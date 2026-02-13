@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - February 13, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">February 13, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">3</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=jWsn76cEK14" target="_blank" rel="noopener">Quantum Computing and AI Boom: Inside the High-Stakes Tech Race | Bloomberg Tech: Europe 2/13/2026</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/12DXqfZQBwvHFBp31Teww9briF_9d45RTmGp6fiYScdvI4LZ3xPEfmw54EXV4o6tQMuG1I2t4Q=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Bloomberg Technology</span><span class="channel-subs">(716.0K)</span></span>
+                        <span class="meta-sep">·</span><span>24:03</span>
+                        <span class="meta-sep">·</span><span>1.6K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-13</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Tom Mackenzie</span></div>
+                </div>
+                <div class="tldr">Quantum computing has transitioned from theoretical research to a critical &quot;scaling&quot; phase, with industry leaders projecting commercial viability and &quot;practical quantum advantage&quot; by the late 2020s or early 2030s.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Quantum computing has transitioned from theoretical research to a critical &quot;scaling&quot; phase, with industry leaders projecting commercial viability and &quot;practical quantum advantage&quot; by the late 2020s or early 2030s. While the U.S. and China currently lead in massive...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Quantum computing has transitioned from theoretical research to a critical "scaling" phase, with industry leaders projecting commercial viability and "practical quantum advantage" by the late 2020s or early 2030s. While the U.S. and China currently lead in massive corporate investment, European firms are carving out a position of strength by dominating the essential supply chain components of error correction, networking, and algorithms.</p>
+<h3>The Path to Commercialization and "Quantum Advantage"</h3>
+<ul>
+<li><strong>Timeline for Impact:</strong> Industry experts anticipate that the "switch" to real-world commercial impact will occur toward the end of this decade (2029–2030).</li>
+<ul>
+<ul>
+<li><strong>The 2025 Turning Point:</strong> Panelists noted that 2025 was a pivotal year where investment increased by 50% and hardware reached the performance levels necessary for error correction.</li>
+</ul>
+</ul>
+<li><strong>Early Adopter Industries:</strong> The first sectors to see material benefits will be those reliant on complex molecular simulation.</li>
+<ul>
+<ul>
+<li><strong>Drug Discovery:</strong> Solving chemistry and material science problems that traditional supercomputers cannot scale to handle.</li>
+<li><strong>Advanced Materials:</strong> Development of more efficient batteries, fertilizers, and high-temperature superconductors for power transmission.</li>
+</ul>
+</ul>
+<li><strong>The "Willow" Benchmark:</strong> Google’s Willow chip (unveiled Dec. 2024) serves as a baseline for the industry, demonstrating the ability to solve problems in minutes that would take classical supercomputers septillions of years.</li>
+</ul>
+<h3>Technical Hurdles: Scaling, Errors, and Networking</h3>
+<ul>
+<li><strong>Quantum Error Correction:</strong> Steve Brierley (Riverlane) identified this as the single most critical hurdle.</li>
+<ul>
+<ul>
+<li>Current machines can manage roughly 1,000 operations before errors occur; commercial applications require <strong>trillions of error-free operations.</strong></li>
+<li>Error correction technology acts as a real-time "loop" that infers and corrects data flips as the computer runs.</li>
+</ul>
+</ul>
+<li><strong>Modular Scaling:</strong> Carmen Palacios-Berraquero (Nu Quantum) emphasized that the future of the industry is not in building single, massive processors ("monolithic scaling"), but in networking smaller, robust processors together.</li>
+<ul>
+<ul>
+<li>This mirrors how modern AI and cloud data centers scale by networking GPUs and CPUs.</li>
+</ul>
+</ul>
+<li><strong>Hardware Integration:</strong> Quantum machines are increasingly viewed not as standalone units but as accelerators that will work hand-in-hand with existing GPU and CPU hardware (e.g., IQM’s partnership with NVIDIA).</li>
+</ul>
+<h3>Geopolitics and the European "Sovereignty" Strategy</h3>
+<ul>
+<li><strong>The European Gap:</strong> Jan Goetz (IQM) noted that while Europe has more quantum startups than the U.S., it lacks the massive corporate investment seen from American giants like Google, IBM, and Amazon.</li>
+<li><strong>Avoiding Dependency:</strong> Leaders argue that Europe must control its own quantum supply chain to avoid the strategic dependencies currently seen in the AI sector.</li>
+<ul>
+<ul>
+<li><strong>The "European Way":</strong> Rather than copying the U.S. cloud-first business model, Europe is focusing on infrastructure, building hardware specifically for on-premise data centers and supercomputing hubs.</li>
+</ul>
+</ul>
+<li><strong>Global Competitiveness:</strong> Despite the funding gap, European firms are emerging as global leaders in specific "puzzle pieces," such as algorithms (Phasecraft), networking (Nu Quantum), and error correction (Riverlane).</li>
+</ul>
+<h3>Investment, Talent, and Security Risks</h3>
+<ul>
+<li><strong>The Talent Pipeline:</strong> IQM is aggressively targeting the educational market, aiming to place a quantum computer in every university globally to ensure future workers are trained on their specific architecture.</li>
+<li><strong>Capital Totals:</strong> Significant recent fundraises include:</li>
+<ul>
+<ul>
+<li><strong>Riverlane:</strong> $75 million Series C (2024).</li>
+<li><strong>Nu Quantum:</strong> $60 million round.</li>
+<li><strong>Phasecraft:</strong> Over $50 million raised to date.</li>
+</ul>
+</ul>
+<li><strong>The "Encryption Shock":</strong> The arrival of large-scale quantum computers in the early 2030s poses a systemic threat to current public encryption (RSA).</li>
+<ul>
+<ul>
+<li>Experts warn that industries requiring long-term data security (10+ years) are already late in transitioning to "Quantum Safe" encryption standards.</li>
+</ul>
+</ul>
+</ul>
+<blockquote>
+"You only create this position of strength if you actually have something that you control... Controlling the quantum supply chain, Europe is very strong... Now we just need to scale it." — <strong>Jan Goetz, CEO of IQM</strong>
+"It’s basically the dawn of an entirely new technology—the telescope of the 21st century... The opportunities are really gigantic." — <strong>Ashley Montanaro, CEO of Phasecraft</strong>
+"The best quantum computers today can perform about a thousand operations before errors overwhelm the device. To get to large-scale commercial applications, we need trillions of error-free operations." — <strong>Steve Brierley, CEO of Riverlane</strong>
+"In 2025 the industry turned a corner... we demonstrated that the qubits are reaching the sort of performance that will allow them to be error-correcting. The main challenge left is scaling them up." — <strong>Carmen Palacios-Berraquero, CEO of Nu Quantum</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Quantum computing is being hailed as the next frontier of high-performance processing, a technology many believe will redefine how we crunch data and transform entire industries, from drug discovery and cybersecurity to global finance and national defense. While the field is often viewed through the lens of a race for commercial and military supremacy between the United States and China, industry leaders argue that Europe could win in this frontier tech if its ambition is properly backed. Building a position of strength requires controlling the quantum supply chain, an area where Europe is currently robust with many companies ready to scale.
+
+This new architecture is built on fundamentally different principles than today’s machines. While traditional computers use binary bits and perform tasks sequentially, quantum computers use quantum bits, or qubits, which handle data in parallel and consider many possible outcomes simultaneously. The potential is staggering: a processor built by Alphabet recently solved a problem in five minutes that would take a traditional supercomputer ten septillion years—a duration longer than the age of the universe. However, significant challenges remain, including the need for massive power supplies, ultra-cold temperatures, and the reduction of high error rates.
+
+For Europe to remain competitive, it must address the gap in scaling and industrial engagement. While the continent boasts more quantum startups than the United States, it lacks heavy investment from tech giants comparable to the likes of Google, IBM, or Amazon. Political will in Brussels is strong, and several quantum strategies have been announced, but execution remains the primary hurdle. Experts suggest that quantum is a matter of sovereignty; failing to lead risks creating the same dependencies currently seen in the artificial intelligence sector. Rather than simply copying the American cloud-based model, Europe can find its own path by integrating quantum hardware directly into data centers and industrial infrastructure.
+
+Commercialization is already underway. IQM, for instance, is selling quantum computers to the educational market to train the next generation of talent and to supercomputing centers that integrate the hardware with existing CPUs and GPUs. In Denmark, companies like Novo Nordisk are already investing in quantum research to drive pharmaceutical breakthroughs. The mission for European startups is to shift from a local mindset to a global one, ensuring they do not just build the supply chain but lead the market.
+
+The industry reached a significant turning point in 2025. Qubits have reached performance levels that allow for error correction, shifting the focus from basic research to scaling and commercial value. Recent breakthroughs in both hardware, like Google's Willow chip, and algorithms have brought the industry to the cusp of practical quantum advantage. While hardware developers work on different approaches—such as superconducting circuits or trapped ions—the consensus is that these systems will eventually be networked together to scale horizontally, much like modern AI data centers.
+
+Error correction remains a critical hurdle. Current machines can only perform about a thousand operations before being overwhelmed by noise, but commercial applications require trillions of error-free operations. Bridging this gap involves real-time systems that infer and correct errors as the computer runs. Once perfected, the first industries to benefit will be those relying on complex chemistry and material science. Quantum computers can solve chemistry and material problems in a radically new way, allowing researchers to design new medicines or batteries on a computer rather than through years of trial and error in a laboratory.
+
+As European companies like Nu Quantum, Phasecraft, and Riverlane develop world-leading intellectual property, the challenge remains to keep that talent and commercial value within the region. Continued government support and a robust financing pipeline are essential to prevent these firms from becoming mere acquisition targets for global giants. Beyond economics, there is a looming encryption shock. By the early 2030s, quantum computers could potentially break current public encryption standards. Transitioning to quantum-safe protocols is no longer a distant concern; for industries that need to keep data safe for a decade or more, the time to adapt is already here.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-1">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=AY0Etuc6UHU" target="_blank" rel="noopener">How This Entrepreneur Built A $2.2B AI Unicorn</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/ytc/AIdro_nulMc6GNIrLUi_wcTCKojfsfro0dsNLAueuj4edxt_Kl4T=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Forbes</span><span class="channel-subs">(2.1M)</span></span>
+                        <span class="meta-sep">·</span><span>39:03</span>
+                        <span class="meta-sep">·</span><span>176 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-13</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Minna Song</span> <span class="tag tag-person">Maggie McGrath</span></div>
+                </div>
+                <div class="tldr">EliseAI is a $2.2 billion AI unicorn transforming the housing and healthcare industries by deploying conversational AI to automate administrative workflows, currently powering one out of every six apartments in the United States.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-1">TL;DR EliseAI is a $2.2 billion AI unicorn transforming the housing and healthcare industries by deploying conversational AI to automate administrative workflows, currently powering one out of every six apartments in the United States.  Solving the &quot;Ghosting&quot; Problem: In the...</div>
+                    <div class="summary-full" id="full-1">
+                        <p><strong>TL;DR</strong></p>
+<p>EliseAI is a $2.2 billion AI unicorn transforming the housing and healthcare industries by deploying conversational AI to automate administrative workflows, currently powering one out of every six apartments in the United States.</p>
+<h3>Strategic Market Disruption: Housing and Healthcare</h3>
+<ul>
+<li><strong>Solving the "Ghosting" Problem:</strong> In the rental market, 40% to 50% of inquiries typically go unanswered. EliseAI’s conversational AI automates responses to 100% of calls and emails, enabling 24/7 scheduling and lease management.</li>
+<li><strong>Vertical Expansion:</strong> The company expanded into healthcare because the administrative "pain points"—scheduling appointments, insurance verification, and patient instructions—mirror the friction found in real estate leasing.</li>
+<li><strong>Economic Impact:</strong> Housing and healthcare represent over 40% of average American spending. By automating these sectors, EliseAI aims to lower administrative costs and improve service quality in "life's most critical areas."</li>
+<li><strong>Adoption Metrics:</strong></li>
+<ul>
+<ul>
+<li><strong>Market Share:</strong> Now serves 1 in 6 US apartments (up from 1 in 10 earlier in 2024).</li>
+<li><strong>Efficiency:</strong> In healthcare, the platform automates 90% of conversations and has reduced call abandonment rates by 90%.</li>
+<li><strong>Velocity:</strong> Real estate clients see a 65% increase in lead-to-lease velocity.</li>
+</ul>
+</ul>
+</ul>
+<h3>Technology Infrastructure and Scalability</h3>
+<ul>
+<li><strong>Foundation on Transformers:</strong> Founded in 2017—the same year the Transformer architecture (the "T" in GPT) was invented—the company has evolved from basic conversational bots to sophisticated Generative AI.</li>
+<li><strong>Architecture Rebuild:</strong> In 2021-2022, Song made the "painful" but necessary decision to rebuild the company's entire tech stack. </li>
+<ul>
+<ul>
+<li>This allowed for a "plug-and-play" system where internal and external models can be swapped instantly.</li>
+<li><strong>Speed Mandate:</strong> The team has an internal mandate to test any new AI model the same day it is released.</li>
+</ul>
+</ul>
+<li><strong>Security-First Product Management:</strong> Because housing and healthcare are highly regulated, security and encryption are treated as core product features rather than afterthoughts.</li>
+</ul>
+<h3>Leadership and Organizational Culture</h3>
+<ul>
+<li><strong>In-Office Synergy:</strong> Unlike many tech peers, EliseAI maintains a heavy in-office culture across hubs in New York, San Francisco, Boston, and Chicago to facilitate rapid communication.</li>
+<li><strong>Communication Efficiency:</strong> To maintain speed while scaling, the company prioritizes <strong>Writing over Meetings</strong>. Documentation allows new hires to gain months of context quickly without constant all-hands meetings.</li>
+<li><strong>Hiring "Founders":</strong> Song specifically recruits former founders or individuals with an entrepreneurial spirit. </li>
+<ul>
+<ul>
+<li><strong>Decentralized Decision-Making:</strong> Hiring "business leaders" instead of "swimlane workers" prevents the CEO from becoming a bottleneck.</li>
+<li><strong>CEO Involvement:</strong> Song personally interviewed the first 400 employees to ensure cultural alignment.</li>
+</ul>
+</ul>
+</ul>
+<h3>Fundraising and Growth Strategy</h3>
+<ul>
+<li><strong>Opportunistic Fundraising:</strong> Following a $250 million Series E, Song notes that recent rounds were preempted by investors. This allowed the company to accept favorable terms without undergoing exhausting six-month fundraising processes.</li>
+<li><strong>Sunk Cost Fallacy:</strong> Song emphasizes the importance of being willing to replace existing internal technology if a better external innovation emerges, prioritizing product excellence over pride of authorship.</li>
+<li><strong>Future Outlook:</strong> The company is focused on "generational" impact. While an IPO remains a possibility, the current priority is maximizing operational efficiency for customers in private markets.</li>
+</ul>
+<p>***</p>
+<p><strong>Notable Quotes</strong></p>
+<blockquote>
+"If you delegate hiring, really you're delegating building your culture." — <strong>Minna Song</strong>
+"It's very standard that 40 to 50% of all inquiries go unanswered unless you're using AI... You wouldn't accept this from any other industry, but you already come in [to real estate] expecting that." — <strong>Minna Song</strong>
+"We focus on just building the best product that we possibly can... we never hesitate to replace something if something else is better." — <strong>Minna Song</strong>
+"I ask [candidates], 'What are you working on and why are you working on that?' If they can't answer the 'why,' that tends to be a bad sign that they're doing wasted work." — <strong>Minna Song</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-1">
+                        Maggie McGrath, editor of Forbes Women, recently spoke with Minna Song, the co-founder and CEO of EliseAI. The company, which achieved unicorn status with a $2.2 billion valuation after a $250 million Series E round, is currently disrupting the housing and healthcare industries through advanced artificial intelligence. Song’s journey into the sector began from an unconventional starting point: despite her background in software engineering, she took a job as an administrative assistant at a real estate firm to research the industry's pain points firsthand. She recognized that housing is a fundamental human need and a person's largest expense, yet the industry lacked transformative technology. By working on the front lines, she identified that nearly half of all renter inquiries went unanswered, creating a massive opportunity for automation.
+
+Founded in 2017—the same year the Transformer architecture was invented—EliseAI has evolved alongside the rapid advancements in generative AI. Initially focused on a leasing product to solve the &quot;ghosting&quot; problem in the rental market, the company built conversational AI to handle calls, emails, and tour scheduling. Today, one in every six apartments in the United States uses EliseAI. The technology has created a network effect; as property managers adopt AI to meet consumer demand for immediate responses, those who rely on manual processes find themselves left behind. Unlike the job market, where applicants might use AI to blast out resumes, the rental market remains deeply personal and selective, making AI most effective on the management side for screening amenities and streamlining the high-volume work of leasing.
+
+The success in housing paved the way for EliseAI to expand into healthcare, an industry with remarkably similar administrative workflows. In both sectors, the core challenges involve answering phone calls, scheduling appointments, and managing downstream tasks like insurance verification or maintenance requests. These two industries account for over 40% of the average American's spending, yet both remain burdened by outdated, manual processes. By automating these workflows, EliseAI provides 24/7 support while lowering administrative costs. The company’s name itself is a tribute to ELIZA, the pioneering natural language processing chatbot developed at MIT, where Song attended school.
+
+A critical turning point for the company occurred in 2021 and 2022, when Song made the difficult decision to completely rebuild the software architecture. While this move initially concerned investors because it slowed the release of new products for a year, it was essential for long-term scalability. The redesign allowed EliseAI to easily plug in new large language models and stay ahead of the rapid pace of AI innovation. This commitment to avoiding the &quot;sunk cost fallacy&quot; has defined Song’s leadership; she maintains a mandate that the team must test any new technology the same day it is released, ensuring the company never hoards outdated systems out of pride.
+
+EliseAI’s internal culture is built on high velocity and an in-office environment across its New York, San Francisco, and Boston headquarters. To maintain speed as the team scales toward 400 employees, Song emphasizes written communication over excessive meetings, allowing new hires to quickly catch up on months of context. She also prioritizes hiring &quot;founders&quot;—individuals with an entrepreneurial spirit who think holistically about the business rather than just their specific roles. Song personally interviewed the company’s first 400 employees, believing that to delegate hiring is to delegate the very building of the company's culture.
+
+Looking toward the future, Song remains focused on maximizing the impact of her work by addressing fundamental human needs. Whether in housing or healthcare, her goal is to eliminate the status quo of poor service and inefficiency. By significantly improving metrics like lead-to-lease velocity and call abandonment rates, EliseAI is positioning itself as a generational company. While the future might include an IPO, the current focus remains on building a product that simplifies complex interactions for non-technical users, proving that in critical industries, convenience and automation will eventually become the expected standard.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-2">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=EQL7RGd2Id0" target="_blank" rel="noopener">Watch CNBC's full interview with Treasury Secretary Scott Bessent</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">CNBC Television</span><span class="channel-subs">(3.3M)</span></span>
+                        <span class="meta-sep">·</span><span>27:13</span>
+                        <span class="meta-sep">·</span><span>2.5K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-13</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Scott Bessent</span></div>
+                </div>
+                <div class="tldr">Treasury Secretary Scott Bessent announced a new FinCEN whistleblower program to recover billions in fraudulent government spending while projecting that the U.S.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-2">TL;DR Treasury Secretary Scott Bessent announced a new FinCEN whistleblower program to recover billions in fraudulent government spending while projecting that the U.S. economy is transitioning from a &quot;table-setting&quot; phase in 2025 to a &quot;banquet&quot; of growth in 2026.  FinCEN...</div>
+                    <div class="summary-full" id="full-2">
+                        <p><strong>TL;DR</strong></p>
+<p>Treasury Secretary Scott Bessent announced a new FinCEN whistleblower program to recover billions in fraudulent government spending while projecting that the U.S. economy is transitioning from a "table-setting" phase in 2025 to a "banquet" of growth in 2026.</p>
+<h3>Whistleblower Initiative and Fraud Recovery</h3>
+<ul>
+<li><strong>FinCEN Whistleblower Site:</strong> Treasury is launching [fincen.gov/whistleblower](http://fincen.gov/whistleblower) to encourage reporting on waste, fraud, and abuse in government programs.</li>
+<ul>
+<ul>
+<li><strong>Compensation:</strong> Whistleblowers can receive rewards between 10% and 30% of recovered fines.</li>
+<li><strong>Specific Targets:</strong> Bessent highlighted "astounding" fraud in Minneapolis involving daycare centers with no children and transport companies with no vehicles.</li>
+</ul>
+</ul>
+<li><strong>Political Accountability:</strong> Bessent criticized the lack of oversight in Minnesota, alleging a "circular system" where fraudulent funds were donated back to politicians.</li>
+</ul>
+<h3>Federal Reserve Oversight and Nominations</h3>
+<ul>
+<li><strong>Kevin Warsh Nomination:</strong> Bessent confirmed that Senate Banking Committee hearings for Warsh will proceed. </li>
+<ul>
+<ul>
+<li><strong>Legislative Holds:</strong> While Senator Thom Tillis is holding a full Senate vote pending investigations into Fed construction overruns, Bessent emphasized the importance of continuity before Chair Powell’s term ends in mid-May.</li>
+</ul>
+</ul>
+<li><strong>Fed Fiscal Criticism:</strong> The Secretary lambasted the Federal Reserve’s internal spending, noting they do not work on Congressional appropriations.</li>
+<ul>
+<ul>
+<li><strong>"Magic Money":</strong> Bessent claimed the Fed prints money to cover budget overruns and is currently losing $100 billion annually due to "terrible bond market purchases."</li>
+</ul>
+</ul>
+<li><strong>Criminal Subpoenas:</strong> He noted that the U.S. Attorney for D.C. issued subpoenas to the Fed in December after the agency failed to respond to emails regarding construction project costs.</li>
+</ul>
+<h3>Economic Outlook and Fiscal Policy</h3>
+<ul>
+<li><strong>2026 Forecast:</strong> Bessent predicted 2026 will be a "banquet" for the American people, driven by factory completions and the "working families tax cut."</li>
+<li><strong>Deficit Targets:</strong> The administration aims to reduce the deficit-to-GDP ratio to 3%. </li>
+<ul>
+<ul>
+<li><strong>Current Progress:</strong> The 2025 deficit dropped to 5.4% (from 6.97% in 2024), which Bessent attributed to constrained spending and "growing the denominator" through GDP expansion.</li>
+</ul>
+</ul>
+<li><strong>Inflation and Interest Rates:</strong> Predicted inflation could return to the Fed’s 2% target by mid-2025. He argued that growth is not inherently inflationary if it is accompanied by deregulation and increased supply.</li>
+<li><strong>IRS Data:</strong> Reported that early-season tax refunds are already up 22% compared to the previous year.</li>
+</ul>
+<h3>Trade, Technology, and Crypto</h3>
+<ul>
+<li><strong>China "De-risking":</strong> Bessent clarified that the U.S. does not want to "decouple" from China but must "de-risk" by bringing production of critical minerals, semiconductors, and steel back to the U.S.</li>
+<li><strong>Tariff Scope:</strong> Responding to reports of narrowed metal tariffs, Bessent suggested any changes would likely be "clarifications on incidental objects" rather than a broad retreat.</li>
+<li><strong>Crypto Regulation:</strong> Called for the passage of the "Clarity Bill" to provide market structure.</li>
+<ul>
+<ul>
+<li><strong>Bitcoin Volatility:</strong> Noted that current sell-offs are within the historical norm of 58% corrections.</li>
+<li><strong>Legislative Obstacles:</strong> Criticized certain crypto firms for blocking the bill, stating they would "rather have no legislation than this legislation."</li>
+</ul>
+</ul>
+</ul>
+<h3>Legislative Strategy and the Filibuster</h3>
+<ul>
+<li><strong>Filibuster Reform:</strong> Bessent explicitly advocated for ending the Senate filibuster, citing "game theory" and the "prisoner's dilemma." </li>
+<ul>
+<ul>
+<li><strong>Political Strategy:</strong> He argued that since Democrats previously moved toward "nuking" the filibuster, Republicans must move first to secure voter integrity and keep the government open.</li>
+</ul>
+</ul>
+<li><strong>Government Shutdown:</strong> Warned that Democrats might use a shutdown to hurt the President, though he asserted the economy remained resilient during the previous longest shutdown in history.</li>
+</ul>
+<p>***</p>
+<blockquote>
+"2025 is about setting the table. 2026 is going to be a banquet for the American people." — <strong>Scott Bessent</strong>
+"The Fed, unlike other branches of government, does not work on appropriations. They have magic money. So when they go over budget, they just print more money." — <strong>Scott Bessent</strong>
+"We don't want to decouple [from China], we need to de-risk... President Trump’s [strategy] is a dual strategy: we want to engage with the Chinese, we want fair trade, but we are going to de-risk." — <strong>Scott Bessent</strong>
+"In game theory, the best known game is the prisoner's dilemma... if you have bad actors, then you should move first. It's kind of kill or be killed... the Republicans need to be smart about [ending the filibuster]." — <strong>Scott Bessent</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-2" onclick="toggleSummary(2)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-2">
+                        Treasury Secretary Scott Bessent joined the program to discuss a new initiative from the Treasury’s Financial Crimes Enforcement Network (FinCEN) aimed at incentivizing whistleblowers. This program is designed to ferret out waste, fraud, and abuse in government programs, with a particular focus on issues observed in Minneapolis. Whistleblowers who provide information leading to the recovery of funds stolen from taxpayers can receive rewards ranging from 10% to 30% of the fines levied. Bessent cited examples of rampant fraud, such as daycare centers operating without children and transport companies without vehicles, describing a circular system where federal funds were allegedly stolen and then donated back to politicians.
+
+The conversation shifted to the nomination of Kevin Warsh and the timeline for his confirmation. Bessent addressed concerns regarding construction cost overruns at the Federal Reserve and the ongoing investigations into those projects. While Senator Thom Tillis currently holds a vote on the nomination, an agreement has been reached to proceed with hearings. Bessent emphasized the importance of continuity at the Fed and praised Warsh as a highly qualified candidate who previously received unanimous support in the Senate. He also addressed criticisms regarding the Justice Department’s involvement, noting that while the administration does not influence U.S. attorneys, the lack of oversight at the Fed—which operates on &quot;magic money&quot; rather than appropriations—warrants a thorough investigation.
+
+Regarding trade policy, Bessent commented on reports that the administration might narrow the scope of certain metal tariffs directed at China to mitigate collateral damage to the European Union. While he declined to get ahead of the President's final decision, he indicated that any adjustments would likely be clarifications on incidental objects rather than a broad rollback. He maintained that the administration remains committed to its tariff strategy while seeking to de-risk the relationship with China rather than fully decoupling.
+
+On the economic front, Bessent analyzed a jobs report that exceeded expectations, with 130,000 jobs added and unemployment at 4.3%. He highlighted that private sector growth was even stronger at 170,000 jobs, while government payrolls were reduced by 40,000, marking the lowest ratio of government-to-total jobs since 1966. He characterized 2025 as a year for &quot;setting the table&quot; and predicted that 2026 would be a &quot;banquet&quot; for the American people as factory construction projects reach completion. He credited this outlook to policies such as the working families tax cut, the deductibility of American-made cars, and the elimination of taxes on tips and overtime.
+
+Addressing the national deficit, Bessent dismissed the Congressional Budget Office's (CBO) projections, arguing that their static scoring system underestimates GDP growth. He asserted that the deficit-to-GDP ratio is already declining due to constrained spending and a growing economy. He pointed to the bond market’s recent performance as evidence that the United States is getting its fiscal house in order, noting that he trusts market signals over CBO forecasts.
+
+Bessent also discussed the potential for a massive productivity boom driven by artificial intelligence and deregulation. He compared the current technological shift to the railroad expansion of the 1880s and the internet boom of the 1990s. By creating a supply-side shock through deregulation and capital expenditure incentives, the administration aims to drive growth without triggering inflation. He predicted that inflation could return to the Federal Reserve’s 2% target by the middle of this year, easing the &quot;onerous tax&quot; that has burdened consumers over the last several years.
+
+Despite positive indicators, Bessent acknowledged that many Americans remain concerned about affordability due to cumulative inflation and the high cost of groceries, insurance, and rent. He argued that as energy prices fall and real wage growth continues, the public's mood will improve. He also commented on the political environment, advocating for the end of the filibuster to ensure the passage of key initiatives like voter integrity and to prevent government shutdowns. He criticized the opposition for being &quot;bad actors&quot; willing to hurt the economy for political gain.
+
+Finally, the Secretary addressed the volatility in the cryptocurrency market. He noted that Bitcoin is currently undergoing a historically typical sell-off and emphasized the need for legislative clarity. He urged the passage of the &quot;Clarity Bill&quot; to establish a market structure for digital assets, warning that the opportunity for a bipartisan deal could disappear if the political makeup of the House changes. He reiterated the President’s goal of making the United States the digital asset capital of the world by fostering innovation in blockchain and decentralized finance.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
