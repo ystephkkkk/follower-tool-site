@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - February 14, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">February 14, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=WaxIRDWUGqI" target="_blank" rel="noopener">AI, Robotics, and Manufacturing&amp;#39;s Future: What CES 2026 Reveals About Industrial Innovation</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/dPJbpEZ3bgIeP0V6g5BMtpmrd00KOfbaXj3FK5KF2uItBfQ5uawE5h1ru4iAs1ws-basZ8MT=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Siemens</span><span class="channel-subs">(29.5K)</span></span>
+                        <span class="meta-sep">·</span><span>15:40</span>
+                        <span class="meta-sep">·</span><span>50 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-14</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Roland Busch</span> <span class="tag tag-person">Cedrik Neike</span></div>
+                </div>
+                <div class="tldr">CES 2026 signals a fundamental shift from digital transformation to &quot;intelligent transformation,&quot; where AI inference at the edge, flexible robotics, and breakthrough energy solutions like fusion are converging to redefine industrial productivity and workforce engagement.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR CES 2026 signals a fundamental shift from digital transformation to &quot;intelligent transformation,&quot; where AI inference at the edge, flexible robotics, and breakthrough energy solutions like fusion are converging to redefine industrial productivity and workforce engagement. ...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>CES 2026 signals a fundamental shift from digital transformation to "intelligent transformation," where AI inference at the edge, flexible robotics, and breakthrough energy solutions like fusion are converging to redefine industrial productivity and workforce engagement.</p>
+<h3>AI and the "Intelligent Transformation"</h3>
+<ul>
+<li><strong>Beyond Digitalization:</strong> Lucian Fogoros highlighted a transition from traditional digital transformation to "intelligent transformation," where AI is integrated across manufacturing, energy, and infrastructure to drive autonomous decision-making.</li>
+<li><strong>Vertical AI and Edge Inference:</strong> Kevin O'Donovan emphasized the rise of "Vertical AI" and AI inference at the edge.</li>
+<ul>
+<ul>
+<li><strong>Architectures:</strong> Shift toward small language models running on localized hardware (AMD, Qualcomm, and specialized startups) rather than the cloud.</li>
+<li><strong>Edge Deployment:</strong> This allows for real-time processing directly on the factory floor, essential for the "factory of the future."</li>
+</ul>
+</ul>
+<li><strong>AI-Driven Efficiency:</strong> Emerging tools now allow for the automation of complex human tasks, such as AI-driven stakeholder interviews and feedback summarization for product managers.</li>
+</ul>
+<h3>The Evolution of Robotics and Physical AI</h3>
+<ul>
+<li><strong>Functional vs. Aesthetic Robotics:</strong> While humanoid robots serve as "eye candy" at CES, the panel agreed that the immediate value lies in "Physical AI"—robots on wheels and robotic arms that are currently deployable.</li>
+<li><strong>Flexible Automation:</strong> Jake Hall noted that AI is revitalizing 40-year-old robotic technology by making it flexible and agile. </li>
+<ul>
+<ul>
+<li><strong>Cross-Industry Application:</strong> Automation is moving beyond automotive into food and beverage, agriculture, and construction.</li>
+</ul>
+</ul>
+<li><strong>Innovative Logistics:</strong> Hall highlighted a collaboration between Hyundai Motor Group and Boston Dynamics featuring a robot that slides under vehicles to move them for charging and construction, illustrating how simple, clever hardware can solve massive efficiency gaps.</li>
+</ul>
+<h3>Bridging the Manufacturing Talent Gap</h3>
+<ul>
+<li><strong>Changing Perceptions:</strong> With 2.3 million manufacturing jobs expected to go unfulfilled, the industry must rebrand from "dark, dirty, and dangerous" to a high-tech career path.</li>
+<li><strong>The Digital-Physical Link:</strong> The "Manufacturing Millennial" Jake Hall emphasized that the next generation (Gen Z/Gen Alpha) views manufacturing through a digital lens.</li>
+<ul>
+<ul>
+<li><strong>Tools for Recruitment:</strong> Technologies like 3D printing, Digital Twins, and the NVIDIA/Siemens Omniverse collaboration transform manufacturing into an innovative environment that appeals to digital natives.</li>
+</ul>
+</ul>
+<li><strong>Democratized Production:</strong> High-tech tools allow young innovators to design and manufacture products from home, bridging the gap between hobbyist creativity and industrial production.</li>
+</ul>
+<h3>Energy Innovation and Industrial Sustainability</h3>
+<ul>
+<li><strong>The Fusion Breakthrough:</strong> Kevin O'Donovan highlighted "Fusion" as the standout innovation, specifically citing Commonwealth Fusion Systems.</li>
+<li><strong>Powering AI Factories:</strong> As manufacturing returns to domestic shores and AI factories demand massive amounts of electricity, fusion offers a potential solution.</li>
+<ul>
+<ul>
+<li><strong>Fuel Efficiency:</strong> Host Magnus Edholm noted that a small bottle of fusion fuel could theoretically power an individual's entire lifetime electricity consumption.</li>
+</ul>
+</ul>
+<li><strong>Digital Twins in Energy:</strong> Companies are utilizing digital twins and simulation to accelerate the timeline for fusion, aiming for reality within the next two years.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"We are seeing this transformation from digital transformation towards intelligent transformation. In other words, the AI across various industries that we should all be looking at."
+</blockquote>
+<p>— <strong>Lucian Fogoros</strong>, Co-founder of IoT Central</p>
+<blockquote>
+"The humanoid ones get all the eye candy, but if you turn around and go, 'What’s an autonomous vehicle?' That’s a robot. In the factory... this stuff is happening now."
+</blockquote>
+<p>— <strong>Kevin O'Donovan</strong>, Technology Evangelist</p>
+<blockquote>
+"Manufacturing is no longer this physical world; it’s a digital world that new generations are growing up on... Technology’s not the old industry, it’s the leading industry of innovation."
+</blockquote>
+<p>— <strong>Jake Hall</strong>, The Manufacturing Millennial</p>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Magnus Edholm welcomes viewers to CES 2026 in Las Vegas, joined by industry experts Lucian Fogoros, Kevin O’Donovan, and Jake Hall. The group represents a wide cross-section of the technology sector, each bringing a unique perspective to the event. Lucian, an engineer and journalist, focuses on Industrial IoT and AI across manufacturing, energy, and infrastructure, leveraging a global community of 300,000 people. Kevin, a technology evangelist, explores the &quot;art of the possible,&quot; bridging the gap between cutting-edge technology and practical value for the manufacturing and energy sectors. Jake, known as the Manufacturing Millennial, advocates for bringing the next generation into the workforce to address the 2.3 million unfulfilled jobs in the industry by showcasing the innovative technology currently transforming the field.
+
+The group has been busy on the show floor, with members logging between 22,000 and 29,000 steps in a single day. Lucian highlights a significant shift he has observed from traditional digital transformation toward &quot;intelligent transformation,&quot; where AI is integrated across various industries. He points to the rise of longevity-based applications and the Explorer Tour, which features a life science use case utilizing digital threads and AI to identify and resolve issues. 
+
+Kevin discusses the ubiquity of AI at this year’s show, specifically focusing on AI inference at the edge. Companies like Nvidia, AMD, and Qualcomm are developing architectures to push vertical AI out to the factory floor. He also notes the rapid progress in physical AI and robotics. While humanoid robots often serve as the &quot;eye candy&quot; of the event, Kevin emphasizes that the real economic value is currently found in robotic arms and autonomous vehicles, such as the AGVs and AMRs already being deployed in Siemens' factories.
+
+Jake shares his perspective as a first-time CES attendee, noting that the event is where the future is envisioned. He believes the industry is successfully moving away from the &quot;dark, dirty, and dangerous&quot; stereotype toward a digital world that appeals to younger generations who grow up with 3D printing and design software. With the advancement of the Nvidia Omniverse and digital twins, manufacturing is repositioning itself as a leader in innovation. Jake notes that AI is transforming once-stagnant robotic arms into flexible tools capable of operating in new sectors like food and beverage, agriculture, and construction.
+
+One of the most striking innovations highlighted is fusion energy. Kevin points to Commonwealth Fusion Systems, which is using digital twins and simulation to bring fusion to reality within the next few years. This technology has the potential to provide massive amounts of clean energy; for example, a small amount of water-based fuel could theoretically power a person's entire lifetime of electricity needs. Additionally, Lucian mentions a tool for automating consultant interviews using AI, which could streamline the process of gathering and summarizing feedback from large communities.
+
+Reflecting on creative engineering, Jake notes a collaboration between the Hyundai Motor Group and Boston Dynamics featuring technology that slides cars around charging stations and manufacturing facilities. As the day concludes, the participants describe the atmosphere of CES 2026 as inspiring, driven by cross-industry collaboration and the rapid evolution of intelligent technology. To follow their ongoing coverage, Lucian can be found at iot-world.com, Kevin shares insights on LinkedIn and Instagram, and Jake provides updates through his website, mfgmil.com.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
