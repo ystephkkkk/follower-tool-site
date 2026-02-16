@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - February 15, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">February 15, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">3</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=LnRLUvylhjE" target="_blank" rel="noopener">The Next Tech Dawn: Quantum Computing &amp; Real-World Applications</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/12DXqfZQBwvHFBp31Teww9briF_9d45RTmGp6fiYScdvI4LZ3xPEfmw54EXV4o6tQMuG1I2t4Q=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Bloomberg Technology</span><span class="channel-subs">(716.0K)</span></span>
+                        <span class="meta-sep">·</span><span>12:05</span>
+                        <span class="meta-sep">·</span><span>8.0K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-15</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Tom Mackenzie</span> <span class="tag tag-person">Carmen Palacios-Berraquero</span> <span class="tag tag-person">Ashley Montanaro</span></div>
+                </div>
+                <div class="tldr">&gt; &quot;The best quantum computers today can perform about a thousand operations before errors overwhelm the device.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR: Following the milestone release of Google’s Willow chip in late 2024, the quantum computing industry has shifted from theoretical &quot;hope&quot; to a scaling and consolidation phase. Experts anticipate the transition to mainstream commercial utility—particularly in drug discovery...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR:</strong> Following the milestone release of Google’s Willow chip in late 2024, the quantum computing industry has shifted from theoretical "hope" to a scaling and consolidation phase. Experts anticipate the transition to mainstream commercial utility—particularly in drug discovery and materials science—will occur by the end of this decade as the industry solves the critical "error correction" gap.</p>
+<h3>Current Industry Status: From Breakthrough to Scaling</h3>
+<ul>
+<li><strong>The 2025 Pivot:</strong> The industry has moved past the "hope vs. reality" gap. Qubits have reached performance levels high enough to make error correction viable.</li>
+<li><strong>Investment Surge:</strong> 2024 saw a 50% increase in quantum investment and a notable rise in M&amp;A activity, signaling a transition toward commercial consolidation.</li>
+<li><strong>The Scaling Challenge:</strong> While current quantum processors are robust, they remain too small for commercial value. The current focus is "horizontal scaling"—networking multiple processors together in a modular fashion, mirroring the evolution of modern AI and cloud data centers.</li>
+<li><strong>Hardware Diversity:</strong> Multiple technologies (trapped ions, neutral atoms, superconducting qubits) remain competitive. Experts suggest the "winner" will likely be whichever platform scales most effectively through networking infrastructure.</li>
+</ul>
+<h3>Technical Barriers: Error Correction &amp; Algorithms</h3>
+<ul>
+<li><strong>The "Operations Gap":</strong> Steve Brierley (Riverlane) notes that today’s best quantum computers can perform roughly 1,000 operations before errors occur. Commercial applications require <strong>one trillion</strong> error-free operations. </li>
+<li><strong>Quantum Error Correction (QEC):</strong> This is the essential "middle layer" that corrects errors in real-time as the computer runs. The speed of this inference loop defines the computer's clock cycle.</li>
+<li><strong>Algorithm Efficiency:</strong> Ashley Montanaro (Phasecraft) highlights breakthroughs in quantum algorithms that have achieved <strong>million-fold reductions</strong> in the computational cost of specific problems, bringing practical "quantum advantage" closer even on existing hardware.</li>
+</ul>
+<h3>Commercial Timeline and High-Impact Industries</h3>
+<ul>
+<li><strong>Mainstream Adoption:</strong> Experts forecast a commercial "switch" toward the end of the 2020s or early 2030s.</li>
+<li><strong>Primary Use Cases:</strong></li>
+<ul>
+<ul>
+<li><strong>Materials Science:</strong> Designing new lithium-ion batteries and high-temperature superconductors for low-loss power transmission.</li>
+<li><strong>Pharmaceuticals:</strong> Radical new methods for drug discovery by "solving" chemistry problems that traditional computers cannot scale to handle.</li>
+</ul>
+</ul>
+<li><strong>Economic Value:</strong> Individual applications in these sectors are estimated to be worth billions, leading to descriptions of quantum as "the telescope of the 21st century."</li>
+</ul>
+<h3>Geopolitical Landscape &amp; The Talent War</h3>
+<ul>
+<li><strong>European vs. US Dominance:</strong> While US firms like Google and IBM lead in hardware, the UK and Europe have established global leads in essential "puzzle pieces" like error correction (Riverlane), algorithms (Phasecraft), and networking (Nu Quantum).</li>
+<li><strong>Strategic Financing:</strong> To prevent "brain drain" to the US, Europe must provide better late-stage financing and maintain strong government support. </li>
+<li><strong>Government Role:</strong> The UK government recently committed £1 billion to quantum computing. Industry leaders emphasize that this funding must be deployed rapidly to maintain the current momentum.</li>
+</ul>
+<h3>Cybersecurity: The "Encryption Shock"</h3>
+<ul>
+<li><strong>Vulnerability:</strong> By the early 2030s, quantum computers are expected to reach the "trillion operation" threshold required to break current public-key encryption.</li>
+<li><strong>Mitigation:</strong> The industry is transitioning to "quantum-safe" encryption standards (e.g., NIST standards). </li>
+<li><strong>Urgency:</strong> Carmen Palacios-Berraquero (Nu Quantum) warns that for organizations needing to keep data safe for 10+ years, the risk is already immediate; those with shorter data-longevity needs have more time to adapt.</li>
+</ul>
+<blockquote>
+"The best quantum computers today can perform about a thousand operations before errors overwhelm the device. But to get to large-scale commercial applications, we need trillions of error-free operations."
+</blockquote>
+<p>— <strong>Steve Brierley, CEO of Riverlane</strong></p>
+<blockquote>
+"It’s basically the dawn of an entirely new technology—the telescope of the 21st century... the opportunities are really gigantic."
+</blockquote>
+<p>— <strong>Ashley Montanaro, CEO of Phasecraft</strong></p>
+<blockquote>
+"We’re entering this new phase where it’s all about scaling up, consolidation, and racing towards commercial value... I think towards the end of this decade is when that switch will happen."
+</blockquote>
+<p>— <strong>Carmen Palacios-Berraquero, CEO of Nu Quantum</strong></p>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        The journey toward realizing the full potential of quantum computing reached a significant milestone on December 9, 2024, with the unveiling of Google's Willow quantum computing chip. This announcement triggered a surge in investor interest, leading to a rise in publicly traded quantum firms. More than a year later, the industry appears to have reached a turning point. Leading figures in the European quantum sector, including Carmen Palacios-Berraquero of Nu Quantum, Ashley Montanaro of Phasecraft, and Steve Brierley of Riverlane, suggest that the focus has shifted from fundamental research to the challenges of scaling and commercialization.
+
+The state of the technology in 2025 shows that qubits have reached performance levels that allow for effective error correction. While the industry has developed robust quantum processors, the primary challenge remains scaling these systems to a size capable of delivering commercial value. Investment in the sector increased by 50% over the last year, accompanied by a rise in mergers and acquisitions. This transition marks a new phase of consolidation as firms race toward practical applications. Significant breakthroughs have occurred not only in hardware, such as the Willow chip, but also in algorithms, where some new methods have achieved million-fold reductions in the computational cost of specific problems. These advancements suggest that the milestone of practical quantum advantage is drawing closer.
+
+A critical component of this progress is error correction. Currently, the best quantum computers can perform approximately one thousand operations before errors overwhelm the device. However, large-scale commercial applications will require trillions of error-free operations. This gap is bridged by quantum error correction technology, which sits atop physical qubits to infer and correct errors in real-time as the computer runs. This process essentially creates a clock cycle for the quantum computer, enabling the reliability necessary for complex tasks.
+
+Experts anticipate that the transition to real-world commercial impact will occur toward the end of this decade. Achieving this will depend on the ability to network quantum processors together, allowing for horizontal, modular scaling similar to how modern AI and cloud data centers operate. This approach is hardware-agnostic, meaning it can be applied to various competing technologies, including trapped ions, neutral atoms, and superconducting qubits.
+
+The economic potential of the industry is vast but difficult to quantify, as individual applications in materials science and medicine could be worth billions. Quantum computers are uniquely suited to solving chemistry and material science problems that traditional computers cannot handle. Early benefits are expected in the development of new medicines, high-temperature superconductors for low-loss power transmission, and more efficient lithium-ion batteries.
+
+While the United States remains a major player, Europe and the UK have established themselves as leaders in essential niches, such as quantum networking, algorithms, and error correction. The UK government has committed £1 billion to the sector to support this growth. While some firms may become targets for acquisition, there is a strong drive to maintain independence and build global leaders within Europe. This requires continued support for the talent pipeline and later-stage financing to ensure that academic excellence translates into sustained commercial success.
+
+Finally, the rise of quantum computing brings significant implications for digital security. Once quantum computers reach the capability of performing a trillion error-free operations, they will be able to break current public-key encryption. This threat has prompted a decade-long effort by standards bodies like NIST to develop quantum-safe encryption. For industries that need to keep data secure for a decade or more, the transition to these new standards is already an urgent priority, as the potential &quot;encryption shock&quot; could arrive as early as the 2030s.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-1">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=HwbvdntnETs" target="_blank" rel="noopener">Sec. Of State Marco Rubio Holds Press Conference With Slovak PM Robert Fico</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Forbes Breaking News</span><span class="channel-subs">(5.5M)</span></span>
+                        <span class="meta-sep">·</span><span>50:46</span>
+                        <span class="meta-sep">·</span><span>14.8K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-15</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Marco Rubio</span> <span class="tag tag-person">Robert Fico</span></div>
+                </div>
+                <div class="tldr">U.S.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-1">TL;DR U.S. Secretary of State Marco Rubio and Slovak Prime Minister Robert Fico met to solidify a &quot;pragmatic&quot; bilateral partnership focused on nuclear energy expansion, a negotiated end to the Ukraine conflict, and a &quot;V4 plus USA&quot; regional cooperation framework.  Nuclear...</div>
+                    <div class="summary-full" id="full-1">
+                        <p><strong>TL;DR</strong></p>
+<p>U.S. Secretary of State Marco Rubio and Slovak Prime Minister Robert Fico met to solidify a "pragmatic" bilateral partnership focused on nuclear energy expansion, a negotiated end to the Ukraine conflict, and a "V4 plus USA" regional cooperation framework.</p>
+<h3>Energy Security and Nuclear Cooperation</h3>
+<ul>
+<li><strong>Nuclear Expansion:</strong> Prime Minister Fico emphasized Slovakia’s commitment to nuclear energy, noting that a bilateral agreement with the U.S. went into effect on February 13.</li>
+<ul>
+<ul>
+<li><strong>Westinghouse Partnership:</strong> Slovakia aims to sign specific agreements with Westinghouse in 2025 to build a new 1,200-megawatt nuclear block by 2040.</li>
+</ul>
+</ul>
+<li><strong>Fossil Fuel Transition:</strong> Fico expressed deep concern over the EU's "REPowerEU" decision to stop the flow of Russian gas by November 2027, placing Slovakia at the "end of the pipe."</li>
+<li><strong>Oil Transit Crisis:</strong> Fico alleged that the current disruption of oil through the Druzhba pipeline is a "political blackmail instrument" used by Ukraine against Hungary and Slovakia due to their stances on EU membership and the war.</li>
+<ul>
+<ul>
+<li><strong>Regional Impact:</strong> Because Slovakia’s Slovnaft refinery is owned by the Hungarian company MOL, threats to Hungarian oil security directly impact Slovak interests.</li>
+</ul>
+</ul>
+</ul>
+<h3>The War in Ukraine and Peace Initiatives</h3>
+<ul>
+<li><strong>Diplomatic Realism:</strong> Both leaders expressed a desire for a rapid end to the conflict, though Fico was more critical of existing Western strategies.</li>
+<ul>
+<ul>
+<li><strong>Rubio’s Perspective:</strong> Described the war as "deadly, bloody, and costly," stating that the Trump administration seeks to be a "facilitator" of a negotiated end.</li>
+<li><strong>Fico’s Perspective:</strong> Argued that the EU strategy of sanctions and military aid has failed and is a "trap" that lacks a military solution.</li>
+</ul>
+</ul>
+<li><strong>Slovakia as a Mediator:</strong> Fico offered Slovakia as a hub for opinion exchange and intelligence, citing the country's proximity to the conflict and its ability to "understand the language" of both Ukraine and the Russian Federation.</li>
+<li><strong>Sovereign Policy:</strong> Fico defended his decisions to maintain dialogue with Moscow and Beijing, stating that "sovereign partners" should not lie to one another about the reality of the conflict.</li>
+</ul>
+<h3>NATO and Defense Modernization</h3>
+<ul>
+<li><strong>Airspace Sovereignty:</strong> Slovakia is seeking to increase its procurement of U.S. F-16 fighter jets from 14 to 18 units.</li>
+<ul>
+<ul>
+<li><strong>Current Dependency:</strong> Fico noted it is a poor sign of sovereignty that Slovak airspace is currently protected by Poland, Hungary, and the Czech Republic after Slovakia "gifted" its equipment to Ukraine in previous years.</li>
+</ul>
+</ul>
+<li><strong>NATO Burden Sharing:</strong> Secretary Rubio clarified that the U.S. is not leaving NATO but expects allies to increase their own capabilities.</li>
+<ul>
+<ul>
+<li><strong>Collective Strength:</strong> Rubio argued that "the stronger our allies are, the stronger we are collectively," and that individual national strength is a positive development for the alliance.</li>
+</ul>
+</ul>
+<li><strong>Dual-Use Infrastructure:</strong> Slovakia is utilizing military budgets for dual-use projects, specifically citing a large military hospital currently under construction in Eastern Slovakia.</li>
+</ul>
+<h3>Regional Diplomacy and the V4 Group</h3>
+<ul>
+<li><strong>Visegrad Group (V4) Presidency:</strong> Slovakia will assume the presidency of the V4 (Slovakia, Czech Republic, Poland, Hungary) on July 1, 2026.</li>
+<li><strong>"V4 Plus" Format:</strong> Rubio and Fico discussed inviting the U.S. to participate in V4 meetings to create a "V4 plus USA" forum for energy and international cooperation.</li>
+<li><strong>U.S. Commitment to Central Europe:</strong> Rubio signaled that under the Trump administration, Central Europe will be a "key component" of how the U.S. engages with the continent, moving beyond pleasantries to "concrete actions."</li>
+</ul>
+<h3>Middle East and Global Policy (Q&amp;A)</h3>
+<ul>
+<li><strong>Syrian Stabilization:</strong> Secretary Rubio confirmed he met with both the Syrian Foreign Minister and Kurdish leader General Mazloum in Munich. He defended working with the interim Syrian authorities as a pragmatic choice to prevent an ISIS resurgence and manage mass migration.</li>
+<li><strong>Iran Policy:</strong> Rubio stated the U.S. prefers diplomacy and a "negotiated summit" with Iran, though the administration remains positioned in the region to defend U.S. forces if threatened.</li>
+</ul>
+<p>***</p>
+<p><strong>Notable Quotes</strong></p>
+<blockquote>
+"It is the view of the United States under [Trump's] presidency that we expect every country in the world to act in their national interest. That is what countries are supposed to do." — <strong>Marco Rubio</strong>
+"I think that the most valuable thing brought by the American President into foreign and world politics is common sense, pragmatism, and not looking at the interests of others. Everyone must primarily look at their own national state interests." — <strong>Robert Fico</strong>
+"The stronger our allies are, the stronger we are collectively... we don't want Europe to be a vassal of the United States, we want to be your partner." — <strong>Marco Rubio</strong>
+"I am convinced that this war is senseless, that the conflict in Ukraine has no military solution... if we don't have a dialogue, then we cannot say that we are interested in ending the military conflict." — <strong>Robert Fico</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-1">
+                        Following a joint meeting in Bratislava between the Prime Minister of the Slovak Republic, Robert Fico, and the United States Secretary of State, Marco Rubio, the two leaders held a press conference at the Office of the Government to discuss the future of the bilateral relationship. This meeting served as a direct follow-up to their recent discussions in Florida with President Donald Trump, signaling a renewed emphasis on high-level engagement between the United States and Central Europe.
+
+Prime Minister Fico opened the proceedings by emphasizing his commitment to a sovereign Slovak foreign policy oriented toward all four corners of the world. He stated that his primary obligation is to protect the national interests of the Slovak Republic, while maintaining mutual respect with international partners. He noted that where interests align, the two nations act as allies, and where they differ, they must negotiate to find suitable solutions.
+
+A primary focus of the discussion was energy security and nuclear cooperation. Slovakia and the United States recently saw an intergovernmental agreement on nuclear energy enter into force on February 13. The Prime Minister expressed a strong interest in working with a multinational consortium, including the American company Westinghouse, to build a new 1,200-megawatt nuclear block by 2040. He requested American cooperation during the project’s preparatory phase, noting its significance not just for Slovakia, but for the entire European Union.
+
+Regarding broader energy concerns, the Prime Minister highlighted the challenges Slovakia faces as it transitions from being at the beginning of the eastern energy pipeline to being at its end. He criticized certain European Union decisions, specifically REPowerEU, which are set to halt gas flows from the east by November 2027. In response to the current crisis in oil supplies to refineries controlled by the Hungarian company MOL, he indicated that upcoming meetings with Hungarian Prime Minister Viktor Orbán would focus on finding regional solutions.
+
+On the topic of the war in Ukraine, the Prime Minister reiterated Slovakia’s unique position, which does not always match those of its European partners. He expressed a belief that the conflict will continue for a significant period without a short-term peace solution. Offering Slovakia as a bridge for communication due to its linguistic and geographic proximity to both sides, he praised President Trump’s pragmatic and rational approach toward ending the war as quickly as possible. He emphasized that Slovakia is ready to assist in any peace initiatives that could bring the nonsense of the conflict to an end.
+
+The leaders also discussed regional cooperation, specifically the Visegrad Group (V4). With Slovakia set to take over the V4 Presidency in July 2026, there is mutual interest in a &quot;V4 plus United States&quot; format to address urgent international and energy issues.
+
+In terms of defense, Slovakia reaffirmed its role as a NATO member while acknowledging the U.S. position that Europe must take greater responsibility for its own security. The Prime Minister discussed plans to strengthen national capacities, including dual-use projects like the large military hospital being built in Eastern Slovakia. He also expressed interest in expanding Slovakia’s fleet of F-16 fighter jets from 14 to 18 to ensure sovereign protection of Slovak airspace, which is currently reliant on neighboring allies following the donation of military equipment to Ukraine in previous years.
+
+Secretary of State Marco Rubio echoed the importance of direct engagement, stating that there is no replacement for this level of communication. He welcomed the progress made on energy opportunities and signaled that the United States intends to increase its engagement in Central Europe. Addressing the philosophy of the Trump administration, Rubio stated that the U.S. expects every country to act in its own national interest. He argued that when interests align, it creates extraordinary opportunities for partnership, and where they do not, the relationship provides a framework for accommodation.
+
+Regarding NATO, Secretary Rubio clarified that the United States is not leaving the alliance. He explained that moves to increase European influence and capability within NATO are viewed positively by Washington. He stressed that stronger individual allies make for a stronger collective alliance, which serves as a better deterrent against any challenges. He also addressed the humanitarian tragedy in Ukraine, noting the horrifying suffering of civilians and the high cost of the conflict. He emphasized that the Trump administration is focused on facilitating a negotiated end to the war.
+
+During the subsequent inquiry regarding regional security and international law, the Prime Minister defended his sovereign decisions, such as maintaining dialogue with world powers like Russia and China. He argued that excluding these voices from the conversation only hinders the pursuit of peace. He criticized the current European strategy regarding Ukraine, characterizing it as a trap where ideological goals have compromised economic competitiveness. He stated that the policy of sanctions and military aid has failed to weaken Russia strategically and has instead led to hundreds of thousands of deaths. He concluded by calling for a shift in focus toward peace initiatives, arguing that after 20 packages of sanctions, the international community should have instead prioritized 20 initiatives for peace.
+
+By April, only three months after the war began, an agreement was prepared in Istanbul that could have ended the conflict. However, several Western politicians intervened, advising against the deal because they believed that a strategy of supporting the war and imposing sanctions would lead to the economic and political weakening of the Russian Federation. Today, it is clear that this strategy is not working, yet the countries that supported it from the beginning lack the courage to admit it. Instead of focusing on military solutions that lead to hundreds of thousands of deaths and deeper Russian territorial gains, the European Union should have focused its energy on peace. While the EU is currently providing a 90-billion-euro loan to Ukraine—with 60 billion earmarked for weapons—a more sovereign political approach would have been to develop 20 peace initiatives rather than 20 packages of sanctions.
+
+Regarding the energy crisis, when nations are at war, propaganda is used by both sides. Ukraine accuses Russia of using energy for political goals, and the reverse is also true. Historically, Slovakia earned approximately 500 million euros annually in transit fees for Russian gas, while Ukraine earned between 800 and 900 million euros. Following ideological decisions to halt the transit of Russian gas, Slovakia has lost this revenue. Despite this, Slovakia continues to act responsibly. Rather than taking retaliatory measures, the country provides emergency electricity and gas to help Ukrainian families survive the winter. However, the REPowerEU decision to stop all Russian gas transit by November 2027 will create significant difficulties. Slovakia will shift from being at the beginning of the pipeline to the end, without immediate access to LNG terminals. Post-war, the ownership of these pipelines must be addressed so they can no longer be used as instruments of blackmail.
+
+The issue of European Union membership also requires honesty. Countries like Serbia, Montenegro, and Albania are currently much better prepared for accession than Ukraine. While some claim Ukraine is ready, it must meet all necessary conditions before joining. Furthermore, the recent destruction of oil infrastructure has become a subject of conflicting reports. It appears that the supply of oil through the Druzhba pipeline has become a tool for political pressure, particularly against Hungary due to its uncompromising stance on EU membership for Ukraine. Because the Slovnaft refinery in Bratislava is owned by the Hungarian company MOL, any threat to Hungary’s oil supply is a direct threat to Slovakia’s national interests as well.
+
+In other diplomatic developments, recent meetings with the leaders of Greenland and Denmark have established a positive trajectory, though the details of these sovereign discussions remain confidential. Regarding the situation in Syria, a historic meeting recently took place between the Syrian Foreign Minister and the Kurdish leader, General Mazloum. The United States was faced with two choices: allow Syria to collapse into a fractured playground for terrorists and Iranian influence, or attempt to work with the interim authorities and President al-Shara. The decision to engage has already yielded results, as al-Shara adhered to a request to stop fighting so that thousands of ISIS prisoners could be moved securely to Iraq. 
+
+While the integration of the Kurds into the national Syrian forces and the stabilization of a diverse society including the Druze, Bedouins, and Alawites will be difficult, this path is preferable to total state collapse. Although there are significant challenges ahead and the implementation of these agreements will be tested, the current trajectory is headed in a positive direction. Slovakia and its partners remain committed to navigating these complex international crises by prioritizing stability, humanitarian needs, and sovereign national interests.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-2">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=pfzKXgz2XKE" target="_blank" rel="noopener">LIVE: Undersecretary of War for A&amp;S and Secretary of Energy Chris speak during a press conference</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/TWszE9YjlFH4S5-i-r2-n5LdEqP_9GMbG4c9Nk-wsJvt2jdyOUTGyPHtbTiIQAhGkAnjVrwU=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Department of War</span><span class="channel-subs">(262.0K)</span></span>
+                        <span class="meta-sep">·</span><span>33:57</span>
+                        <span class="meta-sep">·</span><span>1.1K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-15</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Michael Duffey</span> <span class="tag tag-person">Chris Wright</span></div>
+                </div>
+                <div class="tldr">The provided text does not contain a transcript of the press conference; it is a placeholder message requesting a video or link.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-2">TL;DR The provided text does not contain a transcript of the press conference; it is a placeholder message requesting a video or link. As a result, the specific details of the discussion at Hill Air Force Base cannot be summarized.  Missing Source Material: The section labeled...</div>
+                    <div class="summary-full" id="full-2">
+                        <p><strong>TL;DR</strong></p>
+<p>The provided text does not contain a transcript of the press conference; it is a placeholder message requesting a video or link. As a result, the specific details of the discussion at Hill Air Force Base cannot be summarized.</p>
+<h3>Transcript Status</h3>
+<ul>
+<li><strong>Missing Source Material:</strong> The section labeled "Transcript" consists of an automated message stating: "Please provide the video file or a link to the video you would like me to transcribe."</li>
+<li><strong>Action Required:</strong> To generate an executive briefing, please provide the actual text or dialogue from Undersecretary Michael Duffey and Secretary Chris Wright.</li>
+</ul>
+<h3>Event Context</h3>
+<ul>
+<li><strong>Participants:</strong> The event features Undersecretary of War for Acquisition &amp; Sustainment (A&amp;S) Michael Duffey and Secretary of Energy Chris Wright.</li>
+<li><strong>Location:</strong> The briefing was held at Hill Air Force Base, Utah, a major installation for the Department of War.</li>
+<li><strong>Scope:</strong> Based on the speaker roles, the discussion likely covers the intersection of national defense acquisition, energy security, and military infrastructure.</li>
+</ul>
+<blockquote>
+"Please provide the video file or a link to the video you would like me to transcribe. I need access to the source material to provide a verbatim transcript." — N/A (Automated Message)
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-2" onclick="toggleSummary(2)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-2">
+                        Please provide the video file or a link to the video you would like me to transcribe. I need access to the source material to provide a verbatim transcript.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
