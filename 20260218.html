@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - February 18, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">February 18, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">3</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=vJcAWM99ADA" target="_blank" rel="noopener">San Francisco Fed President Mary Daly Talks AI, Economy | Bloomberg Talks</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/PXTURrVHPIkg8Vmb3AvphcIBcSKE33kqDOgyeUvVLFsDAkEGamXpaEhEYh9YNERkvrW1BBmC=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Bloomberg Podcasts</span><span class="channel-subs">(428.0K)</span></span>
+                        <span class="meta-sep">·</span><span>34:07</span>
+                        <span class="meta-sep">·</span><span>181 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-18</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Mary Daly</span></div>
+                </div>
+                <div class="tldr">San Francisco Fed President Mary Daly views AI as a potential driver of sustained productivity and disinflation, but emphasizes that the Federal Reserve remains in an &quot;evidence-based&quot; observation mode, waiting for clear data before adjusting monetary policy.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR San Francisco Fed President Mary Daly views AI as a potential driver of sustained productivity and disinflation, but emphasizes that the Federal Reserve remains in an &quot;evidence-based&quot; observation mode, waiting for clear data before adjusting monetary policy.  Productivity...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>San Francisco Fed President Mary Daly views AI as a potential driver of sustained productivity and disinflation, but emphasizes that the Federal Reserve remains in an "evidence-based" observation mode, waiting for clear data before adjusting monetary policy.</p>
+<h3>AI and Economic Productivity</h3>
+<ul>
+<li><strong>Productivity Trends:</strong> Recent U.S. productivity has tracked at an annual rate of roughly 2.7% over the last 10 quarters, significantly higher than the 50-year average of 1.9%.</li>
+<ul>
+<ul>
+<li><strong>Causality Gap:</strong> Daly notes it is currently impossible to definitively link these gains to AI versus general cost management or one-time pandemic-era adjustments.</li>
+</ul>
+</ul>
+<li><strong>Level vs. Growth:</strong> A key distinction exists between "one-time adjustments" (e.g., automating a single loan process) and "sustained productivity growth" where technology fundamentally changes revenue generation and product design across all industries.</li>
+<li><strong>Marginal Protection:</strong> Firms are likely using AI to protect profit margins as their power to pass through price increases to consumers diminishes.</li>
+</ul>
+<h3>Inflation and the "Next-Later" Energy Crisis</h3>
+<ul>
+<li><strong>The Inflation Tug-of-War:</strong> AI investment creates a dual impact on inflation.</li>
+<ul>
+<ul>
+<li><strong>Demand-Side Pressure:</strong> The massive build-out of data centers raises prices for construction labor and raw materials (metals).</li>
+<li><strong>Supply-Side Relief:</strong> Long-term productivity gains from AI act as a disinflationary force by lowering the cost structure of firms.</li>
+</ul>
+</ul>
+<li><strong>Energy Imbalance:</strong> Within the 12th District (which includes Silicon Valley), demand for electricity is currently outstripping supply.</li>
+<ul>
+<ul>
+<li><strong>Infrastructure Delays:</strong> Supply is lagging due to aging infrastructure, regulation, and supply chain issues for components like transformers.</li>
+<li><strong>Disinflationary Energy:</strong> Daly argues that energy will only become disinflationary once supply catches up to or exceeds demand, which is a "next and later" prospect.</li>
+</ul>
+</ul>
+</ul>
+<h3>Labor Market: Replace, Augment, and Create</h3>
+<ul>
+<li><strong>Task Displacement:</strong> Daly identifies a three-stage evolution of AI in the workforce: Replace (tasks), Augment (workers), and Create (new roles).</li>
+<li><strong>Net Employment:</strong> Historically, no technology has ever reduced net employment; instead, it shifts the nature of work.</li>
+<ul>
+<ul>
+<li><strong>Current Environment:</strong> The U.S. is in a "low firing, low hiring" state, which contributes to worker anxiety despite low unemployment.</li>
+<li><strong>Skill Longevity:</strong> Roles like "prompt engineers" are already being automated, signaling that workers must focus on "durable skills" and stay "AI-ready."</li>
+</ul>
+</ul>
+<li><strong>Sectoral Concentration:</strong> Most current job growth is concentrated in healthcare and education, while other sectors show stagnation or slight declines, creating a "vulnerability" for workers trained in non-growing fields.</li>
+</ul>
+<h3>AI at the Federal Reserve</h3>
+<ul>
+<li><strong>Operational Integration:</strong> The Fed is actively using AI for internal operations, including coding assistance, research discovery, and back-office efficiency (e.g., Fedwire and ACH systems).</li>
+<li><strong>Exclusion from Monetary Policy:</strong> AI is not used to set interest rates or determine the "neutral rate" of interest.</li>
+<ul>
+<ul>
+<li><strong>Model Limitations:</strong> Current models produce a massive range for the neutral rate (from -3% to +11%), making them theoretical constructs rather than surgical tools for policy.</li>
+</ul>
+</ul>
+<li><strong>Fiduciary Stewardship:</strong> The Fed maintains "ring-fenced" proprietary environments to test AI, ensuring they do not introduce risk to public funds or trust.</li>
+</ul>
+<h3>Monetary Policy Outlook</h3>
+<ul>
+<li><strong>Evidence-Based Approach:</strong> While monetary policy is forward-looking, Daly insists it must remain evidence-based. The Fed will not cut rates based on *anticipated* AI gains until those gains manifest in disaggregated inflation data.</li>
+<li><strong>Restrictive Stance:</strong> Policy is currently "modestly restrictive." If the neutral rate is approximately 3%, the Fed has roughly 75 basis points to go before reaching a neutral stance, though this depends on inflation reaching the 2% target.</li>
+</ul>
+<blockquote>
+"AI is a technology, it's not a miracle... it’s about how you find a way to relate to AI that makes you better. A better detective if you're an economist, a better public servant if you choose to work in that field." — <strong>Mary Daly</strong>
+"The neutral rate of interest is not a truth with a capital T, it's an estimate... No one calibrates monetary policy surgically with a neutral rate of interest estimate." — <strong>Mary Daly</strong>
+"If an employee using AI gets much more productive, you hire more of them, not fewer of them. The economy grows faster, product development goes faster, and demand gets stronger." — <strong>Mary Daly</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        US productivity data, specifically the Bureau of Labor Statistics measure of output per hour for the non-farm business sector, reveals an interesting trend. Over the last 50 years, the average quarterly reading has sat at an annual rate of about 1.9%. However, over the last 10 quarters, that figure has risen to just under 3%, currently averaging around 2.7%. While it is tempting to attribute this surge to AI, assessing productivity factors in real time is incredibly challenging. Economists still debate the exact causes of the productivity shifts seen in the 1990s, and determining how much of the current growth stems specifically from AI remains difficult to prove through macro studies.
+
+A key distinction exists between one-time adjustments and sustained productivity growth. If a company automates a production line or uses AI to streamline loan applications, it saves money once. While those savings persist, they represent a level shift in productivity rather than ongoing growth. For sustained productivity growth, technology must enable all industries to scale, develop new ways to generate revenue, and innovate in product design. While it is undeniable that productivity growth has increased recently, the question remains how long this trend will persist.
+
+It is possible that AI is driving productivity gains that result in economic growth without inducing inflation, a phenomenon similar to what was observed in the 1990s. Currently, inflation remains above the 2% target, and many consumers feel stretched by high price levels. The investment phase of any new technology can actually boost demand for goods, services, and labor, which may initially raise inflationary pressures. Conversely, the productivity gains that follow are typically disinflationary. The timing of these shifts is critical. We must investigate whether the build-out of data centers is raising the costs of construction and raw materials or if productivity gains are already helping firms manage their cost structures and protect profit margins.
+
+There is significant anxiety regarding whether AI will displace workers. Historically, technology has never reduced net employment, but it does change the nature of that employment. We are currently seeing a cycle of replacement, augmentation, and creation. AI is largely replacing specific tasks, which allows for worker augmentation. For instance, some firms are hiring more coders overall while letting go of those whose skills have not kept pace with technological changes. While the labor market is slowing, this is happening across industries, regardless of their AI adoption levels. The current environment of low hiring and low firing makes workers feel vulnerable, but the focus for the workforce should be on developing durable, AI-ready skills.
+
+The Federal Reserve does not currently use AI for monetary policy, as the neutral rate of interest remains a theoretical construct rather than a surgical tool for policy adjustment. However, the Fed is utilizing AI in its internal operations. As fiduciary stewards of public funds and trust, the institution is cautious, practicing in ring-fenced, risk-managed environments. These tools are being used to improve data analytics, support bank supervision, and assist in the coding of electronic payment systems like Fedwire and FedNow. The goal is to make the Fed more efficient, effective, and resilient.
+
+Monetary policy is forward-looking and evidence-based. There will come a point when there is enough evidence to confirm that anticipated productivity gains from AI are materializing. This will be reflected in price pressures and how firms handle input costs. While current policy is modestly restrictive, we must monitor the labor market closely. Much of the recent job growth has been concentrated in healthcare and education, while other sectors have seen declines. Ensuring that this vulnerability does not turn into economic fragility is a priority.
+
+AI adoption is more pervasive than many realize, extending into the agricultural sector. Farmers in the 12th District are using AI for weather forecasting, generating ideas for drought-resistant crops, and optimizing processing lines. This technology has the potential to be an equalizing force across different regions, provided we manage its diffusion correctly. 
+
+The regulation of these new tools involves a constant tension. Unregulated innovation can lead to consumer harm, while excessive regulation can result in economic stasis. The challenge is to find a middle ground that allows for innovation while ensuring safety. Much like riding a horse, if you pull the reins too tight, the progress stops; if you let go entirely, it runs too fast. 
+
+Looking ahead, there is great cause for optimism. The 12th District is filled with entrepreneurs and innovators who view AI as a tool to build a better economy and a better world. People are focusing on the &quot;now&quot; and the &quot;next,&quot; looking for ways to harness technology to improve education, global opportunity, and overall livelihoods.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-1">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=FDbtHK8wupo" target="_blank" rel="noopener">eToro Group Ltd Q4 2025 Earnings Call</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/OMeeDRW1ZjUnbMdmPxorkMmb4YT2oGdT-0ZtA0ofnfGPmBhkJQm0y7yqMeF5TJ3TW5fNORn_ADA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">eToro</span><span class="channel-subs">(127.0K)</span></span>
+                        <span class="meta-sep">·</span><span>80:26</span>
+                        <span class="meta-sep">·</span><span>676 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-18</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Yoni Assia</span></div>
+                </div>
+                <div class="tldr">eToro delivered a strong Q4 2025 with 38% adjusted EBITDA margins and record net deposits, driven by a resilient multi-asset model that successfully offset crypto volatility through significant growth in commodity and equity trading.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-1">TL;DR eToro delivered a strong Q4 2025 with 38% adjusted EBITDA margins and record net deposits, driven by a resilient multi-asset model that successfully offset crypto volatility through significant growth in commodity and equity trading. The company is now pivoting to an...</div>
+                    <div class="summary-full" id="full-1">
+                        <p><strong>TL;DR</strong></p>
+<p>eToro delivered a strong Q4 2025 with 38% adjusted EBITDA margins and record net deposits, driven by a resilient multi-asset model that successfully offset crypto volatility through significant growth in commodity and equity trading. The company is now pivoting to an "AI-first" operating model to accelerate product development and 24/7 global market access.</p>
+<h3>Financial Performance and Operational Growth</h3>
+<ul>
+<li><strong>Key Financial Metrics:</strong> </li>
+<ul>
+<ul>
+<li><strong>Net Contribution:</strong> Rose 10% year-over-year to $868 million for FY2025; Q4 contributed $227 million (up 6% sequentially).</li>
+<li><strong>Adjusted EBITDA:</strong> Reached $87 million in Q4 with a 38% margin, reflecting disciplined cost management despite a softening crypto market.</li>
+<li><strong>Assets Under Administration (AUA):</strong> Increased 11% year-over-year to $18.5 billion, supported by record net deposits and improved customer retention.</li>
+</ul>
+</ul>
+<li><strong>Customer Base:</strong> Funded accounts grew 9% year-over-year to 3.81 million.</li>
+<li><strong>Capital Allocation:</strong> The company repurchased 1.5 million shares ($59.5 million) in Q4, totaling $100 million in buybacks to date.</li>
+<li><strong>January Momentum:</strong> Early 2026 data shows improved KPIs driven by high volatility and trading volume in commodities (specifically Gold) and equities.</li>
+</ul>
+<h3>AI Integration and Product Innovation</h3>
+<ul>
+<li><strong>AI-First Transformation:</strong> CEO Yoni Assia announced that eToro is now an "AI-first" company, with all new eToro apps being developed 100% by AI.</li>
+<ul>
+<ul>
+<li><strong>Operational Speed:</strong> AI adoption has reportedly allowed the company to move "10 times faster," completing processes in days that previously took months without increasing headcount.</li>
+<li><strong>Tori AI Analyst:</strong> The proprietary AI assistant continues to evolve, providing personalized portfolio insights and risk assessments for retail users.</li>
+</ul>
+</ul>
+<li><strong>The eToro App Store:</strong> A new ecosystem is launching with nearly 1,000 apps in the pipeline, allowing "pro" investors to build and monetize AI-powered trading tools and quantitative strategies.</li>
+<li><strong>Asset Expansion:</strong> eToro plans to support over 100,000 tradable assets across equities and crypto by the end of 2026.</li>
+<li><strong>24/7 Trading:</strong> Following strong adoption of 24/5 trading for S&amp;P 500 and Nasdaq 100 stocks, the company is moving toward an "always-on" 24/7 model for all asset classes.</li>
+</ul>
+<h3>Strategic Global Expansion and M&amp;A</h3>
+<ul>
+<li><strong>US Market Strategy:</strong> eToro is aggressively localized in the US, launching CopyTrader and preparing to introduce "smart portfolios" and prediction markets in 2026, pending regulatory licenses (RIA and NFA).</li>
+<li><strong>Wealth Management Success:</strong> </li>
+<ul>
+<ul>
+<li><strong>UK Markets:</strong> Assets under administration for eToro’s ISA (Individual Savings Account) grew seven-fold year-over-year.</li>
+<li><strong>Partnerships:</strong> Collaborations with BlackRock, Amundi, and Franklin Templeton have expanded the "smart portfolio" offering to 127 total portfolios.</li>
+</ul>
+</ul>
+<li><strong>M&amp;A Appetite:</strong> Management signaled a high appetite for selective, accretive M&amp;A in 2026, specifically targeting the crypto, neo-brokerage, and wealth management sectors.</li>
+<li><strong>Increased Marketing Spend:</strong> From a position of strength, CFO Meron Shani announced a plan to scale sales and marketing investment from 21% to 25% of net contribution to capture market share among the "wealth transfer" generation.</li>
+</ul>
+<h3>Resilience of the Multi-Asset Model</h3>
+<ul>
+<li><strong>Market Rotation:</strong> While crypto trading contribution declined 72% year-over-year due to lower volatility and pricing, capital markets contribution (equities, commodities, currencies) surged 43% to $116 million.</li>
+<li><strong>Commodity Surge:</strong> Significant trading engagement was noted in Gold and other commodities during Q4 and January 2026, validating the platform's ability to retain users even when specific asset classes (like crypto) are underperforming.</li>
+<li><strong>On-Chain Future:</strong> The company is bridging traditional finance and DeFi via a non-custodial crypto wallet, anticipating a shift toward tokenized real-world assets (private markets and real estate) in late 2026.</li>
+</ul>
+<p>***</p>
+<p><strong>Notable Quotes</strong></p>
+<blockquote>
+"We’re building now our eToro Super App 100% with AI. All of the eToro apps are developed 100% by AI... AI means we can move 10 times faster. It is accelerating our growth, enabling us to innovate more rapidly without a corresponding increase in complexity or headcount." — <strong>Yoni Assia, CEO</strong>
+"Our marketing strategy continues to generate strong and disciplined returns... our 2024 cohort has already achieved a 1.8 times return on investment, while our 2020 cohort has delivered 5.6 return on investment, demonstrating the durability of our model." — <strong>Meron Shani, CFO</strong>
+"This is not about or dependent on the spot price of crypto assets at any given point in the cycle. This is about building a platform that is poised to lead the inevitable shift to on-chain market infrastructure." — <strong>Yoni Assia, CEO</strong>
+"We have a high appetite for M&amp;A, but we want to make sure we’re selective and find the right accretive opportunities... we do expect to see several M&amp;A deals in 2026." — <strong>Yoni Assia, CEO</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-1">
+                        Daniel Amir, Head of Investor Relations, opened the webcast by noting that the session would be recorded and made available on the eToro investor website along with the earnings press release, investor presentation, and January monthly spreadsheet. He was joined by CEO Yoni Assia and CFO Meron Shani. The session included a review of prepared remarks followed by a Q&amp;A session addressing questions from institutional research analysts and retail shareholders. Before beginning, the team noted that the discussion would contain forward-looking statements regarding business goals, outlook, and financial performance, all of which are subject to risks and uncertainties detailed in their SEC filings. Additionally, the presentation included non-GAAP financial measures, with reconciliations to GAAP measures available in the company’s published materials.
+
+CEO Yoni Assia characterized 2025 as a defining year for eToro. The company became publicly traded on the Nasdaq, accelerated its adoption of artificial intelligence, and expanded its product offering across key markets, including the United States. Significant progress was made toward building a comprehensive financial super app, with growth across all primary KPIs. The company is operating at a pivotal moment as AI reshapes information access and financial services move on-chain, creating a more transparent and borderless global infrastructure. These shifts, combined with a structural increase in retail market participation and a massive generational transfer of wealth, are driving demand for a digital-first, personalized investing experience.
+
+eToro remains focused on expanding access to global markets through 24/7 trading, bringing assets on-chain, and leveraging AI to help users make smarter decisions. In 2025, net contribution increased 10% to $868 million, while fourth-quarter adjusted EBITDA reached $87 million, representing a 38% margin. These results highlight the strength of eToro’s multi-asset model, which allows the platform to perform across different market conditions. While crypto trading has been part of the offering since 2013, the company has diversified into equities, commodities, and currencies to ensure resilience across various cycles.
+
+In the trading sector, the adoption of 24/5 equity trading has been strong, particularly for S&amp;P 500 and Nasdaq 100 stocks. The company is now moving toward 24/7 trading for a broader range of asset classes. In 2025, eToro expanded its crypto offering to over 100 coins in the US and expects to support over 100,000 tradable assets across equities and crypto by the end of 2026. The investing pillar also saw expansion into Hong Kong, Nordic, and Middle East exchanges. New partnerships with firms like Amundi, BlackRock, and Franklin Templeton have bolstered the smart portfolio offering, while the pro investor community grew to over 5,000 members. Wealth management and neobanking services also saw significant momentum, with eToro Money seeing a 29% increase in transfers and a massive spike in debit card transaction volume.
+
+Innovation remains central to eToro’s strategy as the company transitions to being AI-first. AI is being embedded across the business to improve efficiency and accelerate product development. The company is currently developing its Super App and various sub-apps using AI, which allows for faster innovation without a corresponding increase in headcount. New tools like Tori, an AI analyst, and the upcoming launch of an App Store will provide users with more personalized insights and sophisticated trading capabilities. Simultaneously, the company is preparing for the shift to on-chain infrastructure, which will eventually support tokenized real-world assets like private markets and real estate.
+
+CFO Meron Shani provided further financial detail, noting that the $227 million in fourth-quarter net contribution represented a 6% sequential increase. Assets under administration grew 11% year-over-year to $18.5 billion, driven by record net deposits. While crypto trading contribution saw a year-over-year decline due to high volatility in the prior year, capital markets contribution rose 43% to $116 million, bolstered by strong activity in commodities. Net interest income also grew to $59 million. To drive growth in 2026, the company plans to gradually increase marketing investment from 21% to 25% of net contribution. The company ended the quarter with $1.3 billion in cash and continues to execute its share repurchase program, having deployed $100 million to date.
+
+During the Q&amp;A session, the management team addressed market volatility and strategic goals. Yoni Assia noted that January saw high engagement in commodities, particularly gold. Regarding the crypto market, he emphasized that eToro remains bullish on the long-term future of the asset class and is prepared to navigate various cycles by shifting marketing focus between asset classes as needed. The company’s M&amp;A appetite remains high, with active discussions underway for selective, accretive opportunities in the crypto and brokerage spaces. In the US, the rollout of CopyTrader and the pursuit of an RIA license for smart portfolios remain top priorities for the first half of 2026. The company’s long-term moat continues to be its community-driven model and the multi-year track records of its pro investors, which are difficult for competitors to replicate.
+
+Regarding crypto regulation and the Clarity Act, the firm generally avoids commenting on specific pending legislation because they are regulated by many different bodies across the globe. However, there is a strong belief that regulatory clarity significantly helps an industry mature. This has already been observed in Europe with MiCA and is becoming evident in the current United States environment. The biggest driver for the industry will be the path toward moving new types of asset classes on-chain. As clarity improves, banks, insurance companies, and private equity firms are increasingly tokenizing different types of assets to distribute them to new audiences.
+
+In the U.S., increased regulatory clarity is expected to create more opportunities to bring new products to customers. Major wealth managers, including BlackRock, Franklin Templeton, WisdomTree, Amundi, and Ark, are already working with eToro. These large financial institutions and asset managers are issuing new products with the goal of delivering them to a global, younger audience. While it is still the early days of this trend, more clarity on regulation will undoubtedly expand that reach.
+
+Regarding prediction markets, the industry is evolving very fast in both predictions and perpetuals, with different regulatory environments across both categories. The firm is currently evaluating the space with an interest in partnering rather than building an entire proprietary stack. There is an emerging trend of prediction aggregators that allow users to find the best prices on predictions, and the current strategy is to look at partnering within that space.
+
+In closing, the company thanked the participants for their questions and invited them to attend upcoming investor conferences during the quarter. Investors are welcome to follow up directly with Daniel Amir for further information.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-2">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=hnc9dTdeF_o" target="_blank" rel="noopener">Is OpenClaw Flawed? Experts React | This Week in AI E001</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/7ws8ldqZZk014JeYLjV6CRZPvCkm4W1NW9IX2b42VKr4u38KtIyqjcwttXYe6f4GH553iBf3fA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">This Week in Startups</span><span class="channel-subs">(346.0K)</span></span>
+                        <span class="meta-sep">·</span><span>71:29</span>
+                        <span class="meta-sep">·</span><span>838 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-18</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Jason Calacanis</span> <span class="tag tag-person">Mitesh Agrawal</span></div>
+                </div>
+                <div class="tldr">The &quot;agentic revolution&quot; is rapidly commoditizing executive-level tasks, enabling small teams to achieve massive scale—such as &quot;one-person, $1 million&quot; accounting practices—while forcing a shift in hiring toward &quot;forward-deployed engineers&quot; who can integrate AI into legacy workflows.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-2">TL;DR The &quot;agentic revolution&quot; is rapidly commoditizing executive-level tasks, enabling small teams to achieve massive scale—such as &quot;one-person, $1 million&quot; accounting practices—while forcing a shift in hiring toward &quot;forward-deployed engineers&quot; who can integrate AI into legacy...</div>
+                    <div class="summary-full" id="full-2">
+                        <p><strong>TL;DR</strong></p>
+<p>The "agentic revolution" is rapidly commoditizing executive-level tasks, enabling small teams to achieve massive scale—such as "one-person, $1 million" accounting practices—while forcing a shift in hiring toward "forward-deployed engineers" who can integrate AI into legacy workflows.</p>
+<h3>Executive Efficiency and the "Hiring Hiatus"</h3>
+<p>The adoption of OpenClaw (OpenClaude) and similar agentic platforms is fundamentally altering how CEOs manage their time and headcount.</p>
+<ul>
+<li><strong>Executive Chores:</strong> Mitesh Agrawal (Positron AI) reported saving 30–45 minutes daily by using agents for inbox filtering and drafting Slack responses, effectively recapturing roughly three weeks of productivity per year.</li>
+<li><strong>Hiring Automation:</strong> Kash Ali (TaxGPT) successfully automated the screening of 1,000 job applications using an agent. What would have taken a technical recruiter 40 hours was completed in two hours with high accuracy.</li>
+<li><strong>The "Hiring Hiatus":</strong> Host Jason Calacanis noted a growing trend where firms delay hiring for mid-to-lower-level roles (recruiters, content marketers, PR) as agents prove capable of handling rote service tasks.</li>
+<li><strong>Human-in-the-loop:</strong> Despite the efficiency, speakers emphasized that high-stakes decisions—especially in finance, legal, or "taste-based" tasks—still require human oversight to prevent "horrifically inappropriate" outcomes or hallucinations.</li>
+</ul>
+<h3>Industry Transformation: Accounting and Cinema</h3>
+<p>AI agents are being positioned not just as tools, but as a solution to systemic labor shortages in specialized fields.</p>
+<ul>
+<li><strong>Solving the CPA Shortage:</strong> Kash Ali highlighted a crisis in the U.S. accounting industry, which is currently short 340,000 accountants. TaxGPT aims to enable "one-person, $1 million" practices where a single CPA manages an "army" of AI agents.</li>
+<li><strong>Rapid Upskilling:</strong> While traditional CPA training takes years, AI-augmented training could potentially condense the timeline for becoming a competent preparer to just weeks or months.</li>
+<li><strong>Saving Independent Film:</strong> Alex Ellis (Qloo) shared an anecdote of a $35M film project that was nearly cancelled due to high costs. By using an AI division to generate extras and crowd scenes, the budget was reduced to $15M, making the project viable.</li>
+</ul>
+<h3>Technical Case Study: The Autonomous Content Clipper</h3>
+<p>Producer Oliver demonstrated a custom-built agent created within OpenClaw to automate the production of social media clips.</p>
+<ul>
+<li><strong>Custom Tooling:</strong> Rather than using third-party software like CapCut, Oliver used OpenClaw to build a specialized toolkit utilizing <strong>ffmpeg</strong> for video editing and <strong>Deepgram</strong> for transcription.</li>
+<li><strong>Efficiency Gains:</strong> The process of finding a viral moment, downloading, transcribing, captioning, and editing was reduced from 45–60 minutes to just 5 minutes.</li>
+<li><strong>Memory Management:</strong> The agent uses <strong>.md (Markdown) files</strong> as a long-term memory system (e.g., `soul.md` for behavioral values) to ensure it learns from previous mistakes and tracks evolving viral trends.</li>
+<li><strong>Micro-Agents vs. "Ultron":</strong> A debate emerged regarding whether to build many specialized "micro-agents" for specific tasks or a single, massive agent with a giant context window. Mitesh Agrawal predicted a "small brain/big brain" future where local models handle routine tasks while cloud-based frontier models handle high-complexity work.</li>
+</ul>
+<h3>Current Blockers and Infrastructure Needs</h3>
+<p>While progress is rapid, several technical and economic hurdles remain.</p>
+<ul>
+<li><strong>Context Window Degradation:</strong> Even with million-token windows (like Gemini), models still experience performance degradation over time. Current workflows require frequent memory summarization to maintain accuracy.</li>
+<li><strong>The Cost of "Frontier" Models:</strong> Using high-end models (like Claude Opus) via API remains expensive. This creates a push for better local inference on hardware like the Mac Mini or specialized chips.</li>
+<li><strong>Hardware Bottlenecks:</strong> Mitesh Agrawal noted that Positron AI is focusing on chips that increase memory and reduce the cost of tokens, as "attention scales quadratically," making long-term memory a significant engineering challenge.</li>
+<li><strong>Platform Restrictions:</strong> Agents are currently limited by the terms of service of platforms like X/Twitter and Reddit, which often block automated posting to prevent non-authentic behavior.</li>
+</ul>
+<blockquote>
+"The industry is in crisis... Our goal is to create these tools where a one-person, one-million-dollar accounting practice will be possible... because the bottleneck of talent is removed."
+— <strong>Kash Ali, CEO of TaxGPT</strong>
+"We're done hiring new humans at Launch... Notion's new AI agent is like having twice as many, and I'm not exaggerating here, it's like doubling your team size."
+— <strong>Jason Calacanis, Host</strong>
+"I think we're not going to be out of this memory cycle for a long, long time. Everyone is focused on figuring out ways to improve that context window without degradation."
+— <strong>Mitesh Agrawal, CEO of Positron AI</strong>
+"If it really is an EA (Executive Assistant) to be trusted, you shouldn't have to prompt it... It should be proactive and able to glean your context."
+— <strong>Alex Ellis, CEO of Qloo</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-2" onclick="toggleSummary(2)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-2">
+                        Welcome to This Week in AI, the show featuring founders building in the artificial intelligence space. Host Jason Calacanis is joined by a panel of three industry leaders: Mitesh Agarwal, CEO of Positron AI, which builds chips for faster and smarter AI inference; Alex Ellis, CEO and co-founder of Qloo, an AI platform for decoding global consumer taste preferences; and Kash Ali, co-founder and CEO of TaxGPT, an AI tax assistant for accounting and advisory firms.
+
+The primary topic of discussion is the impact of OpenClaude and how it is changing the landscape of work. Mitesh Agarwal describes his obsession with the platform, noting that while agents existed before OpenClaude, the platform's ease of use for tasks like inbox filtering and Slack notifications is revolutionary. He uses the platform to draft email and Slack responses, as well as to summarize CI/CD pipelines for his chip architecture. He estimates these workflows save him thirty to forty-five minutes every morning. For a CEO, this level of efficiency compounds to roughly 150 hours saved per year, the equivalent of gaining three extra weeks of time.
+
+Alex Ellis provides a perspective on the democratization of high-level assistance. He compares the rise of AI agents to how Uber democratized private chauffeurs and Airbnb democratized second homes. While Ellis notes there is still a gap in taste-based judgment—such as the difference between planning an itinerary and having the confidence to let an agent click &quot;purchase&quot;—he sees immense potential in proactive agents. Qloo addresses this by providing structured taste inferencing, which acts as a reliable entity spine for large language models to prevent hallucinations and provide accurate &quot;rails&quot; for consumer preferences.
+
+Kash Ali shares how OpenClaude has accelerated the product vision at TaxGPT, allowing the team to launch features in a week that were originally planned for the end of the year. Ali also highlights a significant win in recruiting: after receiving 1,000 applications for new engineering roles, he used OpenClaude to automate the resume review process. By setting up an agent to filter candidates based on specific requirements, he saved over 40 hours of manual labor and eliminated the immediate need for a technical recruiter. Jason Calacanis observes that this represents a potential &quot;great hiring hiatus,&quot; where firms can delay new hires by making their existing teams significantly more efficient through agentic workflows.
+
+The conversation shifts to the broader economic and social impacts of AI. Ellis mentions a filmmaker who saved an independent project by using AI to generate crowd scenes, reducing the production budget from $35 million to $15 million. Without this technology, the film would not have been made. Similarly, Kash explains that the accounting industry is facing a shortage of 340,000 professionals. AI agents allow smaller, &quot;mom and pop&quot; accounting firms to become full-stack operations, handling bookkeeping, advising, and payroll more efficiently. The goal is to enable a &quot;one-person, one-million-dollar accounting practice&quot; by removing the talent bottleneck.
+
+To demonstrate the practical application of these tools, Producer Oliver showcases an autonomous content clipper he built within OpenClaude. The agent scans platforms like X and YouTube for viral moments, analyzes transcripts to identify the best segments, and uses the built-in tool ffmpeg to clip and caption the video automatically. This custom toolkit allows the production team to bypass third-party editing software. Mitesh notes that this is the true power of the current AI era: the ability for individuals to build their own custom software toolkits to solve specific problems, driving a level of efficiency that was previously impossible.
+
+The manual process of creating a single viral clip typically begins with searching platforms like X for content, a task that can take anywhere from two to thirty minutes. On average, curation takes about 15 minutes. From there, downloading the footage and using CapCut to burn in captions adds another 10 to 15 minutes. Finally, publishing takes between 15 and 30 minutes, totaling a 45-minute to hour-long process. With the OpenClaude agent, that entire cycle has been compressed to just five minutes.
+
+A significant bottleneck remains regarding direct publishing to social media. Currently, the agent recognizes the terms of service for platforms like Reddit and X, which often prohibit automated posting. While the agent can technically take control of a browser or access files, it often refuses to post content to maintain authentic behavior. However, it may be possible to prompt the agent to work around these ethical constraints or at least facilitate the process by saving content to drafts.
+
+The value of automated archiving and content discovery is becoming increasingly apparent as software is commoditized. One effective strategy involves using &quot;replicants&quot; to run weekly cron jobs. These agents research YouTube thumbnails, titles, and trending social media patterns, saving their findings into markdown files. This allows the agent to build a cumulative knowledge base, ensuring it never repeats old insights and builds on what it has previously learned. 
+
+The architecture of this AI memory relies on specific files: agents.md for workflow prioritization and soul.md for behavioral values and temperament. This autonomous self-improvement is a key advantage over human labor; while few people have the discipline to consistently research and refine a skill every week, an agent performs the task without fail. Some users also employ optimization agents to scan these memory files for redundancies and provide actionable debriefs, though human oversight is still required for major improvements.
+
+Despite these advancements, agents still struggle with human nuance. While they excel at repeatable, logic-based tasks, they lack social discernment. This can lead to errors in judgment, such as an agent selecting an inappropriate gift because it failed to understand the context of a request. Humans must remain in the loop for financial and executive decisions, even as their productivity is amplified by AI.
+
+The primary blockers in the industry currently involve price and hardware limitations. While local models on devices like the Mac Studio are improving, they still lack the reasoning capabilities of frontier models like Opus or Gemini. However, using high-end APIs consistently is expensive. The next frontier for silicon companies is expanding context windows without performance degradation. Currently, large contexts require significant memory, and systems often have to clear and summarize memory periodically to stay efficient.
+
+To scale these capabilities within a team, it is essential to train members on setting up their own instances via cloud servers like AWS. While there is a debate between using many micro-agents for specific tasks versus one &quot;mega-agent&quot; to rule them all, individual agents are currently more effective for refining specific skills like social media editing or application sorting. As these tools evolve, the goal is for agents to continuously study the latest trends and cumulatively build a knowledge base that far exceeds the traditional discipline of human workers.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
