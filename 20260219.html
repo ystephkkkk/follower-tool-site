@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - February 19, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">February 19, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=HSL7Q88oP9w" target="_blank" rel="noopener">AI Research Symposium: keynotes by Ashwini Vaishnaw, Demis Hassabis, Yoshua Bengio &amp;amp; Yann LeCun</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/nkEayG9fDZPPoWEKjA2ykwJNVgOjBrd73ALNF2MwYdDlHB4mF9_jNF1f0u5EzBbOIb9bEYbKE74=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">ET Digital</span><span class="channel-subs">(21.8K)</span></span>
+                        <span class="meta-sep">·</span><span>116:06</span>
+                        <span class="meta-sep">·</span><span>76 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-19</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Ashwini Vaishnaw</span> <span class="tag tag-person">Demis Hassabis (CEO, Google DeepMind)</span> <span class="tag tag-person">Yoshua Bengio</span></div>
+                </div>
+                <div class="tldr">The AI Research Symposium highlighted India’s emergence as a primary global hub for AI adoption and research, with industry leaders predicting the arrival of Artificial General Intelligence (AGI) within 5–8 years.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR The AI Research Symposium highlighted India’s emergence as a primary global hub for AI adoption and research, with industry leaders predicting the arrival of Artificial General Intelligence (AGI) within 5–8 years. The briefing emphasizes a dual focus on utilizing AI for...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>The AI Research Symposium highlighted India’s emergence as a primary global hub for AI adoption and research, with industry leaders predicting the arrival of Artificial General Intelligence (AGI) within 5–8 years. The briefing emphasizes a dual focus on utilizing AI for "population-scale" problems in the Global South while urgently establishing international "AI Metrology" and safety standards to prevent the social and technical pitfalls experienced during the rise of the World Wide Web.</p>
+<h3>The Roadmap to Artificial General Intelligence (AGI)</h3>
+<ul>
+<li><strong>AGI Timeline:</strong> Demis Hassabis (CEO, Google DeepMind) predicted that AGI—systems capable of all human cognitive abilities, including creativity and long-term planning—could be on the horizon within the next <strong>5 to 8 years</strong>.</li>
+<li><strong>Current Limitations:</strong> Hassabis identified several hurdles that current "jagged" AI systems must overcome:</li>
+<ul>
+<ul>
+<li><strong>Continual Learning:</strong> Moving beyond "frozen" models to systems that learn online from context and experience.</li>
+<li><strong>Long-term Planning:</strong> Developing the ability to execute coherent plans over years rather than short-term tasks.</li>
+<li><strong>Consistency:</strong> Eliminating errors where a model can solve a Math Olympiad problem but fail at elementary logic.</li>
+</ul>
+</ul>
+<li><strong>The "Einstein Test":</strong> A true AGI would exhibit "taste" for the right hypothesis. Hassabis suggested a benchmark: training a model on data up to 1911 to see if it could independently derive General Relativity.</li>
+</ul>
+<h3>AI as the Ultimate Tool for Science and Robotics</h3>
+<ul>
+<li><strong>Scientific Renaissance:</strong> AI is envisioned as a "co-scientist" that will revolutionize drug discovery, material science, and climate change.</li>
+<ul>
+<ul>
+<li><strong>AlphaFold Success:</strong> Used 150,000 known protein structures to predict nearly all proteins known to science; future systems will use these specialized models as "tools" within general foundation models like Gemini.</li>
+</ul>
+</ul>
+<li><strong>Physical AI and Robotics:</strong> A "breakout moment" for robotics is expected in the next <strong>2 to 3 years</strong>.</li>
+<ul>
+<ul>
+<li><strong>Multimodal Integration:</strong> Using foundation models to give robots a better understanding of the physical world.</li>
+<li><strong>Generalization:</strong> Shifting from "special-cased" expert systems to general learning algorithms that can navigate physical spaces as effectively as they play Atari or Go.</li>
+</ul>
+</ul>
+</ul>
+<h3>Lessons from the Web: Risks and "AI Metrology"</h3>
+<ul>
+<li><strong>Unintended Consequences:</strong> Dame Wendy Hall (University of Southampton) cautioned that the AI industry must not repeat the mistakes of the World Wide Web, where social media's harms and data oligopolies were not anticipated.</li>
+<li><strong>The Need for Measurement:</strong> Hall advocated for the creation of a <strong>"Center for AI Measurement"</strong> (AI Metrology), likening it to a "Met Office for AI" to forecast social impacts and provide technical assurance.</li>
+<li><strong>Security Guardrails:</strong></li>
+<ul>
+<ul>
+<li><strong>Dual-Purpose Risks:</strong> Urgent focus needed on cyber-defense and bio-risks to ensure AI-driven attacks do not outpace defenses.</li>
+<li><strong>Agentic Era:</strong> As AI becomes more autonomous (agentic), international standards are required to ensure these systems do not "veer off" planned paths.</li>
+</ul>
+</ul>
+</ul>
+<h3>India’s Strategic Role and Inclusivity</h3>
+<ul>
+<li><strong>Market Scale:</strong> India is already the second-largest market for both OpenAI (100M+ users) and Anthropic (Claude).</li>
+<li><strong>Population-Scale Use Cases:</strong> Shri Ashwini Vaishnaw (Minister for Electronics and IT) highlighted India’s focus on using AI to solve "real-world problems" in:</li>
+<ul>
+<ul>
+<li><strong>Healthcare and Agriculture:</strong> Improving productivity and access at the edge.</li>
+<li><strong>Climate Change:</strong> Using AI for large-scale environmental modeling.</li>
+</ul>
+</ul>
+<li><strong>Inclusivity Concerns:</strong> Wendy Hall raised a critical warning regarding the <strong>lack of women in AI leadership</strong>, noting that despite high graduation rates, women are often "dismissed or disregarded" at higher tiers of the tech industry.</li>
+<li><strong>Youth Optimism:</strong> Over 250,000 people attended the AI Expo, with a median age under 30, signaling a massive demographic shift toward AI-native careers in the Global South.</li>
+</ul>
+<blockquote>
+"We are at a threshold moment where AGI is on the horizon, maybe in the next five to eight years... It’s going to be the most transformative technology in human history."
+— <strong>Demis Hassabis</strong>, CEO and Co-founder of Google DeepMind
+"Whenever you invent a new technology, you have to think about what might go wrong. We didn’t get it right with the web... we didn't foresee the social harm social media is doing today."
+— <strong>Dame Wendy Hall</strong>, Professor of Computer Science, University of Southampton
+"In India, we are very focused on AI for population-scale problems—healthcare, agriculture, and climate change. Looking at the optimism of our youth, I’m feeling hopeful for a totally new future."
+— <strong>Shri Ashwini Vaishnaw</strong>, Union Minister for Electronics and IT
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        We trust particular people or agents because we know they will act in our best interests. Artificial intelligence allows us to make that trust scalable. For instance, an elderly person concerned about fraudulent purchases or mis-sold financial products can now carry an AI agent smarter than any human expert in their pocket. This agent can provide real-time advice on insurance policies or investments, helping to prevent mistakes. Within the next year or two, everyone will likely have an AI agent to shop, compare prices, and identify fraudulent platforms. India is already leading the world in adopting these technologies. Both Sam Altman of OpenAI and Dario Amodei of Anthropic have noted that India is their second-largest market, with over 100 million users for platforms like ChatGPT and Claude.
+
+The current prominence of AI is unprecedented. Only two years ago, the idea of AI researchers winning Nobel Prizes would have been met with laughter, yet two were awarded in the same year. While the field saw early Turing Awards in the 1960s and 70s, a twenty-year gap followed before pioneers like Professor Raj Reddy and Professor Edward Feigenbaum were recognized in 1994. Today, the computer science community and the broader academic world have fully embraced the field. This symposium was designed to bring together the most influential voices in the industry: Demis Hassabis, who uses machine learning to advance science; Dame Wendy Hall, an expert in web sciences; Yoshua Bengio, a leading voice on AI safety; and Yann LeCun, who remains highly optimistic about AI’s potential. These plenaries, alongside panels on the Global South and research dialogues on the frontiers of engineering, aim to spur global discussion on how AI affects every individual.
+
+The response to this summit, particularly from young people, reflects a deep optimism toward the future. In India, the focus remains on AI at the edge and use cases that solve population-scale problems in healthcare, agriculture, and climate change. As these technical matters are discussed, it is vital for the world's top minds to provide concrete suggestions on how to make AI safe. It must remain a tool for the benefit of humanity rather than a force that distorts the social balance.
+
+We are currently at a threshold moment where artificial general intelligence (AGI) may be on the horizon within the next five to eight years. While today’s systems are impressive, they still lack the consistency, long-term planning, and continual learning required for true AGI. Current AI can be described as &quot;jagged&quot;; a system might solve a gold-medal-level math olympiad problem but fail at elementary arithmetic if the question is phrased unexpectedly. Furthermore, true creativity—the ability to formulate the right hypothesis or ask the right question—remains a human stronghold. A true test for AGI would be training a model on data up to 1911 and seeing if it could independently derive general relativity as Einstein did in 1915.
+
+The next decade will likely be a golden era for scientific discovery. AI is the ultimate tool for finding structure in vast amounts of data, as demonstrated by AlphaFold’s impact on biology. However, the architectural future of AI involves a choice between general foundation models and specialized tools. While math and coding skills should be integrated into general models because they improve reasoning across all tasks, highly specialized functions like protein folding are better handled by specific tools called upon by a central agent. This agentic era will also extend to robotics. As foundation models become more multimodal and gain a better understanding of the physical world, we expect significant breakthroughs in physical AI and humanoid robotics within the next few years.
+
+However, as AI becomes more autonomous, the risks become more tangible. Beyond the threat of bad actors using AI for cyber or biological attacks, there is the technical challenge of ensuring these systems remain robust and reliable. Lessons must be learned from the evolution of the World Wide Web. When social media emerged, the unintended consequences—such as social harm and the rise of oligopolies—were not fully anticipated. We must now focus on AI assurance, measurement, and metrology. Similar to how a metrology office forecasts the weather, we need a &quot;science of measurement&quot; for AI to monitor and simulate its social and technical impacts. India’s success with data governance and the Aadhaar system provides a blueprint for the global dialogue on safe and inclusive AI. Moving forward, the goal is not just to build more advanced technology, but to ensure that our moral compasses guide its development for the collective good.
+
+We effectively surrender our data not just to governments, but to retail and big tech companies. We sign it over by ticking terms and conditions that no one reads, allowing these entities to use that data as they please. Google, for instance, functions as a massive reinforcement learning machine. We are part of that social machine; we provided the data, and in return, we received a search engine that worked, reinforcing the system every time we used it. While products like Gemini are impressive and guided by good values—with figures like Demis Hassabis involved—we still face a gap in our understanding. We can define safety and security issues like cybersecurity, but we struggle to define the broader social consequences. We didn't predict the impact of the web or social media, and we must now find ways to forecast the social consequences of AI.
+
+There is significant rhetoric regarding job losses and unemployment, but the true social consequences are difficult to predict because we don't yet know how people will use this technology. This is the focus of web science as applied to AI: building social machines and developing ways to evaluate, test, and forecast potential outcomes. Forecasting human behavior as a society is even more difficult than forecasting the weather. To address this, we must develop new ways of thinking, such as building simulations using the data we have and encouraging a new generation of data analysts to monitor these developments from a social perspective. By learning from the past, we can help the next generation build a better future.
+
+Inclusivity and diversity remain critical challenges. Bringing the AI summit to the Global South, specifically to India, is a vital step given the country's immense scale and its vibrant population of young people. AI must be governed for the benefit of all humanity, ensuring the Global South has access to its advantages, from generative AI to embedded robotics in sectors like farming. We must also ensure the elderly are included in this transition. Our responsibility is to build the safety rails and infrastructure that allow young people to develop these technologies securely, supported by laws that hold bad actors accountable.
+
+A major concern is the lack of women in AI. Despite making up 50 percent of the population, women remain underrepresented in tech leadership. Throughout my career, I have fought to change this, yet the number of women in leadership positions remains low. Women in industry and academia often face being dismissed or patronized. My friend Dame Steve Shirley often asked why women leaders have &quot;flat heads,&quot; referring to the constant, condescending &quot;pats on the head&quot; from those telling them not to worry. This is not a problem for women to solve alone; men must stop patronizing their female colleagues and start listening to and encouraging them. I wouldn't be here without mentors—both men and women—who kept me going when I felt like giving up.
+
+The current AI landscape is dominated by a few countries and a handful of companies, but the future may look different. India has the scale to achieve whatever it sets its mind to. In the UK, while we are a smaller island, we lead through soft power and the development of the AI assurance and insurance industry. Just as we buy insurance for our cars or health, companies will soon buy insurance for AI products to manage risk and accountability. Furthermore, many countries in the Global South are &quot;leapfrogging&quot; Western technology, as seen with India’s Aadhaar system and mobile innovations in Africa. Every government needs a sovereign AI strategy that is fit for purpose for its specific needs rather than a one-size-fits-all model.
+
+Regarding the future of work, we must move beyond hypothetical rhetoric and start gathering evidence. While there are fears that AI will replace entry-level programmers, the reality is that we will always need experts to direct the AI and verify its output. The future lies in augmented intelligence, where teams of humans and machines work together. For students, the goal shouldn't just be learning computer science in isolation. I started as a pure mathematician and transitioned into computing because I recognized it was the next big thing. Today, AI is an interdisciplinary field that touches every subject, from history to music. Everyone needs some level of AI literacy to understand the world they are building.
+
+This shift is also reaching the creative arts. In India, the National Education Policy 2020 is finally bringing creative arts, design, and sports into the mainstream curriculum. AI has entered every aspect of storytelling, from scriptwriting to graphics. While AI may eventually master some of these skills, the foundational ability to tell a story remains essential. We must prepare students from an early age to understand the &quot;grammar&quot; of storytelling while equipping them with the technical tools of the new age. Whether in engineering, medicine, or the arts, a foundational understanding of AI will be the common thread for the next generation.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
