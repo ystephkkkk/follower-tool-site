@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - February 20, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">February 20, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">2</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=dDELRokzeIY" target="_blank" rel="noopener">Vinod Khosla: AI Tutors, Doctors &amp;amp; Farmer Experts For 1.5B Indians | AI Summit 2026</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/d8aonbazIXdeP94JJ5mXnMam7VctYGR6ggoMLfUhtqun7sajHCl6oTeIG3Ubrm-UpsBm0hllOQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Business Today</span><span class="channel-subs">(3.0M)</span></span>
+                        <span class="meta-sep">·</span><span>12:18</span>
+                        <span class="meta-sep">·</span><span>141 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-20</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Vinod Khosla (Founder, Khosla Ventures)</span></div>
+                </div>
+                <div class="tldr">Vinod Khosla advocates for the immediate deployment of AI-driven tutors, doctors, and agronomists integrated into India’s Aadhaar ecosystem to provide high-level expert services to the bottom half of the population at near-zero cost.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Vinod Khosla advocates for the immediate deployment of AI-driven tutors, doctors, and agronomists integrated into India’s Aadhaar ecosystem to provide high-level expert services to the bottom half of the population at near-zero cost.  Personalized Learning: Khosla argues...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Vinod Khosla advocates for the immediate deployment of AI-driven tutors, doctors, and agronomists integrated into India’s Aadhaar ecosystem to provide high-level expert services to the bottom half of the population at near-zero cost.</p>
+<h3>Revolutionizing Education via AI Tutors</h3>
+<ul>
+<li><strong>Personalized Learning:</strong> Khosla argues that AI tutors are superior to human tutors because they use "knowledge tracing" to assess a student's specific gaps within minutes and tailor instruction accordingly.</li>
+<li><strong>Existing Scale:</strong> Through ck-12.org, over 400 million students globally and 4 million in India have already used these AI-based services.</li>
+<li><strong>Diksha 3.0:</strong> Khosla proposes upgrading India's current "Diksha" content library—which he describes as currently "unusable"—into an AI-first experience in partnership with Sarvam AI. </li>
+<ul>
+<ul>
+<li>The system is already compatible with CBSE and National Education Policy standards.</li>
+<li>Services are available in multiple Indic languages, including Hindi, Odia, and others.</li>
+</ul>
+</ul>
+</ul>
+<h3>Democratizing Healthcare with AI Doctors</h3>
+<ul>
+<li><strong>Comprehensive Primary Care:</strong> AI can provide 24/7 expertise in disease management, mental health, physical therapy, and nutrition coaching at a level of comprehensiveness currently unavailable even in Western countries.</li>
+<li><strong>Solving the Doctor Shortage:</strong> Khosla notes that India cannot reach Western doctor-patient ratios through traditional means, even with a trillion dollars and decades of time; AI is the only viable way to scale resources.</li>
+<li><strong>The "Intern" Implementation Model:</strong> He suggests a 1–2 year transition where AI acts as an "MBBS graduate intern" overseen by human physicians before moving toward more autonomous operation.</li>
+<ul>
+<ul>
+<li>The AI can diagnose, prescribe tests, and handle dialogue, only triaging to humans for physical exams or emergencies.</li>
+</ul>
+</ul>
+</ul>
+<h3>AI Agronomy for Rural Farmers</h3>
+<ul>
+<li><strong>PhD-Level Expertise:</strong> The goal is to provide every farmer with a PhD-level agronomist available locally on their specific small plot of land.</li>
+<li><strong>Low Barrier to Entry:</strong> Recognizing literacy challenges, these systems are designed to function via voice and image recognition. </li>
+<ul>
+<ul>
+<li>Farmers can simply speak to the AI or take pictures of their crops to receive expert advice.</li>
+</ul>
+</ul>
+</ul>
+<h3>The Infrastructure Proposal: AI as a Public Utility</h3>
+<ul>
+<li><strong>Integration with Aadhaar/UPI:</strong> Khosla proposes that these AI services be integrated into the Aadhaar identity system, similar to how UPI revolutionized digital payments.</li>
+<li><strong>Non-Profit Delivery:</strong> He plans to build a "Section 8" non-profit company to build, operate, and eventually transfer these systems into the state-run Aadhaar ecosystem.</li>
+<li><strong>Localized Adaptation:</strong> The systems require iterative cycles to adapt to specific Indian conditions, local languages, and regional disease patterns.</li>
+</ul>
+<p>***</p>
+<p><strong>Notable Quotes</strong></p>
+<blockquote>
+"This is not helping a doctor, this is building a doctor." — <strong>Vinod Khosla</strong>
+"Rich people can afford personal tutors. They won't do as well as people who have access to this AI." — <strong>Vinod Khosla</strong>
+"There's very little a human doctor can do that this AI can't do today, other than the physical parts. If they have to feel your stomach, of course, an AI can't do that yet." — <strong>Vinod Khosla</strong>
+"Unless AI benefits the bottom half of the Indian population, we're not going to see a huge amount of impact." — <strong>Vinod Khosla</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Good afternoon. Today, I want to discuss immediate applications of AI that can benefit the bottom half of the Indian population. Rather than focusing on business or technology trends, I want to address what can be done within the next year or two to reach 1.5 billion people with impactful, immediate benefits. For AI to truly matter in India, it must serve those who need it most. We can now provide 24/7 personal tutors for every child, nearly free medical care through AI doctors, and PhD-level agronomy expertise for every farmer. These services do not even require literacy; users can simply speak or share pictures to access them.
+
+In rural India, many children lack educational support because teachers are often unavailable. AI-based tutors ensure that every child has their destiny in their own hands. The non-profit ck-12.org already provides free AI content and tutors globally, reaching 400 million students. In India, millions of students are already benefiting from these services, which are fully compatible with the CBSE curriculum and National Education Policy standards. These AI tutors are efficacious and, in many ways, superior to human tutors. They can assess a student's level within minutes and use knowledge tracing to specifically target gaps in understanding. We are currently working with Sarvam to develop Diksha 3.0, an AI-first version of India’s existing content library. By leveraging billions of student questions, this model knows how to teach effectively and includes professional development for teachers to keep pace with modern education.
+
+AI doctors represent a similar transformation. This technology can provide 24/7 primary care, chronic disease management, mental health therapy, and nutrition coaching at a trivial cost. This level of comprehensive care often surpasses what is available even in the United States or other Western countries. While humans are still necessary for physical examinations and surgeries, AI can handle the majority of primary care functions and triage patients to human specialists when needed. Historically, scaling India’s doctor-patient ratio to Western levels was considered impossible, even with decades of time and trillions of dollars. However, AI allows India to leapfrog traditional systems and achieve a superior standard of care. The proposed model involves the AI initially acting as a supervised intern, assisting MBBS graduates, until the need for human oversight eventually diminishes.
+
+These services—education, healthcare, and agronomy—should be integrated into the Aadhaar ecosystem, similar to the UPI system. Every farmer should have access to PhD-level agronomists locally and 24/7. To achieve this, I am proposing the creation of a Section 8 non-profit company to build, operate, and eventually transfer these systems into the Aadhaar infrastructure. While these systems require iterations to adapt to Indian languages and regional disease patterns, the core technology is ready today. We can multiply our medical and educational resources by organizing vast, previously unusable libraries of information and making them accessible and relevant via AI.
+
+The future is here. Massive impact services that once required hundreds of billions of dollars can now be implemented cheaply and at scale. By scaling medicine, teaching, and agronomy, we can provide the bottom half of the population with the tools they need to succeed. This is an incredible opportunity for India, and failing to act on it would be a significant loss.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-1">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=LoJ2ExEOtzU" target="_blank" rel="noopener">IMF Chief Kristalina Georgieva Exclusive Interview on India&amp;#39;s AI Moment | World Exclusive Interview</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/T2CFyCYOvSqnAJZL2HTDrLw-9Z48j97WXjHn41HoPXZ-ZaeH02WAFSBe2cDKRWNcjZR5lhtKcg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">India Today</span><span class="channel-subs">(11.0M)</span></span>
+                        <span class="meta-sep">·</span><span>21:19</span>
+                        <span class="meta-sep">·</span><span>100 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-20</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Kristalina Georgieva (Managing Director, IMF)</span> <span class="tag tag-person">Siddharth Zarabi (Managing Editor, Business Today)</span></div>
+                </div>
+                <div class="tldr">AI represents a &quot;tsunami&quot; for the global labor market that could boost global growth by 0.8%, but its benefits must be democratized through digital public infrastructure and robust social safety nets to prevent a widening gap between &quot;haves&quot; and &quot;have-nots.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-1">TL;DR AI represents a &quot;tsunami&quot; for the global labor market that could boost global growth by 0.8%, but its benefits must be democratized through digital public infrastructure and robust social safety nets to prevent a widening gap between &quot;haves&quot; and &quot;have-nots.&quot;  The Labor...</div>
+                    <div class="summary-full" id="full-1">
+                        <p><strong>TL;DR</strong></p>
+<p>AI represents a "tsunami" for the global labor market that could boost global growth by 0.8%, but its benefits must be democratized through digital public infrastructure and robust social safety nets to prevent a widening gap between "haves" and "have-nots."</p>
+<h3>AI’s Impact on Global Labor and Productivity</h3>
+<ul>
+<li><strong>The Labor "Tsunami":</strong> AI is expected to impact 40% of jobs globally and 60% in advanced economies, either through enhancement or replacement.</li>
+<ul>
+<ul>
+<li><strong>The "Middle Squeeze":</strong> While AI creates high-paying tech jobs and indirectly stimulates low-skilled service demand (restaurants, hotels), it threatens to eliminate middle-tier and entry-level roles.</li>
+<li><strong>Wage Disparity:</strong> Early data from the U.S. shows 1 in 10 jobs now requires AI-enhanced skills and offers higher pay, potentially widening income inequality.</li>
+</ul>
+</ul>
+<li><strong>Economic Growth Potential:</strong> AI has the potential to break the current cycle of "low growth, high debt" by adding an estimated 0.8% to global GDP, potentially returning growth to pre-pandemic levels.</li>
+<li><strong>Policy Prescriptions:</strong></li>
+<ul>
+<ul>
+<li><strong>Education Reform:</strong> Moving toward "learning to learn" and fostering adaptability rather than static skill sets.</li>
+<li><strong>Flexicurity:</strong> Georgieva recommends the Danish "flexicurity" model, which combines labor market flexibility for employers with strong social security for displaced workers.</li>
+</ul>
+</ul>
+</ul>
+<h3>The Indian Model of AI Democratization</h3>
+<ul>
+<li><strong>Digital Public Infrastructure (DPI):</strong> Georgieva highlights India’s success in creating a Digital ID for 1.4 billion people as the foundation for accessible AI.</li>
+<li><strong>Public Good vs. Corporate Models:</strong> India’s approach of building foundational models for public sectors like healthcare and education is cited as a more applicable blueprint for the Global South than the high-tech corporate models of the U.S. or China.</li>
+<li><strong>Global Leadership:</strong> India is positioned to lead the developing world in ensuring AI remains a source of benefit for all society rather than a tool for further fragmentation.</li>
+</ul>
+<h3>Navigating Regulation and the Global Trade Order</h3>
+<ul>
+<li><strong>Regulation vs. Innovation:</strong> The MD warns against "suffocating" innovation with excessive red tape, though she emphasizes the need for collective ethical guardrails to ensure "AI for good, not for evil."</li>
+<li><strong>The Multipolar Trade Reality:</strong> Despite rising tariffs and fragmentation, Georgieva argues that "trade is like water"—it will find a way around obstacles.</li>
+<ul>
+<ul>
+<li><strong>Regional Integration:</strong> Global trade is shifting toward bilateral and plurilateral agreements (e.g., India’s deals with the UK, EU, and US).</li>
+<li><strong>Supply Chain Continuity:</strong> Total decoupling is viewed as impossible; supply chains will continue to cross borders despite geopolitical tensions.</li>
+</ul>
+</ul>
+</ul>
+<h3>Global Economic Risks and Fiscal Fragility</h3>
+<ul>
+<li><strong>Exhausted Buffers:</strong> A primary concern is that many countries have exhausted their fiscal capacity due to the pandemic, war in Ukraine, and high interest rates.</li>
+<ul>
+<ul>
+<li><strong>The "Shock-Prone" World:</strong> Unlike previous crises, rich countries currently lack the "tons of money" needed to provide positive spillovers to the rest of the world when the next shock hits.</li>
+</ul>
+</ul>
+<li><strong>Climate Change:</strong> Georgieva describes climate change as a critical risk but also a leadership opportunity for India, specifically through initiatives like the International Solar Alliance.</li>
+<li><strong>IMF’s Role:</strong> The IMF currently manages 50 programs (including Sri Lanka) to support countries facing high debt and diminished official development assistance.</li>
+</ul>
+<blockquote>
+"AI is like a tsunami hitting the labor market. We assess 40% of jobs globally, 60% in advanced economies, to be impacted by AI in the next years, either enhanced, made more productive, or replaced." — <strong>Kristalina Georgieva</strong>
+"What India is doing in AI is phenomenal because the goal of India is to democratize AI... India is determined to help the rest of the world, especially the Global South, to benefit from AI." — <strong>Kristalina Georgieva</strong>
+"Trade is like water, you put an obstacle, it goes around it. My projection is the following: we are in a multipolar world. This is a reality." — <strong>Kristalina Georgieva</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-1">
+                        At the AI Impact Summit in New Delhi, International Monetary Fund Managing Director Kristalina Georgieva highlighted India’s unique approach to the rapid advancement of artificial intelligence. A central theme of the summit was the democratization of AI, reflecting India’s determination to ensure the technology serves as a source of benefit for the entire society rather than a force that widens the gap between the haves and the have-nots. Georgieva noted that the speed of AI’s integration into work and life is the highest in the history of technological transformation, presenting a tremendous opportunity for productivity and growth while simultaneously posing risks of worker displacement.
+
+The impact of AI on the labor market is likened to a tsunami, with IMF assessments suggesting that 40% of jobs globally—and 60% in advanced economies—will be affected. This transformation creates a &quot;middle squeeze,&quot; where high-skilled jobs are enhanced and pay more, and demand for low-skilled service jobs increases, but mid-level roles are often eliminated. To counter these risks, policymakers are encouraged to redefine education for an era of continuous learning, strengthen social safety nets, and adopt &quot;flexicurity&quot; models that combine labor market flexibility with security for workers. India’s recent labor market reforms were noted as a positive step in creating this necessary adaptability.
+
+India’s strategy in the global AI landscape is built upon its robust digital public infrastructure. By creating digital IDs for 1.4 billion people, India has established a foundation to make AI more accessible and applicable to public goods such as healthcare and education. This model may prove more applicable to the Global South than the high-tech corporate models seen in the United States or China. While the IMF projects that AI could potentially lift global growth by 0.8%, reaching this potential requires international cooperation on ethical guardrails to ensure the technology is used for good while avoiding suffocating innovation with excessive regulation.
+
+Beyond AI, the global economic landscape is shifting toward a multipolar reality. While new tariff orders and trade fragmentations create complexity, global trade continues to adapt through regional and plurilateral agreements. Trade remains resilient because the world is too integrated to fully pull apart. However, the world has become more shock-prone, dealing with the lingering effects of the pandemic, international conflicts, and climate change. Many countries have exhausted their fiscal buffers, making global solidarity and the role of the IMF crucial for supporting nations in distress.
+
+India remains a global bright spot with domestic growth around 7%, contributing significantly to the world economy. Although climate change remains a universal concern, it offers India an opportunity for leadership through initiatives like the International Solar Alliance. By maintaining a dynamic, innovation-driven economy, India serves as a model for other nations navigating the transition into a high-tech, shock-prone global environment.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
