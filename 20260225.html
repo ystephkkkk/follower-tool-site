@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - February 25, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">February 25, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=PPXIL4vbLfs" target="_blank" rel="noopener">How We Built a $159B Company as Brothers</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/1QdlbXwJRXYY6leF-ULTE8ahNmTYEgezebSqVDZqI2DLGSkRCCcvcUtdkAhOj5mLB8C0AK_J=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">TBPN</span><span class="channel-subs">(51.9K)</span></span>
+                        <span class="meta-sep">·</span><span>17:10</span>
+                        <span class="meta-sep">·</span><span>246 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-25</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">John Collison (Co-founder, Stripe)</span> <span class="tag tag-person">Patrick Collison (Co-founder &amp; CEO, Stripe)</span></div>
+                </div>
+                <div class="tldr">Stripe reported 34% year-over-year growth, driven by a &quot;phase transition&quot; in 2025 and 2026 where new AI-native business cohorts are launching faster and performing better than any previous group in the company’s history.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Stripe reported 34% year-over-year growth, driven by a &quot;phase transition&quot; in 2025 and 2026 where new AI-native business cohorts are launching faster and performing better than any previous group in the company’s history.  Strong Financial Momentum: Stripe grew 34% last...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Stripe reported 34% year-over-year growth, driven by a "phase transition" in 2025 and 2026 where new AI-native business cohorts are launching faster and performing better than any previous group in the company’s history.</p>
+<h3>Growth Metrics and the 2026 "Singularity"</h3>
+<ul>
+<li><strong>Strong Financial Momentum:</strong> Stripe grew 34% last year, a metric the founders attribute to the underlying growth of the businesses using the platform.</li>
+<li><strong>The 2026 "Singularity":</strong> Patrick Collison noted that Q1 2026 may be remembered as the start of a "singularity" in the real economy. </li>
+<ul>
+<ul>
+<li><strong>Cohort Acceleration:</strong> Businesses that signed up in 2025 and early 2026 are outperforming the 2023 and 2024 cohorts on a per-business basis.</li>
+<li><strong>Phase Transition:</strong> This shift isn't just "vibe-coded" hype; Stripe’s data shows a simultaneous increase in the number of new businesses and the median performance of those businesses.</li>
+</ul>
+</ul>
+<li><strong>Real Economy Health:</strong> Despite market volatility over the last two years, Stripe’s time-series data suggests the broader economy is in robust shape, particularly for companies focused on innovation and retooling.</li>
+</ul>
+<h3>The Infrastructure of Agentic Commerce</h3>
+<ul>
+<li><strong>Evolution of Payments:</strong> The founders anticipate a "torrent" of agentic commerce where AI agents, rather than humans, conduct transactions.</li>
+<li><strong>Tempo Incubation:</strong> Stripe is incubating Tempo to address blockchain congestion. </li>
+<ul>
+<ul>
+<li><strong>High Throughput:</strong> Future AI agents will require platforms capable of processing millions or billions of transactions per second, a scale no current payment rail supports.</li>
+<li><strong>Stablecoin Synergy:</strong> Stablecoins and high-throughput blockchains are viewed as the native currency and infrastructure for AI agents.</li>
+</ul>
+</ul>
+<li><strong>Unblocking the Web:</strong> Because the current web is built for humans (e.g., CAPTCHAs), Stripe is doing the "boring" infrastructure work—API and protocol development—to make product catalogs from retailers like Walmart, Best Buy, and Etsy buyable directly within AI applications.</li>
+</ul>
+<h3>AI Sentiment vs. Economic Reality</h3>
+<ul>
+<li><strong>The Value Gap:</strong> While some surveys suggest 80% of executives see no value in AI, John Collison dismissed this as "hogwash," arguing that the value is often hidden in layers of efficiency.</li>
+<ul>
+<ul>
+<li><strong>Embedded Utility:</strong> AI is already heavily integrated into high-value workflows like customer service augmentation and automated coding.</li>
+</ul>
+</ul>
+<li><strong>Bespoke Software:</strong> Patrick predicts a fundamental shift where software becomes "like pizza"—cooked at the moment of consumption rather than mass-produced. </li>
+<ul>
+<ul>
+<li><strong>Shift in Economics:</strong> Software is moving from a fixed-cost, infinitely monetized model to a regime involving inference costs and custom, real-time creation for the user.</li>
+</ul>
+</ul>
+</ul>
+<h3>Strategic Philosophy and Long-term Compounding</h3>
+<ul>
+<li><strong>Avoiding "MBA Brain":</strong> John Collison argued against making product decisions based on generic TAM (Total Addressable Market) spreadsheets. </li>
+<ul>
+<ul>
+<li><strong>Specific Pain Points:</strong> Stripe Atlas succeeded by solving the specific, granular frustrations of incorporation rather than following a theoretical business model.</li>
+</ul>
+</ul>
+<li><strong>The Power of Compounding:</strong> Successes like Stripe Atlas and Stripe Press are described as a "long obedience in the same direction." </li>
+<ul>
+<ul>
+<li><strong>Stripe Press:</strong> The publishing arm recently surpassed 1.1 million books sold, a milestone the founders view as "AGI-proof."</li>
+</ul>
+</ul>
+<li><strong>Legacy Transformation:</strong> Incumbent firms are increasingly turning to Stripe when they decide to launch innovative or "retooling" projects, even if their core systems remain on legacy infrastructure.</li>
+</ul>
+<blockquote>
+"I feel like there's at least a reasonable chance that 2026 Q1 will be looked back upon as the first quarter of the singularity... looking at real purchasing behavior on Stripe, end of '25, beginning of '26 is when I feel like we're really starting to see it." — <strong>Patrick Collison</strong>
+</blockquote>
+<blockquote>
+"You can't get too MBA brain about new products... you have to reason in product specifics. Any MBA would have told you that the adjacency of incorporation makes no sense... whereas you actually go talk to founders they're like, 'Guys, this is the single biggest issue I run into starting my company.'" — <strong>John Collison</strong>
+</blockquote>
+<blockquote>
+"Software historically has been created months, years beforehand and then freeze-dried... software should be like pizza in the sense that it should be cooked right then and there at the moment of use." — <strong>Patrick Collison</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        We have John and Patrick Collison from Stripe. How are you guys doing? What's going on? Greetings. Welcome to the show. Thank you so much. This is... this is huge. I went through Y-C, you guys were massively influential in my career and it's a joy to speak to you today on such a big day.
+
+But I'd love for you to kick it off with the actual news. What happened? Why are we talking to you today? We had two announcements today. One is we're launching a tender offer for employees and that, and kind of the valuation, everything tended to get a bunch of the headlines.
+
+The thing that was honestly more work was we released our annual letter where every year we sum up all the trends that we're seeing on Stripe. Stripe is growing a lot; we grew 34% last year because the businesses on Stripe are growing a lot. And there's just... as you guys know, there's a lot happening in tech right now.
+
+This is why we need T-B-P-N. This is why we need a non-stop stream of everything going on because there is so much happening. So, yeah. We'll move... we'll move to 24 hours eventually, eventually. I mean, but I feel like there is a ton of AI noise and stories and drama and we are, you know, never running out of stuff to talk about.
+
+But what are you actually seeing in the data? Because there's always this disconnect between the market and the real economy. Like people are still shopping in retail stores occasionally. What... where is AI actually moving the needle? Well, the... generally speaking, I would say from the Stripe data, it looks like the economy is in pretty good shape.
+
+There's been, to say... to say the least, there's been some degree of volatility in markets over the last two years and, you know, all sorts of different events and DeepSeek moments and what have you. But if you look at the actual real economy time series, if you look at what's actually happening substantively over the last two years, things... I mean, it's always hard to prognosticate the future.
+
+Over the last two years, things really seem to be in good shape. The thing that's really catching our attention... one... one second, because I... I'm just curious. Have... have you guys tried to think about... maybe the businesses are doing well on Stripe because they are, you know, kind of like forward-looking, extremely tapped in, you know, working on the right things?
+
+If you look at a bunch of legacy providers, you would see that actually there are a bunch of businesses out there that are slowing down, that maybe are feeling the effect of just overall consumer spending. Have you tried to kind of break that out or understand that dynamic? It's... it's obviously hard to measure because we don't have that data, we only have our data.
+
+But... but... but I think there is some of that composition effect. And we see it, I guess, both in Stripe's data compared to, say, public earnings from others; clearly the respective populations are performing somewhat differently. But I guess we also see it qualitatively in the conversations we're having with customers where what tends to happen for some incumbent is they built some business.
+
+They installed some system long before Stripe even existed. Maybe there's some sense that, well, if it's not broken, don't fix it. But then they decide, hey, we're going to do something new. And when they're doing something new, then they want to use the best infrastructure that will enable them to move the fastest and launch in the most countries.
+
+They want to support stablecoins and do things with AI and whatever. And then they tend to launch that on Stripe. And so there is this qualitative sense that once a company decides to do something innovative, new, retool, what have you, they're more likely to come to Stripe. Are you seeing overlap between stablecoin activity and AI activity?
+
+There's been sort of a new narrative around agents will use stablecoins, but I feel like agents can use legacy payment rails just fine, and then also you can do really cool things with stablecoins that are not really AI-native necessarily. And so I wonder... I wonder how much overlap there is there. I would distinguish between how things work today and how things will work in the future.
+
+In terms of how things work today, agents absolutely can. You know, a lot of people build with Stripe. You can have a one-time-use credit card that your agent can go out and spend. But if you look at what's happening, there's lots of agents having to solve captchas to be able to kind of do stuff on the wider web.
+
+Clearly, the web is not built for agents and, as a result, they have to get creative to actually do any real-world tasks. And that's true in kind of economic activity as well. Where we think things will go is just there will be a huge amount of agentic commerce. And again, we're seeing a little bit of it today. We think there'll be a torrent of it.
+
+That is what unites stablecoins and AI because we think you're going to need blockchains and better blockchains, honestly. I mean, this is what... this was our thinking behind incubating Tempo because you're going to need really high-throughput blockchains for the agents. Can you take us through some of the historical technologies that led to growth in just internet payments?
+
+I'm thinking about like mobile, social commerce, one-click checkout, Apple Pay. Like there's so many things. When I think about the agentic commerce boom that's coming, like it could be hooking a better version of Siri up and, you know, ChatGPT rolling this out very aggressively, but also, you know, smart speaker, smart lamps, like your watch.
+
+There's so many different pieces to unblock and unhobble the actual agents as they go about their day. Well, can I answer a slightly different question but then we can come back to that? Go ahead. So... I just want to... sorry... this is a broader point... we'll tell you the questions, you tell us your answers. Sorry, you... you know how brothers are.
+
+But then, so I just want to lose one point per the prior question about, you know, what we're seeing in the economy. Because I feel like, and this... this is very arbitrary obviously, but I feel like there's at least a reasonable chance that 2026 Q1 will be looked back upon as the first quarter of the singularity. Maybe in three years in hindsight that'll look completely delusional, I don't know.
+
+But what we're seeing, I mean, there's... there's kind of the macroscopic picture of the Stripe user base and things overall looking pretty good and the tumult not quite showing up. But when we look at the cohorts, and then when we look at the businesses that signed up in 2023 and their progression and trajectory over the subsequent months, the businesses that signed up in 2024, and then the businesses signed up in 2025...
+
+There's been a phase transition in 2025 where there are both more of them and on a per-business basis they are on average doing better. Which is really striking because you might think, okay, well there's this cavalcade of new lightweight, vibe-coded applications or something, but, you know, there's not really a lot of substance there. We're actually seeing both numbers move together.
+
+There are many more businesses getting started and the average, the median business is in fact performing better. We're only a couple weeks into 2026, but it see... it... it looks tentatively like 2026 may plausibly be an acceleration even over that significant leap of 2025. So, I don't know. I mean, there's... we've... we've had all sorts of dramatic AI inventions and innovations over the last couple years.
+
+There's a bit of a question of well, how and when and how should we think about how it'll translate to the economy. I would say looking at real purchasing behavior on Stripe, 2025, end of '25, beginning of '26 is when I feel like we're really starting to see it. That's super interesting data. One because we were... there was some survey that came out yesterday or maybe it was late last week that said, they asked a bunch of executives, &quot;Are you getting any value out of AI?&quot;
+
+And 80% of them said no. But clearly if you look... when you look... when you look at... Oh, come on, that's hogwash. Like find me one executive who wants a refund on their tokens. Find me one executive who said, &quot;Oh yeah, we started, you know, augmenting our customer service with AI so people are more productive but we're just going to go back to doing it the old-fashioned way.&quot;
+
+Or like we're spinning our code by hand and, you know, we don't need any of this automated loom technology. Just... like... refuse... Yeah, yeah, yeah. I'm not saying... I'm not... I could pick out a bunch of reasons... Doomer! Technopessimist! No, I could pick out a bunch of reasons why it would be wrong. One reason it might be wrong is they are not in the weeds actually using the tools and so they just think like...
+
+They might not even be aware that they're using the tools because it's buried under two layers of... And they're not feeling... they're not feeling the acceleration because they're not... they're not... I wanted to ask how you guys think about incubations like Tempo when you look at... when I look at Atlas and what Jeff and the team have done there.
+
+You think even in your... I don't know... kind of like the most wild projection that you had early with Atlas, like hey maybe someday a quarter of the C-corps in the United States could be, you know, built on this platform, anybody would have said that was insane and yet here we are. Gosh, I... I'm not sure what to say really except we just... we just try to pay a lot of attention to the...
+
+I mean as you guys know, there's a lot of pain points that go into starting a company and we just try to take them seriously. And then, you know, it's the line, so much of... so much of these things is just a long obedience in the same direction. Like Atlas is now this great overnight success, but we launched Atlas I think in 2014 or 2015 and so, you know, 10 years of compounding and yeah, now it's at some pretty meaningful, meaningful scale.
+
+And you know, I think Tempo will probably have the same shape where we think it... I mean again, to this AI discussion and us sounding a bit unmoored and untethered, like I think the world is going to need platforms that support millions of transactions per second, billions of transactions per second, which no payment rail or platform does today.
+
+But it's even in a success case it's not going to be an overnight thing. It's going to be, you know, five, six, seven years and then maybe we'll... we'll have conversations about how you know, Tempo suddenly became an overnight success or something. But John... I think... I think Patrick's a bit the fish in water who can't, you know, who doesn't know things are wet.
+
+My framework would be you can't get too MBA brain about new products. You can't have your spreadsheet that's like, oh the TAM is this, and just like reason about things in generic terms. Yeah, you should never say we want 1% of global GDP running on Stripe. Oh no, we did that kind of stuff. Exactly. Wait, you guys never pitched that?
+
+Well, companies... wait, we actually never thought about Stripe in GDP terms until one day we realized oh hang on, you can. Oh man. Oh. That's such an important lesson because so many like company founders, how many pitch decks have you seen over the last decade that are like, &quot;Yeah, we just need 1%...&quot; and it's kind of a meme. We're like Stripe. That's funny.
+
+You... you can go back in the WayBack Machine and find the early Stripe websites, but we were very focused on payments for developers and making that experience good. But where I'm going is I think you have to reason in product specifics. And so, again, I think any MBA would have told you that the adjacency of, you know, incorporation makes no sense, it's not related to what's our right to win.
+
+You know all these things people say, whereas you actually go talk to founders they're like, &quot;Guys, it's like this is the single biggest issue I run into starting my company.&quot; And similarly with Tempo and as we think about incubations, we're trying to solve a real problem here where we talked in the letter about Bridge having operational issues not because of Bridge, but because of blockchain congestion.
+
+This is where you have coins that are... or blockchains both used for kind of meme coin trading and also serious real-world payments. And so we just want low-latency high-throughput payments and we're going to need much higher throughput for the agents. But anyway, I think you have to reason in very specific product terms. What specific products are you excited about in the unhobbling of agentic commerce?
+
+We... we laid out in the letter basically these... these levels of agentic commerce because I think like everything in AI, people want to sell a hypey story and so they talk about how the machines will buy everything, you know without even consulting you. And... people aren't actually... you know that seems far off, they're not that excited about that.
+
+You can start from just the basics of why are we filling out forms? Like that, you know you were talking about the progression of commerce, why can't I just send something to, you know a link to ChatGPT and have it buy it? Or why can't I search, you know outside of... you know just doing a basic keyword search or something like that?
+
+And so a lot of the work Stripe is doing is building the infrastructure. We're working with all the big retailers that you'd expect, the, you know, Etsys and Shopifys and Best Buys and Walmarts and folks like this to make product catalogs buyable within the AI apps. And there's basically a ton of boring API and protocol and infrastructure work which, you know, we love. That's our business.
+
+People just want to be able to do shopping, do discovery, and do purchases within the AI apps. And let me just be more kind of abstractly, you know we've been... I mean there's this specific agentic commerce thing and then there's just so the general question of how software will change because of agents. And I've been thinking about it a bit like maybe software becomes a bit like pizza.
+
+That is to say, software historically has been created—not like pizza some would say—months or years beforehand and then, you know, freeze-dried and of whatever you prepare it at the sort of moment of consumption. But we're actually going to... you know, software should be like pizza in the sense that it should be cooked right then and there at the moment of use.
+
+And so it's this act... this quite fundamental shift where you don't want mass-produced industrial-scale software; you want bespoke custom software made for you that moment. That's a... that's very fundamentally different. It's kind of the... you know, the up until now the economics of software have been conceived of as fixed cost and then infinitely monetized or monetize as much as possible.
+
+That has these kind of winner-take-all dynamics. But once there are inference costs and custom creation involved, it really shifts. It's kind of the, you know, the non-Walrasian software regime and just I don't know, I don't quite know where it goes, but I... I think it's going to look very different. Last question. Pineapple on pizza, yes or no?
+
+Ireland was... was big into pineapple on pizza. Ireland not a big pineapple growing country, I will concede, but a lot of pineapple in the pizza. Good memories. We know a very large fraction of the banana market, don't forget. So we punch above our weight in fruits that don't grow there. There we go. I love pineapple on pizza.
+
+The round is exciting, the overall growth of volume is exciting, but we wanted to hit the gong for how many books you guys are selling. Oh yeah. Can you give us... can you give us the numbers there to scale that operation? Stripe Press just... well actually we announced in the letter we sold our millionth book. But in fact, since... Overnight success! Incredible.
+
+Now... look... book... book... we've actually now sold our 1.1 millionth book. So, but we'll wait for the next gong at two. But we think books are great, we love books and they're very... they're very A-G-I proof. Oh yeah. No, we... we... we've been a huge fan of so much of the Stripe Press catalog. I haven't read them all, but I'm collecting them one at a time and I'm working through them.
+
+Every time one drops it's always a moment, and we love them. So thank you for everything. Yeah, it was great to have you guys on and congratulations to the whole team on an incredible... No, congratulations to you guys. T-B-P-N is an amazing startup and it's super cool to see you guys grow and build in the streaming world our sector needs.
+
+Built on Stripe. Built... incorporated on Stripe. Built on Stripe. Incorporated on Stripe, built on Stripe. Happy customer. Our first... our first ad deal ever was a live read at a live conference. I think we charged $50 and I put... and I sent someone a Stripe link. Oh when we're talking about the 2025 cohort being the fastest ever, you were feedback but... well we'll have to have you to our internal Stripe show.
+
+So we'll follow up with that. That would be great. Yeah, we'll talk to you soon. Have a great rest of your day. Congratulations. Thanks guys. Cheers. Goodbye.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
