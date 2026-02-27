@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - February 27, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">February 27, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=UMxtK7aptXw" target="_blank" rel="noopener">Trump Tariff Turmoil, Private Credit Risk Grows, &amp; AI’s Software Fears | The Weekly Wrap</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Steve Eisman</span><span class="channel-subs">(157.0K)</span></span>
+                        <span class="meta-sep">·</span><span>24:34</span>
+                        <span class="meta-sep">·</span><span>2.2K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-27</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Steve Eisman (Portfolio Manager, Neuberger Berman)</span></div>
+                </div>
+                <div class="tldr">&gt; &quot;An entity, Kuvare Insurance, whose assets Blue Owl manages, used insurance policyholder money to purchase loans from Blue Owl’s distressed funds.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR: While blockbuster NVIDIA earnings highlight the current AI boom, systemic risks are mounting in the $1.8 trillion private credit market due to its heavy exposure to AI-disrupted software and &quot;incestuous&quot; relationships with the life insurance sector.    Supreme Court...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR:</strong> While blockbuster NVIDIA earnings highlight the current AI boom, systemic risks are mounting in the $1.8 trillion private credit market due to its heavy exposure to AI-disrupted software and "incestuous" relationships with the life insurance sector.</p>
+<h3>Tariff Turmoil and Market Reactions</h3>
+<ul>
+<li><strong>Supreme Court Ruling:</strong> The Court struck down President Trump’s tariffs imposed under the International Emergency Economic Powers Act (IEEPA).</li>
+<li><strong>The Pivot:</strong> The administration responded with a temporary 15% global tariff under the 1974 Trade Act, while launching "Section 301" investigations to create permanent, country-specific tariffs.</li>
+<li><strong>Fiscal Impact:</strong> Treasury Secretary Scott Bessent estimates the shift will be revenue-neutral for 2026, though market uncertainty remains high.</li>
+<li><strong>Bitcoin as a Failed Hedge:</strong> Bitcoin fell 5% on tariff uncertainty. Eisman argues this proves Bitcoin is not a hedge against fiat debasement but is simply a speculative asset correlated with tech stocks.</li>
+</ul>
+<h3>The Private Credit and Life Insurance "Red Flag"</h3>
+<ul>
+<li><strong>Blue Owl Contagion:</strong> Blue Owl (a $17B private equity firm) recently froze redemptions in its private credit funds.</li>
+<li><strong>Conflicts of Interest:</strong> Blue Owl sold $1.4 billion in loans to four buyers—one of which was Kuvare Insurance, an entity Blue Owl controls. Eisman characterizes this as using policyholder money to bail out distressed funds.</li>
+<li><strong>Software Overexposure:</strong> Approximately 20% of the $1.8 trillion private credit market consists of loans for software company buyouts. </li>
+<ul>
+<ul>
+<li><strong>Default Risks:</strong> UBS strategists suggest default rates could surge to 15% as AI disrupts legacy software business models.</li>
+</ul>
+</ul>
+<li><strong>Opaque Leverage:</strong> While private credit funds are limited to 2:1 leverage, insurance companies can wrap these same loans into CLOs with 10:1 leverage, shifting systemic risk to annuities and life insurance policyholders.</li>
+</ul>
+<h3>AI: The "Skeptical Narrative" vs. Financial Reality</h3>
+<ul>
+<li><strong>NVIDIA’s Paradox:</strong> Despite 73% year-over-year revenue growth and a massive earnings beat, the stock struggled to maintain gains. Its 25x PE multiple reflects deep market doubt about the long-term returns on AI infrastructure spending.</li>
+<li><strong>Software Carnage:</strong> </li>
+<ul>
+<ul>
+<li><strong>Salesforce:</strong> Shares fell 25% this year; organic revenue growth (8%) was deemed too light to combat AI fears.</li>
+<li><strong>IBM:</strong> Dropped 13% following news that Anthropic’s new products could eat into IBM’s COBOL language franchise.</li>
+</ul>
+</ul>
+<li><strong>The "Insider" Indicator:</strong> Eisman notes that despite the sector's "annihilation," no major software company insiders are buying their own stocks, signaling internal doubt about the paradigm shift.</li>
+</ul>
+<h3>Key Weekly Earnings Highlights</h3>
+<ul>
+<li><strong>First Solar:</strong> Described as a "complete and utter disaster." Revenue guidance was $1 billion below analyst expectations ($4.9B–$5.2B vs. $6.12B expected), as the administration’s dislike of renewables impacts the commercial sector.</li>
+<li><strong>Home Depot &amp; Lowe's:</strong> Both reported meager same-store sales growth (0.4% and 1.3% respectively). The housing market remains "locked" by homeowners holding sub-4% mortgages.</li>
+<li><strong>Circle (USDC):</strong> Reported strong revenue growth (77%) and $75.3 billion in circulation, but remains vulnerable to Fed interest rate cuts and high concentration in the crypto-native world.</li>
+<li><strong>Warner Bros:</strong> Revenue down 6% year-over-year; Eisman maintains the company is not worth its $70 billion market cap and faces a "difficult culture to manage."</li>
+</ul>
+<h3>Institutional vs. Retail Investing Gap</h3>
+<ul>
+<li><strong>The Professional Edge:</strong> Institutional investors utilize Bloomberg terminals, sell-side research, expert networks, and direct access to company management.</li>
+<li><strong>The Equalizer:</strong> Eisman notes that despite these massive information advantages, market indices almost always outperform active professional managers anyway.</li>
+</ul>
+<p>***</p>
+<blockquote>
+"An entity, Kuvare Insurance, whose assets Blue Owl manages, used insurance policyholder money to purchase loans from Blue Owl’s distressed funds. This is hardly an arm’s-length transaction." — <strong>Steve Eisman</strong>
+</blockquote>
+<blockquote>
+"We can doubt the future of AI all we want, but these numbers [NVIDIA's] are powerful. And yet, the skeptical narrative about AI retains its power... the relatively low multiple expresses all the doubts." — <strong>Steve Eisman</strong>
+</blockquote>
+<blockquote>
+"Private equity firms investing in funding buyouts of software companies were victims of their own enthusiasm and inability to see the paradigm shift occurring now as AI was under development back then." — <strong>Steve Eisman</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        NVIDIA reported powerful numbers. How could it not? And yet, the skeptical narrative about AI retains its power. And the Blue Owl news from last week, in my view, was particularly bad. The private credit market has exploded into a $1.8 trillion market. Huge. 
+
+Part of the problem is that private credit is overexposed to software. In a recent report, private credit could see default rates surge to 15% because of AI disruption. Such a level would be disastrous.
+
+Hi, this is Steve Eisman. And this is the weekly wrap for the week ending Friday, February 27, 2026, but recorded on Thursday night, February 26. Before I start the wrap, I'm going to do something I don't normally do and flag the episode we will release this coming Monday, March 2nd. 
+
+I do a deep dive with Tom Gober, an expert in what is going on with private equity increasingly dominating the life insurance sector and the incredible risks involved. This is truly worth checking out. On this week's wrap, I discuss 1. tariff turmoil, 2. I go into more depth on Blue Owl, private credit, and private credit's exposure to the software sector, and I also touch on Blue Owl's control of a life insurance company.
+
+3. AI creates more fear in software and other sectors as well, 4. earnings results of NVIDIA, Salesforce, First Solar, and others, and 5. I answer two viewer questions, the first as to why the market did not react more negatively to Friday's tariff news and the second as to what tools institutional investors have that retail investors do not. So let's get started.
+
+On Friday of last week, the Supreme Court struck down President Trump's tariffs, which he imposed under the International Emergency Economic Powers Act, the IEEPA. Over the weekend, President Trump responded with a new, temporary 15% tariff under Section 122 of the 1974 Trade Act and a plan to start several new Section 301 trade investigations covering most major trading partners.
+
+This would allow him to reimpose the tariffs under other laws. The 15% global tariff is a temporary measure, while reciprocal and fentanyl tariffs are converted into more permanent Section 301 tariffs on specific countries. Section 301 tariffs involve a multi-month investigative process. 
+
+According to Secretary of the Treasury Scott Bessent, the new tariffs should result in virtually unchanged tariff revenue in 2026 from what was currently being raised. If correct, the net effect of the US's pivot to a new tariff plan, while undoubtedly messy, may be neutral overall for the US fiscal picture. 
+
+But there is market uncertainty because of the tariffs, and I want to flag one headline from Monday morning. On CNBC, there was a headline of, quote, &quot;Bitcoin falls as much as 5% as Trump tariff moves raise uncertainty.&quot; That was the headline. This headline should not exist. 
+
+The entire investment thesis behind Bitcoin and cryptocurrency, as I have said many times, is that it is a hedge, or supposed to be a hedge, against the debasement of fiat currency. If that's the case, Bitcoin should be up on days of uncertainty, but it always goes down on such days. It is mostly correlated with tech stocks. 
+
+Until now, it is just a way, in my view, for people to speculate about speculating. In this week's interview with George Noble, George postulated that Bitcoin is just no longer cool, and that the people who once traded in it have moved on and are now all on predictive market sites.
+
+I want to return to the topic of private equity and private credit that I discussed last week with respect to the Blue Owl news. It deserves more commentary. So let's first review again what happened. Blue Owl is a $17 billion market cap private equity company that specializes in making private credit loans. 
+
+The private credit market has exploded into a $1.8 trillion market. Huge. And if it ever blew up, it would hurt the US economy badly. Investors have been showing fear about this market for about a year, and the Blue Owl news from last week, in my view, was particularly bad. 
+
+Over the last five years, private credit firms have been expanding their distribution from institutional investors to retail investors. They created private lending funds specifically designed to attract retail investors. The yield on private credits is higher than public credits, so retail investors are enticed. 
+
+The big problem is that this model works great in good times. It has never been stress-tested for a scenario where the asset valuations are being questioned, there is liquidity pressure, and there is a major sector-specific disruption in software. All of this is happening simultaneously now. 
+
+So what happened? Blue Owl froze redemptions from its private credit funds. At the same time, it sold $1.4 billion in loans at roughly par to four buyers. Three buyers were CalPERS, Canada's OMERS, and British Columbia Investment Management. So far so good. 
+
+However, the fourth buyer was Kuvare Insurance, and here is where it gets funky. In April 2024, Blue Owl bought Kuvare Asset Management, the investment management arm of Kuvare Insurance. Blue Owl did this transaction as a way to emulate what Apollo has accomplished with Athene. 
+
+Often, Apollo sells the loans that it originated to its captive insurance company, Athene. Here too, Blue Owl sold some of the $1.4 billion in loans to an entity that it controls. This is hardly an arm's-length transaction. Let me make this clear. 
+
+An entity, Kuvare Insurance, whose assets Blue Owl manages, used insurance policyholder money to purchase loans from Blue Owl's distressed funds. Now, Blue Owl's funds can only be leveraged two to one. Kuvare Insurance can lever loans far more. 
+
+It might wrap those loans into a CLO that can be levered ten to one. So the same risks are now going into far more levered vehicles, but backed by insurance policyholders. By the way, Kuvare Insurance is a life insurance company that sells annuities, whole life, and universal life policies.
+
+We have to question whether it can cover those obligations now that it's being loaded with riskier investments, or apparently riskier investments. One more thing: part of the problem is that private credit is overexposed to software. These loans are a result of buyouts of software companies at high valuations, which were funded by private equity and private credit funds. 
+
+There are some estimates that over 20% of the entire private credit market is composed of loans to software buyout transactions. In a recent report, a strategist at UBS said that private credit could see default rates surge to 15% because of AI disruption. 
+
+Now, I have no idea if a 15% default rate is realistic at all, but such a level would be disastrous. The obvious question is: How did all of these pools of smart money miss what now seems so obvious—that the adoption of LLMs would impact the profitability of software companies? 
+
+Back then, LLMs were not a secret, although they were not widely used. ChatGPT was launched in November of 2022, and Perplexity was launched in December of 2022. But they were in the works. People inside can rarely see the paradigm shifts. 
+
+When they do, they are called whistleblowers or outsiders until after the fact. Then they are called seers. Private equity firms investing in funding buyouts of software companies were victims of their own enthusiasm and inability to see the paradigm shift occurring now, even as AI was under development back then. 
+
+Lastly, on Monday, Boaz Weinstein's Saba Capital and Cox Capital announced a tender offer to retail investors in Blue Owl's funds, but at a 20 to 35% discount. The significance of this is that Blue Owl investment funds are being priced by the smart money at a 20 to 30% discount. That's some haircut. 
+
+I flag Blue Owl this week again for two reasons. First, the $1.8 trillion private credit market is now huge and has a large impact on the US economy. The private credit market is opaque, but it has not suffered any serious credit issues, at least not yet. 
+
+What is even more opaque is the impact from the relationship between the private credit loans that private equity makes, which it then often sells into the insurance companies that these same private equity companies own or control, as in the case of Kuvare. 
+
+I will be exploring this private equity-life insurance relationship in depth this Monday with my guest, Tom Gober, who is a former life insurance examiner. In the end, if private equity only sold private credits to institutional investors, nobody would care. 
+
+But it has expanded into selling loans to retail investors, 401k plans, and insurance companies backed by individual policyholders. Now everybody cares. Monday saw a resumption of fears regarding the demise of multiple industries due to AI. 
+
+Cybersecurity stocks got hit hard with stocks like CrowdStrike down 10%. Fear also struck the payment sector with Visa down 4.5% and Mastercard down 6%. This was all earlier in the week. And IBM at one point was down 13% as Anthropic announced a product that would eat into IBM's COBOL language franchise. 
+
+Every day is an adventure. Now, I will admit I am no expert in software, so I really don't know, nor does anyone, how big an impact AI will have on software. But when it comes to payments, Visa and Mastercard have network effects. 
+
+They connect hundreds of millions of merchants with billions of consumers globally, and here, I don't think AI can impact that. And now for earnings. The two big tech earnings for the week were NVIDIA and Salesforce. 
+
+NVIDIA reported powerful numbers. How could it not? Last year, total AI-related CAPEX in the US was a total of $450 billion. Four hyperscalers—Meta, Google, Microsoft, and Amazon—have already projected $650 billion in AI CAPEX in 2026. 
+
+So NVIDIA's numbers had to be great, and they were. Revenue beat, EPS beat, guidance beat by a lot. I'll just flag one statistic. Q4 revenue was $68.1 billion, up 73% year-over-year and 20% quarter-over-quarter. 
+
+Earnings per share was up 82%. It's incredible to say that the company with the largest market cap in the world grew revenue 73% in a year. We can doubt the future of AI all we want, but these numbers are powerful. 
+
+And yet, the skeptical narrative about AI retains its power. NVIDIA's stock was up only 1% after hours, and opened down Thursday morning and closed down. And despite the 67% EPS growth projection for this fiscal year, NVIDIA's PE is only 25 times. 
+
+That relatively low multiple, especially compared to the company's growth rate, expresses all the doubts now surrounding AI. Salesforce: This stock has been rocked because of AI software fears. The stock is down 25% this year alone, and Wednesday night's earnings report did not help. 
+
+The stock was up on Thursday, but that report did not help. The software company maker reported healthy results, but unfortunately, its fiscal 2027 revenue view trailed Wall Street projections. Salesforce beat on earnings per share and revenue. 
+
+Its revenue grew 12% year-over-year in its fiscal fourth quarter, which is the company's fastest growth rate in two years. But, if you exclude the impact of the recent acquisition of Informatica, organic revenue growth was only 8%. 
+
+For the 2027 fiscal year, Salesforce provided revenue guidance that was a bit light, and given the AI overhang, this is not the time for light revenue guidance. One more thought on software stocks: I can't help but notice that despite the annihilation of the sector, no major insiders are stepping up to buy stock in their software companies. 
+
+What does that tell you? It tells me that maybe the insiders have their own doubts. Moving on, in housing, Home Depot and Lowe's reported. Nothing great here. With respect to Home Depot, earnings per share and revenue beat slightly. 
+
+However, same-store sales growth was a meager 0.4%. Home Depot kept its EPS guidance of flat to up 4%. Lowe's has been doing better than Home Depot of late. Its same-store sales growth was a better 1.3%. 
+
+It too beat on earnings and revenue but gave EPS guidance that was lower than expectations. These are great companies struggling through a period where the housing market is locked by the fact that existing homeowners have sub-4% mortgages. 
+
+The best news for all housing stocks just occurred, and that is that mortgage rates just ticked below 6%. Next up, First Solar, the solar company. First Solar's numbers were, to put it very plainly, a complete and utter disaster. 
+
+The solar group has generally been awful for the last few years, but the group is divided between those that sell to consumers and those that build massive solar panels for utilities. The residential side has been terrible for years for two reasons. 
+
+First, most consumers borrow to put up a solar system on their roof. With rates higher, volumes have collapsed. And subsidies, both state and now federal, have lessened or been eliminated. So a company like Enphase has seen its stock decline from $340 during COVID to a current $46. 
+
+However, until now, the commercial solar side has held up, and there was a hope that the demand for electricity and therefore renewables because of data centers would overcome the elimination of federal incentives. Nevertheless, it now looks like President Trump's dislike of all renewables has finally impacted commercial solar. 
+
+On Tuesday, after the close, First Solar's stock was down 15%. The company reported weak fourth quarter earnings results and full year guidance. Let me get a little specific so you'll get a flavor. First Solar earned $4.84, while analysts expected $5.15, so a miss. 
+
+For the full year, First Solar guided revenue to come out between $4.9 billion and $5.2 billion, which was way lower than the $6.12 billion that analysts were expecting. In response to these bad results, a bunch of analysts downgraded the stock. 
+
+Moving on to a company we've discussed before: Circle, the stablecoin company. They reported. This stock has been on a rollercoaster and has suffered with the decline in cryptocurrency prices. Circle went public in June of last year at $31. 
+
+It quickly jumped to $260 and it has been on a steady decline since then, and with the recent demise of crypto prices, the stock got as low as $50. Now Circle is actually a profitable company, and the results that they reported this week were good. 
+
+Revenue rose a very nice 77% to $770 million, and Circle's stablecoin called USDC posted circulation levels of $75.3 billion, up 72%. Shares were up 35% on Wednesday. I'd just point out that currently, Circle's sole source of revenue is from the interest rate it earns on the stablecoin reserves that it maintains. 
+
+And that interest rate is at the short end of the curve. So if the Fed continues to cut interest rates, that will hurt Circle's future revenue. The issue for Circle is that most of its current business is derived from customers in the crypto digital asset world. 
+
+It needs to diversify into the broader payments world, which is what it is trying to do. Finally, Warner Brothers reported. The numbers were not good. The company reported a loss of 10 cents. Revenue of $9.5 billion was down 6% year-over-year. 
+
+I said this last week, but I'll say it again. I don't think that Warner Brothers is worth its current $70 billion market cap. And Warner Brothers has a very difficult culture to manage. If I was a shareholder of Netflix, I'd be hoping that Paramount wins. 
+
+Netflix's current PE multiple of 26 times, I think, is starting to look interesting. And now for the mailbag. First up is from YesWeCan-u91: &quot;Steve: I think Friday was SHOCKING in many ways. GDP growth came in at 1.4% - half consensus.&quot;
+
+&quot;PCE and Core PCE came in at 2.9% - well above the Feds target. Also many bears were saying that if SCOTUS struck down the Trump tariffs, that would create market chaos because there would be uncertainty around whether companies can expect a refund or whether Trump will impose new tariffs using new legislation.&quot;
+
+&quot;Despite ALL of this negative news, the market went up on Friday and closed up for the week. Your analysis of this situation would be greatly appreciated.&quot; Before I answer this question, I would just point out that the market did have a bigger correction on Monday where the S&amp;P 500 declined by over 100 basis points. 
+
+This decline does express investor uncertainty regarding the tariffs, but it is hardly calamitous. So why has the market not reacted more? People love to catastrophize, and business news loves a good catastrophe headline. 
+
+Frankly, since the great financial crisis, there has been a competition amongst pundits to see who can predict the next calamity. They keep predicting it, but it has not yet happened. And while a recession is always possible, the US economy has proven to be incredibly resilient. 
+
+One bad day about tariffs is not going to tip the economy into a recession. For me, the big risks to watch are: 1. the amount being spent on AI and will it generate adequate returns, 2. the problems emerging in private credit and private credit's overexposure to software loans.
+
+3. the incredibly complex relationship between private equity, private credit, and the life insurance companies that private equity owns and or controls. These are the risks that I will be watching most closely. And our second question is from Gil, who says: 
+
+&quot;Hi Steve, As a retail investor, I am curious to know what resources professional investors have at their disposal that give them an edge over retail investor such as myself. I read the annual reports and other financial filings for companies that I follow, as well as any investor presentations and conference recordings.&quot;
+
+&quot;However, professional investors - such as guests you bring on to your show - seem to know much more about companies than what I can glean from publicly available resources. I would appreciate if you can walk us through the professional equity research process, highlighting the additional, non-public resources that professionals have.&quot;
+
+&quot;Additionally, under what circumstances do you believe the additional information possessed by professional investors is crucial to making good investment decisions and under what circumstances does it matter less?&quot; This is a great question. One of the purposes of my podcast is to bring institutional knowledge to retail. 
+
+Let me elaborate on what tools institutional investors wield that retail investors don't have access to. First, institutional investors have access to Bloomberg terminals and their equivalents, and that provides them with a wealth of data that they can easily access, from credit spread information to sector analysis to the ability to stress-test portfolios. 
+
+Second, institutional investors have access to sell-side research. And sell-side analysts, while they are not always the best stock pickers, they are incredibly knowledgeable about their companies. Sell-side analysts visit institutional firms all the time, and in those meetings, investors grill them about what is going on.
+
+Also, institutional investors have access to industry consultants and experts who are not sell-side analysts. Institutional investors also have access to company managements. This can occur at conferences or at meetings at firms. And it all sounds very impressive. And it is. 
+
+It's a wealth of information. But I just point out that despite this information advantage, the indices almost always outperform active managers anyway. This last Monday we dropped an interview with George Noble, a famous investor who used to run one of the largest equity mutual funds at Fidelity. 
+
+This is a stock jockey episode. George is very bullish on gold, and negative on crypto and the tech sector, and negative about AI infrastructure spending. He voiced opinions that you don't normally hear on business news. Feel free to send me questions about this interview. 
+
+It involved many different topics with some at times complex lingo. So check it out. And this coming Monday, we made a change because of a scheduling conflict. We had originally scheduled dropping an episode about life insurance a week from Monday, but we will now drop it this Monday. 
+
+As I said at the beginning, that interview is with Tom Gober, a former insurance examiner. Tom discusses how private equity has made massive inroads into the life insurance sector, and in the process, he believes, has increased the risk that the life insurance sector takes with its investments. 
+
+He also discusses how these same life insurance companies increase their leverage by moving insurance liabilities overseas via sophisticated reinsurance deals. This is an incredibly important story and it has complexities that I hope we explained well. Hope you tune in. 
+
+Be sure to check out our website realeismanplaybook.com. There you can easily access all our episodes as well as the financial literacy masterclasses. If you're enjoying these weekly wraps and our podcast, we kindly ask that you support the channel by subscribing. 
+
+Subscribing is the best way to help us expand this community to more like-minded individuals such as yourself, and we greatly appreciate your support. And that's the wrap. See you real soon. 
+
+This podcast is for informational purposes only and does not constitute investment advice. The host and guests may hold positions in stocks discussed. Opinions expressed are their own and not recommendations. Please do your own due diligence and consult a licensed financial advisor before making any investment decisions.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
