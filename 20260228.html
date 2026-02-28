@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - February 28, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">February 28, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">3</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=ENc0F5ir8Ak" target="_blank" rel="noopener">Keynote Address By Shaktikanta Das | India’s Financial Vision | The Great Reset | BT Summit</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/d8aonbazIXdeP94JJ5mXnMam7VctYGR6ggoMLfUhtqun7sajHCl6oTeIG3Ubrm-UpsBm0hllOQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Business Today</span><span class="channel-subs">(3.0M)</span></span>
+                        <span class="meta-sep">·</span><span>30:56</span>
+                        <span class="meta-sep">·</span><span>257 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-28</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Shaktikanta Das (Principal Secretary to the Prime Minister of India)</span></div>
+                </div>
+                <div class="tldr">India has successfully transitioned from &quot;Incredible India&quot; to &quot;Credible India,&quot; emerging as a primary engine of global growth with a projected 7.6% GDP growth rate for 2025-26, supported by disciplined fiscal management and transformative structural reforms.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR India has successfully transitioned from &quot;Incredible India&quot; to &quot;Credible India,&quot; emerging as a primary engine of global growth with a projected 7.6% GDP growth rate for 2025-26, supported by disciplined fiscal management and transformative structural reforms.    Economic...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>India has successfully transitioned from "Incredible India" to "Credible India," emerging as a primary engine of global growth with a projected 7.6% GDP growth rate for 2025-26, supported by disciplined fiscal management and transformative structural reforms.</p>
+<h3>Macroeconomic Resilience and Fiscal Prudence</h3>
+<ul>
+<li><strong>Economic Growth Outperformance:</strong> India remains the fastest-growing major economy, contributing nearly one-sixth of global real GDP growth post-pandemic.</li>
+<ul>
+<ul>
+<li><strong>GDP Estimates:</strong> Real GDP growth is projected at 7.6% for FY25-26, following a revised 7.1% for FY24-25.</li>
+<li><strong>Post-Pandemic Average:</strong> The five-year average real GDP growth (FY21-22 to FY25-26) stands at 7.8%.</li>
+</ul>
+</ul>
+<li><strong>Fiscal Discipline:</strong> The government has successfully navigated a fiscal glide path, reducing the deficit from a pandemic peak of 9.2% to a budgeted 4.3% for FY26-27.</li>
+<ul>
+<ul>
+<li><strong>Debt Reduction:</strong> Central government debt-to-GDP is targeted to drop to approximately 50% by 2031.</li>
+</ul>
+</ul>
+<li><strong>Quality of Expenditure:</strong> Central government capital expenditure (Capex) has increased four-fold since 2017-18, now making up 22.8% of total spending.</li>
+</ul>
+<h3>Industrial Resurgence and Infrastructure Scaffolding</h3>
+<ul>
+<li><strong>Manufacturing Shift:</strong> Policy focus has moved beyond services to create a manufacturing powerhouse via "Make in India" and Production Linked Incentive (PLI) schemes.</li>
+<ul>
+<ul>
+<li><strong>Electronics:</strong> India is now the world’s second-largest mobile phone manufacturer.</li>
+<li><strong>Pharma &amp; Defense:</strong> India ranks third globally in pharmaceutical volume and has seen a dramatic surge in defense exports.</li>
+</ul>
+</ul>
+<li><strong>Infrastructure Investment:</strong> Total effective capital expenditure is expected to reach ₹17.1 lakh crore in FY26-27, spanning highways, ports, and digital networks to reduce logistics costs.</li>
+<li><strong>Energy Transition:</strong> India achieved 50% of its installed electricity capacity from non-fossil fuel sources in June 2025—reaching its Paris Agreement goal five years ahead of schedule.</li>
+<ul>
+<ul>
+<li><strong>Green Hydrogen:</strong> The National Green Hydrogen Mission aims for 5 million metric tons of annual production by 2030.</li>
+</ul>
+</ul>
+</ul>
+<h3>Digital Public Infrastructure (DPI) and AI Strategy</h3>
+<ul>
+<li><strong>India Stack 2.0:</strong> The evolution of DPI is moving toward a more intelligent, AI-driven framework.</li>
+<ul>
+<ul>
+<li><strong>UPI Dominance:</strong> The Unified Payments Interface now processes over 20 billion transactions monthly, representing nearly half of global real-time digital payments.</li>
+<li><strong>Governance:</strong> Over 57 crore Jan Dhan accounts and 65 crore DigiLocker users have enabled seamless Direct Benefit Transfers (DBT) and digital record access.</li>
+</ul>
+</ul>
+<li><strong>Artificial Intelligence:</strong> Backed by the ₹10,300 crore India AI Mission, the focus is on "AI for public good."</li>
+<ul>
+<ul>
+<li><strong>Language Models:</strong> Development includes indigenous Large Language Models (LLMs) for 22 languages and "Small Language Models" (SLMs) designed for cost-effective use on smartphones.</li>
+</ul>
+</ul>
+</ul>
+<h3>Financial Stability and Global Trade Integration</h3>
+<ul>
+<li><strong>Balance Sheet Turnaround:</strong> India has resolved the "twin balance sheet problem" of stressed banks and over-leveraged corporates.</li>
+<ul>
+<ul>
+<li><strong>Banking Health:</strong> The sector is characterized by democratization of credit and the rise of fintech.</li>
+<li><strong>Household Resilience:</strong> Indian households remain net financial asset holders with increasing participation in equity markets.</li>
+</ul>
+</ul>
+<li><strong>Strategic Trade Policy:</strong> India is negotiating Free Trade Agreements (FTAs) with the UK, EU, and USA from a position of strength rather than protectionism.</li>
+<ul>
+<ul>
+<li><strong>Remittances:</strong> Inflows reached a record US $135.4 billion in FY24-25, providing a significant buffer for the balance of payments.</li>
+</ul>
+</ul>
+<li><strong>Demographic Dividend:</strong> With a median age of 29 and 68% of the population in the working-age group, India possesses the world's youngest large labor force.</li>
+</ul>
+<blockquote>
+"India's journey [is] from being an Incredible India to a Credible India, an India that inspires trust and confidence." — <strong>Shaktikanta Das</strong>
+</blockquote>
+<blockquote>
+"Today, India is not just reacting to the world; we are influencing its future direction and shape." — <strong>Shaktikanta Das</strong>
+</blockquote>
+<blockquote>
+"A developed India, that is Viksit Bharat, is not just a destination on a calendar; it is a commitment we make today for our future generation." — <strong>Shaktikanta Das</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Good evening, everyone. It feels nice to be back in Mumbai and see so many known faces with whom I had worked for six years here and have had the opportunity also of interacting on a continuous basis even now. 
+
+So Shri Arun Puri, Shri Siddharth Zarabi, Miss Kallie Purie, organizers of this event, BTV, National Stock Exchange, which is hosting this event, and ladies and gentlemen and distinguished members of this gathering. It's a great honor to stand before this August audience at the Business Today Banking and Economy Summit hosted at the prestigious National Exchange Building in Mumbai. 
+
+The high editorial standards, expert analysis, and impactful reports of Business Today have firmly established it as one of India's most trusted and authoritative voices in business journalism. In fact, over the years, the India Today group has emerged as an institution that has transformed a single magazine into one of India's most diversified and influential media powerhouses. My congratulations to Shri Arun Puri and his team.
+
+The presence of leaders from banking, policymaking, and industry in this event today is not just a celebration of excellence, but a reaffirmation of our shared responsibility to strengthen the foundations of growth, stability, and inclusion for India's future. We are living in an era of geopolitical shifts, more so given the events which are taking place since today morning. 
+
+So this is an era of geopolitical shifts, rapid economic change, technological disruption, and evolving expectations. In this backdrop, I propose to speak on India's journey from being an Incredible India to a Credible India, an India that inspires trust and confidence.
+
+The global economy is currently navigating an unusually turbulent and uncertain phase, shaped by persistent geopolitical fragmentation, supply chain realignments, and uneven economic momentum across regions. The International Monetary Fund, that is the IMF, underscores this fragility, noting that risks to global growth outlook remain firmly tilted to the downside. 
+
+Compounding this challenge is a possible tightening of financial conditions led by high public debt and widening fiscal deficits across several major economies. While global economic order is shifting under the weight of volatility, the Indian economy presents a picture of resilience and stability. 
+
+This has happened not by chance. It is indeed the result of surgically precise interventions by the Government of India and, I would also like to add, the Reserve Bank of India. In the immediate aftermath of the COVID-19 pandemic, India undertook calibrated fiscal and monetary expansion which were rolled back in time and ensured that undesirable cholesterol was not built up in our economic and financial systems. This was something unique among countries.
+
+As a result, the Indian economy has emerged much stronger after the pandemic. In fact, in the post-pandemic period, nearly one-sixth of global real GDP growth has come from India, thus establishing India firmly as one of the primary engines of global economic expansion. 
+
+Today, India is not just reacting to the world; we are influencing its future direction and shape. The National Statistics Office, that is the NSO, places India's real GDP growth for 25-26—and as you would be aware, the data was released yesterday—the NSO places India's real GDP growth for 25-26 at 7.6%, reaffirming India's position as the fastest-growing major economy in the world. 
+
+At a personal level, at a personal level, I'm delighted to note that the GDP growth for 24-25 is now estimated to be 7.1%. It was earlier estimated as 6.5%, but now it is estimated, according to the data released yesterday, at 7.1%. 
+
+24-25, as some of you would recall, was my last year in the Reserve Bank of India. And the latest GDP data not only aligns with the Reserve Bank's estimates at that time, but also dispels the narrative of gloom and doom in certain quarters about the impact of Reserve Bank's policies on the state of the economy during that year. 
+
+This data also unequivocally demonstrates the success of Reserve Bank's monetary policy in containing inflation without compromising the growth momentum of the economy. In fact, India's average real GDP growth during the post-pandemic five-year period, that is from 21-22 to 25-26, stands at an impressive 7.8%.
+
+Throughout my career, I've had the privilege of serving government in multiple capacities, a journey that has allowed me to closely witness India's extraordinary economic transformation. Seeing these shifts in policy, growth, and national ambition unfold from such proximity has given me a ringside view of India's transformative journey. 
+
+Drawing from this experience, I propose to reflect on nine building blocks that define the Indian economy and foster its credibility. Building block one relates to structural reforms and institutional strength. Over the past decade, India has pursued a steady and credible reform agenda anchored in strong institutions and implementation of several structural reforms. 
+
+This marks a pronounced shift towards a stable, institution-driven reform agenda that enhances global confidence and trust in our policy direction. Landmark reforms such as the implementation of the Goods and Services Tax, that is the GST, including the latest comprehensive reforms in GST which took place last year in the month of September; enactment of the Insolvency and Bankruptcy Code, that is IBC; and adoption of flexible inflation targeting have collectively reshaped the Indian economy. 
+
+We have also seen the implementation of the Real Estate Development Act, that is the RERA Act; measures to improve ease of doing business; strategic schemes for self-reliance; and several others. What is even more important is that India is avoiding reform complacency by steadily advancing its next-generation reforms. 
+
+In a landmark measure in November 2025—that is, last November—the government has operationalized the four labor codes to support a future-ready workforce and a more competitive business environment. As you would recall, the labor codes were enacted in 2020, but it was notified for implementation in November last.
+
+So the second building block which I am talking about relates to fiscal prudence and capital expenditure push, that is capex push. At a time when public debt remains elevated and fiscal space is under strain in many countries, India's fiscal trajectory stands out for combining consolidation with sustained public investment. 
+
+India has moved steadily along its fixed fiscal glide path, reducing the deficit from the pandemic peak of 9.2% of GDP in 20-21 to 4.4% in 25-26, and is budgeted to be 4.3% in the financial year 26-27. This is precisely because of the kind of surgical, directed interventions which were undertaken both by the government on the fiscal front and the Reserve Bank of India on the monetary front. 
+
+Central government debt to GDP is targeted to reduce from 56.1% in 25-26 to 50% plus minus one by 2031. In a world where many nations are struggling with inflationary pressures and widening fiscal gaps, India's approach stands out as a model of prudence and stability. 
+
+A key marker of this fiscal stability is the improved quality of expenditure. The share of central government capex, that is capital expenditure, in its total spending has risen from about 12.3% in 2017-18 to 22.1% in 25-26, and is budgeted to increase further to 22.8% in 26-27, strengthening the productive capacity of the economy.
+
+One of the most powerful drivers of India's growth story is its unprecedented investment in infrastructure. The country's capital expenditure has seen four-fold increase since 2017-18, rising to 11 lakh crore in 25-26, and is budgeted at 12.2 lakh crore rupees in 26-27. 
+
+The effective capital expenditure, that is capital expenditure including the grants-in-aid to states for capital expenditure, is expected to touch 17.1 lakh crore in 26-27. These investments are not concentrated merely in mega cities, but they span highways, ports, airports, digital infrastructure, logistics networks, and urban renewal projects across the nation. 
+
+These systemic interventions are reducing logistics costs, improving connectivity, and opening up opportunities beyond traditional urban clusters. Today, India is not just building infrastructure; it is building the scaffolding of a modern economy that can sustain high growth for decades.
+
+The third building block of the Indian economy relates to resurgence in manufacturing. Over the last decade, several policy measures were undertaken to shift the India story from a services-only narrative to a manufacturing resurgence. 
+
+Anchored by the Make in India initiative, the country has witnessed a sustained surge in industrial output. Strategic interventions like the Production Linked Incentive schemes have reinforced this momentum. The manufacturing revival is especially pronounced in technology-intensive sectors. 
+
+Electronics manufacturing has grown more than five-fold over the last decade, with record mobile phone production making India the second largest mobile phone manufacturer in the world. Ambitious semiconductor initiatives under this rupee 76,000 crore India Semiconductor Mission are building end-to-end capability. 
+
+India's pharmaceutical sector continues to dominate globally, ranking third by volume and being the biggest supplier of low-cost vaccines in the world. The automotive industry has regained strong traction post-pandemic with rising production and expanding exports and a clear movement up the global value chain. 
+
+Even India's defense manufacturing has witnessed a dramatic transformation with a rapid surge in exports over the past decade. The fourth building block I would like to refer to is services sector resilience and moving up the global value chain. 
+
+India's services sector is a major driver of exports and employment in the country. Services sector FDI inflows accounted for 80% of total FDI flows during 22-23 to 24-25. From being described as the world's back office, India is now transitioning into value-added services and innovation. 
+
+Nearly 1,800 Global Capability Centers, that is GCCs, have come up contributing about US dollar 68 billion to the economy and employing over 2 million professionals. GCCs in India have become strategic hubs where teams design global production, lead R&amp;D, and manage entire intellectual property portfolios. 
+
+Further, India's Artificial Intelligence, that is AI, strategy is taking clear shape, powered by rupee 10,300 crore India AI Mission. The initiative focuses on building sovereign AI capacity through development of indigenous Large Language Models, LLMs, across 22 Indian languages. 
+
+At the same time, India is taking a smart and practical approach by focusing on Small Language Models also, that is SLMs, which are cheaper to run, easier to train for Indian languages, and can work even on smartphones. Most importantly, India is building AI that solves real problems for citizens, from healthcare to agriculture, creating a model of AI for public good. 
+
+The recently held AI Impact Summit 2026 in New Delhi will position India as a global leader in this direction. The building block five which I would like to refer to relates to the external sector and trade integration. 
+
+India has entered 2026 with a remarkably resilient balance of payments, supported by strong services exports, rising remittances, and steady capital flows. Despite global volatility, India's services sector led by IT and business services continues to generate robust net receipts. 
+
+Remittances remain another backbone of external stability, reaching US dollar 135.4 billion in 24-25. Diversified exports, healthy inward transfers, and moderate external debt have collectively enabled India to navigate capital flow swings. 
+
+Amid global supply chain disruptions, rising tariffs, and geopolitical fragmentation, India has pursued an assertive strategy of trade diversification anchored in Free Trade Agreements and interim trade pacts. At a time when global trade weakened in 2025, India expanded its external engagement rather than retreating behind the veil of protectionism. 
+
+The government fast-tracked and concluded several major FTAs with UK, Oman, New Zealand, the European Union, and the USA. What is remarkable in these trade agreements is, as the Prime Minister has recently described, a paradigm shift in India's trade policy. 
+
+India is now negotiating trade agreements with major advanced economies from a position of strength and confidence. Illustratively, the India-EU Free Trade Agreement is a landmark next-generation partnership which unlocks unprecedented market access and places India in the central circle of global trade. 
+
+The India-US trade agreement represents another major breakthrough, sharply reducing the US tariff on Indian goods. The new trade agreements, together with India's broader diversification strategy into new markets and new products, reinforce India's position as a key driver of global economic growth.
+
+Building block six relates to strong balance sheets of banks, corporates, and households. For over a decade, India had grappled with the twin balance sheet problem of stressed banks and over-leveraged corporates. This made the financial system highly vulnerable to external shocks. 
+
+India's banking and financial sector, however, have since staged a complete turnaround. We are now witnessing a rapid transformation fueled by the so-called triple threat of progress, innovation, disruption, and the birth of entirely new business models. 
+
+Let me repeat, we are now witnessing a rapid transformation fueled by the so-called triple threat of progress, innovation, disruption, and the birth of entirely new business models. The democratization of credit, the revolution of digital payments, and the rise of fintech have turned what was once a rigid sector into a fluid and dynamic engine of growth. 
+
+We are no longer just providing services; we are building the infrastructure of aspiration for 1.4 billion people. Similarly, after a multi-year deleveraging cycle, Indian corporates now stand on much stronger financial footing. 
+
+Balance sheets have been significantly cleaned up with reduced leverage, stronger profitability, and markedly improved interest coverage ratios. The renewed financial strength has enabled large firms to weather the global disruptions while positioning themselves for the next phase of investment and expansion. 
+
+In fact, there are already visible signs of pickup in the private investment cycle. Indian households' balance sheets also remain equally resilient with household debt levels being far lower than those of major emerging economies. 
+
+Further, the increase in household borrowings is being led by better customers, prime and above. Further, increase in households' borrowings is being led by better-rated customers who are prime and above. Households also remain net financial asset holders, supported by a surge in equity participation. 
+
+Retail investors have become a powerful pool of stable domestic capital, symbolizing a cultural and structural shift towards long-term wealth creation. The building block seven relates to digital public infrastructure, that is the India Stack. 
+
+The infrastructure of 20th century India was defined by physical infrastructure. The 21st century infrastructure would be defined by Digital Public Infrastructure, that is DPI, which is the India Stack. This stack has become the global gold standard for how a nation can use technology to empower citizens. 
+
+The Unified Payments Interface, that is UPI, now processes over 20 billion transactions per month, accounting for nearly half of all global real-time digital payments. The digital-first approach has moved beyond simple payments to transformative governance through Direct Benefit Transfer, that is DBT. 
+
+DigiLocker has now more than 65 crore users, underscoring seamless access of digital records across sectors. With the world's cheapest data rates and over 950 million internet users, the focus has now expanded to Open Network for Digital Commerce, that is ONDC, and the Account Aggregator framework, which are democratizing e-commerce and credit for millions of small businesses. 
+
+We are now witnessing the birth of what may be called the Digital Stack or the India Stack 2.0, the next generation of India's digital public infrastructure. This would be a more nuanced, intelligent, AI-driven, and globally scalable evolution. 
+
+Leveraging over 57 crore Jan Dhan accounts, we are moving towards a frictionless financial future. Imagine a world where a voice-based conversational AI allows a farmer in a remote village or a street vendor in a tier-3 town to authorize transactions without needing a smartphone or high-speed internet. This is the democratization of opportunity.
+
+The building block eight relates to demographics, human capital, and jobs. While the developed world grapples with an aging crisis, India is entering its prime. With over 68% of population in the working-age group and a median age of around 29 years, India possesses one of the youngest labor forces globally. 
+
+To harness this potential, initiatives such as the Skill India Mission and the Pradhan Mantri Kaushal Vikas Yojana were launched to improve employability. Measures are being taken to connect job seekers with employers and to remove practical barriers of entering the workforce. 
+
+The e-Shram portal has been launched to register unorganized workers. Women-centric livelihoods are being strengthened through the Deendayal Antyodaya Yojana. Together, these initiatives reflect a shift from welfare-led employment to productivity-driven job creation. 
+
+And this is a big transformation. This is aimed at making India's workforce larger, more skilled, and more formally integrated into the economy. The ninth building block relates to energy transition and green growth. 
+
+India's energy transition has reached a point where ambition is no longer the headline; execution is. In June 2025, India achieved a landmark in its energy transition journey by reaching 50% of its installed electricity capacity from non-fossil fuel sources, more than five years ahead of the 2030 goal set by the Paris Agreement. 
+
+As of end 2025, the country's renewable energy capacity reached 258 gigawatt, more than tripling over the past decade, a reflection of sustained investment and policy support in solar, wind, and other non-fossil fuel assets. 
+
+The country has simultaneously driven down power shortages to nearly zero—it's actually 0.1%—even as demand has surged. A proof that clean energy is not just keeping up with India's growth, but in fact powering it. Under the National Green Hydrogen Mission, the country aims to produce 5 million metric tons of green hydrogen annually by 2030. 
+
+The scope for harnessing expanded nuclear energy has been enabled by opening the doors for the private sector. India's energy transition is therefore no longer a climate story alone; it is a story of economic self-assertion, industrial competitiveness, and strategic resilience in a world where energy has become the new currency of power.
+
+Let me now make some concluding observations. Driven by the nine solid building blocks which I have explained earlier, India is mapping a future that is already arriving. Today, we are not here to merely recount history. 
+
+The world is coming to us because India is one of the largest and most exciting markets. With our demographic strength, technological momentum, startup and AI ecosystem, stable macroeconomic framework, and rising competitiveness, India is poised to define the economic narrative of the 21st century. 
+
+There are several other building blocks like agriculture, tourism, healthcare, and a few others, which are also witnessing rapid strides, but I have not touched upon them in the interest of time. As we look ahead, one point stands very clear: India's growth story has become credible, and the coming decade will not be one where India simply participates in global growth, but one where India shapes it. 
+
+A developed India, that is Viksit Bharat, is not just a destination on a calendar; it is a commitment we make today for our future generation. It requires us to be bold in our disruption and uncompromising in our pursuit of stability. 
+
+We have to run a marathon and a sprint simultaneously, maintaining macroeconomic and financial sector stability while aggressively expanding the new frontiers of growth. I'll stop here. Thank you very much. Namaskar.
+
+Thank you so much, sir. May I please request you to stay back on this stage? I will also request Shri Arun Puri, Chairman of India Today, to please come up onto stage and felicitate our special guest as well. 
+
+Thank you so much, sir, for your inspiring words. Let's move to the center of the stage, sir. May we have the token of appreciation? Sir, please hold on. May I also request Shri Ashish Kumar Chauhan to come up onto the stage and felicitate you as well. 
+
+We have a bull with the family and the bell sign as well of the NSE to be presented to you. Warm round of applause ladies and gentlemen for Shri Shaktikanta Das. Thank you so much, sir. Thank you so much, Arun sir. And thank you so much, Ashish sir. Ladies and gentlemen, we meet...
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-1">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=MPTNHrq_4LU" target="_blank" rel="noopener">Full interview: Anthropic CEO responds to Trump order, Pentagon clash</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/ytc/AIdro_niBFv49gSx4rr1afMZU_Pv7SeuPKO2SMHvv0Ar7OKxM4o=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">CBS News</span><span class="channel-subs">(6.9M)</span></span>
+                        <span class="meta-sep">·</span><span>27:44</span>
+                        <span class="meta-sep">·</span><span>415.8K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-28</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Dario Amodei (CEO, Anthropic)</span></div>
+                </div>
+                <div class="tldr">Anthropic CEO Dario Amodei is defending the company’s &quot;red lines&quot; against domestic mass surveillance and fully autonomous weapons, arguing that the Pentagon’s retaliatory &quot;supply chain risk&quot; designation is a punitive and unprecedented overreach against an American company.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-1">TL;DR Anthropic CEO Dario Amodei is defending the company’s &quot;red lines&quot; against domestic mass surveillance and fully autonomous weapons, arguing that the Pentagon’s retaliatory &quot;supply chain risk&quot; designation is a punitive and unprecedented overreach against an American company....</div>
+                    <div class="summary-full" id="full-1">
+                        <p><strong>TL;DR</strong></p>
+<p>Anthropic CEO Dario Amodei is defending the company’s "red lines" against domestic mass surveillance and fully autonomous weapons, arguing that the Pentagon’s retaliatory "supply chain risk" designation is a punitive and unprecedented overreach against an American company.</p>
+<h3>The "Red Lines": Limits on Military &amp; Government Use</h3>
+<p>Anthropic maintains that it supports 99% of military use cases, including combat support and cyber operations, but refuses to concede on two specific applications:</p>
+<ul>
+<li><strong>Domestic Mass Surveillance:</strong> </li>
+<ul>
+<ul>
+<li><strong>Legal Lag:</strong> Amodei warns that AI can now analyze bulk private data in ways that bypass the intent of the Fourth Amendment, effectively getting ahead of current privacy laws.</li>
+</ul>
+</ul>
+<li><strong>Fully Autonomous Weapons:</strong> </li>
+<ul>
+<ul>
+<li><strong>Technical Unreliability:</strong> Current AI models possess a fundamental "unpredictability" that makes them unsafe for use in weapons that fire without human intervention.</li>
+<li><strong>Oversight Concerns:</strong> Amodei argues that "concentrating power" into an army of millions of drones controlled by a machine removes the essential chain of human accountability and common sense.</li>
+</ul>
+</ul>
+</ul>
+<h3>Failed Negotiations and the "Three-Day Ultimatum"</h3>
+<p>The conflict escalated rapidly following a deadline imposed by the Department of Defense (DOD).</p>
+<ul>
+<li><strong>Meaningless Concessions:</strong> Amodei claims the Pentagon’s proposed deal included "vague" language—such as allowing restrictions only "if the Pentagon deems it appropriate"—which offered no actual protection against the two red lines.</li>
+<li><strong>The Ultimatum:</strong> The government gave Anthropic a three-day window to agree to all "lawful use" terms or face designation as a supply chain risk under the Defense Production Act.</li>
+<li><strong>Continuity of Service:</strong> Despite the friction, Anthropic has offered to help the DOD "offboard" its technology and transition to competitors to ensure American troops aren't left with a 6-to-12-month capability gap.</li>
+</ul>
+<h3>Response to "Supply Chain Risk" and Political Attacks</h3>
+<p>Defense Secretary Pete Hegseth and President Trump have publicly criticized the company, with Hegseth designating them a supply chain risk.</p>
+<ul>
+<li><strong>Punitive Measures:</strong> Amodei notes that "supply chain risk" designations are typically reserved for foreign adversaries like Kaspersky Labs or Chinese chip makers; applying it to a patriotic U.S. firm is "retaliatory."</li>
+<li><strong>Market Impact:</strong> While the designation aims to create "fear, uncertainty, and doubt," Amodei asserts the legal impact is limited only to military contracts and will not threaten Anthropic’s overall business survival.</li>
+<li><strong>Rejection of "Woke" Labels:</strong> Amodei dismissed claims that the company is "left-wing," citing his previous cooperation with the administration on energy provisioning and AI-driven healthcare initiatives.</li>
+</ul>
+<h3>Private Sector Autonomy vs. Congressional Action</h3>
+<p>A central tension in the briefing is whether a private company should dictate terms to the Pentagon.</p>
+<ul>
+<li><strong>Technical Expertise:</strong> Amodei argues that because AI doubles in computation every four months, the creators are currently the only ones who understand its front-line risks and reliability issues.</li>
+<li><strong>Legislative Failure:</strong> While acknowledging that Congress should ultimately set these guardrails, Amodei argues that because "Congress is not the fastest-moving body," private companies must "draw a line in the sand" in the interim.</li>
+<li><strong>The First Amendment:</strong> He frames the company’s refusal to comply with the administration's demands as an exercise of First Amendment rights and a defense of "democratic values."</li>
+</ul>
+<blockquote>
+"We are okay with 98 or 99 percent of the use cases they want to do except for two... domestic mass surveillance and fully autonomous weapons." — <strong>Dario Amodei</strong>
+</blockquote>
+<blockquote>
+"To our knowledge the supply chain designation has never been applied to an American company. It has only been applied to adversaries... being lumped in with them feels very punitive." — <strong>Dario Amodei</strong>
+</blockquote>
+<blockquote>
+"The right for our military officers to make decisions about war themselves and not turn it over completely to a machine... these are fundamental principles." — <strong>Dario Amodei</strong>
+</blockquote>
+<blockquote>
+"We are patriotic Americans... Disagreeing with the government is the most American thing in the world." — <strong>Dario Amodei</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-1">
+                        We appreciate you taking the time. You are Dario Amodei, the CEO of Anthropic, is that right? 
+
+That's correct. 
+
+Great. Well, my first question to you is why won't you release Anthropic's AI without restrictions to the US government?
+
+Yeah, so you know, we should maybe back up a bit for a little bit of context. So you know, Anthropic actually has been the most lean forward of all the AI companies in working with the US government and working with the US military. We were the first company to, you know, put our models on the classified cloud. 
+
+We were the first company to make custom models for national security purposes. We're deployed across the intelligence community and the military for applications like cyber, you know, combat support operations, various things like this. And you know, the reason we've done this is, you know, I I believe that we have to defend our country. 
+
+I believe we have to defend our country from autocratic adversaries like China and like Russia. And so we've been we've been very, you know, we've been very lean forward. We have a substantial, you know, public sect team, public sector team. But you know, I have always believed that you know, as we defend ourselves against our autocratic adversaries, we have to do so in ways that defend our democratic values and preserve our democratic values. 
+
+And so we have said to the Department of War that we are okay with all use cases, basically 98 or 99 percent of the use cases they want to do except for two that we're concerned about. One is domestic mass surveillance. There we're worried that you know things may become possible with AI that weren't possible before. 
+
+An example of this is something like taking data collected by private firms, having it bought by the government and analyzing it in mass via AI. That actually isn't illegal; it was just never useful before the era of AI. So there's this way in which domestic mass surveillance is getting ahead of the law. The technology is advancing so fast that it's out of step with the law. 
+
+Case number two is fully autonomous weapons. This is not the partially autonomous weapons that are used in Ukraine or or you know could potentially be used in Taiwan today. This is the idea of making weapons that fire without any human involvement. Now even those I think that you know they you know our adversaries may at some point have them so perhaps you know they may they may at some point be needed for the defense of democracy, but we have some concerns about them. 
+
+First, the AI systems of today are nowhere near reliable enough to make fully autonomous weapons. You know anyone who's worked with AI models understands that there's a basic unpredictability to them that in a purely technical way we have not solved. And there's an oversight question too. 
+
+If you have a large army of drones or robots that can operate without any human oversight where there aren't human soldiers to make the decisions about who to target, who to shoot at, that that presents concerns. And we need to have a conversation about about how that's overseen and we haven't had that conversation yet. And so we feel strongly that you know for for you know those two use cases should should not be allowed.
+
+The Pentagon has told us that they have agreed in principle to these two restrictions and they wanted to strike a deal. Why couldn't an agreement be reached?
+
+So there were you know there there were kind of several stages of this, all done quickly and kind of all you know determined by the kind of three-day you know the the kind of very limited three-day window that they gave us right? They gave us an ultimatum to you know to agree to their terms in three days or you know be designated a supply chain risk or Defense Production Act. I guess we'll get to that later. 
+
+But during that time there were few back and forth. You know at one point they sent us language that you know appeared on the surface to meet our terms but it had all kinds of language like if the Pentagon deems it appropriate or you know you know or to do anything to do anything in line with laws. So it didn't actually concede in any in it didn't actually concede in any meaningful way and and there were further steps of it that that also did not concede in any meaningful way. 
+
+We have wanted to strike a deal since the beginning. If you want to get a sense of the Pentagon's position of it, the Pentagon spokesman Sean Parnell the day before tweet you know he reiterated their position: we only allow all lawful use. And this was the same as when they sent with they sent us they sent us their terms. So they they have not exceeded in in in in they have not in any way agreed to our exceptions in any meaningful way.
+
+The President posted today in response to the situation. &quot;Their selfishness,&quot; referring to Anthropic, &quot;is putting American lives at risk, our troops in danger, and our national security in jeopardy.&quot; Is what do you think? What's your response?
+
+So you know in in the statement we issued yesterday and also in the one we issued today, we said that we were willing even if even if the Department of War or even if the Trump administration takes these unprecedented measures against us, this kind of supply chain designation that's normally used against foreign adversaries, we have said that you know even if they take these extreme actions, we'll do everything we can to support the Department of War to provide its technology for as long as it takes to offboard us and and onboard you know a competitor who's willing to do these things that that that we are not that we are not willing to do.
+
+Prepared to exit?
+
+Yes. So so we have offered continuity. We're actually deeply concerned about this. We're deeply concerned about the kind of interruption of service which is exactly what's happening when we're designated a supply chain risk, right? 
+
+When we're designated a supply chain risk, they say like you know you have to be off all of our systems and I've talked to people on the ground, uniformed military officers who say this is essential. Not having this will set us back 6 months, 12 months, maybe longer and so that's why we've tried so hard to try to get to try to reach a deal. 
+
+But again the three-day ultimatum, the risk to designate us a supply chain, the whole timeline has been driven by the Department of War not by us. We are trying to provide continuity, we are trying to provide the services, we are trying to we are trying to reach a deal here.
+
+So then what does this mean for the safety of Americans?
+
+Yeah, you know I would I would say a couple things. You know in the short run it means and you know it's it's up to the Department of War, you know we're still trying to reach a we're still trying to reach a deal with them, we're still trying to talk to them. You know.
+
+You are? Are they talking with you?
+
+We you know we've we've received various communications. We haven't seen anything that you know that satisfies our we haven't seen anything that satisfies our concerns but you know I I mean that just in the broad sense that we are still you know we're still interested in working with them as long as it is in line with our red lines. 
+
+But it sounds like you're still really far apart and now Secretary Hegseth has determined you all a supply chain risk and said what he's said. So do you think it's possible at this point to come to an agreement?
+
+You know I look an agreement requires both sides. We for for our side are willing to serve the national security of this country, we are willing to provide our models to all branches of the government including the Department of War, the intelligence community, you know the more civilian branches of the government under the terms that we've provided, under our red lines. 
+
+We are always willing to do that, right? You know we're you know we you know we don't take offense here. The reason we're providing our technology in this way is that we want to support the you know national security of the United States. We're not doing it you know for the sake of Pentagon officials, we're not doing it for the sake of a particular administration, we're doing it because it's good for the national security of the United States and we're going to continue to do that.
+
+Why do you think that it is better for Anthropic, a private company, to have more say in how AI is used in the military than the Pentagon itself?
+
+So first I would say and I think this is an important point, no one on the ground has actually to our knowledge run into the limits of any of these of any of these exceptions. These are excuse me these are 1 percent of use cases and and ones that that we have seen no evidence on the ground have been done. 
+
+Now now again I can't say what their plans are, that you we don't know but but we have no evidence that these use cases have actually have actually run into trouble. We've spread across the Department of War and other parts of the government without without running into any of these problems. Now in terms of these one or two narrow exceptions, I actually agree that in the long run we need to have a democratic conversation. 
+
+In the long run I actually do believe that it is Congress's job. If for example domestic there are possibilities with domestic mass surveillance, government buying of you know bulk data that has been produced on Americans, locations, personal information, political affiliation to build profiles and it's now possible to analyze that with AI, the fact that that's legal that seems like you know the judicial interpretation of the Fourth Amendment has not caught up or the laws passed by Congress have not caught up. 
+
+So in the long run we think Congress should catch up with where the technology is going but Congress is not the fastest moving body in the world. And for right now we're the ones who see this technology on the front line. I would expect that the Department of War, I would expect them to be thoughtful about these issues to you know to proactively you know think think about these issues and so I would have expected them not not to have any concern and and you know for us to have a for us to have a conversation. 
+
+But I think in the absence of that you know a you know we need to look at the technology, we need to look at what it's capable of in terms of reliability and we need to look at the ways in which it's getting ahead of the law and in which it's escaping the intent of the law. Those are some very narrow areas, but I think that they're important. 
+
+These are things that are fundamental to Americans, right? The the the the the right not to be spied on by the government, right? The right for our military officers to make decisions about war themselves and not turn it over completely to a machine. These are these are fundamental principles.
+
+But in the name of fundamental principles, why should Americans trust you, the CEO of a private company, to make these decisions instead of the federal government?
+
+Well I would give I would give two answers to that. One you know a a you know we are we are a private company, right? We can choose to sell or not sell whatever we want. There are other providers. If the DOD, the government you know doesn't like the services we provide or or or the way that we make them, they can use another contractor. 
+
+This would have been the normal way to handle this right? Just to say, I would have disagreed but I would have respected them if they said DOD we don't want to work with Anthropic, our principles are not aligned with yours, we're going to go with one of the other models. 
+
+But they've both extended that to parts of the government beyond the DOD and tried to punitively revoke our contracts beyond DOD and they've done this supply chain designation thing which basically says that if you're part of a if you're another private company who has military contracts you can't use Anthropic in you can't use Anthropic in a way that touches those military contracts. 
+
+So they're reaching into the behavior of private enterprise and it's very hard to interpret this in any way other than punitive. To our knowledge the supply chain designation has never been applied to an American company. It has only been applied to ad you know adversaries like you know Kaspersky Labs which is a Russian cybersecurity company that you know that is suspected of suspected of ties to the Russian government, Chinese chip suppliers. 
+
+You know being being lumped in with them it it feels very punitive and inappropriate given the amount that we've done for US national security.
+
+So you say you've done so much for US national security, you're adhering to these two restrictions that you want to keep. Do you think that Anthropic knows better than the Pentagon here?
+
+We don't look you know I one of the things about a free market and free enterprise is different folks can provide different products under different principles. Remember this isn't just about terms of use, this isn't just about you know this is what our model is legally allowed to do. 
+
+Our model has a personality. It's capable of certain things, it's able to do certain things reliably, it's able to not do certain things reliably and I think we are a good judge of what our models can do reliably and what and what they cannot do reliably. And I think we do have a good view into how the technology again is getting ahead of the law. 
+
+And but I would say over I would say again I I actually agree with you that this is not tenable in in the long term. I don't think the right long-term solution is for a private company and the Pentagon to argue about this. I think Congress needs to act here and we are thinking about that, we are thinking about what Congress could do to impose some of these guardrails that don't hinder our ability to defeat our adversaries but that you know allow us to defeat our adversaries in a way that's in line with the values in in line with the values of our country. 
+
+But as you know Congress doesn't move fast.
+
+No.
+
+So you know I think I think in the meantime we do need to draw a line in the sand.
+
+So until Congress acts, you're saying you are going to hold firm here. But there are so many other companies out there that do business with the US government. Boeing builds aircraft for the US military. Boeing doesn't tell the US military what to do with that aircraft. How is this any different?
+
+Again I would say two ways that it's different. One I would point again to the newness of the technology, right? When a technology is well established then you know the you know I you know I mean there are lots of technical things about aircrafts but but you know I think a you know a general has a pretty good understanding of like how an aircraft work. Like aircrafts have been around for a long time.
+
+But there's plenty of innovation inside the aerospace industry.
+
+Sure, but not at the pace that not at the pace that we see with AI. AI is moving so fast. I've talked often about how AI is on an exponential trend. Every the models you know the the amount of computation that goes into the models doubles every four months. We have never seen anything like this pace of innovation.
+
+But if that pace continues apace, then the US government will never be caught up. So how does that logic apply if you have long argued that you want to work with the US government to provide you know the appropriate national security? If it's going to be such a fast development for the foreseeable future, Congress can't catch up, then why turn your back on them?
+
+Well I I think there's only I think there's only catching up once, right? So the pace of the technology is fast, the issues that arise are few but very important. Again we we only have two of these: domestic mass surveillance, fully autonomous weapons. We need to have a conversation with Congress to help them understand some some of the risks associated with it. Again this is the most American thing in the world. No one wants to be spied on by the US government. No one wants to be spied on by the US government.
+
+At the exact same time, some of our greatest adversaries have technology that is either quickly catching up to us or will eventually do so. Perhaps already caught up. And so our if our military is critical to defending the American people and critical to our democracy, freedom, the republic, why stay in this position and say no, we're not going to cooperate?
+
+Again you know again that's an abstract that's an abstract argument but let's look at the actual two uses. Domestic mass surveillance does not help the US catch up with its adversaries. Domestic mass surveillance is is you know is an abuse of the government's authority even where it's technically legal. So that one we can rule out. 
+
+Fully autonomous weapons, there I actually am concerned that we may need to keep up. It you know it's it's not the technology is not ready. And so we are not, as I said, we are not categorically against fully autonomous weapons. We simply believe that the reliability is not there yet and that we need to have a conversation about oversight. 
+
+And we have offered to work with the Department of War to help develop these technologies to prototype them in a sandbox. But they weren't interested in this unless they could do whatever they want right from the beginning. And and so you know again we we need to balance the existential need - no one has emphasized it more than me - to defeat our adversaries, but we need to fight we need to fight in the right way. 
+
+You know this is like saying if our adversaries commit war crimes shouldn't we commit war crimes as well? I'm not saying this amounts to war crimes, what I'm saying is that the the essence of our values is that we have to find a way to win in a way that preserves those values. We can't just be a total race to the bottom. We we you know we have to have some principles. 
+
+And these are very few. This technology can radically accelerate what our military can do. I've talked to admirals, I've talked to generals, I've talked to combatant commanders who say this has revolutionized what we can do. And and these are just the very limited use cases we've deployed so far. 
+
+And and so why harp on the 1 percent of use cases that are against our values when we can pursue the 99 percent of use cases that are in favor of our that advance our democratic values and that defend this country and we can even try to study that last 1 percent of use cases to understand if there is a way to do them consistent with our values. That is our position and I think that's very reasonable.
+
+Give me one or two examples of what could go wrong.
+
+So the the kind of thing that we I there are two classes of things that I could imagine could go wrong. One again is around this idea of reliability, which is just it targets the wrong person, it shoots a civilian, it doesn't show the judgment that a human that a human soldier would show. Friend friendly fire or shooting a civilian or just the wrong kind of things. 
+
+We don't want to sell something that we don't think is reliable and we don't want to sell something that could get our own people killed or that could get innocent people killed. Second is this question of oversight. If you think about it you you human soldiers there's you know a whole chain of accountability that assumes a human uses their common sense. 
+
+Suppose I have an army of 10 million drones all coordinated by one person or a small set of people. Can't you know I think it's easy to see that there are accountability issues there, right? That that you know concentrating power that much doesn't work. It it doesn't mean we shouldn't have this fleet again I don't know maybe we need it at some point because our adversaries will have it. 
+
+But we need to have a conversation about accountability, about who is holding the button and who can say no. And I think that's very reasonable.
+
+President Trump has called Anthropic a left-wing woke company. Is this decision at all driven by ideology?
+
+You I look I can't speak for what you know I can't speak for what other parties are doing and what they're doing.
+
+But you and here at Anthropic.
+
+Yeah look we but we we I think have tried to be very neutral. We speak up on issues of AI policy where we have expertise. We don't we don't have views we don't think about general political issues and we try to work together whenever there's common ground. 
+
+For example I went to an event in Pennsylvania with the President, with Senator McCormick, about provisioning energy, provisioning enough energy to power our AI models in the provisioning our AI models in the US. I spoke to the President, I you know I expressed that I you know I agreed with many aspects of what he's doing. 
+
+We also did a pledge around you know using AI for health and we've done a number of other things. When the AI action the administration's AI action plan came came when the administration's AI action plan came out we said that there were you know many perhaps most aspects of it that we agreed with. 
+
+So this idea that we've somehow been partisan or that we haven't been evenhanded, we've been studiously evenhanded. And again we can't control if someone, even even the President, you know has an opinion about us. That's not under our control. What's under our control is that we can be reasonable, we can be neutral and we can stand up for what we believe.
+
+1 to 10 will there be an agreement with the federal government on this in the future or do you think this is over?
+
+Look I I have no crystal ball for our part our position is clear. We have these two red lines, we've had them from day one. We are still you know we are still advocating for those red lines. We're not going to move on those red lines. 
+
+If we can get to the point with the department where you know where we can see things the same way then perhaps there could be an agreement. For our part and for the sake of US national security we you know we continue to want to make this work. But you know again it takes two parties to have an agreement.
+
+If you had a moment with the President right now, tonight, what would you say to him?
+
+You know I again I would say we are patriotic Americans, we have done everything we have done has been for the sake of this country, for the sake of supporting US national security. Our leaning forward in deploying our models with the military was done because we believe in this country, we believe in defeating our autocratic adversaries, we believe in defending America. 
+
+The red lines we have drawn we drew because we we we believe that crossing those red lines is contrary to American values and we wanted to stand up for American values. And when we were threatened with supply chain designation and Defense Production Act which are unprecedented intrusions into the private economy by the government we we exercised our classic First Amendment rights to speak up and disagree with the government. 
+
+Disagreeing with the government is the most American thing in the world. And we are patriots. In everything we have done here we have stood up for the values of this country.
+
+Do you think Anthropic can survive this as a business?
+
+You know when the Pres when Secretary Hegseth tweeted out the supply chain designation he said something that was inaccurate that far exceeds their lawful authority. He said that any company that has a military contract can't do business with Anthropic at all. That is not what the law said. We put out a statement that pointed to the law. 
+
+All the law says is that as part of its military contracts any company cannot use Anthropic as part of those military contracts. That is a very that is a much more limited impact.
+
+So you're confident then Anthropic can survive this?
+
+Not only survive it, we're going to be fine. The impact of this designation is fairly small. Now the nature of the tweet that the Secretary put out was designed to create uncertainty, was designed to create a situation where people believed the impact would be much larger, was designed to create fear, uncertainty and doubt. But we won't let that succeed. We will be fine.
+
+Critics call this an abuse of power what the Pentagon is doing and what the White House is doing. Do you believe this is an abuse of power?
+
+You know again I would return to the idea that this is unprecedented.
+
+But is it an abuse of power?
+
+You know this has never happened before. This designation has never happened before with an American company. And I think it was made very clear in some of their statements, in some of their language, that this was retaliatory and punitive. I don't I don't know what else to call it. Retaliatory and punitive.
+
+So will you take legal action?
+
+We we I've I've stated in our statement again all we've received is a tweet. We haven't received an actual supply chain you know there's there's been no actual action by the government. There's just been tweets saying what they're going to saying what they claim they're going to do.
+
+You haven't received any formal information?
+
+We we haven't received any formal information whatsoever. All we've seen are tweets from the President and tweets from Secretary Hegseth. When when we receive some kind of formal action we will look at it, we will understand it, and we will challenge it in court.
+
+What do you think that says about their ability to navigate major national security issues if this is the way that you say they're communicating with you?
+
+Again you know I I don't want to make this I don't want to make this about this particular administration, I don't want to make this about particular people. We are trying to do whatever we can to support US national security. That's why we're committed to trying to find a deal. 
+
+If we can't find a deal, that's why we're committed to to offboarding in you know in a smooth way that allows our warfighters to continue to be supported as they as they go into conflicts. And that's why we're committed to standing up to you know actions that we think are not in line with the values of this country. 
+
+It's not about any particular person, it's not about any particular administration, it's about the principle of standing up for what's right.
+
+Dario Amodei, CEO of Anthropic. Thank you very much. I appreciate your time.
+
+Thank you so much for having me. Thank you.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-2">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=kzWbCF_IkHY" target="_blank" rel="noopener">Software Stocks Implode, Claude's Hit List, State of the Union Reactions, Trump's Tariff Pivot</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">All-In Podcast</span><span class="channel-subs">(1.0M)</span></span>
+                        <span class="meta-sep">·</span><span>81:08</span>
+                        <span class="meta-sep">·</span><span>205.9K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-02-28</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Chamath Palihapitiya (Co-host, All-In Podcast)</span> <span class="tag tag-person">Jason Calacanis (Co-host, All-In Podcast)</span> <span class="tag tag-person">David Sacks (Co-host, All-In Podcast)</span></div>
+                </div>
+                <div class="tldr">The public markets have shifted from questioning *when* AI will impact corporate cash flows to *if* traditional business models will survive, causing massive &quot;multiple compression&quot; in software stocks, while the U.S.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-2">TL;DR The public markets have shifted from questioning when AI will impact corporate cash flows to if traditional business models will survive, causing massive &quot;multiple compression&quot; in software stocks, while the U.S. faces a critical bottleneck in data center expansion due to...</div>
+                    <div class="summary-full" id="full-2">
+                        <p><strong>TL;DR</strong></p>
+<p>The public markets have shifted from questioning *when* AI will impact corporate cash flows to *if* traditional business models will survive, causing massive "multiple compression" in software stocks, while the U.S. faces a critical bottleneck in data center expansion due to energy constraints and local opposition.</p>
+<h3>AI Disruption and the "SaaS-pocalypse"</h3>
+<ul>
+<li><strong>The "Claude Hit List":</strong> Anthropic’s rapid-fire releases have triggered significant market cap losses in specific sectors.</li>
+<ul>
+<ul>
+<li><strong>Impacted Sectors:</strong> Legal software (Thomson Reuters, LexisNexis), cybersecurity (CrowdStrike, Okta), and legacy infrastructure (IBM fell 13% after Claude’s COBOL modernization announcement).</li>
+</ul>
+</ul>
+<li><strong>Tactical vs. Strategic Market Shifts:</strong> Chamath Palihapitiya argues the market has moved from a "When" to an "If" mindset regarding cash flows.</li>
+<ul>
+<ul>
+<li><strong>Valuation Compression:</strong> Investors are demanding a "margin of safety," leading to lower price-to-earnings multiples and higher weighted average cost of capital (WACC) because of existential "event risk."</li>
+</ul>
+</ul>
+<li><strong>The "Citrini" Controversy:</strong> A viral Substack post predicting an AI-driven economic death spiral (where AI job cuts lead to a total collapse in consumer spending) was criticized for being "science fiction."</li>
+<ul>
+<ul>
+<li><strong>Short-Seller Ties:</strong> David Sacks noted reports that the article's authorship was linked to a hedge fund holding short positions in the named companies.</li>
+</ul>
+</ul>
+<li><strong>Jevons Paradox:</strong> Sacks and Friedberg argue that lowering the cost of software engineering increases total demand rather than destroying it, citing rising software engineer job postings and high salaries ($570k+ at Anthropic).</li>
+</ul>
+<h3>The Evolution of Knowledge Work</h3>
+<ul>
+<li><strong>Internal Automation:</strong> Jason Calacanis detailed his firm’s use of "OpenClaude" agents to automate business processes.</li>
+<ul>
+<ul>
+<li><strong>Efficiency Gains:</strong> Current employees are seeing 10-20% weekly efficiency increases by automating SDR tasks, podcast transcript analysis, and content creation.</li>
+<li><strong>Business Model Shifts:</strong> High-end knowledge workers are becoming "agent orchestrators," allowing small teams to produce the output previously requiring dozens of employees.</li>
+</ul>
+</ul>
+<li><strong>Capital Preservation:</strong> Chamath predicts a "second shoe" to drop: tech companies must stop "incinerating" cash on stock-based compensation (SBC) to build the multi-year cash runways needed to navigate the AI transition.</li>
+</ul>
+<h3>Energy Constraints and the Data Center Buildout</h3>
+<ul>
+<li><strong>The "BANANA" Problem:</strong> David Sacks introduced the acronym "Build Absolutely Nothing Anywhere Near Anyone" to describe the 100+ data center projects currently facing local opposition.</li>
+<ul>
+<ul>
+<li><strong>Economic Cost:</strong> Analysis suggests approximately $130B in lost revenue over two years if 12 gigawatts of planned capacity is canceled due to local pushback.</li>
+</ul>
+</ul>
+<li><strong>Rate Payer Protection Pledge:</strong> President Trump announced support for a pledge requiring tech "hyperscalers" to fund their own power needs or build "behind the meter" generation.</li>
+<ul>
+<ul>
+<li><strong>Policy Goal:</strong> This aims to prevent residential electricity rates from rising while allowing the U.S. to win the AI infrastructure race against the Middle East and China.</li>
+</ul>
+</ul>
+<li><strong>Data Centers as "The New Oil":</strong> David Friedberg argues that data centers are the new foundational infrastructure; if the U.S. blocks them, the economic value will simply migrate to more permissive jurisdictions.</li>
+</ul>
+<h3>State of the Union &amp; Policy Shifts</h3>
+<ul>
+<li><strong>Trump’s SOTU Performance:</strong> The "Besties" generally viewed the speech as effective, noting high viewer approval ratings in flash polls.</li>
+<ul>
+<ul>
+<li><strong>The "Insider Trading" Moment:</strong> A highlight included Elizabeth Warren standing to support Trump’s call to ban congressional insider trading, prompting a rare moment of bipartisan humor.</li>
+</ul>
+</ul>
+<li><strong>SCOTUS Tariff Ruling:</strong> The Supreme Court (6-3) struck down Trump’s "emergency powers" tariffs, marking a significant check on executive authority.</li>
+<ul>
+<ul>
+<li><strong>The Pivot:</strong> Trump immediately invoked Section 122 of the 1974 Trade Act to implement a temporary 15% global tariff while the administration builds a new legal case under Section 301 (unfair trade practices).</li>
+</ul>
+</ul>
+<li><strong>Esprit de Corps:</strong> Jason Calacanis called for an end to "lawfare" and a return to bipartisan collaboration, though Sacks remained skeptical, citing ongoing radicalization in the Democratic party.</li>
+</ul>
+<h3>Science Corner: The Fountain of Youth?</h3>
+<ul>
+<li><strong>Yamanaka Factors in Humans:</strong> Life Biosciences (co-founded by David Sinclair) has reached a Phase 1 clinical trial agreement with the FDA—the first human application of Yamanaka Factors to reverse cellular aging.</li>
+<ul>
+<ul>
+<li><strong>Initial Target:</strong> Reversing blindness by rejuvenating retinal cells in patients with glaucoma or ocular "strokes."</li>
+<li><strong>The Mechanism:</strong> An AAV virus delivers DNA to the eye, which can be "turned on" by an antibiotic (doxycycline) to reset the epigenetic clock and restore youthful cell function.</li>
+</ul>
+</ul>
+</ul>
+<blockquote>
+"The market used to debate 'when' cash flows would be impacted. This is no longer a 'when' moment; the market is in an 'if' mode. Are these cash flows durable at all? This causes a massive compression in multiples." — <strong>Chamath Palihapitiya</strong>
+</blockquote>
+<blockquote>
+"The economy is not a pie; it’s a garden, and technology is rain. Technological innovation increases the growth rate of the garden; it doesn't just redistribute slices." — <strong>David Sacks</strong>
+</blockquote>
+<blockquote>
+"Knowledge work may be a transitory phenomenon that only existed between the foundation of the computer and the existence of AI. We are facing a shift where the ability to make stuff may exceed the capacity to consume it." — <strong>David Friedberg</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-2" onclick="toggleSummary(2)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-2">
+                        All right everybody, welcome back to your favorite podcast, the All-In podcast. Today we have a conspiracy corner episode for you. We’re going to go over the 9/11 inside job, we're going over flat earth, and the JFK assassination. It’s going to be all conspiracy all the time after our amazing blockbuster episode during ski week. We're going all conspiracy here. 
+
+Our guest today, Alex Jones. How many views did it get? Nine views? I mean, it's tough when you have one out of four besties. It doesn't... Michael Tracy is on standby. Not true. Not true. I can carry an episode for at least 400,000 views. I mean, you might. You might. 
+
+I liked your—hey, for people who don't know, Chamath has his own YouTube channel. He’s got his escape hatch for when this train wreck burns to the ground. He started his own YouTube channel and he's hedging his bets. Friedberg’s working on his solo project. Everybody's doing solo projects. The band’s got a lot of solo projects. The Beatles are experimenting. We got a little Yoko Ono situation going on here. 
+
+You know what the number one topic for this show was by the All-In AI bot, Sacks? What’s up? The number one was Dario versus Hegseth. The Department of War versus Anthropic was the number one topic selected by our AI bot. As a programming note for folks, that decision will be made end of the day Friday when this podcast comes out, so we will talk about it next week. 
+
+But let's get to work. We’ve got a full docket. The Claude kill list has expanded, and an AI fan-fiction Substack tanked your 401k on Monday. Let's get into it. Anthropic’s generational run continues. They’re now three-for-three in tanking different market sectors, Chamath, in February. Congratulations. This is like they took the mantle from Brad Gerstner tanking the market. 
+
+The Anthropic shitlist. It is. February 3rd, Anthropic announces, &quot;Hey, we've got a legal plugin for Claude, Co-Work.&quot; Thomson Reuters, LexisNexis, and LegalZoom are all down at least 10% since February 3rd. Then on February 20th, Claude Code Security is announced in a limited research preview. Stocks tank again. CrowdStrike, Cloudflare, and Okta are all down. 
+
+Then, February 23rd, Anthropic announces Claude can modernize COBOL databases. If you don't know COBOL, that's the oldest coding language in the world. That's where Sacks learned to code when he was in college in the '70s. It’s used for banking, payroll, government, and healthcare. It runs 95% of ATMs in the US and it powers social security payments. 
+
+85% of all COBOL code runs on IBM machines. So, IBM decided they would tank 13% on Monday, their worst day since 2000. That is $31 billion in market cap losses. So let's stop here before I get into the fan fiction piece. What's your take here of what's happening in the market, Chamath? 
+
+Is this simply people looking for an excuse to trim their positions because things have been top-ticking at all-time highs and people are just looking for an excuse? Or is this reality? Is this the go-forward reality that AI is going to compress these kinds of stocks because it solves a lot of problems?
+
+I'm going to give you two explanations. I don't know what percentage I would allocate across the two, but I think one is tactical and one is much more strategic. But I think both are happening. The tactical one is that we are at a moment in time where a lot of the smart money hedge funds are starting to massively degross. 
+
+What that means is they're trimming a lot of positions and they're just taking on a lot less risk. Why, I don't exactly know. It could be motivated by the second thing that I'm going to talk about. But the point is, in a degrossing cycle, you tend to be trimming risk and making your position sizes much smaller. 
+
+So the longs become less long, the shorts become less short, and you just shrink. And so there's just general downward pressure. That is a clear behavior right now. But I think the structural change is the more important one, and this is sort of what I talked about this morning. 
+
+In a normal functioning market, what we are always debating is when a set of cash flows go from becoming highly confident to less highly confident. It's a &quot;when&quot; conversation. So, when will Coca-Cola's cash flows be impacted? When will Eli Lilly's cash flows be impacted? When will Meta's cash flows be impacted? 
+
+The answer to the &quot;when&quot; gets translated by the public markets into three things. Your price-to-earnings multiple—where if you invert that number, what that is equivalent to is the yield on the money that you get. So if you're at 20 times PE, that's a 5% yield. The second is a revenue multiple, and the third is what's called your weighted average cost of capital. 
+
+The weighted average cost of capital means that if you look at the next 20 to 30 years of earnings and you want to figure out what that is worth today, you have to discount all of these back and you have to assume a percentage of interest effectively that it takes to get there. 
+
+The basic math of this is that when you have a high WACC, you’re massively discounting these cash flows. When you have a low WACC, you're assuming that these things are very durable. Okay, so what is happening? We used to debate &quot;when.&quot; This is no longer a &quot;when&quot; moment. The market is very much in an &quot;if&quot; mode. 
+
+Are these cash flows durable at all? Could they fall off a cliff in year three? Is there some AI model that's going to come around the corner and obliterate this business without me knowing it? Because they've shifted into this &quot;if&quot; mindset, your risk becomes totally different. You have this event risk that you don't know how to price. 
+
+Whenever the market shifts into that mode, what you see is that the holders of those equities want a massive margin of safety. What does that mean? They have to take PEs way down. If you used to trade at 40, you should trade at 20. If you used to trade at 20, you should trade at 10. They take revenue multiples down. 
+
+You used to trade at 10 times revenue, now you're going to trade at three times. You take the WACC way up. Used to be a 6% discounted weighted average cost of capital, you know what, I'm taking you to 12 or 13. That's the market's way of saying, &quot;I'm now debating if these things will even exist,&quot; and so I need to give myself a huge buffer to own this stuff. 
+
+That's what's happening right now. It has a lot of ripple effects that we can talk about. Friedberg and I have talked about this a lot. The most obvious impact is how these tech companies recruit and retain talent because the biggest thing that it starts to eat into are the cash flows of a business, which really directly tie to stock-based comp and all this other stuff. 
+
+So we have moved away from a &quot;when&quot; to now an &quot;if,&quot; and I think that that is a very smart question to be asking. The answer may be for many of these companies that they will survive, but we don't know how long. Until that becomes clearer, you have to give yourself room to be wrong. 
+
+You said &quot;when,&quot; then &quot;if,&quot; did you mean &quot;if&quot; to &quot;when&quot;? No, no, no. We’ve always debated &quot;when.&quot; When will these cash flows disappear? Now it's like, will they even exist? Got it. Okay, so the second part of this story, Friedberg and Sacks, is that a Substack post—fan fiction—taking place in the fictional 2028 global intelligence crisis went mega-viral. 
+
+It had 28 million views on X. It was posted Sunday night. It made the market tank on Monday. In this fictional Substack post, the author said there's going to be essentially a death spiral that happens because of AI. How does that work? Well, first, companies embrace AI, everything goes right, they're able to cut staff, and their margins go up, similar to how Amazon has trimmed their white-collar staff. 
+
+Then, they're so successful at this that they lose their customer base because consumers don't have discretionary funding to spend. Then it creates a death spiral where the companies keep deploying AI to try to hit the margins by cutting staff and the entire economy collapses. Dr. Doom level stuff. Unemployment is at 10%. S&amp;P goes down from 38% highs. 
+
+After this piece came out, which speculated that agents would get rid of all the 3% interchange fees and move everybody to settle transactions on stablecoins, all the financial stocks got hit on Monday. Amex down 8%, Capital One down 8%, Mastercard 6%, Visa 4%, yada yada. 
+
+Finally, this piece got a lot of pushback. There was a silly piece in it, or a section in it, where they said AI agents would vibe-code their way to displacing DoorDash, and that's kind of silly if anybody who has run a network-based business knows. Sacks, I assume you read this piece or at least saw the fallout from it. What's your take and then we'll go to you, Friedberg.
+
+Yeah, well, I know that this Citrini article got passed around like a joint at a Grateful Dead concert. But I'm starting to question how legitimately viral it really was. There's some information that just came out that the attribution of the article has been amended, meaning the co-authors have been amended to include a short fund that was shorting some of the names mentioned in the article. 
+
+This is according to another post that just came out. According to this post, the authorship attribution on a report attributed to market-moving was changed after publication and the co-author is the managing partner of a $262 million SEC-registered hedge fund who confirmed short positions in the companies the report named. 
+
+So, I think that's point number one. I just wonder: did this article truly go viral or did the authors do anything to kind of amplify it and we just don't know the answer to that question? But regardless of that, let's just take the arguments on their face. I think one of the best responses to it was by another writer named Derek Thompson. 
+
+He wrote an article called &quot;Nobody Knows Anything,&quot; which I think is a reference to a famous take by legendary Hollywood writer William Goldman. In any event, what the article says is no one really knows what's going to happen with AI in two years, never mind 20 years, and so they resort to science fiction writing masquerading as analysis. 
+
+The author here, Derek Thompson, says that the conversation about AI is really just a marketplace of competing science fiction narratives. He says that's not to say the technology is a parlor trick, but rather that the level of uncertainty is so high and the quality and supply of real-world real-time information about AI's macroeconomic effects so paltry that very serious conversations about AI are often more literary than genuinely analytical. 
+
+So in other words, what he's saying is, look, this guy's writing very compelling science fiction but there's no real analytics behind it to defend it. And yes, this could happen. Here's a prediction market on whether people believe the Citrini scenario is going to come true. Something like 12% believe the Citrini scenario is going to happen. 
+
+But the truth is no one really knows. I mean, there are other dueling science fiction narratives where AI is going to create such a world of abundance that we're not going to need for anything. And just by the way, Derek Thompson is one of the abundance guys with Ezra Klein.
+
+This is why the market's getting whacked. I think that you're right, Sacks. Nobody knows. So if you can get 5% for owning government bonds, why are we taking excessive risk here? Yeah, let me just build on your point about SaaS. The reason why there's so much uncertainty around SaaS is that SaaS used to be such an easily modeled and predictable category. 
+
+As a VC, we saw the same story play out across many, many different categories of software. You'd have this initial period where there'd be this experimentation phase, you have a bunch of different products that come to market, there'd be a battle, and then the market would eventually settle and there'd be a category leader. 
+
+They would capture most of the market share and the vast majority of the market capitalization, and they would have very, very predictable metrics. It was very easy to grade a SaaS business. You look at ARR, you look at the net dollar retention, you want to see—depending on the phase—RPO. RPO, revenue under performance obligation. Right. 
+
+So, these things began to be seen as like an annuity with growth. They were rock solid. Because a good net dollar retention would be something like 120%, which means that your cohort of existing customers on balance would all renew the next year and actually they would renew at 120% of their previous year's contract values. 
+
+The reason you got that extra 20% is they would buy more seats or there'd be additional products or features they would upsell. It got to be very, very predictable. So when people were buying software companies at 13 times ARR, they thought they were buying a growth annuity. 
+
+Now all of a sudden you've got to factor into that, &quot;Well, wait a second, what if AI disrupts the whole market? What if it doesn't eliminate—I don't think AI is going to get rid of Salesforce, but it could eat into their growth opportunity.&quot; We just don't know. What if it changes the pricing model? It just creates a whole lot of unknowns. 
+
+I actually don't believe in the Citrini or the doomer take on this, but I can see why the market would feel this level of uncertainty given how predictable a category SaaS used to be just, say, a year ago. Well, chaos is a ladder, Friedberg, and this means opportunity. 
+
+So if we look at this and SaaS has headwinds, then is there a winner? Is open source the winner, or is this all deflationary in your mind, Friedberg, and we just make less money and the earnings of these companies get compressed, the size of them gets compressed? How do you think about it?
+
+I think fundamentally, if you're driving productivity with AI, you're driving leverage on human time and leverage on capital. The question is how quickly can you drive that up? And that's a function of how much consumption there is, how much capacity there is for consumption. 
+
+On the one hand, I'll just speak broadly, I think humans have this desire to improve their livelihoods by roughly 10% every year. Meaning your income and your ability to purchase stuff that is new relative to where you were last year has to go up by 10% for you to be happy. 
+
+If it's less than 10%, you're probably unhappy. Is that—that's your anecdote or that's like...? That's just like an anecdote. I think that's sort of like my rubric for thinking about why people are unhappy or happy. So if your earnings are the same but things are getting more expensive, you're not happy. 
+
+If your earnings go up by 10% and things stay the same price, you got 10% more than you had last year, you’re going to be happy. I just think all humans are driven by this need to consume more each year than they did last year. So I think for me that's the lower limit on consumption capacity in the world. 
+
+The question that we're now facing, which we've never faced in human history before, is: is there an upper limit on consumptive capacity? AI creates such a profound shift in productivity and in leverage that normally you would say, &quot;Hey, when we get a new tool, or we get new leverage in a system, we build a new technology, we can make more with less.&quot; 
+
+Therefore, everyone gets access to more things for the same price, or the cost of things that they consume come down by a certain price. But there may be a situation now where the ability to make stuff exceeds the capacity to consume stuff. And that is something that I don't think we've faced before. 
+
+I think that's sort of where a lot of the models start to break. Just general economic models, just general productivity models, and general social models. And this goes to the point about what is everyone going to do? 
+
+In the same way that I think we've argued that maybe SaaS was a transitory business phenomenon that existed between the foundation of the internet and the era of AI, it may be the case that knowledge work in general is also a transitory phenomenon that only existed between the foundation of the computer and the existence of AI generally speaking. 
+
+If all of that goes away very quickly, and all of those people can be redistributed and recast into doing other higher level, more creative things, their productivity goes up by 100x. Is there really a consumer on the other end of all of that productivity? Is there really enough consumptive capacity? 
+
+I think that's the profound question that we all face. I don't think that there's any limit to product—wait, Friedberg, is that your way of saying that SaaS goes to zero or that's your way of saying these companies go to zero? I'm just saying knowledge work in general. 
+
+No, I understand, but what is the implication to these businesses? But is this just another dueling science fiction take? I mean, what's your evidence for this? I think it's fine to have a sci-fi take about the future. It’s intuition, I think. It’s intuition, I think, is what he's getting to. 
+
+But is there data? Because I can show you some data that I think contradicts what you're saying. And I have some first-hand sort of—in the sense that there's more leverage, Sacks, that people are able to actually deliver. Well, J-Cal, I want to hear what you have to say because I know you're experimenting with this. 
+
+But let me just show you a few data points real quick, because I think this is relevant. We're really talking about the disruption caused by coding assistants, right? This is like the first big killer app of AI. I mean, I guess after writing and research for chatbots. 
+
+And we'll have agents later, but really it's all about coding assistants and the ability to more easily create code. That's what's creating the disruption to the SaaS category. So let's just focus on the data we see right now around that. 
+
+There are a lot of people who are pointing this out, that Anthropic right now has a job listing for a software engineer on their website for $570,000. A lot of people are kind of pointing out, &quot;Okay, so wait, so what Anthropic is saying is they're still trying to hire software engineers at a very high wage, but somehow they think these jobs are going to be eliminated.&quot; 
+
+Chamath might apply for that job, he— Yeah, austerity measures. Sounds pretty good to me. That's a lot of money. Chamath might take that job and then just have AI do it for him. No, I'm—I'm worried, like I hope my 80/90 team doesn't see that offer. That is a big number. 
+
+Our equity is way higher, but our salaries are not that high. I mean, you look—you put these things together, it's like... That equity is money good. The reality is those guys are doing $5 to $6 billion structured secondaries every year now, or they're starting, which means that they will. That's like cash compensation. 
+
+So for me to match that, I need to be 3x higher than that. Right. And I think a lot of people are kind of pointing out, well this is a contradiction. Anthropic doesn't really seem to be practicing what they're preaching if they're paying enormous amounts still for software engineers even as they claim they're obsoleting the entire category. 
+
+Something doesn't quite add up. Citadel Securities did a new report that rebuts that Citrini report and they show a couple of stats here which I think are really interesting. Job postings for software engineers are rapidly rising. They're showing—I think it was roughly a 10% year-over-year increase in the demand for software engineers. 
+
+On a related note, they also show that company formation is also rapidly expanding. And that may have something to do with AI making it easier to start a business or to get leverage, to your point, Friedberg. So look, there's a couple of competing effects going on here. 
+
+I think Aaron Levie had a really good explanation of why you might see something very counter-intuitive happening. And again, it all goes back to Jevons Paradox. But what Aaron says is that when you lower the cost of something that was previously supply-constrained, demand for that thing goes up. 
+
+Software engineering is just one of the easiest examples to contemplate. But there are going to be many other jobs like that. Think about software engineering. Even amongst startups in Silicon Valley, which I think are probably some of the most attractive places for software engineers to work, there's always been a chronic shortage of them. 
+
+Then you've got the Fortune 500 companies—non-tech companies—which have always had an even harder time hiring technical talent. So you have this massive unfilled need for software engineers across the entire economy. Now you're going to be able to get a lot more leverage out of software engineers. 
+
+It doesn't mean they're going to get fired, it just means that now maybe you can have a lot more 10x software engineers and those jobs are now being spread throughout the whole economy. I also think, just to put some numbers on this, I think the cost structure of the average Fortune 500 business is something like 5% IT. 
+
+That includes all of their IT, not just their software. What should it be? What should the percentage of software be in an enterprise cost structure? Elon describes companies as cybernetic organisms that are part software, part human. 
+
+If you think about the current Fortune 500 company being 1 or 2% software, maybe they should be 50% software. I think what Aaron is saying here is the market for software and software engineers was so constrained by the lack of availability that even if we 10x or 100x the productivity of software engineers, the demand will be there to absorb this new supply. 
+
+It could lead to this explosion in productivity without the massive job loss. I think you're right. I think the thing that I would look at is I would expect OpEx as a percentage of revenue to fall off of a cliff, but within that OpEx, the percentage of it that you allocate to technology and technology-related things probably goes way, way up than what it is today. 
+
+Okay, Jason, the batch of people that are applying for Launch, has SaaS stopped? Has software stopped? It's AI-first companies, obviously, and people are... are they rebuilding traditional SaaS tools just cheaper? Basically, everybody's building the great—you know, as we talked about at the All-In Summit. 
+
+Some of these companies are trying to build the best pilot in the world, or Waymo's trying to build the best driver in the world. People are now trying to build the best SDR in the world, the best salesperson, the best executive coach. And so we have been obsessed with Claude Co-Work but mainly OpenClaude. 
+
+And so what we did was—and I think it's not developers that are going to do all this work, it's knowledge workers. We have 20 people in our firm. We had 15 of them come in this weekend and they all got trained over like six or seven hours how to have their own OpenClaude agent and we started building it. 
+
+Every piece of software that we wanted to buy or build over the last 10 years that we never got to, my people are building in the last 30 days. As an example, when you're selling ads for a podcast, you want to check all the other podcasts and what advertisers they have. 
+
+We trained an agent to go take the top 100 podcasts, look through the transcripts, figure out who the advertisers are, check those advertisers in Pipedrive, tell us when the last time we contacted them was, and put it into the sales room. That was an SDR job that we wanted to fill and software we wanted to build. 
+
+Then, we wanted people to have— So hold on, that was a human that you were paying money and now you've replaced with software? Or that human still exists and now they just do it in a better way? Redeploying that human. We had a human doing it, we’re going to redeploy them to do other things. 
+
+And the consistency of this, Chamath, and the accuracy, and then it’s doing it all night long. So we have like seven of these agents in these kind of roles. The next piece we did was we gave my agent, which is like the Ultron, root access to Gmail, Calendar, Zoom, Notion, and Slack. 
+
+What it's doing is it's giving each person: &quot;Here's what you got done this week with their manager, here's the emails you sent, here's the meetings you took, here's the context, here's the threads you were involved in.&quot; And then it's helping manage those people. And so we are getting— 
+
+Okay, but all that to me says you, Jason, despite all your doomerism, seems like you're growing and you're going to be hiring more people and you're more productive. Am I getting this wrong? No, no, I'm not doomerist. What I think's going to happen in these positions... 
+
+But are you growing and you're going to be adding more people? We're not—no, no, we're not going to add more people. Definitely not adding people. The people we have are becoming 10 or 20% more efficient every week because the software we would have paid for or built from another vendor, it’s being built by our OpenClaude agents. 
+
+As an example, when we make clips for this podcast or other podcasts, we have it go and look at like a This Week in Startups episode from 10 years, tell us the three best moments, and it makes the clip, it puts the subtitles on it, and then it puts the clip into the Slack room. That was something that was going to be a full-time job. 
+
+So we're getting 10-20% more efficient. Then I started doing it at home. So I had it take our Instacart, pull out the last 10 orders we did, and then tell us what we order most of the time, and then it’s going to automatically build a cart for us. Every single knowledge work job is being automated right now. 
+
+And you can take it and if you're a business process head where you know how to do a business process and you can structure it and write it with an agent, it'll just run it every day, every week. We did another agent: &quot;How do you make better thumbnails?&quot; 
+
+We told it every Saturday, in your skills—so when you build an OpenClaude it has like a soul file and it has a skills file—in the skills file we told it, &quot;Sacks, every week go out and look for people discussing how to make better thumbnails on YouTube, how to make better titles.&quot; 
+
+It found this week, Chamath, somebody at MrBeast's company talking about how they're using heat maps. It was an article I would have never known. It added it to its skill and now whenever we post a thumbnail it tells us, based on its skill that it refines every week, how to make that thumbnail better. 
+
+It’s starting to make the thumbnails. This is becoming recursive. So you keep the same number of people but they get 10 or 20% more efficient. I don't know what this means for the larger economy. All I know is it's the most exciting time I've had online since the web came out, since the internet came out. 
+
+It is so much fun to automate all this stuff. The big question that I am thinking about that I haven't gotten a good answer about, so I don't know what you guys think, is that all these businesses are going to need to batten down the hatches and give themselves room to figure this all out, right? 
+
+If you take Sacks' point and your point, J-Cal, which is that young nimble companies like yours are going to be rapidly experimenting, the bigger larger companies are going to slowly onboard themselves to start experimenting. All of that means we're going to get much clearer answers to all of this. 
+
+But what it also means is that you're going to have to have time so that you can figure this all out. And if you want to buy yourself time, you're going to need a ton of cash. And if you're going to think about saving cash, the one place tech companies literally incinerate cash is how they do compensation. 
+
+I kind of think at some point the next shoe will drop and all of these tech companies have to really look at stock-based comp because they literally incinerate most if not all of their free cash flow fighting the dilution from stock-based compensation. 
+
+So if you want five or six years to just be in the arena on the field figuring this out, you’re going to want to kind of be very cash-flow generative and really conservative in how you spend your money. Yeah, Sacks, the people who embrace this I think become five or ten times more valuable than the people who are not. 
+
+That’s where I think the opportunity in the economy is. So unless you think humanity is going to run out of problems to solve, I think it's going to be boom. It's going to be boomtown. And I think people are going to start more companies because the barrier to start a company is no longer $3 or $4 million. 
+
+You can just have two or three people and you start setting up these agents and man, you can make software, you can do sales, you can do PR. Everything is getting faster and faster and faster. The time between conceiving of a product and publishing it and finding a developer—you don't even need a developer, you can just publish software. 
+
+The wake-up moment for me was we were talking to our agent about, &quot;Hey, we want to get this functionality out of Slack.&quot; And it's like, &quot;Yeah, Slack doesn't have that, but have you considered Mattermost?&quot; I'm like, &quot;What's Mattermost?&quot; It's like, &quot;Oh, it’s an open-source project. I can spin it up this weekend, export your Slack instance and put it there.&quot; 
+
+I was like, &quot;Oh, don't do that, we’re only spending 6k a year on Slack or 10k a year.&quot; But the software is building CRM systems for us, it’s building agents for us, and it wants to just build all the software stack. 
+
+So you could, when you renegotiate with Slack or HubSpot or whatever company you're working with, you're going to be able to say to them, &quot;Hey, we could roll our own and when you want to upsell us on this latest thing,&quot;—like you talked about, Sacks, upselling is such a big part of SaaS—you're like, &quot;I can actually build that software myself internally.&quot; 
+
+I don't need you to do it. Ryan Petersen just posts on X: &quot;Claude for legal works seems to work just as well as Harvey, by the way.&quot; Now the SaaS-pocalypse is going after private companies now too. Well, I think for a while now there has been a question of which layer of the stack is going to capture all the value. 
+
+Is it going to be the model companies, or could it be the applications that are built on top of the models, or, you know, if there's a lot of competition at both those layers of the stack, do the chip companies get it all? I think it's an unclear question. Totally unclear. 
+
+Yeah, I think for any given vertical application, you do have to defend why you think your value prop will be sustainable as the underlying foundation models just get better themselves. And it's open source, like this week we put up Kimmi 2.5, it can do about 80-85% of the jobs, so we lowered our token bills massively when we stood that up. 
+
+All right, listen, this is TBD, we got a lot more to think about on this topic. Just on this point of a lot of these debates about AI being dueling science fiction narratives, I just think that the doomer narratives are inherently more appealing to people. I mean, I think it's partly just because you look at most sci-fi movies, they're dystopian, not utopian. 
+
+In addition to that, I think we have a bunch of heuristic biases in favor of the doomer narrative. One of them is the seen versus the unseen. It's a lot easier to see the jobs that already exist that could be obsoleted than it is to imagine the new jobs and the new business models that haven't been created yet. 
+
+Those will likely take some great innovator or a genius to think of in order to create. So we have that huge heuristic bias of not being able to see the creation that's coming. It takes way less creativity to think about the potential destruction. 
+
+Then finally, I think the other heuristic is just the whole fixed pie fallacy. Most people do tend to think of the economy as a fixed pie. This is why you see so much anger against millionaires and billionaires is because of this idea that if someone's getting rich, it must be at the expense of someone else. 
+
+That's not actually the case. The economy itself could be growing larger as a result of someone inventing something new that increases production. A really good line from another article that was written just a couple of weeks ago was: &quot;The economy is not a pie, it's a garden, and technology is rain.&quot; 
+
+Again, you know, all this technological innovation is going to increase the growth rate of the garden, it’s not a fixed pie, and just because you see an expansion in productivity in one part of the economy does not mean that you're going to see job loss in another part of the economy.
+
+I think you're right. I think you're going to see a 10x'ing in the demand for tokens, but I also think you're going to see a 90% price reduction in the cost of an output token probably by the end of this year. So I think that to your point, it’s going to just create an enormous upswell of demand. 
+
+We're going to be able to cut the prices of an output token so dramatically. And by the way, that discussion we had, Chamath, last week when we talked about the tokens outpacing the employee salary and just where are these tokens all going to come from—that was our most viewed clip or one of the most viewed clips in the history of this podcast. 
+
+So people are actually really focused on this. I had my team redo our cost model and now we have that as a line item when we think about fully burdened cost of employees. We now factor that in because we’re at a place where some of our software engineers are just racking up ginormous bills. 
+
+And then separately, just general runs that we do for general-purpose stuff that we need to just run our product is exorbitant—it’s so expensive. So I am waiting with bated breath for what Sacks said, which is like we need an explosion in the capacity that's available. 
+
+I do think that the silicon solutions are coming that will cut the costs, but we need a large block of land, power, and shell ready to then turn all of this stuff on so that we can actually take advantage of it. Rumors the new Mac Studio's coming will have an M5 chip in it and will be language model ready. 
+
+So that's the rumor—that they're building it for models. That could be an incredible turn of events. Everybody's desktop running the local model. Sacks, you want to have the final word here, or Friedberg, before we—?
+
+Just to go back to what Chamath was saying there, I mean, you've got political forces that want to stop the construction of all data centers in the United States, which is crazy. So if that gains steam, then that's going to be a huge constraint on any change whatsoever. 
+
+Can I tee this up for you, J-Cal? So I went back this weekend and I looked at the number of data centers that have faced local opposition and whether there were patterns. And I posted it on X, so Nick, maybe you can put this up. But it was really a very small behavior, which was pushing back on data centers and getting them canceled. 
+
+We had about 25 projects total, of which 20 were just in Q2 alone. There are a hundred data center projects right now that are facing some form of local opposition. Interesting, because if you take that 40% number and you apply this and then you multiply it by the number of megawatts that they have announced, last year we lost almost 5 gigawatts in terms of canceled projects. 
+
+This year, coming in 2026, we have about 7 that could be canceled if you use this math. If you then flow that through, OpenAI, Sarah Friar said this, that every gigawatt for her—for OpenAI—is about $10 billion of revenue. 
+
+So if you assume that that's roughly accurate, plus or minus a billion here or there, what that means is that in 2025 the industry as a whole lost $50 billion of revenue. And this year, if 7 gigawatts gets canceled, it's about $70 billion. 
+
+Now you're talking about $130 billion of lost revenue over these two years that'll go forward in time that we miss out on. I think that that is really bad. We need to figure out a way to nip this in the bud. 
+
+Confounding, because we were sitting here five years ago, ten years ago, local municipalities were fighting and giving discounts to try to get these data centers open to get the jobs and get the revenue. And now we've got people trying to stop them. 
+
+This is a perfect transition for the State of the Union before we get there. Two important programming notes: All-In is going to host two events in 2026. One of them, Liquidity, May 31st to June 3rd in Yountville, up in wine country. 
+
+Chamath has taken control of the event and he has set a standard for who gets on stage. None of you mids can control the programming. That's it. Chamath came in and he dropped the hammer. Who do you got so far? You want to tease a couple of people who you've invited to come speak? 
+
+I'll tease two. The first is an incredibly dear friend of mine, the ax of axes, Dan Loeb, who founded Third Point, who is an unbelievable investor in literally every domain: private credit, public equities, private tech. He’s just a beast. So he’ll be doing a really important keynote. 
+
+He has not done one of these public speaking slots in a very long time. And then the second is the CFO of OpenAI, Sarah Friar. Oh, wow. Unbelievable star. And we're going to double-click into the entire business model of OpenAI on stage in front of everybody. Amazing. 
+
+So go to allin.com. And then for those of you who plan ahead for travel, more coming, more great things coming every week. If you are an All-In Summit fan, I can't believe it, Friedberg, we're going to be in our fifth year, September 13th to 15th. Only gets better every year. 
+
+Going to have some good parties too. I mean, that Back to the Future and the Blade Runner parties—those were epic. allin.com/events. Hey, can I give a plug to a friend of the pod, Bill Gurley? He's got an amazing new book, &quot;Runnin' Down a Dream.&quot; Please. Wait, wait, wait, before you start. 
+
+There it is, &quot;Runnin' Down a Dream.&quot; I just want everybody to stop the—pause the podcast. I want you to buy three copies, give it to two young people and a parent you know. This book is incredible. It's a great book. It really is inspiring for kids and Bill Gurley, friend of the pod who always shows up for us. 
+
+J-Cal, do an impression for us of what it would be like if you and Bill Gurley started a podcast together. All right, everybody. Welcome to the JC-BG podcast. I'm your host, Jason Calacanis. And I'm Bill Gurley, and we're here in Texas at Terry Black's where we're getting some beef ribs. 
+
+We're going to discuss investing in marketplaces as well as my new book, &quot;Runnin' Down a Dream,&quot; which will teach your kids how to not be fuck-ups. And if your kids are fuck-ups, you can hit them in the back of the head with the book. Texas style. 
+
+One of the big topics, and I think something you're working on with President Trump, Sacks, is this energy pledge. I've been seeing rumblings about this. Explain what's going on in terms of getting the country in sync around these data centers and energy. 
+
+Well, the president announced in the State of the Union last night that he supports a ratepayer protection pledge, which requires the major tech companies to provide for their own power needs for AI data centers so that residential consumers do not see their rates going up. 
+
+I think this makes total sense. I think, Chamath, to your point, this is the reason behind a lot of the opposition to new data centers—that the local residents fear that their electricity prices are going to go up. And that shouldn't be the case. 
+
+So the president has said that he's committed to not allowing residential rates to go up as a result of data centers. Pretty straightforward. You get the big tech companies, the hyperscalers, to pay for the increase in the electricity cost, or you let them set up their own power behind the meter. 
+
+The president has been talking about this for over a year—that our biggest AI companies would also become big power companies because we had let them stand up their own power generation behind the meter. So these data centers don't even have to connect to the grid; they could just do colocation themselves. 
+
+But also, I think that with this ratepayer protection pledge, what you're going to see is that it could actually bring down consumer prices. Because what happens is that when these data centers then set up their own power and connect to the grid, they can give back the excess to the grid. 
+
+Also, they will make investments in scaling the infrastructure. Although electricity is priced at a metered rate, the costs to generate it are not all variable. There's a lot of huge fixed costs in there. So when you increase scale, then you can actually reduce the metered rate. 
+
+So again, you know, this is really, I think, the rebuttal to Bernie Sanders, who just wants to stop all progress whatsoever. I saw a funny post calling it BANANAs, which is &quot;build absolutely nothing anywhere near anyone.&quot; 
+
+BANANAs are replacing the new NIMBY. So you just can build absolutely nothing. I think the president's approach finds a very good balance here, which is: look, we can have progress, just don't make residential consumers pay for it. 
+
+Let the big tech companies pay for it themselves. And I think you'll see more coming out about this from the White House next week. Quite a deft move. Friedberg, how should America be thinking about this great data center buildout energy usage, you know, if you expand it out over the coming decade? 
+
+And how do you sell that against the backdrop that you talk about, the socialist movement—you got a great interview coming out with Ray Dalio on the All-In interview program next week. How do you think about those competing forces? 
+
+You've got the socialists saying BANANAs, NIMBY, slow down, decel, and then you've got this incredible race we're in for efficiency and this opportunity and abundance. How would you sell it to kind of bring these two sides together? Or is it impossible?
+
+The data coming in and out of data centers moves at roughly the speed of light, so you could put them anywhere. And I think that our policymakers need to be very cognizant of that fact. We have and we do connect the internet using high-speed cable, high-speed fiber optics throughout the world. 
+
+So theoretically, if we don't embrace and allow the economic development of the data center industry—and it will fundamentally be an industry because it is almost like the new sort of oil. Where are the oil rigs going to go? Where are the railroads going to go? Where are the telegraph lines going to go? 
+
+Where are the factories going to go? If we don't put them here, someone else will put them on their shores. Someone else will put them in their country. Someone else will put them in their jurisdiction. And a lot of the economic value that arises from the people that will build those facilities, the energy that will be installed to produce power for those facilities, and all of the second and third order industries that emerge as a result of those installations—that value will accrue elsewhere. 
+
+Such a good point. It's not going to just go away. The demand is there, the economy's moving forward, AI's moving forward. We live in a world with 196 countries, and data centers do not take up a lot of space. They're very small relative to the economic value that they produce. 
+
+If you zoom out on the map of the world, all the data centers in the world fit under the tip of a pin. So this is a very small footprint, and if we're going to give up hundreds of thousands of jobs and many billions of dollars of economic value creation, we're being pretty silly and pretty obtuse in our view of the world. 
+
+And it's such a good point, Chamath, because you were recently in the Middle East and I've been there a bunch—in Saudi, UAE. These are the folks who built a large portion of those oil refineries and they are savvy to this. What are they doing in Saudi, UAE, Qatar, all of these regions? 
+
+They're doubling down; they're 10x'ing their data center builds. So to your point, Friedberg, either we build them or they're going to go somewhere else. There are people who are willing to underwrite these and they're willing to take out the red tape from the process here and move quicker than us. 
+
+So I think this is a pretty deft move by President Trump to say, &quot;Hey, you guys should all just guarantee that consumers don't get impacted.&quot; The water thing is a total hoax—like the water is recirculated, that's a hoax. I think this is really smart. 
+
+I think that what the president is doing and what Sacks is doing is really smart. The thing to keep in mind is that there's still a risk that prices go up and it has nothing to do with these data centers, and it has everything to do with the business model of being a utility. 
+
+Because what happens is in order to get a license, a monopoly license in an area to provide energy, to generate energy for a community, the exchange works in the following way: you go and you present a CAPEX plan to the Public Utilities Commission. That's effectively your budget. That says, &quot;Here are the lines I'm going to upgrade, here are the generators I'm going to upgrade.&quot; Independent of data centers, the reality is the draw—the electricity consumption of individual Americans—is going up because we have more devices, we have cars, we have all of these other things. 
+
+So what we also have to do is we have to look at how utility as a business model actually incentivizes them to increase prices by making all kinds of investments. We have to do a good job of making sure we hold everybody accountable. 
+
+Otherwise, what you could see is that the data centers take on the burden for themselves but prices still continue to escalate because a utility says, &quot;I need to spend a billion dollars this year to upgrade my infrastructure.&quot; What that allows them to do is take that billion dollars and essentially invest it for a return. That’s the business model of a utility. 
+
+And this is really happening in blue states. Micron has a hundred billion dollar mega-fab in New York and there's a lawsuit by one, two, three, four, five, six—six concerned citizens. This is shameful. That's shameful. 
+
+And the project has taken 1,200 days—1,200 days between their announcement and the groundbreaking. And they spent 612 days on the environmental impact study. People, wake up. Just go to Texas. Elon built his factory here, the Gigafactory, in under like 18 months. This is the great state of Texas. Come here, we'll build it for you and you'll be done. 
+
+Yeah, I don't know why anyone bothers with the blue states anymore. They make it too hard to build. It's so dumb. It's such a self-own too. Like, don't you want to be part of the future? You're literally ankling the entire country. Desgraciados. 
+
+By the way, there are a lot of people in New York who want to work. This is not a case actually of this new fab being unpopular. The majority of people in the area actually want this plant being built. They want the jobs that are going to come there. 
+
+A lot of people say data centers don't create a lot of jobs. This is actually a chip fab, so it will create a lot of jobs—a lot of good high-paying jobs. People want it, but six people can stop it with a lawsuit after it's already been through a two-year environmental review. 
+
+It's not just blue and red states. These are nonprofits that get organized to create this kind of chaos. I remember looking at a massive lithium investment in Nevada. And the whole point was to domesticate lithium production. 
+
+What was interesting is this enormous deposit that's just sitting there ripe for development. Right before they were about to get environmental approvals, or right after, there was a lawsuit by people who wanted to protect the upper land grouse. 
+
+It's seared in my mind that the upper land grouse of Nevada is the reason why we do not have domestic national security around lithium. And you have to ask yourself: why is this possible? And it's possible because you have these environmental nonprofits that can go and create this chaos with absolutely no risk to them. 
+
+Zero. They can fundraise around it and they can create this chaos. I mean, Nick, to this point, this is an example of Greenpeace, and specifically here, they were pushing back on an oil pipeline to such a degree and they created so much chaos that they were sued. 
+
+A North Dakota judge just said that he's going to order Greenpeace to pay damages that should total almost $350 million in connection to those protests. And it should not be the case that six people can slow down a $100 billion investment package. That's not right. 
+
+Well, I think there is—and I just want to highlight this important point—there's not a lot of logic and reason. You guys are right, but I do think there's a lot of emotion and there's a huge aversion to big tech, a huge aversion to wealth creation by select individuals and select companies, and a huge aversion to economic growth that doesn't benefit everyone. There's a fundamental kind of underlying &quot;left behind&quot; emotion that drives a lot of this.
+
+And I've said it before, but I think unless there's systems or mechanisms that get folks to come along with the value creation ahead and help them connect their own lives to the value creation that's being realized, they're not going to be supportive. There is this kind of diametrical opposition towards big tech, towards the wealth gap, and towards value accrual to a select few companies or select few individuals, and this fuels and feeds that. 
+
+So I think fundamentally maybe it's not just about giving the data centers their own power capacity, but there's got to be mechanisms and tools that help the broader population understand or recognize or get some benefit from it as well, where they're an owner in it or participant in it. They have the power. As we're seeing, they have the power to stop it, therefore they want to have some benefit for providing authority to do it.
+
+And these six people are concerned about housing costs, worker exposure to toxic chemicals, pollution in air and water, greenhouse gas emissions, energy consumption, flooding of the wetlands—all these things that obviously could be mitigated. All right, let's keep moving here. We’ve got a lot more docket to get through. 
+
+State of the Union came in at 108 minutes, and it’s the longest in six years, actually the longest since they started tracking this. The theme of President Trump's State of the Union this year: America at 250, strong, prosperous, and respected. Trump took a bunch of victory laps: inflation, jobs, closing the border. All those have gone really well. 
+
+But this comes to the backdrop of Trump's approval rating being super challenged. He started his first year at plus 11.7%, now he's negative 14.3%. That is a 26-point swing. Economy started plus 3.4, down to 18.2, and trade started at 5.9% and went down to 22.7. So let's call balls and strikes here, gentlemen. 
+
+Favorite moments? What were your favorite moments from the State of the Union and just general impressions of one hour and 45 minutes of Trump going to town? I thought it was great. Favorite moment? Favorite moment or two? Well, I had a couple. One was the Ilhan Omar-Rashida Tlaib death stare and them just like losing their minds and screaming. I just thought it was so un-American. 
+
+The second was when he was calling for law and order, where focusing and prioritizing on American citizens—and none of the Democrats stood up. I thought that was kind of foolish. It was like obvious things and the Democrats wouldn't applaud, but this time they did, like they did for the hockey team, which I thought was like the right thing to do. 
+
+And then the fourth thing is just a shout-out to our friend Brad Gerstner, who got a big shout-out from the president. I don't know, Sacks, if you engineered that or not, but that was fantastic and it's like... That was incredible. He got like a double shout-out. It was like a double tap. That was really cool. Our group chat—our group chat went crazy. It was really—it was really cool. Those are my four highlights. 
+
+Great. Here's your—here's your clip of, yeah, Democrats not standing for Americans over illegal aliens. 20 seconds. 
+
+&quot;If you agree with this statement, then stand up and show your support. The first duty of the American government is to protect American citizens, not illegal aliens.&quot;
+
+Why wouldn't you stand for that? That's an easy one to stand for. Doesn't make any sense. Who'd you stand for, J-Cal? Yeah, I mean, I—I'm pro—I can be anti-ICE, but I'm pro-American and I'm pro-reasonable immigration, like 90% of the country is. So it just doesn't make any sense. 
+
+But do you think American citizens should be prioritized over illegals? Of course. Of course. Yes. Of course. Yes. And then I also think there should be a path to citizenship for people who've been here for a while and I think that's what the majority of the country thinks as well. 
+
+Right, but your point is I can hold two thoughts in my head so I would have stood if he asked me. Yes, obviously we should take care of American citizens first. Yes, and we should deport violent criminals. We've been over this like a million times here. This is like consensus in the country. 
+
+But what—but what do you think is going on in everybody else's head when they're like, we got to—we cannot stand for this, this is outrageous? These two sides, I mean, I think it's like the tariff thing, it's like the ICE thing. These two sides cannot work together. It's just the most polarized it's ever been. 
+
+Trump is not like the kind of guy to reach across the aisle. The Democrats are now digging in. So we just have a dysfunctional government where, you know, in a more functional time period, like under Clinton, let's say, or Bush, people would have gotten together—and I'm jumping ahead to the tariff discussion—and they would have said, yeah, of course, tariffs are done in Congress, that's the law, whatever. 
+
+What are your thoughts, Mr. President? How can we support your tariff program? But now it's like, oh, well we don't work together, we don't actually have discussions anymore, there's no bipartisan, you know, collaboration. All these politicians are disgraciados across the board. They should be working together for the American people. 
+
+If the president wants to do tariffs, they should be reasonable about it and give him the power to do reasonable tariffs, and he should be reasonable and say, hey, I understand that's your power, let's get together and we'll chop it up and let's have dinner together. But they're just too polarized. It's just disgraceful where this country has gotten to. I blame both parties.
+
+Whenever the Democrats get smoked out as being radicals and extremists, you always want to basically say a pox on both your houses and blame the Republicans and Democrats equally. The fact of the matter is that the president said to the audience, to the members of Congress, hey, if you agree with the statement, stand up. 
+
+And of course, every single Democrat sat there stone-faced and refused to applaud or acknowledge what he was saying. This was a very easy test for the Democrats to pass. That's exactly what I just said. Literally what I said. In fact, it was a political risk for the president because it was so easy for the Democrats to demonstrate that they're operating in good faith.
+
+They could have shown that they're willing to be bipartisan and they're not extremists and they're actually common-sensical and logical. And they completely failed the test. They’re dumb. They're dumb. In fact, it wasn't just on that one. I mean, let me just tell you some of the other ones where they refused to applaud. 
+
+So they refused to applaud the grieving families of innocent American women and children murdered by criminal illegal aliens, including the mother of Irina Zaritskaya. That was very sad. That was sad. That was unbelievable. They refused to applaud for securing our homeland and ending the invasion of criminal illegal aliens, killers, rapists, gang members, and traffickers. 
+
+They refused to applaud for unifying against political violence. So the president mentioned the assassination of Charlie Kirk, they would not even do a polite clap for Erica Kirk and unifying against political violence. They refused to applaud for keeping violent criminals locked up. 
+
+They even refused to applaud for lower prescription drug prices for millions of Americans because it was President Trump who orchestrated that policy. And there were so many other examples like that. And you know, I think the reason why this speech was so effective—and by the way, it's not just me saying it, something like two-thirds of the people that CNN polled, so two-thirds of CNN watchers said it was highly effective...
+
+Something like three-quarters of CBS News viewers said it was highly effective—is because the president laid out 80-20 issues one after another, right, or even 90-10 issues, or 95-5 issues. I mean, these were all issues where the overwhelming number of Americans I think agree with the policy the president laid out.
+
+And in every single case the Democrats opposed it, wouldn't even give it a polite applause. And that is different than in the past. And you can say that's because of hyper-partisanship and polarization, but it's also because of another thing. It's because the Democrats have become a party of radicalism and extremism. 
+
+And the viewpoints that they expressed through their aesthetics the other night, they do express those things in policy and in speeches all the time. So it's not just like a one-off or, you know, somehow like we have a misconception of who these guys are. I think the big line of the night was when Trump just sort of said, &quot;these people are crazy.&quot; 
+
+I mean, he said it in like almost a mournful and regretful way. He doesn't want them to be crazy; he wants them to be rational so he can work with them. I mean, I'll still point the other side which is, this has been going on for a couple of, you know, State of the Unions here across this—the Republicans didn't stand for the Democrats often, and it's a bit of showmanship. 
+
+But the truth is, Trump is the divider-in-chief, he always is attacking people, he's always mocking people, so they don't want to play ball with him. So I do think you can both-sides it. He’s a counter-puncher. You have no choice in politics, you've got to counter-punch. No, I don't think so. That's actually the problem with that philosophy, Trump's philosophy of we have to counter-punch.
+
+We have to attack, we never have to apologize, we never have to be reasonable. That's part of what's broken down in our politics. And these two sides should work together. We should go back to a bipartisan... How are you going to work with Ilhan Omar? Listen, I'm not saying it's going to be easy, but she is the mirror—hold on, let me finish my statement. 
+
+You asked a question. I think Trump is the mirror of that. He has been hostile towards these Democrats, he doesn't give them an inch, they should be more collaborative. That's what the balance of power between the executive branch, you know, and these, you know, congressmen and the Congress and the Senate—this is how it's supposed to work. 
+
+And these two sides need to learn how to get back to listening to each other, understanding each other's positions, and then finding a middle ground. And that's why the Democrats lost last time, because they didn't have the common sense to say, hey, everyone wants the border closed—to your point, it's a 90% issue—and Kamala Harris was too dumb to just say, yeah, we should have closed the border. It's closed now and we've got it. 
+
+Anyway, the whole thing is a mess. I understand you've got to fight for your team, but I don't like the counter-punching, I like collaboration. You just actually made the key point, which is underlying the optics and the polarization, you have issues. And on those issues, President Trump is on the side of the American people. 
+
+The issues where 80% of the American people agree. Some huge percentage, I don't know exactly what it is, thinks that the Somali daycare fraud in Minnesota was an outrage. And the president is right to point that out, and what's the Democrats' reaction? You've got Ilhan Omar screaming from the audience at him. 
+
+Yeah, she’s a loon. I mean, at the end of the day she—but the Democrats—they're not that different. You did have—you did have Elizabeth Warren stand for stopping Nancy Pelosi from trading stocks, and that gave Trump his best one-liner of the night. That was his best one-liner clearly. And they stood for Iran too, and stopping Iran from being a nuclear... I give Elizabeth Warren credit for that. There you go, you don't have to punch her back.
+
+&quot;Stop Insider Trading Act without delay. They stood up! I can't believe it! Can't believe it! Is Nancy Pelosi standing up? She is! Zing! Sing pow! Good job.&quot;
+
+That's why he's so good is he's in the moment and he's reacting to what's happening in the chamber. He's not just reading from a teleprompter and he nailed it. He's got good timing, damn it. But look, that moment just proves what you were saying, J-Cal, because this is not just about polarization. 
+
+On that issue, Elizabeth Warren was willing to stand because she actually, to her credit, wants to ban insider trading by members of Congress. But on the rest of those issues, like securing the border, she did not stand. Why? Because she does not agree with the president on that issue. We just have to get back to these sides working together. That's my personal feeling. 
+
+Friedberg, any thoughts on the theatrics and Trump's first year writ large and the sort of back-and-forth and is there any hope that these two teams could collaborate at some point on something like, say, the ballooning deficit, which Trump has not got under control in his first year and it's going to be $2.5 trillion added? 
+
+What are your thoughts here on them collaborating on anything important, Friedberg? That's probably one thing they can agree on, is just keep the money flowing. Got it. They'll both give a standing ovation for &quot;burn more capital and put us more in debt.&quot; Well said, my guy David Friedberg.
+
+Solved enough science. It is your time to shine. The world's greatest moderator has decided we're going directly to Science Corner. This is your time to shine and it's Sacks' time to drop a deuce. Sacks went immediately off-camera. Yeah, he had to drop a deuce. All right, what's going on? What do you need me for? 
+
+This is very important for you. Friedberg's going to talk. Lightning round for Science Corner. Go, Friedberg. Wait, wait, are we doing any more topics after this or can I just leave? Yes, tariffs. Yes, we're doing tariffs. Why would we do that? Because I want to get Science Corner. You're going to put the audience to sleep. 
+
+I'm not saying Science Corner doesn't have its audience. Focus. Listen, you can go take a deuce. Look at you, you're like screaming, you’re screaming. Let him do his work. Let him cook. Let him cook. Friedberg, tell us about this Harvard study.
+
+Speaking of science, I think that there's a very important moment happening right now. We've talked a number of times on this show about Yamanaka factors. These are these four proteins that were discovered by Shinya Yamanaka that we found later that when applied to cells, mammalian cells can actually reverse the age of those cells, reset the epigenetic clock, reset the epigenome...
+
+Which is the little markers on top of the DNA that turn genes on and off, back to a youthful state. Extraordinary groundbreaking work that was done that won the Nobel Prize led to the foundation of several companies. There's a Harvard scientist named David Sinclair. He's a bit of a controversial character. 
+
+Do you guys know him? I think you guys, one or two of you may have met him. Chamath, you ever met him? I haven't, but I—I followed him, I've seen his stuff. So Sinclair's kind of bemoaned a little bit by the scientific and academic community for being a little too over-hypey, snake-oil salesman as some of folks have claimed.
+
+Years ago he sold a company to GSK saying resveratrol would reverse aging and it didn't end up working and he made $720 million on that and it didn't work and he's promoted certain supplement companies and so on. So I want to preface with that before I kind of underwrite what he's saying with this next thing. 
+
+But he's a co-founder of a company called Life Biosciences, and they've reached a major agreement with the FDA to be the first company to treat humans with Yamanaka factors. Specifically what they're doing is they're going to be delivering these Yamanaka factors—these are these proteins that rejuvenate cells and make them youthful again—into the eye. 
+
+And so their first indication is to actually inject them into the vitreous fluid in the eyeball and they'll affect the retina in the eye to address people that have gotten blind from glaucoma or one of these kind of stroke-like diseases that happen in the eye. 
+
+And the expectation with this phase one clinical trial is that the delivery of these Yamanaka factors into the eye will rejuvenate the retina, make it youthful again, and restore vision. If it works, which it's expected to because we see this result happen in animal models, it could be an extraordinary breakthrough not just in terms of blindness but in terms of the first human application of Yamanaka factors to reverse aging. 
+
+The way they're doing it is they're actually packaging up DNA that will make these proteins into viruses, an AAV virus that is delivered into the eye. The virus will then go into the retinal cells and then will deliver this payload for this DNA to make these proteins in the eye cells. 
+
+And it can be turned on and off—amazingly, they've created a switch mechanism in it where the protein production, the production of these Yamanaka factors, can be turned on and off by taking an antibiotic called doxycycline. 
+
+So the person that gets the delivery of this drug takes the antibiotic, turns on the production of these Yamanaka factors, and then theoretically their eye cells will de-age, will get youthful again, and their vision will be restored. So phase one clinical trials underway. 
+
+First time in human history we're seeing Yamanaka factors being delivered into humans. Literally the tip of the iceberg, there are now over a dozen startups that are trying to deliver Yamanaka factors, which are these proteins, or some other sort of protein that can actually reverse aging by restoring the epigenome in cells and make them young again. 
+
+So this is the beginning of a wave of what I think will be the most extraordinary revolution in human therapeutics and ultimately could lead to, you know, some people would argue the fountain of youth. Is this just a tox study? So is it mechanism—? Phase one, yeah. They’re not—yeah, they’re—well they'll see results. 
+
+They'll see results, but they're going to keep dosing low but you will see results. God, that's going to be incredible. It’s going to be incredible. By the way, a number of other folks that are gearing up for phase one using if not the Yamanaka factors, other factors that they've identified or designed as an alternative to Yamanaka factors again to rejuvenate the cells. 
+
+And just to remind folks, the way this works is it was discovered that these proteins when they go into a cell, they take all of those little markers that sit on top of your DNA that turn genes on and off, and they create a system that causes them all to move to the right place. 
+
+So it resets the markers so that those cells will start to operate like they're supposed to when they were young again. It’s going to be incredible. Do you think like people’s knees or joints or where do you think it could flow to next, in all seriousness? Arthritis? Yep. 
+
+And by the way, when applied and if it's distributed in the skin, they've seen some results in monkeys where like wrinkles go away. It like literally makes these cells all work youthful again. And so a lot of the damage that happens over time is not damage to DNA. 
+
+It's damage to the epigenome. It's the parts that sit on top of the DNA that turn genes on and off and they get moved to the wrong place as you get older. And by resetting them and getting them back to the right place, boom, the cell is young again, the organ is young again, and suddenly you look and act and feel young again. 
+
+It's an incredible technology. We're just at the early stage, the early innings of turning it into therapeutics. Again, the discovery goes back to 2006, and now we're starting to see it get into clinic. All right, let's rejuvenate—let's rejuvenate some hairlines on this podcast, that would be next up. Speak for yourself. I don't know, you got a little peaks going on there, my brother, a little peaks. What are you talking about, bro? My hairline's incredible. I'm 50. I mean, it's not bad for 50, I give you credit, you’re holding your own.
+
+All right, let's talk about our final topic. SCOTUS struck down Trump's emergency powers tariffs. Last Friday, SCOTUS voted 6-3 against President Trump's EPA tariffs. Six judges voted against, three conservatives—Roberts, Barrett, Gorsuch—and three liberals. 
+
+Via Bloomberg: &quot;Not since the Supreme Court struck down the first New Deal in 1935 has the court reversed a policy of comparable importance to a sitting president.&quot; 91 years since SCOTUS struck down FDR's first New Deal in 1935. 
+
+UPenn Wharton analysis says the tariffs collected about $175 billion to date, 50% of all tariff duties might wind up being refunded. This is going to take some time to sort out in the courts. 2,000 importers have already filed for refunds. 
+
+We talked about it here. I think the majority of people felt like this is the way the decision would go. And we talked about it here that there were other options for President Trump to pursue. He immediately said he was not deterred and invoked a 15% global tariff across the board via section 122 of the 1974 Trade Act. 
+
+Here's your Polymarket: Will the court force Trump to refund tariffs? 18% chance, but spiked to 40% after the SCOTUS decision. How will Congress react? Polymarket says 3% chance Congress passes any tariffs by March 31st. 
+
+So again, as I referenced earlier, these two sides just can't seem to work together and that would have resolved the whole thing. Sacks, you want to give us your take here? First of all, I don't think the tariffs are going away. What the court basically indicated, especially the 70-page Kavanaugh dissent, is that there's multiple alternative bases in law for the tariffs, in existing law. 
+
+So for example, section 122 of the Trade Act of 1974 enables temporary 150-day tariffs of up to 15% to address balance of payments issues. And the president has already invoked this. So we are now operating under that. What the 150 days is going to do is buy the administration time to substantiate, via studies and agency reviews, what it needs to prove.
+
+This will allow them to invoke more sweeping tariff authority under section 301 of the Trade Act and under section 338 of the Tariff Act. Section 301 authorizes tariffs responding to unfair foreign trade practices. Section 338 of the Tariff Act allows tariffs against countries discriminating against US commerce. 
+
+The Kavanaugh dissent actually provided a roadmap for the administration to put in place tariffs using one of these alternate bases. So I think that one way or another the tariff policies of this administration and the favorable trade deals that they allow us to strike with many nations, they will continue. 
+
+And I think the court seems to know that because the majority's opinion and concurrences collectively said nothing about how the administration should go about refunding the tariff revenue already collected. I think that if they expected this decision to end the tariff policies altogether, they probably would have said something about that. 
+
+And I think that brings up a really important point just on the merits here, which is: why would we want to give back hundreds of billions of dollars to a bunch of importers when we're trillions of dollars in debt? And I'll just say that the people who originally predicted that somehow these tariffs would be catastrophic for the economy, those predictions all proved not to be true. 
+
+So I think that this is ultimately going to be a popular policy. The administration will figure out a different way to do it, and I predict that future administrations, whether they're Republican or Democrat, will keep some version of the tariffs in place because I think that they will be ultimately popular on a long-standing basis.
+
+I think we've proved the experiment has been successful. What was the experiment? We needed to smoke out what the right balance of trade should be between the United States and all of its partner countries. I think that what we uncovered is that for the most part they were structural imbalances that were made not because they made economic sense for America, but it was just part of a hodgepodge of globalist drivel that people just bought into. 
+
+And if you strip all that stuff away, we had a hollowed-out manufacturing class and we have a hollowed-out middle class, and the tariffs will create more equality for the American worker in the end. So now I think the debate should be about how to implement these in a structural and permanent way. 
+
+I think we talked about this before, Jason, that this was sort of expected and there are many other mechanisms. I think the president activated one of them immediately. I don't think this is going away and I don't think it should go away. 
+
+So I think now the point is Congress really should ratify these things because it is clear that it was the right thing to do, and if they don't then, you know, the president still has a lot of room to get these done. But these make smart economic sense in my opinion.
+
+Friedberg, any thoughts on the ruling? Does it give you some, I don't know, respect for the courts that they made a judgment not along party lines for once? Does it...? Yeah, okay. I think that all Americans should feel assured and comforted in the fact that I think a lot of people view the Supreme Court as having a high degree of partisanship. 
+
+The fact that the president, despite having a majority of what others would think were kind of politically aligned appointees on the court, had a ruling that he did not want I think should give everyone good faith that the system that the founders set up is working.
+
+There is a judicial branch that adjudicates the law against the executive branch when they think that it doesn't map, and I think that that was very important to see. So, you know, clearly the debate about tariffs, the economic effect of tariffs, the security structural trade relationship effect of tariffs and the importance of that is a separate conversation.
+
+But I do think that the read of the law being what I would say is non-partisan with respect to the court's action is important and probably very valuable. I'll reiterate that. This is a great moment, I think, for the Supreme Court to make a thoughtful decision and I think we need to think about executive power a whole bunch, whether it's Biden with student loans or Trump with tariffs. 
+
+We have this beautiful system set up by the founding fathers. I know it's frustrating, gridlock’s frustrating, trust me, we all come to this podcast every Thursday and we have to work together. It's hard to work together, but you got to learn to work together and we don't want an executive branch that can unilaterally just roll over the other branches. 
+
+And that's going to end, I think Trump's going to lose the midterms and we're going to get to more chaos again and we might as well start this reconciliation process of these two sides stopping their lawfare against each other and working together for the American people on the important issues. 
+
+The tariffs—there are some fundamentally important things that Trump was doing there and they were working. They could have been chaotic, that's a reasonable criticism of them because business owners didn't know what to do. So Trump did it in a chaotic way. That's just a fact. 
+
+He should have done it in a more thoughtful way and the Congress should have been alongside him saying, hey, what tools do you need? How can we help support this? We know that there's trade imbalances, we know that people are being unfair. Let's work together as one America to negotiate these things. 
+
+Both sides—start having dinner together, start playing cards together, and do what we do here on this podcast, which is you fight it out, you argue, but then you come together and try to find some resolution for this stuff. So they should go and tell Trump, hey, we'll approve all the tariffs you did, we will not force you to get refunds, the Congress should come out and just say that. 
+
+And then they should say, hey, and when you want to do them in 2026, just run them by us or ask us for some parameters that you want and let's just be thoughtful about these. These are our concerns. That's it. Thank you for coming to my Ted Talk. Can I just do one response to that? Absolutely. I'm sure you have some debate club points that you want to point out. 
+
+Well, I just want to make one. I mean, do you think Susan Rice is going to respect your call for comity and basically working together, Kumbaya? I want the esprit de corps. No, I don't. I think both sides— She just had a diatribe where she basically said that Republicans and actually not just, like, partisan Republicans but even tech companies that merely were working with the administration should expect to get prosecuted. 
+
+I mean, she was basically outright saying she and the Democrats are going to pursue lawfare as soon as they get back in charge. They're absolutely going to do that, just like when Trump got in, he went after Comey, he went after Jerome Powell. The lawfare is happening on both sides. Both sides need to drop the lawfare.
+
+We need to get rid of these pardons, they're ridiculous, and these teams—we have to be a team. So let's just get some esprit de corps and teamwork going in Washington DC, and that's what we should vote for in the midterms. We should vote for moderates who want to work together and in 2028 we should have some kind of moderate ticket that wants to work together. 
+
+That would be better for all Americans. This kind of chaos is not good, folks. All right, listen, it's been another amazing episode of the All-In podcast. Your favorite podcast. Like, subscribe, whatever the hell you want to do on your own time. For David Sacks, David Friedberg, Chamath Palihapitiya, love you boys. I am the world's greatest moderator, J-Cal. See you next time. Bye-bye.
+
+Let your winners ride.
+Rain Man David Sacks.
+And instead we open-sourced it to the fans and they've just gone crazy with it.
+Love you Bestie.
+The Queen of Quinoa.
+Besties are back.
+Episode 13.
+There was a giant dog taking a deuce in your driveway, Sacks.
+Yeah, oh man.
+
+My internal moderator beat me at every turn.
+We should all just get a room and just have one big huge orgy because they're just—it's like this, like sexual tension that they just need to release somehow.
+Wet your beak, beak. Wet your beak, beak. Wet your beak.
+We need to get merch.
+Besties are back.
+I'm going All-In.
+Wet your winners ride.
+Besties are back.
+Episode 13.
+
+There was a giant dog taking a deuce in your driveway, Sacks.
+Yeah, oh man.
+My internal moderator beat me at every turn.
+We should all just get a room and just have one big huge orgy because they're just—it's like this, like sexual tension that they just need to release somehow.
+Wet your beak, beak. Wet your beak, beak. Wet your beak.
+We need to get merch.
+Besties are back.
+I'm going All-In.
+Wet your winners ride.
+Wet your winners ride.
+Besties are back.
+Episode 13.
+I'm going All-In.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
