@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - March 01, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">March 01, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=eTCLJyPjOtI" target="_blank" rel="noopener">Former Goldman Sachs CEO Talks AI, Private Credit and Politics</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/PXTURrVHPIkg8Vmb3AvphcIBcSKE33kqDOgyeUvVLFsDAkEGamXpaEhEYh9YNERkvrW1BBmC=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Bloomberg Podcasts</span><span class="channel-subs">(434.0K)</span></span>
+                        <span class="meta-sep">·</span><span>35:59</span>
+                        <span class="meta-sep">·</span><span>3.2K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-03-01</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Lloyd Blankfein (Former CEO, Goldman Sachs)</span> <span class="tag tag-person">David Gura (Host, The Big Take Podcast)</span></div>
+                </div>
+                <div class="tldr">Former Goldman Sachs CEO Lloyd Blankfein warns that the financial markets are in a &quot;late-cycle&quot; stage vulnerable to a reckoning, particularly within opaque private credit markets, while reflecting on how Goldman Sachs has successfully preserved its p...</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Former Goldman Sachs CEO Lloyd Blankfein warns that the financial markets are in a &quot;late-cycle&quot; stage vulnerable to a reckoning, particularly within opaque private credit markets, while reflecting on how Goldman Sachs has successfully preserved its partnership culture...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Former Goldman Sachs CEO Lloyd Blankfein warns that the financial markets are in a "late-cycle" stage vulnerable to a reckoning, particularly within opaque private credit markets, while reflecting on how Goldman Sachs has successfully preserved its partnership culture despite its evolution into a public corporation.</p>
+<h3>Market Risks and the "Late-Cycle" Reckoning</h3>
+<ul>
+<li><strong>The Discipline Gap:</strong> Blankfein suggests that long periods of market prosperity inevitably lead to a loss of discipline, as investors forget the consequences of risk.</li>
+<ul>
+<ul>
+<li><strong>Cyclical Inevitability:</strong> He compares the need for market corrections to "going to the mattresses" in *The Godfather*, suggesting that periodic crashes are necessary to clear out "bad blood" and poor investments accumulated over a decade.</li>
+</ul>
+</ul>
+<li><strong>Private Credit Concerns:</strong> He expresses significant worry over "opaque assets" and illiquidity in private credit. </li>
+<ul>
+<ul>
+<li><strong>Valuation Issues:</strong> Marking these assets to market is imprecise, and testing those marks is nearly impossible because there is no liquid market of knowledgeable buyers for small "smidgens" of private debt.</li>
+</ul>
+</ul>
+<li><strong>Protecting Retail Investors:</strong> Blankfein strongly opposes moving "Mom and Pop" retirees into illiquid private equity or credit. </li>
+<ul>
+<ul>
+<li><strong>Political Consequences:</strong> While the government tolerates institutional losses, losses for citizens/taxpayers trigger severe regulatory and political backlash. He questions if firms should risk their franchises by chasing the consumer sector late in the cycle.</li>
+</ul>
+</ul>
+</ul>
+<h3>The Evolution of Artificial Intelligence</h3>
+<ul>
+<li><strong>Current State:</strong> Blankfein characterizes current AI as a "parlor trick" for individual users—useful for generating essays but lacking the source-verifiability of a traditional Google bibliography.</li>
+<li><strong>Operational Impact:</strong> He predicts that AI will not reduce headcount in the short term. Companies will likely need to *increase* staff to run new AI systems in parallel with legacy systems to ensure reliability before fully switching over.</li>
+<li><strong>Investment Bubble:</strong> While acknowledging potential over-investment, he notes that "hyper-scalers" are often led by founders putting their own massive personal wealth at risk, which provides a degree of market signaling.</li>
+<li><strong>Algorithmic Continuum:</strong> He views AI as a natural progression of algorithmic trading, which serves the vital purpose of removing human emotion from investing (e.g., the fear that prevents people from buying "waterfront property after a hurricane").</li>
+</ul>
+<h3>Goldman Sachs: Partnership vs. Public Corporation</h3>
+<ul>
+<li><strong>Preserving Culture:</strong> Blankfein is surprised by how well the "partnership culture" has survived 25 years post-IPO. This culture is defined by "busybody" co-owners who feel entitled to know what is happening in every department.</li>
+<li><strong>The Shift from "E" to "PE":</strong> He explains the fundamental difference between a private and public firm:</li>
+<ul>
+<ul>
+<li><strong>Private:</strong> Focuses on long-term accretion of capital ("Earnings" or E).</li>
+<li><strong>Public:</strong> Focuses on the "Multiple" (PE). Public markets value stability, leading the firm to sometimes forgo volatile earnings to achieve a higher share price.</li>
+</ul>
+</ul>
+<li><strong>David Solomon’s Tenure:</strong> Blankfein credits his successor with completing the transition to a modern public company by moving volatile investing opportunities off-balance sheet, a move desired by public shareholders but less prioritized during Blankfein’s own era.</li>
+</ul>
+<h3>Corporate Responsibility and Politics</h3>
+<ul>
+<li><strong>Against "Red and Blue" Companies:</strong> Blankfein argues against the polarization of corporate America, stating that companies should not be forced to take positions on controversial social issues unless they fall within the firm's core expertise or directly affect employee welfare (e.g., marriage equality).</li>
+<li><strong>Government Intervention:</strong> As a "moderate globalist," he remains skeptical of centralized government management of the economy. </li>
+<ul>
+<ul>
+<li><strong>The Power of Failure:</strong> He argues that the strength of the US economy is the ability to fail fast—if an airport is built in the wrong place, it is quickly plowed over for a Walmart. Government ownership or stakes slow down this essential creative destruction.</li>
+</ul>
+</ul>
+<li><strong>"Cancel Culture" and Loyalty:</strong> Regarding reputational scandals, he emphasizes that firms should not "cut and run" on employees facing public outcry if the firm believes the individual did nothing wrong. He warns that overreacting to "cancel culture" damages a firm's ability to recruit and retain talent.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"In a way you have market problems and crashes and problems simply because a lack of discipline builds up over time; it's human nature... we're getting close to the end... we're due for a kind of a reckoning." — <strong>Lloyd Blankfein</strong>
+</blockquote>
+<blockquote>
+"I think we shouldn't have blue companies and red companies... why should we divide—the country's polarized enough—why should we divide our economy in half?" — <strong>Lloyd Blankfein</strong>
+</blockquote>
+<blockquote>
+"In the short term you won't lose head count [to AI], you'll have to add head count to use the new technology while having the old system in place... you can't switch on a dime." — <strong>Lloyd Blankfein</strong>
+</blockquote>
+<blockquote>
+"If you punish people for being wrong as if they were stupid, you'll lose them. You'll even if they don't walk away, you'll lose their mind and you'll lose their ambition." — <strong>Lloyd Blankfein</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Let me start just by asking you sort of what retirement has been like. You left the firm in 2018. What is your day-to-day like? I'll just say this, I have... I still have the background, the occupational hazard. I still have the background noise of following markets. I still... I still know the price of everything all the time.
+
+I engage in some philanthropic activities that I used to follow that I just do a little bit more of. I spend more time with my family, although I haven't really clocked it. It may just be that my family feels like it's more time, because... because the weight of it is more oppressive than it has been. 
+
+But look, let me just say, let me just sum it up. I do what I want to do. I spent about 40 years or more doing what I had to do and now every day I get up and I kind of do what I want to do that day. I swim every day, I watch, you know, I watch, I watch podcasts. I walk around and I listen to things and so, you know, I like being up on things. 
+
+I can tell you what I don't do. I don't get calls that require me to jump on a plane and fly to Riyadh on four... on four hours' notice so that I could... so that they could raise by a few percentage points the odds of getting a transaction that we're competing for. 
+
+But you know, I'm a busybody and I'm nosy and I look at what's going on. If I read about a transaction and I wonder, &quot;Gee, who is doing this transaction?&quot; So I pick up, you know, one of my grandkids' toy telephones and I bark into it and say, &quot;Are we in this? Why not?&quot; And there's nothing... nobody at the other end. So I have all the satisfaction of reliving my old life of torturing people, but since no one's listening to it, no one ever gets mad at me. 
+
+You write in the book about this transition that took place in the '90s away from kind of narrative-driven investing or trading into more algorithmic trading. It does strike me we're in a moment where there is a prevailing narrative, that's the AI narrative. How is it going to revolutionize the world? Is it going to revolutionize the world? How long would that take? Are you an AI user, an AI skeptic? 
+
+Look, I think it's a continuum. We're always... when you say algorithmic trading, there were always... there were always people who used analysis, technical analysis. As technology advanced, you'd have machines looking for the technical points and following that. And the point of algorithmic traders or technical trading is to take the human emotion out of it. 
+
+Because there's, you know, there's a school that says, &quot;Oh my god, you'll sit there and say, 'Gee, when x, y, and z happens, I'm going to do it,'&quot; but when x, y, and z happens, people don't do it. I, you know, let me make an analogy in the real world. Everyone says, &quot;You know, I just can't wait to buy waterfront property when it gets cheaper. I'm going to buy it right after the next hurricane.&quot; 
+
+And of course the next... and then a hurricane happens, property values along the waterfront get lower. And guess what? When everybody else is scared and wants to sell at a lower price, you don't want to buy at the lower price because you're scared too. So this is something that would take the emotion out of it and just force you into doing things based on signals. 
+
+And it's... you know, it was working then, it's working now, just better technology, faster, and more variables. Is AI something that you're playing around with? Mostly it's a parlor trick. Because I'm asking it for questions that I could get the answer to but not as quickly and not as delightfully when it gives me something that's coherent. 
+
+I would say, when I use Google I get a bibliography. When I use... when I use Chat or one of the other AI, I get an essay that purports to be the answer. Sometimes I want a bibliography because I want to do the background stuff myself and look through it, and sometimes I just want an answer. 
+
+The thing also about a bibliography is you kind of check sources. When you just get an answer, you kind of wonder whether it's right or not. I'm not running a company now so I can't tell you which parts of our operations and technology and other things are being displaced by AI such that we can have a much smaller head count in that. 
+
+I do know, based upon other cycles, that in the short term you won't lose head count. You'll have to add a head count to use the new technology while having the old... while having the old system in place because you need a reliable system and you can't switch on a dime. So you'll have to run them both parallel for a while. 
+
+Are we overinvesting in it? Maybe. Even if it's perfect and right in every way, not every company doing it will be a winner. Undoubtedly in hindsight we'll wish we hadn't made some investments or we hadn't invested in companies that are involved in it, but we just don't know which. 
+
+But, you know, one other thing, the hyper-scalers, I mean, really companies investing close to and in some cases over $100 billion a year. How many countries could invest in R&amp;D for over $100 million a year? But I have to say the people who are doing it, these companies, most of them are run by their founders who have most of their wealth tied up in those companies. 
+
+So they're playing with their own money and they're risking their own wealth in this. I would say, I don't know if they're right, but they are... they are at least as likely to be right as anybody else who's doing it and it's their money. They're putting their money where their mouth is. 
+
+Let me ask you about something complementary to this: there is a growing chorus warning about what AI is going to mean for private credit. So you had Jamie Dimon saying, &quot;I see a couple of people doing some dumb things.&quot; Marathon's Bruce Richards predicting the default rate in direct lending is going to rise in the next few years because of software's exposure to all of this. Are you worried about private credit, you with your banking background, how much it's grown and the integrity of that credit? 
+
+Well, I'm worried. Look, one has to worry about opaque assets where there's... where there's illiquidity so it's very hard to mark to market and you're marking it by analogy to other companies. So it's not... there's no precision there. It is very hard to test in the market whether your marks are correct because the only way to really test is to sell some. 
+
+It's very hard to sell to a knowledgeable buyer because any knowledgeable buyer would have to do the work and the credit analysis. And who's going to do the credit analysis to buy a little smidgeon little piece of something? And so... and then another phenomenon that's gone on is, we haven't—and this is just taking it away from credit for a second and just talking generically about opaque assets—the markets have been very good for a very long time. 
+
+The one thing that imposes a lot of discipline on people are problems and losses and disasters. Something like that happens and then everybody goes into shock and then all of a sudden everyone gets very careful about how they allocate capital, at least for a while. And like any other commodity, investing dollars is... if everything is always good and there are no adverse consequences, you start to lose discipline over time. 
+
+And by the way, this is why there are cycles to everything: business cycles, history cycles, market cycles. And so, it's been a long time since we have had to redress things. You know how I have this bad habit of quoting movies sometimes. Remember in the movie, you know, The Godfather, when they're going to the mattresses and the guy says, &quot;You know, we have to have these things every 10 years to get rid of all the bad blood that's built up over that 10 years.&quot; 
+
+And in a way you have market problems and crashes and problems simply because a lack of discipline builds up over time. It's human nature; there's an inevitability about it. We're kind of, I don't know if we're in the absolute end of the cycle, but we're getting close to the end... you know, late stages of cycles on this and we're due for a kind of a reckoning. 
+
+So, generally I'd be very, very... I'm always very cautious, I'm in the risk management business, but especially cautious at this time. You can point to several reasons, but if for no other reason just because we haven't had a problem for such a long time, undoubtedly we've put money in places where write-offs are going to need to happen. And when you're dealing with opaque, illiquid assets like credit, that's a place that one would clearly have to look. 
+
+You've spoken out against people putting private equity and credit in retirement portfolios. This is something that an arm of Goldman Sachs is doing, encouraging people to do. If you were still running the firm, is that something you would be encouraging as well given the opacity of this asset class? Is it something that Mom and Pop and the rest should have? 
+
+Yeah, I'm not talking about... again, specific firms. There are firms that are really good and care about it, but there's... you know, hundreds of firms doing this and not everybody has been around for 150 years or more and wants to be around for another 150 years or more. So I would say, just generically, putting the relative riskiness aside, I would say the consequences of being wrong or having a problem in the account of retirees, i.e., real people, citizens, taxpayers, voters, is much more highly consequential. 
+
+The political sector, the government sector really cares but not that much if institutional investors lose money. They're smart, they can afford it. Even very, very, very high-net-worth individuals, they must be smart because they have money and even if they're not smart, they can afford it. But when you lose money for individuals, for consumers, i.e., taxpayers and citizens, people in government get very, very upset; regulators get very, very upset. 
+
+So my point is that at any point, in any moment, you should approach when you're dealing with that segment with a lot more trepidation. Not because the odds of this security will... you know, will be worse in their account than someone else, just the consequence of a bad outcome is much more dramatic to the people who do that. Let me tell you, I learned some of that the hard way. We're an institutional firm so we never really had that, but I understand the consequences of that in the financial crisis. 
+
+And so, I just cautioned. Now, I would say that at all times, but here we are at late cycle in these markets. Is it the absolute end of the cycle? I don't know, but after so many years of a bull market and a bull run in all these assets, we're getting close, you know, we're in the later part of the cycle I'm sure. 
+
+So wouldn't you know it, this is the time when firms are lobbying to give individuals, you know, to bestow on them the opportunity of investing in these assets, these relatively illiquid assets, at this particular time of the cycle. I think the people who are doing this should think about that very, very hard and if they're going to do it, exercise a much greater degree of caution and just be aware of the calculus. 
+
+Is it worth it? In other words, if your business is really terrific, if you're growing, you're doing very, very well, do you really need to extend your franchise that much by going to this much more dangerous sector? You've called yourself a worrier more than a warrior. Something Jamie Dimon's clearly worried about is that we're back in a period that's like '05, '06, '07 run-up to the crisis. How does that strike you? Do you see the historical analogy that he does, this moment to that? 
+
+Yeah, no I can't speak—I mean, he's smart, he sees a lot of stuff. I don't... I can't comment on what he's saying, but I'd say the best analogy would be to say, you know, kind of late cycle. You know, you know the crisis that we had was... in different forms, it was basically a real estate collapse. It took the form of mortgages, you know, loans on real estate, real estate on real estate; that was really what it was. 
+
+In one form or another, that was kind of late stage when individuals started to get involved in it. And of course that was what inflamed the politics at the time and really caused... it was dramatic and of course banks were very... I mean, very complicated, we could talk about that. But what's an analogy? Maybe you could find an analogy in that in companies that are historically institutional companies, transacting institutional-oriented products who are trying to have very small-sized transactions put into mutual funds or 401s. 
+
+Oh, by the way, into affiliated insurance companies, which is kind of one step away from individuals because remember insurance companies take your premium and will pay you back. They're the one... it's really individuals that are counting on, in a lot of cases, those companies having a good portfolio that's solvent so that they can pay back their debts with their obligations when certain contingencies happen years and years forward. 
+
+Kind of a consumer-oriented business also. So maybe that's an analogy because they both feel kind of late stage with assets and opportunities that normally wouldn't... wouldn't go to individuals. That's what I see. But you know, these crises don't have to be the same, but in some way or another they rhyme, and they always come from different... look, if we're sitting here... 
+
+One of the things I always thought: if we're sitting here fretting about a specific thing, that's the thing that's less likely to happen. Because if we're fretting about it, that means we're all going home, talking to our people, trying to moderate the risks associated with it, and that's usually a good thing. Usually what you get is... usually when the world blows up, it's something you thought was triple-A. 
+
+And the question is, you know, what is it and who has a... you know, who has contingency planned well enough, who's looked around corners and seen that possibility that they may have thought was a very remote possibility but it was a contingency that happened? And so they contingency planned and did something... got closer to home at the right place and reduced their risks. 
+
+I'd like to talk about your appetite for risk-taking, how that's evolved. We could go back to 1994 which was a bad year for Goldman. And you write in the book about how there was this kind of pendulum shift; there was excessive risk-taking, and then there was kind of excessive caution that followed that as the company kind of found its feet again. Talk if you would just about finding that balance. 
+
+Well 1994 was a really bad year for Goldman because we were kind of there by ourselves. You know, if you're going to have a bad year, you'd like everybody around you to have a bad year. You'd like it to be a generic problem, you'd like to be the best of a bad group, or even in the middle of a bad group. But we... you know we were miserable and we didn't have a lot of company in '94. 
+
+You know we had very big positions that were conditioned on rates not going down, or at least not coming up, especially European. This was a time of a crisis and a lot of pressure on economies in Europe and we thought they surely won't want to immiserate their people by taking interest rates up in a slow-growth environment. And guess what, they immiserated their people in the slow-growth environment, so we did poorly. 
+
+We lost money. That was a moment in time also where the firm was a private partnership. And in a private partnership, and by the way, a private partnership with unlimited liability for the partners. So you could not only lose all the money you had in the firm, but they'll come around and take away your home and house and so... and so that... that really makes you really focused. 
+
+And in our business, if you're afraid to lose money, it's very hard to make money. Not because people are betting wildly, but we intermediate the other side of what people want to do. People want to sell blocks of something, people want to hedge big positions where there's no other side, where we would have to position that risk until we could cut it into little pieces and sell it off. 
+
+But that's a lot of risk and so people were very, very loath. So it's not just what you lose in the moment, it's all the opportunities that you inevitably let go by that you otherwise would have taken advantage of, and that could go for a long time. And what you have to do there is leadership has to be, you know, kind of sober about the fact that you really don't want to lose more money. 
+
+But at the same time, you encourage people to go ahead and you have to have the discipline in your own organization to let people know by your behavior that you're not going to punish or kill people for having legitimate losses that were not necessarily... you know, people... You're not supposed to be stupid, but even smart people are wrong a good percentage of the time. 
+
+If you punish people for being wrong as if they were stupid, you'll lose them. Even if they don't walk away, you'll lose their mind and you'll lose their ambition. So that's a very, very delicate management problem after a crisis like that to get people front-footed again. And by the way, what they're feeling, you're feeling too. You know, you're a little like the flight attendant going through turbulence. 
+
+You know, the engine may sound a little bit different and you kind of wonder, is it supposed to sound like that? And if you're the flight attendant, you better have a big fat smile pasted on your face because if you look like you're terrified, guess how the passengers are going to respond. So I would say, in a crisis, put the oxygen mask on you first before you put it on your kids because you're not doing your kids any favors if you pass out. And the other thing is try to... try to look like you're not scared to death. 
+
+Goldman's special sauce, as you put it, is that heritage you're talking about, the fact that it was a partnership for as long as it was. How has it post-IPO been able to retain a lot of that? Maybe the special sauce isn't as strong as it was before, but it does have a unique flavor and how's it retained that? 
+
+I think the thing that we would have least predicted, that we were the most nervous about, that most came up into the debates about whether we should go public or not—which by the way I thought was inevitable given we needed a balance sheet and stable capital—the thing that I would have thought would have been the biggest surprise if I could look forward to where we are today is how well Goldman Sachs preserved the partnership culture. 
+
+25 years, more than 25 years after we've been a public company. Now, what does that mean, a partnership culture? People don't necessarily understand it. You know, I spent half my tenure in the private firm, half my tenure in the public company. In a private company, the people that report to you are your co-owners of the business. 
+
+They have a set of expectations. They act like owners. They expect to know everything that's going on. A Japanese bond salesman wants to know what's going on in investment banking in London. If somebody screws up somewhere in the world, it affects everybody around the firm. They're not just in their own cylinder. It's not considered rude to be a busybody and look around and see what's going on around the whole firm. 
+
+It's their expectation, their sense of entitlement to have that. People expect to be consulted as owners. People think if they object, you'll listen to them. And you may be slow in implementing a decision that you thought was the right thing to do, but people are objecting and so you socialize things more. People in the firm get paid based upon how the firm as a whole did, not their little cylinder or not their little space. 
+
+There's a lot of differences between a partnership culture and a regular corporate. And I think the firm did a good job in protecting that even though nobody's been a partner for a long time, but they call themselves partners. They use the name. And it's real. I'll tell you another thing, there's an economic difference. 
+
+When I was in a private partnership, you care about your capital account; you don't have stock. You leave your capital in the firm because that's the... your money is the working capital of the firm. You care about how money accretes into your capital account, but you don't care if it's a smooth accretion every year or if it rises 5% every year. You care what it looks like after 20, 25, 30 years. 
+
+And so if on a 10-year cycle you make money four years, lose money in two years, break even four other years, that's perfectly fine as long as it's enough. In a corporation, in a public company, it's not just your earnings, it's your earnings times a multiple and the multiple is governed by people's sense of the stability of your earnings and the growth of your earnings. 
+
+So all of a sudden you care about your E, your earnings, but you really care about your PE. And maybe you'd forgo some of your earnings in order to have more stability in those earnings so you get a higher multiple. And so I think over time the real test was, how do you function, recognizing that you had a different ownership base, i.e., public shareholders versus the partnership. 
+
+How do you satisfy your public owners who care about a share price and still have all those partnership culture elements, you know, the risk profile, everything. I'd say that process started with my predecessor, Hank... Paulson, yep. Hank Paulson, who was CEO when the firm went public. It certainly continued threading that needle with me. 
+
+And I tell you, I think my successor David Solomon has done a good time and in some ways he's completed that transition to a great extent. Because what I didn't do so much and what he did, I kept a lot of our investing opportunities on balance sheet. Which was a very big source of E, P&amp;L, but it was somewhat sometimes a burden on our PE multiple because it would be much more volatile. 
+
+He's moved a lot of that off-balance sheet, which frankly was what our real owners at this point really would want to have happen. For a long time, in Hank's tenure and my tenure, we were a public company but most of the shares were owned by insiders, by partners. Over time partners retire, they sell their stock and so over time it becomes more and more like a traditional public company where the public owns the vast majority of shares and the insiders own a small amount. 
+
+Early in my tenure the partners, you know, the traditional older partners still owned most of the stock and it was reflected in a board of directors where we had at sometimes four or five Goldman people, Goldman employees, on the board of directors. That wouldn't happen today. There's a, as I see it, a very vibrant alumni network, in part thanks to you and your work kicking that off and organizing it. 
+
+How actively are you engaged with what the firm is doing? You and other alums of the firm watching what's happening and what people are saying? All... so all the time. I mean it's a very important thing. It's very important to the core of Goldman Sachs that we care about our alumni and in return the alumni care very much about the firm. 
+
+If you went to somebody who'd been at Goldman Sachs for five years, 25 years ago, had a great career and you ask them to tell you about themselves, the first thing they'll say is, &quot;I'm ex-Goldman.&quot; A lot of people at Goldman Sachs go into public service after their tenure at the firm and in fact people refer to sometimes a revolving door; ours wasn't a revolving door. 
+
+Government took from Goldman. We didn't hire principally people from government; it was the other way around. But we get people that were public-service minded. We care about our alumni. If somebody's going into government 15 years after, guess who they ask to help them with their process of getting through the Senate confirmation or other things. 
+
+But having been there is highly valuable; it's a very important recruiting tool and it's a very important morale lift. Part of the perks of being at the firm is that you get to have been at the firm. There are always going to be people who think they're going for 30 years to Goldman and they stay three, and there are people who only intend to stay three and they stay 30. But whether it's three or 30, it's a good place to get your training and start your career. 
+
+I suspect that you as a Goldman alum have followed the scandal that erupted around Kathy Ruemmler, the general counsel who came into that job after you'd left, a scandal that was brought about by the fact that many emails between her and Jeffrey Epstein were made public. She effectively became a reputational risk herself and I'm curious how you think the firm has handled that. 
+
+You know, I tell you I don't shy away from provocation, but I just don't know. I hadn't met Kathy; she came in after I left. I don't know what the calculus was. I'd say in general one of the ways in which you're a good partnership is if you think... and again, this is a big &quot;if,&quot; I don't know. I really don't know. I don't know what was exchanged, I don't know Kathy, I don't know the situation. 
+
+But I'll say as a generic matter applied to other situations like the financial crisis or big losses... I prefer to talk about that and you can draw your own analogy where something goes wrong. Or we're doing M&amp;A. And in an M&amp;A transaction as people here well know, sometimes your opponents in an M&amp;A will use the media against you and make accusations and try to generate support for themselves by slandering the opposition. 
+
+Even if the pressure on you in that kind of a context gets severe, if you cut and run on somebody in your firm that you think, whether you're right or wrong, is unfair—and you really think they did nothing wrong and you really think that somebody's just picking on them—if you act badly to your own people that's not just a specific costly thing to do with respect to that person, but that's signaling that goes on to the rest of the organization. And so, one doesn't do that. 
+
+So you're asking me a specific question about a specific person; I don't know enough to comment on that. But I will say what people are neglecting in looking at these situations is I don't think that people who... look, in the mortgage crisis, nobody... you had people at other firms, they blew up certain things, they got fired. Did anybody ever know the name of the person who was running the mortgage business at Goldman Sachs during that era? 
+
+No, it was all me. I was the symbol, I was the guy in charge. Everyone did this... I promise you I never sold a mortgage in the firm. First of all, we didn't do mortgages; it was secondary markets. But if they were doing their job and did nothing wrong and hedged appropriately and didn't lose money and did everything right, we didn't fire those people because there was a clamor for that to happen. 
+
+And if I had done it, we wouldn't have been Goldman Sachs anymore. We wouldn't have the people, we wouldn't be able to recruit, we wouldn't be able to retain. The firm wouldn't have its relationship with the people. So I am intentionally not asking the specific question you're asking because I don't know about it. That's not like I'm shying away from... it would be unfair. 
+
+But I will say what doesn't get talked about is the support that a firm should show to its people if they believe that there's unfairness in the world. And by the way we're seeing some of this stuff where people get merely cited... I'm not saying in this situation, but in a cancel culture world, people are cutting and running on people every day. You can read in the paper somebody's getting fired for something that maybe three years from now they'll look back and say, &quot;Was that really a capital offense?&quot; 
+
+So, again, I shy away from the specifics of this because I don't know enough. But I do say that the world more generally is in a bad place, the polarized world we're in today is in a bad place with respect to penalties and accusations. Every crime is a felony, every felony is a capital offense and I'm not sure that that's warranted. 
+
+One more question on this note. You write about a mantra that you used and read out to colleagues of yours at Goldman; you said there shouldn't be any tolerance for bad behavior you observe at your company. Is that not applicable here? I think through sort of what's happened, which is the board clearly vetted her and asked about her relationship with Epstein, was satisfied. 
+
+But you keep wanting to talk about this. I don't really have much to say about it. I know in a trial the prosecutor informs the jury about how bad the victim suffered. But at the end of the day, the jury has to find out whether the person under trial was the perpetrator or did anything wrong. So at the end of the day, you can appeal to people's emotion about how bad the outcome was, but you still have to decide whether the person on the dock did something wrong. 
+
+And so, you know, if you want to talk about what happened in any given situation I'd probably agree with you but at the end of the day the ex-lawyer in me wants to focus. This is all... I am with you on the severity and the difficult outcomes and you want people who were responsible to suffer what they deserve to suffer, but at the end of the day you still have to decide if these are the right people and if what they did caused the problem. 
+
+Let me pull back and ask just about the mo... Go ahead. By the way, I was... I got called by press people to comment on my mentions in the Epstein file. There are five mentions of his office trying to get in touch with me to invite me to specific dinners. And I kept being out of town and... and by the way I have no memory of it. 
+
+When people I didn't know called my office inviting me to stuff, I didn't know them... I never said no, but I didn't say yes if I didn't know them. And so the fifth time the memo went back internal to Epstein's organization, &quot;Should I keep trying with Lloyd, or should I give it up?&quot; And the answer came back, &quot;I think at this point give it up.&quot; 
+
+And I didn't know that. Because if somebody had asked me, did I ever meet him? No. Did I ever engage with him? No. But it was a sidebar, third parties discussing how I was responding. And I frankly have no memory of not being responsive but that didn't stop reporters, before I knew how I was mentioned, calling me up and asking if I wanted to comment on my mentions. Just saying. 
+
+You characterize yourself as a moderate globalist. And I wonder how you see the way that corporate America is interacting with Washington today. You said we were talking about Government Sachs; maybe there would have been a moment for you to do some government service not in the second half of Trump's first term. What do you think as you watch your contemporaries, other CEOs, interact with this White House? 
+
+Look, you have to do what you have to do. If somebody puts a gun to your head, you're going to do stuff you otherwise wouldn't like to do. I think... I think we shouldn't have blue companies and red companies. I mean I don't... and it feels that way to you? Yeah, starting to feel that people are being asked and expected to take positions on controversial issues. 
+
+I think that, by the way, those are properly left to the political sector. I'm not saying that people shouldn't have positions on them, but not in terms of your platform because you're a consumer company and you're selling toothpaste. I don't think you necessarily have an... but people are shoving microphones in people's faces and say, &quot;You really should take a position here.&quot; 
+
+I mean, you could take a position as an individual but recognize the reason why they're shoving the microphone in your face is because you have the platform of your company. Since the interest in you is coming from people's interest in that platform, I think you have a duty to do what's in the interest of the company. 
+
+Now, I think there are times when you not only can but maybe you should take a position, and that is specifically where the issue that's being debated is in the core of your expertise. So if there's a government shutdown looming because they can't pass a budget, I think you can ask Goldman Sachs, &quot;What do you think the consequences will be?&quot; 
+
+And somebody at Goldman Sachs who knows about this stuff should comment upon it, take a view, and explain to the public why they have the view that they have. I think there are cases where the issue affects your people in a way that otherwise wouldn't allow them to do their jobs, like marriage equality. I took a very strong position on marriage equality. 
+
+I was the chairman of the New York City Partnership, which is like the local chamber of commerce but for very big companies in New York, and we were very strong on that issue and we lobbied for it. But, you know, in that respect, I'm the champion of the people who work at Goldman Sachs. 
+
+As individuals you can vote, you can make statements, you can carry a placard and march, but I'm not sure it's right to use the prestige of your corporation and certainly I don't think you should be required to do that. And there are people who would want to require companies to do that. It makes no sense. Why should we divide... the country's polarized enough, why should we divide our economy in half? 
+
+On that issue of polarization we've seen companies have to go to the White House, the U.S. government taking stakes in companies. What do you make of that in the year 2026 to see a Republican president heading down that path? Look, I think one shouldn't defend the extreme of anything. So I generally think the economy does well without centralized control, centralized management or government dictates. 
+
+I'm glad that Al Gore never built the information superhighway and laid all that cable five minutes before the internet and the cloud took over and made it vestigial. The strength of the U.S. economy is that we have millions of decision-makers and the real strength of the economy is that when those decision-makers are wrong... you build an airport in the wrong place, planes don't land there, fees don't get paid, the bank loans don't get paid off. 
+
+They repossess, they plow it over and they build a Walmart quicker than any other country would. That's the strength of our economy. Having government as a decider or having government owning a stake such that it slows down the processes that I just described is not a good thing. Is there room for government sometimes? Yes. 
+
+Orphan drugs that otherwise wouldn't be made where we have a social thing. Rural mail where nobody would. The electrification of the Tennessee Valley in the 30s when nobody would have spent that money. Supply chains where no individual company has the wherewithal or the incentive to play that money where they have to invest in infrastructure as a matter of public policy or national security. 
+
+A lot of opportunities for government, maybe they've hit all the right ones. But I think there are a lot of wrong ones that are possibly to be hit. If the government is involved in it, it may get too much capital and it may have that capital much longer than it needs to, and the incentive structure is just discombobulated. So there's not no time for it, but it's not a lot. Lloyd Blankfein, thank you very much. Thank you.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
