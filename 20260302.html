@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - March 02, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">March 02, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">3</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=gLM4l9BJzvg" target="_blank" rel="noopener">Strikes in Iran and Lloyd Blankfein Looks Back 3/2/26</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">CNBC Television</span><span class="channel-subs">(3.3M)</span></span>
+                        <span class="meta-sep">·</span><span>47:49</span>
+                        <span class="meta-sep">·</span><span>375 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-03-02</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Lloyd Blankfein (Former CEO, Goldman Sachs)</span> <span class="tag tag-person">Alex Harstrick (Veteran and Venture Capitalist)</span> <span class="tag tag-person">Dan Murphy (Reporter, CNBC)</span></div>
+                </div>
+                <div class="tldr">&gt; &quot;You tell me who's running Iran, and I'll tell you how this goes.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR: Following the death of Ayatollah Khamenei, the U.S. and Israel have entered a &quot;new and uncertain phase&quot; of conflict in Iran, triggering a de facto closure of the Strait of Hormuz and marking the onset of the world’s first AI-driven hot war.  Military Conflict: The U.S....</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR:</strong> Following the death of Ayatollah Khamenei, the U.S. and Israel have entered a "new and uncertain phase" of conflict in Iran, triggering a de facto closure of the Strait of Hormuz and marking the onset of the world’s first AI-driven hot war.</p>
+<h3>Geopolitical Escalation: Operation Epic Fury</h3>
+<ul>
+<li><strong>Military Conflict:</strong> The U.S. and Israel are conducting ongoing strikes against Iranian targets following the death of Ayatollah Ali Khamenei. </li>
+<ul>
+<ul>
+<li>Eleven nations are now involved in the conflict as Iranian-backed militias target Israel and surrounding Arab states.</li>
+<li><strong>Regional Impact:</strong> CNBC’s Dan Murphy reports that air defenses are on high alert in the UAE after projectiles were intercepted over Dubai and Abu Dhabi.</li>
+</ul>
+</ul>
+<li><strong>The Administration’s Stance:</strong> President Trump stated that operations are "ahead of schedule" and aimed at delivering a "punishing blow" to the regime.</li>
+<ul>
+<ul>
+<li>Trump has signaled that the conflict could last up to four weeks, while suggesting the "end game" is to encourage the Iranian people to overthrow the government.</li>
+</ul>
+</ul>
+<li><strong>Undefined Endgame:</strong> Experts warn that previous attempts at regime change (Afghanistan, Iraq, Libya) remain a cautionary tale, as there is currently no clear successor to the Iranian leadership.</li>
+</ul>
+<h3>Energy Crisis and Maritime Paralysis</h3>
+<ul>
+<li><strong>Strait of Hormuz:</strong> Brian Sullivan reports that while the Strait is not physically blocked, it is effectively "closed" to liquids tankers because ships cannot secure insurance for the 21-mile passage.</li>
+<ul>
+<ul>
+<li><strong>Global Supply Risk:</strong> 20% of the world’s oil, 20-30% of natural gas, and 30% of chemical fertilizers pass through this bottleneck.</li>
+<li><strong>Refinery Attacks:</strong> An Iranian drone hit Saudi Aramco’s Ras Tanura refinery—the largest in the world. While supply hasn't been impacted yet, crude oil prices have surged past $72/barrel.</li>
+</ul>
+</ul>
+<li><strong>China's Vulnerability:</strong> China is the primary victim of the maritime standstill, as 80% of Iran’s liquid exports (and roughly 4 million barrels per day through the Strait) go to Chinese markets.</li>
+<li><strong>Alternative Routes:</strong> Some oil is being diverted through Saudi Arabia's East-West pipeline, but volumes cannot fully replace the lost Hormuz capacity.</li>
+</ul>
+<h3>The Advent of AI Warfare</h3>
+<ul>
+<li><strong>A New Era of Combat:</strong> Alex Harstrek of J2 Ventures describes this as the first "true hot war" driven by AI, where active munitions are being designed, deployed, and executed by artificial intelligence.</li>
+<li><strong>Silicon Valley vs. The Pentagon:</strong> A cultural "language barrier" has emerged between the military-industrial complex and tech developers.</li>
+<ul>
+<ul>
+<li><strong>Anthropic Blacklisting:</strong> The Pentagon recently blacklisted Anthropic (maker of the Claude AI) after the company refused to adjust its "Terms of Use" to allow for mass surveillance or fully autonomous weaponry.</li>
+<li><strong>The "Stick" Approach:</strong> Harstrek warns that the Pentagon is using "sticks" (supply chain risk lists) to compel collaboration, which may alienate the Silicon Valley talent needed to compete with China and Russia.</li>
+</ul>
+</ul>
+</ul>
+<h3>Market Outlook and Corporate Transitions</h3>
+<ul>
+<li><strong>Lloyd Blankfein on Risk:</strong> The former Goldman Sachs CEO expressed support for the intervention, arguing that the "opportunity and proximity" to a bad outcome with Iran justified the action before they acquired nuclear capabilities.</li>
+<ul>
+<ul>
+<li><strong>Market Reckoning:</strong> Blankfein warned that the market is overdue for a "cleaning out," noting that 15 years without a major reckoning has led to a lack of discipline in private credit and illiquid assets.</li>
+<li><strong>Fed Independence:</strong> He criticized "assaults" on the Federal Reserve, calling it "crazy" to undermine the guardian of the dollar's integrity while the U.S. remains a debtor nation.</li>
+</ul>
+</ul>
+<li><strong>Berkshire Hathaway Succession:</strong> In his first annual letter, Greg Abel (successor to Warren Buffett) vowed to maintain the company’s culture of financial strength and capital discipline. </li>
+<ul>
+<ul>
+<li>Despite a 29% decline in operating earnings, Berkshire maintains a cash hoard of approximately $373 billion.</li>
+</ul>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"You tell me who's running Iran, and I'll tell you how this goes. Nobody knows who's running Iran."
+</blockquote>
+<p>— <strong>Brian Sullivan</strong>, CNBC Anchor</p>
+<blockquote>
+"This is the first time that we're going to see an AI-driven war, a true hot war... the technological enablement is like something we've never seen before."
+</blockquote>
+<p>— <strong>Alex Harstrek</strong>, Managing Partner, J2 Ventures</p>
+<blockquote>
+"The combination of opportunity and proximity to the bad outcome, I am not regretting that this happened."
+</blockquote>
+<p>— <strong>Lloyd Blankfein</strong>, Former CEO, Goldman Sachs (on strikes in Iran)</p>
+<blockquote>
+"If I hear a twig crackle in the background, I jump five feet into the air and I want to do something... It seems to me we're overdue for something."
+</blockquote>
+<p>— <strong>Lloyd Blankfein</strong>, on current market volatility and risk management</p>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Bring in show music, please. Hi, I'm CNBC producer Katie Kramer. Today on Squawk Pod, more American troops are on the way to the Middle East as the conflict with Iran continues, and Wall Street reacts. President Trump says that things are moving along very well, very well. 
+
+CNBC's reporter Dan Murphy is in Dubai. The end game here is still largely undefined. And our Brian Sullivan is on the global energy markets. I spoke with an oil industry executive yesterday. He said it very clearly: &quot;You tell me who's running Iran, and I'll tell you how this goes.&quot; 
+
+Plus, venture capitalist and Pentagon vet Alex Harstrek on what makes this time different. This is the first time that we're going to see an AI-driven war, a true hot war. And noted risk manager Lloyd Blankfein, the former Goldman Sachs head, on the view from corporate America of regime change in Iran. 
+
+The combination of opportunity and proximity to the bad outcome, I am not regretting that this happened. It's Monday, March 2nd, 2026. Squawk Pod begins right now. Stand by Joe, by in three, two, one, cue, please. 
+
+Good morning and welcome to Squawk Box right here on CNBC. We are live from the Nasdaq MarketSite in Times Square. I'm Becky Quick along with Joe Kernen. Andrew is off today. The US and Israel are hitting more targets in Iran following the death of Ayatollah Ali Khamenei. 
+
+Iran and militias that are backed by the country are firing missiles at Israel and Arab states. A top Iranian security official warning on X that, in his words, we will not negotiate with the United States. In a video on Truth Social, President Trump said that the nation grieves for three US service members who've been killed in action. 
+
+Sadly, there will likely be more before it ends. That's the way it is, likely to be more. But we'll do everything possible where that won't be the case. But America will avenge their deaths and deliver the most punishing blow to the terrorists who have waged war against basically civilization. 
+
+Joining us now from Dubai is CNBC's Dan Murphy. Dan, bring us up to speed on where things stand in the region right now. Becky, good morning. Well, residents in the Gulf capitals woke up this morning wondering where this conflict will go next after what was an intense weekend of strikes between the US, Israel, and Iran. 
+
+Right now, regional air defenses are still on high alert. Loud blasts have been heard today in both Dubai and in Abu Dhabi. And you heard there President Donald Trump warning more American casualties are possible, even suggesting this conflict could last up to four weeks. 
+
+As you mentioned as well, oil prices are surging today. Saudi Arabia's Aramco confirming one of its key refineries called Ras Tanura was hit by an Iranian drone. That facility was shut down due to a fire and there's been no impact on supply, but analysts say it risks escalating this already hot conflict. 
+
+Of course, the biggest risk right now is in the Strait of Hormuz and in the Red Sea, where any attack or full shutdown could drive oil prices even higher. Of course, some oil can be diverted through alternative routes, including Saudi Arabia's East-West pipeline to the Red Sea, but they can't really fully replace the Hormuz volumes. 
+
+So that is a great concern for energy traders. And all of this also comes as we see a new front opening up as well. Hezbollah, this is the Iranian proxy in Lebanon, indicating it was attempting to avenge the death of the Ayatollah by striking targets inside Israel. 
+
+The Israelis have been hitting back today by striking Hezbollah targets inside Lebanon. And of course, members of Congress will also be briefed today, but the end game here, at least from a Gulf capital perspective, seems undefined. 
+
+President Trump has called on Iranians to rise up and overthrow their government, but what the end game here is is still unclear here. America's experience, of course, with regime change from Afghanistan to Iraq to Libya has been fraught and often unpredictable at best. 
+
+For now, the region appears to be entering what's been called a new and pretty uncertain phase here with multiple military fronts now open and, of course, the fate of some 90 million Iranians hanging in the balance. Becky. 
+
+Dan, I think that's the biggest question. What happens regionally at this point? There are now 11 nations that are involved in this and nations that thought that they were going to be remaining neutral have been targeted by the Iranians. What do you see as the next step, just in how those nations respond? 
+
+It's a great question. And over the last 24 hours, we've seen this wave of Iranian strikes really shaking the Gulf capitals that are probably better known, as you know, Becky, for their stability and for their role as safe havens for tourism and commerce and global capital. 
+
+Here in Dubai, for example, I could hear loud explosions overhead. This weekend I saw projectiles streaking across the sky. We saw air defense systems working to intercept waves and waves, literally hundreds of Iranian missiles and drones across the course of those two days. 
+
+And of course, that is not something that anyone who lives in Dubai, let alone the wider UAE or even other Gulf capitals, ever expected to see. Authorities also say many of those projectiles were aimed at civilian infrastructure as well. This is brand new territory. 
+
+We're talking about ports here, airports, even areas close to some of the city's most recognizable landmarks here in Dubai. So the impact on daily life here is already very, very real. And many residents here and also in the other Gulf cities are now working from home or they're sheltering in place. 
+
+Others also finding themselves stranded still because flights are canceled. We have airspace still closed and, of course, parts of the region's infrastructure also heavily disrupted. So the impact on average everyday lives has been quite profound. 
+
+And in terms of what is going to happen next, well, it is ultimately going to be determined by what the US President decides and how long this war will run. As I mentioned, the end game here is still largely undefined at this point. 
+
+It appears we are on the cusp of regime change in Iran, but what exactly that regime could be replaced by has leaders here on edge. It's back to you. Dan Murphy, Dan, thank you very much for that update and we hope to talk to you again soon. 
+
+Yesterday morning I did have a chance to speak with President Trump. Amazing he is open to some phone calls. I guess he was obviously a lot was going on but this is what he said. President Trump says that things are moving along very well, very well, and that everything's ahead of schedule. 
+
+Said it's a very violent regime, perhaps one of the most violent regimes in history. We're doing our job, not just for us but for the world, and everything is ahead of schedule. As for an off-ramp, which people always want to talk about that, whether it's too soon or not, he said, as you might imagine, it depends on a lot of variables. 
+
+We will have to see, but things are evolving in a very positive way right now. Berkshire Hathaway reporting fourth quarter results this weekend. Operating earnings totaled $10.2 billion. That was a 29% decline from the year-ago period due partly to weaker results in Berkshire's insurance business. 
+
+The company's cash hoard was down slightly to about $373 billion. That's down from $382 billion at the end of the third quarter. The fourth quarter was the company's last with Warren Buffett as its CEO. Greg Abel took the reins earlier this year. 
+
+In his first annual letter to shareholders, Abel vowed to continue Buffett's culture of financial strength and capital discipline. He wrote, &quot;Our owners' time horizon extends beyond the tenure of any individual CEO. I will not be your CEO for the next 60 years as simple arithmetic makes that, shall we say, an ambitious plan.&quot; 
+
+&quot;However, 20 years from now when I will have just a fraction of the tenure that Warren had, my intention is that you or your descendants will be proud that your company is even stronger.&quot; Greg Abel, by the way, will join us exclusively live on Squawk Box right here on set Thursday morning. 
+
+On set? He's coming on set. He's going to sit down with us and he's going to talk all of this through. His letter was great, first one out, and there were some people who were thinking, okay, he's going to change things, he's going to shake things up. 
+
+Why was he thinking that? We're going to be getting dividends, we're going to be getting more share buybacks. He said, &quot;No, man, this is keeping things steady.&quot; Well, that's exciting that he's going to be here. But I initially heard the headline was he's going to continue, Greg Abel plans on continuing the path that Warren Buffett paved. 
+
+You're kidding! Really, so he wants to continue being like the greatest money manager? Honestly, there were a lot of analysts who were saying, okay, we're going to get more details, we're going to see him do a share buyback, we'll talk about what they're going to do with that $300 and almost $80 billion. 
+
+He's not going 100% into crypto first thing? No. This is steady as she goes, second verse same as the first. And we're going to get to talk to him all about this on Thursday. And how many hours has he spent with Buffett? Years, years. That's what I mean. Yeah. 
+
+So he's got a pretty good idea. Years and years. And that was what Warren Buffett and Charlie Munger always said is that we're not looking for somebody from the outside, somebody that has to be trained in these ways, we are looking for an incredible manager who already knows all of these things. That's what they found in Greg Abel. 
+
+Right. Okay, what time Thursday? I think. That's a good hour. Yeah, before people leave. Yeah. Netflix co-CEO Ted Sarandos says that Paramount Skydance will have to cut billions of dollars in costs and lay off thousands of people after taking on a large amount of debt to acquire Warner Brothers Discovery. 
+
+Sarandos making those comments to Bloomberg after his company dropped out of the race to buy assets from Warner. He also said Netflix is, in his words, &quot;in the clear&quot; in regards to reports that the Justice Department is looking into the company's business practices. 
+
+I mentioned Ted Sarandos wearing jeans with a tie and a jacket and apparently this is something that people get away with. Sullivan, Brian Sullivan is here. Hey, he's got a jacket on, you don't. You do have a jacket. Where's your jacket? 
+
+Can I intro you in the way that you should be introed? Saudi Arabia's energy ministry says an Iranian drone hit Aramco's Ras Tanura refinery, which you probably know about. Biggest in the world. Resulting in a fire that was quickly contained. 
+
+Oil prices are surging, we're above 70 on the risk of supply disruption right now, the price of crude, as you can see, 72. Brian Sullivan. I'm going to narrow this and simplify this into something that's probably a little too simplistic, but here's the point. 
+
+Folks, let's bring up a live view from MarineTraffic by Kepler of the Strait of Hormuz. Okay, you can go online marinetraffic.com, you can take a look at the red dots, filter out the vessels. All those red dots and arrows are liquids tankers, either natural gas, oil, chemicals, methanol, whatever. 
+
+You notice the top part I tried to highlight in the little green box, I know it's tough to see, but that upper knob, that is the Strait of Hormuz, 21 miles. And as you can see, there are no red dots or arrows in there. Those are ships, meaning there are no ships going through. 
+
+Now we hear the term, &quot;we're going to close the strait.&quot; I don't like that term. It's not a canal, there's no gate, you can't lock it. If a ship wants to go through, it can. At its peril. Right. And right now it's pretty much impossible to get insurance. 
+
+So if something were to happen, you know, you got blown up with a ship-to-shore missile or a mine, whatever it may be, the loss is all on you. That is everything for the price of oil. If we start to see ships go through there, I think the price of oil could actually fall from where it was two days ago. 
+
+And by the way, 21 miles and 20% of the world's oil flows through that tiny strait. That's why it's such a key issue. As long as that remains closed, that is going to keep these oil prices elevated. There were some analysts, Brian, who suggested that we could see $100 oil. You don't sound like you believe that. 
+
+Well, I was pretty clear last night on CNBC Asia and on Twitter as well, the people I'm talking to and sort of the old commodity trader hat here, which is that you look at Iran, Iran is not Iraq, it's not Afghanistan, it's not Libya. Okay, I understand the connections, regime change, you heard that a lot Joe this morning. 
+
+I know our colleague Dan Murphy, who actually was living through bombs falling on where they are in Dubai. Iran is not those countries. I think the people of Iran want to be free. We saw the protests, we saw the mass executions. 
+
+I spoke with an oil industry executive yesterday. He said it very clearly: &quot;You tell me who's running Iran, and I'll tell you how this goes.&quot; Nobody knows who's running Iran. I know they're talking about this Assembly of Experts, they get together, they pick the next Ayatollah. 
+
+If it's somebody that's seen as more, a little friendly to the West, you're going to see a bid come out of oil. And it's not just oil. 20 to 30% of natural gas goes through that feed or that area. And also Joe, chemical fertilizers. 30% of chemical fertilizers in the world. 
+
+So watch names like CF, Mosaic, those are here, those are big fertilizer companies based here. Watch the Chenieres and the Venture Globals on the LNG side and watch the shippers. Because the shippers are already raising rates and if and when we get insurance, and we will, we will get insurance, just depends on what price, they're going to take a higher cut on the shippers. 
+
+So watch GasLog, Scorpio, Frontline and some others. The insurance is the first problem, the second is captains not wanting to go through because it puts their lives, the lives of their crews at risk too. Yes. What would you compare this to, what we've seen in the past, 2019 or earlier? 
+
+This is what's fascinating. In 2019 Iran or somebody attacked Saudi Arabia. They blamed proxies. They blamed proxies but it was their missiles and whatever, we call it Houthis whatever, the Abqaiq area and refinery in Saudi Arabia, Brent crude spiked 14%. 
+
+Can I blow your mind Joe, and it's not just my jeans? Here's the thing. We killed the Ayatollah Khamenei and many of his top leaders. The move in oil prices right now is not even a top 25 oil price move. What does that tell you about the level of oil that is in the market right now? 
+
+But here's the thing. If this goes on, if that little... bring up that map please again of the Strait of Hormuz. If we don't see ships, red dots, red arrows going through that part in a day or two, the price of oil is going to trickle up every single day. Yeah. 
+
+What are we doing to make sure that that doesn't happen? Well, we can sweep mines. So in the 1980s, back when you were five years old Joe... Mhm. ...they used to sweep mines because Iran would dump literally World War II mines, these floating bobbing things, and we've learned to go through and clear those out. 
+
+There are now ship-to-shore, shore-to-ship missiles, those drone ships, effectively a speedboat with a bomb attached to it. The US Navy's going to have a say in what happens here, US naval air power will have a say in what happens here, but as we learned in the Red Sea, it can just take a couple of people in a speedboat with an RPG that can severely disrupt traffic. 
+
+I will, to your point Becky, I talked to somebody in the insurance business also yesterday who said remember last year Ukraine and Russia had a three-day ceasefire to move grain through, wheat through the Black Sea because they said okay listen, both sides need to eat, we don't want people starving, three days everybody go and we're not going to blow anything up. 
+
+There is some chatter I'm going to report right now, there's some chatter I talk to insurance executives that perhaps we could see a similar situation where if there is somebody in Iran, and it's a big if, that could make this decision to say because Iran needs the money Joe, more than any other country. 
+
+They're the ones that need more oil money than anybody else. We're not going to blow anything up, everybody's ship gets to go in and out, we all sell our oil or gas and everybody's safe. They launched attacks on Oman, which had been the negotiator between the neutral negotiators between these characteristics and that left some people saying wait a second, there's nobody, no way to talk to anybody from Iran, no way to know who's in charge and no mediator who could do that. 
+
+Yeah and I heard you talking to Dan Murphy, our colleague in Dubai this morning. What's the strategy here? I mean why are you going after your fellow Muslim nations? Now they're all different, right, Iranians are trying to be Persians. We don't want to lump them all together. 
+
+There are factional and regional differences, believe me, not everybody is getting along, but the reality is dropping a bomb on a hotel or an airport in Dubai is not going to endear yourself to the region. Crazy. I would think that there are people sitting around, I mean they're thinking about everything. 
+
+I would be thinking they would try not to do things near the strait to prevent Iran from being able to close the strait. There was a ship yesterday that went through and some turned off their transponders so you don't know they're going through but then you can kind of see them just show up on the other side. 
+
+I watched a ship go through and it hugged the Dubai coastline. I mean it must have been if you were swimming you might have been able to go out and touch it because they were trying to be as far away from Iran as they could. Right. If we start to see ships go through there en masse again, I think the price of oil could fall back. 
+
+But they need the money. So you think that's plausible? Now did they blow out, blow through all that 6 billion on the palettes from 2000... remember? Oh yeah. They already spent all that. Don't they have some of that left from Biden? I just... that's not a real question. No no, it's a fair... no, I'll answer it. I'll answer it. 
+
+I'm over here. All right. I just wanted to bring it up. You don't need to answer it. So the UK and EU basically did this, and if you're on the radio I'm doing like a blind eye thing, to Iran for about four of the last five years. Yeah. Sanctions could have, should have been enforced, but they were not because oil, natural gas. 
+
+You need money, you need revenue. Okay, and Iran was able to build up Joe its foreign currency reserves, quadrupled them off of what they were. That number has come back down again. And I'll tell you there's another variable, I'm just going to throw this out as we need to wrap I'm sure. 
+
+China is the big variable here because 80% of Iran's liquids go to China. Now they're not going to get it. It's not going to hurt us, it's probably going to benefit companies like Cheniere and Venture Global if anything because natural gas, LNG, oil, any shipper coming from Houston is a lot safer than coming from Qatar or through that little strait that we talked about right now. 
+
+China imports something like 10 million barrels a day and I think 4 million of it was coming through the strait. It's one of the derivative stories that we're going to have to really dive into, the whole impact on China, Taiwan, everything. 
+
+Rarely do you know you're living through history as it's happening real-time, and this is it. This is history. It is. Real-time. There are times I wonder about the whole simulation thing too, the amount of things that happen in our lives. I don't know, maybe things are... you don't believe it? 
+
+Elon Musk said we might be. I think the three of us should get together one afternoon before you guys go to bed and we'll test that theory. We'll have a glass of wine. Or a decaf coffee or whatever it is and we'll talk about this. All right. Otherwise I gotta go because they keep rapping. 
+
+They keep rapping. One afternoon before we go to bed at . Yeah. Exactly. You said it. All of us. I've been there. Thank you. You know it. You do. I got up at this morning. Not thinking about you Joe. Yeah but you think about how to do it five days, to do it every day. He did. He used to be a wake-up call. 
+
+Oh that's right, you used to do that. Yeah, used to. You're not doing it now. Like Mitch Hedberg said, I used to, but I still do too. Yeah. Okay. Hard work. But you look amazing. What's your secret? .. early to bed, early to rise. Good surgeon, I don't know. Makes a man healthy, wealthy and wise. Propecia. Jeans. Jeans. Jeans. Which you're wearing. Yes. We'll end on that too. 
+
+Peeps will be next. Coming up on Squawk Pod, the first AI-driven war with veteran and venture capitalist Alex Harstrek. We've seen these types of shifts all throughout human history. Somebody was using bronze, someone else used steel. 
+
+Somebody was using a sword, someone else was using a gun. Someone else was using a gun, someone else was using a missile. And another headline from the weekend: the Pentagon blacklisting Anthropic, the maker of the Claude artificial intelligence agent, over a dispute about the military's use of Claude. 
+
+Concerns are brewing. It is easy to comment on the nomenclature difference between Silicon Valley and the military-industrial complex. Welcome back, this is Squawk Pod from CNBC. Stand Joe by, three, two, his mic, cue. You're watching Squawk Box on CNBC. 
+
+I'm Joe Kernen along with Becky Quick. Andrew's off today. The US, as you know, and Israel striking more targets in Iran. Iran and militias backed by the country firing missiles at Israel and across the board at Arab states. Our next guest says that the Iran conflict is the first new hot war where the White House could use AI-driven weapons in real time. 
+
+Joining us right now is Alex Harstrek. He is J2 Ventures founder and managing partner. He also happens to be a veteran who focuses very closely on defense companies and technology. And Alex, let's talk a little bit about this. 
+
+We'll get to Anthropic and what it said over the weekend, but first of all, what do you make of the situation right now, how prepared we are, and what you expect to see? Well, Becky, I think your previous guest touched on the issue very well from a geopolitical standpoint. But in your intro you summarized it perfectly. 
+
+This is the first time that we're going to see an AI-driven war, a true hot war. Previously these were technologies that were used for a bunch of other purposes: logistics, military planning. But for the first time ever you're going to see active munitions being used that were almost completely designed, deployed, and executed by artificial intelligence. 
+
+I think currently there's still a lot of human in the loop, but the technological enablement is like something we've never seen before. And how do we prepare for that, first as a nation and then secondarily, you're an investor to boot, how do you think about these things? 
+
+The idea of drones being able to infiltrate through systems, of them being much cheaper than traditional missiles, and how we prepare ourselves for that. It's really, really hard. From a geopolitical standpoint we just need to accept the fact that artificial intelligence in warfare is an inevitability. 
+
+We've seen these types of shifts all throughout human history. Somebody was using bronze, someone else used steel. Somebody was using a sword, someone else was using a gun. Someone else was using a gun, someone else was using a missile. 
+
+And when you think about any sort of decisive action that happened in any type of military conflict, it was usually ended by somebody having such a decisive advantage from a weapons standpoint that fighting no longer made any sense. 
+
+And so the issue that we have right now though is that for the first time ever, those weapons aren't being designed by the military-industrial complex itself. They're being designed by Silicon Valley, by developers around the world, by people who were not raised or brought up in this industry, but they've built the technology that best enables this industry. 
+
+And so though AI is an inevitability, the best AI is not being built by people who want it to be an inevitability in the same context that previous weapons were built. And so that's causing a bit of a clash that we really haven't seen for about a decade between Silicon Valley in the general sense and the military-industrial complex. 
+
+And so though AI will be adopted, the best AI is still kind of sitting on the sidelines because of a lot of these moral quandaries about how AI is being developed and deployed. Which sets up the Anthropic controversy perfectly. Where you come down on that. 
+
+Anthropic said, &quot;No, we will not go along with anything and everything.&quot; Dario Amodei has since come out and said that the two things that they really would not go along with would be: one, mass surveillance of US citizens; the second being AI weaponry that has no human interaction whatsoever. What are your thoughts on this? 
+
+It's hard to comment on the specifics of the case, Becky, but it is easy to comment on the nomenclature difference between Silicon Valley and the military-industrial complex. So when the Pentagon talks, the Pentagon is a command-and-control culture. 
+
+The person at the top is at the top, the person below the person at the top does not challenge the person at the top, vice versa. Everybody has had some experience with the military to understand this cultural dynamic. The way Silicon Valley expresses that same cultural dynamic is through their terms of use because that's how they recruit their engineers. 
+
+Their engineers are equally mission-driven to those in the Pentagon, albeit they speak in a different way. And so what we're seeing right now is exactly that clash playing out, which is the terms of use that Anthropic approached the Pentagon with originally are being changed. 
+
+And so just as the Pentagon is having a disagreement with how that terms of use needs to adjust, so too does Anthropic believe the terms of use should not be adjusted. And so the impasse is really difficult, largely because I believe both sides are speaking past each other. 
+
+In the case of the Pentagon, it was never a stick that helps them incentivize proper military technology. When we think about the best tech that's created in America—everything from GPS, lidar, the inputs for computer chips—all of these different pieces were created because the military made an incentive around creating those products and making them in America and then adopting them for fundamentally dual-use purposes. 
+
+You begin to enter into unprecedented and potentially dangerous territory in interaction with Silicon Valley when you begin to have sticks around working with the military. Said differently, compelling people who otherwise would not want to work with the military to bring their products forward. 
+
+I understand where the Pentagon is coming from. China is developing all of these tools internally, Iran is developing these tools internally, Russia is developing these tools internally. If America doesn't compete, America risks potentially catastrophic losses by not having AI-enabled weapons. 
+
+But we need to make sure that we're talking to each other in the way that we want to be spoken to. And I think that risk is something we're only just beginning to see. Okay, we're out of time, but Sam Altman from OpenAI, which immediately cut a deal with the Pentagon and said that they would be, the Pentagon said they'd be using OpenAI's AI measurements and tools as a result. 
+
+Sam Altman said that there's more debate than he thought there would be on this, at least on Twitter, about whether we should prefer a democratically elected government or unelected private companies to have more power. Whose side do you come down on: Sam Altman's or Dario Amodei's? 
+
+Ultimately America's governed by laws. Those laws are created and governed by those at the consent of the governed. This is why we have a republic. Technology is amazing, I absolutely love it, but we do need to put all of our decision-making into lawmakers and into those who are democratically elected. 
+
+Technology should never supersede those in power. So you think the Defense Department was right to say, &quot;You're going to go along with us or else&quot;? Should Anthropic be put on a supply chain risk list? 
+
+The actual legality, Becky, is really tough. But what I would say is I think both sides are talking past each other and it's disappointing that there isn't more of a conversation between the two in how to best resolve this issue, because we need the best and brightest on how we think about the future of artificial intelligence in warfare. 
+
+Nobody should be sitting out of that conversation. Alex Harstrek, Alex, thank you for joining us this morning. Squawk Pod will be right back with former Goldman Sachs CEO Lloyd Blankfein looking back on his unique Wall Street life. 
+
+Usually I have to respond to people. Here I could write something down, go back, and make it better and change it. I've never... I'm going to go become a screenwriter now. I didn't realize you could do that sort of thing. Stay with us. 
+
+You're listening to Squawk Pod from CNBC on this newsy Monday with Joe Kernen and Becky Quick. Here's Joe. We have a true genius. I've known you for a long time, Lloyd Blankfein is here. You're so fast, so quick-witted, such a worldly guy. 
+
+You got a book out. Let's stop right there. We got a book out too, and you're so funny. I think wit and intelligence are correlated. I've learned that over the years. But &quot;Streetwise: Getting To and Through Goldman Sachs&quot;. Jack Welch was getting ready to come on on September 11th and talk about his book. 
+
+Sometimes things happen which preempt what you're here to talk about. We're going to get to the book as quickly as because I want to hear about it, and especially when I realize that you call it really catharsis because you're trying to explain to your kids why you were away so much but doing great things. 
+
+But just what how do you stand on what's transpired since Friday night? You know, a couple of things. You know the guys with the guns win, which you know very logical in history, that bears it out. But let's take a specific example from the past. How about when the Ayatollah came back? 
+
+The Shah's troops all had the guns and they were loyal, loyal, loyal until guess what? They decided they weren't going to fire on their own countrymen for whom they developed a certain kind of sympathy as that regime was falling, was falling. So it's not unprecedented and it's not unprecedented even with respect to Iran. 
+
+So just note that it's conceivable. So the converse could happen where the revolutionary types don't fire on the pre-revolutionaries? Exactly. And so, you know, I would, you know, I'd be always prepared for the worst. I'm in the risk management business, one has to do that. 
+
+But I would say every once in a while things can work out and maybe this will also work out. When you heard about it on Saturday or whenever you heard about it did you say LFG? I'm thinking, I don't know what's LFG. Don't ask. 
+
+Were you thinking, were you in favor of it? Were you thinking, let's go? Let's go. You know here's what I was thinking of and I just made an analogy in my head. The biggest after Iran, the biggest troublemaker in the world is North Korea. 
+
+Not much we could do about that today because they have nuclear weapons. And you think who let that opportunity go by where we could have gone in, intervened, and eliminated them as a threat? By the way they still might be the scourge of the world. 
+
+I mean we haven't heard from them in a while but they'll be back, they haven't left and they'll be back. And I'm thinking don't we wish we had intervened in that when we still had time? And now people are saying, well it wasn't proximate yet, we weren't close enough with Iran, it wasn't... 
+
+But you know something my algorithm is how close is it but also what's the opportunity set and will it ever be repeated? So we have a moment in time, no air defenses, the civil population is up, the country and the economy's in disarray. 
+
+You know the combination of opportunity and proximity to the bad outcome, I am not regretting that this happened. All right. So you thought... you've heard of LNG. Yes. But you had no idea what LFG was. You thought I was talking about that. I don't believe you. 
+
+I know how traders like you, former traders talk and you speak in typos. Bow-mouthed. Yes, exactly. Investment banker. Yeah, I was like one of those guys. Yeah, you were. Tell... let's delve into. I want to read it because I, you know, as I said, knowing what I know about you it must be hilarious reading through it but also heartfelt. 
+
+Well I think it's funny, you know the first time in my life usually I have to respond to people. Here I could write something down, go back, and make it better and change it. I've never... I'm going to go become a screenwriter now. I didn't realize you could do that sort of thing. You can. 
+
+What was the thrust though? I mean you grew up with absolutely nothing. I know that for a fact. What'd your dad do? He was like a mail sorter in the Post Office. Mail sorter, yes. And you know now you're a fat cat and you got to listen to Elizabeth Warren tell you what a fat cat you are. Yeah, exactly. Exactly. 
+
+But it was you ended up at Harvard didn't you? Look, there's a lot of... it's memoir-ish so there's a lot of biographical stuff, you know with perspective going from the projects in East New York, public housing in East New York to Harvard and getting tortured a little bit while there, of course only having good memories about it now but not necessarily while I was living it. 
+
+False start in a law firm, but a lot of it is getting to and through Goldman Sachs, which is the subtitle. Heroes of mine who didn't always act in a great way because they're human but they still remain heroes. A lot of it is the financial history of the period. 
+
+For crying out loud we had the financial, we had the crisis of the century about every four and a half years during my tenure. And very often nothing can go wrong in the world without Goldman Sachs being affected by it given the size and scale of our balance sheet and our influence and of course they would accuse us of, you know, starting... most of the time they'd accuse us of starting it. 
+
+So there's that perspective on things. And so again, it's the mystique of Goldman Sachs going through it behind the scenes, a lot of financial history, a lot of focus on the financial crisis and how people behave and how an organization which I think still has a spectacular culture. 
+
+Look at the people that Goldman Sachs attracts, recruits, look at what they do with their subsequent careers. People performed really terrifically in the lead-up, which is why we weren't that affected commercially. We were quite affected reputationally and, you know, largely because we did okay in the crisis. And the aftermath. 
+
+So a lot of it is, I hate to say, you know, people have pointed it out, I'm not embarrassed to say it, it's a bit of an ode to my old firm and what it has accomplished and really how it happened, how does that secret sauce get created and maintained? 
+
+What is the answer to that question? Well, I would say it's a kind of a... it's always been a partnership culture, an ownership culture. We have people, nobody... people in the firm, their compensation comes from the success of the whole firm. 
+
+People are taught to have big ears. People are treated like owners, which means there's... look, there's a big difference between being a senior partner and a CEO. I was kind of even as a CEO I was kind of a senior partner, which means engaging, listening, socializing changes, having to go a little bit slower, having to change your mind, which not a lot of, you know, which nobody really liked to do. 
+
+Well, sometimes I changed my mind and I wanted to change my mind in response to what I've been told. But creating an expectation that people are owed information, are owed influence in the firm, creates kind of an ownership. And so people in the firm have big ears. 
+
+They're people, you know, who are bond traders in Japan whose reputations and what they do for a living is affected by what happens to investment bankers in New York. And they feel ownership of it. They get mad as heck if something goes wrong and they go out and send congratulations if everything goes right. 
+
+And even in a large firm that has grown over the years in population and also in footprint around the world, that's not always... you know, 26 years after becoming a public company, the firm still thinks of itself as a partnership. All the senior people are called partners. 
+
+That process of going public happened with my predecessor, Hank. Continued with me. You know, when Hank was there the firm, even as a public company, was dominated by Goldman Sachs partners who were the owners. Continued into my world where it was sort of... 
+
+And the transition toward a public company has continued under David Solomon. What does that mean? It means more emphasis on smoother earnings, let's say, which is what the new owners of the company want, namely the shareholders. And he's accomplished that and I think that's a good thing. 
+
+I was sort of in the middle of that, which was, you know, still had a lot of stuff on balance sheet, still had a high tolerance for volatility. In a private partnership you care about your capital account, you don't care about the smoothness of earnings or price-earnings. 
+
+And I think that that has continued to this day. The big achievement I think that has occurred is that becoming a public company, a real public company with all the things that public shareholders want to see in the management and still maintaining that partnership ethic. 
+
+And I talk a lot about how that's done and, you know, the way it's done is you do things you might not want to do, you take time you might not have, but you walk the walk, not just talk the talk. When did David take over for you? 
+
+About at the end of 2018. You send him a nice Christmas gift every year? Yeah, and I also vote with management every year. He... I don't know, there was some I guess a little bit of rockiness in his tenure but now I mean Jesus, you got a lot of stock left? 
+
+I still... yeah I do. Worth a lot. It's worth a lot more. Oh, I'll have to go check. Can we... and everybody I'll never forget your quote from the financial crisis that &quot;Calm down Boss, you're not in a boat over storming the shores of Normandy.&quot; 
+
+&quot;You're getting out of a Higgins boat on Omaha Beach, you're getting out of a Mercedes in the New York Fed to have to... go, right, get a grip. Could be worse.&quot; But it got worse. Not quite. But the bullets were figurative, not literal. Exactly. 
+
+And when I said LFG I ain't doing Squawk. I'm just... I admire our guys so much. I don't think I... I really don't think I could be... could have been one of those guys, I mean that actually do walk the walk. You know it turns out that you don't know till you know. 
+
+Maybe you don't know till you know. I think... I'm not talking about... I've asked, what if you cry in basic training like with the Marines? You go home if you... you know I go through this and I'm not talking about physical courage which is of course a different order of magnitude and a deep respect and I realize the times that we're in. 
+
+But even the courage that people showed in the financial crisis and I'm not conflating the two or equilibrating the two. No. But I would say there were people who were spectacular guys, athletes, Olympians and blah blah blah and, you know, and when it hit the fan, you know there was some hyperventilation in the corner. 
+
+And there were some people who didn't look like they could walk up a whole flight of stairs who were just magnificent. What happened to the people who didn't pass that test? Well they kind of flaked off. They did. And also they lost a lot of prestige. 
+
+And a lot of time during these things I pointed out to people that your reputations are going to be made during this period of high pressure. So act well not just because it's in your economic interest or because I'm requiring it, act well because the people around you and look at the people who leave Goldman Sachs. 
+
+All the cabinet officers, all the prime ministers and everything, that even you guys who are young in the firm, your reputations with each other, even the dopey guy sitting next to you, roll the clock forward 25 years and these are going to be the most influential people in the world. 
+
+Whether they stay at Goldman or go somewhere else, go into government or just another firm or create a private equity shop, whatever, these are going to be the most influential people and their impression of you is going to be fixed based upon how you act today. So guess what, act well. 
+
+Are we going to need the same type of people anytime in the near future to face the same type of things? In other words, how do you feel about the market right now? AI, private credit? You know, it's kind of a bit fragile before all this stuff started. 
+
+And so we coming into it, I think this macro kind of event will, you know, look, things can go off the rail, a lot of stuff could go wrong and get worse, you know oil could become a bigger deal longer, straits closed. You know my base case is that this will sort out on a macro base and then we'll have to deal with some of the stuff. 
+
+You know there's always anxiety, we look for, you know wall of worry. I'm basically very, very positive. You are? Oh on the market, sure. But the one thing that you have to realize is every... you know you need a kind of a cleaning out. 
+
+It's like &quot;The Godfather&quot;, you know you have to have a war every 10 years to clean out the grudges. I think in markets there hasn't been a problem or a reckoning in a long time. So you know the people had to have lost discipline since the last time that there was one of these things. 
+
+Usually it happens every five or six years, it hasn't happened for more than 15 years. And so you think about the lack of discipline, money going in the wrong place, no one's had to really mark-to-market stuff. Look, we've just had one of the best... we still near the highs of the equity market. 
+
+It's been the best financing market and inventory is still... of illiquids is still building up on balance sheets and supposedly can't be so at some point there'll have to be a forced reckoning. Hopefully it won't happen later this afternoon or tomorrow, but at some point that's a real cause of worry. 
+
+Having said that, it all... it seems like a lot of headwinds, the economy's doing well, inflation is kind of tamer and tan... we're probably we're going to lower rates into a into a pretty good GDP. I realize that there's a lot of polarization because the economy is not doing a very good... it's doing a good job creating wealth but not necessarily allocating that wealth according to the values and so you're getting a polarized society and that's bad. 
+
+But overall a lot of tail... a lot of tailwinds and a lot of, you know we're just about to come up to more fiscal stimulus and by the way fiscal stimulus coming from hyperscalers who are going to, you know who are investing hundreds of billions of dollars which is also kind of going to be a stimulus to the market. 
+
+What do you do with your own money? You're a risk manager, you think of these things from all these perspectives. Do you position your own if you, you know worry that this is long in the tooth? We're overdue for a reckoning. That's a good way of doing it. 
+
+Always, you should always ask people what do you think and then following up with what are you doing because people sometimes say not because they're lying but because they get confused themselves because I'm a worrier and so if you ask me what I think I'll give you all my worries. 
+
+But if you ask me what I'm doing I'm all in equities. I'm in risky assets and of course very, very responsive if I hear a twig crackle in the background I jump five feet into the air and I want to do something. And I think that that's a way to be positioned. 
+
+It seems to me we're overdue for something, I'm not sure of the direction, but inevitably it will come. But I don't see it happening tomorrow or the day after tomorrow. Next week is another thing. What about the Federal Reserve with the changes that have taken place there? Is this something you pay much attention to? 
+
+In terms of what they're doing or the assault on the Federal Reserve? The assault on the Federal Reserve, what comes next? I think it's crazy. I think the Federal Reserve is, look, we're a debtor nation. We need creditors to lend us money all the time. 
+
+US can't default by not paying... we'll never default specifically because we print dollars, we can always return all the dollars we printed. The question for our creditors is what is that dollar going to be worth? And if they think that the dollar's going to be inflated or diminished in terms of its purchasing power, they'll either require a much higher interest rate or they won't lend to us at all. 
+
+The guardian of the integrity of the dollar is the Fed. And so if I'm a creditor I want a Fed that's independent, high integrity, that honors its mandate to not allow the currency to be inflated, i.e., to default through inflation. And so to undermine the importance of the Fed is sending the wrong message to our creditors. 
+
+So I would... I wouldn't be doing that. And it's crazy for the people who are managing our debt to be undermining the importance and the influence of the Federal Reserve on policy because the creditors look to the Fed as the guardian of their interests. 
+
+One of your predecessors John Whitehead was at Normandy. Not only was he at Normandy, he was one of the first people to get there to organize things, so he had no cover. So you come from good stock. When he was a junior officer on one of the landing craft and when I made that comment at the time... you were thinking about him I guess. 
+
+I was thinking about him and he sent me a very nice note that was terrific. You know when you talk to your, you know when you talk to people and you know what they lived through. Yep. That informed your, the way you are. Which I appreciate. 
+
+Well thank you and thank you for... keep, I'd like to talk more about this and you're always welcome. You know that. Is that right? Always. Fantastic. All right. Thank you. And that is Squawk Pod for today. Thanks for listening. Thanks for starting your week with us. 
+
+Squawk Box is hosted by Joe Kernen, Becky Quick, and Andrew Ross Sorkin. Please tune in weekday mornings on CNBC at 6:00 AM Eastern to get the smartest takes and analysis from our TV show right into your ears. 
+
+Follow Squawk Pod wherever you get your podcasts and listen anytime you want. Have a great Monday. We'll meet you right back here tomorrow. And we are clear. Thanks guys. Thank you. Thank you.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-1">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=a7MM0UnQ4o4" target="_blank" rel="noopener">The Next Financial Crisis? Private Equity, Private Credit &amp; Life Insurance | Real Eisman Playbook</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Steve Eisman</span><span class="channel-subs">(158.0K)</span></span>
+                        <span class="meta-sep">·</span><span>48:51</span>
+                        <span class="meta-sep">·</span><span>13.0K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-03-02</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Steve Eisman (Host, The Real Eisman Playbook)</span> <span class="tag tag-person">Tom Gober (Forensic Accountant)</span></div>
+                </div>
+                <div class="tldr">&gt; &quot;The state departments of insurance are underfunded, understaffed, undersophisticated...</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-1">TL;DR: The U.S. life insurance and annuity industry is facing a systemic &quot;slow-boil&quot; crisis driven by private equity giants using policyholder premiums to fund high-risk private credits while hiding massive leverage in opaque offshore &quot;secret captives.&quot;  Structural Shift: Over...</div>
+                    <div class="summary-full" id="full-1">
+                        <p><strong>TL;DR:</strong> The U.S. life insurance and annuity industry is facing a systemic "slow-boil" crisis driven by private equity giants using policyholder premiums to fund high-risk private credits while hiding massive leverage in opaque offshore "secret captives."</p>
+<h3>The Private Equity Takeover of Life Insurance</h3>
+<ul>
+<li><strong>Structural Shift:</strong> Over the last 30 years, the industry has transitioned from non-profit mutual organizations to public companies, and finally into the hands of Private Equity (PE) firms like <strong>Apollo (Athene)</strong>, <strong>KKR (Global Atlantic)</strong>, and <strong>Brookfield</strong>.</li>
+<li><strong>Captive Investment Vehicles:</strong> PE firms increasingly treat insurance companies as captive buyers for their own debt products. </li>
+<ul>
+<ul>
+<li><strong>Affiliated Paper:</strong> Firms originate private credit and sell it to their own insurance subsidiaries. For example, Athene’s affiliated paper grew from roughly $10 billion to $40 billion in five years.</li>
+<li><strong>Liquidity Mismatch:</strong> Insurers are borrowing short-term (e.g., via funding agreements/GICs) to invest in long-term, illiquid, and exotic assets like joint ventures and limited partnerships in the Cayman Islands.</li>
+</ul>
+</ul>
+<li><strong>Conflict of Interest:</strong> Decisions regarding policyholder funds are made by PE owners who prioritize internal profit over arm's-length, conservative investment strategies.</li>
+</ul>
+<h3>The "Secret Captive" Reinsurance Scandal</h3>
+<ul>
+<li><strong>Liability Offloading:</strong> Insurers use Special Purpose Vehicles (SPVs) or "captives" to move billions in liabilities off their primary balance sheets to free up capital for dividends or new business.</li>
+<li><strong>The Underfunding Gap:</strong> Forensic accountant Tom Gober notes that while a legitimate reinsurance deal requires commensurate assets to cover liabilities (e.g., $5B for $5B), captives are often drastically underfunded.</li>
+<ul>
+<ul>
+<li><strong>Example:</strong> In one instance, a company offloaded $7 billion in liabilities but held only $200 million in real assets, plugging the gap with "contingent" assets that have no market value.</li>
+</ul>
+</ul>
+<li><strong>Jurisdictional Arbitrage:</strong> Companies move these liabilities to "industry-friendly" states (Vermont, South Carolina, Delaware, Arizona, Iowa) or offshore (Bermuda, Cayman Islands, Barbados) where transparency is non-existent.</li>
+<ul>
+<ul>
+<li><strong>Growth of Captives:</strong> Domestic captive reinsurance grew from $12 billion in 2001 to $440 billion by 2011, before moving further offshore to avoid scrutiny.</li>
+</ul>
+</ul>
+</ul>
+<h3>Regulatory and Analytical Blind Spots</h3>
+<ul>
+<li><strong>Fragmented Oversight:</strong> Unlike banks, which are regulated by the Fed, insurance is regulated state-by-state. State departments are often underfunded and lack the sophistication to track complex PE-driven transactions.</li>
+<li><strong>Permitted Practices:</strong> Some states allow insurers to ignore standard statutory accounting guidelines, effectively letting them hide the true extent of their insolvency risk.</li>
+<li><strong>Rating Inflation:</strong> PE firms are increasingly using smaller, less stringent rating agencies (e.g., Egan-Jones) to assign investment-grade ratings to risky Irish or Cayman-based SPVs that would likely fail traditional Moody’s or S&amp;P criteria.</li>
+<li><strong>Analyst Ignorance:</strong> Sell-side analysts covering PE giants often focus on fee revenue and spread, ignoring the "Statutory Filings" where insurance risks are actually disclosed.</li>
+</ul>
+<h3>Systemic Risks: The "Slow-Boiling Frog"</h3>
+<ul>
+<li><strong>The Credit Bull Market Illusion:</strong> The inherent leverage and risk in this model have been masked by a decade-long bull market in credit. Eisman warns that human nature fails to recognize crises that unfold slowly.</li>
+<li><strong>The "Run on the Bank" Risk:</strong> If institutional investors (like Vanguard or major pension funds) demand their cash back from funding agreements simultaneously, insurers may be forced to sell illiquid assets at a massive loss, triggering a collapse.</li>
+<li><strong>Impact on Policyholders:</strong> If the industry faces a credit blow-up, millions of policyholders and annuitants may find that the "guaranteed" death benefits or retirement income they paid for over decades are unsupported by real assets.</li>
+</ul>
+<blockquote>
+"The state departments of insurance are underfunded, understaffed, undersophisticated... The industry that they are attempting to regulate is incredibly sophisticated." — <strong>Tom Gober</strong>
+</blockquote>
+<blockquote>
+"Human beings do very badly with crises that unfold very slowly... You can lever yourself up to your eyeballs as long as nothing bad happens. But if you are way over-levered and something bad happens, then you're screwed." — <strong>Steve Eisman</strong>
+</blockquote>
+<blockquote>
+"I actually get to see those captives' annual statements because they were accidentally posted publicly... It had roughly 200 million in real assets [covering] 7 billion in liabilities." — <strong>Tom Gober</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-1">
+                        Hey, this is Steve Eisman, and people always ask me, &quot;What is the next big scandal out there?&quot; And I think today's guest is going to really explore with us what that scandal could be. It involves life insurance, involves your annuities, involves your policies, involves private equity, and how private equity has taken over the life insurance industry.
+
+This is a slow-brewing scandal which could be, one day, a great financial crisis. And my guest today is Tom Gober, who we will be speaking to. He's a forensic accountant. He's been involved with the life insurance industry for decades. He's a real expert and we are going to learn a ton. And afterwards, I'll come back and tell you what I think we've learned.
+
+Hi, this is Steve Eisman and welcome to another episode of The Real Eisman Playbook. So today we're going to change gears a little bit, and we're going to talk about what is potentially a long-standing brewing scandal in the life insurance industry. This is a little complicated, so bear with us. We're going to try and make it as simplified as possible, but there's some technical things that we're going to have to talk about.
+
+And here my guest today is Tom Gober. Gober, correct. And Tom, why don't you talk about your background first and then we'll walk into this both complex yet incredibly important story? Yeah, thank you so much. It is a privilege to be here. Thank you.
+
+Yeah, I started right after I got my master's degree in business. I went to work for Merrill Lynch. What year would that be? '82 is when I graduated, so it would have been '82, '83 with Merrill Lynch. But they just wanted me to cold call. And I'd just gotten my master's degree and I thought, &quot;I need to use my brain.&quot;
+
+So I went back to Millsaps College where I went to school and I said, &quot;I want to use my brain.&quot; And she said, &quot;You know, there's this new position open. It's called an insurance examiner where you would examine or audit the insurance companies in the state.&quot; And she said, &quot;You know, they've got all the money and they're complicated. I bet you'd use your brain.&quot;
+
+I applied, got the job, and that was 41 years ago. I began as a young insurance examiner. And how long were you an insurance examiner? Seven years. First two years to get accredited and pass seven examinations, another two years to get certified, five more exams I had to pass. And then I became the state examiner-in-charge which meant I... And what state was this? Mississippi.
+
+Mississippi. Let's pause for a second because I think most people don't understand this. Banks are regulated by the federal government and they are regulated mostly by the Fed. And they're pretty professional. The regulators at the Fed know what they're doing, and certainly today they know what they're doing after having had the crap beaten out of them from the Great Financial Crisis.
+
+But the insurance industry has an entirely different regulatory apparatus. It's state regulation. So you could be an insurance company that's incorporated in Mississippi. Your regulator is the state regulator of Mississippi. You could be an insurance company that's incorporated in Delaware or in Ohio.
+
+Depending upon where you are incorporated, that is who is going to be your state regulator. And I would say the overall quality, no offense to your history, of insurance state regulators is not great. There's a long history of insurance companies playing one state off against another and also having the ability to move stuff offshore, which we're going to talk about.
+
+But I would argue the entire regulatory apparatus of insurance in the United States is not good. I agree totally, and I lived through it. The state departments of insurance are underfunded, understaffed, and undersophisticated. They are not sophisticated. The industry that they are attempting to regulate is incredibly sophisticated.
+
+Exactly. I mean today, as we'll point out, much of the life insurance industry, which is the industry we're going to focus on, is owned by private equity firms. And you cannot talk about more sophisticated people than that. Oh, no. So you're talking about private insurance companies run by incredibly sophisticated private equity people who are being regulated by, as you said, underfunded, unsophisticated state regulators.
+
+No doubt about it. Plus it's worldwide. You've got a lot of the holding companies and reinsurers are in Barbados, the Cayman Islands, and Bermuda. And so how is a young state insurance examiner going to keep up with all of that? Yes, right.
+
+Okay, so let's boil this down, you know. We're at a cocktail party and I've just met you. And you're going to tell me what this story is all about. We're going to get into detail because the devil is in the details, as you know. But if we were just at a cocktail party and you wanted to tell this story in five minutes—the simplified version—what is the nature of the potential scandal that's going on in life insurance?
+
+I would say that the life and annuity insurance industry has radically changed over the last couple of decades. Yes. Their promises are extremely long-term. People timely pay their entire lives. So you take out a life insurance policy, you pay premium. Your whole life. Your whole life.
+
+For you, you could pay it for decades based on the promise that maybe, let's say if I live to 85 or 90, which would be 50 years from now—exactly—my family will get paid what it is promised. It's a very, very, very long-term promise, and annuities as well. Totally.
+
+So because of that unique nature of the policyholder being totally at the whim of the industry, the regulators have to apply fairly strict scrutiny on these companies. But over the last several decades, that has eroded significantly. So not only is there substantial risk-taking in the industry—not just in investments, but we'll talk later about reinsurance offshore—it's not just that.
+
+It's the lack of transparency, and that it used to be that the 50 insurance commissioners—51 with Washington D.C.—tended to have the same rules, but not anymore. Now certain states that are especially industry-friendly... Like who? Name them. What states? Vermont, South Carolina, Delaware, Arizona, Iowa.
+
+Okay, five states. They're the big five, those five. Yes. And what they do there is they grant these things called permitted practices. Well, a permitted practice simply means they're allowing them to do things that the statutory accounting guidelines that they're supposed to follow would not allow.
+
+So a lot of companies form these secret captives, these small captive reinsurers. They're really just an SPV—a Special Purpose Vehicle. Right. There's no building, there are no employees. And they're dumping liabilities into these states where the rules are much looser and they're underfunding with real money.
+
+So I would say, you know, if you send them 5 billion in liabilities, you should send 5 billion in assets. Right, it's supposed to be commensurate. But I'm finding sometimes they may only send 2 billion in assets to cover 5 billion. And I've been screaming about that, literally, for seven years. And finally people are starting to wake up.
+
+So the bottom line, and then we're going to really dig down into this, is that the two areas that have changed over the last, call it 20 years, would be that the industry is taking more investment risk—no doubt—than it used to take. So the, call it, credit quality of the portfolios that they're investing in are riskier. Definitely.
+
+And number two, they have these captive reinsurance deals which, trust me, people's eyes glaze over when you talk about captive reinsurance deals. But the bottom line is, by having these captive reinsurance deals, the industry is able to lever itself much more than it should be able to. And without you being able to tell, because it's secretive.
+
+You go to a Vermont captive or you go to Barbados or Bermuda or, you know, anywhere offshore, you cannot get the financial information you need. They should require that the companies file with the U.S. but they don't. Right, because they're not Cayman Island citizens. We transfer the liabilities; it's still the Mississippi commissioner's job to protect that Mississippi policyholder. Just because it goes offshore doesn't mean you can suddenly fund it with far less money.
+
+Right. Okay, so let's dig down for a second. 30 years ago, the life insurance industry was mostly a non-profit mutual industry. Absolutely. Fair statement. Beautiful. And then in the 2000s, much of the industry went public. So Lincoln National, MetLife, Prudential—these were all massive IPOs in the, call it, pre-Great Financial Crisis. This all happened. Exactly.
+
+Since then—and this is where I want you to walk people through—there have been major changes in that a lot of the life insurance industry has been moved into the hands of private equity. So let's just start with that, because that's a sea change in terms of who actually owns some of the major life insurance companies. So tell us the story, what happened?
+
+Sure. I'm glad you said 30 years ago because a lot of this did start about 30 years ago. They started using these captives in Vermont about 20 years ago. It was after that private equity came in and took control of a group of life and annuity carriers. So Apollo bought Athene. Apollo bought Athene. KKR bought who, who, who? Bought the Global Atlantic four insurers. Right.
+
+Yeah, Brookfield has now bought two life and annuity carriers. Private equity has come in, and the difficulty there is that it used to not be allowed for someone who didn't have a good grasp of what life and annuity accounting is about. If we're talking about who knows life insurance accounting, private equity guys know it better than the life insurance guys know it.
+
+They're creative with it, let's just say. They are creative about it. Yes. So once they come in and take control, it is literally from the inception of taking control they cause the insurance companies to enter into investment management agreements. Yes. So that suddenly a private equity crew who's used to gambling, taking high risk, making profits, is...
+
+Now in their defense... No, sure. ...you know if you were to sit down with Marc Rowan of Apollo... He would argue that—well, let's back up for a second. Apollo owns Athene. Athene is their captive life insurance company. Apollo generates a tremendous number of private credits which it basically sells to Athene, that now owns it. It does.
+
+So from Apollo's perspective, it basically has a captive company to buy its own paper. It does. And now what Apollo would argue is that they're great underwriters. That when you do a private credit versus a public bond, the spread is higher, so they're making more money. And they would argue that they're not really taking on any more risk other than some liquidity risk.
+
+But I would argue they're not even really taking on that much more liquidity risk because corporate bonds don't trade that well to begin with anyway. Sure. So in their defense, you know if we were putting Marc Rowan on the witness stand, he'd say &quot;What are you complaining about? All my bonds are still good.&quot; What would you, how would you respond to that?
+
+And Brookfield would say the same, and KKR would say the same. And in their defense, nothing really has blown up. So what's your response to that? I agree with most of what you said. Apollo has selected some good investments for Athene to invest in. Right. But it is an apparent conflict of interest that the private equity group can cause policyholders to invest in whatever they want it to invest in.
+
+So where you have a conflict there, you have potential for abuse. Yes. You don't have arm's-length transactions. No question. I've learned recently that a lot of the more complex internal investments within the Apollo group and other private equity groups are not as publicly traded, don't have the same sort of ratings, right?
+
+So it would be difficult to know for sure how quickly the insurer could sell a given investment because it came from an internal private equity group rather than public. Well, they're not selling them and these are private credits, so they would say &quot;We're not, this is long-term stuff. We are taking liquidity...&quot; They would admit upfront &quot;We are taking liquidity risk in exchange for a higher yield.&quot;
+
+I have a great answer for that. My real concern... Recently Athene very significantly ratcheted up the amount of deposit-type contracts they've issued. In other words, what does that mean? It means that they are borrowing money short-term and using the proceeds to invest long-term. Oh, okay. There's a mismatch obviously there. There's a duration mismatch.
+
+But where they used to be 12 billion, 15 billion, they're suddenly 37.9 billion. Of deposits. Of deposit-type contracts that the institutional investors—you know we're talking the Vanguards and big pension plans around the world. They're raising the money from them. Exactly.
+
+And if they said—of this I am certain—if the head of Vanguard called Marc Rowan and said, &quot;We've got 3 billion parked with you as a funding agreement,&quot; they used to know them as GICs, Guaranteed Interest Contracts, right. Right. So, &quot;I want you to get me my money back.&quot; Rowan might say to himself, &quot;Gosh, I'd hate to give up all this liquidity because we have policyholders that will be counting on it.&quot;
+
+But I'm afraid if he said no and Vanguard talks to the other investors and says, &quot;I can't get my cash back,&quot; then you might start a domino chain, right? The problem is they don't have nearly enough short-term investments to match that 37 billion in short-term debt. I see. Okay. So they would have to sell some long-term, not very publicly mark-to-market sort of thing.
+
+Fair. I mean, a lot of what I want to get to is reinsurance now because that's where the leverage is. It is. But you know, part of the issue as to what I learned from the Great Financial Crisis: Human beings do very badly with crises that unfold very slowly. Oh, excellent point. It's because it's like, you know, here you are, you're complaining about this stuff.
+
+And the private equity guys would just say &quot;Dude, you've been talking about this for years and nothing's happened.&quot; Yep. No doubt. And they're right, nothing's happened. Now one of the reasons why nothing's happened: it's been a bull market in credit for over 10 years. Definitely. Spreads are still at all-time tights.
+
+You can lever yourself up to your eyeballs as long as nobody, nothing bad happens. Exactly. So nothing bad has happened yet, but if you are way over-levered like we learned from the Great Financial Crisis and something bad happens, then you're screwed. So let's turn—we'll come back to the credit in a bit.
+
+Let's talk about how does this industry lever itself? How hidden is that leverage? Let's talk about what reinsurance is and what third-party reinsurance is versus captive reinsurance. Great question. An insurance company should never write more business than it can afford to write. Right? They need to have a backbone, an infrastructure...
+
+And have enough capital. Right, to handle putting a lot of new business on the books. Because you understand new business has all these high commissions to the agents upfront, underwriting costs. So there's a lot of expensive things that have to happen in that first year. Right. Life insurance writes policies at a loss because they pay huge commissions generally to insurance brokers.
+
+It could be over 10%. So day one they're in the hole. That's what you're saying. Correct. And we hope they will begin to make profits usually by the end of the third year forward. They take the money, they invest it. They generally invest it in bonds and over time they make money. That's right. So that they can pay people. That's right.
+
+The first thing my mentor taught me—I learned so much from the mentor that taught me as I was training as an examiner. He taught me, &quot;You know Tom, an insurance company can never write itself out of a hole.&quot; So if an insurance company is under stress, the worst thing they can do is say &quot;We need to sell a bunch of business,&quot; right? To get cash in.
+
+So if you want to sell more business than you can really afford, it's pretty simple. The industry is doing it every day. As fast as business comes in, they're offloading it not to independent reinsurers... Well, let before we even get to that. Okay. Just explain in a legitimate—when things were totally legitimate—how a reinsurance deal would work with a third party.
+
+Because only if we can understand what was legitimate can we understand what is illegitimate. Totally. Great point. So let's go back. You're a life insurance company. You want to offload risk. Who do you do it with? How do you do it? Okay, excellent. So a life insurer would turn to a reinsurer, an independent reinsurer that has its own money.
+
+Most of whom were usually in Bermuda. Well, actually originally in Germany. There were a lot of really big like Munich Re. Yep, Munich Re. There's a lot of really strong company reinsurers that have been around centuries as opposed to decades, right. So you would reach out to them and say, &quot;Can I transfer to you&quot;—cede, C-E-D-E—&quot;can I transfer to you 5 billion in liabilities?&quot;
+
+And why would you want to do that? Because if you free up some of those liabilities, in reality it can free you up to either pay stockholder dividends or write more business. So you're getting more cash upfront is basically what would happen. So when you go to cede the 5 billion, you're supposed to send 5 billion in assets with those liabilities.
+
+Right. Now they might take 4.99 billion because they'll earn some investment income, right? But it has to be commensurate. And that's the number one rule. And it's with a third—you're negotiating with a third party, so they're going to want to write a good deal for themselves too. Exactly. They don't want to take on 5 billion in liabilities and 3 billion in assets. Who would?
+
+Right. I'll tell you who would: an affiliate. Okay, we're going to come to that. Okay, so that's what the life insurance industry used to do. They would cede business to a third-party reinsurer. It could be in Europe, it could be in Bermuda, and that's how the industry acted forever. Okay, when did that change?
+
+Really, I would say about the same time all of the life and annuity carriers began demutualizing. About three decades ago. Okay. And soon after they began going for profit, they realized we need to be able to pay stockholder dividends. Well, that money has to come out of the pot. And so if you're taking money out of the pot, something's got to be put in its place to fill that hole.
+
+If you have a great year every year, that's not a problem. But all companies have years where they have a bad year. The problem is if they had a bad year, they wouldn't be allowed to pay a stockholder dividend. Right. So what they would do is, when they come down to year-end, the CEO says to the CFO, &quot;Do we have enough to be able to pay a dividend this year?&quot;
+
+He says, &quot;No, you know we're going to be 2 billion short. Let's do one of our affiliated reinsurance deals. We'll cede 4 billion but we'll only cede 2 billion in assets.&quot; So this is a reinsurance deal but basically life insurance company X does with itself. A division. Basically with a sub, a division.
+
+A division that might be housed in Bermuda. And sometimes it's literally a subsidiary which is just an, you know, it's just like an alter ego. Right. You're moving money from one pocket to the other. There's no outside independent entity that's going to have the money when you need it. Right, okay.
+
+So that began mostly with the captive reinsurers in the U.S. I mentioned Vermont, South Carolina; they were the first two states to really push this. And it's totally secret. Literally. Now what do you mean by it's secret? You cannot get any financial information period from any—if you were to reach out to Vermont.
+
+Even if you were a policyholder and said, &quot;Hey my policy's been ceded to your company in Vermont, please send me the balance sheet,&quot; they say we can't. No one can see their financial statements. So you can't see the financial statements of a captive reinsurer based in Vermont. Even right here in the U.S. Okay.
+
+And they rode that horse hard, I mean, for the first 10 years. 2001 was when it really started, this U.S.-based captive. The first year was 12 billion total nationwide—12 billion was ceded to these captives. In 10 years, it went from 12 billion to 440 billion. Wow, okay. And then I started screaming quite loud and, you know, getting interviewed in industry publications, the New York Times and others.
+
+And I made it clear we shouldn't be letting these companies be secret. Sure enough, they started backing off using the captives and they started going offshore heavily. And where offshore? Bermuda, Barbados, Cayman Islands are the main ones. Okay. So now they're ceding to basically wholly-owned subsidiaries outside the United States. Outside the U.S.
+
+So what happens if an insurance company goes down? How easy or not easy is it to get paid from a reinsurer in Bermuda or the Cayman Islands? It is a nightmare, and I learned the hard way. I've been hired as a forensic accountant to come into a receivership where they had to take a company down here in the U.S.
+
+And my job was to determine: what are the assets really worth? Is the balance sheet true? The worst part is when they say, &quot;What about what's the reinsurance like?&quot; And I say, &quot;Almost all of it is offshore.&quot; The attorneys just, you know, grimace because that means extremely long-term and very expensive litigation trying to repatriate those assets.
+
+Even though it's owned by the same company. Even though it's totally under the same umbrella. Totally. You can't get those assets back timely. You've got to get in line. One of my clients had to go through the Hague, you know, depending on which country. If it's the Cayman Islands, they require them to get in line at the Hague just to try to get money back.
+
+And remember this is not their money, this is our policyholders' money here in the U.S. Why should we even let the money leave? I don't understand that. And it's not transparent. You understand in the U.S. you have to use statutory accounting. You want it to be solvency-based. Is this company strong? Will they be strong 75 years from now?
+
+GAAP, Generally Accepted Accounting Principles, looks at earnings and profits patterns over time for investors. Love GAAP. If you're an investor, GAAP's what you want to read. But if you're a contract holder, a policyholder, an annuitant... In today it's the difference basically between GAAP accounting and statutory accounting.
+
+It's the difference between GAAP and cash. Yeah, very much. Like how much cash do you really have? Right. So the problem is when they transfer the liabilities out of the U.S. company, say in Iowa, and they cede 10 billion to the affiliate offshore. They subtract the whole 10 billion here in the U.S. But down there they use GAAP.
+
+They don't use SAP. So down there the auditors say, &quot;Oh, you can defer all those commissions even though the commissions have been paid and the money's long gone.&quot; They get to spread it out over 25 years. That deferred acquisition cost is monstrous. So you end up significantly underfunding future death claims.
+
+Let's press to that for a second. So 2001 for 10 years, the for-profit life insurance industry did this. But then private equity came in. Oh yes. And now let's talk about it, because private equity I think took this to a whole other level. You are exactly right. And not only is that happening, but you are also getting tremendous deals where companies are transferring their pensions from themselves to private equity.
+
+And then private equity is doing reinsurance. Let's talk all about that. Talk about how private equity has taken this to another level. Yeah, so when I first learned that private equity had dived into the industry, I didn't understand that. Because, you know, private equity is private equity and largely unregulated by the SEC because, remember, the rule was it's your own money, you're wealthy and you're sophisticated, right?
+
+And so why should we have to protect you? But suddenly private equity is taking control of millions of policyholders' premiums and playing the same games with them. So I said, &quot;Oh, this is not going to go well.&quot; And it started with Goldman Sachs did some with the Global Atlantic companies, but the biggest move was by Apollo to take Athene, right.
+
+And Apollo's the trailblazer here. Everybody has seen what Apollo has done, seen how profitable it has been, and has followed. By the way, interestingly enough, there was a period where Athene was public and the stock did terribly because nobody in the public equity world trusts life insurance accounting.
+
+So these companies sell at like three to five times earnings because nobody trusts the accounting. And that's why Apollo bought it back in—because they realized they weren't getting paid to have this entity public. Well, I'm not a goody-goody. You know, I think the life and annuity industry is crucial to this country. Yes.
+
+And I champion that industry. And private equity isn't all bad. They're just more aggressive and it's okay to be more aggressive to a point. But I'm seeing trajectories like this and suddenly almost vertical in all of the categories of risk that worry me. Like what? Investment concentration.
+
+So a good example is Athene in the last five years went from say 10 billion in affiliated paper to 40 billion. So when you say affiliated paper, you mean paper that Apollo itself has originated and gives to Athene? As opposed to Athene buying paper from somebody else. Somebody else. They're internal IOUs back and forth, right?
+
+The problem is it's so easy because private equity controls the decision making of the policyholders—the people that look after the policyholders. And so if they say, &quot;Hey, type up another 2 billion dollar note. We owe Athene's policyholders 2 billion,&quot; and you take 2 billion out in cash or Treasuries.
+
+What I've seen over the last five years is a dramatic shift from much more traditional investments that you can get a quote on that have great ratings—true ratings, independent ratings, things that you can count on—to very exotic, highly illiquid investments like joint ventures, limited partnerships with affiliates in the Cayman Islands. Right?
+
+So you mentioned ratings for a second. Let's talk about ratings for a second because in traditional public bond fixed income world, most of the stuff is rated by Moody's and S&amp;P. That's right. But I read in some of the pieces that you sent me that the games that private equity are playing is they're using much smaller rating agencies. So talk about that. What's going on there?
+
+I was disturbed to find out fairly recently... You seem to be disturbed quite frequently. Yeah, well, I care. I truly care. And for 41 years I've championed the policyholder. And what I'm seeing are small rating agencies like Egan-Jones. Egan-Jones is the most publicly recognized right now. I think there's even a criminal investigation, all right.
+
+And they are giving ratings that don't appear to be accurate. What do you mean by that? I've seen investments where not only was the rating—did the rating receive an investment-grade rating when it shouldn't have—but also it mischaracterized what the investment itself was. Like they said investment-grade bond in the U.S. when it was an SPV in Ireland.
+
+Special Purpose Vehicle in Ireland. Right, in Ireland. Okay, that kind of stuff bothered me. But then when it came out publicly, apparently a very small staff, you know, 18 or 20 analysts, gave out thousands of ratings. And you got to wonder how they're able to do that. How much work they could do.
+
+Right. Let's talk about let's go back to leverage for a second. There's the stated leverage from GAAP, and then there are all these deals and this statutory leverage. How much leverage do you think the industry really has as opposed to what its GAAP accounting is showing? Hard question to answer. It is. I can say that it is very substantial.
+
+Well, give us some numbers, like what? So if you look at one of the big life insurers that does a lot of offshore reinsurance. Okay. They show roughly 200 billion in liabilities. Okay, so that's future death claims and annuity payouts. Okay, 200 billion. But if you dig down, if you dive deep into the financials...
+
+And by the way, these annual statements are 7,700 pages. The statutory statement. The statutory statement. When you get down to Schedule S Part 3 Section 1 where you can see that reinsurance having been moved, there's 195 billion having been ceded offshore to an affiliate rather than to an independent reinsurer that has its own money.
+
+The question is: how much of that is money good? 195 billion in assets to cover those liabilities. And I've begged the regulators, &quot;Why don't you just force them to tell you what their assets are?&quot; The state regulators. Yeah, the state regulators. Because again, they're supposed to protect U.S. policyholders.
+
+Just because the promise is somewhere else doesn't mean we no longer need to worry about our policyholders. So if they're not money good, and I'm certain they're not, because when I have been able to see, it's been substantially less in assets than liabilities. When you've been able to get... When, and it's only been a few times.
+
+Like give one example of what the liabilities were and what the assets were. One company had taken reserve credit meaning we've laid off 7 billion to these three captives of ours. Mmhmm. And that implies they'll be able to collect that 7 billion back. In fact, if you know they can't make those payments, you're not supposed to take credit.
+
+They shouldn't subtract the liability. Right. They subtracted the entire 7. I actually get to see those captives' annual statements because they were accidentally posted publicly. Mmhmm. Temporarily. As soon as they realized they had put them out, they took them back. But you saw them. I got to see them.
+
+And it had roughly 200 million with an M in real assets. So 7 billion in liabilities, 200 million in assets. 200 million in assets. The rest were plugged with these things that are contingent. Contingent. They called it an XOL asset. And I knew the second I read what they purported it to be that it can't be carried at any value because it's no different from a lottery ticket.
+
+If an insurance company buys a lottery ticket and I examine them, I ask, &quot;Has the drawing occurred yet?&quot; If they say no, then I say, &quot;Well, expense the $2,&quot; right? But if they can prove it has been drawn and they have the winning ticket, great asset. But it's contingent on that win, right, that they win. Assets under statutory and GAAP can't even be called assets if there is a contingent nature there.
+
+So what's the contingent nature of this asset? These XOL assets that perhaps this reinsurer, if they were to pay us something in the future—even though the footnotes say they will not ever pay, right. It's clearly they're trying to plug a hole with something that couldn't be sold. You can't take an XOL asset and transfer it to someone. You can't sell it.
+
+So if you had to pay claims, how are you going to sell it to convert it to cash? And I know that's complicated, but it's an important aspect here. So when you said earlier that people are starting to listen to you, who's starting to listen to you? The U.S. Senate Banking Committee invited me to present to the chief counsel and his staff.
+
+That was outstanding. They took copious notes, they listened. And I said, &quot;I hope you know I really do know what I'm talking about.&quot; They said, &quot;That's why we asked you to come share with us.&quot; Right after that, I got invited to testify, oral and written, to the U.S. Department of Labor on these very issues: private equity, too much risk-taking, offshore reinsurance, all the things that I've been concerned about.
+
+And then publications have been reaching out to me more: Bloomberg, not just the industry journals, but Financial Times, you know. The problem is the cat's out of the bag. It's already happened. You know, I guarantee you that—let's go back for a second. And if we had to summarize your thesis, it's that this industry takes more risk than it used to take in terms of its investment portfolio.
+
+And I think that's a fair statement and that's easily proven. But nothing's really blown up yet because we've been in a bull market of credit for a very, very long time. And at the same time, because of all these captive reinsurance deals, the industry is a lot more levered than it appears. Correct. And so it sounds like the Great Financial Crisis in sort of a different format.
+
+Different uniform but same concept. No doubt. And if, and there's always—it'll eventually happen—there's a recession and we get credit blow-ups, the life insurance industry is in big trouble. Big trouble. That's the basic—that's your basic story. Yep. But the problem is, I go back to my point that I said before: human beings deal with glacial crises very, very badly.
+
+So you're screaming and yelling, but nothing bad has happened. And so you know, the people who you're talking about, the KKRs and the Apollos of the world will say &quot;Listen, you know I hear what you're saying, but we're great underwriters and nothing bad has happened so go away.&quot; And until, unfortunately, until something bad happens, nothing will happen.
+
+I do want to say this. Several companies have failed recently. A number of them actually. They're not really big. They're small. They're medium-sized. Like who? PHL, which used to be Phoenix Life, part of the Nassau group. Okay, they failed terribly just a year ago. Okay. How big were they? I can't remember exactly. The hole is 2.5 billion.
+
+It is small potatoes. Small potatoes in this world. But the lesson learned from there is the exact lesson we will learn with the larger ones. In fact, the rehabilitator for PHL in a court filing said, &quot;It turns out the hole was much bigger than we anticipated because the commissioner had allowed an XOL asset as an asset and upon further review, it turned out to have no value.&quot;
+
+And so the hole got bigger without us seeing the hole getting bigger because it was hidden. Right. The exact same activities are happening in the larger companies. But they are able—they're sophisticated, you've said that. They're able to delay action longer than a medium-sized company. They have more money to move around and shell games and they keep doing more and more reinsurance.
+
+If you were talking about... You were talking about the most sophisticated financial people maybe on planet Earth now control life insurance companies. Mmhmm. I mean, there is nobody more sophisticated than Apollo and KKR and Brookfield. No one. There is a solution, though. Okay. I would ask that private equity—for all of their reinsurers, they control those reinsurers, they're affiliates—just have them file the same statutory filing in the U.S. that their U.S. companies file.
+
+Good luck getting them to do that. Why wouldn't they? Because they're never—they're not interested in catering to you. Because they don't want people to know what they're doing. It would show that they are not funding... They're much more levered than you think. Exactly. They're not fully funding. Right. And I understand and appreciate that.
+
+And by the way, the people—it's interesting—the people who I know, sell-side analysts, very well. The people who cover Apollo, KKR, Brookfield are not insurance analysts. They have really not much understanding about what goes on in the insurance company. I just learned something important. Yeah. The analysts who cover life insurance, they're an entirely different group of people.
+
+I bet. And they have an entirely different background. They look at things completely differently. You know, when you read reports, sell-side analyst reports, when Apollo and KKR report, they talk about what the fee revenue was, what the realizations were, they talk about Athene's spread. But they're not digging.
+
+There isn't one—there is not one sell-side analyst who covers Apollo/KKR who... they may know what a statutory filing is, but they have never looked at them. Ever. I'm afraid you're right. And that's the problem. Right. So let's just sum it up. Sure. I'll let you have the last word. Just sum up for me what your story is and what you think the catalyst is to make bad stuff really happen.
+
+In my professional opinion, the biggest threat is lack of transparency. Mmhmm. You can have the slightest bit of opacity and it be a massive problem. What you can't see, what you can't confirm, is deadly. And now those amounts are huge. Offshore, secret captives in the U.S. We can't confirm: is the money there?
+
+But all of the other activities that worry me—borrowing short-term and investing long-term—those have skyrocketed in the last five years. Affiliated investments have skyrocketed in the last five years. All of the private equity groups are doing basically the same thing with their insurers: taking way more risk with way less transparency.
+
+And all I'm asking is: look, the statutes exist today to prevent this sort of activity, this secrecy. All they'd have to do is uphold the statutes and we'd see how big the hole is. That's the real message, I think. Tom, thank you very much. Thank you so much for having me. It was a real pleasure. And thanks for understanding. Oh, well, I've been around. Yes you have. Thank you very much. Thank you.
+
+Well, that was an incredible interview and let me tell you what my takeaways are. First of all, like I said in the interview, human beings do really badly with crises that unfold really, really slowly because as long as nothing really bad happens, everybody figures, &quot;Eh, what's the big deal?&quot; But this is a really big deal.
+
+And the problem here is on several fronts. Number one, as private equity has taken over the life insurance industry, they have treated their life insurance divisions as captives where they are selling their own private credit paper to their life insurance companies. And so the risk that the industry is taking is much higher than it used to be when it was just investing in plain-vanilla bonds.
+
+That's problem one. That problem has not erupted, though, because we have been living through a massive bull market in credit. And as long as that's the case, this problem is going to get pushed off. That's problem one. Problem two is that the insurance industry, especially in the hands of private equity, is transferring much of its risk to captive reinsurers offshore and is using that as a method to increase the leverage that life insurance industry companies have.
+
+But all that is under the table. You can't see it. So you really don't know how levered the life insurance industry really is. The only thing I can guarantee is that it's a hell of a lot more levered than it looks. Third thing is that this is an industry from a sell-side analyst perspective that is covered by people who are very good analysts but who cover investment banks, asset managers, and they cover the alternative asset managers.
+
+And the alternative asset managers are Apollo and KKR, who own the life insurance companies. But the analysts are not life insurance analysts. And all of the secrets of this industry are in what's called statutory filings. And I guarantee you that the sell-side analysts do not look at the statutory filings of these companies. So no one is really looking at this.
+
+Problem number four is that this is an industry that is regulated state by state. And there's a couple of states—five states as our guest showed—that are extremely lenient and that are not forcing this industry to disclose what their real risks are. So my conclusion is this is a problem that's like a slow-boiling frog that one day is just going to explode.
+
+And the reason why you should all care is that all of you have life insurance policies; you have annuities. And if this industry ever blows up, you may not get paid, and then where will you be? And the regulators are not doing anything here, just like they didn't do anything before the Great Financial Crisis.
+
+And I don't expect these regulators to do anything. And the problem is that you know when they're going to do something? They'll do something after it blows up. But by then, it'll just be too late.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-2">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=EJCIiTNH5R8" target="_blank" rel="noopener">LIVE: Hegseth And Caine Hold Pentagon Press Briefing On Iran War</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Forbes Breaking News</span><span class="channel-subs">(5.5M)</span></span>
+                        <span class="meta-sep">·</span><span>56:50</span>
+                        <span class="meta-sep">·</span><span>53.1K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-03-02</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Pete Hegseth (War Secretary)</span> <span class="tag tag-person">Dan Caine (Chairman of the Joint Chiefs of Staff)</span></div>
+                </div>
+                <div class="tldr">The United States has launched &quot;Operation Epic Fury,&quot; a massive, multi-domain military campaign directed by President Trump to permanently dismantle Iran’s offensive missile capabilities, naval infrastructure, and nuclear ambitions.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-2">TL;DR The United States has launched &quot;Operation Epic Fury,&quot; a massive, multi-domain military campaign directed by President Trump to permanently dismantle Iran’s offensive missile capabilities, naval infrastructure, and nuclear ambitions.    Mission Goal: The operation is...</div>
+                    <div class="summary-full" id="full-2">
+                        <p><strong>TL;DR</strong></p>
+<p>The United States has launched "Operation Epic Fury," a massive, multi-domain military campaign directed by President Trump to permanently dismantle Iran’s offensive missile capabilities, naval infrastructure, and nuclear ambitions.</p>
+<h3>Strategic Objectives and Doctrine</h3>
+<ul>
+<li><strong>Mission Goal:</strong> The operation is laser-focused on three decisive outcomes: the destruction of Iran's offensive missiles and production facilities, the elimination of the Iranian Navy, and the total prevention of nuclear weapon acquisition.</li>
+<li><strong>"America First" Warfare:</strong> Secretary of War Pete Hegseth characterized the operation as the conclusion of a 47-year conflict.</li>
+<ul>
+<ul>
+<li><strong>Shift in Engagement:</strong> The administration explicitly rejected "nation-building" and "democracy-building," opting instead for a lethal, time-bound mission with no "politically correct" rules of engagement.</li>
+<li><strong>The "Conventional Shield":</strong> Hegseth argued Iran used its drone and missile arsenal as a conventional umbrella to protect its "nuclear blackmail ambitions," a dynamic the U.S. is now dismantling.</li>
+</ul>
+</ul>
+<li><strong>Diplomatic Context:</strong> The briefing emphasized that the administration attempted "earnest" diplomacy and pathways to peace, which the Iranian regime reportedly used only to stall for time.</li>
+</ul>
+<h3>Operational Execution: "Operation Epic Fury"</h3>
+<ul>
+<li><strong>H-Hour and Initial Strikes:</strong> The operation commenced on Saturday, February 28, at 01:15 EST (09:45 AM Tehran time) following a direct order from President Trump: "No aborts, good luck."</li>
+<li><strong>Scale of Effort:</strong></li>
+<ul>
+<ul>
+<li><strong>Targeting:</strong> U.S. and Israeli forces struck more than 1,000 targets within the first 24 hours.</li>
+<li><strong>Aerial Dominance:</strong> The campaign utilized over 100 aircraft, including B-2 stealth bombers flying 37-hour round-trip sorties from the continental U.S. to strike deeply buried underground facilities.</li>
+<li><strong>Multi-Domain Integration:</strong> Initial "movers" were U.S. Cybercom and Spacecom, which blinded Iranian sensors and communications before kinetic strikes began.</li>
+</ul>
+</ul>
+<li><strong>Current Status:</strong> Approximately 57 hours into the operation, the U.S. has established local air superiority and continues to scale the intensity of strikes.</li>
+</ul>
+<h3>Force Posture and Command Leadership</h3>
+<ul>
+<li><strong>Key Commanders:</strong></li>
+<ul>
+<ul>
+<li><strong>Admiral Brad Cooper:</strong> Commander of U.S. Central Command (CENTCOM), overseeing the overall AOR.</li>
+<li><strong>Lt. Gen. Pat Frank:</strong> Leading counter-missile and counter-drone operations.</li>
+<li><strong>Vice Admiral Kurt Renshaw:</strong> Commanding naval engagements against the Iranian Navy.</li>
+<li><strong>Lt. Gen. Derek France:</strong> Directing the air campaign.</li>
+</ul>
+</ul>
+<li><strong>Deployed Assets:</strong></li>
+<ul>
+<ul>
+<li><strong>Naval Power:</strong> The *USS Abraham Lincoln* and *USS Gerald R. Ford* Carrier Strike Groups are active in the theater.</li>
+<li><strong>Air Power:</strong> Fourth and fifth-generation fighters (including F-35As from the Vermont Air National Guard) and significant tanker/mobility assets.</li>
+</ul>
+</ul>
+<li><strong>Casualties and Losses:</strong></li>
+<ul>
+<ul>
+<li><strong>Personnel:</strong> Four Americans have been confirmed killed in action thus far, with others injured.</li>
+<li><strong>Equipment:</strong> Three U.S. Air Force F-15Es were lost overnight; however, General Caine stated these losses were not due to hostile fire and are under investigation.</li>
+</ul>
+</ul>
+</ul>
+<h3>Defensive Operations and Regional Partnerships</h3>
+<ul>
+<li><strong>Missile Defense:</strong> U.S. Patriot and THAAD batteries, along with Navy destroyers, have intercepted "hundreds" of Iranian ballistic missiles and one-way attack UAVs.</li>
+<li><strong>Regional Coalition:</strong> Forces from Israel, Qatar, the UAE, Kuwait, Jordan, and Saudi Arabia have participated in defensive measures.</li>
+<li><strong>Intelligence and Precision:</strong> Hegseth described the strategy as "shooting the archer instead of the arrows," using "exquisite intelligence" to destroy launch sites before they can be utilized.</li>
+<li><strong>Domestic Vigilance:</strong> The Department is monitoring potential "sleeper cell" threats within the U.S. in coordination with interagency partners following the start of hostilities.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"We didn't start this war, but under President Trump, we are finishing it. Their war on Americans has become our retribution against their Ayatollah and his death cult." — <strong>Pete Hegseth, Secretary of War</strong>
+</blockquote>
+<blockquote>
+"This is not a so-called regime change war, but the regime sure did change and the world is better off for it." — <strong>Pete Hegseth, Secretary of War</strong>
+</blockquote>
+<blockquote>
+"The enemy would see one thing: speed, surprise, and violence of action... This was a massive overwhelming attack across all domains of warfare." — <strong>Gen. Dan Caine, Chairman of the Joint Chiefs of Staff</strong>
+</blockquote>
+<blockquote>
+"History doesn't care if we're tired, if we're scared, or if the fight feels big. It demands warriors who rise anyway. We are not defenders anymore. We are warriors. Trained to kill the enemy and break their will." — <strong>Pete Hegseth, Secretary of War</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-2" onclick="toggleSummary(2)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-2">
+                        Need to silence their cell phones. If you have a cell phone, if you could silence it or turn it off. Check one, two. This is the final mic check. Check one, two audio check.
+
+This is the chairman's mic. Please turn off your cell phone or put it on mute. Don't have to turn my phone off, just put it on mute. Check one, two. Check one, two.
+
+This is the chairman's mic. Check one, two. Check one, two audio check one, two. We're doing a final mic check for the pool as well as DMA, as well as a cell phone announcement.
+
+Please silence all cell phones. Check one, two. Check one, two. We've got about four minutes. Dan Caine, one more time, check one, two. One more.
+
+Audio check one, two. We're doing a final mic check. This is the Secretary's mic. Check one, two. Check one, two. Again, please turn off all cell phones or silence them. Thank you.
+
+Well, good morning. We just finished an update with Admiral Brad Cooper, the CENTCOM Commander, across the CENTCOM AOR. Our leadership and troops, as you would expect, are doing a fantastic job.
+
+Two days ago, under the direction and direct orders of President Donald J. Trump, the Department of War launched Operation Epic Fury. It is the most lethal, most complex, and most precise aerial operation in history.
+
+For 47 long years, the expansionist and Islamist regime in Tehran has waged a savage, one-sided war against America. They didn't always declare it openly except for their constant chants of &quot;Death to America.&quot; They did it through the blood of our people.
+
+There were car bombs in Beirut, rocket attacks on our ships, murder at our embassies, and roadside bombs in Iraq and Afghanistan, funded and armed by Iranian Quds Force and IRGC killers. My generation of veterans carry the names of brothers who never came home.
+
+These were brothers butchered by Iranian-backed roadside bombs and well-armed militias. Thousands of our own. We didn't start this war, but under President Trump, we are finishing it.
+
+Their war on Americans has become our retribution against their Ayatollah and his death cult. It took the 47th President, a fighter who always puts America first, to finally draw the line after 47 years of Iranian belligerence.
+
+He reminded the world, as he has time and time again, that being an American means something unbreakable. If you kill Americans, if you threaten Americans anywhere on Earth, we will hunt you down without apology and without hesitation and we will kill you.
+
+President Trump has also been very consistent: crazy regimes like Iran, hell-bent on prophetic Islamist delusions, cannot have nuclear weapons. It's common sense. Many have said it, but it takes guts to actually enforce it. And our President has guts.
+
+Iran's stubborn and self-evident nuclear pursuits, their targeting of global shipping lanes, and their swelling arsenal of ballistic missiles and killer drones were no longer, are no longer tolerable risks. Iran was building powerful missiles and drones to create a conventional shield for their nuclear blackmail ambitions.
+
+Let me say that again: a conventional shield for their nuclear blackmail ambitions. Our bases, our people, our allies were all in their crosshairs. Iran had a conventional gun to our head as they tried to lie their way to a nuclear bomb.
+
+It almost worked under Obama and his terrible deal, but not under this President. Turns out the regime who chanted &quot;Death to America&quot; and &quot;Death to Israel&quot; was gifted death from America and death from Israel.
+
+This is not a so-called regime change war, but the regime sure did change and the world is better off for it. Today in their desperation, the enemy is unmasked as Iranian missiles and drones rain down indiscriminately on the hotels, airports, apartments, and other civilian targets of their neighbors.
+
+These are cowardly terrorist tactics from a regime that for decades has trafficked in cowardly terrorist tactics, lies, death, and destruction to this day. The Iranian leadership has built nothing except proxies and missiles and drones and deeply buried nuclear factories and facilities.
+
+Peaceful nuclear ambitions do not need to be buried underneath mountains. Last June, Operation Midnight Hammer obliterated their nuclear program to rubble. Afterward, we told them plainly: that's it, now make a deal.
+
+They arrogantly refused. We said: rebuild it, and we'll stop you again, this time far worse. Well, President Trump, Secretary Rubio, Steve Witkoff, Jared Kushner, they bent over backwards for real diplomacy, offering pathway after pathway to peace.
+
+I watched it, I was there. They tried over and over and over again. These were earnest attempts at peace. The former regime had every chance to make a peaceful and sensible deal.
+
+But Tehran was not negotiating, they were stalling, buying time to reload their missile stockpiles and restart their nuclear ambitions. Their goal: hold us hostage, threatening to strike our forces. Well, President Trump doesn't play those games.
+
+And as Secretary Rubio said after the Maduro raid: if you don't know, now you know. President Trump puts America and Americans first. He doesn't hesitate and neither do our troops.
+
+The mission of Operation Epic Fury is laser-focused: destroy Iranian offensive missiles, destroy Iranian missile production, destroy their navy and other security infrastructure, and ensure they will never have nuclear weapons. We're hitting them surgically, overwhelmingly, and unapologetically.
+
+With every passing day, our capabilities get stronger and Iran's get weaker. We set the terms of this war from start to finish. Our ambitions are not utopian; they are realistic, scoped to our interests and the defense of our people and our allies.
+
+Speaking of people, we hope the Iranian people take advantage of this incredible opportunity. President Trump has been clear: now is your time. To Iranian security forces: choose wisely.
+
+President Trump has also been clear about your fate in either direction. To the media outlets and political left screaming endless wars: stop. This is not Iraq. This is not endless.
+
+I was there for both. Our generation knows better and so does this President. He called the last 20 years of nation-building wars &quot;dumb,&quot; and he's right. This is the opposite.
+
+This operation is a clear, devastating, decisive mission: destroy the missile threat, destroy the navy, no nukes. Israel has clear missions as well for which we are grateful. Capable partners, as we've said since the beginning.
+
+Capable partners are good partners. Unlike so many of our traditional allies who wring their hands and clutch their pearls, hemming and hawing about the use of force. America, regardless of what so-called international institutions say, is unleashing the most lethal and precise air power campaign in history.
+
+We are using B-2s, fighters, drones, missiles, and of course, classified effects. All on our terms with maximum authorities. No stupid rules of engagement, no nation-building quagmire, no democracy-building exercise, no politically correct wars.
+
+We fight to win and we don't waste time or lives. As the President warned, an effort of this scope will include casualties. War is hell and always will be.
+
+A grateful nation honors the four Americans we have lost thus far and those injured. They are the absolute best of America. May we prosecute the remainder of this operation in a manner that honors them.
+
+No apologies, no hesitation, Epic Fury. This is for them and the thousands of Americans before them taken too soon by Iranian radicals. Before I turn it over to General Caine for the operational update, let me speak straight to you, the Joint Force.
+
+Our warriors on the front lines: this is your moment. This is the generational turning point America has waited for since 1979 and since the rudderless wars of hubris my generation, our generation, endured. Don't listen to the noise. Just stay focused.
+
+Our Commander-in-Chief is steady at the wheel. We face a determined enemy, but you are better. But we must prove it every single day. History doesn't care if we're tired, if we're scared, or if the fight feels big.
+
+It demands warriors who rise anyway. Peace through strength, the warrior ethos, lethality, unity of purpose. Those are not slogans. They're the beating heart of what it means to wear the uniform.
+
+That uniform. You think clearly under fire, you act decisively in chaos, you uphold the Constitution and you uphold our country without hesitation. We are not defenders anymore.
+
+We are warriors, trained to kill the enemy and break their will. History is watching. Be the force you swore an oath to be. Focused, disciplined, lethal, and unbreakable.
+
+We will finish this on America First conditions of President Trump's choosing. Nobody else's, as it should be. And know this above all: President Trump and I have your back always.
+
+Through fire, through criticism, through fake news, through everything. We unleash you because you are the best, most powerful, most lethal fighting force the world has ever seen. May Almighty God watch over you and His providential arms of protection extend over you. Godspeed warriors and keep going. General Caine, over to you.
+
+Thank you, Mr. Secretary, and good morning everyone. The purpose of my portion of the briefing today is to update you and the American people on the actions taken thus far.
+
+The briefing will discuss the preparation, the planning, setting the force, the early operations, and how we're assessing the progress thus far. So let's get started.
+
+On Saturday, 28 February at Eastern Standard Time, AM local Tehran time, on the orders of the President of the United States, U.S. Central Command, under the command of United States Navy Admiral Brad Cooper, commenced Operation Epic Fury.
+
+As I said, I'm going to walk you through the initial phases of the operation. But first, I want to express my deep condolences and the condolences of the Joint Force to the Department of War personnel killed and wounded in action thus far.
+
+As the Secretary said, they're heroes and represent the best of what our nation has to offer. They're true examples of what selfless service means. Our deepest and heartfelt condolences are with their families, their friends, and their units.
+
+We grieve with you and we will never forget you. Additionally, I stand here before you today grateful for each service member, planner, logistician, operator across our Joint Force, for our Department of War civilians, our intelligence community teammates, and our interagency teammates who continue to stand in harm's way alongside us.
+
+I am proud of all of you as you take the fight to the enemy, and we are the best in the world at integrating, period. I want to extend my personal gratitude to the dedicated commanders and senior enlisted leaders and the enlisted members of the Joint Force who are fighting this fight across the CENTCOM AOR.
+
+In addition to Admiral Cooper and Fleet Master Chief Compton, I want to highlight a few today. U.S. Army Central Command Commander Lieutenant General Pat Frank who along with his team are fighting the counter-missile and counter-drone fight.
+
+United States Navy Central Command Commander Vice Admiral Kurt Renshaw and his team who are engaged with the Iranian Navy and projecting American naval combat power from the seas. And United States Air Force Central Command Commander Lieutenant General Derek France and his leadership team who are crushing Iranian targets from the air.
+
+I want to highlight the support to the CENTCOM fight from other combatant commands who are directly involved with this effort to include U.S. Spacecom, U.S. Cybercom, and U.S. EUCOM. I also want to specifically call out United States Transportation Command and U.S. STRATCOM for their contributions to this fight.
+
+We cannot project American combat power at the time and place of our choosing without both. And finally, I want to express how deeply thankful I am for the continued service and sacrifice of the entire Joint Force and their families. Their unwavering commitment and dedication are the cornerstones of this effort.
+
+So let me start with a few details. First, to be clear as the Secretary said, this is not a single overnight operation. The military objectives that CENTCOM and the Joint Force have been tasked with will take some time to achieve and in some cases will be difficult and gritty work.
+
+We expect to take additional losses. And as always, we will work to minimize U.S. losses, but as the Secretary said, this is major combat operations. So let me talk about the preparation and the planning.
+
+On February 28th, the full strength of America's armed forces came together in a unified purpose against a capable and determined adversary. The United States Army, Navy, Marine Corps, Air Force, Space Force, Coast Guard, and our reserve components integrated across our combatant commands and began coordinated operations with the Israeli armed forces of an unprecedented scale.
+
+As the Secretary laid out, our military objectives are clear. Our mission is to protect and defend ourselves and together with our regional partners, prevent Iran from the ability to project power outside of its borders. And we must be ready for follow-on actions as appropriate.
+
+Across every domain—land, air, sea, cyber—the U.S. Joint Force delivered synchronized and layered effects designed to disrupt, degrade, deny, and destroy Iran's ability to conduct and sustain combat operations. On the U.S. side, this marked the culmination of months and in some cases years of deliberate planning and refinement against this particular target set.
+
+From precision strikes against key military infrastructure, to persistent intelligence and targeting integration, to the close coordination of the components across vast distances, this operation again demonstrated America's reach, readiness, and professionalism and that of our joint united force. It was historic not only in the operational scope, but in the level of joint integration displayed across every element of the Joint Force.
+
+And as I said earlier, this work is just beginning and will continue. So now to talk a little bit about setting the force and setting the theater. On the order of the Secretary of War over the last 30 days to reinforce deterrence and provide the President with credible options should action be required, the Joint Force began to systematically reposition assets and personnel across the region.
+
+These movements ensured that U.S. forces remained postured, protected, and ready to respond decisively for any emerging threat. This deployment included thousands of service members from all branches, hundreds of advanced fourth and fifth generation fighters, dozens of refueling tankers, the Lincoln and Ford Carrier Strike Group and their embarked air wings, and a sustained flow of munitions, fuel, and supplies, all supported with command and control, intelligence, surveillance, and reconnaissance networks.
+
+And the flow of forces continues today. In fact, Admiral Cooper will receive additional forces even today. This rapid buildup of forces demonstrated the Joint Force's ability to adapt and project power at the time and place of our nation's choosing.
+
+I want to highlight a couple specific cases for you. The Gerald R. Ford Carrier Strike Group, which many of you know was down in the Western Hemisphere, redeployed across the Atlantic to set the theater. The ship, her crew, their families, and the entire strike group took a deep breath and as they always do began planning to conduct combat operations.
+
+The integrated Reserve and National Guard forces have continued to demonstrate the value of America's reserve forces including the Wisconsin Army National Guard operating in Kuwait and Iraq and Air National Guard units from a variety of states to include Vermont and Virginia. In the case of the Vermont Air National Guard and the 158th Fighter Wing, they were mobilized for Operation Absolute Resolve and then were tasked to take their F-35As across the Atlantic instead of going home to be prepared to support this operation.
+
+The same is with our Air National Guard and Air Force Reserve Command tanker and mobility forces who stepped right out of their civilian jobs to deploy and to protect the region. Lastly, I want to highlight the unsung heroes of warfare: our American logisticians and sustainment force, those who quietly work every day behind the scenes to project and sustain America's combat power.
+
+Our leaders from World War II were right when they said professionals do logistics. As regional tensions rose, the Joint Force elevated our force protection measures on the order of the Secretary and repositioned discreetly civilians and non-essential personnel designed to ensure the safety and security of our Joint Force.
+
+By the time operations began, only essential forces remained on our bases and in theater, already capable to respond. So now let me move to H-hour. At PM on Friday, February 27th, the United States Central Command through the Secretary of War received the final go-order from President Trump.
+
+The President directed and I quote, &quot;Operation Epic Fury is approved, no aborts, good luck,&quot; close quote. In the region, every element of the Joint Force made their final preparations. Air defense batteries readied themselves, checking their systems to respond to Iranian attacks.
+
+Pilots and crews rehearsed their strike packages for the final time. Aircrews began loading their final weapons and two carrier strike groups began to move towards their launching points. Across the globe, our operations centers came alive in Tampa, Florida, here at the Pentagon, and of course forward in the Central Command AOR.
+
+As always, operational security was paramount as we sought to maintain and sustain the element of surprise. This operation was highly classified so that at H-hour, the enemy would see one thing: speed, surprise, and violence of action.
+
+The first movers were U.S. Cybercom and U.S. Spacecom, layering non-kinetic effects, disrupting, degrading, and blinding Iran's ability to see, communicate, and respond. At H-hour, the beginning of major combat operations, local Eastern Daylight Time, local AM Tehran time, as dawn crept up across the Central Command AOR, the skies surged to life.
+
+More than 100 aircraft launched from land, sea—fighters, tankers, airborne early warning, electronic attack, bombers from the states, and unmanned platforms forming a single synchronized wave. This was a daylight strike based on our trigger event conducted by the Israeli Defense Forces enabled by the U.S. intelligence community.
+
+The first shooters at sea were Tomahawks unleashed by the United States Navy, which closed in on Iranian naval forces and began to conduct strikes across the southern flank in Iran. On the ground, forces fired precision standoff weapons, measured, deliberate, precise, and lethal.
+
+This was a massive overwhelming attack across all domains of warfare, striking more than a thousand targets in the first 24 hours. We are now roughly 57 hours into the operation. In the initial phase, CENTCOM's focus was systematic targeting of Iran's command and control infrastructure, naval forces, ballistic missile sites, and intelligence infrastructure, designed to daze and confuse them.
+
+Coordinated space and cyber operations effectively disrupted communications and sensor networks across the area of responsibility, leaving the adversary without the ability to see, coordinate, or respond effectively. The combined impact of these strikes, swift, precise, and overwhelming, has resulted in the establishment of local air superiority.
+
+This air superiority will not only enhance the protection of our forces, but also allow them to continue the work over Iran. Over the course of the last two days, the Joint Force has launched hundreds of missions from land and sea and delivered tens of thousands of pieces of ordnance.
+
+The effort continues to scale. This included American B-2 bombers, which again, similar to Midnight Hammer, flew a 37-hour round-trip sortie from the continental United States, dropping precision penetrating munitions on Iranian underground facilities across the southern flank and slightly deeper.
+
+Additionally, Israel has separately executed hundreds of sorties against hundreds of targets. Beyond Air Force and Navy aircraft strike packages, coordinated salvos of precision standoff weapons from across the region have neutralized hundreds of pre-planned targets.
+
+As I mentioned earlier, in support of these kinetic operations, U.S. Cybercom and Spacecom have continuously layered effects to disrupt, disorient, and confuse the enemy. I will note that this operation had several combat firsts, which I'll allow at some point in the future Admiral Cooper to talk about since he owns the AOR.
+
+While we've prosecuted a relentless offensive campaign, our defense has been equally important. Across the theater, operations have remained steady and disciplined. Once again, our integrated air and missile defense network is performing exactly as it's intended.
+
+U.S. Patriot and THAAD batteries along with ballistic missile defense-capable Navy destroyers continue to coordinate and execute intercepts with precision and consistency. I wish that every American could hear the voice communications like I have as these Joint Operations Centers remain calm, focused, and cool while executing under fire over and over and over again.
+
+Collectively, these systems have intercepted hundreds of ballistic missiles targeting U.S. forces, our partners, and regional stability. The threat from one-way attack UAVs has remained persistent. Our systems have proven effective in countering these platforms, engaging targets rapidly.
+
+Each intercept represents hundreds of hours of training, readiness, and technology all coming together to work as designed. We remain vigilant in the counter-UAV fight. And the defense of the region is not ours alone.
+
+As the threat grew, our partners surged in beside us. Air defense batteries in Qatar, the UAE, Kuwait, Jordan, and Saudi Arabia joined the fight, proof positive that years of training, trust, and hard-earned integration pay off.
+
+I am aware of the loss of three U.S. Air Force F-15Es overnight in the region. I am grateful for the safety of the crews and we know that this was not from hostile enemy fire. As this matter is under investigation, I'll not comment further on this.
+
+Let me close. Operations will remain active across the theater and across the globe. The U.S. forces are postured not only to maintain pressure, but to respond and adapt as required. Operation Epic Fury stands as a reminder of what the United States military uniquely delivers: the ability to project power on a global scale with speed, surprise, precision, and overwhelming force when and where our nation requires it.
+
+What we've demonstrated over the past several days reflects years of investment in readiness, joint integration, and professionalism of the Joint Force. As major combat operations continue across CENTCOM, we remain engaged globally.
+
+America's Joint Force retains the credibility, capacity, and flexibility to respond to any contingency anywhere in the world at any time. To those who would test our resolve or threaten the United States, our allies, or our interests, understand clearly: we can reach you, we can sustain the fight, and we can scale the fight, and we will prevail.
+
+To the American people: your Joint Force remains steady, frosty, calm, and focused. Your service members are trained, disciplined, and determined. We understand the risks of this mission and the weight of the responsibility that we carry.
+
+We also recognize that our families also shoulder the burden at home. You are a part of this too. I am proud today, as I am every day, to stand as a member of America's Joint Force.
+
+There is no mission too complex, no distance too great, and no adversary too determined for the men and women who wear our nation's uniform. We mourn our fallen, we honor their families, and we continue our mission with focus, unity, and strength. And now I'm happy to take any questions.
+
+Thank you, Mr. Chairman. Right here, go ahead.
+
+Thank you for your time. What percentage of Iranian long-range strike capabilities are still in the fight, and what is our exit strategy here and when will it be deployed?
+
+Well, they... they have long-range strike capabilities, which we're hyper-focused on. The brief we got just this morning, Admiral Cooper knows exactly and precisely what kind of threat matrix he's looking at, the way they might change their techniques and how we adapt to that. So we're making sure the theater commander has absolutely everything he needs.
+
+I mean, one of the things the chairman mentioned is for months and months, even before we built up, we ensured that we had maximum defensive capabilities in theater just to allow the president the decision space in the future. So even before this buildup in the last 30 days, we discreetly brought defensive assets in, to make sure, understanding that there are Iranian capabilities.
+
+As far as timeframe, I would never hang a timeframe from our perspective. The commander-in-chief sets the optempo and terms of this fight. As I said, it's on his terms, and we'll make sure that Admiral Cooper and his team have everything they need not just to defend.
+
+I mean, the best defense is a good offense. And so we are aggressively pushing into that airspace over that southern flank to ensure that we control it, and we destroy anything that moves that would attempt to shoot at us. Think of it as shooting the archer instead of the arrows. That's where we want to be.
+
+And we have the kind of exquisite intelligence to get over the top, find that and destroy it. It won't happen overnight. This is a big battlespace, with a lot of capabilities. That's part of the reason why it's such a threat to us.
+
+That's why I talk about a conventional umbrella to blackmail nuclear ambitions. They were building up this conventional arsenal in order to ensure that no one would ever block them from their ability to get nuclear weapons. So we're very clear-eyed about the nature of this Iranian threat and we're going to get after it. I don't know if you have anything to add to that, Mr. Chairman.
+
+No. Thank you for the question. The only thing I'll add is unlike an operation, a single operation like Midnight Hammer or Absolute Resolve, it'll take some time for us to conduct battle damage assessment and the targeting cycle that CENTCOM will run will take those things into effect. Admiral Cooper will adjust his plan and fires accordingly to ensure that we're attriting that. He's focused on long-range strike capability coming out of the enemy, and that's a key and essential part of it.
+
+Secretary Hegseth, thank you. Reagan Reese with the Daily Caller. Two questions for you. The president said yesterday in his video message that we will leave Iran when we complete all of our objectives. What are our objectives, and can you share more information on how the soldiers who were killed were killed?
+
+Well, I laid out the objectives, as did the chairman. They're completely nested. I mean, Iran has an ability to project power against us and our allies in a way that we can't tolerate. So whether that's ballistic missiles and drones, so offensive capabilities, effectively their navy, which would attempt to set other terms and impose different costs, drone capabilities, which we laid out there.
+
+And ultimately, though, this tying it back to Midnight Hammer, the president has been willing to make a deal. You can't have a nuclear bomb. Radical Islamists can't have a nuclear bomb that they wield against the world. He gave them every single opportunity. Then we precisely took it away.
+
+And even then, after that, they didn't have that, they didn't come to the table with a willingness to give it away. So ultimately, those nuclear ambitions, which never ceased, are something that had to be addressed as well. So that's a discrete sense of what's being addressed here, to ensure that they can't use that conventional umbrella to continue a pursuit of nuclear ambitions.
+
+And then, as it pertains to the U.S. casualties, that particular incident was... you know, you have air defenses and a lot's coming in, and you hit most of it. And we absolutely do. We have incredible air defenders. Every once in a while, you might have one, unfortunately we call it a &quot;squibber,&quot; that makes its way through.
+
+And in that particular case, it happened to hit a tactical operations center that was fortified, but these are powerful weapons. So we are... we're certainly... we'll do as I said, moments like that as we remember them and we take care of them and take care of their families, only stiffen our resolve to ensure that we do this properly.
+
+Thank you. Mr. Secretary Hegseth, I had two questions for you. First, are there currently any American boots on the ground in Iran?
+
+No, but we're not going to go into the exercise of what we will or will not do. I think that's one of those fallacies for a long time that this department or presidents or others should tell the American people and our enemies, by the way, &quot;here's exactly what we'll do. Here's exactly how long we'll go. Here's exactly how far we'll go. Here's what we're willing to do and not do.&quot;
+
+It's foolishness. And so President Trump ensures that our enemies understand we'll go as far as we need to go to advance American interests, but we're not dumb about it. You don't have to roll 200,000 people in there and stay for 20 years.
+
+We've proven that you can achieve objectives that advance American interests without being foolish about it. Now, will we be bold about it? Are we willing to be decisive about it? Do we put months and months of planning into what kind of effects we want to achieve? Absolutely.
+
+But going forward, why in the world would we tell you, the enemy, anybody what we will or will not do in pursuit of an objective? We fight to win. We fight to achieve the objectives the President of the United States has laid out. And we will do so unapologetically. Thank you.
+
+Is there any significance to Israel carrying out this strike to kill the Ayatollah? And I wanted to know what was your immediate reaction to finding out about his killing?
+
+I think Israel did a great job in the conduct of that operation.
+
+President Trump put a four-week timeline on it. Are you saying that's wrong?
+
+Thank you. Yeah. You mentioned during the briefing, General Caine, that there would be additional troops sent to the region. Could you say how many troops currently are involved in this operation and how many additional troops are planned to go in in this next phase?
+
+I don't want to talk specifics because that would tip the enemy off. We have more tactical aviation flowing into theater, just based on the time it took to get it out there. I think we're just about where we want to be in terms of total combat capacity and total combat power for Admiral Cooper.
+
+One of the things though that a commander, he'll consistently assess the trajectory of the campaign, is he on or off trajectory, and then make an ask of the joint force which will then develop options for consideration by the secretary and the president to either increase or in some cases decrease the amount of combat capability that we have over there.
+
+I heard the question about about four weeks. It's the typical typical NBC sort of &quot;gotcha&quot; type question. President Trump has all the latitude in the world to talk about how long it may or may not take. Four weeks, two weeks, six weeks, it could move up, it could move back.
+
+We're going to execute at his command the objectives we set out to achieve. And what he has shown an ability to do that other presidents can't quite seem to have the aperture to do—well, I mean, Joe Biden didn't even know what he was doing—is to look for opportunities and off-ramps and escalations for the United States that creates new opportunities to execute what we need on our own timeline.
+
+So you can play games about four weeks, five weeks... he has all the latitude and I'm glad he does because there's no better communicator than our president expressing those things. I've been in meetings with the president for the last two and a half days.
+
+We know exactly where his headspace is, and he will communicate as he should exactly what he would like, and we will follow those orders. I think everything he said on that is right down the middle. Absolutely.
+
+Yes, right there. Yes, sir.
+
+Thank you very much, Secretary. I left my hometown of Saqqez in Iranian Kurdistan in 1996. Can you promise that I will be able to return home safely this year? And I have a following question to Pete.
+
+I appreciate the question. I can't... I'm not here to place guarantees on that. But I think the message the president has given has been clear to the people of Iran: this is your moment. There were... the world was seized by these crowds, and then seized by the reality of this regime killing tens of thousands of innocent protesters.
+
+So we saw the nature of the regime yet again exposed. We saw many, many of the Iranian people seek a change there. This is their moment to take advantage of it for sure.
+
+Secretary, you served in Iraq and know that no American soldiers were killed in Kurdistan. The Kurdish people are very pro-American. Will you continue protect Kurdistan and Peshmerga as loyal ally of the United States? Why I'm asking this question, because now Kurdistan is under attack by Iranian drones and by proxies in Iraq and other regions.
+
+I think I can speak to allies generally in the region, who we've been in constant communication with. We have been standing shoulder to shoulder with them and we appreciate their capabilities. Absolutely. Yes, right here.
+
+Hi, thank you. Cameron Arcane with the Daily Wire. My question is about some of the domestic threats, if any, regarding this right now. Have there been any concerns about Iranian sleeper cells and kind of what is the Trump administration been doing to kind of monitor these threats?
+
+Well, across the interagency, in full coordination, of course we're paying attention to any potentialities there. This is a former regime, a regime, that seeks to export that ideology and try to sow terror. We're ready for that. We've seen these types of folks before and the American people can rest assured that we're vigilant on that. Right here.
+
+As a follow-up on that last question, there was just this what appears to be a terrorist attack in Austin yesterday. How does that change the operation at all? What effect does that have? I mean...
+
+It doesn't change the operation at all and I know the authorities are executing exactly the way they should. Yes, ma'am.
+
+Secretary Hegseth, then, and one for Chairman Caine as well. I understand to your point here that you don't want to broadcast everything for our adversaries to hear, but the American people also want to know what they're sending their men and women to war for. Are... is there a concern of this spiraling into a longer war? And then one for the chairman when you're done.
+
+Did you not hear my remarks? I mean, we're ensuring that the mission gets accomplished, but we're very clear-eyed as the president has been, unlike other presidents, about the foolish policies of the past that recklessly pulled us into things that were not tethered to actual clear objectives.
+
+So we know we have plans, we have generals, we have chairmen, we have commanders, CENTCOM commanders, Admiral Cooper, who's executing very deliberately to ensure outcomes that I laid out are accomplished. But we would never in front of a press pool lay out how long it may take. The mission for our warfighters, which is what matters to us, is very, very clear, and they're executing it right now violently.
+
+And just for the chairman quickly, I have one for just for the chairman. You said this is not a one-night operation, it will take time to achieve the goals. What would be the goal line here for you?
+
+I think the secretary laid out the military objectives and that's what we execute against is the military objectives.
+
+Last one, right here.
+
+Thank you, sir. As you've said, there are a large amount of U.S. service members that are in harm's way right now. What is your prayer for them?
+
+First of all, my prayer for them is that I do pray for them. My wife prays for them, our family prays for them, our cabinet prays for them. None of this is done on a whim.
+
+Having been in their boots, having been in their shoes, having been in their flight suits, I think we... I mean, I know we think about them with every decision that we make and every recommendation that we make to the President of the United States. Those recommendations are made prayerfully.
+
+And when I pray every day for them and for this mission, I pray simply for the biblical wisdom to see what is right and the courage to do it. It's going to take courage to follow through on this. There's going to be a lot of noise, and we pray for that and we hope all of you do as well. Thank you very much. I appreciate it. Thank you.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
