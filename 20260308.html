@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - March 08, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">March 08, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">2</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=xLqUXIwPGUo" target="_blank" rel="noopener">Extended interview: Tim Cook</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/8XWkf3KEs9kJQHGdmK6WdZFiFTeIGUdiq2oLOqhuMC-RW_SIHak4qBDqTbWTrEJiUFG2rEyiVQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">CBS Sunday Morning</span><span class="channel-subs">(1.8M)</span></span>
+                        <span class="meta-sep">·</span><span>20:12</span>
+                        <span class="meta-sep">·</span><span>10.6K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-03-08</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Tim Cook (CEO, Apple)</span> <span class="tag tag-person">David Pogue (Correspondent, CBS Sunday Morning)</span></div>
+                </div>
+                <div class="tldr">Apple’s enduring success is rooted in a unique culture of collaboration and &quot;insanely great&quot; product focus established by Steve Jobs, which Tim Cook has expanded by integrating modern social values and navigating the complexities of massive global scale.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Apple’s enduring success is rooted in a unique culture of collaboration and &quot;insanely great&quot; product focus established by Steve Jobs, which Tim Cook has expanded by integrating modern social values and navigating the complexities of massive global scale.  The &quot;Bleak&quot; Era:...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Apple’s enduring success is rooted in a unique culture of collaboration and "insanely great" product focus established by Steve Jobs, which Tim Cook has expanded by integrating modern social values and navigating the complexities of massive global scale.</p>
+<h3>The Jobs-to-Cook Transition and Leadership Philosophy</h3>
+<ul>
+<li><strong>The "Bleak" Era:</strong> Tim Cook joined Apple 28 years ago when the company was in a dire state, reporting only $1.4 billion in quarterly revenue and struggling to meet payroll.</li>
+<ul>
+<ul>
+<li>Cook ignored advice from colleagues to stay at Compaq, moved by Jobs’ unique passion for product and his "counter-intuitive" pivot toward the consumer market while competitors focused on enterprise.</li>
+</ul>
+</ul>
+<li><strong>Succession Mandate:</strong> When Steve Jobs named Cook CEO, his primary directive was: "Never ask what I would do, just do the right thing."</li>
+<ul>
+<ul>
+<li>Jobs sought to avoid the "paralysis" he saw at Disney after Walt Disney’s death and wanted a professional, orderly transition—a first in Apple’s history.</li>
+</ul>
+</ul>
+<li><strong>Individual Purpose:</strong> Cook notes that he did not truly find his life's purpose until joining Apple at age 38, citing the company’s focus on changing the world as a fundamental turning point for him.</li>
+</ul>
+<h3>Core Principles: The Apple "DNA"</h3>
+<ul>
+<li><strong>Strategic Focus:</strong> A central tenet of the company is saying "no" to a thousand good ideas to ensure the company can say "yes" to the one truly important thing.</li>
+<li><strong>Integration of Verticals:</strong> Apple maintains that "magic" for the user is only possible at the intersection of hardware, software, and services.</li>
+<li><strong>Collaboration as a "Rock Tumbler":</strong> Cook describes the internal culture as one of intense debate where different viewpoints are "put into a rock tumbler" to produce better, bigger ideas.</li>
+<li><strong>User-Centricity:</strong> The user experience remains the center of all development, prioritizing "insanely great" quality over "good enough."</li>
+</ul>
+<h3>Modern Corporate Values and Social Responsibility</h3>
+<ul>
+<li><strong>The "North Star":</strong> Cook believes a company is a collection of people and must therefore have values to navigate chaotic times.</li>
+<li><strong>Privacy and Accessibility:</strong> </li>
+<ul>
+<ul>
+<li><strong>Privacy:</strong> Viewed as a fundamental human right and designed into products from the beginning.</li>
+<li><strong>Accessibility:</strong> Products are designed from the start to be usable by everyone, including those with visual or hearing impairments.</li>
+</ul>
+</ul>
+<li><strong>Sustainability and Education:</strong> </li>
+<ul>
+<ul>
+<li>Cook emphasizes education as the "great equalizer," citing his own modest background.</li>
+<li>The company has placed a significant focus on carbon emission reduction and environmental sustainability as part of its core decision-making process.</li>
+</ul>
+</ul>
+</ul>
+<h3>Managing Scale and the Future of Innovation</h3>
+<ul>
+<li><strong>Growth and Scrutiny:</strong> Apple is now 3–4 times larger than when Cook became CEO, with 100,000 more team members than 15 years ago.</li>
+<ul>
+<ul>
+<li><strong>Pros:</strong> Greater ability to enter new product categories and serve more people.</li>
+<li><strong>Cons:</strong> Increased regulatory scrutiny, which Cook warns can potentially slow innovation.</li>
+</ul>
+</ul>
+<li><strong>Long-Term Engineering:</strong> Innovation at Apple requires a "multi-year" view. For example, designing custom silicon requires the discipline to plan technology cycles several years in advance.</li>
+<li><strong>Uniqueness of Culture:</strong> Cook argues that Apple’s culture is its greatest asset and impossible to replicate because it requires decades of hiring the right people and nurturing specific principles through various technological "air pockets."</li>
+</ul>
+<blockquote>
+"Steve’s advice to me was: 'Never ask what I would do, just do the right thing.' He had watched Disney go through this paralysis of sitting around and talking about what Walt would do, and he did not want that for Apple." — <strong>Tim Cook</strong>
+</blockquote>
+<blockquote>
+"He had an idea of focus, that you say no to a thousand things to say yes to the one that's truly important." — <strong>Tim Cook</strong>
+</blockquote>
+<blockquote>
+"It’s very difficult to replicate culture... because you have to hire the right people and then those people have to hire the right people... Apple is just in a party of one." — <strong>Tim Cook</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Well first of all, congratulations, 50 years, that's very cool. Yeah. a wise man once said Apple doesn't look for- doesn't look back, we look forward. That's right. but is there wisdom to be gleaned by taking a moment to contemplate this arc so far? Yeah, we think so. we don't look back as a part of our culture, as you know very well from- from your days watching us. so we've had to build a new muscle, honestly. it's something that we just don't do. We're always focused on the next thing and in improving something that exists today and, you know, trying to see around the corner and give people something they didn't know that they wanted and- and so it's been different, but I think it's of great value, as it turns out, to look back and feel grateful for the journey. To feel grateful for all of the characters that have been a part of that journey. to reflect on Steve and the principles that he laid out for the company that are still living today and- and so I think all of these things and a reminder of why we do it. That we do it to enrich other people's lives. You know, to empower them to do things they couldn't otherwise do, or they can change the world and we can celebrate them and do it all over again. And so I- I think there is value in it. And it's- but it's a new muscle for us. You had to block out time that wasn't originally in your schedule. That's right. so as I understand it, you have been here for more than half of the company's history. That's right, 28 years. Wow. Yeah, in a few days I'll celebrate the 28th anniversary. Nice. can you tell the folks the condition of the company when you arrived? Yeah, it was bleak, to be honest. the company was- had very little cash. we were still in the mode of making sure we could meet the payroll. the company had shrunk down to- basically 1.3, 1.4 billion dollars of revenue a quarter. And the company had shrunk its population down so there was- there was a small team. and we had lost our way. You know, the company had drifted without Steve. And Steve had come back and was reinvigorating the company and- he had a vision that was so unique at that time that he wanted to go after the consumer. Everybody else was going after the enterprise, if you remember that period of time. Everybody thought that was the thing to do. Steve was turning the exact opposite way and I thought it was brilliant. And- and so I- I jumped at the chance to join the company. And- but it was those days were difficult days. And it wasn't inevitable that the company would succeed. I was advised by the people that knew me best not to come. not to come. I was working at Compaq at the time, which was the largest personal computer company in the world. How ironic is that? Yeah. And- but I saw in Steve something I'd never seen in a CEO before. He had a passion for product that was so unique and refreshing. And he thought about the world in a very different way. And- I was taken in the first meeting with him and I wanted to throw caution to the wind and join despite the condition of the company. Wow. You threw caution and the advice of all your colleagues to the wind. I did. I did and it was the best decision I ever made. It- it fundamentally changed my life. And I don't mean because I'm CEO, but just working at Apple with the brilliant people here and feeling the energy and- really, really focusing on changing the world in some kind of positive way and making your contribution and- and that's what it's all about at the end of the day, you know, is improving other people's lot in life. And- and so it gave me great meaning. And I- you know reflecting, I was 38 at the time I think. I think I- had gone through that not really having a purpose in life until arriving at Apple. And- it was an incredible feeling and I've never looked back. Wow. Fantastic. you have shared- something really moving when Steve was dying. when Steve was dying he gave you some advice. Can you-? Yeah, he told me when he- he called me over to his house and- he told me he wanted me to be the CEO. And I debated with him a little bit and- and said &quot;Are you- are you sure you don't want to be CEO anymore?&quot; and he- I thought at the time that he would live a long time, honestly. He was going to be executive chairman and I was going to be CEO. And obviously it didn't turn out that way. but his- his advice to me was never ask what I would do, just do the right thing. And so he saw and he- he told me the story behind this, he was very close to Disney, as you know his history. He had watched Disney go through this paralysis of sitting around and talking about what Walt would do. And he did not want that for Apple. He wanted a professional transition at CEO because Apple had never had one before. There was always some issue that- that prompted the- a CEO change. It was always done at a time of panic. A- a panic. And- he wanted it to be a professional and- and orderly kind of transition. And- and he had thought about it as you would guess at a very deep level. And- and I'll never forget that. And I- it was such a gift for me- because he- he took off of my shoulder this question of what would Steve do? You know, a lot of other people ask that, although not so much in the company. but I never did. You know, I just put my head down and- and thought I'm going to be the best version of myself. But- but surely some of the principles and values that Steve had are the right thing to do. I mean, how- how do you know- when given that advice, how do you know when to stick with what Steve would have done and when to deviate? Well, the- his principles are the DNA of this company. 50 years after its inception and I hope a hundred years and 200 years into the future because they're so incredible. You know, he- he had the vision that the collaboration was something that would produce great results. That one plus one is equal to three, not two. That if you share an idea and debate it, it gets bigger and better. And if you care enough that you call somebody at 10 at night because you just had a- idea that, you know, that incredible things can come out of that. He had an idea of focus, that you say no to a thousand things to- to say yes to the one that's truly important. And that when you do something, you should do it at an excellence level that- is it where good isn't good enough. It has to be insanely great. And- and so all of these ideas and that Apple should own its hardware and software and later services, because it's the intersection of these things that produces magic for the user. He had the user at the center of everything. You know, he was always obsessed with the user experience and- and how customers would experience our- our products and what they could do with them. And so all of these things are the ethos of the company- today and- and when he was here and I'm sure- from the founding of the company, although that part of the history I don't know as well as you do. I mean, that's an interesting question. These- these throughlines have obsessed me. So knowing what you know, are there any values and principles in place today that date all the way back to the two Steves? Oh, I think a lot of this- I- a lot of the ideas about building something insanely great was there in the early days. The idea that you could put something out into the world and it would be amazing and wonderful for people to use. I think this dates back to the creation of the company. this idea that collaboration and bringing together people with different lens and different viewpoints on things and putting them in a rock tumbler and, you know, turning it and to see what comes out. I think that's the- that was the from the founding days of the company. And it's still the case today. You know, if you went into a meeting here, we argue and debate everything. but out of those meetings and out of those conversations comes better ideas, bigger ideas. And- so I- I think a lot of those date back to the origin of the company. But you've added some principles and values of your own. I mean the company seems more socially aware, inclusiveness, accessibility, education... Yeah, I think- you know, a- a company is a collection of people. And people should have values and therefore a company should have values. That's my simpleton view of the world. And so the things that we bring to the table are things like accessibility. We believe- we want everybody to be able to use our products. and so we design them from the start of if somebody's blind that they can use our product or if somebody's deaf, they can use our product. privacy. We think it's a fundamental human right. And so we design privacy into our products from the- from the get-go. We believe everybody should be treated with dignity and respect. And so we treat each other like that. We have a great trust in the way that we- we treat each other. And we treat our customers that way. We- we treat everyone that we come in contact with that way. We believe in education because for many of us, it was the great equalizer. You know, I come from a very- modest background and education was so critical in my trajectory, so- so critical. And so all of these things and our focus on the environment, our belief in sustainability and reducing carbon emissions, all of these things are a part of who we are as people. And- and they help guide our decision-making. I don't know if you've been reading the news, but- we are living in a very chaotic time with a lot of change. Does that make it any harder to maintain those values? No, I think it- in a lot of ways I think it makes it more important to have them. And so you can see your way in a- in a world that is, you know, dynamic and changing and- and so forth. And so I- I think it's critical to have a North Star. And, you know, you- you might get buffeted with the wind blowing and- and so forth, but you keep moving toward the North Star. And- that's the way I see it. Apparently whatever you're doing is working because by many metrics this company is now triple or quadruple the size and the profitability it was when you arrived as CEO. what are the pros and cons of being a huge company? Yeah, it's been a wild ride. it's been a wild ride. the- the pros are things, you know, we live to serve people products that enable them to- to do great things with them. And so as you get larger, you can do more of that. As you get larger, you can go in a few more categories of products. Not too many still, for our size we- we do very few things because we want to do it at the quality level that we- that we need. of course- - with the size comes scrutiny as well, and regulatory- regimes. In the early days there was no regulatory for tech. Now there is and that- I worry about that because it can slow innovation. Not all of it. There's some regulation that is good, but there's some that is- that are not. we have about a hundred thousand more team members versus 15 years ago. And with that comes great opportunity because you can touch a lot more people, you can do more things. but- but overall, I see it as a privilege. Overall, it is a privilege. So- so I want to talk a little bit about the future. So- what's in the next iPhone? Just kidding. What another throughline is our- the focus on secrecy. We're obsessed with staying secret about things we're working on. That's right. but are there times when you have time to think about the larger picture of the future of Apple and the future of technology? Yes, of course. a- a large part of what we do is focusing all on the future as we talked about. We're always trying to see around the corner and identify things before other people identify things and begin working on those. You know, in our- in our labs right now we're working on things for, you know, several years out. When you design your own silicon, you must do that. You must have the discipline to have a- have fairly long-term view given the- given the speed that technology runs at. --I saw an interview you did in 2015 and this is getting back to our conversation about Steve and how much Steveness is there. and at the time you said &quot;This really is still Steve's company.&quot; Would you still say that? Yes. He's very much- his DNA is deep in this company. And we revere him. And there's not a day that goes by that I don't think about him. Not about what he would be doing and what- the second-guessing kind of things. But just the- the fact that he- was had such great vision and such great principles that all this time later, that it still serves as the guide rails for a company like Apple. You know, his- his greatest, other than his family, his greatest invention wasn't a product, it was Apple itself. And- and I- it's a- it's a privilege to be here. But this is- you mentioned his ability to see around corners. This is what I don't get. There are so many times when he made decisions that seemed absolutely crazy at the time. And forgive me, there was even second-guessing in the press about his choosing you. You are the anti-Steve Jobs. You are not volatile and explosive, you know. And every time he was right. How does he do that? I don't know. He's a- a brilliant guy, he was a genius. He is- the- he is a once in a thousand years kind of person. He's- he's of that magnitude. And- and you know, I- I loved him. He was- in addition to being all of those things, he was a dear friend as well. And- yeah, I still- I miss him terribly. okay, one final thing. this is Silicon Valley, there's a lot of employee and executive shifting from company to company. How is it that nobody's studied what you do here or hired the people who used to be here and recreated this company's success? It's, you know, the secret of Apple: people and culture. Those are the two things that are so essential. Yes, we have a lot of intellectual property and so forth and that is important. But it's people that create that intellectual property. It's the culture that creates the innovation with the intellectual property. And- and so this- this culture is a- if you feed it and nurture it, it- it sustains itself and grows and evolves- but on the set of principles that he laid out probably from the very first day that he was in the garage. And- and so I- I think it's very difficult to replicate culture. And it's- because it- it takes a long time because you have to hire the right people and then those people have to hire the right people and you- you have to build a- com-, you know, a complete organization and you have to go through cycles where life is changing, the external world changes, and you've got to sustain during those cycles of change. The technology changes, it reach-, it has air pockets of technology where you can do something remarkably different all of a sudden. And so all of these things require a culture to learn and to be reinforced over years. And so I- I think Apple is such a unique place, it's not possible to replicate it. That's how I feel. I know a lot of different companies and I think Apple is, you know, just in a party of one. It's- it's remarkable enough that it's still here with the same mission of turning advanced technology into tools that... I mean, I- I note that Samsung started out as a dried fish vendor and Nokia was a paper mill. But Apple 50 years in is still Apple. Still building insanely great products that enrich people's lives. That is what it's about at the end of the day. Well put and congratulations on 50. Thank you. Thank you, man. So much... Thank you. There actually is no TV story, I just wanted to hang out.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-1">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=_rcniEb9bLw" target="_blank" rel="noopener">The most successful AI company you’ve never heard of | Qasar Younis</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/Wk7-4UW17JqDXgVWDiE7s1gJxDkt_UwNa2oNw8OYRwc9deiCv2V2fFAdNgByDi0K9AAF0YMj=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Lenny's Podcast</span><span class="channel-subs">(557.0K)</span></span>
+                        <span class="meta-sep">·</span><span>84:24</span>
+                        <span class="meta-sep">·</span><span>5.3K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-03-08</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Qasar Younis (Co-founder and CEO, Applied Intuition)</span> <span class="tag tag-person">Lenny Rachitsky (Host, Lenny's Podcast)</span></div>
+                </div>
+                <div class="tldr">Qasar Younis, CEO of the $15 billion company Applied Intuition, argues that the most profound impact of AI over the next decade will occur in physical industries like mining, farming, and construction rather than just digital software.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-1">TL;DR Qasar Younis, CEO of the $15 billion company Applied Intuition, argues that the most profound impact of AI over the next decade will occur in physical industries like mining, farming, and construction rather than just digital software. He advocates for a &quot;quiet&quot; approach...</div>
+                    <div class="summary-full" id="full-1">
+                        <p><strong>TL;DR</strong></p>
+<p>Qasar Younis, CEO of the $15 billion company Applied Intuition, argues that the most profound impact of AI over the next decade will occur in physical industries like mining, farming, and construction rather than just digital software. He advocates for a "quiet" approach to company building, prioritizing product mastery and radical pragmatism over public-facing hype.</p>
+<h3>The Future of Physical AI</h3>
+<ul>
+<li><strong>The Second Industrial Revolution:</strong> Younis views the AI boom as a parallel to the Industrial Revolution. While it brings societal shifts, it will ultimately lead to a significant decrease in net human suffering by solving "impossible" problems like cancer and providing universal access to mobility.</li>
+<li><strong>Targeting "Unsexy" Industries:</strong> The most immediate impact of AI (next 5–10 years) will be in sectors requiring heavy autonomy, such as farming, mining, and construction.</li>
+<ul>
+<ul>
+<li><strong>Demographic Crisis:</strong> The average age of a farmer is in the late 50s. AI is "coming just in time" to fill labor gaps in industries where populations are declining or people no longer wish to perform dangerous work.</li>
+</ul>
+</ul>
+<li><strong>Levels of Autonomy:</strong> Younis predicts that within 5–7 years, "L2++" autonomy (like Tesla’s FSD) will be ubiquitous and nearly free in every new vehicle globally, fundamentally changing how society views transit safety.</li>
+</ul>
+<h3>Managing AI Anxiety and Public Perception</h3>
+<ul>
+<li><strong>Fear via Misunderstanding:</strong> Younis posits that anxiety about AI "overlords" stems from a lack of technical understanding. He encourages people to learn the technology to see its current limitations (e.g., AI struggling to understand the orientation of a cup).</li>
+<li><strong>The Safety Imperative:</strong> In the US alone, over 30,000 people die annually in car accidents. Younis argues that while society fears robots, we have become "numb" to the massive, preventable death toll caused by human drivers.</li>
+<li><strong>Market Volatility vs. Reality:</strong> He notes that recent stock market sell-offs in tech are driven by "high finance" investors who see AI-generated prototypes and assume billion-dollar companies can be replaced in weeks. He considers this a misunderstanding of the "depth" and integration required for enterprise software.</li>
+</ul>
+<h3>The Applied Intuition Playbook: "Radical Pragmatism"</h3>
+<ul>
+<li><strong>Building in Silence:</strong> Unlike many Silicon Valley founders, Younis intentionally kept Applied Intuition "under the radar" for nearly a decade. </li>
+<ul>
+<ul>
+<li><strong>Focus:</strong> "Our best work is done alone and quietly." Every minute spent on public consumption is a minute not spent on customers or products.</li>
+</ul>
+</ul>
+<li><strong>Operational Discipline:</strong> Despite its $15 billion valuation and 1,000+ engineers, the company has famously never spent the capital it has raised, operating as a self-sustaining business.</li>
+<li><strong>The "Cleaning Zen" Culture:</strong> Influenced by Japanese schools, employees clean their own office spaces. This reflects an ethos where "no one is above the work," connecting cleanliness to well-written, hygienic code.</li>
+<li><strong>Key Operating Principles:</strong></li>
+<ul>
+<ul>
+<li><strong>Move speed above everything.</strong></li>
+<li><strong>Never disappoint the customer.</strong></li>
+<li><strong>Laugh a lot:</strong> Humor is used as a tool for grounding and providing subtle, high-quality feedback.</li>
+</ul>
+</ul>
+</ul>
+<h3>Global Competition and the "China Threat"</h3>
+<ul>
+<li><strong>State vs. Market:</strong> Younis warns against "apples-to-apples" comparisons between US and Chinese companies.</li>
+<ul>
+<ul>
+<li><strong>Huawei Example:</strong> Roughly 25% of Huawei employees are Communist Party members; the company is an extension of the state ("China’s Ambition") rather than a profit-maximizing entity.</li>
+</ul>
+</ul>
+<li><strong>EV Market Disconnect:</strong> He notes that Chinese EV companies are lauded for their tech but often don't have to worry about the profit margins that "hammer" US companies like Rivian. If US companies didn't have to answer to private markets, their "fielded products" would be equally impressive.</li>
+</ul>
+<h3>Philosophy for Founders</h3>
+<ul>
+<li><strong>The Muscle of Founding:</strong> Younis notes that his third company is his most successful. He advises founders to treat their first few years as a "zero" and focus on building the "muscle" of the craft rather than expecting immediate success.</li>
+<li><strong>The "Old Book" Heuristic:</strong> To build "taste" and judgment, Younis avoids new releases and primarily reads old, time-filtered books (e.g., *The Autobiography of Malcolm X*, *Guns, Germs, and Steel*, and Sam Walton’s *Made in America*).</li>
+<li><strong>Early Traction:</strong> He maintains that successful companies almost always show market traction early. If a founder hasn't found product-market fit after two years, they should consider a "hard reset" of the foundation.</li>
+</ul>
+<blockquote>
+"Our best work is done alone and quietly. Every minute you're writing something for public consumption, you're not focusing your very limited time that you have on your customers and your product." — <strong>Qasar Younis</strong>
+</blockquote>
+<blockquote>
+"The core root of fear is misunderstanding. If you at home are very anxious about AI, the best thing that you can do is spend time to understand it, and you will quickly see the limitations." — <strong>Qasar Younis</strong>
+</blockquote>
+<blockquote>
+"A man who cannot command himself is not fit to command others. That maintenance aspect is a part of that... if you maintain yourself and your own work, the products are almost a result of that system." — <strong>Qasar Younis</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-1">
+                        You decided to join Twitter recently and put out your first tweet. Marc Andreessen quote-tweeted it and said: &quot;This is the best AI CEO nobody knows! Follow for free alpha.&quot; Our best work is done alone and quietly. Every minute you're writing something for public consumption, you're not focusing your very limited time that you have on your customers and your product.
+
+You're building a lot of the future that we're going to be living in. What does the next couple of years look like? Us solving some of these impossible problems, like cancer, are directly going to be related to this AI boom. Net suffering in humanity, overall, should go down significantly. 
+
+A thread that has emerged on this podcast is that AI is coming just in time to save us. The real impact of AI in the next 5 to 10 years really is going to be in farming, mining, and construction. These industries need autonomy, and it couldn't come soon enough. If you look at farmers, the average age of a farmer is in their late 50s. What does that mean in 10 years from now? 
+
+There's a lot of anxiety about what AI is going to do to the world. The core root of fear is misunderstanding. If you at home are very anxious about AI, the best thing that you can do is spend time to understand it. And you will quickly see the limitations. Get to know it and then actively make the technology be used for good. 
+
+Today my guest is Qasar Younis, co-founder and CEO of Applied Intuition. You have probably never heard of Qasar or Applied Intuition. This is the most important, under-the-radar AI company and CEO that I've ever come across. It's a $15 billion company that has been growing quietly over the last decade. 
+
+What they do is they add AI to vehicles like cars, tractors, planes, submarines, mining rigs, and a lot more. 18 of the top 20 automakers are customers, as well as the biggest global construction, mining, and trucking companies. Also, the Department of Defense. They're basically Waymo or Tesla, but without the hardware. 
+
+Qasar himself was born on a farm in Pakistan, grew up in Detroit, and started his career as an engineer at GM and then at Bosch. He then went on to start a couple of companies before starting Applied Intuition. I love everything about this episode and I am so excited to bring it to you. 
+
+Don't forget to check out lennysproductpass.com for an incredible set of deals available exclusively to Lenny's newsletter subscribers. Let's get into it after a short word from our wonderful sponsors. This episode is brought to you by Omni. Many product teams today are in the process of debating how to ship AI analytics. 
+
+The hard part is obvious. Having an LLM guess at SQL in production is a huge mess and just a bad idea. Omni takes a different approach. They have a semantic layer built in, so that when you embed their analytics, the AI actually knows your business definitions, not just your raw tables. 
+
+You can test queries, validate the reasoning, and lock down permissions before anything hits production. If you want AI analytics in your product without building the whole stack from scratch, check out omni.co/lenny for a free three-week trial. Companies like Perplexity, dbt Labs, and BuzzFeed use Omni to ship analytics their customers can trust. That's O-M-N-I dot C-O slash L-E-N-N-Y.
+
+My podcast guests and I love talking about craft, and taste, and agency, and product-market fit. You know what we don't love talking about? SOC 2. That's where Vanta comes in. Vanta helps companies of all sizes get compliant fast and stay that way with industry-leading AI automation and continuous monitoring. 
+
+Whether you're a startup tackling your first SOC 2 or ISO 27001 compliance, or an enterprise managing vendor risk, Vanta's trust management platform makes it quicker, easier, and more scalable. Vanta also helps you complete security questionnaires up to five times faster, so that you can win bigger deals sooner. 
+
+The result? According to a recent IDC study, Vanta customers slashed over five hundred thousand dollars a year and are three times more productive. Establishing trust isn't optional. Vanta makes it automatic. Get $1,000 off Vanta at vanta.com/lenny.
+
+Qasar, thank you so much for being here. Welcome to the podcast. Thanks for having me. You're basically building a lot of the future that we're going to be living in and people may not even realize this. And the kind of... there's two sides to this. On the one side, let me ask you this question: If things go really well, what does the next couple years look like for people with the emergence of AI, with physical AI? What's a vision of the future? 
+
+Let me take the broader AI point and then the more specific one on physical AI. Macro, I think... think about this like the Industrial Revolution, right? So if you're sitting let's say in the late 1800s, there's a lot of... you know, we can focus on a lot of bad things that happened because of the Industrial Revolution, right? 
+
+You have child labor, and you have monopolies emerging, and you have abuse of... you know, wars end up happening. But there's also its almost unimaginable present without the values and without the... kind of benefits we got out of the Industrial Revolution which is broader access to healthcare like we've never seen before, access to goods, material goods, things like we take for granted like heating and cooling your home. 
+
+There's this great YouTube kind of channel that focuses on POW letters from Germans who are seeing America in the early 40s. They're writing letters back to Germany about what they're seeing as they're basically, you know, prisoners of war. And they're kind of blown away that the towns that they roll by in these trains as they're going to their POW camps are all lit up, or that there's cars everywhere. 
+
+80% of German towns in World War II did not have electricity and that's kind of a mind-bending kind of thing because we just assume all this stuff, all this technology is, you know, equally distributed. So the positive version is these things that we, let's say, folks who are wealthy or folks who have access to technology, these things everybody has access to. 
+
+The fact of simply having somebody who is a coach to you and having that coach very specifically to you, not a generic, you know, ChatGPT that's giving fairly generic answers, that's a very powerful thing. I think us solving some of these impossible problems like cancer are directly going to be related to this AI boom. 
+
+So I think net suffering in humanity, I think just like the Industrial Revolution, overall, should go down and go down significantly. And I'm a fundamental optimist in that view that technology will bring that... that positivity. In physical AI specifically, again, you know, when you have things like your... you have your own car and you have the ability to have your limbs and you have your senses and you can drive, you take these kind of things for granted. 
+
+You jump in your car and you go to the store. For somebody who maybe is disabled or somebody who doesn't have the money to afford a vehicle, access to mobility that's nearly free, or is free, is a big deal. And that simple example of making self-driving cars free for everybody and how that would change the planet—you live in Rwanda and you are two hours from the nearest hospital, that matters in a very, very true way. 
+
+And so I think a lot of let's say the negativity around AI comes from people who, frankly speaking, are living in a very, very good existence. And when you live on the other edge of society, yes, and I'm not like some naive person who thinks that there's no downsides of technology, we can discuss that, but I just see there's a lot more positivity. 
+
+So when you ask that question what's the next... forget 3 to 5 years, what's the next 20 years, these things that we take for granted that are bad, suddenly are not there. And I think certain diseases, certain accessibility to basic, you know, services, suddenly start going away. One last example of that is you take just the fact that you can message people basically for free. 
+
+You know, for people old enough, like this is not the norm. We came from Pakistan, we couldn't even communicate back to Pakistan because the long distance was so expensive and so it was hand-written letters. Today you can basically contact anybody on the planet basically for free. There's obvious downsides for that, but there's lots of upsides for that which is being in touch with people that you care about and you love basically for free. 
+
+And so I think AI has the ability to bring this abundance to many, many more people at a near free cost. On the flip side of this, as you pointed out, there's a lot of... there's a lot of anxiety about what AI is going to do to the world, to jobs, robots, they're like these videos coming out of China with these robots with nunchucks, like the stock market... 
+
+I feel, you know what, I feel the nunchuck union is up at arms right now. How dare they! Yeah, but it's, you know, it's scary and the, you know, market's reacting more and more to just like oh wow, these companies are maybe not going to survive long term. Again, being at the center of this and building a lot of the stuff that'll get us there, how do you envision that couple years playing out? 
+
+Like are you optimistic? What keeps you optimistic? Any advice to people to help them kind of stay, you know, calm through this period? Those are two separate things: anxiety around technical shift and then the public investors reacting to specific stocks they've held. We have to separate those things. So let's talk about them separately. 
+
+On the first one, you know, the core root of fear is misunderstanding. I think if you at home are very anxious about the impact of AI in some variant on your own job, the best thing that you can do is spend time to understand it and you will quickly see the limitations. There's some great videos on YouTube which are like, you know, trying to get Gemini to understand what a cup is by just holding it upside down and it like really struggled and then they do it with, you know, ChatGPT. 
+
+So it's like if the revolution is coming, you know, the AI overlords have to first understand like the top and bottom of a cup. And so you realize that you can see the video of nunchuck-wielding humanoids which are pre-programmed and they cost $15 million to do that video. Yeah, that is true, it's not fake, I'm not implying it's fake, but it's also not what your brain kind of fills in the gaps. 
+
+You see nunchuck robots and you just feel like well the gap... these are sentient beings that are at their own volition going, rather than it's a bunch of motors that have been programmed to do a certain thing. If you really want to be impressed you go to a car factory and we've been doing that for 25 years where you have very, very advanced robots moving extremely fast to build things. 
+
+And why we don't have anxiety about the car factory, but we have anxiety about the nunchuck robots is because the human being doesn't... like that gap, we understand the gap of a welding robot. You see oh okay, that's a robot it's been programmed to make this weld, but we don't know the technology... we as just an individual human being living in the world, you don't know how that robot was made to do that nunchuck thing and so you substitute that with anxiety and fear. 
+
+And so I would really implore you to you know, kind of learn more about the technology and you start seeing the edges. Now does that take away from the most fundamental thing that you're getting at, the string that you're pulling at, which is like is society going to be fundamentally harmed and is this, you know, net-net bad for society? 
+
+I think in any technical shift, the emergence of WhatsApp, just as an example, there are people who are damaged by that. Literally companies that go away, but also humans who are damaged by the advent of that technology. And so I think as members of society and as leaders in society, we can move that funnel in whichever way. 
+
+Technology for... remove the word AI, AI is such a like emotional word because it's wrapped in these things you don't know and so that fear then kind of deforms... so let's just say technology. You know, so I think it's up to us to recognize this technology can be used for good and technology can be used for bad. And I think that's where really the focus is: so get to know it and then actively make the technology be used for good, as a participant whether you're a founder or all the way as as an individual, you know, employee or citizen of a large company. 
+
+Then on the second part of the question about, you know, public investors and stuff, this is my... I don't have any, you know, particular research on this, but this is what my guess is what's actually happened. Beyond being an engineer, which is my core identity for the lack of a better word, I also did an MBA at Harvard. 
+
+And so that was the first time that this let's say... I didn't come from very, you know, kind of wealthy upbringings and so the first time when I went to Harvard I saw like, you know, that world, that world of people having like private jets and stuff. It was really eye-opening experience for me, but the real world I was exposed to was high finance and how high finance works. 
+
+And you might think, as I did from far away, that folks at hedge funds or at large, you know, public equities funds are extremely nuanced and thoughtful and they are like, you know, on whiteboards with extremely deep and maybe even theoretical math to figure out should they buy or sell, you know, Figma, and that's not actually how it works. 
+
+I mean really what these folks are is—in this particular case I think what's happening is they buy and sell stock. They are smart people and they do work hard, it's not to take that away, but they don't have a fundamental edge that you would assume that somebody who sits in a skyscraper in New York has. And by the way, that's why retail investors have become such an active and kind of significant part of the market. 
+
+So those folks have gone to AI consultants and have gone to people who are literally developers at these firms and they'll do something like &quot;hey why don't you build me this app in a week.&quot; And then, you know, this consultancy will come back with an app which kind of looks like maybe a Figma or another, you know, some some web app. 
+
+And said hedge fund manager, they're like well... and then, you know, if the company was sitting there they would say no no, this just looks like my app but this is actually not my app, it's not as deep, it doesn't have all these things, the integrations with all these other other systems. But for the public investor they're like &quot;yeah, but it only took like a few weeks or a month to build this, it took you 500 engineers a couple of years.&quot; 
+
+This AI thing could be real and the things I'm reading on X about like just vibe coding your way to replace, you know, billion-dollar companies, that might be the case and the market immediately prices in that risk and that's where that sell-off comes from. That doesn't necessarily mean all of those... I mean just within the last 24 hours I had a... I can't say his name but like a very let's say calibrated investor who said this is the time to buy because these companies are not actually going away. 
+
+And so I think those are two very... anxiety within society and the sell-off are two very different things. They're motivated by different things. They're part of the larger AI narrative, but I wouldn't conflate those two things. It's not that the hedge fund investor is like &quot;I'm worried about society, sell-off now.&quot; Like it's different than that, at least that's my impression. 
+
+This is the alpha we've been talking about, time to buy, this is not investment advice. But that's really good advice. I think the real advice is to fight fear and I feel that anxiety especially when I go to Michigan and outside of people in the Silicon Valley bubble. It's like just try to learn a little bit about the technology that you're afraid of and you'll start seeing some of the edges. 
+
+I love your point about how self-driving cars are essentially robots; we don't call them that but they're robots. Absolutely. And you see a nunchuck-wielding robot... a self-driving car doing bad things could be very dangerous already. And so that's a really good reframe that if you just think of it as just another robot, it's been really good for us. 
+
+And by the way, the self-driving thing as an example, you know, whichever way you slice the statistics that are available from self-driving companies, they're supremely, supremely more safe than human drivers. And I do believe in 20 or 30 years, not that much longer, we'll look back and we'll kind of be like... it's kind of like we think about child labor. 
+
+You know, in the post-Industrial Revolution that was a normal thing. You would send kids who are in middle school to go work. It happens in third-world countries today, there isn't a lot of emotion behind it, it is not considered to be exploitative because you have no choice. You know, everyone's just... and I think we'll look back in 25-30 years and be like, people would just be tired, under the influence, after like an extremely stressed, dramatic life experience and then they jump into a car. 
+
+Like that... that's... it is crazy. And just for everyone, everyone should really emotionally think about just in the United States over 30,000 people will die in the next year from these accidents. That... like the old Stalin line: &quot;One death is a tragedy, a million is a statistic.&quot; And we just let the statistic kind of go over our head like oh it's 30,000 people, but if you've ever talked to a family of somebody who went through a tragedy like a car accident, it is unbelievable. 
+
+And you suddenly all the fear of AI robots goes away and you really see that human impact and you realize like actually us driving doesn't make sense and it's not for any other reason than literally people die. I've become a huge... I have a Tesla and the self... I just use self-drive all the time now. Just like a few months ago it got very good and it used to be nerve-wracking and now it's like wow, this is much better than I am. 
+
+And you're doing... you're not using... you're not doing driving as a job. Imagine if you're a commercial truck driver or you work in a mine or you work, you know... like there, a little bit of intelligence, a helping hand in that very dangerous task is incredible. And I think there's something about the human brain where you know when you bring up that reality of like self-driving trucks, immediately people are like &quot;well what about the trucking jobs?&quot; 
+
+Now needless to say we don't have enough people who want to do that job. So leave that fact to the side. I think the fact that you really focus on is the fact that people die from trucking accidents. Like we can't throw out the baby with the bathwater. And so I think I implore everybody you know who thinks about AI broadly and physical AI specifically to always recognize that your monkey brain is programmed because of thousands of years of living out in the wild. 
+
+Hundreds of thousands of years of living out in the wild and being in the cave that when you hear the rustle in the bush, you think it's a snake because that's what our ancestors were programmed. So now when something new enters our psyche, your view isn't &quot;well if mines became autonomous, well wouldn't that lose jobs?&quot; It's like those are awful jobs that people die in. 
+
+And the best evidence is that people don't want to work in them. Like that's the best evidence. Like nobody's clamoring to go work in a mine in a remote area. And so intelligence can help make that reality much, much better. People are seeing AI advance in all these different ways on the software side. You know they see all these models being released, AI's going driving 100% of people's code now. 
+
+What's really cool about you is you see the hardware side of this and I think one of the biggest changes to our lives will probably be robots walking around doing things for us. Do you have a sense of just how close we are to just robots around us day to day? So I would think about this... the framing here matters again, of being on a spectrum. 
+
+There are robots around us like Roombas, you know, like they clean your carpet while you're sleeping. There's robots around you when you make a coffee—that's an automated machine that is taking an input and doing a bunch of things based on what you know what you need. So what you're really talking about is how fast can we go up that spectrum to where you have a robot that can take on lots of tasks with little guidance. 
+
+And the way that I would think about this is let's say we're sitting in... this podcast is happening not in 2026, but 2006. And you're asking me the same question about mobile and you say mobile is coming—this is remember pre-iPhone, which comes out in '07. Everyone's got those flip phones, so we have some mobile, it's not like a completely... so we have some robots around us already. 
+
+But like it's like okay so when are we going to... and you ask me in 2006 well when are we going to get that Star Trek phone that can do everything. And I think at that time I would say, because I don't even know the iPhone is coming a year later, I would say well Lenny I don't know, maybe it's 1 to 5 years. And if it's not 5 years later that Uber, WhatsApp, Instagram, and Snapchat are all products being consumed by many, many, many millions of people. 
+
+So what happens when you think about sitting in 2006 and why can't your brain figure out that Instagram is coming? Well, Instagram is very hard to even conceive without phones that have an app store, have cameras on both sides, are generally available that lots of people have it, and the fact that people are comfortable being on social networks. 
+
+In 2006 it's still an early thing, this is pre-Twitter and Facebook is not that big. MySpace is but it's not the same type of private kind of communication. And so the point I'm making is I think it can come pretty fast, but the way and the form factor it'll come is hard to pick just like it's hard to figure out Instagram's going to happen because the intelligence in that particular type of hardware which will be generally available—that's a key word, generally available—is really going to impact the use cases. 
+
+So I think like the most obvious use cases that will come early are going to be use cases where you get the most amount of bang for buck. And the bang for buck is a car that drives itself, or a mining robot which is a mining vehicle which is now intelligent. And the reason is all that you know let's say engineering required to make this giant machine that moves dirt has already been done. 
+
+It's been done over the last you know 50-60 years. So then you're just inputting a little bit of intelligence into it and then leveraging everything else that the companies and kind of people have developed. So I think—and I'm not just you know pitching my own book, I mean we're a physical AI company—I continue to believe that our brain emotionally loves the humanoid concept because we're monkeys. 
+
+But actually just like more pragmatically, it's actually just putting intelligence into things that already exist all around us. And I think and then once that happens, then new applications will emerge which I think we'll talk about in 5 to 7 years which we'll start seeing... so let's just move forward 5 to 7 years and let's see what reality exists and then maybe we can try to jump into the future from there. 
+
+I think generally speaking every single car company on the planet right now is working on a product that's like a Tesla FSD product. Every single car company, there without exception. Many, many companies are working in versions of that that will become fully autonomous within a cheap sensor suite. So the fundamental difference just to simplify it all, the Tesla approach versus the Waymo approach, just to really keep it simple. 
+
+The Waymo approach is lots of sensors and lots of compute and maps, and the Tesla version is very few sensors, no maps—no high-fidelity maps, I'm just generalizing here—and cheaper compute for the lack of a better word. And the Tesla version of a product, this is in the industry is called an L2++ product, is going to be available everywhere because it's literally cheaper and it doesn't require like HD maps. 
+
+The Waymo product functions better in a geographically constrained area. So you fast-forward 5 years, both of these types of technologies will be much more ubiquitous. L2++ and L4 will be much more ubiquitous, not only in the Bay Area or in parts of China but really globally. There are companies working on this globally. 
+
+So now, I don't know if you remember, but nav systems used to be a big deal in cars. You would pay thousands of dollars and nav systems were kind of the thing that everybody wanted. We're at that moment for L2++ systems where people are willing to pay thousands of dollars for a semi-automated vehicle. 
+
+It will not be a long time—you're already seeing this happen in China—where the downward pricing pressure for that autonomous product for the lack of a better word will become close to free. So now you fast forward 5 to 7 years and every car has some level of autonomy. So now you have to mentally live in that reality that everybody who's buying a car, they just get FSD with it. 
+
+Now you start seeing a different world because now average person isn't wondering &quot;is self-driving going to come,&quot; they use it all the time. They don't wonder... and so what you have in nav systems is a CarPlay emerges, and Android Auto emerges, and it's very natural. People are like &quot;oh I have my phone, I just plug it in&quot; and it wasn't a big revolution, but the CarPlay and Android Auto revolution is actually huge. 
+
+It brings free navigation and free applications to your car and it's fairly ubiquitous. And so I think the next thing that happens in 5 to 7 years is then full autonomy becomes the thing that everyone expects. And so I think and all of that and you will see a clear decrease in injuries and death because of that, because you have some intelligence helping you drive this. 
+
+Now again I'm using the consumer vehicle analogies just so people can understand it, but this is the same in construction, it's the same in mining, it's the same in defense. In every one of these verticals there's these big physical machines that humans are interacting with that teaming up with that machine is the future. 
+
+The productivity unlock from just you looking at a machine not like a sentient being but but almost like a physical agent of something you're trying to accomplish unlocks things that I think are very hard to think about. So I love you know you know things like MoteBook and I love the, let's say, open Claude revolution that's happening for the lack of a better word, but I think the big impact that's still such a small part of society. 
+
+My barometer of impact is like you go to Detroit airport and you sit in a gate and you look around and you're like how many people here are using Open Claude. And it's like let me like... like you might be the only person who knows what that is. And whereas everybody they're living their lives, and so to them actually the impact of AI is going to be in this physical physical world. 
+
+I see you also have a... yeah there you go perfect. Lobster claws. Yeah so I think the real impact of AI in the next 5 to 10 years really is going to be in farming, in mining, in construction, in self-driving trucks. That's where you're going to have a real impact. Though I think, I mean I love this stuff that's happening on these platforms, but it's still segregated to like frankly developers and some small, very, very small part of society. 
+
+I wasn't planning to spend so much time here but this is extremely interesting and I think it's important for people to hear from folks like you about where things are heading because as I said everyone is just like &quot;what is happening, what is going to be my future.&quot; The jobs piece is really interesting and you have a thread that has emerged on this podcast recently is that like people are afraid AI will take their jobs, but in reality AI is coming just in time to save us. 
+
+Populations are declining, people are aging, and we need something to help us there. I know this is something Marc talked about and you're really close with them, help us feel better about just how AI isn't going to take our jobs and actually going to save us. Yeah I think honestly speaking these industries, they need autonomy. I mean and it couldn't come soon enough frankly speaking. 
+
+This is not like people are not fighting for those trucking jobs. If you look at farmers, the average age of a farmer is in their late 50s, 58 or so. What does that mean in 10 years from now? That means many of those farmers are going to be retiring if they're not already retired. And 20 years we have even a bigger problem. 
+
+That by the way is every vertical is like that. And I you know my hypothesis here by the way on like sometimes people say like oh you know McDonalds can't hire or like the local quarry can't hire and where are all the people. The people are still here. I think they just the trade-off is just not worth it anymore. 
+
+In the 1980s, in the 1990s, doing the long-haul trucking job was what the family has to sacrifice, the father not being there for days and weeks on end. And today that same working class family can make that decision and say &quot;you know what I will drive for Uber or DoorDash.&quot; And I'm willing to do that because I can turn that app off and pick up my kid and I prioritize that. 
+
+That is where I think this intelligence revolution in the real world is really I think is going to fill those gaps in, rather than like an entire industry suddenly gone and it's just automated. I don't believe that future, mainly because the realities of actually replacing an entire industry with robots is still that's too complex. One day it will happen, but it's not happening anytime soon. 
+
+But the entire society will be different by that point. And I think again use the Industrial Revolution as a good version of that. The earlier question if I'm somebody who is not in the AI ecosystem and I have this anxiety and how would I... reading history books is a great way to really understand how society deals with this. 
+
+And there's a lot of literature because Industrial Revolution doesn't happen like you know in the dawn of Christianity where not many people are writing and not many people are reading. Lots of people are writing, lots of people are reading in the last 150 years and you can read both the people who are impacted by the Industrial Revolution, people who are benefiting, and by and large it's a very positive experience. 
+
+That doesn't mean there are downsides; we should mitigate the downsides. But the thing that we can't do—and this is maybe specifically as America or society as a global population as a whole—there's this impetus to say like we got to pump this brake on... again don't say AI, say technology. Pump this brake on technology. 
+
+The issue then is the American economy really ends up stuttering and that impacts the lowest end of the labor market way more than anybody else. And so in the attempt to help the people who are the most marginalized, we actually hurt them the most. And the reality is very, very fundamental: in a future that does not take care of the average worker and the average person in America, we'll have much bigger problems. 
+
+So we need a solution that takes that into account. But that solution isn't just pump the brakes, AI is bad or frontier technology is bad or technology is bad or whatever thing that you you don't like. I think that'll have really, really bad consequences. One of the reasons that we don't pump the brakes is just fear of China and competition with China, the nunchuck robots being a recent example of oh shit. 
+
+And I know you have kind of a contrary take on just how much of a threat China is and how they're approaching things. The summary version of this is I think the way we recently read as a company, we read this book &quot;House of Huawei&quot; which is just a really great, interesting book. And Huawei's a really amazing company for the reason that it makes great technology. 
+
+But the couple hundred thousand people that work at Huawei, about a quarter of them are members of the Communist Party and Huawei's goal is not to grow profits or shareholders. It's a private company, it's really an extension of the state. I mean literally the name Huawei means &quot;China's Ambition&quot;. So imagine if you had a company called MAGA and half of the company or a quarter of the company was a certain political party. 
+
+And they said our goal isn't to make profits or to... our goal is just the expansion of it's not even a company anymore. It's something else, right? And so I think we incorrectly, when we specifically speak of Americans, we think about China we impart our understanding of markets and companies onto China. So we think Huawei since they make phones they must be just like Apple. 
+
+It's like no no no, actually they're not like Apple at all. And so I think the first thing I would implore everybody who thinks about China, especially with anxiety in America is: you're not comparing companies to companies. These are not apples to apples, this is very, very different. 
+
+And so imagine instead of thinking OpenAI is competing against DeepSeek, you say OpenAI is competing against the Chinese government. Instead of Apple competing against Huawei, Apple's competing against the Chinese government. And you can even remove the word Chinese government, &quot;government&quot; is the best word to define what this organization is. 
+
+But it's not a for-profit, privately owned, independent group of people who are working on projects together to build products to market. So that's the first very important thing. You cannot treat China like another America, or another Europe, or another whatever. Number two is if your goal isn't to make profits, you can do incredible research and it can be extremely compelling. 
+
+But like we've seen, if the system is not sustainable, that's also not a company and that's not sustainable. Let me give a very stark example of that. Chinese EVs are really lauded as being this exceptionally interesting product, right? And you constantly get the streamer of I would say fairly shallow analysis which says &quot;look how good China is and look how bad the home team is.&quot; 
+
+Munich, Detroit, Tokyo, Seoul are the other epicenters for automotive globally. There is a Chinese EV-like company in America, it's called Rivian. Makes great products, but they lose a lot of money making those products and therefore the company is not very highly valued. I think if you said top 50 or top 100 companies in the Bay Area, I'm not sure Rivian would even make that list. 
+
+And it's not that the products are bad or the people at Rivian are incompetent or they're not working hard, it's just the business is a tough business. The EV business in automotive is a tough business. So how can we hold these realities so we say look how amazing these Chinese EV companies are and look how bad the home team is? 
+
+It's just because the home team is being assessed for being a business. It has to make profits. And because it doesn't, it gets hammered by public investors. The other thing is not even a company. Now let's say if we do apples to apples, you say America just has to build great EVs—that means Tesla and everybody else combined and we don't care about profits—I think America would field some very good products. 
+
+And they would be &quot;wow&quot; products. So the comparisons are really, really off and I think that creates a misunderstanding. I think you know then the maybe the most philosophical question: Can China succeed and does that mean America has to fail or vice-versa? If you believe in open and free markets, you believe everybody can succeed in those markets and that's been proven for over 100 years. 
+
+And I think what we're experiencing right now is how does China play in that ecosystem because I said open and free markets and those are not open and free markets. But that doesn't necessarily mean that you have to have an antagonistic relationship, it certainly doesn't mean that China is incompetent, and it certainly doesn't mean that it doesn't warrant our attention and our focus. 
+
+But it's also not a one-to-one comparison. I think we should be very careful in implying it's a one-to-one comparison. And by the way, that like 5-minute explanation is never going to get to the average person sitting at an airport in Detroit, Michigan waiting for their flight. They just... all they consume is &quot;China bad&quot;. Like it's like that's not... it's not like that, it's not that simple, it's way more nuanced.
+
+This episode is brought to you by Lovable. Not only are they the fastest growing company in history, I use it regularly and I could not recommend it more highly. If you've ever had an idea for an app but didn't know where to start, Lovable is for you. Lovable lets you build working apps and websites by simply chatting with AI. 
+
+Then you can customize it, add automations, and deploy it to a live domain. It's perfect for marketers spinning up tools, product managers prototyping new ideas, and founders launching their next business. Unlike no-code tools, Lovable isn't about static pages. It builds full apps with real functionality. And it's fast. 
+
+What used to take weeks, months, or years, you can now do over a weekend. So if you've been sitting on an idea, now is the time to bring it to life. Get started for free at lovable.dev. That's L-O-V-A-B-L-E dot D-E-V. 
+
+So you decided to join Twitter recently and put out your first tweet. Your first tweet was just like &quot;Hello, I'm going to start tweeting&quot;. That tweet got like 2 million views. Elon replied to you. Marc Andreessen quote-tweeted it and said: &quot;This is the best AI CEO nobody knows! Follow for free alpha.&quot; 
+
+Elad Gil, famed investor, describes you as the most successful, most quiet company in AI. And to me this is really interesting because most founders are told build in public, build a following, be loud, get out there, talk all the time about what you're doing. You did the opposite; you're very under the radar, stayed quiet, build, build, build, and then decided later okay now it's time to talk about our story. 
+
+So I think this counter-narrative is really interesting and I think will inspire a lot of founders to not feel like they have to do this. What was your philosophy of just staying quiet and then starting to? Yeah it's a great point. So number one, it was intentional and I think if it was up to me we would do that forever. 
+
+I think we're very much inspired by folks more like a Berkshire Hathaway and less like you know a Silicon Valley darling. And the... I'll tell why I changed the views and then... but before some founders go and take that advice immediately without without really thinking about it. I can do that because I'm known in the ecosystem. 
+
+I know these folks personally and so I don't need to have a brand out there that is getting Elad to remember me and think about me. And so if you're you know... my first two companies were a lot less known before I really became a YC. So you know all of our company values can be reduced to these two words of radical pragmatism. 
+
+Before you take the advice, make sure it applies to your situation. One of the reasons Naval, who's one of our investors and a friend, says you know fame itself is like a tool and it's powerful. Now if you don't have a network and you can get a following, that's a fantastic way to recruit people to your company, to recruit investors to your mission, and then of course, customers. 
+
+But for us, I think that wasn't a hard requirement 10 plus years ago. The other thing is I think Peter and I... you know the old saying about life is kind of like you do things and then you rationalize the thing that you do, right? So I think fundamentally Peter and I, my co-founder Peter Ludwig, we don't get a lot of emotional satisfaction out of doing very public things. 
+
+And I think if I were really to play armchair psychologist and really try to get to the root of why, beyond the rational view which is: focus on your customers, focus on the product. Every minute you're doing a podcast, every minute you're doing an X post, every minute you're writing something for public consumption, you're not focusing your very limited time that you have on your customers and your product and ultimately that's the only thing that's going to produce and yield results. 
+
+But the reality of the situation today of 2026 is even a company like us that's known or someone like me who's known in the ecosystem, you still want to get that broader message out and that's what I talk a little bit about on X. So it is definitely contrarian but it's not just contrarian for contrarian's sake. It plays a little bit of our own psychology. 
+
+And then I would say just to finish that thought, I grew up as an immigrant. I came to the US from Pakistan when I was a kid, have a little bit of a weird name, and you feel like anybody I grew up in Detroit, in Warren, Michigan specifically for all those at home. And when you feel that you're a little bit on the edge of society or you're not maybe in the mainstream—and this resonates with some people, it doesn't necessarily resonate with everybody—you feel very skeptical of the mainstream. 
+
+Because you're just on the outside for so long. And I think you can trace a bunch of founders' psychology to this feeling of being an outcast actually. And so then you find yourself in a situation where you're like the YC COO, and the narrative of &quot;I'm an outsider&quot; is like... I don't know if there's anything more inside than being the YC COO, right? 
+
+So I think that reconciliation over my career also has had to happen which is like maybe that's just kind of a weird kind of thing. And so when I talk to Marc Andreessen who really pushed me to go online or Elad or whoever it is, their view is: leave your baggage and your trauma in the background and really let's think more pragmatically. 
+
+And the pragmatic thing here is whether I like to do these types of things or not, fundamentally it helps get the message out. And the message can be something very small and myopic like what's happening in physical AI and machines becoming intelligent, or much larger which is what's happening in society through this fundamental change that we're going through. 
+
+I have had the rare privilege of seeing the full economic spectrum. You know I've really seen the extreme ends of both sides and truly I really mean that. And so somebody like Marc who is close to our company says: well those are some ideas that are worth getting out beyond just you promoting your company or something like that. 
+
+And that I actually can get behind, which is the debate and discussion about ideas and what's happening to our society because of these technical changes. And so here I am. Amazing. Okay so there's a few threads I want to follow there. One is you were as you said COO at Y Combinator, you saw a lot of startups up close. This is your third startup on your own. 
+
+Something that I hear you talk about is that successful companies almost always show traction very early. A lot of founders hear &quot;no just keep trying fighting and maybe you'll be the next Figma or Notion four years in, we'll figure it out.&quot; What's your experience there and what's your advice to founders who are not seeing traction early? 
+
+A nuance is... I mean if I was starting another company I'd call it Nuance, right? So I think what you're saying is correct. I have I continue to believe that good companies tend to have traction fairly early and then just sustain it for a decade plus. To the founder that's toiling—let's say you're listening and you're about two years into your company and and you're maybe having a tough time getting money and building that first product that consumers or businesses really love either through retention or dollars. 
+
+Two years is a difficult time. The heuristic that I would use is if the information I'm getting from the market is not informing me on a more and more specific path, I would consider resetting. And what I mean by reset is oftentimes—and this is wearing my YC hat seeing hundreds and thousands of companies—oftentimes the co-founding, literally the foundation upon which the house is built, is not correct. 
+
+It's like imagine you built this house and every time you put a cup of water in it it slides off the table and it falls on the ground. And you keep adjusting the table. It's like, maybe the foundation is actually wrong, the whole house is off kilter. And that foundation might not only be your co-founders; it could be the market that you're in, it could be the phase of life that you're in and the amount of effort that you're willing to put into that thing in order to make it successful. 
+
+So there's a bunch of reasons that a company can fail, and you have to be able to somehow say &quot;I don't know what is the reason, I'm just going to have to hard reset here.&quot; One thing I would tell founders—and I tell a lot of Applied Intuition people, we're creating a founder class in itself, people who have worked at Applied are now starting their own companies. 
+
+We have a thousand plus engineers and over time they're starting their own firms and I say to all of them: just imagine the first time you're going to do a startup for the first three years, it's a zero. Just rid yourself of the expectation that it's going to be successful. And that you're really a craftsperson. 
+
+If this was a woodworking podcast and you said the first table that you built was wobbly, you wouldn't say &quot;well go work at Crate and Barrel.&quot; You'd say &quot;well that's the first table, we're going to keep at it.&quot; Being a founder is its own muscle. And you want to exercise that muscle, but I think a lot of founders, especially earlier in their founding career, put such an incredible pressure on themselves to make it great out of the gate that they actually miss the thing that you're getting in that first round. 
+
+Which is learning and building that muscle for the second and third time. And I think it's not random that my third company is the most successful company. I think you see that more often than not. There are funds which are almost exclusively focused on multi-time founders for this reason. 
+
+I love these core values you've shared so far. The last one: &quot;the best work is done alone quietly.&quot; I'm so on board with that. &quot;Radical pragmatism&quot; is the other one you shared earlier. Are there a couple more there? These are gems. Yeah we... those are like I would say the meta values. We have very specific let's say operating principles. 
+
+And this is as tactical as advice I can give to founders. Come up with your values when you're getting a little bit of traction. And the reason I say that is, early enough where you... and the way you come up with the values is not like &quot;what values should we have as philosophers.&quot; No no. You should figure out why are we being successful. 
+
+Literally write down the five to ten things that are the reason you are being successful and those become your values and you kind of re... so we did that and so our first one was &quot;move speed above everything&quot; and it was like us being fast. The second one is like &quot;never disappoint the customer,&quot; technical mastery, high output matters... 
+
+All the way down to like ones that are not obvious, like &quot;laugh a lot.&quot; That's been our core value from the beginning of the company's history and it's like, when you're working on intense things, if you don't have the ability to keep grounded and have perspective... laughter and humor also is a way to get subtle feedback in a slightly different taste than &quot;this sucks.&quot; 
+
+You can say it's not the best and that is slightly in the... and so you're really creating the framework in which people are learning how to behave with each other within the company. And so today the values really serve us as almost like guiding principles. And so you know we do new team meetings every week. Peter and I meet all the new team members and we're almost always talking about the values in some level of detail and depth. 
+
+Yeah. Another value: half of the work is follow-up. Like just taking notes and following up, that is the business, it's not more complex than that. &quot;Laugh a lot&quot; is my new favorite company value. Yeah, it sounds like a wonderful place to work. And then on the last piece there, there's this book that just came out by Stripe Press about maintenance and how valuable and underappreciated the maintenance part of work is. Absolutely, absolutely.
+
+Yeah, I think if there’s a takeaway that you get from, let’s say, a bit of my philosophy on where we started the conversation—around why being promotional has all these negative connotations—I’m careful using that word. But why not be promotional is because there’s costs to everything.
+
+If you can focus on the craft and making the product really, really good and really listening to your customers, you have a much higher likelihood of success. And then you can always go and scale there. Part of that is the thing that you’re talking about: maintenance.
+
+Another version is—you know, my roots are in automotive engineering. Automotive engineering is actually an exercise in quality. That’s really what it is. You’re building these very complex machines at scale. People talk about rockets being really, really complex, but you only got to send up a rocket, even at the highest capacity, like once every couple of days. 
+
+You’re making a car every 30 seconds, and you have to make it extremely cheap, and it’s globally competitive. So you really get into the nuance and minutiae of how a factory runs. A factory is about safety and maintenance; there’s not a lot of complex things. 
+
+It’s just about what you break down into being operationally strong. Operationally strong is keeping an eye on a handful of things and making sure you’re doing them really, really good. I’m one of those believers in the adage: a man who cannot command himself is not fit to command others. 
+
+That maintenance aspect is a part of that, right? It’s like when you maintain yourself and your own work, you maintain your team, and you maintain the company. The products almost come out of all of that system. I think a lot of founders don’t think about their company as a system or almost as a machine, but I would implore you to do that.
+
+Then you really focus on the craft of the machine and building the machine, making it more hygienic and making it more well-tuned. Just like you meet people who really love cars and they really obsess about the maintenance of cars—they will detail like underneath the driver’s seat. 
+
+As somebody who details my own car, nobody’s going to look at that, but it’s under that same ethos of really caring a lot about the craft and being really... frankly speaking, since you have a limited amount of time, it’s hard to really care about X and also making your company hygienic. 
+
+There are different reasons at different points of your company that you should do different things, but that’s kind of a little bit of the ethos. I love how you keep coming back to just staying quiet, working on the thing, and not talking about it. Your last point there makes me think of that classic &quot;the score takes care of itself.&quot; 
+
+Yeah, so Joe Montana is actually one of our investors. In our Series D post, the post was &quot;the valuation takes care of itself,&quot; which very much falls into that category. Sometimes people will come to our office and they’ll say, &quot;Oh, it’s such a clean office, you guys must have this giant cleaning staff.&quot; 
+
+Actually, we clean our office. Just like in Japanese schools—as I mentioned, I lived in Japan—the students clean their own schools. We have a cleaning zen every week, and everyone cleans the area around them. 
+
+I think it’s important that there’s something about this ethos of not getting so wrapped up in your own narrative of, &quot;I’m a Stanford software engineer and I do AI.&quot; It’s like, clean up your desk. There are some basic things like that. I don’t know what that larger philosophy is, but it is a philosophy that we kind of drive towards. 
+
+I think our claim to fame, which is kind of a crazy reality, is we’ve never spent any money we’ve ever raised in the history of the company. It kind of almost sounds like it’s made up. The company’s almost 10 years old, with a thousand engineers plus. 
+
+We’re a functioning business without using capital that we’ve raised. I think it’s somehow connected to us cleaning the office. I don’t know how—maybe because you’re saving all these cleaning costs, it all makes sense. We still have people clean, but our employees also are aware of their surroundings. 
+
+I think there’s a direct line between &quot;be quiet and alone,&quot; &quot;clean your desk,&quot; and &quot;well-written software.&quot; I don’t know what that thing is, but it all falls in the same arc. I know you all have a no-shoe policy for that same reason, to keep things clean. Yeah, and it’s also influenced by Japan. 
+
+The other way to think about this, maybe, again, if I’m just trying to impart everything I’ve known to founders—because that information is so limited and everyone’s kind of trying to make it up—is I would implore you as a founder to really try to take the best of Japan and the best of Germany, the best of China, the best of Detroit, the best of Silicon Valley. 
+
+I think sometimes people take that Steve Jobs line and they really deform it where they say &quot;great artists steal.&quot; What he was really talking about is—the less magnanimous version of that is—be humble and learn from everything around you. As a leader, be well-rounded. 
+
+I think reading should be... I’ve seen a Charlie Munger line where he says, &quot;I’ve never met anybody very, very successful who doesn’t read all the time.&quot; I very much fall into that category as well. If you unpack why that is—why does reading a physical book make you a better founder—let’s just ask that question in the most direct way. 
+
+I’m not reading... especially, my ethos of reading is: read old books. Don’t read anything new. Read old books because time has filtered out a lot of the noise, so you get a lot of signal. In your life, you’re going to read a thousand books, maybe, in the best-case scenario. 
+
+You’re going to read probably 50 to 100 books, which is kind of crazy for the average person. So you’re just not going to read many. Don’t read low-quality content. There are true pillars of human ideas out there. You consume those ideas, and then it’s up to you to interpret how those ideas reflect upon the business that you’re leading or the technology that you’re developing. 
+
+I absolutely believe reading a book like Malcolm X’s autobiography will make you a better founder. And it’s not—again, it’s like the whole cleaning zen all the way to clean code—it’s not directly one-to-one related. I think we always want these very simple if-then statements. 
+
+But I think being a well-rounded founder, where you understand society around you and history around you, somehow makes you build a better product. I don’t know how and why, but I think it absolutely is true. I do see a connection there. 
+
+People like Charlie Munger, who were not AI founders obviously, also believed that, and I think there’s some pattern there. It’s interesting—this is the same metaphor for LLMs. You feed all this data, and somehow they become almost conscious. How does that happen? No one fully knows. 
+
+It’s so interesting how similar you are to Marc Andreessen in your way of thinking and the way you consume content. We're both bald. There’s a thread here of just: here are important ingredients to being really successful. 
+
+Yeah, I mean, Marc—we’re fortunate enough to choose our investors, and that’s a true privilege. I didn’t have that in my first company; we spent years and didn’t raise a dollar, so I certainly appreciate it. But if I’ve ever had like a mentor, Marc would fall into that category. 
+
+Before Applied, we debated and talked a lot. I think Marc is also like that; he really consumes content actually outside of this little industry that we’re in, and then I think it makes him actually a better investor. We’ll point people to your website; you have a list of the books that you recommend and love, and it’s very long and very not what you often see. 
+
+I can’t help but just ask: are there a few books that have most influenced your thinking or most influenced your life? Yeah, that list—I’ve been thoughtful about that. The reason I use books like the autobiography of Malcolm X as an example is I know that’s not on the top of the list. 
+
+Everyone’s going to... if I say &quot;High Output Management,&quot; classic Andy Grove, you guys know that. It’s the most mentioned book here. Yeah, exactly. It’s like partly the theatrics of also entertaining you, but also giving you new information as a listener. 
+
+A good one I’m currently reading—and this is just kind of a random list of books—I’m reading the &quot;Vibe Coding&quot; book that came out. Our whole company’s reading that, which is a new book, and it kind of goes against the grain of my heuristic. 
+
+&quot;Emperor of All Maladies,&quot; the cancer book, is a fantastic book. I’m almost done with that. I think it changes the way I think. You read that, and it changes your existing framing on life. In the LLM use case, this is somehow related in the sense that diverse data makes your understanding of the world more rich and nuanced, and therefore it’s better. 
+
+I’m always inspired to give more wacky kind of examples rather than the obvious ones. But the obvious ones, if I really wasn’t being theatrical: I think Sam Walton’s book &quot;Made in America&quot; is an unbelievable book. He wrote it on his deathbed. &quot;My American Journey&quot; is also very good, Colin Powell’s book. It’s not on my website, but it’s really good. 
+
+I’m somebody who tries to connect some of these dots from us being cave people to now living in Silicon Valley working as a venture-backed AI company founder. &quot;Guns, Germs, and Steel&quot; is really at the top of that list of fantastic books, or &quot;Collapse,&quot; also by the same author. 
+
+My point to founders is: read the stuff. You can still go to physical bookstores. Read the stuff that is both old and well-regarded and you know nothing about. Often when I’m trying to find the next book to read—like I remember the way I picked up &quot;SPQR,&quot; which is the book on Roman history—it was like: I don’t actually know a lot about Roman history. I know the high-level stuff. 
+
+Think about all the ideas in the universe, from philosophy to history to Jainism to the rise of Japan as a feudal state. Go to areas you don’t really know and then just find the best book in that space. I think you’ll just start filling in the blanks. That’s kind of the way that I grok the ecosystem: what don’t I know anything about, and let me go find the best piece of material in that. 
+
+Marc’s philosophy is this barbell strategy of &quot;only today’s news like X&quot; and &quot;10-year-old books.&quot; I love that you’re just like—no X, just an upside-down T almost, only books. Marc was a heavy influence in me getting on X. He’s propagated that view. 
+
+The thing that I really do agree with him on is: as our company becomes a larger, more influential, and impactful company to society, it is my responsibility as a co-founder and the CEO of the company to at least propagate my ideas to our first AI founder community, and then larger technology leadership, and then the world at large. 
+
+In that way, Marc has really taken it... you think about VCs not long ago, you would never even know who their names are. They were like these anonymous PE guys or hedge fund managers; you can’t even think of names. They’re just blobs of ominous-sounding &quot;Obsidian Corporation&quot; or something like that. 
+
+It’s only a16z and a couple of other folks, like John Doerr, who really kind of created the: &quot;Hey, I’m going to be the individual investor and I’m going to propagate a certain set of ideas.&quot; That creates gravity within Silicon Valley; it influences founders to then make certain types of companies, and then of course, they invest in those. 
+
+Speaking of that, last question. You have this view that a lot of CEOs in Silicon Valley don’t actually have great taste. I’m excited to hear what your experience is there. Yeah, I also want to be careful to imply that I do. I fall into that group. 
+
+I think it is true because of a couple of reasons. Both taste in the most, let's say, artistic sense, and in the most specific sense of running a company—like what should be the HR policy for point X. A lot of that is because I think they’re just not exposed to a lot of interesting, good things. 
+
+That’s been a theme in this whole conversation: just get more and more exposure. It’s very unfortunate when I meet somebody who—and I’m not thinking of anyone particular, so if this is you and you’re one of my friends, I apologize, I’m not talking about you—but it’s like, you grow up in Cupertino, you go to Berkeley, and the first thing you do when you come out of school is you start a company. 
+
+That’s all you do for 20 years. You’ve never even been an employee. Why I think that’s so important to experience as an individual is because when you become a leader, you’re making policies and you’re creating culture, and you have to keep that in mind. 
+
+A bunch of founders, because they never had the fortune of being at the bottom of the totem pole—that’s just one version of how to not consume the photos of Bresson or Picasso or whoever it might be, but it’s something similar. 
+
+There’s something similar about how you can sometimes meet founders—and maybe a good heuristic here is: there are some founders that would be good at lots and lots of things, actually, not just being a founder of an AI company in the Bay Area. There’s something about taste there, because what you’re talking about is understanding humans and understanding life and then being able to discern with some judgment what is good and what’s not good. 
+
+If your life experience is very narrow, you could still be good, and you might have the ability to discern what’s good and what’s not good. But I think there’s something about if you’ve backpacked for a few years around the world, I somehow believe that’s going to make you a better founder. I don’t know how I can—there’s no peer-reviewed research that I can point to that says that. But I think that’s what I’m getting at. There is some developing of taste. 
+
+I feel like we have helped people build their taste and feed their model with more insights in this conversation. I feel like we could chat for hours, but I know you’ve got to run. Yeah, I’m not sure there were any real takeaways other than... okay, so we really went everywhere. I’m sorry if you had a particular line of questions you wanted to go down. 
+
+We went in all the perfect directions. Final question, just where can folks find you online, and how can listeners be useful to you? That’s a great question. I mean, I love to hear what are books that I don’t know. That’s always good. Some of my favorite books have been just randomly recommended to me. 
+
+Of course, I consume research as well. If there’s something particularly novel going on—obviously all the mainstream stuff we as a company and me as an individual are going to consume—but things that are a bit off the beaten path, we’re always looking for that. 
+
+If you have a particular opinion about specifically our domain, physical AI, and how AI’s going to impact mines, farms, construction sites, robotaxis, all that stuff, I’m always interested to hear new opinions on that, or even old opinions maybe with a different viewpoint. 
+
+If you see me, you can see me online. Of course, I’m always around to—I’m always open to that feedback. And you’re on Twitter now. There we go. Exactly, follow me there. Channeling my inner Marc. 
+
+Qasar, thank you so much for doing this, thank you so much for being here. Yeah, thanks for having me. It was a lot of fun. Bye everyone. Thank you so much for listening. If you found this valuable, you can subscribe to the show on Apple Podcasts, Spotify, or your favorite podcast app. 
+
+Also, please consider giving us a rating or leaving a review, as that really helps other listeners find the podcast. You can find all past episodes or learn more about the show at lennyspodcast.com. See you in the next episode.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
