@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - March 09, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">March 09, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">2</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=2L-15JYxS8c" target="_blank" rel="noopener">$1B DEFENSE PUSH: GE Aerospace makes major investment in US manufacturing</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/QpEnztyD6_IW7_LM3t3j7j8l3XKdZFN9HmbF-_sa8y2-ORUz2IgajHoZ8SMREv4ZHO2LeGM2gg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Fox Business Clips</span><span class="channel-subs">(76.6K)</span></span>
+                        <span class="meta-sep">·</span><span>13:08</span>
+                        <span class="meta-sep">·</span><span>12.3K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-03-09</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Larry Culp (CEO and Chairman, GE Aerospace)</span> <span class="tag tag-person">Maria Bartiromo (Host, Fox Business)</span></div>
+                </div>
+                <div class="tldr">&gt; &quot;We power the better part of three quarters of all commercial departures around the world on a daily basis.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR: GE Aerospace is launching a $1 billion investment in 2026 across 30 U.S. communities to accelerate engine production and clear a $200 billion backlog, a move that includes $275 million for defense upgrades and the creation of 5,000 new American jobs.    Domestic...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR:</strong> GE Aerospace is launching a $1 billion investment in 2026 across 30 U.S. communities to accelerate engine production and clear a $200 billion backlog, a move that includes $275 million for defense upgrades and the creation of 5,000 new American jobs.</p>
+<h3>Strategic Capital Investment &amp; Job Creation</h3>
+<ul>
+<li><strong>Domestic Expansion:</strong> GE Aerospace will invest $1 billion throughout 2026 across 17 states.</li>
+<ul>
+<ul>
+<li>The Durham, North Carolina facility—GE’s largest engine assembly site—is a primary focus for ramping up Leap engine production for Boeing and Airbus fleets.</li>
+</ul>
+</ul>
+<li><strong>Workforce Growth:</strong> The company aims to hire 5,000 new employees in 2026.</li>
+<ul>
+<ul>
+<li>This follows a previous hire of 5,000 workers in 2025, aimed at building technical expertise for production demands lasting into the 2030s.</li>
+</ul>
+</ul>
+<li><strong>Modernization &amp; AI:</strong> Investment includes deploying AI on the shop floor to improve productivity, safety, and quality.</li>
+<ul>
+<ul>
+<li><strong>Data Utilization:</strong> AI leverages data from 20- to 30-year engine lifecycles to enhance both new manufacturing and long-term maintenance.</li>
+</ul>
+</ul>
+</ul>
+<h3>Defense Infrastructure &amp; Military Readiness</h3>
+<ul>
+<li><strong>Defense Funding:</strong> $275 million of the $1 billion investment is specifically earmarked for defense facility upgrades.</li>
+<ul>
+<ul>
+<li>This brings GE’s total three-year investment in its defense footprint to $600 million.</li>
+</ul>
+</ul>
+<li><strong>Critical Military Support:</strong> GE currently powers two-thirds of U.S. military aircraft, including combat jets and helicopters.</li>
+<ul>
+<ul>
+<li><strong>J85 Engine Contract:</strong> A new deal with the Defense Logistics Agency will optimize the supply chain for the J85 engine, which powers the Air Force’s T-38 trainer aircraft.</li>
+</ul>
+</ul>
+<li><strong>Procurement Reform:</strong> CEO Larry Culp expressed strong support for streamlining government procurement to reduce lead times for tooling and testing without sacrificing safety.</li>
+</ul>
+<h3>Operational Scaling &amp; Supply Chain Recovery</h3>
+<ul>
+<li><strong>Massive Backlog:</strong> The company is managing a nearly $200 billion backlog driven by surging commercial airline expansion and rising global defense budgets.</li>
+<li><strong>Supply Chain Gains:</strong> GE reported a 40% increase in inputs from key suppliers over the last year.</li>
+<ul>
+<ul>
+<li>This collaboration resulted in engine shipments increasing by 25% to 30% in 2025.</li>
+</ul>
+</ul>
+<li><strong>Cost of Ownership:</strong> Culp emphasized that for engines costing $10M+, the focus is on reliability over a 20- to 30-year lifecycle. GE currently powers approximately 75% of all global commercial departures.</li>
+</ul>
+<h3>Financial Performance &amp; Trade Policy</h3>
+<ul>
+<li><strong>Record Growth:</strong> In 2025, GE Aerospace saw revenue grow by 21%, earnings by 38%, and cash flow by 24%.</li>
+<li><strong>Trade Advocacy:</strong> The company supports "zero-for-zero" tariff constructs to maintain the U.S. aerospace industry’s status as a top net exporter ($75 billion annually).</li>
+<li><strong>Market Leverage:</strong> Culp noted that President Trump views aerospace as a key point of leverage in international trade relations, particularly regarding China.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"We power the better part of three quarters of all commercial departures around the world on a daily basis. We have a million people in the air currently with GE technology under wing. It’s an incredible responsibility we all take very seriously."
+</blockquote>
+<p>— <strong>Larry Culp, CEO of GE Aerospace</strong></p>
+<blockquote>
+"One of the things the president has initiated is really a look at procurement reform. And we’re big supporters of that because the more that we can streamline the processes... we’re going to take time out of the system, we’re going to take cost out of the system, without sacrificing safety or quality."
+</blockquote>
+<p>— <strong>Larry Culp, CEO of GE Aerospace</strong></p>
+<blockquote>
+"This is the ultimate long-cycle business; we’re going to continue to play the long game... to not only have another good 2026, but really put together a decade of outstanding performance that sets us up for the 2030s."
+</blockquote>
+<p>— <strong>Larry Culp, CEO of GE Aerospace</strong></p>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Welcome back. New this morning, GE Aerospace is announcing a billion-dollar investment in the company's manufacturing operations and facilities across the country. It's part of an effort accelerating engine deliveries and increasing production of parts to keep pace with military demand. More than 275 million dollars are going toward defense facility upgrades. That will create 5,000 American jobs.
+
+Joining me now in this Fox Business exclusive is GE Aerospace CEO and Chairman, Larry Culp. Larry, it's great to have you this morning. Welcome back. Thank you, Maria. Good to be with you. Well, let me just say first off, congratulations. You have been running this company incredibly well, and it is showing through the stock and through your operations and your earnings.
+
+Tell us first, given the fact that you are running the most valuable industrial aerospace company in the world right now, tell us right now what is driving business before we get into this latest investment. Well, Maria, you're very kind. We have a team nearly 60,000 strong around the world doing, I think, a phenomenal job supporting our airline customers, our airframer partners, and our military customers, particularly the US military, at a time where we're seeing tremendous demand.
+
+We have, here coming into 2026, nearly 200 billion dollars of backlog. People are flying; airlines are looking to expand and modernize, as is the US military and our allies around the world. And given the install base that we have, both in commercial and on the military side of things, we could not be busier, but happily so.
+
+That's wonderful. And of course, airline demand is booming, defense budgets are rising, and the president's calling for a one-and-a-half trillion-dollar defense budget in 2027. And you have heeded the call from President Trump to ramp up investment in the United States. Tell us about this most recent investment in your facility, sir.
+
+Maria, what we're rolling out this morning is the news that we're going to invest another billion dollars here in 2026. We'll do that in 30 communities across 17 states where we operate. I'm here today in Durham, North Carolina. This is our largest engine assembly facility in the country. Behind me is one of our Leap engines. 
+
+These are the engines that are under-wing with both the Boeing 737 MAX and the Airbus A320neo family. We are ramping production here dramatically, and this investment will allow us to continue to deliver more engines as airlines expand and modernize their fleets. It'll also give us the ability to deliver a number of reliability and durability enhancements to our engines, all the while supporting the US warfighter. 
+
+275 million, in fact, of that billion-dollar investment is geared towards supporting our ramping in defense production. Yeah, I want to hear more about that because we're talking all morning about the defense infrastructure and what the government is relying on here, particularly as it relates to the Iran conflict. These are long-term contracts and these are long-term investments that you're talking about, whether it's an airline or contracts from the government. 
+
+How much does one of those engines cost? Well, depends, Maria, on what engine you're talking about, but we're clearly talking about initial purchases that are well in excess of, say, 10 million dollars. But what's important for our customers is the cost of ownership over the 20 to 30-year lifecycle that that engine will be in operation.
+
+One of the wonderful aspects of this business is we not only sell that engine when those new airplanes are delivered, we live with that engine side-by-side with our airline customers throughout the course of that lifecycle. So it really is that all-in cost of ownership that is critical and part of the reason we're putting in the capital that we are to enhance the reliability and durability of the engines. 
+
+We power the better part of three-quarters of all commercial departures around the world on a daily basis. We have a million people in the air currently with GE technology under-wing. It's an incredible responsibility we all take very seriously. These investments, which come on the heels—you'll recall a year ago we were together, we talked about investing another billion dollars in 2025—we did that. 
+
+But we're on a multi-year ramp, Maria. Given that 200 billion-dollar backlog, we'll need to continue to invest to support our commercial customers, but again, we're doing the same thing to support the US warfighter and our allies around the world. So, what do you want to say about a bottleneck in the supply chain? Explain to us what's going on with regard to the supply chain and how fast you can turn these products out. 
+
+Well, Maria, I think the last several years we've made tremendous progress hand-in-hand with our suppliers to come out of the pandemic and ramp production as not only fleets are expanded, but the current fleets are used at record levels. We saw last year a 40 percent increase in the inputs we receive from our key suppliers, really as a result of that collaboration. 
+
+And in turn, depending on the platform that you're talking about, our engine shipments were up 25 to 30 percent. So we think we know what we need to do here, but this is going to be a multi-year effort given the nature of the demand curve that we're looking at. It's a high-class challenge to have, but one I think the GE Aerospace team and our supplier partners are keen to tackle.
+
+And Larry, what do you want to say about jobs here? Given this one billion dollars, this additional one billion dollars that you're investing in your facilities, how many jobs does that create? What can you tell us about the use of AI and how that's complementing certain jobs? Give us the picture of jobs at GE Aerospace today.
+
+Maria, coupled with today's announcements, we are also sharing our intent to expand our workforce by another 5,000 people here in 2026. We did that same number, ironically, in 2025. That really gives us the expertise and the capacity to continue to increase production, not only in 2026, but it sets the stage for us to do so every year into the 2030s.
+
+That's the nature of the mountain that we're climbing here at GE Aerospace. Certainly AI is a part of what we're doing, not only to improve productivity on the shop floor, but frankly to enhance safety and quality. The more that we can put into the hands of our operators—not only here in Durham but around the country—the latest tools that make the most impact given the incredible data access we have through those 20 to 30-year lifecycles in these engines, the better off we're going to be.
+
+This is true not only when we're manufacturing a new engine, but when we're looking after those engines for decades over those lifecycles I mentioned earlier. Now, in terms of being a government contractor, GE Aerospace is landing this contract from the Defense Logistics Agency to accelerate the readiness of that J85 engine, powering the US Air Force's primary training aircraft.
+
+GE will provide fleet management and supply optimization capabilities, supporting the Air Force's training mission and goals. Larry, congrats on that deal. Tell us more about this product and how GE is playing a key part in the military's goals right now, specifically as we're talking about the Middle East. 
+
+Well, Maria, we talk so often about our commercial business, but about a third of what we do is in the defense realm. We're fortunate that over time we have built up a position where we power two-thirds of the US military aircraft, be they combat jets, be they helicopters and the like. There's a lot that we're doing.
+
+We were up again 30 percent in terms of our engine deliveries to the military in 2025. The announcement that you're referring to will enable us to support our J85 engine on the Air Force's T-38 trainer. The more that we're able to orchestrate the delivery of the 6,000 parts that go into that engine, that will enable those trainers to be in the air more with pilots getting more training hours. 
+
+That has a direct knock-on effect for US readiness. So we're happy to contribute. It's one of many things that we do across the US military portfolio, but an important part particularly in today's world. Yeah, I mean, you know the president met with the defense contractors at the White House on Friday. I know you were not there, but the president came out of that meeting and said that they have promised to quadruple production of some of these weapons. 
+
+Larry, why is it that it takes as long as it does to actually meet the incredible demand that we're talking about? And can you assess for us sort of the issues that are at hand in that regard? Well, in many respects the issues with respect to lead times on the defense side of things, Maria, are very similar to the ones on the commercial side. 
+
+The tooling required to build these engines has very long lead times. We've been looking to reduce those lead times across our supply base; I think we're making progress. But also, one of the things the president has initiated is really a look at procurement reform. And we're big supporters of that because the more that we can streamline the processes by which we develop an engine, and in turn an aircraft, we know we're going to take time out of the system. 
+
+If we can deploy some of our commercial techniques in the defense realm, we're going to take cost out of the system without sacrificing safety or quality. So there's a lot of opportunity. We've got a role to play and part of this multi-year investment effort that we've made—it'll be 600 million dollars that we will have invested in our defense footprint over the last three years—is very much geared toward not only raising production but quickening the pace of what we're doing for the US warfighter. 
+
+That's a no-fail mission for us at GE Aerospace, and we're proud to be on board. And Larry, this is all coming across in all of your earnings releases. I mean, you recently released your fourth quarter 2025 numbers, surpassing expectations. Your board authorized a quarterly dividend. You are really operating at an incredibly high level. 
+
+I want to get your take on policy and what you'd like to see in terms of changes there. You were pushing in the past for zero tariffs in aviation. And you know, when I've interviewed President Trump in the past, the president told me when we talked about China, look, they need us as much as we need them. And he mentioned jet engines; he mentioned aerospace as sort of one leverage point that the United States has. 
+
+What would be your best advice for the president as he gears up for this meeting with Xi Jinping at the end of March? Well, the president, I think, has been an exceptionally strong supporter of the aerospace industry. He's fully aware that aerospace is a net exporter for the country to the tune of 75 billion dollars annually. 
+
+I think as we saw a number of the trade deals come together last year, we were encouraged by the zero-for-zero tariff construct that was put in many of those deals. I think that will continue to be a priority for the administration. We support that because it allows American companies in aerospace to invest in technology, invest in people, build capacity, and deliver our products all around the world. That's good for American workers, and that's certainly good for the economy at large.
+
+Yeah, I mean, you know GE, as much as it's a customer, it's the number one adversary of the United States. So that's why I raise the issue. I saw the presentation at the Singapore Airshow, which was very, very positive, and investors talked about that in terms of the performance of the company. 
+
+We just looked at the stock chart of GE, and it's doing so well over the last couple of years—straight line up. Larry, what do you want to say about the future and what drives the business in the coming couple of years? Well, Maria, you're very kind. We had an exceptional 2025. Revenues up, what, 21 percent? Earnings up 38 percent, cash flow was up 24 percent. 
+
+But we are not a team that will rest on its laurels. We know our airline customers, our airframer partners, and our defense customers all need more from us in 2026. We're investing, we're improving processes, we're bringing on new people to make sure that we not only have another good 2026, but really put together a decade of outstanding performance that sets us up for the 2030s.
+
+This is the ultimate long-cycle business. We're going to continue to play the long game, and I couldn't be more thankful for the great work that our teams—not only here in Durham but around the world—do with that mission in mind. And of course you've got the pricing power to go along with it. Larry, it's good to see you this morning. We'll be watching the story. Thank you, sir. Thank you, Maria.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-1">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=Uj4aGC8ZjeI" target="_blank" rel="noopener">Anthropic and Alignment | Stratechery by Ben Thompson</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/G3KKbnKufJOIVSn2K-p-4DrmYkR50LHZileEND4IhJ38sLdznQIYOUShN7qqvG1G5vPvB63Mml8=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Stratechery</span><span class="channel-subs">(13.1K)</span></span>
+                        <span class="meta-sep">·</span><span>20:13</span>
+                        <span class="meta-sep">·</span><span>47 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-03-09</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Ben Thompson (Author and Host, Stratechery)</span></div>
+                </div>
+                <div class="tldr">Anthropic’s refusal to allow the U.S.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-1">TL;DR Anthropic’s refusal to allow the U.S. military to use its models for surveillance or autonomous weapons creates a fundamental conflict of sovereignty; if AI is as transformative as nuclear weapons, the U.S. government cannot tolerate a private corporation acting as an...</div>
+                    <div class="summary-full" id="full-1">
+                        <p><strong>TL;DR</strong></p>
+<p>Anthropic’s refusal to allow the U.S. military to use its models for surveillance or autonomous weapons creates a fundamental conflict of sovereignty; if AI is as transformative as nuclear weapons, the U.S. government cannot tolerate a private corporation acting as an independent power base that dictates national security terms.</p>
+<h3>The Anthropic vs. Department of Defense Standoff</h3>
+<ul>
+<li><strong>Point of Conflict:</strong> Anthropic CEO Dario Amodei has restricted the U.S. military from using Claude for mass domestic surveillance and fully autonomous weapons, citing "democratic values" and current technical unreliability.</li>
+<li><strong>The Pentagon’s Response:</strong> The Department of Defense (DoD) has threatened to designate Anthropic a “supply chain risk”—a label usually reserved for foreign adversaries—and may invoke the Defense Production Act to force the removal of these safeguards.</li>
+<li><strong>Competitive Landscape:</strong> While Anthropic resists, OpenAI has recently reached an agreement with the DoD to allow its models to be used in classified settings, effectively replacing Anthropic in the military's tech stack.</li>
+<li><strong>The "Maduro Incident":</strong> Tensions spiked after Anthropic officials expressed disapproval to Palantir regarding the use of their technology during a U.S.-monitored operation involving Venezuelan President Nicolás Maduro.</li>
+</ul>
+<h3>The Logic of Sovereign Power</h3>
+<ul>
+<li><strong>The "International Law" Analogy:</strong> Ben Thompson argues that international law is only as "real" as the entity capable of enforcing it; similarly, a private company cannot dictate terms to a state that possesses the ultimate monopoly on force.</li>
+<li><strong>The Nuclear Comparison:</strong> Dario Amodei has compared selling AI chips to China to "selling nuclear weapons to North Korea."</li>
+<ul>
+<ul>
+<li><strong>Consequence of the Analogy:</strong> Thompson asserts that if AI is truly on the level of nuclear weapons, the U.S. government must treat it as a matter of existential national security that cannot be left in the hands of "unelected corporate executives."</li>
+</ul>
+</ul>
+<li><strong>A Binary Choice:</strong> Thompson posits that the U.S. government faces two options regarding Anthropic:</li>
+</ul>
+<p>1. Force Anthropic into a subservient position where it yields decision-making power to the President and Congress.</p>
+<p>2. Remove the leadership or destroy the entity to prevent it from becoming a rival power base.</p>
+<h3>Corporate Governance vs. Democratic Oversight</h3>
+<ul>
+<li><strong>The Definition Problem:</strong> Restrictions like "do not target civilians" sound simple but are "moral minefields." Thompson references Palmer Luckey (Anduril) to argue that definitions of "civilian," "innocent," and "autonomous" should be decided by elected officials, not CEOs.</li>
+<li><strong>The American Experiment:</strong> There is a fundamental tension between a constitutional republic and a future where the "real levers of power" are outsourced to billionaires and their shadow advisors.</li>
+<li><strong>Enforcement Paradox:</strong> Anthropic’s position that it can "align" the military is seen as untenable because the state cannot accept a dependency on a vendor that might withdraw support during an active conflict.</li>
+</ul>
+<h3>Geopolitical Realism and AI Safety</h3>
+<ul>
+<li><strong>The Taiwan Flashpoint:</strong> The debate over AI is inextricably linked to the defense of Taiwan and TSMC. Thompson notes that Amodei’s push for strict chip controls risks "destroying AI for everybody" if China decides that if they cannot have AI, no one can.</li>
+<li><strong>The Fallacy of "Responsible Stewards":</strong> Thompson critiques the idea that AI safety can only be managed by a few closed-source companies.</li>
+<ul>
+<ul>
+<li><strong>Proliferation is Inevitable:</strong> Massive incentives exist for others to build models, rendering "gatekeeping" ineffective.</li>
+<li><strong>Open Source as Defense:</strong> In a world of AI proliferation, the best defense against malicious AI is more AI, suggesting that open-source development may ultimately be safer than a closed-door oligopoly.</li>
+</ul>
+</ul>
+</ul>
+<blockquote>
+"To the extent that AI is on the level of nuclear weapons — or beyond — is the extent that Amodei and Anthropic are building a power base that potentially rivals the U.S. military. Anthropic talks a lot about alignment; this insistence on controlling the U.S. military, however, is fundamentally misaligned with reality." — <strong>Ben Thompson</strong>
+</blockquote>
+<blockquote>
+"Do you believe in democracy? Should our military be regulated by our elected leaders, or corporate executives? Seemingly innocuous terms from the latter like 'You cannot target innocent civilians' are actually moral minefields... unelected corporations managing profits and PR will often have a very different answer." — <strong>Palmer Luckey</strong>
+</blockquote>
+<blockquote>
+"I believe deeply in the existential importance of using AI to defend the United States... [but] using these systems for mass domestic surveillance is incompatible with democratic values. AI-driven mass surveillance presents serious, novel risks to our fundamental liberties." — <strong>Dario Amodei</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-1">
+                        This is a verbatim transcript of the video. Anthropic and Alignment. &quot;Just because you do not take an interest in politics doesn’t mean politics won’t take an interest in you,&quot; as Pericles once said.
+
+This is not an article about the campaign being waged by the U.S. against Iran, but it’s a useful and timely analogy. There is a never-ending debate that can be had about the concept of International Law and who might be violating it. Some will argue that the U.S. is in violation for the attacks; others will note that Iran has been serially violating International Law with both its overt actions and its support of terror networks for my entire life.
+
+What is important to note is that the entire debate is ultimately pointless. The very concept of “international law” is fake, not because pertinent statutes and agreements don’t exist, but because their effectiveness is ultimately rooted in their enforceability. That, by extension, means there must be an entity to enact such enforcement, with the capability to match, and such an entity does not exist.
+
+Yes, there is the United Nations, but said body only operates by the agreement of its members and their willingness to subjugate themselves to not only its edicts, but to also put forward the capabilities to enforce its mandates. In other words, the only agents that matter are nation-states themselves. The relative power of those nation-states is not a function of lawyers and judges but rather their ability to project force and coerce others.
+
+To put it another way, if after this weekend you want to hold onto the concept of International Law, then realize the debate has been resolved: Iran was in violation because their military just had their clock cleaned by the U.S., which means the U.S. decides who is right and who is wrong.
+
+Anthropic vs. The Department of War.
+
+While most of the U.S. and certainly the rest of the world were preoccupied with the happenings in Iran, another fervent debate has been ongoing in tech. Once again one of the parties is the United States itself, but the other entity in question is a private company, Anthropic.
+
+While Anthropic’s relationship with the administration hit a new low, rival OpenAI said late Friday that it reached an agreement with the Defense Department to have its models used in classified settings. Until recently, this was a status only held by Anthropic. Friday’s quick-fire developments between the Pentagon and two Silicon Valley darlings are poised to shape the future of how the federal government and, particularly the Pentagon, uses cutting-edge AI tools.
+
+Anthropic staked out its position earlier in the week in a statement from Dario Amodei on discussions with the Department of War: &quot;I believe deeply in the existential importance of using AI to defend the United States and other democracies, and to defeat our autocratic adversaries. In a narrow set of cases, we believe AI can undermine, rather than defend, democratic values.&quot;
+
+&quot;Some uses are also simply outside the bounds of what today’s technology can safely and reliably do. Two such use cases have never been included in our contracts with the Department of War, and we believe they should not be included now: Mass domestic surveillance. We support the use of AI for lawful foreign intelligence and counterintelligence missions. But using these systems for mass domestic surveillance is incompatible with democratic values.&quot;
+
+&quot;AI-driven mass surveillance presents serious, novel risks to our fundamental liberties. To the extent that such surveillance is currently legal, this is only because the law has not yet caught up with the rapidly growing capabilities of AI. For example, under current law, the government can purchase detailed records of Americans’ movements, web browsing, and associations from public sources without obtaining a warrant.&quot;
+
+&quot;This is a practice the Intelligence Community has acknowledged raises privacy concerns and that has generated bipartisan opposition in Congress. Powerful AI makes it possible to assemble this scattered, individually innocuous data into a comprehensive picture of any person’s life—automatically and at massive scale. Fully autonomous weapons. Partially autonomous weapons, like those used today in Ukraine, are vital to the defense of democracy.&quot;
+
+&quot;Even fully autonomous weapons (those that take humans out of the loop entirely and automate selecting and engaging targets) may prove critical for our national defense. But today, frontier AI systems are simply not reliable enough to power fully autonomous weapons. We will not knowingly provide a product that puts America’s warfighters and civilians at risk.&quot;
+
+&quot;We have offered to work directly with the Department of War on R&amp;D to improve the reliability of these systems, but they have not accepted this offer. In addition, without proper oversight, fully autonomous weapons cannot be relied upon to exercise the critical judgment that our highly trained, professional troops exhibit every day. They need to be deployed with proper guardrails, which don’t exist today.&quot;
+
+&quot;To our knowledge, these two exceptions have not been a barrier to accelerating the adoption and use of our models within our armed forces to date. The Department of War has stated they will only contract with AI companies who accede to “any lawful use” and remove safeguards in the cases mentioned above.&quot;
+
+&quot;They have threatened to remove us from their systems if we maintain these safeguards; they have also threatened to designate us a “supply chain risk” — a label reserved for US adversaries, never before applied to an American company — and to invoke the Defense Production Act to force the safeguards’ removal. These latter two threats are inherently contradictory: one labels us a security risk; the other labels Claude as essential to national security. Regardless, these threats do not change our position: we cannot in good conscience accede to their request.&quot;
+
+And, to that end, one could argue that this stand-off is ending as it should: Anthropic and its models will be removed from the Department of War tech stack, and an alternative will take their place. Except, as I noted on Friday, this is more than just a customer choosing a different vendor.
+
+Anthropic is one of the few “frontier” large language models available for classified use by the US government because it is available through Amazon’s Top Secret Cloud and through Palantir’s Artificial Intelligence Platform. This is how its Claude chatbot ended up appearing on the screens of officials who were monitoring the seizure of then-Venezuelan President Nicolás Maduro.
+
+Soon after the Maduro raid, during a regular check-in that Palantir holds with Anthropic, an Anthropic official discussed the operation with a Palantir senior executive. The executive gathered from the exchange that the AI startup disapproved of its technology being used for that purpose.
+
+The Palantir executive was alarmed by the implication of Anthropic’s inquiry that the company might resist the use of its technology in a US military operation, and reported the conversation back to the Pentagon, a senior Defense Department official said.
+
+North Korea and Nuclear Weapons.
+
+The reason why this is a bigger deal than it first appears is because of the way Amodei and Anthropic have defined the technology they are building. Back in January, Amodei famously compared AI to nuclear weapons.
+
+&quot;Anthropic Chief Executive Officer Dario Amodei said selling advanced artificial intelligence chips to China is a blunder with “incredible national security implications” as the US moves to allow Nvidia Corp. to sell its H200 processors to Beijing. “It would be a big mistake to ship these chips,” Amodei said in an interview with Bloomberg Editor-in-Chief John Micklethwait at the World Economic Forum in Davos, Switzerland.&quot;
+
+“I think this is crazy. It’s a bit like selling nuclear weapons to North Korea.” Consider the implications if we take Amodei’s analogy literally. North Korea doesn’t need to buy nuclear weapons because they already have them, and it certainly makes any sort of potential military action against them considerably more complicated.
+
+To the extent that AI is of equivalent importance is the extent to which the United States has far more interest in not only what Anthropic lets it do with its models, but also what Anthropic is allowed to do period. To the extent that AI is on the level of nuclear weapons — or beyond — is the extent that Amodei and Anthropic are building a power base that potentially rivals the U.S. military.
+
+Anthropic talks a lot about alignment; this insistence on controlling the U.S. military, however, is fundamentally misaligned with reality. Current AI models are obviously not yet so powerful that they rival the U.S. military; if that is the trajectory, however — and no one has been more vocal in arguing for that trajectory than Amodei — then it seems to me the choice facing the U.S. is actually quite binary.
+
+Option 1 is that Anthropic accepts a subservient position relative to the U.S. government and does not seek to retain ultimate decision-making power about how its models are used, instead leaving that to Congress and the President. Option 2 is that the U.S. government either destroys Anthropic or removes Amodei.
+
+Note that I’m not making the argument put forward by Anduril founder Palmer Luckey about the importance of democratic oversight: &quot;This gets to the core of the issue more than any debate about specific terms. Do you believe in democracy? Should our military be regulated by our elected leaders, or corporate executives?&quot;
+
+&quot;Seemingly innocuous terms from the latter like “You cannot target innocent civilians” are actually moral minefields that lever differences of cultural tradition into massive control. Who is a civilian and not? What makes them innocent or not? What does it mean for them to be a “target” vs collateral damage?&quot;
+
+&quot;Existing policy and law has very clear answers for these questions, but unelected corporations managing profits and PR will often have a very different answer.&quot; The fact that this is a debate over AI does not change the underlying calculus. The same problems apply to definitions and use of ethically fraught but important capabilities like surveillance systems or autonomous weapons.
+
+It is easy to say “But they will have cutouts to operate with autonomous systems for defensive use!”, but you immediately get into the same issues and more: what is autonomous? What is defensive? What about defending an asset during an offensive action, or parking a carrier group off the coast of a nation that considers us to be offensive?
+
+At the end of the day, you have to believe that the American experiment is still ongoing, that people have the right to elect and unelect the authorities making these decisions, and that our imperfect constitutional republic is still good enough to run a country without outsourcing the real levers of power to billionaires and corpos and their shadow advisors. I still believe.
+
+And that is why “bro just agree the AI won’t be involved in autonomous weapons or mass surveillance why can’t you agree it is so simple please bro” is an untenable position that the United States cannot possibly accept. Again, I think this is a good argument.
+
+The one I am putting forward, however, is much more basic and brutal, and doesn’t have anything to do with belief or not in the American experiment (although I’m with Luckey in that regard): it simply isn’t tolerable for the U.S. to allow for the development of an independent power structure — which is exactly what AI has the potential to undergird — that is expressly seeking to assert independence from U.S. control.
+
+Complex Systems.
+
+The important takeaway that is relevant to this article is that Taiwan is the flashpoint in both scenarios. A pivot to Asia is about gearing up to defend Taiwan from a potential Chinese invasion or embargo. A retrenchment to the Americas is about potentially granting — or acknowledging — China as the hegemon of Asia, which would inevitably lead to Taiwan’s envelopment by China.
+
+This is, needless to say, a discussion where I tread gingerly, not least because I have lived in Taipei off and on for over two decades. And of course, there is the moral component entailed in Taiwan being a vibrant democracy with a population that has no interest in reunification with China.
+
+To that end, the status quo has been simultaneously absurd and yet surprisingly sustainable. At the same time, Taiwan has not declared independence, and the official position of the United States is to acknowledge that China believes Taiwan is theirs, without endorsing either that position or Taiwanese independence.
+
+Chinese and Taiwanese do, in my experience, handle this sort of ambiguity much more easily than do Americans; still, gray zones only go so far. What has been just as important are realist factors like military strength (once in favor of Taiwan, now decidedly in favor of China), economic ties (extremely deep between Taiwan and China, and China and the U.S.), and war-waging credibility.
+
+That, by extension, gets at another changing factor: the hollowing out of American manufacturing under Pax Americana has been directly correlated with China’s dominance of the business of making things, the most essential war-fighting capability. Still, there is — or rather was — a critical factor that might give China pause: the importance of TSMC.
+
+As I explained last year in The Taiwan Semiconductor Safeguard: &quot;If China can’t have AI, then it is, at least under current circumstances, relatively easy to make sure that nobody does.&quot; Amodei is, as the quote above notes, cognizant of China as a threat generally.
+
+It concerns me that he consistently fails to acknowledge that the implication of his recommended course of action in terms of chip controls is to risk destroying AI for everybody. First, were there only closed AI systems, then unimaginable power would be vested in the owners of those systems. It seems that Amodei thinks that power should be wielded by him (at a minimum, I would prefer that it be wielded by the U.S. government).
+
+Second, the idea that AI safety can only be guaranteed by a limited number of responsible stewards ignores the massive incentives that exist to build other models. This was clear years ago when only a few companies were working on AI models, and has been proven out by what has happened in reality so far.
+
+Third, in a world of AI proliferation, the best defense against AI will be AI; this means that more AI is actually safer than limited AI, which means open source is ultimately safer.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
