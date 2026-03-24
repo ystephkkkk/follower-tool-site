@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - March 22, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">March 22, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=HW6O3k6QqQc" target="_blank" rel="noopener">Elon Reveals TERAFAB (Tesla &amp; SpaceX) - Full Replay - Becoming a galactic civilization</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><span class="channel-name">Solving The Money Problem</span></span>
+                        <span class="meta-sep">·</span><span>21:46</span>
+                        <span class="meta-sep">·</span><span>202K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-03-22</span>
+                    </div>
+                    
+                </div>
+                <div class="tldr">Elon Musk announced &quot;Terafab,&quot; a massive joint venture between Tesla, SpaceX, and xAI to build one terawatt of annual AI compute.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Elon Musk announced &quot;Terafab,&quot; a massive joint venture between Tesla, SpaceX, and xAI to build one terawatt of annual AI compute. This initiative aims to transition humanity into a galactic, Type 1 civilization by leveraging massive terrestrial fabrication in Austin and...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Elon Musk announced "Terafab," a massive joint venture between Tesla, SpaceX, and xAI to build one terawatt of annual AI compute. This initiative aims to transition humanity into a galactic, Type 1 civilization by leveraging massive terrestrial fabrication in Austin and eventually shifting the bulk of AI processing into space.</p>
+<h3>The Terafab: Redefining Chip Manufacturing</h3>
+<ul>
+<li><strong>Vertical Integration in Austin:</strong> Tesla is building an "Advanced Technology Fab" in Austin, Texas. This facility is unique because it co-locates logic and memory production, packaging, testing, and lithography mask creation in a single building.</li>
+<ul>
+<ul>
+<li><strong>Recursive Design Loop:</strong> This setup allows for an "order of magnitude" faster iteration than the rest of the industry by enabling the team to design, build, test, and refine masks and chips in one continuous cycle.</li>
+</ul>
+</ul>
+<li><strong>The 1-Terawatt Goal:</strong> Musk aims to produce one terawatt of compute per year. Currently, the entire global AI compute output is roughly 20 gigawatts—meaning the existing global supply chain (including TSMC, Samsung, and Micron) provides only 2% of what Musk believes is necessary.</li>
+<li><strong>Specialized Chip Architectures:</strong></li>
+<ul>
+<ul>
+<li><strong>Edge Inference:</strong> Optimized for high-volume terrestrial use in Tesla vehicles and Optimus humanoid robots.</li>
+<li><strong>Space-Optimized:</strong> Designed to withstand high-energy ions and radiation, and engineered to run at higher temperatures to minimize the mass of heat radiators.</li>
+</ul>
+</ul>
+</ul>
+<h3>Starship and the Move to Space-Based Compute</h3>
+<ul>
+<li><strong>The Scaling Problem:</strong> Power constraints on Earth make it difficult to scale beyond a certain point due to atmospheric interference, seasonal changes, and "NIMBY" (Not In My Backyard) regulatory hurdles. </li>
+<li><strong>Space-Based Advantages:</strong> Musk predicts that within 2–3 years, it will be cheaper to deploy AI in space than on the ground.</li>
+<ul>
+<ul>
+<li><strong>Energy Efficiency:</strong> Space offers constant sunlight without atmospheric attenuation, providing at least 5x the solar power of Earth-based installations.</li>
+<li><strong>Cost Reduction:</strong> Space solar panels do not require heavy glass or protective framing against weather, significantly reducing mass.</li>
+</ul>
+</ul>
+<li><strong>Starship V3 and V4:</strong> To achieve this, SpaceX must scale to 10 million tons of payload to orbit per year.</li>
+<ul>
+<ul>
+<li><strong>Starship V3:</strong> Target of 200 tons of payload (up from 100 tons).</li>
+<li><strong>Starship V4:</strong> Will be significantly longer and more capable, making V3 "look kind of short."</li>
+</ul>
+</ul>
+</ul>
+<h3>Scaling to a Galactic Civilization</h3>
+<ul>
+<li><strong>Kardashev Scale Ambitions:</strong> Musk referenced the Kardashev scale (measuring a civilization's energy use), noting that Earth is currently "in the miscellaneous category" compared to the sun. Scaling compute and power in space is the only path to becoming a Type 1 or Type 2 civilization.</li>
+<li><strong>Humanoid Robot Volume:</strong> Musk anticipates the production of humanoid robots (Optimus) will reach 1 billion to 10 billion units per year—surpassing vehicle production by 10 to 100 times.</li>
+<li><strong>The Lunar Mass Driver:</strong> To reach "Petawatt" levels of compute (1,000x greater than a terawatt), Musk envisions an electromagnetic mass driver on the Moon.</li>
+<ul>
+<ul>
+<li><strong>Physics Advantage:</strong> Because the Moon has no atmosphere and 1/6th Earth’s gravity, materials can be accelerated to escape velocity without rockets, dramatically lowering the cost of deep-space infrastructure.</li>
+</ul>
+</ul>
+</ul>
+<h3>The Age of Abundance</h3>
+<ul>
+<li><strong>Post-Scarcity Economy:</strong> By combining sustainable energy, Starship’s transport capacity, and AI/robotics, Musk envisions an economy "a million times the size of the current Earth economy."</li>
+<li><strong>The "Culture" Vision:</strong> Referencing Ian Banks’ *Culture* novels, Musk suggests this path leads to a future where money is obsolete and any need—from basic goods to a trip to the rings of Saturn—can be met for anyone who wants it.</li>
+</ul>
+<blockquote>
+"If you add up all the fabs on earth combined, they're only about 2% of what we need for the... Terafab project. We either build the Terafab or we don't have the chips. And we need the chips. So we're going to build Terafab." — <strong>Elon Musk</strong>
+</blockquote>
+<blockquote>
+"Space has this advantage that it's always sunny... I think it may be only two or three years before it is actually lower cost to send AI chips to space than it is on the ground." — <strong>Elon Musk</strong>
+</blockquote>
+<blockquote>
+"We aspire to be a galactic civilization... where we are not forever confined to one planet, that we become a multi-planet species like the best science fiction you've ever read... and turn science fiction into science fact." — <strong>Elon Musk</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Important announcement to make which is the most epic chip building exercise in history by far. This is really going to take things to the next level. So yeah, a level probably people aren't even contemplating right now. This is not in the—I would call this a sort of an out of context problem. It's not in their context. 
+
+So, we're gonna adjust the context by a few orders of magnitude here. See, it's it's a joint effort. I'm pressing the button, but the button's not working. Oh, there we are. Okay. So, yeah, we aspire to be a galactic civilization. 
+
+I think the the future that everyone—well, most people I think would agree is the most exciting—is one where we are out there among the stars, where we are not forever confined to one planet, that we become a multi-planet species like the best science fiction that you've ever read, you know, Star Trek or Iain Banks or Asimov or Heinlein. 
+
+And we want to make that real. Yeah, not just fiction; turn science fiction to science fact. That's the glorious exciting future that that I certainly look forward to. And it's worth considering sort of like how would you rate civilizations? 
+
+You know, there was a physicist, I think it was Russian in the '60s, Kardashev. He he thought about at a high level, how would you consider any given civilization? And he said, &quot;Well, if you're type one, you're using most of the energy of your planet.&quot; And we actually still have quite a ways to go to be properly a type one. 
+
+We're still using a tiny fraction of the sun's energy that reaches our planet. See, yeah, there we go. But the Earth only receives about half a billionth of the sun's energy. So the sun is truly enormous. The the sun is 99.8% of all mass in the solar system. 
+
+Sometimes people will ask me like, &quot;What about you know other power sources of power on Earth? Like what about fusion on Earth?&quot; Well, that is unfortunately very small because the sun is 99.8% of mass in the solar system, and Jupiter is about .1%, and Earth is in the miscellaneous category. 
+
+We are—I think as Carl Sagan I think might have said—Earth is a is like a tiny dust mote in a vast darkness, very, very small. The sun is enormous. So the way to actually scale civilization is to scale power in space. This is necessarily true because the the we we we actually capture such a tiny amount of the sun's energy on Earth because we're just this tiny dust mote. 
+
+Another way to think of it is roughly like electricity production on Earth of all of civilization is only about a trillionth of the sun's energy. Which means if you increase civilizational power output by a million, you would still only be a millionth of the sun's energy. I mean, it's it's it's awe-inspiring to consider that—just how tiny we are in the grand scheme of things. 
+
+And yeah, we often get sort of caught up in the sort of these sort of squabbles on Earth that are really very sort of minor things in the when you consider the the grandness of the universe. And so I think it's it is important actually to consider the grandness of the universe and what we can do that is much greater than what we've done before. 
+
+As opposed to worry about sort of small squabbles on Earth type of thing. Kind of not much point in that. Yeah, we want to be a civilization that expands to the galaxy with with spaceships that anyone can go anywhere they want at any time. That would be epic. 
+
+And have a city on the moon, cities on Mars, populate the solar system, and send spaceships to other star systems. That sounds like the best possible future, you know. So to do that we need that to harness the power of the sun and so a Terra Fab—while it is enormous, a terawatt of compute per year is is enormous by our sort of civilizational standards—it is still just one step along the way of being even a Kardashev level one. 
+
+You're still have a long way to go to even be a Kardashev level two civilization and you're not even registering as a Kardashev level three. So it's a very big thing by current human standards but but still small in the grand scheme. And but but very difficult for humans. 
+
+So to to accomplish this very difficult goal really requires a combination of efforts of SpaceX, xAI, and Tesla working together to create this epic terawatt project. So, and you know, Tesla and xAI and SpaceX have all done amazing things that people did not think would be done before. 
+
+So, there's the the Giga Texas fab here. There's, you know, the the the Optimus robot that's being built. There's a a global supercharging network. There's really quite a lot. And it wasn't that long ago when people thought electric cars would wouldn't amount to anything. 
+
+And there were there were basically no electric cars for sale when when Tesla started. And people said it was impossible, and now Tesla's making 2 million electric cars a year. Yeah. And then xAI, although it's a new company now part of SpaceX, has also built the first gigawatt scale compute cluster, which in record time. 
+
+Jensen Huang from Nvidia said he'd never seen anything built so fast in his life before. So a great compliment from from Nvidia. And then SpaceX—well, I guess you can read it for yourself. You already know. I mean, the reusable rockets; people said that reusable rockets weren't possible and even if you did do them, they wouldn't be economically feasible. 
+
+So we did them, and then we made them economically feasible. And now we've landed over 500 times, and that then we did the Falcon Heavy, and now we're doing Starship. And Starship is is a critical piece of the puzzle because in order to scale compute and scale power you have to go to space, which means that you need massive payload to space. 
+
+And Starship will enable that. So this gives you sort of just a sense of scale. We've got Optimus there, Optimus for scale, and Optimus is about 5'11&quot;. So it gives you a sense of the size of the Starship V3 rocket. Starship V4 will be much longer. 
+
+Actually, the Starship V4 will make Starship V3 look kind of short. So we'll we'll expand with Starship V3 to 200 tons of payload to orbit from 100 tons with Starship V3. And then you can see that just the—that's just a rough approximation of the the AI, the mini version of the AI set. 
+
+So that's roughly 100 kilowatts. It's showing the solar panels and the radiator to scale. So uh, for some reason there's been a bizarre debate about radiators in space. It's safe to say SpaceX knows how to do heat rejection in space with 10,000 satellites in orbit. Might know a thing or two. 
+
+So you can see the radiator is actually quite small relative to the solar the solar panels. And we call it the MiniSat since that's just 100 kilowatts. We expect future satellites to probably go to the megawatt range. Yeah. So in order to get to the terawatt of compute per year, you need about 10 million tons to orbit per year and at 100 kilowatts per ton. 
+
+So we're confident this is feasible; like no new physics or impossible things are required to to get there. So I'm confident actually that SpaceX will get to 10 million tons to orbit per year. And then we we're building up to a terawatt of solar. That solves the—well, will solve the solar problem, the power generation. 
+
+So then the key missing ingredient is therefore a terawatt of compute. So this announcement is about solving the key missing ingredient. To give you a sense of what we're talking about, the current output of AI compute is roughly 20 gigawatt per year. 
+
+This chart explains why we need to build the Terra Fab because all of the rest of the output from Earth is about 2% of what we need. So if you add up all the fabs on Earth combined, they're only about 2% of what we need for the the terawatt project or Terra Fab project. 
+
+So you know, I—we certainly want our existing supply chain to be clear. We're very grateful to our existing supply chain: to Samsung, TSMC, Micron, and and and others. And we would like them to expand as quickly as they can. And we will buy all of their chips. 
+
+I have said these exact words to them. And but there's there's a maximum rate at which they're comfortable expanding, but that rate is uh much less than we would like. And so we we either build the Terra Fab or we don't have the chips. And we need the chips. So we're going to build Terra Fab. 
+
+And we're starting off with an advanced technology fab here in Austin. And and I I I believe Governor Abbott is in the audience. I'd like to thank Governor Abbott and the state of Texas for their support. Right. So in the advanced technology fab, we we will have all of the equipment necessary to make a chip of any kind—logic and memory. 
+
+And we will also have all of the equipment necessary to make the lithography masks. So in a single building we can create a lithography mask, make the chip, test the chip, make another mask, and and and have an an incredibly fast recursive loop for improving the chip design. 
+
+To the best of my knowledge, this doesn't exist anywhere in the world where you've got everything necessary to build logic, memory, and do packaging and test it, and then do the masks, improve the masks, and and just keep looping it. And we're not just going to do conventional compute in this. 
+
+I think there's some very interesting new physics that is potentially—that actually I'm confident will work. It's just a question of when. So this is going to—we're really going to push the limit of physics in in compute, and we're going to try a bunch of wild and crazy things which you can do if you've got that fast iteration loop. 
+
+I can't emphasize enough the importance of being able to make a chip, test it, and and then make and then change the design, do another one, and have that in a single building. The I I think that our recursive improvement with that situation is probably an order of magnitude better than anything else in the world. Yeah. 
+
+So, broadly speaking, we expect to make two two kinds of chips. One will be optimized for edge inference. So that'll be used primarily in Optimus and in the cars, but but especially in Optimus because I expect the robots—humanoid robots—to be made 10 to 100 times more than the volume of cars. 
+
+So you know, if if vehicle production vehicle production on Earth is about 100 million vehicles a year, and I expect humanoid robot production to be somewhere between a billion and 10 billion units a year. So it's a lot. So yeah, Tesla's going to make a very significant percentage of those is our goal. 
+
+And then we need a high power chip that is designed for space that takes into account the more difficult environment in space where you've got high power, you've got high energy ions, photons, you got electron build-up. It's it's a hostile environment in space. 
+
+So you want to design the chip—you want to optimize it for space—and you also want to generally run it a little hotter than you would normally run a chip on Earth to minimize the radiator mass. So there just a bunch of constraints that you you're design something differently in space than you would on on the ground. 
+
+And the for the space compute, my guess is that is the vast majority of the compute because you you're power constrained on Earth. That's why I think it's probably 100 to 200 gigawatt a year of terrestrial chips and probably on the order of a terawatt of chips in space. 
+
+Just because of power constraints on the ground is is probably how it ends up. Space has this advantage that it's always sunny. It's very nice. So I I actually think that the cost of AI in deploying AI in space will drop below the cost of terrestrial AI much sooner than most people expect. 
+
+I think it may be only 2 or 3 years before it is actually lower cost to send AI chips to space than it is on the ground because in in space you don't need much in the way of batteries because of it's always sunny. And the solar power you get, you're going to get at least five or more times the solar power you get in space on versus the ground. 
+
+Because you don't have atmospheric attenuation or a day-night cycle or seasonality. And you're always normal to the sun. So, you're really maximizing the the the solar power at that point. And the space solar actually costs less than terrestrial solar because you don't need heavy glass or framing to protect it from extreme weather events. 
+
+So as soon as the cost to orbit drops to a low number, it immediately makes extremely compelling sense to put AI in space. It's it becomes a no-brainer basically. Moreover, as you go to to space, you get increased economies of scale and things get easier over time. 
+
+Whereas as you try to put more and more power on the ground, you run out of space and and you you you start using up the the the easy spots, and then you get next level NIMBY. Nobody wants the thing in their backyard. So then so actually increasing power on Earth has becomes harder over time and more expensive over time, but in space it becomes actually cheaper and easier over time. 
+
+These are very important points. So yeah, heat. Heat. Heat. So, what what you just thought there was—because of course you're asking what's on your mind is—well, what do you do after a terawatt? Don't think small. Well, yeah, good point. 
+
+So we you know, how do you get to a petawatt? Is is the obvious next question. And, you get there by having an electromagnetic mass driver on the moon with robots, with Optimi, and obviously lots of humans. And, with that you can send a petawatt. 
+
+You can create a petawatt of compute and send that to deep space because on the moon moon has no atmosphere and has 1/6 Earth gravity. So you can you don't need rockets on the moon. You can literally accelerate it to escape velocity from the surface. 
+
+And that dramatically drops the cost once again of harnessing power and and enables you to go a thousand times bigger than a terawatt. So, for sure the future I want to see I I want to just live long enough to see the the mass driver on the moon cuz that's going to be incredibly epic. Yeah. 
+
+That should hopefully get us to a millionth of the sun's energy at least. Humbling to think about that. But a millionth of the sun's energy would be a million times bigger than Earth's economy. So, it's good from that perspective. And then yeah you expand beyond that to the planets, to the other stars, and create the most exciting possible future than that I can imagine. 
+
+So this looks a bit like the opening in Idiocracy with a Mike Judge unlocking an age of amazing abundance. So yeah, obviously the elements of that are sustainable energy, space travel, and AI and robotics that bring amazing abundance to everyone. 
+
+And it's it's really the it's really the only path to amazing abundance is AI and and robotics. Which is not to say it can't go wrong hopefully, you know, but I think it'll probably go right and it'll be a future that you that you love. And it's the best future I can think of at least. 
+
+So, and then we go beyond the moon, beyond Mars, and we sail through the rings of Saturn. Now, wouldn't it be amazing if you could buy a trip to Saturn? Or frankly, if you just have a trip to Saturn, I think you things will just be free in the future. 
+
+It sounds nuts, but you know, if you've got an AI robotics economy that is anywhere close to a million times the size of the current Earth economy, literally any need you possibly want can be met. If you can think of it, you can have it. 
+
+So, I think Iain Banks in his Culture books has it pretty much right where there there actually isn't money in the future and there's abundance for for everyone. If you can think of it, you can have it. That's it. Uh, which means anyone could have a trip to Saturn. It won't be, you know, just a few people. If you want it, you can have it. Yeah. 
+
+So, yeah. Join join us on this journey. And help us design incredible chips and make incredible chips and build a terawatt of ships, a terawatt of solar, and 10 million tons to orbit per year. Thank you.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
