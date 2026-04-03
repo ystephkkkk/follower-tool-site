@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - April 03, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">April 03, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=NM6T0tV5na4" target="_blank" rel="noopener">The State of Open Source AI | NVIDIA GTC</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/o_D0Uvz2mWrVGrfCBYBzCHABAO2lgLqS3T4pfOM1JH2JJoG_W5gaxQQ3hV7fLEQOvxDsu8vGvQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">NVIDIA Developer</span><span class="channel-subs">(205.0K)</span></span>
+                        <span class="meta-sep">·</span><span>36:11</span>
+                        <span class="meta-sep">·</span><span>349 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-04-03</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Clem Delangue (Co-founder and CEO, Hugging Face)</span> <span class="tag tag-person">Arthur Mensch (Co-founder and CEO, Mistral AI)</span> <span class="tag tag-person">Aravind Srinivas (Co-founder and CEO, Perplexity AI)</span></div>
+                </div>
+                <div class="tldr">Open source AI has evolved from a value-based movement into a critical commercial engine, where industry leaders are now prioritizing open-source infrastructure and transparent data &quot;recipes&quot; to accelerate global AI adoption and efficiency.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Open source AI has evolved from a value-based movement into a critical commercial engine, where industry leaders are now prioritizing open-source infrastructure and transparent data &quot;recipes&quot; to accelerate global AI adoption and efficiency.  Accelerating Product-Market...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Open source AI has evolved from a value-based movement into a critical commercial engine, where industry leaders are now prioritizing open-source infrastructure and transparent data "recipes" to accelerate global AI adoption and efficiency.</p>
+<h3>The Commercial Logic of Open Source AI</h3>
+<ul>
+<li><strong>Accelerating Product-Market Fit:</strong> Ion Stoica (UC Berkeley/Databricks) notes that a successful open-source project solves half of the business equation by proving a product solves a real-world problem. </li>
+<ul>
+<ul>
+<li><strong>Monetization Strategies:</strong> Revenue is generated by offering managed services in the cloud, adding value through performance, cost-efficiency, and advanced features (e.g., Databricks, MongoDB).</li>
+</ul>
+</ul>
+<li><strong>Sustainability through Corporate Structure:</strong> Ying (RadixArk) argues that launching a company is often a "passive choice" required to lead and sustain a successful open-source project.</li>
+<ul>
+<ul>
+<li><strong>Asset Value:</strong> Open source acts as a core asset that allows enterprises to bootstrap faster, while the business layer provides the stability and modularity needed for production environments.</li>
+</ul>
+</ul>
+<li><strong>Democratization of Skills:</strong> Jeff Boudier (Hugging Face) highlights that open-source tools are lowering the barrier to entry. Complex tasks like fine-tuning, once reserved for data scientists, are becoming accessible to all builders through simplified libraries and "agentic" skill registration.</li>
+</ul>
+<h3>NVIDIA’s Strategy: The Nemotron Coalition</h3>
+<ul>
+<li><strong>Ecosystem Efficiency:</strong> Jonathan Cohen (NVIDIA) explains that NVIDIA’s goal is to prevent the industry from "reinventing the wheel." By open-sourcing foundation models (Nemotron, COSMOS, GR00T) and detailed technical reports, NVIDIA allows the ecosystem to move faster.</li>
+<li><strong>The Nemotron Coalition:</strong> A collaborative framework involving numerous companies to share research findings.</li>
+<ul>
+<ul>
+<li><strong>Knowledge Sharing:</strong> Member companies share the results of ablation studies and experiment data, allowing the entire group to make better architectural decisions without redundant costs.</li>
+<li><strong>Industry Participation:</strong> The coalition invites the community to have a say in development, acknowledging that "more smart people don't work at NVIDIA than do work at NVIDIA."</li>
+</ul>
+</ul>
+</ul>
+<h3>The Evaluation and Data Crisis</h3>
+<ul>
+<li><strong>The "Static Benchmark" Problem:</strong> Ranjay Krishna (UW/Allen Institute) warns that open-source benchmarks quickly become static, leading developers to overfit models to specific scores rather than actual utility.</li>
+<ul>
+<ul>
+<li><strong>Multimodal Failures:</strong> Current vision-language models often fail at basic spatial reasoning (e.g., 3D space understanding or simple object counting) because they lack high-quality, descriptive training data.</li>
+</ul>
+</ul>
+<li><strong>Quality Over Quantity:</strong> Krishna’s research found that internet-scraped data often contains text that doesn't describe the actual visual content.</li>
+<ul>
+<ul>
+<li><strong>The Molmo Project:</strong> By building custom datasets where people describe "boring" background details and spatial relationships, the Allen Institute produced the "Molmo" model, which outperformed proprietary models like GPT despite being smaller.</li>
+</ul>
+</ul>
+</ul>
+<h3>Robotics and Simulation</h3>
+<ul>
+<li><strong>The Cost of Physical Data:</strong> Robotics data is prohibitively expensive because it requires manual human "tele-operation" of robots.</li>
+<li><strong>Synthetic Solutions:</strong> To bypass this, the Allen Institute is scaling up simulation environments (hospitals, homes, conference rooms) to generate synthetic data.</li>
+<ul>
+<ul>
+<li><strong>Molmo-Bot Success:</strong> A model trained entirely in simulation (Molmo-Bot) recently outperformed foundation models trained on real-world data, proving that diverse, high-fidelity synthetic environments are the future of embodied AI.</li>
+</ul>
+</ul>
+</ul>
+<h3>The Scale of Modern AI Infrastructure</h3>
+<ul>
+<li><strong>Massive Adoption:</strong> Hugging Face now hosts over 5 million open models, data assets, and applications.</li>
+<li><strong>Traffic Volume:</strong> The platform serves hundreds of petabytes of data per month—a scale comparable to Netflix's movie streaming services.</li>
+<li><strong>Beyond LLMs:</strong> While LLMs dominate the news, the most "trending" assets on Hugging Face are frequently focused on speech-to-text, image generation, and local AI deployment for privacy-conscious developers.</li>
+</ul>
+<blockquote>
+"If our goal is to help the entire ecosystem move as efficiently and quickly as possible, then we want to ask: what are the things we can do once and then share with everybody?" — <strong>Jonathan Cohen, NVIDIA</strong>
+</blockquote>
+<blockquote>
+"Having an open source project which is successful addresses half of that equation, the product-market fit... the open source project is successful because people use it and it solves some of their problems." — <strong>Ion Stoica, UC Berkeley</strong>
+</blockquote>
+<blockquote>
+"We were surprised to find that [Molmo] outperformed GPT... It seemed like scale wasn't everything in vision language; clearly there was a need for better datasets." — <strong>Ranjay Krishna, Allen Institute</strong>
+</blockquote>
+<blockquote>
+"Launching a company is an inevitable choice to be the force behind [a project]... if we want to make it really successful, always there is something that needs to lead the project direction." — <strong>Ying, RadixArk</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Yeah, so I am Ion. I am a faculty at UC Berkeley and I've been there for 25 years or more, more than that. And for the past 15 years, I've been involved in quite a few open source projects. It started with Mesos, the precursor of Kubernetes, Spark, Apache Spark, Ray, SGLang, VLLM, and also, you know, fine-tuned some models—open source models at that time—Vicuna.
+
+From that follows also another project about Chatbot Arena to evaluate these LLMs. And then I also have my entrepreneurial side, having started a few companies including Databricks.
+
+I'm Jonathan Cohen. I'm a vice president of applied research at NVIDIA. Along with Bryan Catanzaro, I co-lead the Nemotron program. My team also develops a lot of the NeMo platform, and I guess a lot of it started on my team and has kind of moved to other parts of the company and a few other applied research projects.
+
+But obviously, a lot of what we do is in the open and that's a really important strategy for NVIDIA, and I'm sure we'll talk more about that. But most of the work from my team is either open weight models or open source software. Thank you.
+
+Hi, I'm Ranjay Krishna. I am a professor at the University of Washington and I'm also Director of Multimodal and Embodied AI at the Allen Institute. The Allen Institute is a non-profit organization. It's a research organization and our mission is to tackle the world's hardest challenges by providing AI solutions.
+
+My group in particular is focused on building vision language models as well as robotics foundation models. And everything that we build is completely open source, meaning that we open source the entire training suite including the training data, the training code, and the infrastructure.
+
+We also open source all of our evaluation data and all of our model checkpoints and weights, meaning you can reproduce everything that we build completely from scratch.
+
+Hi everyone, my name is Ying. My journey of open source started from my PhD at Stanford and also when I was visiting Berkeley actually with Ion Stoica. We initiated the non-profit org called LMSYS and we did a bunch of open source projects there, starting from Vicuna, which is an open source model, and Arena that evaluates many of the open source models, and SGLang as an open source inference engine.
+
+In the last year, we have seen a huge growth in the open source community for LLM development. And many of the core developers, we launched a company called RadixArk and now I'm a CEO and a co-founder of RadixArk. This company will keep focusing on building AI infrastructure with openness at the core of its value system.
+
+We continue to build the inference engine on SGLang and an RL engine we name Miles. There is a long way to go for building the open source ecosystem.
+
+Hi, sorry to be late. I'm Jeff Boudier, and I lead commercial products specifically at Hugging Face. One of my favorite parts of my job is to work with our partners including NVIDIA. Our goal is that every person in the world and every company in the world is able to build and use their own models. Who here doesn't have a Hugging Face account? Okay, nobody—you do. So we still have work to do.
+
+So, thank you so much. As Amanda and I were talking before you guys came up, today's focus is open source and business. There was a time we used to talk about open source purely—I mean there were businesses like Red Hat that came from Linux and stuff like that—but it was still more or less a values question.
+
+And now the number of companies that we have seen out there, including yours and Ying's and all that, the revenue potential and everything is amazing. What's your thought about it? Like what's making that difference and what do we need to continue to do that? And obviously it's a good thing, but do you have an opinion about it?
+
+I think from the business model, obviously any company wants to get to the product market fit. And having an open source project which is successful addresses half of that equation, the product market fit, because the open source project is successful because people use it and people use it because it solves some of their problems. So it's a proof of existence, so to speak.
+
+Now the other part of the equation is whether you can make money on top of the open source, right? And I think that cloud and so forth provided opportunities to do that, like we did early on at Databricks by providing a managed service in the cloud for the open source, then adding more value in terms of performance, cost, and features.
+
+So I think that's kind of part of the recipe for how companies—at least one approach for companies—commercialize open source successfully. Obviously other companies were, you know, like Confluent, MongoDB, and obviously Cloudera and Hortonworks at some—at some extent. So that was one approach. I mean there are other approaches like Hugging Face and so forth and I'm sure we are going to see others. But, you know, it is possible to build business on the open source.
+
+So John, you are leading the whole Nemotron training effort and you know that's been a big news and initiative and there is a lot of excitement around it. So what was your aim towards doing that? One is open source, enabling the community.
+
+Yeah, I mean the idea behind Nemotron is, you know, speaking if I were to speak purely self-interested from NVIDIA's perspective, which isn't—isn't exactly how I think about it, but if you take that frame even, it's in NVIDIA's interest to have great AI everywhere. We believe it's good for everybody. We believe it's good for the ecosystem and the economy.
+
+There are so many businesses that are built on AI and we want to enable all of them to be successful. And the idea behind Nemotron is if everybody were to train their own models from scratch and gather their own data sets and build their own software, that would obviously be incredibly inefficient.
+
+If our goal is to help the entire ecosystem move as efficiently and quickly as possible, then we want to ask the questions, well, what are the things that we can do once and then share with everybody? One of those things is we can build foundation models. So we do that in the case of Nemotron, we do that in the case of world models with COSMOS, and we do that in the case of robotics with GR00T.
+
+Across NVIDIA we have many of these foundation model programs, each to serve a different industry or technical need that powers a different industry. And then all of the R&amp;D that goes into it, as much as we're able to, we also open source. We open our data sets, we open source our training recipes, and we publish these detailed technical reports.
+
+We just published one on Nemotron-3-Super that's very detailed, that really explains what did we do and how did we do it and why did we do it. And the reason for all of that is we want to teach the entire industry because we want the whole industry to move as quickly as possible.
+
+So Ranjay, last year at GTC, I had a great fireside chat with Ali on open source and he had a lot of interesting ideas and he had almost an emotional response to every question I asked. But one thing he focused a lot on was benchmarks.
+
+I think now we have these efforts with Nemotron and a lot of other companies doing models, but at the time there was like a question: what do you do in open source? Do you have any thoughts, and please feel free to add other activities like the multimodal aspect that you mentioned?
+
+Sure. So, I mean, evaluation has always been a big part of the entire training cycle. It's probably the most important part. I think a lot of times what we struggle with in the open source community is we build benchmarks, benchmarks become static, people overfit to them, and it's then this sort of process, this loop where you then have to go back and regenerate new benchmarks to keep track of actual progress.
+
+And often times that process becomes sort of alienated from actual use cases. And so it becomes harder and harder for people who aren't directly building models that are being used by users to build very effective benchmarks. There's been a lot of effort trying to build dynamic benchmarks over the last couple of years that quickly adapt themselves to the change in use cases, but I wouldn't say that those directions have completely been successful yet.
+
+There're still a lot of research questions left, but I would love to see them continue. In the multimodal and embodied AI space, it's still very nascent. When you look at multimodal models, I mean, they're still so far behind in their capabilities. People are still building spatial benchmarks and spatial understanding benchmarks.
+
+These models barely understand 3D space, they barely make sense of, you know, where things are or how far they are. I mean, sure you see some demos where things work well, but even for simple cases like counting, they're unable to reason about, &quot;Hey, I saw this bottle here, I looked away, I came back, oh that's two bottles.&quot; These simple sort of mistakes shouldn't happen, and it's partially because we do have an evaluation problem.
+
+In embodied AI, I would say it's even worse because it's a big systemic problem. It's not just about coming up with one evaluation for one set of tasks, but the kinds of things we want to build robots for are so diverse and the environments we want them to operate in are even larger. I would say that it's—it's—it's a bigger and bigger problem.
+
+Thank you. I'll come back to that, but Ying, you're a good example of starting open source, amazing community build up, great job there, and then you have started something, a business. So like coming back full circle to the question I asked Ion, how do you think about it? How do you sustain Miles and SGLang and then a business that's building on something that's open source?
+
+Yeah, I would say this is actually another direction. It's not that we weren't initially thinking about business, but initially we wanted to do the open source work and share it with people so they can all use it to run something else on top of it. We want to make it successful, we want it to be used by people and maintain high quality.
+
+And then we discover that for every open source project, although at the spirit of it is we want people to all join to co-develop and join to build one thing and make it great, if we want to make it really successful, always there is something that needs to be behind it to lead the project direction and push for everything around it. It just becomes much more complicated on the road when it's getting more and more successful.
+
+And launching a company is an inevitable choice to be the force behind it. We see the huge potential and we want to continue the journey, so having a startup, having a company becomes a passive choice that we need to do. And we also believe if we are doing this, I mean people are all using it and we see more and more people using it, definitely it has a value that creates other values.
+
+If it creates value, then there will be people who will be happy to buy it, which we have just proved—which is true and which is already happening. And this open source project as an asset is enabling a lot of things on top of it. And the enabling part, the enabling layer, expands more than the core itself.
+
+The expansion of how to utilize this open source core, how we can unleash the power that it can do for the other upper layer customers, is what the enterprise will do and that will lie in the business part. Definitely we are still at a very early stage, I mean a lot of things we need to figure out, but I believe the direction is how to build a whole thing around this core.
+
+We want to teach people how to utilize it in a real production scenario, make it stable, efficient, generalizable, and modularizable. We also need a way to even further grow it and fork it—second time develop it to enable more possibilities. And all that path is a business itself.
+
+Awesome, thank you. So there's like little time left and I want to get to a lot of interesting questions. So Jeff, maybe I jump ahead a bit. You guys started quite a few years ago and the question that you ask is who doesn't have a Hugging Face account? So, I think you would have a best insight into the distribution story of it, right?
+
+You started with model weights and then eventually it became a lot of different things. Now there are papers and, you know, different utilities and then your own opinions about things. So how do you think like businesses or people are utilizing different aspects of the infra for an end-to-end system?
+
+Yeah, it's hard to believe that Hugging Face is about 10 years old. The number of models and data assets and applications has been increasing and accelerating. I don't think this is something that we've shared publicly yet, but we crossed over 5 million open models, data assets, and applications on Hugging Face, which really shows the adoption of open source.
+
+Whenever there's a new important model like Nemotron-3-Super that just landed, or like OLMo 2 that recently landed, it creates sort of an ecosystem around those models. And I think there are a lot of things that happen through Hugging Face as a distribution platform that are not necessarily super visible as a user of the community.
+
+The first one is like that scale. And today we serve all these models and data assets—it's like hundreds of petabytes a month, right? So that means that we're serving models at the same sort of scale that Netflix is serving movies, so it's a little bit crazy. Another thing is that when we talk about AI, we think a lot about LLMs, but actually if you look at the top 10 models in terms of trending on Hugging Face, most of them are not LLMs.
+
+They're going to be speech to text, they're going to be image generation, multimodal, etc. And then I think local AI is another thing that's not necessarily super visible and it speaks to how AI builders are now taking AI into their own hands. There's the stuff they want to keep private and run locally and there's the stuff where they need a lot of intelligence and they want to run on the server. We see that very clearly in the numbers.
+
+If you're interested in all these like numbers, our society and policy team just published a new report on the state of open source AI with lots of figures in there.
+
+Awesome, thank you. So coming back to the initial question I asked you, Ion. You have this concept of five-year labs and all of them have spawned some really interesting companies and open source projects.
+
+So how does it look like, and what does it make—like you can tell that story better than anyone—what components of OSS does it take to make a successful business? You have done everything from Databricks to Anyscale to Chatbot Arena and then SkyPilot.
+
+Yeah. So I think again, this is for people who do not know, at Berkeley we have these five-year labs. And they started a long time ago in the beginning of the 80s, so 45, 46 years ago. Actually the first lab was the one which created RISC—reduced instruction set computer—which is dominating now the CPU world.
+
+And then these five-year labs have a mission and it's a group of faculty and students who are excited to work on those problems. Also, I would add as a context that for a long time, and even before open source was fashionable, Berkeley was the cradle of the open source.
+
+It's, you know, maybe people remember about Unix BSD. BSD stands for Berkeley Standard Distribution. Maybe people remember about Internet TCP/IP. You know, this TCP/IP was a project which was open source at Berkeley. And Ingres, the first relational database which was open source. So we're just kind of like they say, we are on the shoulders of the giants.
+
+But now to get—and then we have a series of labs: Rad Lab, AMPLab, RISELab, and now the Sky Computing Lab. And in each of those there were one or more open source projects which actually became quite successful, like Apache Spark, Ray, SkyPilot, SGLang, and VLLM, which are the top open source projects when it comes to inference, LLM inference.
+
+So what gets there is something very organic. First of all, these projects kind of provide the direction in the lab and so forth. But at the end of the day, it's a group of students who are passionate and happy to work together to make it happen, right? So that's kind of actually the key.
+
+The lab itself is built so that basically everything we do is open source, with a permissive license like Apache 2.0, and we don't produce any patents. Everything is for the public good. And then these people, you know, create projects and at some point if some project is successful, some other companies are starting to use it.
+
+Now the question these companies starting to use these projects say is, &quot;Okay, what will happen if I want to bet on this project and the students graduate?&quot; and so forth. And then there are a few choices, right? One choice is basically saying, &quot;Well, you know, I am graduating and going to academia, and the project dies.&quot;
+
+The other thing is that maybe some other company wants to take over the project. Actually, with Apache Spark, we actually wanted to shop around to find some company to take over, because we didn't necessarily want to start a company; we wanted the project to be successful. And the other one is to start a company.
+
+So these are kind of—in many cases the company results from the passion of people to push the open source to be successful at the next level. And it gives a different kind of energy to the students like you're doing a PhD and then there's a potential of seeing the real world implication.
+
+Yes, and I think we build a little bit of more ecosystem so people learn from each other because it's a little bit of that. But fundamentally it's down to a group of passionate students working very well together and pushing on the project and wanting to take it to the next level.
+
+This is an amazing idea. So on the same lines, John, right? So I haven't heard much about the Nemotron Coalition other than keynote slides, but I've been hearing buzz for a while.
+
+So now since we're talking about research to business or open source to business, what entails the Nemotron Coalition? I'm sure it's not just models; it's know-how, it's knowledge, it's data sets, it's a lot of things. How are you thinking about it?
+
+Yeah, well, again, our motivation is we want to power the entire industry to do more AI. You know, what do we have? What does NVIDIA have as an advantage? Well, we have resources. It turns out training a state-of-the-art model is getting more and more expensive, and it's harder and harder for companies to sustain that.
+
+We're motivated and we have resources—it turns out we make money—and so we can put those resources into training these models. And that's great, so we do this for the benefit of the community. But when you think about it, two things: one, it's difficult to build something for the benefit of the community when that community doesn't have a say in what you're doing.
+
+It certainly makes sense from that perspective that we should invite the community to join us. We bring resources, but people bring their own ideas and their own interests and their own expertise. And then the second thing is it certainly isn't the case that every smart person in the world works at NVIDIA.
+
+In fact, it turns out more smart people don't work at NVIDIA than do work at NVIDIA in the world, right? And so if our ambition is to build something that's going to be really great and we need lots of great ideas to do that, it would make sense to try to involve as many of those people outside of NVIDIA as possible.
+
+So that was like the original motivation of the Nemotron Coalition: can we find like-minded companies that are also interested in and benefit from the creation of great open models and data sets and technology, and then can we create some kind of framework that actually allows us all to work together?
+
+I mean, I think the details there require—that will keep evolving, but it includes things like you're saying. We can certainly collaborate on data sets. We've been pretty good about opening our datasets, researchers—our datasets. AI2 has been like exceptional about releasing their datasets. That's a great opportunity for us to work together, for example.
+
+Lots of companies have either access to very interesting datasets or capabilities to build interesting datasets that they realize is to their benefit to share, and so that can be part of this too. And then another aspect is when you train a model, before you like PyTorch train, you spend most of your time thinking about all the decisions that you have to make.
+
+&quot;What's going to be our model architecture? Are we going to use this flavor of Transformer or that flavor? Are we going to use this dataset? What's going to be our mix?&quot; Just a lot of decisions to make. And the way you make those decisions is through research—through research studies, ablation studies, comparative studies, and all these things.
+
+That's an area where there's a lot of opportunity to collaborate. And so I think one of the main areas of the Nemotron Coalition will be that a lot of these member companies are doing their experiments and we're doing our experiments, and it turns out if we share what we're learning with each other we can actually all do a better job. I think that's going to be the main mechanism of a lot of the collaboration.
+
+And is the coalition all formed or it's open for applications?
+
+Well, I think we've announced kind of the initial collection of companies. Our ambition is that over—I think there's like a practical aspect of what we can manage, but our ambition over time is that it would have hundreds of members. I mean really be an enormous organization.
+
+Awesome, yeah, sounds successful. So coming back to you, Ranjay. You mentioned that multimodal is severely lacking in benchmarks and evals, but overall, what else? Because yeah I agree with you, I don't see much out there. But what else is needed in terms of infra, datasets, everything—because I'm sure two or three years from now that's all we will be talking about?
+
+Sure. Let me start off with multimodal first and then I'll talk a little bit about embodied as well. So in multimodal, when we first started thinking about building vision language models, all the proprietary ones that were out there including GPT and Gemini were all closed source. There was nothing that we could really build on.
+
+There were of course some datasets out there, but all of those were very small scale and they were mostly academic datasets. And the general consensus in the community at that time was that we could scale up vision language models the same way that we've been able to scale up language models.
+
+But we kept finding that even in these large models like GPT and Gemini, they kept making mistakes that they really shouldn't be making at all. And it was really hard for us to investigate why without really having open models to play around with. There were of course some models that were open, but again the training data was completely closed off.
+
+So we began by starting to analyze training datasets and we quickly realized that most of the training datasets that people were scraping from the internet to train with contained text that barely talked about the visual content at all. Which makes sense when you think about it, right? When you upload an image on let's say your social media, you don't usually describe the contents; you describe how it matters to you.
+
+And so that's what people were training on. And so it's no wonder that these models were lacking all of this information that's actually in the images. And so we started building our own custom datasets at scale trying to get people to talk about things that they wouldn't necessarily talk about usually—you know, talk about all the boring things in the background of an image, talk about where things are relative to each other.
+
+Once we collected that data and trained our very first model, we were surprised to find that it outperformed GPT. Our first model in this series was Molmo and it was able to beat all of these proprietary models that were much much larger. And so for us it seemed like scale wasn't everything in vision language.
+
+Clearly there was a need for better studies, clear need for datasets, and of course the entire evaluation suite was still very much in development at the time and it still is. Now along the same lines, one of the other things we've been looking at in my team is of course embodied AI and robotics, and the problem there is even more dire.
+
+You have all of these corporations that are training these large foundation models and some of them have released these models. You know, thank you to NVIDIA for example for releasing GR00T or Physical Intelligence for releasing Pi. But again, we don't know anything about their training data.
+
+And so we have very little information to actually understand what it's going to take to replicate these results, why these models fail, and why they make the mistakes that they do. And so again our solution here is to well, try to see if we can build robotics datasets. And of course it's way too expensive for us to build.
+
+It's taking billions of dollars for a lot of these other companies to build robotics datasets at all because you need to train people to tele-op these robots and make them do tasks. And it's a lot of hard work. Instead, our solution has been to go to simulation.
+
+We've been scaling up simulation environments and building out hospitals, conference rooms, people's homes, all pre-populated with 3D assets in all kinds of variations that you might encounter in the real world. Now that we have these assets, we can then start generating data in them.
+
+It's easy to generate data when you know where every single thing is in simulation. And now we can start studying these things at scale. And again we've been surprised because we released a model last week called Molmo-Bot and it's trained completely in simulation, and it outperforms a lot of these foundation models that have been trained with real-world data.
+
+And again it's because we're able to generate data across a wide diversity of things and actually study what it takes to build them. This is the kind of stuff that I think more people in the open source community need to be doing. And again, we do release everything so that others can build and use it.
+
+Yeah, that's awesome. Thank you. So it's all synthetically generated data. Yeah, that's great. I know we are running out of time, so I want to just go through—not blitz through you but ask you one question, one more round.
+
+So Ying, something I've been observing about you, right? So you came as a student from Stanford under Ion and then your work at XAI and then the community you developed with SGLang. And this is something that I observed firsthand: the feedback response was so quick—turnaround that was really intense and that garnered you a lot of support and more feedback and better product and whatnot.
+
+So now that you have a company, how do you see it going forward? How do you continue supporting the community? How do you balance—like what Ion was saying, right—building the open source and everything that's half of it, then how do you make money and then how does the community factor into it? I know you addressed it a little bit in the beginning, but what's your strategy here?
+
+Yeah, first I think open source development gave us the network—it's a window for us to see the world. It's a window for us to gain information, know about the market, like you said iterations—fast iteration of gaining feedback. And those information is—a truly invaluable part for us to move forward to the future of a bigger scope, more ambitious vision.
+
+And the vision then—like SGLang is an inference engine. We started from there. But RadixArk's ambition we already leveled up to just be AI infrastructure, including inference and training. And then our mission in addition to still building the best open source and supporting the whole community and letting people share knowledge, is also about building the infrastructure, which is actually usually the most complicated part.
+
+We build this thing in a good shape and focus on it, put AI infrastructure as our first principle. When people consider the whole pipeline of building the best AI, we focus there and then we work with other partners and other parties to eventually deliver the frontier AI.
+
+What we want to see is from the core AI infrastructure it can be a huge fan out of the various possibilities of building models that can suit different scenarios and solve different tasks and problems. And we believe that energy—we actually consolidate the effort into one focused component and then share it with all the other parties—is what generates the value and also how the business will run.
+
+We do help those companies to bootstrap faster on moving towards frontier AI and we have shared the knowledge. We bring the knowledge from frontier AI that was held in a small group of people to everyone, and through that process people will be happy to pay for the knowledge, but in different vehicles.
+
+Whether it is the knowledge in the vehicle of software, the knowledge in the vehicle of services, or say the platform with a toolbox that you can use. I mean, there could be different products, but at the same time, essentially it's about people paying for knowledge sharing.
+
+Awesome. Thank you. And the conversation won't be complete—and I think Amanda's going to yell at me if I don't ask agentic. I know everybody's thinking about it and we're talking about agents right now—it's a single agent, it's going doing some work, multi-horizon tool calling and all that.
+
+Things are going to get more complex like multi-agentic training and then, you know, you're sharing memory, you have more complicated orchestration, scheduling. How is Hugging Face planning for that era for yourself and the community?
+
+Well, I think there are two dimensions. One is that we want to provide the tooling so that people can build their own agents. There's a lot that goes into it. Agents are systems and so you have the reasoning part and you need to interface that with the tools and you need to provide it skills. So all these different parts of it we want to enable through our open source libraries and then through the repositories on the Hugging Face Hub.
+
+And then there is another piece of agentic that's really exciting to us, which is the democratization aspect, right? If AI proficiency was sort of like a video game with like five levels, then fine-tuning an open model would be maybe level three. And so that was usually the work of data scientists within organizations.
+
+Today that level three you can accomplish at the beginner level because we now have, you know, GRPO or using TRL of an LLM using a custom data set. All these things are skills that you can provide and register to your agent, right? We now have—you do HF, that's our terminal CLI—register skill to whatever you're using, whether it be Claude or whatever or Open-LLM.
+
+That changes everything because that means that the capabilities of building your own AI and customizing your models to your data becomes something that is available to all AI builders. We're excited about it.
+
+Thank you. So I know the time is up. Can I take two more minutes? No? Okay. Well, thank you so much for your time. I know we couldn't—well we started five minutes late so but I couldn't get to all the questions I wanted to ask but thank you. This was very valuable and it's up to these guys if they have time to have more discussions with you all. Thank you so much. Thank you guys so much.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
