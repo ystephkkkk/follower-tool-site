@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - April 13, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">April 13, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=cNMXHPc113I" target="_blank" rel="noopener">ETF Edge on how volatility and conflict in the Middle East are reshaping ETF strategies</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">CNBC Television</span><span class="channel-subs">(3.4M)</span></span>
+                        <span class="meta-sep">·</span><span>19:59</span>
+                        <span class="meta-sep">·</span><span>328 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-04-13</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Christian Magoon (CEO, Amplify ETFs)</span> <span class="tag tag-person">Jamie Harrison (Head of ETF Capital Markets, MFS)</span> <span class="tag tag-person">Dominic Chu (Host, CNBC)</span></div>
+                </div>
+                <div class="tldr">Despite prolonged conflict in the Middle East and shifting interest rate expectations, the ETF market remains resilient due to robust market structure; however, investors are increasingly shifting toward energy, hedged equity, and active management t...</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Despite prolonged conflict in the Middle East and shifting interest rate expectations, the ETF market remains resilient due to robust market structure; however, investors are increasingly shifting toward energy, hedged equity, and active management to navigate potential...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Despite prolonged conflict in the Middle East and shifting interest rate expectations, the ETF market remains resilient due to robust market structure; however, investors are increasingly shifting toward energy, hedged equity, and active management to navigate potential "midterm election year" volatility.</p>
+<h3>Market Resilience and Geopolitical Shifts</h3>
+<ul>
+<li><strong>Unexpected Market Stability:</strong> Christian Magoon noted that despite Middle East conflict, credit concerns, and a hawkish Fed, a bear market has not materialized. </li>
+<ul>
+<ul>
+<li><strong>Resilience Factors:</strong> Strong company earnings and the U.S. position as a net exporter of oil and natural gas have buffered the global economy from price shocks.</li>
+</ul>
+</ul>
+<li><strong>Psychological Shifts:</strong> Investors are moving away from the "transient" view of geopolitical risk. </li>
+<ul>
+<ul>
+<li><strong>Sector Rotation:</strong> Leadership is shifting from 2025’s technology winners toward energy and basic materials.</li>
+<li><strong>Contrarian Indicators:</strong> Institutional ownership of energy recently hit multi-year lows just before the sector became a top performer, suggesting "reverse sentiment" is a strong buy signal.</li>
+</ul>
+</ul>
+</ul>
+<h3>ETF Market Structure and Liquidity Performance</h3>
+<ul>
+<li><strong>Proven Stress Testing:</strong> Jamie Harrison highlighted that ETFs have successfully navigated the pandemic, tariff wars, and current geopolitical shocks without structural failure.</li>
+<ul>
+<ul>
+<li><strong>Arbitrage Mechanism:</strong> The primary market mechanism incentivizing market makers remains robust, ensuring liquidity even during wartime shocks.</li>
+</ul>
+</ul>
+<li><strong>Friction Points:</strong> While the overall market is healthy, some "dislocations" are appearing in specific areas.</li>
+<ul>
+<ul>
+<li><strong>International and Emerging Markets:</strong> These sectors are seeing wider spreads and increased risk premiums as the cost for market makers to acquire underlying positions rises.</li>
+</ul>
+</ul>
+<li><strong>Capacity Concerns:</strong> Harrison warned that with over 800 products launched recently, market makers do not have "endless balance sheets" and may become more selective during extreme sell-offs.</li>
+</ul>
+<h3>Strategic Thematics: Hedging and "Buying the Dip"</h3>
+<ul>
+<li><strong>Hedged Equity Demand:</strong> Investors are gravitating toward products that couple equity exposure with option income (e.g., Amplify’s IDVO and NDIV) to mute volatility while maintaining a ~6–10% distribution rate.</li>
+<li><strong>Cybersecurity Opportunities:</strong> Magoon views the recent pullback in cybersecurity ETFs as a buying opportunity, arguing that AI will drive M&amp;A and increased demand rather than disrupting the sector's utility.</li>
+<li><strong>Crypto Stagnation:</strong> Cryptocurrency remains "rangebound" due to the "Two L’s": lack of Liquidity and pending Legislation.</li>
+</ul>
+<h3>Identified "Red Flags" in Complex Products</h3>
+<ul>
+<li><strong>Liquidity Mismatches:</strong> Both speakers cautioned against ETFs holding <strong>Private Credit</strong>, noting a potential disconnect between the daily trading pace of an ETF and the illiquidity of the underlying assets.</li>
+<li><strong>Equity-Linked Notes (ELNs):</strong> Magoon flagged ETFs using ELNs for income as a significant risk during major drawdowns due to underlying credit risk and potential redemption contagion.</li>
+<li><strong>Due Diligence:</strong> Harrison advised investors to stress-test portfolios for 15–20% drawdowns, specifically looking at collateral constraints and whether underlying constituents will continue to trade.</li>
+</ul>
+<h3>Forward Outlook: Elections and Active Management</h3>
+<ul>
+<li><strong>Midterm Election Volatility:</strong> Historically, midterm years see an average drawdown of 17%, followed by a 12-month forward return of roughly 31%. </li>
+<li><strong>Prediction Markets:</strong> New ETF filings are exploring "prediction market" data and binary outcomes related to presidential election results.</li>
+<li><strong>The Rise of Active Management:</strong> Harrison noted that 86% of new products in 2025 were actively managed, a trend expected to dominate through 2026 as the wrapper evolves beyond "cheap passive beta."</li>
+</ul>
+<blockquote>
+"ETFs have passed every stress test that's been thrown at them, from the pandemic sell-off to the tariff tantrum to now this geopolitical risk... It speaks to the genius of ETF market structure."
+— <strong>Jamie Harrison</strong>
+</blockquote>
+<blockquote>
+"A lot of times some of our best-performing themes are our least bought... reverse sentiment is actually a great thing and indicator for buying some of these unique opportunities."
+— <strong>Christian Magoon</strong>
+</blockquote>
+<blockquote>
+"ETFs feed on liquidity and transparency. When you start talking about complex derivatives or less transparent markets, those would be something you'd want to keep an eye on as volatility ramps up."
+— <strong>Jamie Harrison</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Welcome to ETF Edge, your go-to place for all things exchange-traded funds. I'm your host, Dominic Chu. So the conflict in Iran has now exceeded the six-week time frame that was previously outlined by the Trump administration. 
+
+Investors must now consider maybe the longer-term impacts to the U.S. economy, the global economy, and the markets around the world. So how is it best to position now? Joining me now for that conversation is Christian Magoon, CEO at Amplify ETFs, alongside Jamie Harrison, head of ETF capital markets trading over at MFS. 
+
+Thank you both for being here with us right now. I'll kick off the conversation, Christian, with you, from a top-level perspective. We know that there has been a lot of volatility around the markets, yet markets have been relatively resilient compared to other shocks, geopolitical or otherwise. 
+
+Has it been a surprise to you just how much the markets have held in there, despite a full-blown war going on in the Middle East? Yeah, Dom, I think if we would have had the headlines about everything happening with what's going on in the Middle East, even some of the credit concerns, or even the Fed now suddenly moving from rate cuts to potentially rising rates, I think we would have expected maybe a bear market here, but we haven't seen that. 
+
+And I think some of the resilience in company earnings has been helpful. Also, maybe the view that this isn't a permanent conflict and maybe some of the excess pricing that happened in oil actually benefits the U.S. from being a net exporter to other countries of oil, as well as natural gas. So I think it's been a little bit different than what we would have thought. With that being said, we still think there's a lot of risk on the horizon.
+
+What exactly, just a follow-up there, what do you think investor psychology has been like? You mentioned this idea that maybe this is, I don't want to say fleeting, because I don't want to trivialize what's happening in the Middle East right now. But geopolitical risks have, in the past, been characterized—and I hate using this word—as transient, right? 
+
+That they come and then they go and markets kind of bounce back afterwards. From an investor psychology standpoint, has anything changed with regard to the mentality that investors have about, say, buying dips in this kind of environment? I think there might have been a little seasoning of investors with Venezuela and the first Iran strike where there was a head fake kind of, and it didn't turn out to be really a prolonged crisis. 
+
+So perhaps investors maybe were a little subdued thinking that Iran would be, this time around, a little bit not as material. But certainly, with what we've seen with oil prices now and the duration that you mentioned, we are seeing investors start to change their allocations in 2026. 
+
+And certainly, we've seen some new sectors rise in terms of leadership, whether that's energy or basic materials, kind of seizing the narrative away from some of the technology leaders of 2025. Now, Jamie, an interesting point about all of this relativity with regard to the market action has been just how resilient it's been not just from a price perspective but also from a market structure perspective as well. 
+
+We have seen a massive shock in terms of things like tariffs, in terms of the war being here over the course of the last month plus or so here. What exactly does it tell you about the way that market structure has evolved over just the last five years and maybe even since the Great Financial Crisis? 
+
+Even with big wartime shocks like this, we have not seen as many large dislocations in the market as we might have been accustomed to seeing maybe five, 10, 15, 20 years ago. Yeah, well, certainly the ETF market has proven very resilient through this volatility that we've seen this year. 
+
+And you know, ETFs have passed every stress test that's been thrown at them, from the pandemic sell-off to the tariff tantrum to now this geopolitical risk that we're seeing in the market today. You know, I think it really speaks to the proliferation of the product set and a lot of the market participants that are active in the marketplace. 
+
+So there's an extremely robust lineup of liquidity providers, authorized participants, and banks providing liquidity on a daily basis. And it also speaks to the genius of ETF market structure, right? The arbitrage mechanism that exists in the primary market that incentivizes market makers to provide that liquidity to clients is very much robust and, you know, it's been exciting to see it work efficiently. 
+
+Now, we have seen a bit of widening in international products and especially in emerging market products, and you know, that's just a natural result of the underlying volatility that we're seeing in the market. Certainly doesn't mean anything's broken. It's just it's more expensive to trade in volatile periods and you're seeing that in those ETFs at this moment.
+
+Jamie, could I follow up with that point by asking you, from a person who scrutinizes things like liquidity, transaction cost analysis, and some of the market frictions that go into making an ETF or mutual fund market as kind of seamless as possible? Where have you seen, just maybe over the course of the past five or six months or so, some of the biggest stresses in the marketplace? 
+
+Are there certain specific types of asset classes? Are there certain specific types of maybe equities or fixed income or certain specific sectors in the market that have seen a little bit more relative dislocation and relative friction compared to other parts of the market from a structure perspective?
+
+Yeah, I think in general as a whole, the ETF marketplace has really taken this volatility in stride. But if we were going to have to pick out certain sectors or certain asset classes that have had more friction, it would be in the international space and again the emerging market space. 
+
+At the end of the day, the increased transaction cost and the increased risk premiums that market makers are going to put on ETFs are going to be a direct result of their costs increasing in acquiring the underlying positions in that primary market transaction that they do with issuers that helps create that liquidity for clients on the exchange. 
+
+And the more those costs go up, they're going to be translated into the product. Now, the beauty, as I said, of ETFs is that ETF arbitrage mechanism and again, as ETFs also gain scale, more participants come into that marketplace and also that helps contract spreads. 
+
+So in general, the ETF market has really been resilient. If you're going to look for frictions, probably the international emerging market space, but again, very manageable and really just reflective of the underlying volatility that we're seeing in the marketplace.
+
+You know, Christian, what's interesting about this whole situation right now as well is some of the places in the markets that have gotten some of the most attention because of what's been happening as of late have been certain types of thematic investments, certain things that are trafficking towards hotspots in the market, right? 
+
+We know that oil and gas energy stocks have been a huge focus since the war erupted because of rising oil and gas prices and some of the perceived beneficiaries of who those prices could actually kind of help out in the end. We've also seen some thematics with regard to other places in the market that have seen a lot more interest pick up. 
+
+Can you take us through at Amplify where exactly you are seeing some of those maybe bigger bumps up in terms of investor demand and just how is that playing out in your mind? Yeah, so one area is this hedged equity exposure that really, you know, couples equity exposure with option income. 
+
+In, for example, the international market that Jamie just talked about, we have an international product, IDVO, that owns international dividend-paying companies and then writes covered calls to kind of target around a 6% income rate. And that allows you to stay invested in international equities but have this hedge against the market volatility and kind of mute that. 
+
+On the sector side, we've seen a lot of interest in our energy and natural resources ETF, NDIV, kind of a similar approach, investing in oil, gas, chemical companies, at the same time having a target distribution rate of 10%. It's a five-star rated fund and it's returned over 30% this year. 
+
+So definitely one of the hotspot areas that we've tracked. On the other side, we've seen certain sectors kind of pull back a little bit. Like very timely right now is cybersecurity, which has been kind of a victim of some of the AI-related headlines. You know, is cybersecurity going to be disrupted like software? 
+
+And we think that that dip is relatively good to buy in because we think in an AI-driven world, cybersecurity as well as M&amp;A around cybersecurity is going to be a big deal. So we think that's still relevant, but that's pulled back from a dip standpoint. And certainly, crypto has been kind of rangebound here. 
+
+You know, liquidity and legislation, the two L's, kind of been working against crypto. We were long-term bulls in crypto with a variety of crypto-oriented products, but we think that is also kind of suffered from some of the liquidity being sucked out of the market due to what's going on with Iran.
+
+Now, do you feel as though, Christian, do you feel as though some of those places are seeing a little bit more of that kind of significant buy the dip demand for them? I know that from your perspective they could represent opportunities, but at what point, what do you think catalyzes or triggers people and investors, traders, to want to get more full bore into some of those parts of the market that have been depressed because of market volatility?
+
+Yeah, I think it's going to be a larger disconnect in some of those areas than, you know, the S&amp;P. So I think it's maybe double digits; once you're down over 10% in some of these subsectors, you start to see the contrarians start to say, well, maybe I'll take a look at this or long-term is this 10% due to something structural within the sector or the theme or is it really kind of driven due to macro issues like Iran or liquidity or the direction of interest rates. 
+
+So, you know, a lot of times some of our best-performing themes are our least bought and over the next 12 months they do the best. And sometimes our worst-performing themes are where it's really late in the game and people are piling on and, you know, I think we've seen that even last year when you see institutional ownership of energy via Bank of America research was at multi-year lows. 
+
+Just so happens energy ends up being the best performer in the first three months of the year. Likewise, the AI trade was kind of in the top tier of ownership going into last year and this year has lagged quite a bit. So I think sometimes a reverse sentiment is actually a great thing and an indicator for buying some of these unique opportunities.
+
+The old saying, right, buy when others are selling and sell when others are buying, something like that whole philosophy there. Jamie, I'd like to bring back to you this conversation because many of the things that Christian spoke about right now are asset classes that weren't really top of mind or even in existence with regard to ETF wrappers just five, 10, certainly 15, 20 years ago. 
+
+Things like hedge equity, buffer type products, defined outcome type products. From an ETF platform's perspective and somebody who focuses on capital markets and the trading activity around some of these funds, what exactly are you looking for with regard to how things have held up for some of these kind of newer type of asset classes within ETFs? 
+
+Some of the actively managed ones, some of the buffer ETFs, hedge equity ETFs. We have not seen a real period of market stress that has kind of dislocated those markets at all for some of those new types of ETFs and actively managed products. What exactly from your perspective is something that you'd be keeping a close eye out for to see that those stresses actually kind of maybe lead to something a little bit more, I guess, negative down the line?
+
+Yeah, I think, you know, ETFs feed on liquidity and transparency. Those are key factors for our market makers; those are key factors for our clients looking for products that are accessible. So, you know, when you start talking about complex derivatives, when you start talking about less transparent markets, I think those would be something that you'd want to keep an eye on as volatility ramps up. 
+
+Now, you know, I'm sure Christian, along with MFS and a lot of other issuers, have very robust capital market teams that through the product development stage stress test portfolios to make sure that they'll act as intended. But yes, as innovation continues to increase at a rapid pace within the ETF wrapper, definitely something that we advise our clients be really front-footed about. 
+
+It's important to do due diligence on the portfolio, absolutely. It's also important to do due diligence on the issuer and the infrastructure they placed around their products and the subject matter experts and human capital they have managing these products. 
+
+Because, you know, as these products continue to proliferate—think about last year over 800 products came to market, 72 new issuers—we're absolutely seeing some capacity reached within the industry itself. Market makers and liquidity providers don't have endless balance sheet and you're going to have times of increased market stress where you may start seeing them be more selective about how they deploy that balance sheet. 
+
+And you know, having a firm that has deep partnerships, a deep bench of subject matter experts that plays with the A-team in terms of the street and liquidity providers available, is super important. And you know, as you talk about some of these new products, yeah, definitely something to be well aware of. You know, complexity, lack of transparency could absolutely be an issue if we're going to start seeing some deep sell-offs.
+
+You know, Jamie, for some of these types of products, it's also about maybe the idea that we could see those have some issues down the line if market stresses come to fruition. Without getting too much into the weeds, Jamie, I know that we could if we really wanted to, but without getting too much into the weeds, what exactly do stress tests look like from say an MFS or any other fund issuer's perspective? 
+
+What exactly are the types of things that you are testing around and for? What exactly do those scenario analyses look like? What are the major factors you're trying to key in on? Yeah, from a high level, we're just taking a portfolio situation where the market is having a large sell-off. 
+
+What happens to our collateral constraints, what happens to the balance sheet of our market makers? Do the underlying constituents continue to trade? Are there underlying liquidity freezes in the portfolio should we encounter, you know, a 10 and a 15, a 20% drawdown? And you know, these are easily modeled out. 
+
+But again, when you're talking about a new product set, maybe less so in terms of being able to model that out. So from an MFS perspective, we've approached our ETF franchise from launching natural extensions of our current mutual fund capabilities. We want to meet our clients where they are and so we're leveraging existing investment teams that have a proven track record through plenty of bouts of volatility, so we've been very confident in our ability to provide that liquidity. 
+
+Once you start talking about again some complex derivative strategies—you know, we've all seen the news and the headlines around potential private credit ETFs—that picture becomes much more murky. And again, I think it's up to advisors, to investors, to clients to really dig in and look under the hood and engage with their issuers to ask these tough questions. 
+
+What does this look like in a 20% drawdown? How does this liquidity facility work? Am I going to be able to get in, am I going to be able to get out? And if I'm able to get out, am I able to get out at a price that's tight to NAV, and what's the infrastructure at your shop in terms of managing that consideration for me?
+
+You know, Jamie, I'm watching because Christian has been sitting here nodding next to me like he wants to get on this, so let's throw it to you, what your thoughts are, Christian, hearing what Jamie just spoke about with regard to stresses. Yeah, to me, I think there's two types of ETFs right now that raise some red flags or at least some increased examination in their underlying holdings. 
+
+If your ETF owns private credit, I think it's worth taking a look at kind of what the standards are around liquidity and how that ETF is trading, because that could be a bit of a mismatch between the trading pace of ETFs and the underlying asset. The second is ETFs that own equity-linked notes, and those could potentially be in stress due to redemptions and the underlying credit risk. 
+
+That's another kind of unique derivative and some of the largest ETFs out there, Dom, you wouldn't think that are income-oriented own equity-linked notes versus maybe doing option income or dividend income. They're doing derivative income in a true derivative sense, and these equity-linked notes we've seen in the past have some significant problems. 
+
+I would very closely look at any ETF that has equity-linked notes should we get into a major drawdown or there be a contagion in private credit or something related to the banking system. All right, let's put on our forward-looking hats—I don't want to say crystal ball because I mean that implies certain things about understanding the future. 
+
+But with as much clarity as you guys have on the ETF business right now, and I'll start with you, Christian, first on this, what exactly do you think will be the biggest thing in terms of market development for ETF products that we should be looking out for in the say next six to nine months? 
+
+Is there something in terms of specific areas in the market, asset classes where you could see way more activity building up as we head towards a midterm election cycle and the balance of the year? Yeah, I think there's going to be a continued drive towards equity strategies that have some type of protection, whether that's buffer or hedged equity. 
+
+Remember, a midterm election year historically has the largest drawdown of any year in the election cycle, about a 17% drawdown. So if we think it's bad right now, it could get a lot worse. The good news is, after that drawdown, it actually has the best 12-month forward return of about 31%. 
+
+So, you know, hopefully investors stick in there and how could they stick in there? With hedged equity, whether that's derivative income or buffered product or outcome ETFs. I also think a wild card because of this administration is the prediction markets, and we've seen a couple ETFs be filed to maybe just focus on presidential election results. 
+
+But I think there's some other applications using prediction market data. We're hearing it's incorporated in a lot of research outlooks now that may be able to provide some ETF ideas that aren't binary in terms of outcome. I want to leave it at that because I don't want to reveal too much secret sauce.
+
+All right, so speaking of that Jamie, prediction markets and ETFs, there's something that's been talked about for a while now. From a market structure and a capital markets perspective, just how important is it for you to stay on top of prediction markets vis-a-vis ETFs? Yeah, so, you know, we've seen those filings come out. 
+
+I think, you know, there's still a lot to be determined there in terms of how that exposure's going to be obtained, whether it's going to be via swap contracts or potentially another mechanism. So, yeah, absolutely. Whether it's that product, I know I think I agree with Christian there's been certainly a lot of attention paid to these derivative products, these enhanced income products. 
+
+But I think one thing I can tell you, you talk about looking into a crystal ball, what I can tell you with confidence is that you're going to see a continued focus on active management in the ETF wrapper. You know, when I started in ETFs, these were seen as cheap beta passive products. 
+
+You've certainly evolved from that. Active managers are coming into the marketplace every day. 86% of products were active in 2025 and certainly we're seeing that pace continue in 2026. So I think the benefits of the ETF wrapper—the transparency, the tradability, the flexibility—all very much resonating with investors, and I think you'll continue to see a focus on active management.
+
+All right, well, Christian and Jamie, thank you both very much for joining us here on ETF Edge. We appreciate the conversation here. We've actually asked Jamie to stick around for the ETF Edge podcast. You can catch that and all of our other content over at etfedge.cnbc.com. Thanks for watching and we'll see you next week.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
