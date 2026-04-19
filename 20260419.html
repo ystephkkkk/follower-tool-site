@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - April 19, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">April 19, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=w9M9p5CdCek" target="_blank" rel="noopener">Bloomberg This Weekend | Standstill in Strait, Warsh Heads to the Hill, Blue Origin Blastoff</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/PXTURrVHPIkg8Vmb3AvphcIBcSKE33kqDOgyeUvVLFsDAkEGamXpaEhEYh9YNERkvrW1BBmC=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Bloomberg Podcasts</span><span class="channel-subs">(469.0K)</span></span>
+                        <span class="meta-sep">·</span><span>145:25</span>
+                        <span class="meta-sep">·</span><span>383 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-04-19</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">David Gura (Host, Bloomberg)</span> <span class="tag tag-person">Christina Ruffini (Host, Bloomberg)</span> <span class="tag tag-person">Lisa Mateo (Host, Bloomberg)</span></div>
+                </div>
+                <div class="tldr">Tensions in the Strait of Hormuz have reached a critical impasse as Iran maintains its blockade, prompting the Trump administration to deploy special envoy Steve Witkoff to Pakistan for high-stakes negotiations while simultaneously threatening to target Iranian infrastructure.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Tensions in the Strait of Hormuz have reached a critical impasse as Iran maintains its blockade, prompting the Trump administration to deploy special envoy Steve Witkoff to Pakistan for high-stakes negotiations while simultaneously threatening to target Iranian...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Tensions in the Strait of Hormuz have reached a critical impasse as Iran maintains its blockade, prompting the Trump administration to deploy special envoy Steve Witkoff to Pakistan for high-stakes negotiations while simultaneously threatening to target Iranian infrastructure.</p>
+<h3>Middle East Crisis and the Strait of Hormuz</h3>
+<ul>
+<li><strong>Strait of Hormuz Standstill:</strong> Shipping remains at a near standstill after Iran reversed its decision to reopen the waterway.</li>
+<ul>
+<ul>
+<li>Iran has stated the strait will remain closed until the US lifts its blockade on Iranian ports.</li>
+<li>Multiple ships, including at least nine tankers, have been forced to reverse course; the Indian government expressed deep concern after shooting incidents involving two of its flagged vessels.</li>
+</ul>
+</ul>
+<li><strong>Escalating US Response:</strong> President Trump issued a severe warning via social media, stating that if a deal is not reached, the US will "knock out every single power plant" and bridge in Iran.</li>
+<ul>
+<ul>
+<li>The *Wall Street Journal* reports the US military is preparing to board Iran-linked tankers and seize commercial ships in international waters.</li>
+<li><strong>Negotiation Strategy:</strong> Special envoy Steve Witkoff and Jared Kushner are scheduled to lead a delegation to Islamabad, Pakistan, for talks beginning Tuesday.</li>
+</ul>
+</ul>
+<li><strong>Internal Iranian Friction:</strong> Analysts noted visible fissures within the Iranian regime, as the parliamentary speaker leads negotiations while the IRGC and hardline factions appear to pull back on concessions.</li>
+</ul>
+<h3>The Federal Reserve Leadership Battle</h3>
+<ul>
+<li><strong>Kevin Warsh Confirmation:</strong> Trump’s pick for Federal Reserve Chair faces a Senate Banking Committee hearing this week amidst heavy political friction.</li>
+<ul>
+<ul>
+<li><strong>Legislative Gridlock:</strong> Senator Thom Tillis (R-NC) continues to block all Fed nominations until the administration drops its investigation into outgoing Chair Jerome Powell.</li>
+<li><strong>Financial Disclosures:</strong> Senator Elizabeth Warren (D-MA) has raised concerns regarding Warsh’s financial disclosures, which reveal a personal net worth of approximately $190 million.</li>
+</ul>
+</ul>
+<li><strong>Powell’s Uncertain Departure:</strong> Jerome Powell’s term expires on May 15, but he may remain on the Board of Governors to maintain leverage against the administration's ongoing probes.</li>
+<ul>
+<ul>
+<li>Trump has publicly threatened to fire Powell if he does not leave "on time," though experts suggest the markets may doubt the president's legal authority to succeed in a forced removal.</li>
+</ul>
+</ul>
+</ul>
+<h3>Blue Origin’s Commercial Expansion</h3>
+<ul>
+<li><strong>New Glenn Rocket Launch:</strong> Blue Origin successfully launched its 98-meter heavy-lift New Glenn rocket from Cape Canaveral, achieving a milestone in booster reuse.</li>
+<ul>
+<ul>
+<li>The booster, which originally flew in November, successfully landed on a sea-based vessel for the first time.</li>
+<li><strong>Payload Details:</strong> The rocket carried a satellite for AST SpaceMobile, intended to serve as a "cell tower in space" for direct-to-device cellular service.</li>
+</ul>
+</ul>
+<li><strong>Strategic Pivot to the Moon:</strong> CEO Dave Limp confirmed the company has paused its "New Shepard" space tourism program to focus entirely on NASA's Artemis program.</li>
+<ul>
+<ul>
+<li>The company aims to put a cargo-focused lunar lander on the moon by the end of this year.</li>
+<li>Blue Origin currently targets a cadence of 8 to 12 flights per year, aiming to compete directly with SpaceX’s Falcon 9 and Starship.</li>
+</ul>
+</ul>
+</ul>
+<h3>Global Economic and Security Briefs</h3>
+<ul>
+<li><strong>Airline Cancellations:</strong> Rising jet fuel prices are forcing global carriers to reduce capacity for May; data from Cirium shows 19 of the 20 largest airlines are cutting scheduled flights.</li>
+<li><strong>Cuban Energy Crisis:</strong> Havana is facing severe blackouts as the US oil embargo deepens and shipments from Venezuela and Mexico cease. The Trump administration reportedly sent a delegation to Cuba last week to demand economic and political changes within a "narrow window."</li>
+<li><strong>Sustainable "Blue Foods":</strong> Chef Andrew Zimmern advocated for a shift toward "blue foods" (water-based proteins), noting that by 2045, the US may produce more seafood by weight than potatoes.</li>
+</ul>
+<blockquote>
+"It will happen. One way or another. The nice way or the hard way. It’s going to happen. You can quote me."
+</blockquote>
+<p>— <strong>President Donald Trump</strong> on a potential deal with Iran.</p>
+<blockquote>
+"If I could fly a rocket every week right now, I would be sold out for the indefinite future. Our job is to get out there, get as fast a cadence as we can as quickly as possible."
+</blockquote>
+<p>— <strong>Dave Limp</strong>, CEO of Blue Origin.</p>
+<blockquote>
+"Airdropping the vice president into Pakistan for one day was never going to get the job done... They go by vibes, they go by feel, and that has not worked out so well so far."
+</blockquote>
+<p>— <strong>John Finer</strong>, Former Deputy National Security Advisor, on the previous round of Iran talks.</p>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Coming up on Bloomberg This Weekend, shipping in the Strait of Hormuz at a near standstill. They wanted to close up the strait again, as they've been doing for years, and they can't blackmail us. As the hours tick down to the end of the ceasefire just days away, we're in Islamabad and Washington with the latest on negotiations. And President Trump's pick to lead the Federal Reserve heads to Capitol Hill. The questions Kevin Warsh will face as Trump's feud with Jerome Powell continues. Plus, how to retire rich. You may be in better shape than you realize. It's not always going to be, &quot;Oh my God, you're never going to retire.&quot; Bloomberg's personal finance reporter gives us a year-by-year breakdown on how to save for your golden years. Welcome to Bloomberg This Weekend. We are coming to you live from Bloomberg's global headquarters here in New York City. I'm David Gura. I'm Christina Ruffini, along with Lisa Mateo. It is Sunday, April 19th. Welcome to our listeners and viewers across all our Bloomberg platforms, on radio, TV, streaming, on bloomberg.com, and on the Bloomberg Business app. We've got some live photos for our TV viewers from Cape Canaveral where Blue Origin's Glenn rocket is on the launch pad with a hold at just under four minutes. Its launch window for about another hour and a half. The goal is to reuse its booster for the first time. That booster already launched and landed back in November, and this is a key test for the heavy-lift rocket to show it can compete with SpaceX, which already reuses boosters. Our Ed Ludlow spoke to the CEO of Blue Origin. That interview is coming up later this hour. Before we get to that, though, let's get some headlines with Lisa Mateo. Lisa. You got it. And shipping in the Strait of Hormuz, well, it remains at a near standstill. This after Iran reversed its decision to reopen the waterway. Iran now says it will remain closed until the end of the US blockade on Iranian ports. Bloomberg is reporting multiple ships, including at least nine tankers, have since reversed course. Earlier Saturday, Iran fired on at least two ships trying to transit the waterway. India says it's deeply concerned about two shooting incidents involving two ships flying its flag in the Strait of Hormuz. Now, the US reportedly putting the pressure on Iran to open the strait. The Wall Street Journal says the US military is preparing to board Iran-linked tankers in the coming days and seize commercial ships in international waters. Now, yesterday, President Trump told reporters there are, quote, &quot;very good conversations&quot; going on with Iran. It's working out very well. They got a little cute, as they have been doing for 47 years, and nobody ever took them on. We took them on. They have no Navy, they have no Air Force. Meanwhile, there are signs that the ceasefire in Lebanon could be in jeopardy. The IDF says it eliminated a terrorist cell operating near its soldiers in southern Lebanon. President Emmanuel Macron also said a French soldier was killed in an attack on UN peacekeepers in Lebanon and suggested Hezbollah was to blame. In other news, North Korea launched ballistic missiles toward waters off its east coast. Authorities in South Korea say multiple unidentified missiles were fired from the Sinpo area of North Korea Sunday morning. The missiles believed to have fallen near the east coast of the Korean Peninsula with no impact confirmed within Japan's territory. And Pope Leo opened the third leg of his four-nation trip through Africa in Angola yesterday. The Pontiff challenged its leaders to, quote, &quot;break the cycles of interest that have exploited Africa for centuries.&quot; Now, during his travels, Pope Leo also commented about his back-and-forth with President Donald Trump over the war in Iran, saying that he was not interested in debating the president but that he would continue preaching the Gospel message of peace. Christina and David. Lisa, thank you very much. And it is still so strange to me to have an American-accented Pope. And he speaks English. Yes, he speaks English. It's very odd. Thanks, Lisa. Sorry, go ahead. Go ahead. It's all you. All right. We're just days away from the end of the ceasefire between US and Iran. According to Axios, President Trump held a White House Situation Room meeting yesterday to talk about potential peace negotiations as well as other issues in the Strait of Hormuz. Right now, the Strait of Hormuz is effectively closed. Joining us now from Islamabad, Pakistan, is AP international correspondent Philip Crowther, along with Bloomberg's White House correspondent Courtney Subramanian and Bloomberg Intelligence senior defense research analyst, retired Colonel Wayne Sanders. Courtney, let me start with you. We listened to the president yesterday in the Oval Office to see if he would say something about this conflict. There was a brief mention during the course of an event that was really focused on other matters entirely, but he said, &quot;We'll have some information for you by the end of the day Saturday. We're talking to them. We're taking a tough stand.&quot; Just get us up to speed on what the administration is saying about the quality and the status of those negotiations and what we can expect here as we begin the new week. Yeah, I mean, I would first point out that the night before aboard Air Force One, the president is the one who told us he would be talking about Iran in the Oval Office Saturday morning. So you did see a bunch of us race to the White House Saturday morning hoping that we would get an update on the status of talks, but the president didn't take a single question, as you said. He mentioned very briefly at the top that there were very good conversations ongoing. He said that they tried to get a little cute and they tried to close up the strait as they have done for years. As you guys know, the strait was open before the US and Israeli military campaign on Iran. We didn't hear or see the president for the rest of the day. He spent the remainder of the day at his golf club. We do know that Steve Witkoff, his golf clubs were spotted, so we do believe the president met with Steve Witkoff at his Virginia golf club. The bag was sighted. It's the actual, we now know what the actual Witkoff clubs look like. That's how we're doing this. Incredible. We do, yes. That's where we're at. Incredible. But he continues to strike an optimistic tone about the status of these talks even as both sides, as you know, remain extremely far apart on some really core issues. Philip, I want to go to you because we're seeing some unverified reports this morning coming through Al Jazeera that the talks are now pushed and they're saying likely sometime next week and that's citing two unnamed Pakistani officials. Considering we still have no official details, I'm assuming this isn't happening tomorrow. Are you just in Islamabad in perpetuity now? Do you have any idea when these talks may or may not be happening? Look, I'm here to tell you that I cannot confirm that there will be another round of talks here in Islamabad next week, but what I can tell you is that the preparations for potential talks are definitely now underway here in the Pakistani capital. You can see behind me, this is the biggest tourist attraction here in Islamabad. This is Faisal Mosque. It is still open, but the main access road to it, that is now closed. That is why you can probably not hear the sounds of motorbikes and cars and all the people we've seen over the last few days wandering toward and back and forth from Faisal Mosque. They are not here today. It is just one of many signs we are seeing here on this Saturday morning here in Islamabad that preparations are underway. The two main hotels that had been taken over by the respective delegations last weekend, they have now been taken over by the Pakistani government, meaning any guests have been told to leave. That is a very clear indication right there, and there is footage right now that is circulating all around Pakistan of US military planes landing at a military base just on the outskirts of Islamabad. All of that indicates that preparations are underway. That doesn't mean that I can confirm to you that these talks will be happening, but the rumors all throughout last week were that there was going to be a second round of negotiations despite the fact that, especially over the last 24 or 48 hours, the rhetoric has again become more aggressive between Iran and the United States despite the fact that the Strait of Hormuz is pretty much entirely blocked right now. That does not mean that on the diplomatic front these two sides can't be putting together the building blocks to actually see each other again in person here in Islamabad at some point next week. The date, I cannot give you right now. Colonel Sanders, let me turn to you. And so, absent comment from the president, kind of official word from the White House or from Iranian counterparts, we're looking at the latest media reporting. And there was a big piece in the Wall Street Journal that broke yesterday, and the Journal's reporting that the US military is preparing in the coming days to board Iran-linked oil tankers and seize commercial ships in international waters. The Journal citing US officials saying they're going to be expanding their naval crackdown beyond the Middle East. What does this say to you? It does seem here as we've watched this back and forth about the strait whether it's open or not that the continued presence of this US blockade is really perhaps the biggest sticking point here for the Iranians and for this ceasefire generally. Absolutely. I think it's the United States' counterpoint to what Iran is doing to kind of hold the straits hostage as they did over the weekend. I wasn't surprised to see that there was an additional attack in the strait, specifically when they were shooting at some of the tankers, just because they want to be able to add whatever leverage they possibly can. The naval blockade from the US side, I think is specifically there. Obviously, it's worked in terms of turning some of these tankers around. The use of the Marine Expeditionary Units being there, the 11th and the 13th Marine Expeditionary Units are trained in this boarding and interdiction teams known as VBSS. I think it's one of the areas where both sides are showing, &quot;Hey, look, we still have this capacity.&quot; But if you recall in the Iran-Israel conflict for the 12-day war, they continued to shoot at each other right up until the point of the agreement and even shot at each other a couple times even afterwards. So I still think that this is mostly posturing more than anything. Philip, I want to go back to you because I want to dig into a little bit about how much we think these sides are still talking. Axios today is reporting that the Pakistani army chief, who has been kind of instrumental in facilitating this, held mediation talks between the US and Iran in Tehran this week. He was in Tehran last week and they're also reporting that there was at least one phone call between the US and Iran with possibly Pakistan mediating. Do you have any information on how those efforts are going or what communication has been happening even between the parties as, as you see, it seems like they are gearing up for something there even if we're not sure what or when? Yeah, and certainly Pakistan as the mediator and as the only mediator in this war right now is confident that its efforts are working out. That's why you're seeing these preparations for a potential another round of talks here in Islamabad. And you're right to mention Asim Munir. He is the head of the Armed Forces. He is called by Donald Trump his favorite field marshal. He is crucial in this. He spent three days in Tehran meeting everybody on the Iranian side who is of import who is part of this negotiating team. He met the Parliament speaker. He also met the Foreign Minister. Those are precisely the leaders of the Iranian delegation. Now, what does a mediator do? Well, essentially passes messages back and forth. He took an American message with him to Tehran and presumably he got one from Tehran as well to hand over to Washington. Now, I can't confirm whether there has been any direct contact between the United States and Iran during this time, during these last few days. In theory at least, the only contact that there has been has been face-to-face here in Islamabad last weekend during that first round of talks. But you certainly can't deny that there's that possibility that there might be some direct contact. For now, the mediator is the one passing messages back and forth and making sure that there is some kind of common ground between the two sides. And certainly from what we're hearing here in Islamabad, the Pakistani negotiators or mediators in this case are pretty confident that despite again the rhetoric and despite all the posturing that these are two sides that are actually getting closer. Courtney, the president has made threats against Iran and walked that back, walked the timetable back a handful of times now. And you mentioned that the president took questions on Air Force One over the weekend, on Friday he fielded questions from reporters. Let's take a listen to what he had to say about the status of that ceasefire. If you don't have a deal by Wednesday when the ceasefire ends, will you extend the ceasefire or will you start attacks again? Maybe I won't extend it. But the blockade is going to remain. But maybe I won't extend it. So you have a blockade and unfortunately we'll have to start dropping bombs again. &quot;We have to start dropping bombs again,&quot; the president saying in those comments. So, Courtney, I'd love some insight if you have it into how the president is thinking about the extension of this ceasefire, this pause in attacks on Iran. Again, the end of that is coming up very shortly here and he has been ambiguous about his willingness to extend that. Well, that's Donald Trump's style, right? He likes to keep everyone guessing. He likes to keep everyone on edge. But I would note that we've been here several times throughout this war where the US seemingly ramps up pressure just before a deadline and then both sides pull back and extend a pause in fighting. And I think that is really the core objective here is to just extend the pause in fighting. And one thing I'll note is the Wall Street Journal report that you referred to about the US would begin boarding Iranian-linked ships. I asked White House officials about this yesterday, and they pointed to the Joint Chiefs of Staff Chairman Dan Kane's comments at the Pentagon briefing last week in which he had mentioned that this was going to be an option that they would pursue if things didn't progress. So I do think that there is just a bit of a pressure campaign here to really send a message to Iran that they need to come to the table and start to agree on some of these points of contention so that they can move forward for a lasting peace agreement. Colonel Sanders, I know David asked you about that report and I want to follow up as well. I'm wondering logistically at what point even the massive resources the US has sent to the region start to get strained if you are trying to enforce a blockade, hunt down and board these ships and examine them for, you know, sanctions violations in other areas, other arenas, and then you're looking at the prospect of this ceasefire not holding, so potentially resuming a bombing campaign or whatever else the president wants to do. At what point is he limited by the capacity of the US military or does that capacity expand depending on what the commander-in-chief wants it to do? Yeah, I would say so the capacity is strained but it is something that can be transferable if you think about different theaters of operation. So it ends up being a decision calculus that the president has to look at and say, &quot;Am I willing to take risk in other theaters like the Pacific in order to continue to bring capability over?&quot; Military Sealift Command has been strained in terms of creating pretty much a conveyor belt, if you will, of resources, fuel, logistics, and food, everything else that's going across. That part has played a huge part in terms of being able to prepare for the blockade. But as you mentioned, even during the ceasefire that is still continued to be pushed, even though other areas may have stepped down from aircraft overflights and the number of munitions that have been spent are less, it still doesn't mean that that ecosystem is strained. And so at this point in time, a lot of the operational planning I believe is tied into this to say if this were to continue into another bombing campaign, would I be able to lift and shift fires and resources from a different theater of operation in order to support this one? Philip Crowther, let me go back to you and to this initial announcement that we got from the Iranian Foreign Minister that the strait was open with maybe some small conditions here. What do we know about the impact that's had in Iran? I know there's been some pushback against the Foreign Minister by some more hardline members of that regime. What do we know about the way that that's played there and to the degree to which that represents broader government thinking about how this conflict should proceed? It certainly does appear that some of the statements that we have been hearing coming out of Iran have been made for either public consumption in Iran or indeed for consumption by the leadership there, by the conservative leadership of Iran. This is not a country that is necessarily entirely singing from the same hymn sheet. There are those who want to be very, very strict and impose a full-on blockade of the Strait of Hormuz and maybe there are others who don't and maybe who didn't agree with the initial ceasefire. So there are always different levels to this. Now, the way that this happened was rather unfortunate really because for one moment there we thought with the president's announcement and then also the Foreign Minister's announcement, as you mentioned, pretty much at exactly the same time that the Strait of Hormuz was entirely open for traffic again. That lasted just a few hours at the end of the day because what we're hearing now from the Parliament speaker and he's crucial in this, remember he is the number one on this negotiating team, he again says if there is a US blockade, if we can't get through the Strait of Hormuz because the US blockade is of Iranian ports, then no one else is allowed through either. Philip Crowther, thank you very much. Philip Crowther, international correspondent for the Associated Press, along with Courtney Subramanian, our White House correspondent, and Colonel Wayne Sanders of Bloomberg Intelligence. He's our senior defense analyst. All right. We are getting ready for an update from Florida. The countdown has resumed for Blue Origin's reusable rocket. It's set for launch now around Eastern. Again, there was a hold in place on that launch. Ed Ludlow will get us up to speed on that in just a few minutes. He's lurking around here somewhere. He was up bright and early, he's on it. Also ahead, the future of the Federal Reserve. Kevin Warsh's confirmation hearing before the Senate Banking Committee is scheduled for this week, while the White House ups the pressure on outgoing Fed chair Jerome Powell. Michael McKee, Tyler Kendall are going to join us straight ahead on Bloomberg This Weekend, on Bloomberg Television, Bloomberg Radio, at bloomberg.com and on the Bloomberg Business app. Thank you for joining us live on Bloomberg This Weekend. I'm Lisa Mateo. Let's get you up to date on today's stories. And authorities in Ukraine, they are investigating the motive behind a mass shooting in Kyiv on Saturday. They say a gunman killed six people and injured 14 others before police shot and killed him. Police say the 58-year-old suspect, who was born in Russia, he barricaded himself inside a supermarket with hostages after opening fire on a busy street. Havana's nightlife falls dark as its energy crisis under the US oil embargo deepens. Cuba has been in an economic freefall ever since the United States cut off its oil shipments from the island from Venezuela and Mexico in January. Now meanwhile, President Donald Trump ramping up pressure on Havana. The New York Times is reporting the Trump administration sent a senior delegation to Cuba last week to address the humanitarian crisis on the island. The US officials reportedly told Cuba's leadership that it had a narrow window of time to make certain economic and political changes. And more aggravation maybe in store for airline travelers in the coming months. Higher jet fuel prices, they have carriers worldwide increasing cancellations, grounding planes. Now prediction data from Cirium, it shows that global capacity for May has been reduced with all but one of the 20 largest airlines cutting flights. Christina and David, not what you want to hear after all the other airport issues. My fear today. I bought my tickets early. Benedict Cammel was on the show, said buy your tickets now, and I have this fear that as this progresses, that'll all be for naught if they cancel these flights. That would bring me any joy at all after you've lambasted me for not buying my tickets at all if you had ticketing problems. That would make me a bad person. Thanks, Lisa. You got it. All right. Speaking of things we hope take off without incident, we are watching this Blue Origin launch this morning. Live pictures moments away from the rocket in Cape Canaveral, Florida, taking off. You can see it there on the left side of the screens for our viewers. For our audio listeners, it is a rocket on a platform, ready to go. Yes, launchpad 36. Am I right, Ed Ludlow is here with us to guide us through all this. You've been watching. They're doing it now. You tell us. You and I and we. You've been watching all this. There was this hold about three and a half minutes in. What was happening here? It looked like things were proceeding apace and then there was a stop. Yeah, I mean what I would say for the radio audience listening that what we showed is a 98-meter tall, 321-foot launch system. It's quite sizeable. This is a big vehicle. Of Blue Origin. Blue Origin is the space company founded by Jeff Bezos, the founder of Amazon and one of the world's richest people. And it's a powerful launch system. and you know, we're about 90 seconds away from launch. You tell me if we're going to take this launch or not, but right now things are counting down. It's so normal for them to take pause. These are highly autonomous systems and there are all kinds of imponderables: the weather, human error, data glitches, engineering glitches. So what they often do is just say, &quot;Okay, everyone stop, reset, and let all the different teams that are tracking the launch system catch up with one another.&quot; That's kind of what happened today, and there'll be a postmortem on that. But we're 60 seconds away from launch, and the significance of this, guys, is that New Glenn is the flagship, more powerful system. It's the first time they'll refly a booster that's flown before. That was in November, New Glenn 2. Which we've seen from SpaceX, but they haven't done this before. They have not done this before with New Glenn. They have two separate systems. We can talk later on about the sort of weaker system that focused on space tourism. But this is kind of what Blue hopes will take on SpaceX's Falcon 9 Heavy and Starship. And within this above the rocket rather there's a satellite. It's for cellular service. What do we have on board? Yeah, so AST SpaceMobile is the customer in this case and they think about it as a ginormous cell tower in space. That's what that payload, that satellite will do. I don't know, should we listen in? Let's listen in. We've got about 10 seconds left. Yeah. - acoustic. When turned on, it will provide acoustic suppression to protect the vehicle from shockwaves and also cool the launchpad. There we go. Big water. We're at T-minus... Blue Origin rocket blasts off from Cape Canaveral. Ed, walk us through what's happening here. Two stages in this launch. Yeah, two stages. So at the bottom of the launch system are seven BE-4 engines. And those generate about 550,000 pounds of force per engine. And so when you get to the kind of 60-second mark into the mission, you're approaching what's known as max Q. It's the moment of maximum aerodynamic pressure or stress because like that... beautiful view of Florida. for those watching, I love this because like in modern-day space launch, there's all of these cameras giving real-time signals. I was just going to say, and when it took off, there was a really cool shot of like the bottom of the boosters you could see all the colors. I've never seen anything like it. I don't know which brand they use, but for the radio audience, just imagine a GoPro strapped to the bottom of the rocket just facing downward and showing a beautiful, sort of increasingly curving view of the Earth focused on Florida. and so the second stage... so that's good old-fashioned rocket science and those use rocket fuel. The second stage actually uses a mixture of hydrogen and oxygen in what's called a BE-7 engine. And the reason that you do that is like you're trying to get to an orbit, an orbital height, with high energy and hydrogen and oxygen is a really good way of doing that. So, we can go through the full sequencing of it. You know, those two stages separate, and the booster, the main primary stage, falls back down to Earth. You're seeing the bottom of it now. And the whole point of this, the economics of what we're talking about, is for it to land itself back on a platform in the ocean so that it can be reused. How many times are we talking about here? Well, so this is again the significance of New Glenn 3. The New Glenn program, let's say it's over budget and behind schedule a little bit against its original stated goals, which is very common in the space industry. But this will be only the first time they've reused a booster that's flown before, and that booster only flew in November. But, you know, in speaking with the company, which we may get to, I think that they're now in a place where they're going to really ramp up the cadence of launching this system. Well, let's do that. So you had this interview and you were telling me it's not just about this launch. It's more about their long-term plan and their ultimate goal. Because this New Glenn system, this is the system that Blue wants to get their company and their company's participation in getting America back to the moon. All right, let's listen. It's Ed Ludlow in conversation with CEO Dave Limp. I think it'd be a really good year if we could do, you know, 8 to 12 flights this year, up from two last year. That would be a good cadence for us. I can see a path to that. We have plenty of hardware to do that. It really is what we learn from flights. I would tell you that there's never been a time where launch is in such demand. And by the way, I think the demand is going up with all these direct-to-device announcements. Amazon made one, obviously, AST is doing direct-to-device, and these mega-constellations. We have our own constellation we announced with Terrawave. If I could fly a rocket every week right now, I would be sold out for the indefinite future. And so our job is to get out there, get as fast a cadence as we can as quickly as possible. And the foundation of that again is just to build a world-class manufacturing business. And, you know, that's something I've done for a long time and the team's done for a long time. And I think we're on the right path. We still have a ways to go, but I'm excited about the progress. The world became familiar with Blue Origin through New Shepard, the smaller form factor launch system. And the first focus of that was kind of space tourism, you know, going to a pretty low altitude, relatively speaking, for a few minutes of weightlessness. And you know, of course, I was in Van Horn, Texas, when Jeff Bezos himself went up. But you took the decision to halt that program, in large part to focus on Blue's participation in getting America back to the moon. And so in the first instance, Dave, what has been the result of that decision? Have you been able to accelerate that other program, the lunar program? How have you moved and reassigned resources and people to fulfill that ambition? Yeah, we were able to fly 98 people above the Kármán line. I've never seen so many smiles on every astronaut that we were able to do that for. And I think if you had to make the decision to put New Shepard on pause, we put it on pause for at least two years, with your heart, it would have been a very hard decision because you saw Jeff fly. Every customer is the happiest customer you've ever seen. But when you make that decision with your head, it was probably one of the simpler business decisions that I and Jeff have ever made. Because, you know, I am so passionate about getting the US back to the moon, as is Jeff. I don't think the country wants another Sputnik moment. We have been saying at Blue for 20-plus years that the moon is this incredible gift given to us. You know, it's three days away. It's got all the resources that we will ever need right there, at least for the foreseeable millennium ahead of us. And we know how to get there. The moon is back. It's the focus of this country, right? NASA is the agency leading it, but in commercial space, SpaceX is now deepening its involvement in the plan. And Blue Origin also is in with a really good shot of being a really big participant in the Artemis program. But separate from that, again bringing it back to the launch that we're covering here today, New Glenn 3, this is the launch system, the rocket, that will get their, I guess, more cargo-type lunar lander to the moon's surface. And what I think that Dave went on to say in that interview is that there's a really good shot that if New Glenn goes well, and we'll track it, hopefully the booster lands, but that program will put a cargo-focused lunar lander on the moon by the end of this year, later this year. Wow, that soon. Yeah. And so this is kind of consistent with NASA and with Jared Isaacman, the administrator. This is a simple plan: flood the moon's surface with stuff. Literally, like cargo-focused landers, materials, to build a base on the moon. And like if we had launched Bloomberg This Weekend even three or four years ago and I had said that, you guys would have laughed me off set. But now there's a lot of buy-in across the industry and politically as well to do this. This is the thing Ed says because we talked about data centers in space and I laughed when you brought that up and now look where we are. he spoke about demand. Let's wrap up by talking about that. How much demand this company and others see for continuing to launch satellites like this into space? Yeah, so like, again, the mission on the screen, AST is a customer and they paid money for this. So it's important that they can actually ramp up cadence so they can book revenues. Space is an expensive business, and you measure the economics of that on a dollar-per-kilo basis. Blue Origin's dollar-per-kilo now is in the thousands of dollars and they would hope with time to take zeros off that, right? That's kind of what they're building towards. They need customers to do that. It's so interesting, like we don't have time for the full history lesson, but people forget, in 2015, Blue Origin landed a booster back on Earth before SpaceX did. It's just that SpaceX then massively pulled away. And so, you know, they have all kinds of cellular or internet constellation-based internet opportunities with Amazon, which is trying to take on Starlink with AST, things like that. Wow, that's amazing. All right, Ed, we're going to have to leave it there for now. There is that booster coming back down. But you are coming back at the end of the show to play the news quiz. We're going to make it happen. All right. Just a little while ago, ABC's Jonathan Karl posted on social media saying he spoke to President Trump about a potential deal, with Trump saying, quote, &quot;It will happen. One way or another. The nice way or the hard way. It's going to happen. You can quote me.&quot; And Jonathan Karl did, right there on the social media platform X. We'll have more on that and on Trump's pick for Chair of the Federal Reserve heading to Capitol Hill for a hearing before the Senate Banking Committee. That is coming up on Bloomberg this morning, right here on Bloomberg Radio, Bloomberg Television, bloomberg.com. Kevin Warsh, proceeding with that hearing before the Senate Banking Committee as the president continues his attacks on the Fed Chair and as Thom Tillis, the senator from North Carolina, continues to block the nomination of any Fed official going forward until the investigations into him, into J. Powell, are lifted. Much more to come here on Bloomberg TV and Bloomberg Radio. Thank you for joining us live on Bloomberg This Weekend. I'm Lisa Mateo. Let's get you up to date on today's stories. And authorities in Ukraine, they are investigating the motive behind a mass shooting in Kyiv on Saturday. They say a gunman killed six people and injured 14 others before police shot and killed him. Police say the 58-year-old suspect, who was born in Russia, he barricaded himself inside a supermarket with hostages after opening fire on a busy street. Havana's nightlife falls dark as its energy crisis under the US oil embargo deepens. Cuba has been in an economic freefall ever since the United States cut off its oil shipments from the island from Venezuela and Mexico in January. Now meanwhile, President Donald Trump ramping up pressure on Havana. The New York Times is reporting the Trump administration sent a senior delegation to Cuba last week to address the humanitarian crisis on the island. The US officials reportedly told Cuba's leadership that it had a narrow window of time to make certain economic and political changes. And more aggravation maybe in store for airline travelers in the coming months. Higher jet fuel prices, they have carriers worldwide increasing cancellations, grounding planes. Now prediction data from Cirium, it shows that global capacity for May has been reduced with all but one of the 20 largest airlines cutting flights. Christina and David, not what you want to hear after all the other airport issues. I bought my tickets early. Benedict Cammel was on the show, said buy your tickets now, and I have this fear that as this progresses, that'll all be for naught if they cancel these flights. That wouldn't bring me any joy at all after you've lambasted me for not buying my tickets at all if you had ticketing problems. Touché. Thanks, Lisa. You got it. All right, speaking of things we hope take off without incident, we are watching this Blue Origin launch this morning. Live pictures moments away from the rocket in Cape Canaveral, Florida, taking off. You can see it there on the left side of the screens for our viewers. For our audio listeners, it is a rocket on a platform, ready to go. Yes, launchpad 36. Am I right, Ed Ludlow is here with us to guide us through all this. You've been watching. They're doing it now. You tell us. You and I and we. You've been watching all this. There was this hold about three and a half minutes in. What was happening here? It looked like things were proceeding apace and then there was a stop. Yeah, I mean what I would say for the radio audience listening that what we showed is a 98-meter tall, 321-foot launch system. It's quite sizeable. This is a big vehicle. Of Blue Origin. Blue Origin is the space company founded by Jeff Bezos, the founder of Amazon and one of the world's richest people. And it's a powerful launch system. and you know, we're about 90 seconds away from launch. You tell me if we're going to take this launch or not, but right now things are counting down. It's so normal for them to take pause. These are highly autonomous systems and there are all kinds of imponderables: the weather, human error, data glitches, engineering glitches. So what they often do is just say, &quot;Okay, everyone stop, reset, and let all the different teams that are tracking the launch system catch up with one another.&quot; That's kind of what happened today, and there'll be a postmortem on that. But we're 60 seconds away from launch, and the significance of this, guys, is that New Glenn is the flagship, more powerful system. It's the first time they'll refly a booster that's flown before. That was in November, New Glenn 2. Which we've seen from SpaceX, but they haven't done this before. They have not done this before with New Glenn. They have two separate systems. We can talk later on about the sort of weaker system that focused on space tourism. But this is kind of what Blue hopes will take on SpaceX's Falcon 9 Heavy and Starship. And within this above the rocket rather there's a satellite. It's for cellular service. What do we have on board? Yeah, so AST SpaceMobile is the customer in this case and they think about it as a ginormous cell tower in space. That's what that payload, that satellite will do. I don't know, should we listen in? Let's listen in. We've got about 10 seconds left. Yeah. - acoustic. When turned on, it will provide acoustic suppression to protect the vehicle from shockwaves and also cool the launchpad. There we go. Big water. We're at T-minus... Blue Origin rocket blasts off from Cape Canaveral. Ed, walk us through what's happening here. Two stages in this launch. Yeah, two stages. So at the bottom of the launch system are seven BE-4 engines. And those generate about 550,000 pounds of force per engine. And so when you get to the kind of 60-second mark into the mission, you're approaching what's known as max Q. It's the moment of maximum aerodynamic pressure or stress because like that... beautiful view of Florida. for those watching, I love this because like in modern-day space launch, there's all of these cameras giving real-time signals. I was just going to say, and when it took off, there was a really cool shot of like the bottom of the boosters you could see all the colors. I've never seen anything like it. I don't know which brand they use, but for the radio audience, just imagine a GoPro strapped to the bottom of the rocket just facing downward and showing a beautiful, sort of increasingly curving view of the Earth focused on Florida. and so the second stage... so that's good old-fashioned rocket science and those use rocket fuel. The second stage actually uses a mixture of hydrogen and oxygen in what's called a BE-7 engine. And the reason that you do that is like you're trying to get to an orbit, an orbital height, with high energy and hydrogen and oxygen is a really good way of doing that. So, we can go through the full sequencing of it. You know, those two stages separate, and the booster, the main primary stage, falls back down to Earth. You're seeing the bottom of it now. And the whole point of this, the economics of what we're talking about, is for it to land itself back on a platform in the ocean so that it can be reused. How many times are we talking about here? Well, so this is again the significance of New Glenn 3. The New Glenn program, let's say it's over budget and behind schedule a little bit against its original stated goals, which is very common in the space industry. But this will be only the first time they've reused a booster that's flown before, and that booster only flew in November. But, you know, in speaking with the company, which we may get to, I think that they're now in a place where they're going to really ramp up the cadence of launching this system. Well, let's do that. So you had this interview and you were telling me it's not just about this launch. It's more about their long-term plan and their ultimate goal. Because this New Glenn system, this is the system that Blue wants to get their company and their company's participation in getting America back to the moon. All right, let's listen. It's Ed Ludlow in conversation with CEO Dave Limp. I think it'd be a really good year if we could do, you know, 8 to 12 flights this year, up from two last year. That would be a good cadence for us. I can see a path to that. We have plenty of hardware to do that. It really is what we learn from flights. I would tell you that there's never been a time where launch is in such demand. And by the way, I think the demand is going up with all these direct-to-device announcements. Amazon made one, obviously, AST is doing direct-to-device, and these mega-constellations. We have our own constellation we announced with Terrawave. If I could fly a rocket every week right now, I would be sold out for the indefinite future. And so our job is to get out there, get as fast a cadence as we can as quickly as possible. And the foundation of that again is just to build a world-class manufacturing business. And, you know, that's something I've done for a long time and the team's done for a long time. And I think we're on the right path. We still have a ways to go, but I'm excited about the progress. The world became familiar with Blue Origin through New Shepard, the smaller form factor launch system. And the first focus of that was kind of space tourism, you know, going to a pretty low altitude, relatively speaking, for a few minutes of weightlessness. And you know, of course, I was in Van Horn, Texas, when Jeff Bezos himself went up. But you took the decision to halt that program, in large part to focus on Blue's participation in getting America back to the moon. And so in the first instance, Dave, what has been the result of that decision? Have you been able to accelerate that other program, the lunar program? How have you moved and reassigned resources and people to fulfill that ambition? Yeah, we were able to fly 98 people above the Kármán line. I've never seen so many smiles on every astronaut that we were able to do that for. And I think if you had to make the decision to put New Shepard on pause, we put it on pause for at least two years, with your heart, it would have been a very hard decision because you saw Jeff fly. Every customer is the happiest customer you've ever seen. But when you make that decision with your head, it was probably one of the simpler business decisions that I and Jeff have ever made. Because, you know, I am so passionate about getting the US back to the moon, as is Jeff. I don't think the country wants another Sputnik moment. We have been saying at Blue for 20-plus years that the moon is this incredible gift given to us. You know, it's three days away. It's got all the resources that we will ever need right there, at least for the foreseeable millennium ahead of us. And we know how to get there. The moon is back. It's the focus of this country, right? NASA is the agency leading it, but in commercial space, SpaceX is now deepening its involvement in the plan. And Blue Origin also is in with a really good shot of being a really big participant in the Artemis program. But separate from that, again bringing it back to the launch that we're covering here today, New Glenn 3, this is the launch system, the rocket, that will get their, I guess, more cargo-type lunar lander to the moon's surface. And what I think that Dave went on to say in that interview is that there's a really good shot that if New Glenn goes well, and we'll track it, hopefully the booster lands, but that program will put a cargo-focused lunar lander on the moon by the end of this year, later this year. Wow, that soon. Yeah. And so this is kind of consistent with NASA and with Jared Isaacman, the administrator. This is a simple plan: flood the moon's surface with stuff. Literally, like cargo-focused landers, materials, to build a base on the moon. And like if we had launched Bloomberg This Weekend even three or four years ago and I had said that, you guys would have laughed me off set. But now there's a lot of buy-in across the industry and politically as well to do this. This is the thing Ed says because we talked about data centers in space and I laughed when you brought that up and now look where we are. he spoke about demand. Let's wrap up by talking about that. How much demand this company and others see for continuing to launch satellites like this into space? Yeah, so like, again, the mission on the screen, AST is a customer and they paid money for this. So it's important that they can actually ramp up cadence so they can book revenues. Space is an expensive business, and you measure the economics of that on a dollar-per-kilo basis. Blue Origin's dollar-per-kilo now is in the thousands of dollars and they would hope with time to take zeros off that, right? That's kind of what they're building towards. They need customers to do that. It's so interesting, like we don't have time for the full history lesson, but people forget, in 2015, Blue Origin landed a booster back on Earth before SpaceX did. It's just that SpaceX then massively pulled away. And so, you know, they have all kinds of cellular or internet constellation-based internet opportunities with Amazon, which is trying to take on Starlink with AST, things like that. Wow, that's amazing. All right, Ed, we're going to have to leave it there for now. There is that booster coming back down. But you are coming back at the end of the show to play the news quiz. We're going to make it happen. All right. The Senate Banking Committee is going to get its first chance to publicly question Kevin Warsh this week as they consider his nomination to lead the Federal Reserve. Current chair Jerome Powell has less than one month left in his term, but it is not clear what will actually happen when that term expires. Here to walk us through what's at stake, Michael McKee, our chief international economics and policy correspondent, and Tyler Kendall, our Washington correspondent, are with us. Mike, let me start with you. You're going to be there for the hearing this week and I'm curious how is this going to unfold. There has been so much protestation from the Senator from North Carolina, Thom Tillis. What's it going to be like in the hearing room when this takes place? It'll be probably a little more interesting than usual because there are some questions certainly about Kevin Warsh's views and how he would run the Fed, but it's not going to be any kind of hearing that would end in him not getting the job. Republicans are pretty much aligned. The Thom Tillis situation isn't going to change until the administration drops its probe into J. Powell, but they can hold a hearing and then hold off on a vote until such time as the Senator decides he can vote one way or another. And then Warsh is expected to be confirmed. They've got to get him to the floor. It's always hard to get floor time in the Senate. So it is certainly possible that it ends up with J. Powell staying on for a bit as chair. Tyler, can you update us? What is the latest with that investigation? Because we had this moment last week where you had these prosecutors from the DC Attorney General's office show up at the Federal Reserve and were turned away. And then we have this tweet then from Senator Tillis where he tweeted a photo of the Three Stooges in response. Do you think he's going to hold his ground on this? Do you think the investigation is going to keep going or are we just going to stay at loggerheads? Well, Christina, at this point, Thom Tillis is indicating that he is going to hold firm on not voting to advance the nomination to the full floor. Now, the Trump administration was handed a potential off-ramp last month when the judge had blocked the subpoenas by the Department of Justice, but at this point, as you're indicating, these reports that we saw, some of these prosecutors show up at the Federal Reserve and statements from officials themselves saying that they are bowing to appeal that decision. So as of now, the Trump administration is maintaining its course. The thing is, Thom Tillis really does have the power to derail this. At this point, Republicans only have a 13-11 majority on the committee, so he is that key swing vote. Now, I can say I've heard it suggested before that maybe Republicans could try to find a workaround to this by doing what's known as a discharge petition. I have to say, though, I called up a few sources on the hill when this idea seemed to be circulating and it would be a lot easier said than done for a flurry of reasons, including that when this happens it would be subject to debate, which means that we would have to see what's known as cloture invoked. And that would require two-thirds of the Senate to get on board, which means that Republicans would need Democrats to get on board, and at this point, they're not. Christina and David, we're actually seeing pushback from Democrats that they want to delay Tuesday's planned testimony. A letter was just sent to the Senate Banking chair, Tim Scott, saying that they stand with Thom Tillis. That as long as this legal matter against Fed Chair Jerome Powell is not resolved, they don't want to have a hearing at all. Tyler, we heard from the ranking member of the Senate Banking Committee, Elizabeth Warren, who expressed some hesitation about the financial disclosure that Kevin Warsh filed with that committee ahead of the hearing. What is she upset about or interested in learning more about? So she's saying that the full assets of Kevin Warsh weren't properly disclosed in these financial hearings. 
+
+Michael McKee may have a little bit more information on this because we just got his disclosure showing that he has an upwards personal net worth value of 190 million dollars. So we'll see where this goes, but it sort of tracks with what we had been expecting from the ranking member, Senator Elizabeth Warren, who has long been an opponent of Kevin Warsh's nomination and being that person on the Banking Committee that has tried to be a pushback to the Trump administration's policies when it comes to this. Mike, I want to ask you because there is a deadline here. Powell's term expires on May 15th, but he could stay on as governor, as we've been talking about, but President Trump last week ratcheted up the pressure yet again. We've got some sound for you. Whether it's incompetence, corruption or both, I think you have to find out. I really do. I think you have to find out. So you're not going to drop the probe? No, I'm not playing. I have to find out. And he said he's not leaving if... Well, then I'll have to fire him, okay? If he's not leaving on time, I've held back firing him. I've wanted to fire him, but I hate to be controversial. All right, so what happens if Trump does fire him? How would the markets react? And do you think this is still a possibility? Well, ordinarily you'd say that the markets would react very badly to this and when the issue first came up last year or even in the first term, they did go down. But I'm not sure the markets would believe Trump will succeed in firing J. Powell because so much has happened in the meantime. The Fed has already said that if Kevin Warsh is not confirmed in time, Powell will continue on. The person who is chair of the Board of Governors, there's a legal question about whether it can be Powell or whether the president gets a choice. But the person in charge of monetary policy would remain J. Powell because he was chosen by the Open Market Committee for a year's term. So nothing really would happen there and I don't think the markets would have to panic over that. The idea would be that eventually the president would have to take it to court, but by the time it could get through the court system, Warsh would probably be confirmed and at that point it would be a moot issue. So the whole thing is perhaps a little more of an issue, a blown-up issue that isn't going to happen than it may seem. Mike, what do we know of Chair Powell's plans at this point? So a few meetings back, he said he'd announce what he planned to do at the appropriate time. At the last meeting, he said he'd stick around until his successor is named. Not asking you to psychoanalyze what J. Powell is thinking but, do we have a better sense of how he is regarding the position, the governor position, going forward? Well, we know he has told people, he has suggested that he does want to leave the Fed when his term as chair is up. And it's been tradition that Fed chairs when their term as chair is up, they resign their position even if they have time left on their governor's seat. But the governor's seat is the only real leverage that Powell has against Trump if they want to pursue this whole issue of the building overruns and the investigation that Jeanine Pirro is running. So he has said, until and unless that is completely gone, he's going to remain on the Open Market Committee, remain on the Board as a governor. So that part has yet to play out and it'll be interesting to see what the administration decides because the way they're handling this is very odd. The president wants a new chair, he wants a chair that wants lower interest rates, and yet all of the administration's actions are keeping him from getting that. So at some point you wonder, when are they going to give up and take the win? Mike, I am going to ask you to psychoanalyze J. Powell. No, I'm kidding, I really won't do that. But I do want to ask you what this means for the reputation of the Fed overall, for what it means for people's reliance on its consistency, and if that's been damaged by this whole process going forward. Well, if, for example, the Supreme Court should rule in a way that would allow the president to actually fire J. Powell and he did that, that would put a big stain on the credibility of the Fed. The Fed's already had some problems with its inability to bring inflation under control quickly over the last three, four years. There are questions about certainly the way they handled the Great Financial Crisis. So a new chair coming in would want to try to rebuild credibility and would not need an additional boulder on their back to push up the hill. Kevin Warsh, there are questions about whether he's going to be the president's man and push for lower rates even if lower rates aren't called for, or whether he's going to really defend the Fed's independence. So that'll be an interesting line of questioning at the hearing. Absolutely. Michael McKee, Tyler Kendall, thank you both very much. Up next, from bizarre foods to seafood. Chef Andrew Zimmern sharing his recipes for sustainability ahead of Earth Day. Up ahead on Bloomberg This Weekend. Earth Day is this Wednesday, April 22nd, and of course one of the biggest threats to the planet is climate change. According to a recent study, climate change could cost the world economy some 38 trillion dollars per year by the middle of this century. And of course climate change also impacts the food we eat, how we eat it, how we get it. And joining us now is award-winning chef, TV host and restaurateur Andrew Zimmern. He's also the author of a new cookbook, The Blue Food Cookbook: Delicious Seafood Recipes for a Sustainable Future. Andrew, thank you so much for joining us. Thank you. Great to be here. So explain to us Blue Foods. Is that like Blue Zones we talk about those for health or what does this mean and why did you want to write this? No, that's my buddy Dan Buettner's book, which is great. In an odd turn of consequences, the production company that I own produces his podcast and he's one of my best friends. A great book and you should buy that too. You liked Blue for him, I'm going to use it as well. I got you. Exactly. The United Nations used this term over a decade ago and then nobody else did. And my co-author Barton Seaver and our collaborators at Fed by Blue, who helped vet all the technical information in the book, we all felt it was really important to come up with a way to talk about food that comes from water: fish, shellfish, lake fish, brook trout, seaweeds, very importantly. And to be able to talk about them from a global perspective as opposed to green foods and green economies which are obviously terrestrial. If we want to combat climate change, if we want to feed a hungrier planet, if we want to do so economically and we want to make sure that hunger is statistically eliminated on planet Earth, which is actually possible to do, there is a path to success for that, then all the solutions start with blue foods and our water systems. Most importantly because we have to protect them but we also have to produce from them at the same time. Every second breath we take comes from the ocean and by working on the ocean and working in the ocean and all of our water systems, we can do a better job of protecting it and producing from it at the same time. We're going to ask about at least one recipe here in a moment, but let me just ask about when I go to the store and buy seafood, what should I be looking for? In other words, in the spirit of going after Blue Foods, what are the best things for me to target or purchase as a food-eating consumer here in America in 2026? You should simply ask the person who's behind the counter or wearing the red vest if they're stocking the frozen aisle or the canned aisle, because remember, responsibly sourced seafoods that are properly handled are in three places in your markets. But ask the person, you know, about the catch of the day. Ask about what's fresh. Ask, most importantly, is it responsibly sourced? The questions that people ask themselves with fish and shellfish all the time is: fresh or frozen? Wild or farmed? And those questions are really irrelevant. There's bad actors in the fresh and frozen space. There's bad actors in the farmed and the wild fisheries management space. But the good actors far outweigh them. And I think what people should do is they should be communicating more with the person behind the counter at a supermarket, at a big box store, or at a fish store about what that store thinks they should be eating. Let them right now be the gatekeepers for you. Eat lower on the food chain and try to make sure that you become a good global citizen. To answer David's question more exactly, shop the fish, not the dish. If you go into the market and you're going to make fish and chips with cod and cod's not there, ask the person behind the counter, &quot;Hey, I was going to make fish and chips with cod, there's no cod, what should I use instead?&quot; Let those people help be your guidepost. Shop the dish, not the fish. Well, there's a recipe in here for chocolate chip kelp brownies. Seafood can be a dessert. Any other outliers that you think might take some convincing, but you're going to stand by? Well, seaweed in dessert is just a great way to get something super healthy into your body. The FAO and the OMB all estimate that by 2045, which is 19 years from now, we will be producing more seafood by weight in America than we will potatoes. Think about that. Seaweed is the food of the future. It requires very little equipment and it is all a plus side. I would encourage people to be eating nutritious oily fish that are good for our brain health and our body's development. A sardine, a fresh sardine, but also a tinned one are literally perfect foods when it comes to our health. We need to be incorporating more foods like that into our diets. I want to ask you lastly just about the changes that we've seen in terms of availability of fish, lobster, bivalves as well. Climate change is having a role there. How do you think about that in the context of what you're advocating people eat or go after? How much is that landscape changing? Well, it changes all the time, which is why I've been calling in America for one national agency to help us monitor seafood. Right now we have an alphabet soup of different agencies, all of which are doing good jobs but nobody is really talking to each other. It's also why I've advocated for a Secretary of Food, a cabinet-level position. Food and food-adjacent businesses are one of the largest sections of GDP. You know, independent restaurants alone, forget about farms and all of the food production companies, just independent restaurants alone is about 6% of GDP. We have food decisions being made by six different alphabet agencies in Washington DC alone. So I think we need to centralize all that under one office. I think the other thing that we need to do is we need to remember that the oceans are always changing. What's available one day is not available the other. Lobsters are marching north to colder climates, so are crabs in search of food. And I think what people should do is they should be communicating more with the person behind the counter. All right, I think we're going to have to leave it there. Thank you so much. Have a great day. All right, the book is The Blue Food Cookbook: Delicious Seafood Recipes for a Sustainable Future. Welcome back to Bloomberg This Weekend. It is AM in New York. We are coming to you live from Bloomberg's global headquarters. I'm Christina Ruffini, that's David Gura. Thank you very much. Bringing you the latest breaking news reports and analysis live this morning and every weekend from to Wall Street time. Some breaking news just happening a few minutes ago. President Trump spoke to ABC's Jonathan Karl about the potential of a peace deal in Iran. Karl says Trump told him Iran has committed serious violations of the ceasefire, but President Trump thinks a peace deal is still possible. Quote, &quot;It will happen. One way or another. The nice way or the hard way. It's going to happen. You can quote me.&quot; You can quote me. Let's get to Lisa Mateo with the latest on what is happening in the Strait of Hormuz. Lisa. You got it. And yes, it still remains largely closed. This is as Iran goes against what the president just said and says it's far from a final deal with the US. Now it comes after Iran reversed course on reopening the waterway, saying that it would stay closed until the end of the US blockade on Iranian ports. Bloomberg reporting multiple ships, including at least nine tankers, have since reversed course. Earlier Saturday, Iran fired on at least two ships trying to transit the waterway. The US is reportedly putting the pressure on Iran to open the strait. The Wall Street Journal says that the US military preparing to board Iran-linked oil tankers in the coming days and seize those commercial ships in international waters. Yesterday, President Trump told reporters in the Oval Office that there are, quote, &quot;very good conversations&quot; going on with Iran. We're talking to them. They wanted to close up the strait again, you know, as they have been doing for years, and they can't blackmail us. Now meanwhile, there are signs a ceasefire in Lebanon could be in jeopardy. The IDF says it eliminated a terrorist cell operating near its soldiers in southern Lebanon. President Emmanuel Macron also said a French soldier was killed in an attack on UN peacekeepers in Lebanon and suggested Hezbollah was to blame. And the booster from Blue Origin's New Glenn rocket, well, it has returned. It landed on a vessel in the ocean. Now the rocket, it blasted off from the Cape Canaveral Space Force Station in Florida this morning. It reused that booster for the first time to launch the massive 300-foot tall rocket. It's one of the largest in the world. It also carried a communication satellite for the company AST SpaceMobile. And we brought that to everybody live this morning with Ed Ludlow. It was great to have Ed here to walk us through it. I'm really struck by what he said that everyone's now focused on the moon. The country and all these companies. And they're just going to pre-set a bunch of stuff up there so that we can get up there and build a moon base. Clutter it with junk. It's incredible. My fourth-grade self could never. That's very, very cool. The ceasefire between the US and Iran expiring in days and the Strait of Hormuz, as Lisa just mentioned, remains a key issue for the White House as it remains effectively closed by Iran. The president held a meeting just yesterday to discuss the strait as well as potential peace negotiations, having said this just hours before on Air Force One. Sir, in the strait, are there going to be restrictions and tolls managed by Iran for ships and vessels passing through? No way. None at all? Nope. No restrictions. Mr. President, what kind of restrictions? Restrictions, you know, restrictions. You can't do the tolls. No, they're not going to be tolls. Back with us from Islamabad, Pakistan, is AP international correspondent Philip Crowther. Philip, we're now approaching the end of this ceasefire in a couple days and we still don't have information about the next round of talks. Which of these things do we think is going to happen and how are people feeling about where this ceasefire is and whether or not it's going to hold long enough for these talks to occur? Well, I think the main priority really for the United States and Iran is to be able to somehow extend this ceasefire because it ends on Wednesday and there are no guarantees from here that we're going to see the two negotiating teams see each other again face-to-face here in Islamabad before that day. Though the feeling here in the Pakistani capital and also the impressions we're getting with our own eyes is that certainly the preparations here are underway. Again, just for a potential second round of talks, but still you can see behind me, this is Faisal Mosque. It is the main tourist attraction here in Islamabad. The access road, very, very quiet indeed. Bar for that motorbike just driving by. Otherwise very quiet indeed. The main access road closed here. And that's not the only indication we have here. The two hotels that the two negotiating teams took over last weekend, they have now been taken over by the Pakistani government, presumably so that those delegations can again stay there if another round of talks is to happen. Also, images, video of US military planes landing at an airbase not far from here, the Pakistani capital, those are circulating around Pakistan right now. People are excited that this could be the place for a second round of negotiations and maybe even more for an actual deal of some sort to be signed. There are a lot of stumbling blocks still, and as you've already mentioned, the rhetoric doesn't sound great from the Iranian and the US side, and indeed the Strait of Hormuz remains pretty much entirely blocked, but that does not mean that behind the scenes these two sides can't get closer and closer together, close enough to at the very least meet face-to-face here in Islamabad again at some point next week. Philip, before you were in Islamabad, you were there on the strait. I know you've been tracking what's been happening there closely. So there's the rhetorical confusion that we've been talking about, what the President of the United States has been saying versus what Iranian officials have been saying. We note that ships are awaiting instructions from Iran's armed forces according to the Mehr News Agency in Iran. What in fact is happening there in that waterway at this moment? Many ships there still at a standstill, but where are they looking to for information? What information indeed are they getting? Well, essentially the situation that we're in right now is more or less exactly the same as before this ceasefire first came into place. Dueling blockades is what you're looking at, and the Iranian parliamentary speaker, he is by the way the leader of the Iranian delegation for talks with the United States, he says essentially this: If you, as in the United States, block our ports, then we're not going to allow anybody else through the Strait of Hormuz either. So you've got two blockades at the same time and no traffic whatsoever. There was a very short window of opportunity yesterday. That's when a few ships managed to make their way through. But as soon as Iran said, &quot;No, the Strait of Hormuz is now again blocked by us,&quot; that is when there were attacks from, at least in one case, two Iranian gunships on a tanker that was attempting to get through the Strait of Hormuz, and there have been other incidents as well. And that is pretty much exactly what we saw before the ceasefire was signed between the United States and Israel on one side and Iran on the other. I think the two things can happen at the same time: a reopening of negotiations between the US and Iran and also a reopening of the Strait of Hormuz. What comes first? We'll have to wait and see. Philip, I know that you are talking to us and not watching Fox News. So at the moment, it appears the president is talking to Fox. We've got a couple headlines crossing the terminal. The first big one is Trump says Iran deal to, quote, &quot;blow up if deal not signed.&quot; He also says Steve Witkoff is heading to Pakistan and it may last into Wednesday. Yes, it says Trump says Witkoff is heading to Pakistan for Tuesday meetings. So you might have company there after all in the near future. I'm not sure you're seeing any planes landing yet. That's your first indication here of who might be part of the delegations. And I think that's crucial. I mean, that's the first time we hear a name mentioned actually. That's what we were expecting here, that Steve Witkoff might be the one at the head of the US delegation. There's been all sorts of rumors whether J.D. Vance, the vice president, might be here as well. That's the first name that's named, and if it's named by the president, well then we can presume he's going to be the one who will be leading that delegation. That is a further confirmation, if you will, and I think it's actually the first real confirmation that we're getting that talks will be happening again here in Islamabad coming from the US side. Philip Crowther, laying out all this circumstantial evidence that those talks would continue over the course of the morning, now having this confirmation as you mentioned Christina. Phil, thank you very much for joining us. Philip Crowther, international correspondent for the Associated Press, joining us there from Pakistan. Christina, that is a very interesting wrinkle here. The fact that you had J.D. Vance, the vice president, there for the first round of these talks. Unsuccessful talks, I should say. Now the president seemingly shuffling who he is going to be sending on that diplomatic mission. Right, and with the stakes ratcheting higher, you're sending a lower-level individual to go try to make this happen. I wonder what the strategy of that is. And you know who might be a good person to talk about that? That is our next guest, John Finer. He's the former principal deputy national security advisor under President Biden. John, it's nice to see you. I'm not sure if you could hear, we're seeing President Trump is doing an interview with Fox News right now and we have the first real, as Philip was just saying, tangible note about what's going to be happening. It looks like Steve Witkoff is on his way to Pakistan for hopefully meetings on Tuesday with the Iranians. What's your take on who's being sent to these meetings and whether or not they're going to be productive? Well, I think it's a good thing. I think it's a good thing if the United States and Iran are actually talking as opposed to simply tweeting at each other, you know, nasty things that suggest a breakdown. But we've seen this movie before. You know, heading into a week in which I think the president is probably concerned about market reaction, he wants to send a positive signal that maybe at a minimum these talks could be extended and the ceasefire could continue. But the fundamental problem, and there are two of them, have not been addressed. One is that the Strait of Hormuz remains closed and there's no indication that unless the United States puts something serious on the table to compensate Iran in some way, sanctions relief for something else, that the Iranians are inclined to open it. And second, this nuclear material, which we've talked about for weeks now, highly enriched uranium that Iran retains despite the United States having bombed it many times and told Iran they have to give this up in order for the war to end. Those are the two big issues in the talks and we don't see any closer to resolving them. John, I want to ask you about realism in the context of these negotiations and you have a deep familiarity, of course, with negotiations involving the Iranians. We've talked over the last few weeks just about the amount of time it took to get to the JCPOA agreement. This was something we measured in months, not in weeks or days as it seems like we're trying to do here. So I'm curious what you observed about that first round of talks when the vice president went to Pakistan, emerged from those meetings with nothing to show for them. Now we have Steve Witkoff going there. What does it say to you about how we should be thinking realistically about the way that these two sides can come to some sort of agreement here to stop the fighting in the Middle East? Well, as you said, I was part of negotiations with Iran that took place over a period of several years. Even the final phase of the negotiations to reach the Iran nuclear deal back in 2015 took 19 consecutive days for the Secretary of State deployed to Vienna to really just finish off the last few issues in the talks. It was the longest any Secretary of State, John Kerry in that case, had ever been outside the country in one place in the history of the United States. Negotiations with the Iranians take time, they take patience, they take expertise. And airdropping the vice president into Pakistan for one day was never going to get the job done. I don't think it's necessarily a bad thing if J.D. Vance does not go to this round. The vice president has many wide-ranging responsibilities. He probably can't just live in Pakistan for long enough to get a deal like this done. But whoever goes is going to have to treat this as a serious, detailed, technical exercise. The Iranians know what they're looking for, they know the file, and they are going to be willing to put in the time. We have to be willing to take that same approach. Talk to us about the technical aspect of that because one of the criticisms I've heard from people inside the State Department and at the IAEA is that Steve Witkoff may be very good at negotiating in his private sector life, but he's not a technical expert. He does not know the ins and outs of nuclear material, how to move it, you know, enrichment levels, things like that. And they're not bringing those experts with them even for these brief stints of negotiation. Do you think, have you heard concern that they don't have the knowledge base to successfully carry out these negotiations? Is there a chance they're going to get hoodwinked by the Iranians? Look, not every negotiator can be an expert on all of the different elements involved in these talks. There are technical issues regarding nuclear physics and the inputs to a potential nuclear weapon. There are technical sanctions issues, legal technicalities about how you would give Iran maybe sanctions relief in some cases and not in others. Very careful wording. You don't need to be an expert in all those things, but as you just said, what you do need is expertise in the team while you're negotiating so that you can check Iranian demands against somebody who really does know the ins and outs and what the implications of a concession or a demand might be. And one of the problems in this administration is they don't seem to have a lot of respect for expertise. Many experts in the US government have been driven out of their jobs during the course of the first one year plus of the Trump administration. So whether there are even enough people left in these buildings to be able to help the talks is one question. Whether, if they are there, they're going to be brought to Pakistan I think is another. And if you just look at the history of how these talks have gone up until now, they don't seem to be relying too heavily on experts. They go by vibes, they go by feel, and that has not worked out so well so far. John, indulge me for a moment here. You've done enough cable news to know that the president tweets or posts, we have to read from it if it's germane to what we're talking about here. So we have a very lengthy post here on Truth Social from the president. I'm going to read from it. He addresses what we were covering yesterday, shots fired on these two ships in the Strait of Hormuz. &quot;That wasn't nice, was it?&quot; the president writes. He announces his representatives are going to Islamabad, Pakistan. They're going to be there tomorrow evening for negotiations. Then he gets into who actually has closed the strait here. He says Iran has announced they're closing it, he says the US has closed it because a blockade was already in place. Then he talks about a deal. &quot;We're offering a very fair and reasonable deal,&quot; the president writes. &quot;And I hope they take it because if they don't, the United States is going to knock out every single power plant, every single bridge in Iran. No more Mr. Nice Guy!&quot; President Trump writes. &quot;They will come down fast, they'll come down easy, and if they don't take the deal,&quot; all caps, &quot;it will be my honor to do what has to be done which should have been done to Iran by other presidents for the last 47 years. It's time for the Iranian killing machine to end.&quot; John, let me ask you about &quot;the deal.&quot; The president again putting it in all caps there and I think that's something that's stymied me, perhaps Christina over the course of the weekend. What deal is on the table, if any, that the president's talking about? We've heard about nuclear dust, we've heard about not having a nuclear program. Is it clear to you as somebody who was in government for a long time, continues to follow all of this, what in fact the United States wants in a deal with Iran at this moment? So, the fundamentals of any deal with Iran, when it comes to their nuclear program, when it comes to ending this war... by the way, when it came to the deal that President Obama negotiated with the Iranians back in 2015, is some measure of sanctions relief that benefits the Iranian economy. That is what they are negotiating for. They fought a war to be able to preserve their nuclear program as it currently exists, to preserve their government, and the only way that they are going to stop, to stop resisting traffic going through the strait, is if they are given some sort of compensation that allows them to begin rebuilding their country. There's been a tremendous amount of damage done, yes, to Iran's military, but also to many of Iran's civilian structures and requirements and they're going to demand some sort of financial benefit from that. Whether that be a toll going through the strait or sanctions relief, they're under tremendous sanctions pressure from the United States. On the US side, they want two things: they want traffic resuming through the Strait of Hormuz so the global economy can go back to at least a version of what it was before this war, and they would like Iran to part with a thousand pounds, 440 kilograms, of highly enriched uranium that Iran retains that give it a relatively short pathway to a nuclear weapon or to enough material for a nuclear weapon if they choose to do that. So those are the two sides. It's not actually all that complicated at the end of the day and so what I would imagine is the United States is putting some versions of financial packages on the table that would benefit the Iranian economy and if the Iranians decide it's enough, they may well take that deal. If they don't, I think they believe that time is on their side and the economic pain being caused by the war hurts the United States and its partners and allies more than it hurts Iran. All right, John Finer, thank you so much for joining us and for sticking with it through our dramatic reading of the president's tweets. We appreciate you. I did yeoman's work there, I did my best. John Finer, former deputy national security advisor now at Columbia University. So let's just recap what we've learned here, Christina, over the course of the last few minutes: Steve Witkoff heading to Pakistan, talks to begin according to the president tomorrow night, could continue through what, Wednesday, he said? That's right and he's also threatening, you know, if Iran doesn't take the deal, no more Mr. Nice Guy. He's going to be taking out bridges and other assets which, you know, already caused the president a problem because hitting civilian infrastructure is a war crime in most circles. but to your question, what is the deal? What is the deal that's on the table? Is it just nuclear dust? Does it include the ballistic program as well, those rockets that it's been using, Iran has been using to fire against Gulf allies, and what happens with the strait? And to use a phrase that Philip Crowther used, is the US and is Israel singing from the same hymn sheet here going forward? Coming up in our next hour, we're going to speak with former Secretary of Defense Mark Esper. He's going to join us. And what role can NATO play in helping bring peace to the region? That's straight ahead on Bloomberg This Weekend. Thank you for joining us live on Bloomberg This Weekend. I'm Lisa Mateo. Let's get you up to date on today's top stories. And cleanup is underway across the Midwest after a string of tornadoes and severe storms ripped through communities from the Great Lakes to Texas. The National Weather Service says 26 tornado warnings, they were issued for Wisconsin alone. No deaths have been reported from the storms, but thousands of homes and businesses have been damaged or destroyed. Officials are bracing residents for a long recovery in some rural communities. And in tech news, victory for a humanoid robot in Beijing after it beat the human half-marathon world record. This video, if you're watching, it's amazing. The winner of the race for robots was from a Chinese smartphone maker. It completed the 13-mile race in 15 minutes and 26 seconds. And that's a big difference from the 2-hour and 40-minute finish time of last year's winner. And Blue Origin right now, you're taking a look at some live pictures. Okay, it's going to be the booster... Oh, this was actually when it took off, okay, so it was getting ready to take off. This is Blue Origin's New Glenn rocket. It blasted off from the Cape Canaveral Space Force Station in Florida this morning. There it goes. Now, what happened is that that booster from Blue Origin's New Glenn rocket, it fell back down, landed on a vessel in the ocean, and that is where it is sitting now. Christina and David. Thank you for joining us live on Bloomberg This Weekend. I'm Lisa Mateo. Let's get you up to date on today's top stories. President Donald Trump speaking out about the war in Iran this morning as the Strait of Hormuz remains largely closed. The president telling Fox News US special envoy to the Middle East, Steve Witkoff, is headed to Pakistan for talks on Tuesday with representatives heading to Islamabad tomorrow night. The president posting on social media that if a deal is not made, he will quote, &quot;do what has to be done.&quot; Tomorrow many importers looking for tariff refunds, they're going to be able to begin filing their requests. Now it comes after the Supreme Court ruled in February that the duties were illegal in the first place. Involves a tool from US Customs and Border Protection called the Consolidated Administrative and Processing of Entries or, let's just call it CAPE for short. Laura Curtis, Bloomberg's US economy reporter, explains. CAPE will take the first tranche of import requests and process them mostly automatically. They'll take just one entry number and the sum attached to it and sort of tie it all together, recalculate, and spit out the money that you should have paid. Now more complex refunds, they will take place at a later date. It could become the largest repayment by the US government in its history. Well, as high school students, they near that May 1st decision day deadline to select a college, a new study reveals a hidden influence driving their choices. Researchers at Amherst College, they found that bad weather on a campus visit actually reduces a student's likelihood of applying. Applications dipped the most when it was too hot and when it was raining. Christina and David, I don't know, we went to Scranton, it was like negative 10, and she's going there! I went to Cornell and it snowed and rained for I think nine-tenths of my months there. I went to school in Texas. It frosted once and everyone panicked. It's good, it makes them bond, they can stay inside. Thanks, Lisa. You got it. New developments this morning: President Trump talking to several news organizations, saying he's sending representatives to Pakistan for talks to end the Iran war. Negotiations set to start on Tuesday. All the while, he's also threatening to strike civilian infrastructure if Tehran doesn't agree to a deal. Joining us now is Indiana Congressman Marlin Stutzman, who joins us now from the third district in Indiana. Let me start with a broad question, if I could. Thank you very much for being here. I'm curious how all of this is reverberating around Fort Wayne and its surrounding environs. What are your constituents saying to you? What questions do they have about this conflict as it enters its eighth week? Yeah, well first of all, thanks for having me. You know, that's a really good question because as I've talked to constituents, it usually depends on the age. The older folks that understand or remember the context of Iran and what they have done over the last 40 years, many of them are like, &quot;Finish the job. We need to get rid of this extreme ideology.&quot; And then the younger folks that, you know, haven't lived through the 40 years of turmoil with Iran, they're the ones that typically say, &quot;We gotta get out of there. President Trump said no new wars.&quot; So it's kind of a generational approach more than anything. I want to ask you, though, with that 47 years of context, the reason this administration pulled out of the Iran nuclear deal the first time is because they said Iran couldn't be trusted. Can Iran be trusted to stick to anything that's agreed to in the room in Pakistan with these negotiators? The IRGC cannot be trusted. That's... they have shown that over and over. You know, on Friday we were being told by the Iranian regime that the straits are going to be open. President Trump announced those straits are going to be open, and then within 48 hours, it's not. And so, you know, I think that there's a real power struggle going on inside the IRGC. The prime minister or the parliamentary leader is being kind of the lead negotiator, but it seems after he makes some sort of a deal with President Trump, he's being pulled back by the more fundamentalists that are in that camp. And you know, these are true believers in the ideology that, you know, they're willing to die for their religion. And I think that's also the big struggle within Islam is that you have the modern and moderate Muslims who are moving forward. You look at the countries in the Gulf states and in other parts of the world. And here you have this extreme regime in Iran that continues to show, you know, they're willing to die and want the infidels to be gone. And so I think that's really the struggle that's going on right now. And you look at even Turkey. Turkey's saying, &quot;Hey, we want to see a deal done.&quot; And Turkey's seemed to be supportive, other countries in that region have been supportive. Iran is the one that's standing alone by themselves. So before we let you go quickly, you said you want, you know, the administration to finish the job. If they came to you and said, &quot;We need this whole 1.5 trillion dollars to finish the job,&quot; would you say yes, carte blanche, or would you say we still need to look at this? Well, I don't think we need that much. In fact, any supplemental for Iran, there's talks around 100 billion to 200 billion at most. In fact, the Pentagon is telling us that, you know, they think they can do it within the appropriations that we did in the big beautiful bill. So this 1.5 would actually be long-term military capability, especially, you know, Golden Dome and the new technology coming forward. So I don't think that this is going to cost that much. And no, I would not approve 1.5 trillion just toward the conflict in Iran. Let me ask you about the hearing that's going to take place on Wednesday in the Senate, not in the House. Kevin Warsh is going to have his time before the Senate Banking Committee to testify in advance of his nomination being voted upon. And of course, there's a lot surrounding that that adds some uncertainty to this: whether Senator Thom Tillis is going to allow that to go through. He says he won't. I imagine you'll be listening as a spectator as the two of us will be. What are you listening for and what's your sense of how this nomination is likely to proceed? Are you sympathetic with Senator Tillis in what he's saying? Well, I think if there's anybody that wants to see Jerome Powell leave his position, it's President Trump. And you know, whatever it takes. If the investigation is warranted and is needed, then that's one thing. But if it's just to, you know, to poke him in the eye, then you know, I think that's one of those things that it's just like, you know what, he's done. Let's move on. Let's get to Kevin's nomination and let's get a new Fed Chair. And but again, you know, there's a lot of information that folks have been looking at that say, you know what, there needs to be a deeper look behind Mr. Powell. And so I think that, you know, we just need to be fair, to be practical and be reasonable, and understand that if there is a warrant, or I'm sorry, if there's an investigation warranted, then that should be followed through on. But if it's not, then let's move on and let's get to the new Fed Chair. There's a lot of work to do to grow this economy. Is that your preference, sir? You think that this is a fight the president should let go and just move on so that he can ultimately get his end goal, which is a new Fed Chair? Well, I think the end goal should be to get the new Fed Chair as quickly as possible. But anytime there is abuse of funds or misappropriation of funds, those are the questions that are being asked. And I think that every person needs to be held accountable, whether you're the outgoing Fed Chair or if you're the incoming Fed Chair. We're all human beings that need to be held accountable. And so if there's real problems here that need to be looked into, those should be. But if not, then let's move on and let's get to the new Fed Chair. Thank you very much, sir. Representative Marlin Stutzman from Indiana. We appreciate you joining us on this Sunday. We're also hearing from Secretary of Energy Chris Wright who says the Iranian regime is quote, &quot;falling apart.&quot; We're going to discuss that next, coming up on Bloomberg This Weekend. Stay with us. We will be right back. New developments this morning: President Trump talking to several news organizations, saying he's sending representatives to Pakistan for talks to end the Iran war. Negotiations set to start on Tuesday. All the while, he's also threatening to strike civilian infrastructure if Tehran doesn't agree to a deal. Joining us now is Axios's White House reporter Marc Caputo and Atlantic staff writer Nancy Youssef. Marc, let me start with you and just get your read of the latest here. The president making the rounds over the course of the morning, indicating that Steve Witkoff, Jared Kushner are going to be the point people going to these talks. Curious what you make of that, the latest there, and sort of what you think will be notably different at this meeting compared to the one that took place between J.D. Vance and his Iranian counterparts last week. Well, I have no idea what's going to be notably different. One of the things that seems to be a through line is everything seems to be notably the same. The only through line we have so far is that there's generally a ceasefire between the United States and Iran, between Israel and Lebanon. But otherwise everyone keeps claiming that progress is being made, but what's really happening as a result? We've had a few things in Axios that we had reported: one, that there is an idea out there that the US had started to advance, of providing Iran access to its frozen assets, its currency, bank accounts essentially, of about 20 billion dollars in return for them giving up uranium to the United States, its highly enriched uranium stockpiles. The Iranians wanted more money and then the president came out and said he wasn't going to do this. However, there remain the very big issues, which is: Iran has highly enriched uranium; the United States has access to Iran's money and has basically frozen them out from it, that's a possible trade item; Iran has closed the Strait of Hormuz, the United States wants it open and has a blockade, those things seem tradable; and then more broadly, the United States has lots of weaponry and sanctions against Iran, Iran funds terrorist proxy groups like Hamas, Hezbollah, and the Houthis, and so that also seems to be a trade item. But so far we have not seen anything in writing that clearly shows what's up for trade, what's up for discussion, what the progress is. So until then, you have statements from President Trump and what you just played there, Energy Secretary Chris Wright, saying all this progress is happening, and then you have the Iranians saying, &quot;No, no it's not.&quot; We do know they're talking because obviously they're talking, and also they're not shooting. Nancy, let's go to you. I want to talk to you about some of the mixed messaging we're getting, not just from the administration, but also on the Iranian side as well. We've had infighting between IRGC members and more political elites. We've had this very bellicose tweet this morning or social media post from the president threatening to once again take out Iran's bridges and power plants, but at the same time going back to talks and saying things are progressing and they think that the US can get a deal. What is going on here? So you make a very important point because over the end of the weekend, or at least on Friday, we saw talks about a ceasefire from the Foreign Minister, only for the state news media to say that actually the Ayatollah wasn't on board. And the reason that was significant not just because it impacts the talks, but it was the first real break we've seen, or fissures within the regime, something we've been looking for as a sign of potential fractures for the regime. And so that was noteworthy. But I think you get at a very important point is we're also seeing some broken patterns in the United States, where the president, facing challenges in terms of reaching a strategic outcome that is beneficial to the United States, is turning back to tactical threats. We saw this earlier with the threat to kill a civilization and now, as you note in this latest social media post, he's threatened to strike Iranian infrastructure. In addition to being a violation of the Geneva Conventions, doing so doesn't answer the ultimate question which the US is trying to resolve, which is how to get the strategic outcome that they want. And so it feels to me that we're on a cycle in which we're trying to leverage the US military superiority to reach an understanding of what we want to achieve through these war aims. And as your colleague noted, there are a lot of things that the United States and Iran are trying to achieve: the nuclear program, reopening the strait, sanctions relief, what would happen with proxies, the Iranian proxies, and the war in Lebanon. The last time there were serious negotiations about this, it took nearly two years to reach an agreement on just one component of it. And so I know there's been a back and forth today about whether the vice president is attending, and what that means. I'm also curious if there will be more technical experts in this next round of negotiations, because in the past, these negotiations were successful not when the top sort of headline-making attendees were there, but when the experts were able to work out these details such that when folks like the vice president or the president's top negotiator came to the table, it wasn't to iron out these very, very specific points but to really sort of put the final signature on it. So I'm curious if we'll see a different tactic in terms of how the United States approaches these talks, not just through who's attending from the White House, but who's attending from government agencies that could really help get to a resolution. Good news, it's now this week's Pointed news quiz, the news quiz for risk-takers. David is back this week. I'm back. studied? study so much as I can, you know, I read regularly and watch Bloomberg Television. Tim beat you. My very first loss, Tim did. But we have a guest star today playing along with us. Ed Ludlow is back! I think this is probably like the most dread and nervous I've felt in my career in television, so thank you. Tim and Joe felt the same way, but it'll be fine. Lisa, our quizmaster, will make you look good. Okay, let me explain it to you, Ed, because you're new to this. Okay, so basically we have three different categories, okay? So you have ten-ten-ten, 30 chips in front of you, okay? What you do with those chips, you figure out how confident you are with each category. If you know the first category, you're going to put 10 chips, you're going to put 20 chips, maybe 30 chips, all in one, it depends, or you can split even. I'll ask you the question, you write it on your board, and I'll tell you guys to flip it and we'll see who's right and wrong. Okay. If you're wrong what happens? You take the chip? And if you're wrong I get your chips. Okay. And a little piece of your soul, just a bit. Fair trade. All right, let's get to the categories first. Categories. Okay, first category is Investigations. Second category, Business Leaders. And third category, Cons. Does Cons mean like pro and con or... like a con artist or conviction. Okay. Correct. Not that I'm an expert in any of those domains, well, but it's good to ask. All right. Are you ready for the first question? How are we betting? I put nothing on the first one. Christina has 10. Ed... 10. Okay, so 10-10-10. Okay, good. All right, here we go. The question is: Begoña Gómez was charged with influence peddling and commercial bribery. Her husband is which country's premier? Her name is Begoña Gómez. Her husband is which country's premier? Which country? All right. Flip it. What you got, David? Colombia. Christina? Spain. Ed? Spain. Spain is the answer! Begoña Gómez is the wife of Pedro Sanchez. I read the news and watch Bloomberg Television, Gura. Only when I'm on set. All right, next one category: Business Leader. Are you ready? 10 for Business Leaders. 20 for Business Leaders. Big money, big money. Here we go. 
+
+A man allegedly threw a Molotov cocktail at the San Francisco home of which business figure? What was the name of this business figure? Flip it. Sam Altman. Sam Altman. Sam Altman. Everybody got it! Excellent.
+
+For the record, I've got 20 points for that. But they still have their 20 as well. All right, we're all tied up here. You should have had more conviction that I was going to do a good job. Next time, Ed.
+
+All right, you ready for the Cons? Category for the French city. The founder of which annual New York event was arrested on charges that he stole money raised for charity? What is the name of that New York event? I know this because I hate this thing. So do I.
+
+The category was misleading? No, we'll get to it. Flip it. SantaCon. SantaCon. SantaCon. Everybody got it! The charity event. The issue is like we have SantaCon in San Francisco as well. It's not like a uniquely New York City thing.
+
+Didn't it start in New York? It had to have started in New York. You're... did you bet? Oh, I get your chips, David, you're down. This was probably my most loathed day of the year in the city.
+
+SantaCon is your most loathed day or this current news quiz is your most loathed day? We'll find out at the end of the show. We've got a bonus. Category for the bonus: Antitrust.
+
+Which confectioner, a large consumer of hazelnuts, was a target of European Union antitrust raids this week? Which confectioner, a large consumer of hazelnuts, was a target of European Union antitrust raids this week? Come on. The name of the company. Nutella... which is not the name of the company. Come on.
+
+Ferrero! Ferrero. Ferrero! Look at you getting your categories right, Lisa Mateo. I did not know until I was reading about this thing that Ferrero Rocher made Nutella.
+
+But let's be honest, Nutella inside of Artemis 2 in the spacecraft is a bigger story than this antitrust story. It flowed right past. You did fantastic. You did okay, Ed. Thank you. I appreciate that patronizing statement.
+
+All right, you can test your knowledge on all 10 questions. Take the Pointed news quiz at bloomberg.com/pointed. Thanks for joining us on Bloomberg This Weekend.
+
+Join our colleagues in Asia this evening as global markets kick off trading at PM Wall Street time. And tune in tomorrow during ETF IQ for David Rubenstein's conversation with Wells Fargo Chairman and CEO Charlie Scharf.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
