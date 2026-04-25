@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - April 25, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">April 25, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">2</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=IgK3wrlGQTU" target="_blank" rel="noopener">Cuba's Trump standoff and economic crisis with Michael Bustamante</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/n-34ui1Y67A5utdp1ykhuMMAdIm5c_4XfZ7ScnBG8pkBT4ciCpnx_IqslnlpXzVBTsmQnaTJgg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">GZERO Media</span><span class="channel-subs">(1.1M)</span></span>
+                        <span class="meta-sep">·</span><span>25:55</span>
+                        <span class="meta-sep">·</span><span>1.9K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-04-25</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Michael Bustamante (Historian)</span> <span class="tag tag-person">Ian Bremmer (Host, GZERO Media)</span></div>
+                </div>
+                <div class="tldr">Cuba is currently experiencing its most severe economic and humanitarian crisis in decades, leading to a historic exodus of over 10% of its population.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR Cuba is currently experiencing its most severe economic and humanitarian crisis in decades, leading to a historic exodus of over 10% of its population. While the Trump administration has signaled an assertive &quot;Donner Doctrine,&quot; a military invasion remains unlikely;...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Cuba is currently experiencing its most severe economic and humanitarian crisis in decades, leading to a historic exodus of over 10% of its population. While the Trump administration has signaled an assertive "Donner Doctrine," a military invasion remains unlikely; instead, the U.S. may leverage Havana’s vulnerability to force an economic "deal" that balances private investment with political concessions.</p>
+<h3>Domestic Crisis: A Nation on the Brink</h3>
+<ul>
+<li><strong>Unprecedented Economic Hardship:</strong> Historian Michael Bustamante describes the current period as the most difficult in modern Cuban memory. While the percentage-based GDP decline is not as steep as the post-Soviet collapse 30 years ago, the economy never fully recovered, making the current shortages feel significantly worse.</li>
+<li><strong>Infrastructure Collapse:</strong> </li>
+<ul>
+<ul>
+<li><strong>Energy and Fuel:</strong> Cubans face daily blackouts lasting up to 18 hours. The lack of fuel has halted public transportation and trash collection.</li>
+<li><strong>Desperation:</strong> In Havana, residents are breaking down wood doors to use as cooking fuel and preparing meals over fires in the streets.</li>
+</ul>
+</ul>
+<li><strong>Demographic Seismic Shift:</strong> </li>
+<ul>
+<ul>
+<li><strong>Mass Migration:</strong> An estimated 1 million to 2 million people—more than 10% of the population—have fled in the last five to six years.</li>
+<li><strong>Aging Society:</strong> Because those leaving are primarily young and educated, Cuba is becoming one of the oldest countries in Latin America, leaving fewer people to fuel domestic protest movements or economic recovery.</li>
+</ul>
+</ul>
+<li><strong>Public Sentiment:</strong> Cubans increasingly reject the government’s "blame the U.S. sanctions" narrative, pointing instead to internal failures like the disastrous 2021 currency devaluation.</li>
+</ul>
+<h3>The New Economic Lifeline: Remittances and Private Sector</h3>
+<ul>
+<li><strong>Bypassing the State:</strong> The flow of remittances has evolved to cut out the Cuban military. Private channels now allow family members abroad to purchase goods on "Amazon-like" websites using foreign bank accounts (e.g., in Canada or Mexico).</li>
+<li><strong>Delivery vs. Economy:</strong> Goods are delivered directly to Cuban doors within days, but because the money stays in bank accounts outside the island, these transactions provide a personal lifeline for citizens without strengthening the state’s broader economic standing.</li>
+<li><strong>The Private Sector:</strong> A nascent private sector offers some insulation for a small portion of the population, but those relying on state salaries face extreme poverty and rising inequality.</li>
+</ul>
+<h3>Trump’s Strategy: Diplomacy and "The Deal"</h3>
+<ul>
+<li><strong>The "Donner Doctrine":</strong> While Trump has utilized rhetoric suggesting military assertiveness in the Western Hemisphere, experts believe his primary goal is a "win" through economic breakthroughs in investment and tourism.</li>
+<li><strong>The Marco Rubio Factor:</strong> As Secretary of State, Rubio faces a difficult balancing act. He must reconcile Trump’s instinct for a "deal" with the expectations of his Cuban-American base in Miami, which generally demands fundamental political reform rather than just economic opening.</li>
+<li><strong>Political Concessions:</strong> A plausible endgame involves a "superficial" political signal—such as the release of political prisoners—to allow Trump to claim victory without requiring the total democratization of the island. </li>
+<li><strong>Fear of Instability:</strong> The U.S. administration remains wary of total regime collapse, as the resulting instability and mass migration 90 miles from U.S. shores would be a "worst nightmare" scenario.</li>
+</ul>
+<h3>Geopolitical and Strategic Realities</h3>
+<ul>
+<li><strong>Absence of Organized Opposition:</strong> Unlike Venezuela, Cuba lacks a well-organized, united opposition ready to take over. Most leaders are currently in jail or exile, making "decapitating" the government a risky strategy with no clear successor.</li>
+<li><strong>Failed Obama Opening:</strong> Bustamante notes that the Cuban government missed a critical window during the Obama administration to double down on U.S. investment, viewing the opening with suspicion as a "Trojan horse."</li>
+<li><strong>Waning Foreign Support:</strong> While China and Russia remain allies, they have signaled to Havana that they will not provide a total bailout. They expect the Cuban government to implement serious internal economic reforms to stay afloat.</li>
+<li><strong>Symbolism Over Strategy:</strong> Cuba no longer represents a Cold War-style national security threat. For President Trump, the interest in Cuba is largely symbolic—the opportunity to say he "defeated communism" where previous presidents failed.</li>
+</ul>
+<blockquote>
+<strong>Notable Quotes</strong>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+"Things haven't been nearly this bad since 30 years ago when the Soviet Union fell... this crisis feels in the minds of most Cubans much worse than even what they went through in the 1990s." — <strong>Michael Bustamante</strong>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+"More Cubans have left in the last five years than left in the immediate wake of the Cuban Revolution. Not just in terms of absolute numbers but as a percentage of the population. It’s seismic." — <strong>Michael Bustamante</strong>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+"What's much more plausible [than invasion] is an attempt to force an economic breakthrough: a deal that opens the island to investment and tourism, while delivering Trump a quick and low-risk win." — <strong>Ian Bremmer</strong>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+"Cuba is attractive to the president not because of natural resource wealth... this is about the symbolism of communism and being able to say that we planted the flag and defeated that thing that no one else could." — <strong>Michael Bustamante</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Hello and welcome to the GZERO World podcast. This is where you can find extended versions of my show on public television. I'm Ian Bremmer, and today we are asking: Is the United States really on the verge of invading Cuba? 
+
+In his second term, President Trump has leaned into a more assertive vision of American power in the Western Hemisphere—what he's called a kind of Donner Doctrine, from Venezuela to Panama and beyond. But when it comes to Cuba, the reality is more complicated. A military invasion is actually highly unlikely. 
+
+What's much more plausible is an attempt to force an economic breakthrough: a deal that opens the island to investment and tourism, while delivering Trump a quick and low-risk win. That strategy comes at a moment of vulnerability for Havana. 
+
+The collapse of support from Venezuela, combined with sustained U.S. pressure, has pushed Cuba's already struggling economy into a tailspin. They've had blackouts and fuel shortages and widespread disruption to daily life. For the Castro government, some form of economic opening could be a lifeline. 
+
+But for Trump, striking that kind of a deal would mean balancing competing pressures at home, especially from political allies who see any engagement with this Cuban regime as unacceptable without fundamental political change. Here to talk about all this and more is Michael Bustamante. He's a historian at the University of Miami and an expert on Cuba and U.S.-Cuba relations.
+
+The GZERO World podcast is brought to you by our lead sponsor, Prologis. Prologis helps businesses across the globe scale their supply chains with an expansive portfolio of logistics real estate, and the only end-to-end solutions platform addressing the critical initiatives of global logistics today. Learn more at prologis.com.
+
+Michael Bustamante, thanks so much for joining us today. Thanks for having me. So there's been a lot of chatter about Cuba and some action recently. What is happening to the Cubans today?
+
+If by to the Cubans you mean the Cuban people in Cuba, they are living the most difficult period in their memory for most. Things haven't been nearly this bad since 30 years ago when the Soviet Union fell and Cuba's GDP declined by something like a third in three or four years. 
+
+On a percentage basis, Cuba's GDP in the last five years hasn't declined nearly as much, but the Cuban economy never recovered to where it was in 1989. And so this crisis feels in the minds of most Cubans much worse than even what they went through in the 1990s.
+
+Hearing about all sorts of shortages in electricity. They don't have fuel. So I mean the buses aren't running, they're not picking up trash. I assume you're talking to people that are on the ground. I mean, what—what is day-to-day life like right now for Cubans?
+
+Yeah, day-to-day life is incredibly difficult. Imagine that, you know, the power's been out for 18 hours. It comes on at in the morning and you have no choice but to get up and try to cook, you know, the rice and beans that you want to feed your family for the following day because you don't know if you're going to have electricity, right? 
+
+And so people are really just thinking about not even how they're going to get by that day. They're thinking almost hour to hour. Obviously, there's differences in terms of some Cubans have access to money and resources that come from family outside. 
+
+Some are—have a foot in Cuba's nascent private sector, so they're a little bit perhaps more insulated. But for folks who are relying on state-sector salaries, they are really, really having a very, very difficult time and poverty and inequality have become increasingly severe.
+
+Can remittances get in? Remittances do get in. What's interesting is sort of that the way remittances has got—are getting in has changed somewhat. It used to be that, you know, you went to Western Union in Miami, which had a license to operate in Cuba. 
+
+You sent money, they were able to take money out in a Cuban equivalent currency and go to a store run by essentially the Cuban military and buy imported goods. What's happened now is that the Cuban military and the Cuban financial system has been cut out of that flow to some degree. 
+
+And so now there are—there's this whole kind of private sector channel whereby businesses that have a foot on the ground in Cuba but also say a bank account in a place like Canada or Mexico, they have a website, you can go online, it's almost like Amazon, you can order your family stuff and within three to four days it's delivered to their door. 
+
+But the money is not—is going to an account outside of Cuba that's then used to pay for exports from somewhere to Cuba. And so the economic impact for the Cuban economy as a whole is not great, but it's a real lifeline for many, many people to get by.
+
+Interesting. And so there is some humanitarian aid that I see has been sent. That's true. Right. I mean, Canada's sending a little, Mexico's sending a little. The United States has sent some. The United States has committed to a few million dollars. 
+
+I would say in the United States' case it doesn't really, you know, make up for what's lost in terms of just the overall economic picture as a result of the oil sanctions. But yes, there is aid of different kinds that's getting in. 
+
+There are non-government organizations that work to distribute that aid too. The Catholic Church is playing a big role. But—but make no mistake, this is really, really dire times. I mean, no gas, no electricity, people are breaking down the wood doors in their homes to get wood for cooking, right? They're cooking with fire in the streets. I mean, in Havana. That's—that's how bad things have gotten.
+
+So if—if nothing were to happen, if there were no political decisions that would change the trajectory that we are now on, play this out in six months, in a year, in two years. What—what happens in Cuba as a consequence?
+
+It's really hard to—it's hard to game that out in a sense for me because on the one hand, you would expect that as things get worse, people are going to get more and more frustrated and you would see some kind of civic unrest. And maybe that is what would happen. 
+
+We've seen in recent weeks, you know, people going out on their balconies at night and banging pots and pans in a kind of collective signal of protest. But whether we would get anything bigger, sort of a taking of the streets, right, in a sort of mass scale, that's I think an open question. 
+
+And part of the reason it's an open question is because people are so exhausted, they're as I said, just trying to get by every day. And Cuba has lost a tremendous amount of people to migration in the last few years. 
+
+The estimates vary, but between a million and 2 million Cubans have left in the last five or six years. That's the largest exodus ever. Out of like what, ten basically? Originally out of 11, right? So they've lost more than 10% of their population. 
+
+So it's, you know, more Cubans have left in the last five years than left in the immediate wake of the Cuban Revolution. Not just in terms of absolute numbers but as a percentage of the population. So it's seismic. So who's left, right, to sort of fuel that—that protest movement? 
+
+Cuba also has an aging society. It's one of the oldest countries in Latin America because the people that leave tend to be young. So I—you know, you could see a situation where this plays out and does lead to some kind of instability or civic unrest or protest on a mass scale, but you could also just see this kind of wither into just a really, really dark, dark place.
+
+Now, are—I know it's hard to assess this, but to the extent that the Cubans are blaming someone, how much are they blaming the Cuban government, and how much are they blaming the United States for the hardship?
+
+Well, it's hard to generalize about how Cubans think because of course, Cubans have different points of view. But I think what I would say is I think many Cubans I know, they're tired of the blame game that on—in the geopolitical corners tends to point their finger at either one actor or another: either the Cuban government or the United States. 
+
+I mean, most Cuban people I know are aware that U.S. sanctions have a bite. They obviously have impacts on the Cuban economy, otherwise there'd be no reason for them. But the argument that they have heard their whole lives from the Cuban government that it is only the United States' fault, that's something that even if you agree with it, it's just not working politically anymore. 
+
+People don't buy it because they have seen their own government make some very serious mistakes over the last few years, like a currency devaluation which went horribly wrong in 2021 in the middle of the pandemic and led to mass inflation. 
+
+So they know their own government has some ownership here and—and they haven't owned up to their part in this mess and their part in making the Cuban economy as vulnerable as it is to the kind of external pressure that they're facing now from the Trump administration.
+
+Now, there was a flurry of Cuba in the news in the Obama administration. We had baseball game, we had like the museum that opened up to the internet. It sounded exciting; it never went anywhere. Why—why did that fail? What was the intention and where did it fall short?
+
+Well, I don't know if I—I would agree that it failed. I mean, I was in Havana and in Cuba generally a lot in that period, and I've never known a period that felt more hopeful, more effervescent. Of course there were winners and losers in that sort of reform process, but it was a time when for the first time in all my years of traveling there, I knew people, you know, more or less people my age who were making a decision to stay. 
+
+That they were not thinking of how do I get out of here. Talented people with professional ambitions and—and great educations were thinking, &quot;I want to stay, I want to start a business. I—I think something is happening, I'm not exactly sure where it's going, it's imperfect sure, but—but I want to see and ride this out.&quot; 
+
+The Obama policy at its peak really only had two years to work, and then, you know, two things happen: Donald Trump is elected, and then Fidel Castro dies within weeks of one another. And so that kind of casts a pall on this hope. 
+
+And so I don't know as if we know where that process would—would have ended up. But what I would say is that in retrospect, it also is clear that the Cuban government missed an opportunity. They saw the Obama opening as, you know, &quot;the United States has definitively turned a page on past policies of sanctions.&quot;
+
+They thought, &quot;We—we can kind of play it safe, we can take our time to doing the things internally or with respect to our other relationships and partnerships around the world, we can play off different foreign interests against one another because Cuba is in style.&quot;
+
+But they did not jump in and embrace opening with the United States. They did not. I mean, and you—you know, it's remarkable to go back and look at Obama's speech in the spring of 2016, which was an incredible work of oratory calling on the Cuban people, you know, recognizing the responsibility of U.S. policy but also calling on the Cuban government to open politically and economically. 
+
+The reaction from Cuban official corners in the immediate aftermath was—was striking. It was, &quot;this is, you know, Obama's policy is more of the same, it's a Trojan horse,&quot; right? And—and they missed an opportunity to really double down on say U.S. investment for some of the loopholes that were created at the time in the sanctions framework. 
+
+The fact that they didn't meant that it was that much easier for Trump to unwind the normalization thing when he came in because there—there weren't these sort of deep web of business ties that—that connected both places yet.
+
+So now we've had a—a shift in U.S. policy, but certainly mounting interest, almost a feeling of inevitability. I mean, this is not like Greenland where you got, you know, a flurry and it went away. This is like a steady drumbeat, and it is—has economic implications, has diplomatic implications, occasionally it seems to have military implications, right? 
+
+Where Trump is expected to do something big. A win is coming on Cuba. What—what do you see this policy so far as—as moving towards? Really hard to say what the endgame is here for this administration, and I think the signals have been very mixed. 
+
+You are right that they have created very high expectations, especially where I live in Miami, right? Certainly the Cuban-Americans have to be thinking, &quot;it's finally—it's our time.&quot; Right. The same way they were in 1991, right? But this time they all want like an invasion.
+
+I mean, I don't know if they all want it. There was a poll recently that suggested that there's strong support for some kind of military action. That's actually long been the case. You can poll Cuban-Americans going back years and years and find a majority of people will say, &quot;yeah, we'd like military action,&quot; but we also don't want the government to get out of the way if we want to send money to our mom, right? 
+
+So—so there's a lot of inconsistency I think in popular attitudes. But make no mistake, expectations are really high that the moment is coming. U.S. diplomats have put that out that 2026 is the year of change, the year of liberation. But what's that going to mean? 
+
+You know, the Trump administration— because there is no opposition on the ground in Cuba. It's not that there's no—there is—there is opposition. I mean— but a party, a group. There are many groups. The problem is that they are weak, they are not particularly united, and most of the significant leaders that have existed are either in jail or in exile. 
+
+So this is not anything like the Venezuela case where you had a very well-organized opposition that despite its own history of fractiousness came together around the 2024 election and really, you know, won that election, I think as has been shown. 
+
+And then a lot of them ended up in jail and in exile. Correct. But at least in that case, there is I think a plausible case that you could make that there is a political force that is not just ready but willing and able to sort of take over in the event that the existing state somehow just falls. 
+
+In the Cuban case— Havana is not a case that the Trump administration is making, by the way. That is not a case that they're making. And—but and I think that's what's more striking. That for to be in Miami and hear for calls that, you know, the big moment of change is on the horizon, if this administration came to the conclusion in Venezuela that even that opposition was not ready to take over and not ready to earn the support of the Venezuelan military, how can they not arrive at a similar conclusion in the Cuban case?
+
+Assuming they—they probably are, right? I think the suggestion—I mean, there's been conflicting reporting and conflicting signs because the politics on this are so difficult for the Secretary of State. Who is Cuban-American. Who is Cuban-American. 
+
+The governments are talking. U.S. diplomats have also put out there that they are looking for a Cuban Delcy Rodríguez in reference to the—the Maduro successor that seems to have been basically hand-picked by the United States. I think it might be dawning on them that that person doesn't really exist. 
+
+There's no one to my mind in the Cuban government that's that in a position to simply stick their neck out and kind of be the person who's going to do the United States' bidding. And so what does that leave you with? 
+
+And then you add in that you don't really have an opposition. So your options seem to be limited. Even if you can somehow decapitate, you know, the high ranks of the Cuban state, you're going to have to deal with some remnant of that government that can keep stability because this administration does not want total instability 90 miles from its shores that could lead to things like another mass migration crisis, right? 
+
+That would be their worst nightmare. So the—the expectations that have been created for big political change that goes all the way, root and stem political reform versus some of the hard realities, that's where the rubber meets the road and that's where I think the outcomes here might disappoint some of the expectations that are—that are sky high in Miami.
+
+So there's certainly been, depending on when you listen to Trump on this issue, there's been a—a focus on a lot of deals you can do: tourism deals, real estate deals. You know, maybe you can find a way to work with the Castros themselves, not with the president, who has said that he's not going anywhere, of course. 
+
+And then, you know, you say that's a win, you paint that as a win. So two related questions. One, do you think that's where the Trump administration is actually now heading? And two, if it is, what are the implications of that?
+
+It is really hard to know if that's where the Trump administration's heading. I think it—you know, all things being equal, I could certainly see Trump himself being perfectly fine if that's where this ended up. But they have a problem in that the Trump—Trump himself has said also repeatedly that part of the reason he's so interested in Cuba is because he's had, you know, wonderful Cuban-Americans who have supported him. 
+
+He's appointed many Cuban-Americans to diplomatic posts. He has a Cuban-American as Secretary of State. And so and—and seems to want to do right by them in some way, whatever that means. 
+
+And that &quot;do right by them&quot; for as most Cuban-Americans would define it is not simply having the opportunity to go participate in a hotel venture. And so that's where Trump's kind of deal-making instincts may conflict with some of the domestic political pressure he's going to get from a place like South Florida. 
+
+On the other hand, you know, if they are able to craft a deal, as has occasionally been reported, that is basically about economics, and by the way, the Cubans have signaled that they'd be pretty—pretty comfortable with that. 
+
+You know, their red lines are &quot;don't tell us how to run our political system, don't tell us who to—who to let out of jail.&quot; But even if part of the Trump White House is willing to go there, you know, the consequences for someone like the Secretary of State I think are significant in terms of his future political ambitions, in terms of electoral support for future Republican candidates in Florida, right? 
+
+So that's where there's a—there's a disjuncture here. Okay, but Trump doesn't care that much about that, right? I mean, like if I'm thinking about Trump wanting a win on the back of Iran which has not gone well, on the back of Venezuela that hasn't, and those two experiences have been very, very different in terms of level of ambition, right? 
+
+Then, you know, why wouldn't he take that and from his perspective, it's—it's another win, it's another war that he gets to say is essentially over that he has resolved? He might very well, and I have no doubt— but do you—do you think that or you don't think that?
+
+I think Trump might be willing to take that deal any day of the week. I think there are other parties in the administration who also would be, as long as there is as part of that some kind of at least superficial political signal—maybe a little bit more than superficial. 
+
+The Cuban government say, &quot;let's out a number of political prisoners in jail,&quot; doesn't commit to democratization overnight but makes some gestures in the same way that the Delcy Rodríguez government has—has done in Venezuela, right? 
+
+But largely you keep the picture of the state, you know, the—the same. That might be perfectly sellable for Trump, for many parts of the White House. The question I have—and Rubio himself might be forced to—to do that if that's what Trump wants. 
+
+But then Rubio has a question: Does he—does he go along with it and how does he sell it to his own community? That I think is a really interesting thing to think about. You know, you're right: for Trump, he might not care, presumably he doesn't have to run for election again. But again, I think for Rubio, that's where the dynamic is really—is really interesting.
+
+Let's imagine that this happens and it's bloodless, and it is—the Americans suddenly are investing like crazy in Cuba and you've got, you know, big five-star complexes and tourism comes. The economy feels more open. 
+
+They're getting more information, they're traveling more. Is that—I mean, that may not be Trump long-term, it's a different presidency. But to what extent does that—would that reality create an inevitability that this regime is actually going to have to open politically because you can't maintain communism in an environment like that for very long?
+
+Well, I think in some ways that was kind of the long-term bet of the Obama policy too, was that, you know, take the United States out of the equation as sort of the bogeyman in Cuba's internal politics, get—take away the scapegoat that everything is the United States' fault, and engage with the Cuban people, bring in information and that will over the long term create ingredients that will—will snowball over time. 
+
+I'm not sure if that—if that would be guaranteed to play out in that way, and I think a lot of it has to do with how that economic opening is structured. If it's an economic opening that's structured in such a way that allows the Cuban military, which already has controlling interests in the tourist industry in a bunch of sectors of the Cuban economy, to really suddenly become kind of the new—the new kleptocrats, right, of—of an oligarchic economy that doesn't allow Cubans to really build an economy from the ground up, there's no reason that that kind of opening would necessarily have to lead to political opening. 
+
+I think if an economic opening is really from the ground up, it's going to require the Cuban government also to make enormous changes in how they structure their economy. They have played with liberalization of the economy to some degree, but it's been sort of one step forward, one step back. 
+
+They really have yet to signal that they get that their own economic model is broken independent of what the United States does or doesn't do and that they really need to turn a corner. If they do that, there's also a possibility that you could have, you know, participants in that private sector, in a domestic private sector, really want to give the government the benefit of the doubt and—and focus on their own building businesses rather than political change. 
+
+So I—I don't think inevitability—there's nothing that's inevitable. There's nothing that's inevitable here. Political change in Cuba is going to take fracture at the top and it's also going to take sustained pressure from the bottom. Neither of which we really have to scale that—that would make that possible.
+
+Trump looking at the world today, is wanting to make change in Cuba as a priority the correct political impulse for this administration? In some ways it seems a surprising impulse, you know, given kind of the deal-making impulses, given the comfort that this administration has with dealing with autocrats in lots of places around the world, given that this is an administration that could easily cozy up to the current Cuban government and get a hotel deal out of it if they were smart. 
+
+I mean, I've long thought that the—the smartest thing Havana could have done from their own self-interest point of view back in 2017 was offer Trump a little island off the coast of the main island, right? Small price to pay for what they're going through now. 
+
+But I think for Trump it's also about symbolism. I think this is, you know, to be able to say hypothetically—selling whatever deal comes out of this as &quot;I was the president who did the thing that no other president did.&quot; I mean, that goes straight to I think his ego. 
+
+And so I think, you know, Cuba is attractive to the president not because of natural resource wealth—there's some oil, there's some nickel—but this is not Venezuela, right? It doesn't have the strategic implications of Iran. 
+
+This is about the symbolism of communism, right? And being able to say that, you know, we planted the flag and—and defeated that thing that no one else could, even if defeat really isn't defeat in—in so many ways. So I think for him the symbolism part is—is probably how this is being sold to him as why he should even care at all.
+
+We're not in a Cold War anymore. And, you know, there's—there's been support from the Chinese and the Russians but not all that significant. Why—why does Cuba matter strategically for the U.S., if at all?
+
+Well, if you go by the administration's national security doctrine which they published at the end of last year, they do seem to be very concerned about the ties with China and Russia. There have been allegations of a Chinese listening base, you know, sort of unconfirmed. 
+
+There have been Cubans who have been showing up on the—on the front, on the Russian front. Questions sort of swirling about to what extent the Cuban government may have turned a blind eye to something they know was going on in terms of recruitment. 
+
+But you're right: I mean, I think aside from those things, Cuba does not represent a national security threat to the United States in the way it did during the Cold War. The Chinese and the Russians remain important allies for Cuba economically, they're sending in aid, but they have also both, from their very different kind of ideological priors, communicated to Havana that they need to get their economic act together. 
+
+They are not going to bail out the Cuban economy. They may do enough to help it stay afloat, but they're not going to bail it out. And so the argument that, you know, you have some existential Chinese or Russian threat off—off the coast, I think it's a little—it's—it's a tough sell given some of the facts on the ground.
+
+Michael Bustamante, thanks for joining us today. Thanks for having me. That's it for today's edition of the GZERO World podcast. Why not make it official? Why don't you rate and review GZERO World—five stars, only five stars, otherwise don't do it—on Apple, Spotify, or wherever you get your podcasts. Tell your friends.
+
+The GZERO World podcast is brought to you by our lead sponsor, Prologis. Prologis helps businesses across the globe scale their supply chains with an expansive portfolio of logistics real estate, and the only end-to-end solutions platform addressing the critical initiatives of global logistics today. Learn more at prologis.com.
+                    </div>
+                </div>
+                
+            </article>
+            
+
+            <article class="video-card" id="video-1">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=kMYeTRqzAfc" target="_blank" rel="noopener">Replit's CEO On The Only Two Jobs Left In The Company Of The Future</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Y Combinator</span><span class="channel-subs">(2.2M)</span></span>
+                        <span class="meta-sep">·</span><span>39:12</span>
+                        <span class="meta-sep">·</span><span>5.6K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-04-25</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Amjad Masad (Co-founder and CEO, Replit)</span> <span class="tag tag-person">Andrew Miklas (Partner, Y Combinator)</span></div>
+                </div>
+                <div class="tldr">Replit is evolving from a developer tool into a &quot;vibe coding&quot; platform that allows non-technical domain experts to build and deploy production-grade software using natural language.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-1">TL;DR Replit is evolving from a developer tool into a &quot;vibe coding&quot; platform that allows non-technical domain experts to build and deploy production-grade software using natural language. The company envisions a future where traditional coding is abstracted away, leaving only...</div>
+                    <div class="summary-full" id="full-1">
+                        <p><strong>TL;DR</strong></p>
+<p>Replit is evolving from a developer tool into a "vibe coding" platform that allows non-technical domain experts to build and deploy production-grade software using natural language. The company envisions a future where traditional coding is abstracted away, leaving only two primary roles: builders who act as "internal founders" and sales evangelists who drive human-to-human transformation.</p>
+<h3>The Shift to "Vibe Coding" and AI-Native Builders</h3>
+<ul>
+<li><strong>Abstracting Complexity:</strong> CEO Amjad Masad explains that Replit’s 10-year mission has moved from solving environment setup to automating deployment, and finally to "vibe coding"—interfacing with AI via natural language and design to create real, scalable software without writing code.</li>
+<li><strong>Targeting the "Tech-Adjacent":</strong> While traditional developers often enjoy the "accidental complexity" of coding, Replit is now explicitly building for creators who were previously bottlenecked by technical barriers.</li>
+<ul>
+<ul>
+<li><strong>Primary Users:</strong> Product managers, designers, and entrepreneurs who have the "fire" to build but lack formal computer science backgrounds.</li>
+<li><strong>The AI-Native Generation:</strong> A new class of developers is emerging that views software as a means to an end, focusing on the active creation rather than the underlying syntax.</li>
+</ul>
+</ul>
+<li><strong>Domain Expertise vs. Coding Skill:</strong> The most successful users are often those closest to a specific problem (e.g., a physical therapist building a specialized health-tech app or a pool maintenance professional building vertical SaaS).</li>
+</ul>
+<h3>Agent 4: Parallelism and Autonomous Workflows</h3>
+<ul>
+<li><strong>Aligning with AI Leaps:</strong> Replit aligns its product roadmap with major AI step-changes that Masad observes roughly every six months. </li>
+<li><strong>Key Innovations in Agent 4:</strong></li>
+<ul>
+<ul>
+<li><strong>Parallel Agents:</strong> A multi-agent architecture that allows the system to handle merge conflicts and run multiple tasks simultaneously.</li>
+<li><strong>Built-in Design Canvas:</strong> Allows users to design UI/UX in a visual canvas while the agent builds the backend asynchronously, maintaining a "state of flow."</li>
+<li><strong>"Replit Native" Deployment:</strong> A single project context can now deploy simultaneously to the web, iOS (TestFlight), and Android.</li>
+</ul>
+</ul>
+<li><strong>Autonomy and Reasoning:</strong> The platform is moving toward "long-horizon reasoning," where users can give a high-level prompt, go to lunch, and return to find a fully functional application.</li>
+</ul>
+<h3>Redefining the Future Enterprise</h3>
+<ul>
+<li><strong>The "Two Jobs" Thesis:</strong> In a world of autonomous agents, Masad believes the company of the future will consist primarily of two roles:</li>
+<ul>
+<ul>
+<li><strong>Builders:</strong> Generalists who act like "internal founders," identifying problems across departments (HR, Support, Sales) and "deputizing" agents to build solutions.</li>
+<li><strong>Sales/Evangelists:</strong> Humans focused on trust, education, and helping other companies undergo technological transformation.</li>
+</ul>
+</ul>
+<li><strong>Post-Prompting World:</strong> We are moving toward a future where users give high-level business goals (e.g., "optimize my marketing funnel" or "build me a SaaS and generate revenue") rather than specific instructions on how to code.</li>
+<li><strong>Internal "Vibe Coding" Residencies:</strong> Replit currently employs a team with a vague mission to simply "go around the company and make it better" by building custom internal tools for HR and Support, showcasing a new model for corporate operations.</li>
+</ul>
+<h3>Growth and Lessons from Y Combinator</h3>
+<ul>
+<li><strong>The YC Mentality:</strong> Masad credits Replit’s intensity to the YC model of "hyper-focus," particularly the ability to achieve massive progress in short 3-month (or now, 4-week) sprints.</li>
+<li><strong>The Sales Motion:</strong> Replit uses a Product-Led Growth (PLG) strategy where employees play with the tool on weekends and bring it into the enterprise. </li>
+<ul>
+<ul>
+<li><strong>Enterprise Sales:</strong> Focused on "sales-assisted" evangelism and hackathons to create internal champions.</li>
+<li><strong>Trust as a Moat:</strong> Security and compliance remain the critical "boring" hurdles that allow vibe-coding tools to actually survive in an enterprise environment.</li>
+</ul>
+</ul>
+</ul>
+<blockquote>
+"The people that are getting the most value out of our product tend to be the more tech-adjacent ones... those are people with ideas, with passion, with fire in them, but they're getting hamstrung by the need to learn, to become technical." — <strong>Amjad Masad</strong>
+</blockquote>
+<blockquote>
+"The company of the future is made of builders and sales people broadly... Builders wake up in the morning and think 'How can I make the company more successful?' and then they go around finding problems to solve and deputizing agents to go solve them." — <strong>Amjad Masad</strong>
+</blockquote>
+<blockquote>
+"It’s sort of like Neo in the Matrix where you download a new skill and you’re like, 'Oh, I know how to fly a helicopter now.' The agent searches a set of skills and suddenly it knows how to do that." — <strong>Amjad Masad</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-1">
+                        Today I'm joined by Amjad Massad, the CEO and co-founder of Replit. Replit is the leading no-code app builder for consumers and enterprise. They just recently raised their Series D, a $400 million raise at a $9 billion valuation. Amjad, thank you very much for joining me and I'm excited to learn more about Replit.
+
+Thank you for having me. Of course. Why don't you tell us a little bit about what Replit is? 
+
+Yeah, so, you know, our ambition is that anyone, no matter what level of skill they have—basically anyone who can read and write—can come in with an idea and leave with an app that's deployed, hosted, getting traffic, and able to scale. They don't have to worry about any technical aspect of building that thing. It's been a mission we're on for 10 years right now.
+
+Initially, we solved the development environment. That was the hardest thing—setting up the development environment. Then we solved the deployment environment. Then what was left was the coding part, which was still very intimidating for people. In September 2024, Replit became the first what's called &quot;vibe coding&quot; product where we abstracted away code entirely.
+
+There's a coding agent behind the scenes, but you're just interfacing with AI using natural language and, more recently with Agent 4, also design interactions. You can write things, you can comment on things, and you can drag and drop things in a canvas. We're thinking about a lot of different modalities for how people want to interact with agents because I don't think it's always going to be just text. 
+
+I think at some point it's going to be multimodal—maybe video, maybe audio—but we want to create a natural place where people can express their ideas. Those ideas can turn almost magically into software that is real software. It is not like a toy software; it’s real software, secure software, and scalable software. 
+
+One of the things that's most interesting to me about your company is that it really bridges the gap between a dev tool and not. I think it's the first dev tool I've seen that's not marketed towards engineers. Can you tell me more about how you came to that decision and who is your primary user today? 
+
+Yeah, so, you know, I started coding at a very young age but I was always interested in the act of creation. I was interested in entrepreneurship; I built my first business when I was 13 or 14. I always thought that the developer tools were getting in the way. It actually got worse over time. 
+
+I started coding on Basic. You just start the Basic command-line interpreter and you can just type a little Basic and that's good. By the time I graduated from college, setting up a web app was like a nightmare. It created this desire to just build tools that are more joyful and more enriching, kind of focusing on the act of creation as opposed to the accidental complexity of developer tools. 
+
+I started building a lot of tools for myself and eventually I built what would become the first in-browser IDE. Initially, it was like an open-source project. Later on, I would also work on React and React Native. Every time I built a developer tool, I approached it with the same thing: can you apply design sensibilities in the same way that you would work on a consumer app? 
+
+That's been successful in many ways, but ultimately when we started Replit, the goal was to make programming accessible. Later we updated our mission to create a billion new developers. As we progress in our mission and in solving every part of the software development lifecycle, what we've noticed is a lot of developers actually like the pain. 
+
+They like setting up things and they like configuring every aspect of it. It's no knock against that, but it's sort of like a craftsperson liking to build their own tools. What we've noticed is that the people that are getting the most value out of our product tend to be the more tech-adjacent ones. 
+
+Maybe they are product managers who wrote code many years ago but don't want to worry about their development environment setup or their deployment setup. Then there are designers who have ideas but are often blocked or bottlenecked by engineers, and they want to be able to build their own ideas. 
+
+Later on, as we layered on AI and the product got better, we saw entrepreneurs. When I talk to these people, it reminds me of myself. Those are people with ideas, with passion, and with fire in them, but they're getting hamstrung by the need to learn to become technical. 
+
+At some point in 2023, we just made it an explicit goal: we're not going after developers. There are still developers, and if you walk around Replit today it looks like a dev tool company, but we're building for creators. They're not the traditional type of developers. There's a new generation of developers that are coming up right now because of AI. They're AI-native developers that are creating software without having to worry about every component in the system. 
+
+It's so interesting hearing you say this because it sort of reminds me, I learned to program on VB6. To me, that's the real idea—the tools opening up and making it possible for people that couldn't code. I couldn't code, I learned to code in VB6, and I see a very similar thing that you're exploring with this. 
+
+Yeah, VB6 was better than setting up React and Webpack. 100%, I remember the transition, yes. It got worse over time, which is like many things in life. Programming got worse and I wanted to bring it back, make programming great again essentially. 
+
+Tell me about what people are building today in Replit. 
+
+Yeah, I mean there's a few different categories. There's personal software, there's enterprise software, and then there's entrepreneurs building products. One of the apps that I really liked recently was talking to a physical therapist and her husband. She is a physical therapist that's built up so much deep knowledge in a subsection of physical therapy around fascia and fascia release. 
+
+She has all these different methodologies and ways of tracking the progress for her clients. She wanted to build an app that is very sophisticated, like being able to take scans of your body, being able to scan your range of motion, and tracking that on a 3D representation of your body. 
+
+They spent hundreds of thousands of dollars offshoring to developers around the world and eventually they were frustrated by the entire process. They took matters into their own hands, built it on Replit, and when I saw the app I was like, this is one of the best health tech apps I've ever seen. 
+
+Yeah, because the domain experts can now actually build the product. People who are closest to the problem can build the products they need. You know, I talked to a founder the other day that's building a SaaS solution for people who maintain pools. He grew up in a household where their family business is a pool business. 
+
+There's so much software to build in the world. I also met a founder yesterday who's building software for sports clubs and he was showing me pictures of the software they're using today which is MS-DOS based software. Here in Silicon Valley, we look around us and we're like, oh, what else is left to build? 
+
+But there are so many walks of life, there's so many things that are kind of a blind spot for us. Suddenly, when anyone can make software, a lot of parts of the economy are just going to improve. That's a beautiful thing and a lot of wealth creation is going to happen, along with productivity gains. 
+
+Personal software is also really cool. I talked to a lot of families that build healthcare software. There's like a mom in Korea that built software that helped manage a very rare condition for her kid. A lot of people build personal healthcare software or software for tracking physical activity or ingesting data from all their wearables and doing something with it. 
+
+There is a lot of software for families, too. Like a mom built a &quot;Chore Hero&quot; software for an iPad on the wall that shows the kids how they're ranking on their chores. Then there's the enterprise use case. In enterprise, it tends to be two different use cases. One is product development. Companies want to move a lot faster on product development. 
+
+Everyone now is feeling the pressure of AI. We need to move faster, faster, faster, and they're realizing that it doesn't fall just on their engineers. Their product people can now build software and their designers can now build software. We hear from clients—one of my favorite stories is Woop, who is a client of ours. 
+
+They told us the amount of ideas they can try has grown by an order of magnitude. They used to get a hundred ideas but were able to only try five of them. Now they can try fifty. Companies become a lot more prolific. They can release a lot of new features, create new business lines, and new products. 
+
+Then there are internal tools and line-of-business applications. There's a lot of sales automation that is happening at these companies. Any role inside a company that's dealing with a lot of data flow—for example, think of RevOps at the nexus of data from their CRM, from their data people, from Gong—wants to be able to do things with this data. 
+
+Typically, they're kind of bottlenecked by either engineering resources or the different SaaS tools that they want to buy. The problem with SaaS is that when you onboard a new SaaS tool, that creates a new silo of data that you can't really program. Now they're taking matters into their own hands. 
+
+They are building things like quote configurators and being able to save the company hundreds of thousands of dollars, if not millions of dollars, on SaaS tools and things like that. 
+
+How are you finding these users? How do you market to them? How do you get them to try it out? And then I assume for enterprises it's got to be a very complicated sales cycle getting into the company. How does all that work? 
+
+Well, the cool thing about the world we're in right now is that it's very similar to developers. I think the insight that a lot of YC dev tool companies had—like Stripe or PagerDuty—is that developers were empowered to be able to make decisions to bring software into the company at some point in the last couple decades. 
+
+That shift is happening outside of development right now where the product manager, the designer, and the operations manager are empowered to bring software. The consumer use case and the personal use case are often overlapping with the work use case in that people are playing with these tools on the weekend. 
+
+They're building their own personal apps and they're like, oh, the moment you understand that you can solve a problem with code, it changes your mind. Almost like a neurological shift where you start looking at the world differently. You go around and you're like, oh, I can solve this, I can fix this. 
+
+I remember that when I learned to program. Exactly. And now that shift is happening in a huge part of the population. So it's a PLG play, which I think is still the gold standard. Just make a product that's really good, that people want to recommend to their friends, and make it easy to refer others. Build a referral program and do all of that stuff. 
+
+Then on the sales side, a lot of it is very sales-assisted. Someone brings it to work, we talk to them, and they're the champion. We help them and ask, &quot;Okay, what do you need to convince your boss in order to bring this to work?&quot; Let's work with them to do a hackathon to create more champions inside the company. 
+
+Let's work with you; let's teach your leadership about AI. A lot of what our salespeople are doing is evangelism and education. So it's a different kind of sales motion, I think, than the previous one. We still have enterprise sales that's more top-down where a company comes to us and says, &quot;Hey, we're trying all the different vibe coding tools, we heard it's good for our business, can you help us evaluate Replit?&quot; 
+
+We go into that and there we're often winning because Replit has built a history of just being super trusted on security and on compliance. All of that basic enterprise stuff you still have to do. 
+
+Let's talk about sort of what the limits are today of what you can do with a product like Replit. What kind of systems can you build in Replit and what do you still need to have sort of traditional software engineering approaches to? 
+
+I can confidently say to any entrepreneur out there that you can build a SaaS product, a consumer product, or an automation product on Replit comfortably. If you want to build a new cloud platform or you want to build a new machine learning system, that's not exactly what we're focused on today. 
+
+Some people still figure it out. Replit is a versatile tool; we give you a virtual machine and a general-purpose agent. If you have some technical knowledge, you can bring that and you can build sophisticated things. But if you want to build things entirely vibe coded without worrying about the technical details, we have so many examples on our website. 
+
+There are so many success stories now that I can confidently tell an entrepreneur with no technical knowledge that they can build a piece of software. There are a lot of consumer apps, there are vertical SaaS products, and there are people starting Replit-native agencies. 
+
+I was talking to someone from Iceland yesterday and he was telling me they're getting so much business because they're 60 to 70% cheaper and more effective than traditional agencies, and they're all vibe coding on Replit. They get a client, that client wants an application, and they're able to make a lot of money that way. 
+
+The internal tools and automation tend to be fairly simple programs, like you're building an internal org chart or you're building a CPQ system like a quote configurator pulling from HubSpot or Salesforce. We have a lot of MCP and integrations that allow you to do that. 
+
+How do those integrations work? Have you gone through and built integrations to all of them? 
+
+Yes, yes. We spend a lot of time partnering with companies and building those integrations. Now there's what's happening with the skills revolution where companies are putting out skills and MCPs and we just vet them and integrate them into the product. 
+
+As you're talking to Replit and you're like, &quot;I want to integrate Stripe,&quot; we've already built a set of skills and sometimes code. We'll search a database, we'll bring all that in, and now it's in context. Now the agent is sort of like Neo in The Matrix where you download a new skill and you're like, &quot;Oh, I know how to fly a helicopter now.&quot; 
+
+It's so cool to see the agent saying, &quot;Oh, let me search the set of skills that I have,&quot; and suddenly it knows how to do that. We spend a lot of time just making sure they're secure and they're safe. 
+
+That makes sense, yeah. Having built a dev tool community, how is that different? How do you build this sort of groundswell of support to pull yourself into those organizations? Is it different than how you would have done it traditionally? 
+
+It's a little different in that you need to show what's possible. I think with more traditional CS-trained developers, they know what's possible. They'll read your docs, they'll figure it out, they're on Hacker News all the time, and they're generally much more resourceful in knowing what's possible. 
+
+With Replit, there's a lot of education that needs to be done. We have a devrel team but they're not the traditional devrel; they're more like educators. They're spending a lot of time just teaching people what's possible. Our documentation is also a lot simpler than your typical dev tool documentation. 
+
+You have to be really good in content. Stripe got popular for being really good on documentation. If you're building a dev tool for non-developers, you have to go above and beyond on content. You have to produce a lot of video content as well. 
+
+The agent itself needs to be imbued with characteristics so that it's able to talk to non-developers, tell them what's possible, and be a brainstorming partner. This is why we also moved from purely just prompting to also a canvas and a more visual interface so that people can explore things more easily. 
+
+We have buttons where it says &quot;create different variations of this.&quot; We're adding a lot of different shortcuts just to show people what's possible. On the enterprise side, when we talk to leaders, we're like, reserve any judgment, don't pay for Replit, we're going to come in, bring the group that's most excited about AI, and we're going to do a hackathon. 
+
+How do you, when you see someone, decide, &quot;Yes, this is going to be the person who's going to be so excited to use this&quot;? 
+
+We think a lot about that because typically when you think about ICPs, you're thinking about someone who went to school for this degree or someone who's a product manager or something, which is still true. You can do that. But oftentimes, because we're able to sell to sales departments, marketing, product, and design, the traits that make a champion are different. 
+
+The person who's going to spread it inside the organization, who's going to build, and who's going to do the education and evangelism tends to be very entrepreneurial. They're the kind of person that could start their own company. 
+
+They're able to be very influential internally. They're kind of like what YC talks about—resourceful. They are someone who's not going to get blocked and who's going to figure out what other AI tool they need to integrate. That entrepreneurial founder mindset, I think, is very important. 
+
+While we're on the topic of YC, I'd love to hear about your experience here. How did YC influence what Replit started and what it became? 
+
+The main realization from YC is how much you can get done in three months. When we came in, Sam Altman was still running it. Sam stood in front of the batch and said, &quot;For the next three months, tell your friends you're going to be missing. You're not going to be able to help them move; you'll come back into their lives later.&quot; 
+
+&quot;But for the next three months, you need to be hyper-focused on this company and you're going to be able to achieve great things if you really go intensely into it.&quot; When we did YC, we had a whiteboard and a countdown to demo day and a very simple list of things we needed to achieve. 
+
+Every day we would wake up, we would erase that number, and we would change it for the countdown. When Replit got into YC, it was still a &quot;Repl&quot;—that's the name—and it was still just like a command line where you just type a bit of code and run it. 
+
+We exited YC and we already had web development, we had the initial aspect of hosting, we had code intelligence, and we had so many IDE features. It got a lot more feature-complete just in three months. That is an empowering thing. Sort of what we talked about with programming—just the fact that oh, you can be so intensely focused and achieve so much in three months. 
+
+Now, every agent release is not three months, it's more like four weeks. We bring everyone—because some people are still remote—to the office. We provide breakfast, lunch, and dinner, and coffee 24/7. We're like, we're just going to hit this very ambitious goal. That's the YC mentality. 
+
+Another thing is the compound growth. Especially when you're spinning up a new product, this idea of—I don't know where PG came up with the number seven—but 7% week-over-week growth is a very good way to bootstrap a new product line. We're constantly going back to the YC basics and doing them. 
+
+Tell me about how YC changed your life. 
+
+There are a few ways. One is before we got into YC, we couldn't raise all that much money. We raised maybe $500,000 and VCs did not want to meet us. The doors were not really open for us. After YC, first of all, on demo day you get introduced to a lot of VCs. 
+
+We were lucky because we got rejected from YC three or four times, and then we got invited to do YC because Paul and Sam saw us on Hacker News. We got a direct relationship with Paul and Sam, and then at the end, I was like, &quot;I want an intro to Marc Andreessen.&quot; 
+
+You could still ask the partners here and they'll try a lot to get you intros, but I was bold enough to ask for that. They got me an intro to him and I went and had breakfast at his house and pitched Replit. A16Z ended up leading our seed round. 
+
+My network just expanded tremendously after getting into YC. I don't think we would have been as successful without YC. Perhaps we would have quit if we couldn't fundraise, so it gave our company life. 
+
+Yeah, for us it was very similar. We were complete outsiders and I think having somebody sort of welcome you in made an enormous difference. 
+
+100%. 
+
+So you guys just announced Agent 4, so what is that, like the fourth major revision of your product? 
+
+Yeah, we kind of acted to try to predict the future. Based on what we've seen, starting in kind of 2024, we thought that broadly the AI capabilities have massive step changes twice a year. If you think about 2025, there was the vibe coding revolution that happened earlier in 2025. 
+
+Then there was the autonomous revolution that happened in late 2025 with Opus 4.6 that led to OpenClaude and things like that. But I could tell you the same thing happened in 2024. Mid-2024 Claude came out, and Claude Sonnet for the first time could generate a lot of code as opposed to GPT-3.5, which has that laziness component. 
+
+Late 2024 we started seeing initial signs of the labs kind of doing long-horizon reasoning. That observation led us to align our roadmap to AI capabilities. Every six months we release a new agent version. It's an act of predicting what's possible; it's also pushing the edge of what's possible. 
+
+For example, Agent 3 was the most autonomous agent on the market. We knew that autonomy was coming and we're like, okay, we want to be able to run the agent for 2, 3, or 4 hours. People should be able to put in a big prompt, go to lunch, come back, and see the software fully built. 
+
+So, what do we need to do to update our platform? We had to rewrite everything on the backend to have these long-running containers in the background doing work while the user is not in front of the computer. We did all of that work and although true autonomy didn't arrive until November or December, Replit Agent had demonstrated where the world was headed by September. 
+
+With Agent 4, there were a few things. One was parallel agents. We thought that was finally potentially possible to do. The thing that sucks about autonomy is that you can put in a big prompt and you're kind of sitting back and just watching it work. What do you do next? 
+
+That question—what do you do next—is important. You should be able to design, you should be able to kick off other types of work, and you should be able to chat with your agent and plan for other things. We wanted a more asynchronous nature to the product. 
+
+We started building towards a multi-agent architecture and parallel agent architecture. We had to solve merge conflicts and so many things to make that work. Also, as the agent is building, we want to also unblock you from designing. 
+
+So we also had a more asynchronous design agent and we thought, okay, what is the best interface for that? We designed this canvas. Now we have a built-in design capability inside Replit to be able to explore the next page or the next feature while the agent is building. 
+
+Once you're ready, you'll kick that off into another thread and it starts. People are now sitting in front of Replit and just experiencing the state of flow. Because agents are slow, that's fine, but they can work in the background. Finally, there was teamwork. 
+
+Once you solve parallel agents, you've also solved teamwork because every time someone jumps into the session, you can start or fork an entirely new VM for them and they can work in parallel to you. Because the orchestrator knows how to subdivide tasks, you can also prompt in the same chat window and it will figure out how to make all that work. 
+
+Because we had the canvas, it's such a joy to just see other cursors and people; the product just becomes a lot more live. All these components became Agent 4. Oh, one final one I forgot. We wanted it so that when you make a mobile app, a website, a deck, or a video, all of that should have the context of your project. 
+
+Previously on Replit, and now in every other tool, it's basically you need a different tool for a website and a different tool for a mobile app. So now on Replit, if you build a really cool web app, you could just say &quot;make a mobile app&quot; or &quot;generate mobile app layout on the canvas.&quot; 
+
+When you hit deploy, it deploys your web app to the web and it deploys your app to TestFlight or the Android whatever it is. So now you can run your entire company on Replit. 
+
+What kind of skills do people need to develop to be able to make the most of products like yours? What do people need to get practice at? In your mind, is it that people have to get good at prompting, or is it more that the system's going to get better at just understanding whatever it is you're asking it to do? 
+
+I actually think we're headed to a post-prompting world. You can sense that in the sort of OpenClaude and all the derivatives. The way people are using it, they're more giving it high-level goals like &quot;optimize my marketing funnel.&quot; Prompting will be there whenever you want to do more interactive type work, but also you should be able to give your agent high-level commands. 
+
+I think perhaps by Agent 5 or maybe sooner, you should be able to tell Replit: &quot;Every day build me a SaaS company and try to market it and see what works and make me some revenue.&quot; I think we're almost there. So, what kind of skills do you need? 
+
+Understanding what is possible is going to be important. Playing with these tools a lot, having this playful mindset of adopting these tools, playing around with them, and being plugged in is super important. At some point, it was a drawback or a flaw to be someone who's constantly reading the news or being online, but actually now it's very important to know what's coming down the line. 
+
+I think not giving up is important. Like the thing that you tried to do today that the AI cannot do, try it again in a month. I tell some Replit users if whatever you're trying to build Replit couldn't build today, try it in a couple weeks; it might be able to build it. 
+
+That mindset of &quot;I'm going to keep trying&quot; is important. Idea generation is still going to be important. Obviously, we're going to get to a point where AI is going to be really good at helping you generate ideas. But being generative and constantly thinking about problems you want to solve is key. 
+
+Just being creative and figuring out what the world needs right now is important because let's say you're a small-time entrepreneur—the Peter Levels type of entrepreneur who is very famous on Twitter—oftentimes the products go through cycles. You build a product that is really good for that moment and you can generate a couple million dollars, but then that product's no longer relevant. 
+
+You need to be generative and creative in order to continuously do that. And you can make millions of dollars doing that. 
+
+If you were starting Replit today what would you do differently? 
+
+I mean, I made a lot of mistakes along the way. If I was starting Replit today, I probably hope not to make as many mistakes. You know, culture's very important. At some point we screwed that up and we had to do a reset and layoff and all of that stuff. 
+
+I think being really honest with yourself about product-market fit is very important. It's very easy to delude yourself. Getting any kind of user is an amazing achievement. Getting any kind of money from users is also an amazing achievement and you should celebrate every one of those moments. 
+
+But true product-market fit is entirely different. It's an explosive thing. Being honest about that is important, because we've had periods of &quot;Oh, it looks like that's successful, maybe it's working,&quot; and you keep going down that path, but in reality you should have changed directions a little earlier. 
+
+When it works, it really works and you know it. In terms of AI development, what is something that you are waiting for where you're like, this is going to unlock so much? 
+
+You know, I've been waiting for computer-use models to get better. They're slowly getting better, but it's one of the things that is actually kind of disappointing. It's surprising to me that it's so hard to build them because you'd think it'd be the easiest thing in the world to get data for. 
+
+Do you have a sense of why that is? 
+
+Well, language is a lot easier. Language can also be compressed down into some kind of high-dimensional space much easier than a video feed, right? But still, if we can make progress on self-driving, surely we can make progress on moving the mouse and clicking on things. I think it's a little bit of a mystery. 
+
+That being said, coding agents turned out to be a work-around and a hack. A lot of things that you could do in front of the computer you could do with code, including scripting an Excel sheet. The reason Excel sheet agents got better is because coding got better. 
+
+The reason some commerce agents are starting to work is because they can call APIs. So coding turned out to be a bit of a hack or work-around for computer-use agents. But there's still a lot of software in the world that's very legacy software that computer-use agents would be really good at. 
+
+Also, when you're creating a vibe coding platform like Replit, you want to be able to test the apps that people are making and you want to be able to be discerning as well. Like things that are functioning right but where the UX is not very good. You want to be able to give the user feedback on that. 
+
+The models are not very good at that. So we spend a lot of time prompting and augmenting computer-use models in order to make them good at testing, because Replit has a testing agent. That's one that I think will unlock a lot of different capabilities once we get to computer-use agents. 
+
+I think another one is—and it's become a buzzword—continual learning. The way we're hacking around it right now is we're writing to files. The agent will learn some kind of skill and will write a skill MD file or something like that. But true learning on the job has not been unlocked yet. 
+
+For us to be able to deploy an agent inside an organization and for that agent just to continuously get better for that org itself is such a powerful thing, but that just still seems far away. 
+
+I think one of the common things I'm hearing here is that we're going to have, or we already have today with Replit, agents to build software. You talked about how we're increasing the abstraction until finally you can just say, &quot;Hey, I want a company that just makes money.&quot; How is this going to work? What does that leave left for people? And what does the company of the future look like if it's all just agents all the way down? 
+
+I think the company of the future is made of builders and sales people broadly. Sales will change and sales will be more like, let's help companies transform. Let's use the technology that we're building here to help companies transform. 
+
+Salespeople will be more like—I mentioned it earlier—more like evangelists or educators. I don't think that part is going to go away because a lot of other companies will want to talk to someone; they will want to learn from someone, right? That's how a lot of people learn. 
+
+They trust other humans, and so the sales part is probably one of the more defensible jobs. Interesting. And then for builders, there's always more to automate. I think our job will continue to get higher and higher level. 
+
+That's already the case. With computers, we became much higher level. Computers were literally humans, right? There was a bunch of people doing computations with tables of numbers. Then we took that entire room and put it in a box that's a computer. 
+
+Now there's my job as the operator of the computer to use a computer for a productive use. There was a lot of manual work still in order to make that computer do interesting things or software. Now we have an agent that's using that computer. So, there are different layers of abstraction. 
+
+I don't know when you have a fully autonomous company. Maybe at some point there are certain styles of companies that could be fully autonomous. But I think you need business generalists that understand customers, understand what people need, understand the economy, understand where the world is headed, and understand AI technology. 
+
+You want to give them this abstract vision of a future company. It's like almost everyone is a founder. They wake up in the morning and they think: &quot;How can I make the company more successful? How can I make the company make more revenue?&quot; 
+
+They go around the company finding problems to solve and then creating or deputizing agents in order to go solve these problems. We're already seeing that. We actually have a team—a vibe-coding residency at Replit—and they have a very vague mission, unlike a product team or sales team. 
+
+Their mission is just &quot;go around the company and make it better.&quot; They went to the support team and asked: &quot;Okay, you're using Zendesk and all these other tools; what are the main problems?&quot; The support team said: &quot;Well, we don't have a good way to prioritize our support queue.&quot; 
+
+For example, there are customers that are paying much more than other customers and there are customers that have more urgent tickets. So they built a way to visualize that and a way to create more priority queues. They spent some time with the support team and the CSAT score started going up. 
+
+Then they go around to their HR team and ask: &quot;What are the problems?&quot; Well, onboarding is a problem. There's no place for people to know all the benefits and everything that we have. So they said, &quot;Well, let's build an internal HR platform,&quot; and they do that. 
+
+I think that kind of role is more where the future is headed. More and more people inside the company will be more generalist entrepreneurs that are trying to make the business successful. 
+
+Well, thank you very much for joining me. Pleasure to have you here at YC. 
+
+Appreciated it, thank you.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
