@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - May 03, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">May 03, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=e5Cney1FiDI" target="_blank" rel="noopener">Stefano Domenicali - president and CEO of Formula 1 | Investment Conference 2026</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/d6-Qg0SBaVFUWQYFcY1A92OgyamR1lZdMCmUZKeE-3Z7b8nNlCFufCfQfFg5B-Q-EkyJxR04=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Norges Bank Investment Management</span><span class="channel-subs">(107.0K)</span></span>
+                        <span class="meta-sep">·</span><span>10:38</span>
+                        <span class="meta-sep">·</span><span>430 views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-05-03</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Stefano Domenicali (President and CEO, Formula 1)</span></div>
+                </div>
+                <div class="tldr">Formula 1 has successfully pivoted from a struggling niche sport to a dominant global entertainment and technology platform by leveraging digital content, strategic US market expansion, and a high-performance culture.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">Formula 1 has successfully pivoted from a struggling niche sport to a dominant global entertainment and technology platform by leveraging digital content, strategic US market expansion, and a high-performance culture. The business now competes for consumer time against all forms...</div>
+                    <div class="summary-full" id="full-0">
+                        <h3>TL;DR</h3>
+<p>Formula 1 has successfully pivoted from a struggling niche sport to a dominant global entertainment and technology platform by leveraging digital content, strategic US market expansion, and a high-performance culture. The business now competes for consumer time against all forms of entertainment, including music and cinema, rather than just traditional sports.</p>
+<h3>Strategic Transformation and Resilience</h3>
+<ul>
+<li><strong>The "Sliding Door" Moment:</strong> The COVID-19 pandemic served as a catalyst for a total organizational overhaul. </li>
+<ul>
+<ul>
+<li>Instead of retreating, F1 developed rapid travel protocols and shifted focus to digital-first content when fans could not attend tracks.</li>
+</ul>
+</ul>
+<li><strong>Content Innovation:</strong> The organization pioneered a "behind the curtain" approach to narrative.</li>
+<ul>
+<ul>
+<li><strong>Drive to Survive:</strong> The Netflix series was instrumental in capturing new markets and humanizing the drivers.</li>
+<li><strong>Social Media Pivot:</strong> F1 was among the first major sports to shift from a closed-off traditional model to open social media engagement, treating drivers as "jewels" of the content ecosystem.</li>
+</ul>
+</ul>
+<li><strong>Cultural Shift:</strong> High performance is defined internally as a "state of mind" that requires delivering value to oneself and the broader stakeholder ecosystem.</li>
+</ul>
+<h3>Market Expansion and Economic Footprint</h3>
+<ul>
+<li><strong>Global Demand:</strong> The sport currently hosts 24 events annually, but demand from host countries significantly exceeds the available slots.</li>
+<li><strong>Large-Scale Operations:</strong> A single major F1 event now draws between 450,000 to 500,000 attendees.</li>
+<ul>
+<ul>
+<li>Managing these events requires a global workforce of 25,000 to 30,000 people per race.</li>
+</ul>
+</ul>
+<li><strong>Outperforming US Staples:</strong> In head-to-head comparisons within the same host cities, F1 events have generated more business opportunity and revenue than the Super Bowl.</li>
+<li><strong>Revenue Diversification:</strong> The platform has transitioned from struggling to find investors to securing robust B2B and B2C partnerships that target younger demographics.</li>
+</ul>
+<h3>The Entertainment Ecosystem</h3>
+<ul>
+<li><strong>Broadened Competition:</strong> Leadership views F1’s primary competitors as any entity vying for "leisure time," including theaters, music festivals, and movies.</li>
+<li><strong>Multi-Channel Presence:</strong> To maintain relevancy, F1 is expanding into non-traditional media, such as high-budget cinema, to reach audiences who are not yet racing fans.</li>
+<li><strong>Fan-Centric Logic:</strong> The core strategy relies on "relevancy"—understanding exactly who the viewer is and providing the specific rhythm and narrative they desire.</li>
+</ul>
+<h3>Technology and the Human Element</h3>
+<ul>
+<li><strong>The Role of AI:</strong> While AI is integrated into engineering, F1 remains committed to human-centric competition.</li>
+<ul>
+<ul>
+<li>CEO confirms there will never be autonomous driving in F1; the human driver remains the "maximizer" of engineering work.</li>
+</ul>
+</ul>
+<li><strong>Automotive Relevance:</strong> Despite the transition toward electric vehicles and industry crises, major automotive manufacturers continue to view F1 as the premier platform for technology and mobility showcase.</li>
+<li><strong>Lean Organizational Structure:</strong> Despite its global reach, the central organization maintains a "lean" structure where leadership examples directly influence the entire ecosystem.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"F1 is not a sport, it's a platform of entertainment where a lot of stakeholders are part of it. And it is true, it's a matter of milliseconds... to be the winner or to be the loser. But not only on the track."
+</blockquote>
+<blockquote>
+"We were able to be in the same place in the same city when there was the Super Bowl. And in term of business, we were bigger. And you can imagine for an American to recognize that a small sport is creating more opportunity... well, it's something relevant."
+</blockquote>
+<blockquote>
+"What I can assure you is that F1 will keep the people at the center. You will never see our cars driven by autonomous driving; there will be always people that will maximize the work that the engineers will bring to them."
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        This is Formula 1. Formula 1 is the pinnacle of motorsport. You're driving the fastest car in the world. One of the most exhilarating feelings is to get inside the car. Cars are pushed to the absolute limit. Winning the World Championship, that's every single day what I'm thinking about. I got to cut to the chase. 
+
+And Formula 1 is racing. Full on throttle, building up to 200 miles an hour. All or nothing! Mamma mia! Yeah! I'll do anything for the win at the end of the day. Good afternoon. Good afternoon. I hope that my voice is loud and clear. 
+
+Nicolai, thank you for this opportunity. Thanks to Norges Bank. I mean, it's for me personally, but also for our organization, an incredible opportunity to stand here today in front of you. If you think back a couple of years ago, this was not possible. So, there is a great responsibility on board, but we want to take our opportunity to explain who we are in this context. 
+
+I was listening, you know, to all the things that have been said today. I'm not a teacher. I'm trying to explain who we are and to be effective. Because at the end of the day, I do believe, if I read behind me, high performance culture—what does it mean? Personally, it's a state of mind. 
+
+It is a state of mind that you have to deliver, first of all to yourself and to the people that are around you. F1 is not just a sport; it's a platform of entertainment where a lot of stakeholders are part of it. And it is true, it's a matter of milliseconds of top performance to be the winner or to be the loser. But not only on the track. 
+
+If I look back at what our organization has done in the last couple of years, not many years ago, a lot of people were thinking that the investment in F1 had been very bad. Or they were thinking that F1 was almost there to die. And the beauty is that we are here, in the other way around. 
+
+I mean, we are very strong today and I would say, as a world-wise sports platform today, we have been seen as a reference. This is because we were able to turn the situation around in such a short term. There's no secret; it's just that we were able to have this approach in all the elements we are trying to control. 
+
+I give you one example. We were hit by COVID as all organizations and all people were. And for us, COVID could have been a sliding door moment, taking our bags, going home, and saying hello to all the people that were watching us. Instead, we were able to create in a very, very short time the possibility for us to run our show.
+
+We ran our business around the world and created protocols to travel. Of course, we were not being able to perform in front of the fans at the track, but we were able to perform around the world because at that moment there was the need to have content that was being able to be seen on the screen of a television, computer, or iPhone. 
+
+And that was a moment that was really a sort of great spring for the push of being what we are today. At that moment, we were able to change completely our way to communicate with our fans. We basically opened up—and to say that today seems to be ridiculous—to the social media. 
+
+We were the first to create new content, trying to keep our drivers as our jewels to communicate behind the scenes. We did something that at that time, even to present that project was crazy to say in front of traditional people, like Drive to Survive. This Netflix product has been instrumental for our growth, mainly in the new markets. 
+
+And the other way was trying to be effective in connecting with the new fans that were approaching us. Of course, we have to be respectful of all the ones that love Formula 1, but the only way to be relevant—that is the word I want to keep connected to this kind of sentence—is really to try to understand who is watching us. 
+
+We need to understand who needs to be connected with the right way of working, with the right narrative, with the right rhythm and the right content that they want to listen to. And of course, by doing that, we have changed completely the way to explain who we are. We are now in a situation where all the things that are relevant for us are part of a sport where all the countries want to participate. 
+
+We have 24 events around the world, and the beauty that we have today is that a lot of countries, more than 24, would like to host Formula 1. They see that as a possibility to showcase and to create business opportunities in the country. And this is behind the scene. I give you one reference in terms of numbers. 
+
+In a big event, we are hosting today around 450 or 500 thousand people, and the global chain of work that is behind that—we're talking about 25 to 30 thousand people working for an event. And if I compare it with other sports, I would say one thing that is very relevant in American culture, and I will come back to that because I think it's a very important point for us. 
+
+We were able to be in the same place in the same city when there was the Super Bowl. And in terms of business, we were bigger. And you can imagine for an American to recognize that a small sport is creating more opportunity if you compare it with the legends; well, it's something relevant. 
+
+And then if I take the other stream of our important portfolio that we're managing, it is of course managing the technology behind what we are doing. Big manufacturers and teams are working relentlessly to try to be the best. And of course on that side, I would say the beauty of what we are doing is that we are able to capture the attention of the highest companies at all the technology levels.
+
+It is relevant for them to be seen on our platform. One thing is mobility for sure, one thing is motorsport, but if you look at the involvement of the automotive industry in a moment of crisis, they want to be with us. It shows that the platform that we are offering is the right one. 
+
+Then partnership. Just a couple of years ago, there were not so many who believed in what we are doing. Not so many were investing money in our platform. Today, thank God, we moved to B2B partnerships and to B2C partnerships that are very, very strong. 
+
+They will enable us to get in touch with the younger generation that for us are the future, because they want to be connected with us. And this is something that is not taken for granted. I go back to the last point that for us is relevancy related to who we are there for, that is our fans. 
+
+Our people watch us and want to live the event either at the track or watching on the devices that they are connected with. That's the most important thing that we want to keep at the center of the attention. And to be relevant for them, we need to make sure that all the dimensions that everyone wants to be connected with are activated. 
+
+So, every moment for us in Formula 1 is really important to understand what is the landscape. Today, our race is not only with other sports. I always said to my people, you know, today if you want to be successful in an entertainment platform, you need to understand what is the ecosystem. 
+
+You need to understand that we are competing with the theater, with music, and with movies. That's why we did a movie last year that has been very successful with an audience that was not really keen on understanding what is Formula 1. In other things that are socially important to live together, we need to have people with a lot of energy and passion.
+
+Without that, you cannot be once again on the track the day after when you lose a race. And this mentality is part of all the people that are involved in our ecosystem. This is absolutely totally relevant for us. And if you think about it, we are big ones today, but we are a very lean company. 
+
+The example given by our leaders is affecting all the people that work in our organization. Regarding technology, as I said before, we are always talking about AI today. What I can assure you is that F1 will keep the people at the center. 
+
+You will never see our cars driven by autonomous driving. There will always be people that will maximize the work that the engineers will bring to them because at the end of the day it's a teamwork. But that's the beauty of what we are having. We want to give emotion to the people that are coming with us. 
+
+We want to give something that is in this moment quite unique, because we connect people. And above all, going back to this important sentence, we try to be reactive to the situation that we have to manage. You know, the world is complicated. We travel all around the world and we had to cancel two races because of the actual situation. 
+
+We have to be ready to react to what is happening today, but we won't give up. We have plans; we want to make sure that everyone understands that no one can stop us. That's the mentality that we need to have and that's what I want to share with you. 
+
+I know that there is already a light that is blinking at me that says it's time to go. So, as I said, I really hope that you can follow us. I really hope that one day you can have the time to experience what we can offer to you because without the people that are loving our sport, we can't be here. 
+
+Without the people that are cheering for their drivers, who are aspirational models for our fans, we can't be here. We can't be here if the world of technology is not coming with us, and if it's coming with us, that means that we can offer what they need. In a nutshell, we are here to serve the emotion. 
+
+We serve the world that is moving ahead with something that has to be unique. So F1 will definitely endorse this important moment of our life to be something that we can rely on to have fun, to connect and enjoy. Thank you for your attention and see you soon.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>

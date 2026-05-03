@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - May 02, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">May 02, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=T_948a0TLq0" target="_blank" rel="noopener">Ken Griffin - Founder and CEO of Citadel | Investment Conference 2026</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/d6-Qg0SBaVFUWQYFcY1A92OgyamR1lZdMCmUZKeE-3Z7b8nNlCFufCfQfFg5B-Q-EkyJxR04=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Norges Bank Investment Management</span><span class="channel-subs">(107.0K)</span></span>
+                        <span class="meta-sep">·</span><span>17:17</span>
+                        <span class="meta-sep">·</span><span>7.9K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-05-02</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Ken Griffin (Founder and CEO, Citadel)</span></div>
+                </div>
+                <div class="tldr">Citadel’s success is built on an unapologetic &quot;winning&quot; culture that prioritizes rapid, decentralized decision-making and a disciplined approach to technology where high-impact execution is favored over experimental breadth.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">Citadel’s success is built on an unapologetic &quot;winning&quot; culture that prioritizes rapid, decentralized decision-making and a disciplined approach to technology where high-impact execution is favored over experimental breadth. The firm views human capital as its primary product,...</div>
+                    <div class="summary-full" id="full-0">
+                        <h3>TL;DR</h3>
+<p>Citadel’s success is built on an unapologetic "winning" culture that prioritizes rapid, decentralized decision-making and a disciplined approach to technology where high-impact execution is favored over experimental breadth. The firm views human capital as its primary product, focusing on developing resilient leaders who aspire to long-term impact rather than short-term financial exits.</p>
+<h3>Organizational Agility and Decision-Making</h3>
+<ul>
+<li><strong>Negative Consent Model:</strong> To prevent management from becoming a bottleneck, Griffin employs a "no news is good news" policy for decision-making. </li>
+<ul>
+<ul>
+<li>If a subordinate seeks input and does not receive a response within a specified window (e.g., 48–96 hours), the decision is considered approved. </li>
+<li>This grants junior employees agency and prevents the firm from losing its startup-like speed as it scales.</li>
+</ul>
+</ul>
+<li><strong>Empowering Junior Talent:</strong> Internal principles dictate that the person closest to the information—often the most junior—should be the one making the decision.</li>
+<ul>
+<ul>
+<li>While this risks errors, it accelerates the learning curve and fosters a culture of accountability.</li>
+</ul>
+</ul>
+<li><strong>Managing the "Bureaucratic State":</strong> As firms grow in regulatory complexity, Griffin emphasizes the need to aggressively control the size of the bureaucracy to maintain execution speed.</li>
+</ul>
+<h3>Strategic Talent Development</h3>
+<ul>
+<li><strong>CEO-Level Performance Audits:</strong> Griffin spends several weeks annually reviewing thousands of employee assessments personally.</li>
+<ul>
+<ul>
+<li><strong>Focus on "Failure to Flourish":</strong> He looks for patterns where new hires (from PhDs to lateral transfers) are not succeeding to identify firm-wide gaps in professional development or trust.</li>
+</ul>
+</ul>
+<li><strong>The "Winner's Mosaic" in Hiring:</strong> There is no single interview question; instead, Citadel looks for a "mosaic" of traits centered on aspiration and resilience.</li>
+<ul>
+<ul>
+<li><strong>Aspiration over Ambition:</strong> Griffin seeks candidates who want to build and lead businesses rather than those with a "magic number" (e.g., $10 million) at which they intend to quit.</li>
+<li><strong>Competitive Backgrounds:</strong> The firm values those who have competed in high-stakes arenas like sports, music, or debate because it proves they can handle the "agony of defeat" and return to work.</li>
+</ul>
+</ul>
+<li><strong>Resilience as a Core Competency:</strong> In quantitative investing, even top portfolio managers are only "right" about 53% of the time. </li>
+<ul>
+<ul>
+<li>Success requires the mental fortitude to handle being "wrong and humbled" frequently without losing productivity.</li>
+</ul>
+</ul>
+</ul>
+<h3>Technology Adoption: Bleeding vs. Leading Edge</h3>
+<ul>
+<li><strong>Disciplined GenAI Integration:</strong> Rather than allowing "random ad hoc projects," Griffin recently pruned 200 internal GenAI initiatives down to five high-priority projects.</li>
+<ul>
+<ul>
+<li>This prevents distraction and ensures resources are concentrated on transformative use cases.</li>
+</ul>
+</ul>
+<li><strong>The "Bleeding Edge" vs. "Leading Edge" Framework:</strong> Management must decide with volition when to be a pioneer and when to be a "fast follower."</li>
+<ul>
+<ul>
+<li><strong>Bleeding Edge:</strong> Used for core breakthroughs like TensorFlow, where Citadel was in production within four weeks of the tool’s release.</li>
+<li><strong>Leading Edge:</strong> Used when it is more cost-effective to let others "pave the way" and then capitalize on their learnings.</li>
+</ul>
+</ul>
+<li><strong>Technological Roots:</strong> One-third of Citadel’s workforce are software engineers, positioning the firm as a technology company that "manufactures money" rather than a traditional financial institution.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Don't let yourself in management be an impediment to decision-making by those who are junior to you... negative consent to move forward is really powerful because it tells people that they have agency." - on <strong>Management Speed</strong>
+</blockquote>
+<blockquote>
+"At Citadel, there's no shame in making money. We manufacture money. Our clients give us capital with one goal in mind: can we manufacture more money with that capital?" - on <strong>Firm Purpose</strong>
+</blockquote>
+<blockquote>
+"I want to hear how they're going to climb the next mountain at Citadel... I don't want to hear from somebody who's twenty-two years old that there's some number that represents their magic number [to quit]." - on <strong>Hiring and Aspiration</strong>
+</blockquote>
+<blockquote>
+"One of the key challenges for a business is always that dilemma between being on the bleeding edge and being on the leading edge... Pick that path with volition. Don't let that come down to random happenstance." - on <strong>Innovation Strategy</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Our next speaker started investing from his Harvard dorm room in 1986 and founded one of the world's leading alternative investment firms just a year after graduating. Kenneth Griffin is the founder and CEO of Citadel, which manages over sixty billion dollars in capital. At Citadel, winning is core.
+
+They hire the top one percent and create an environment where that top one percent push each other to be even better. How do you build a culture where the best want to stay and compete? Malin Norberg, the Chief Investment Officer for Market Strategies, joins him to find out. Please welcome Kenneth and Malin.
+
+Thank you, Ken, for joining us here in Oslo today. I cannot think of a better person to talk to about winning culture. So winning is one of Citadel's core values alongside integrity, learning, meritocracy, and extraordinary colleagues. But winning is the one that stands out there. So why winning?
+
+So first, it's just wonderful to be here today. Thank you so much for having me participate in this wonderful conference. And one of the things that is very true is that this team, which has done such an extraordinary job in managing the sovereign wealth of the nation, has been focused on delivering for the people of Norway. 
+
+You have had a winning team which has really delivered in a profound way for the people of your country. Let me be clear. Why do we actually enumerate winning as one of our core values? Because, regretfully, in the United States, we went through a period of time in which winning seemed to be out of vogue. 
+
+We lost our way in the wilderness. And great firms are focused on winning. As David Rubenstein put it: can you create a product that the consumer will value, the consumer will pay for, and the consumer will reward you for creating and for building? 
+
+Firms that are winning firms do just that. And firms that create inferior products are firms that fail. And what worried us is that in a culture where participation trophies were becoming ubiquitous, we lost our way as a country in what it took to win. 
+
+We at Citadel really do believe in the importance of winning for our clients. That's core to our business. And I was thinking about what David had to say in terms of companies and products. One thing to keep in mind is at Citadel, there's no shame in making money. 
+
+We manufacture money. Our clients give us capital with one goal in mind: can we manufacture more money with that capital? You certainly manufacture money in a very impressive way. So when it comes to winning culture, Nicolai just mentioned speed as one of the pillars to a winning culture. 
+
+And your colleague here just told me that one thing that amazes him with Citadel is that you can still move at the speed of a startup even though you are thousands of employees. So how do you do that? So I wish we could. I wish we could. 
+
+But as you grow, as a business grows in complexity and grows in stakeholders, and grows in regulatory footprint for example, it actually becomes necessary to have more process and more bureaucracy to make sure that what you do is on the right side of the road. 
+
+Startups have greater flexibility than your established firms. But your established firms have far greater depth and resources. What you have to be very focused on is that you are controlling the size of the bureaucratic state. 
+
+That you keep a constant focus on the ability to rapidly make decisions and, when a decision is made, to rapidly execute upon that decision. But because you have a bigger footprint, you're still going to have to go through a few more steps than that smaller startup might have to go through. 
+
+But with more resources, with the ability to interact with other global players on a far stronger playing field, we're able to move quite quickly. On decision-making though, this is one where large firms do tend to find themselves lost in the wilderness. 
+
+I'll tell my colleagues all the time, when they put something to my desk for input for me, I'll give them a date. I'll be back to you in seventy-two hours, forty-eight hours, or ninety-six hours. If you don't hear from me, I gave you a yes. It's your call. 
+
+Don't let yourself in management be an impediment to decision-making by those who are junior to you. And in some sense, negative consent to move forward is really powerful because it tells people that they have agency, that they can make a decision. 
+
+One of our key internal principles is the most junior person who is closest to the information, that's the person who optimally should make the decision as often or as frequently as possible. Now, will they make mistakes? Of course they will. 
+
+But they will grow much faster in a culture where they're empowered with agency to make decisions. They will learn from their successes and they will learn from their failures. But most importantly, they are rapidly learning. And that's how we create leaders.
+
+It's a good point, and talking about developing people, the Wall Street Journal reported that you spend several weeks every year reviewing the performance assessments for thousands of employees. So why is that where you choose to spend your time? And what does it say about the culture at Citadel?
+
+Well first of all, I think it says that I deeply care about how my colleagues are advancing in their careers. And what I'm looking for is I'm looking for patterns of where we are not developing talent strongly enough and aggressively enough. 
+
+So where in the business are our newest hires, whether they're out of college, out of a PhD program, or a lateral hire from another global investment bank or global investment management firm, where are people not flourishing? 
+
+And I'm trying to understand what do we need to do as a firm, what do we need to do differently, whether it's professional development, whether it's the experiences that people have, or whether it's the trust that is placed in our newer hires. 
+
+What do we need to do differently to get more out of people? One of the things I'm most proud of at Citadel is the extraordinary amount of human capital that we've developed over thirty-five years. People who run today one of the world's most successful hedge funds, who run one of the most successful securities dealers in the world, and bluntly, countless people who run many of the financial institutions around the world whose roots trace back to Citadel. 
+
+I think these are all a testament to our consistent focus on developing people to be the best they can be. So Citadel was the pioneer in quantitative investing and you've been using machine learning for well longer than most of us knew what that was. 
+
+So how do you, with that headstart, ten years of headstart on the AI movement today, how do you make sure you stay ahead? Well, I think that's actually a wonderful story about the kind of firm we want to be. 
+
+I remember when TensorFlow was released and five of my colleagues came to my office like the day it came out. And they literally said TensorFlow, which was Google's machine learning toolkit, was going to revolutionize the world. Like with complete conviction. 
+
+And I said okay. And they were basically saying we want to go spend the next couple of weeks really engrossed in what this body of knowledge means and how we can apply it in market making and securities. And I said well I mean of course, like go for it. 
+
+And really the point of the meeting was not the permission, it was their excitement over this transformative technology. They wanted to bring me behind the curtain to think about what machine learning was going to mean for our business. 
+
+And I remember calling one of those colleagues about four weeks later and saying, &quot;Okay, so what are your initial findings? Like what have you gleaned so far from using TensorFlow?&quot; He goes, &quot;Well, it's in production.&quot; 
+
+And I'm like, &quot;What do you mean it's in production?&quot; He goes, &quot;Well we used it to quote the US equity portfolio. We've been doing that for the last two weeks.&quot; And I'm like, &quot;It's been four weeks since the meeting.&quot; 
+
+He goes, &quot;No no, like a group of us worked pretty much every single day, twelve to fourteen hours a day, because this is one of the coolest things we've ever worked on and this is going to transform the world and we're already using it in production.&quot; That's a winning culture.
+
+That's a winning culture. And around technology, so with Gen AI technologies, not only for the technologists, but for everyone, have you changed the culture around how you manage technology adoption in the firm?
+
+So I think it's important to remember that about one in three people at Citadel are software engineers. So the firm is very, very deeply invested in technology. It's core to what we do. I think it's just important to keep that in the back of your mind when you touch on this topic. 
+
+So for us with generative AI, I think frankly one of the biggest problems out of the gate was there was perhaps too much enthusiasm for embracing Gen AI. The early generation large language models were really, really fascinating to people because for the first time, machine learning didn't create a vector of zeros and ones, it created written word. 
+
+You could write a poem, it could write a song, it could write a story, it could write a narrative. I mean, it interacted with people in a way that technology has rarely interacted with individuals. And it was incredibly alluring to people as to how they use this to change what they were doing at work. 
+
+One of the tougher conversations I had with a colleague is when I said, &quot;Alright, I want a list of all the Gen AI-based projects that we have at Citadel.&quot; And he came back with two hundred projects. And I said, &quot;No. No. Five. We're going to do five.&quot; 
+
+And he's like, &quot;Well what about the other one hundred and ninety-five?&quot; I said, &quot;We're going to kill all those. We're going to do five, we're going to actually push them really hard, we're going to see what works and what doesn't work, but we can't afford to let everybody be pursuing random ad hoc projects.&quot; 
+
+It's just too expensive. It's too much of a distraction. Now, of the five that we pursued, we had a real success with just over half. Now of note, the Gen AI models have gotten markedly better. 
+
+I don't think we incurred any cost of killing one hundred and ninety-five projects. And I do believe that over the course of the last six months with the introduction of OpenAI 5.0, with Claude 4.6, 4.7, I think you have a transformative sea change taking place. 
+
+You've got many more use cases today that are practical, that are implementable, that are meaningful in impact than you did two years ago. So I think one of the key challenges for a business is always that dilemma between being on the bleeding edge and being on the leading edge. 
+
+And I think good companies think very long and hard about where is it worth being on the bleeding edge, so it was with TensorFlow. And where do you want to be on the leading edge, where do you want to be a fast follower, where do you want others to sort of pave the way in front of you and you can follow quickly and capitalize on their learnings? 
+
+I think it's very important in running a big business to think about when do you want to be in the bleeding edge, when do you want to be in the leading edge, and pick that path with volition. Don't let that come down to random happenstance.
+
+So one of the places where you're in the leading edge is hiring the top people. So you have hundreds of thousands of applications every year and you've said Citadel hires winners in life and not just winners in business. 
+
+So say I'm applying for a job at Citadel and I'm sitting next to you for a job interview. So what's the one question you would ask me to see if I was the right cultural fit for Citadel? Oh, I wish one question would do the trick. 
+
+What's the most essential question? Look, I don't think there's not one; it's a mosaic. Okay? We're all people, we're complicated. And what you want to understand is what is the mosaic of this person and how does that fit into our team holistically and the team they're going to be a part of. 
+
+So there are a few things that I'm deeply interested in in learning about you. Nicolai, you spoke about ambition. I actually prefer the word aspiration over ambition because I think it appeals to our deeper inner meaning more directly. 
+
+What are we aspiring to do in this world? What are we aspiring to create or to change? I want to know your ambitions or aspirations. I want to know what success looks like to you. You know, I had a young man from Harvard with me years ago and I asked him right to the point: if you made ten million dollars, what would you do? 
+
+And he goes, &quot;I would quit and I would climb the highest peaks around the world.&quot; I said okay. I said I don't think this is the right firm for you. And he goes, &quot;Well you've already made an offer to me.&quot; I said, &quot;That's wonderful, I strongly urge you not to accept it.&quot; 
+
+Because I don't want to hear from somebody who's twenty-two years old that there's some number that represents their magic number—that if they made that much money, they're going to climb mountains around the world. I want to hear how they're going to climb the next mountain at Citadel. 
+
+How they're going to grow a business for us, how they're going to change the firm. How they want to lead our Asian business. Or look, if I made ten million dollars, I'd like to think that it was done because I was very successful at X and that I'd have more responsibility here to have a bigger impact on the firm. 
+
+That's what I want to hear. Right? So I look for people's aspirations. I look for their track record of being a winner. You know, I love people who competed in competitive sports in high school and college. They're not going to play tennis for Citadel's tennis team. 
+
+But their willingness to get up every single day and go to practice, their willingness to put it all out, in this case on the court, and to win or to be beaten says a lot about their resiliency and their perseverance. 
+
+And those are really important life skills that you learn in playing competitive sports. In fact, in choosing to compete in any arena—speech and debate, as a musician—competing in any arena tells me that you are willing to win and to lose. 
+
+And that is such an important life skill. People forget that my average equity portfolio manager is right in about fifty-three percent of their stock picks. Okay? Could you imagine you're going to your surgeon and he goes, &quot;Yeah, about fifty-three percent of my patients live&quot;? 
+
+What a humbling job. You're right about fifty-three percent of the time. If you're right about fifty-three percent of the time with the right upside-downside ratio, you're actually extraordinarily good as a portfolio manager. 
+
+But that means you go home a lot of days really wrong and really humbled. Do you have the mental fortitude to come back to work the next day and get right back at it? Well, I think those are some great advice and insights to a winning culture and I think that's a good note to end on. So thank you so much Ken, this has been very insightful.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
