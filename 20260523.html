@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - May 23, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">May 23, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=x8Rx0S6kzaY" target="_blank" rel="noopener">Building A.I.: The Deep Mind Behind the Moment</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/GJ8V0NX6NddGh9bf4zED4tsjPjjBK2hdp5FWHMy09pV7sdSkkE3yEhCRSch4waEb9ZavyUrWfw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">ABC News</span><span class="channel-subs">(19.6M)</span></span>
+                        <span class="meta-sep">·</span><span>20:53</span>
+                        <span class="meta-sep">·</span><span>11.5K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-05-23</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Sir Demis Hassabis (CEO and Co-founder, Google DeepMind)</span> <span class="tag tag-person">Rebecca Jarvis (Correspondent, ABC News)</span></div>
+                </div>
+                <div class="tldr">Google DeepMind CEO Sir Demis Hassabis projects that artificial intelligence will deliver ten times the impact of the Industrial Revolution at ten times the speed, urging international standards and collaborative societal governance to manage disruption while accelerating scientific breakthroughs.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR  Google DeepMind CEO Sir Demis Hassabis projects that artificial intelligence will deliver ten times the impact of the Industrial Revolution at ten times the speed, urging international standards and collaborative societal governance to manage disruption while accelerating...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Google DeepMind CEO Sir Demis Hassabis projects that artificial intelligence will deliver ten times the impact of the Industrial Revolution at ten times the speed, urging international standards and collaborative societal governance to manage disruption while accelerating scientific breakthroughs.</p>
+<h3>The Scale, Speed, and Global Impact of AI</h3>
+<ul>
+<li><strong>A "10x" Revolution:</strong> Hassabis compares the current AI transition to the Industrial Revolution, predicting it will have 10 times the impact but occur 10 times faster, unfolding over a single decade rather than a century.</li>
+<li><strong>The Singularity:</strong> Humanity is currently standing "in the foothills of the singularity," representing a profound transformation in how society operates.</li>
+<li><strong>Google's Full-Stack Advantage:</strong> Google is uniquely positioned to lead the AI industry because it controls the entire vertical pipeline, spanning custom silicon chips, frontier research models, and massive consumer product surfaces (such as Google Gemini).</li>
+</ul>
+<h3>Balancing Disruption: Jobs, Public Anxiety, and Energy Costs</h3>
+<ul>
+<li><strong>Job Disruption and Opportunity:</strong> While acknowledging that AI will cause significant short-term job displacement, Hassabis believes the tools will "superpower" the next generation to build new industries and opportunities that are currently unimaginable.</li>
+<li><strong>Energy Consumption Concerns:</strong> Hassabis argues that critics often overstate the environmental impact of AI data centers.</li>
+<ul>
+<ul>
+<li><strong>Net-Positive Energy:</strong> He predicts that within 10 years, AI applications will save far more energy globally than the data centers consume.</li>
+<li><strong>Corporate Cost Burden:</strong> In the interim, "hyperscalers" and tech giants—not ordinary consumers—must bear the cost of building out dedicated green energy infrastructure.</li>
+</ul>
+</ul>
+<li><strong>Economic and Philosophical Redesign:</strong> Technology companies should not decide the future alone. Hassabis urges economists, social scientists, and philosophers to collaborate urgently to design new economic models that distribute AI-driven productivity gains equitably.</li>
+</ul>
+<h3>Accelerating Science and Medicine through AI Breakthroughs</h3>
+<ul>
+<li><strong>Accelerating Discovery:</strong> AI is the ultimate tool for scientific exploration, capable of finding patterns across vast datasets to compress 50 years of scientific and medical progress into just five years.</li>
+<li><strong>The Success of AlphaFold:</strong> Over 3 million scientists globally are already using DeepMind's open-source AlphaFold system to predict 3D protein structures, a foundational tool that will influence almost all future drug design.</li>
+<li><strong>Curing Diseases:</strong> Through Isomorphic Labs, Google is actively applying AI models directly to target, model, and cure complex diseases.</li>
+</ul>
+<h3>Preparing the Next Generation: Education and Human Skills</h3>
+<ul>
+<li><strong>Core Academic Focus:</strong> Hassabis advises nervous students to tune out media noise and study foundational STEM subjects (math, physics, computer science, and biology) to learn how to interface intelligently with advanced tools.</li>
+<li><strong>The Vital Role of Humanities:</strong> He emphasizes that the humanities will be more important than ever, as society needs deep thinkers to chart the ethical, cultural, and political boundaries of the AI era.</li>
+<li><strong>The Importance of the "Human Soul":</strong> As technical execution becomes automated, human value will shift toward uniquely biological traits:</li>
+<ul>
+<ul>
+<li><strong>Creativity and Taste:</strong> The intuition to ask the right scientific questions, formulate the best hypotheses, and design meaningful experiments.</li>
+<li><strong>Uniquely Human Design:</strong> Bringing a distinct "soul," intuition, and lived experience to products and ideas.</li>
+</ul>
+</ul>
+</ul>
+<h3>Global Governance and Safety Guardrails</h3>
+<ul>
+<li><strong>International Standards:</strong> While global coordination is ideal, the U.S. and Western allies represent a large enough market to set and enforce safety and security standards on their own.</li>
+<li><strong>The "Dual-Use" Dilemma:</strong> Because AI can be utilized for massive beneficial breakthroughs or repurposed by bad actors for harm, labs must urgently collaborate on advanced cybersecurity to ensure guardrails cannot be stripped out of deployed models.</li>
+<li><strong>Rejecting a Pause:</strong> Hassabis notes that waving a "magic wand" to pause AI development is unrealistic, and slowing down would dangerously delay crucial medical cures and environmental solutions. </li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"When we look back at this time, I think we will realize that we were standing in the foothills of the singularity."
+— <strong>Sir Demis Hassabis</strong>
+</blockquote>
+<blockquote>
+"I think it's going to be 10 times the impact of the Industrial Revolution, and maybe 10 times faster, occurring over a decade instead of a century. So, we're talking about really profound, profound transformation."
+— <strong>Sir Demis Hassabis</strong>
+</blockquote>
+<blockquote>
+"What separates the great scientists from the good scientists is not their technical ability... It's actually creativity and having a kind of great taste... for what's the right question, what's the right hypothesis, what's the real sort of meaningful experiment that needs to be done. And for now, that's all going to be natively driven by the human component."
+— <strong>Sir Demis Hassabis</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Not so long ago, the AI of today seemed unimaginable. Now it can write code, generate video, help diagnose diseases, and reason through complex problems in seconds. And as the race to dominate artificial intelligence accelerates, Google is increasingly poised to take the top spot, changing the way we search, how we create, and even how we monitor our bodies. 
+
+And we spoke exclusively with the architect behind it all, Google DeepMind co-founder and CEO Sir Demis Hassabis. He says this is just the beginning. When we look back at this time, I think we will realize that we were standing in the foothills of the singularity. We are so happy to be here having this conversation with you. So thank you for inviting us here. 
+
+Oh, it's great to do it. And it is a good time for you to do it, I would imagine, as Google and DeepMind really seem to be pulling out in front of all of the AI competition. Is that what you expected? Well, I think, you know, we're very happy with our progress that we've made the last few years. 
+
+I think we've taken giant leaps on the modeling and the research side, but also integrating it, especially over the last year, into all of our product surfaces. So, I think it's an amazing thing that only Google can really do because we have the full stack all the way from the chips to the frontier models to the AI products. 
+
+We are seeing right now a growing AI backlash. Parents are sounding the alarm about the dangers of AI chatbots. The Department of Homeland Security says AI offers opportunities for bad actors to undermine our democratic system. Data centers that power the AI boom, with their hulking size dividing communities, are straining energy grids and spiking neighbors' electric bills. 
+
+Former Google CEO Eric Schmidt was booed during a commencement speech at the University of Arizona. Time magazine selected its Person of the Year for 2025, and this time, it was the architects of artificial intelligence. Interesting. 
+
+People see it increasing the cost of their energy, they see it claiming jobs, they see it claiming their future, and they hear all of the incredible things that it might do, but they also feel very uncertain about what it is doing right now. How do you answer to that? 
+
+Well, I think it's right to have some worry and some concern about the future because a lot of it is very uncertain. But I think part of it is also the way some of the industry is communicating about what things are going to happen. In my view, all of this is still to be determined. 
+
+And I think especially the youth of today, they are going to be the ones to write the next chapter, and make use of all of these incredible technologies to come up with incredibly new opportunities that would not exist without it. And I think that's been the history of technology advances in the past 20 or 30 years. 
+
+They always worry about it at the time, and then we figure out with human ingenuity how to overcome those challenges. But we really need to do this very urgently and, ideally, internationally too. Internationally, could we make rules here, implement them, and say whatever China does is up to China? 
+
+Well, ideally, there would be a kind of international standard around AI, but I think the US and the West is, of course, a big enough market and easily powerful enough to make some of those standards themselves. And I think we are going to need them as these systems become more and more powerful, because they're dual-purpose technologies. 
+
+They can be used for amazing good, which is obviously what myself and others who have been working on this for a long time are hoping for, but they can also be repurposed by bad actors for harm. So, there needs to be some standards around how these things get used, built, and deployed. 
+
+You were a chess prodigy as a child. You designed video games as a teen, studied the human brain, won the Nobel Prize, and now you're at the forefront of this technology that is revolutionary. What is it about this moment that you want the world, people, and humanity to wrestle with? 
+
+Well, I think that AI is actually going to be almost a new era for humanity. I think it's that big and profound a change. Sometimes I compare it to being 10 times the impact of the Industrial Revolution, and maybe 10 times faster, occurring over a decade instead of a century. 
+
+So, we're talking about a really profound transformation. And what I would like to see AI being used for is to advance science and medicine. That's what I set out over 30 years ago now to do with AI, and that's why I spent my whole career working on AI, because I see it as the ultimate tool to push forward scientific discovery. 
+
+When you say this is going to be 10 times bigger than the Industrial Revolution and 10 times faster, and then you talk about curing disease, that is incredibly exciting. But there's the flip side of that—it's jobs, and it is whether we are ready as humanity for this technology. How do you balance those two things? 
+
+Well, I think there are a lot of challenges, too. It's a double-edged sword, AI. We, on the one hand, want to solve disease and help with things like energy and environmental issues, and I think AI can help with all of that on the plus side. But it will also disrupt jobs. 
+
+I think there will also be huge new opportunities as well, actually, which is what I believe will happen with AI. These AI tools will sort of superpower the youth of today to be able to do incredible things that you could barely imagine a few years ago. 
+
+And I think that anytime there's a lot of disruption, it also means there's a huge amount of new opportunity. And so, that's how I see the future of jobs going. 
+
+I think the question that people ask is: okay, we understand the new opportunity, but there's a lag time there. The Industrial Revolution happened over a century plus of time. If this is moving so fast, and it's clearly going to displace some workers, what becomes of them in the meantime? 
+
+Well, I think this is where all of society—civil society, academia, and social sciences—needs to come together to try and chart out how we as humanity want the next stage to go. The future is not written. 
+
+I think it's for us collectively to decide how we want economies to change, what we imagine jobs are going to become, but also make sure that we distribute all of the incredible productivity gains that are going to happen with AI to as many people as possible so that everyone around the world benefits. 
+
+And I think those are all choices to be made, actually, and they're not really to do with the technology itself. They're more wider societal issues that I think a broad group of people needs to come together to discuss and debate. 
+
+And I think also, to get humanity ready for these big changes, it's going to need almost a new philosophy, a new great philosophy. And I think, again, it shouldn't just be about technologists and the people building this technology. It's going to affect everyone, so everyone should be involved in that conversation. 
+
+How optimistic are you that that conversation is going to happen to solve this problem before we actually have to confront it? I think we're seeing the good signs of that. 
+
+Things like the AI summits that have been happening around the world—the first one was convened in London, and the most recent one was in India—are bringing together the international community from all different walks of life to discuss these really big issues. But I think there needs to be a lot more, and it needs to happen a lot faster because the technology is moving, improving, and progressing so quickly. 
+
+So, given where things are right now, would you be in favor of hitting the pause button if everybody else was in favor of it as well? Well, I think if it was possible to wave a magic wand, potentially. 
+
+But I think mostly what it's about is taking the time and collaborating on the most important issues on the safety and security of these systems. Of course, we want the cures to all diseases, and we want new types of energy and materials, and we need those things as quickly as possible if you look at the other challenges that are confronting the world and society today. 
+
+If this goes the way you anticipate, you and a handful of people are building technology that is absolutely revolutionary. And it's you and a handful of tech executives. Even with the very best of intentions, why should such a small group of individuals get to decide our future? 
+
+I don't think it should be that way. So, I think there needs to be an international standards approach to this. It shouldn't just be the tech companies; it should be broader society. Everyone has got to take this really seriously, just like the technologists do, and I think maybe that's starting to happen now, but there's real urgency needed around that. 
+
+You see it happening? I think they are starting to, yes. What do you think they need to know or understand that they're missing at this point? 
+
+Well, I think it's just hard for the human mind to comprehend something that is exponential. We're just not really built for that with the way our brains have evolved; we think in more linear terms. But this is an exponential technology, and a lot of things are going to happen very fast that are going to be very impactful. 
+
+So, I think that's probably the hardest thing to get your head around. And I think everyone is actually able to, of course, interact with pretty much the latest AI technologies in chatbots every day, using things like Gemini. 
+
+So, everyone now has a feel for what this technology is, what it can do, and what it is still weak at doing. And that's great, I think, because it allows them to be understanding of the enormity of what's coming and hopefully help to shape that. 
+
+One of the other big issues people have with AI right now is the energy cost. Data centers add cost to energy. Should the average ordinary person bear that cost? 
+
+I think, first of all, the energy costs are often overstated with data centers. But also, most of the big companies and the hyperscalers are building out their own energy infrastructures to make sure that the brunt of those costs and the energy that they're using is not passed on to the consumer, and Google is definitely doing its part there. 
+
+The second thing I would say on that is that I believe AI is actually going to be one of the best technologies for environmental concerns. I think AI in the next 10 years is going to save far more energy than it uses in the long run. 
+
+Ten years from now... Sure. ...it'll save the energy? I think, in less than that, it will save more energy than it's using. And in the meantime? 
+
+And in the meantime, we'll need to build up that infrastructure, and the big companies and the organizations that have those resources will need to bear the brunt of those costs. 
+
+If you could correct anything about AI that you believe exists in the public's mind right now that you think is misinformed, what would that be? Well, I think first of all, in terms of the approach to it, I would say that those of us who are building it need to be approaching it with some humility around the amount we understand about these systems and what we think about the certainty of certain paths from here. 
+
+I think the future is still to be written. I think there are going to be some incredible things that are going to happen, amazing things that are going to be incredibly beneficial for the world. But with each step, we find out new things. It's very new, this technology, progressing very fast, and we need to adapt quickly to any new things that we see. 
+
+So, I think that's the number one thing. And then, on top of that, I would say that for society in general, it's incumbent on the industry to show unequivocally the benefits, and I think there has not been enough of that so far. 
+
+What evidence have you seen of dramatic change, things that are so much better today because of AI? Well, if you take AlphaFold, our big breakthrough in understanding the 3D structure of proteins, over 3 million scientists in the world make use of that now in all of their really important scientific and medical research. 
+
+So, I think there won't be a drug designed in the future that won't have made some use of AlphaFold, looking into the future. So, I think that's already an unbelievable benefit to the world, and that's just one example. 
+
+What's the single biggest thing that people are not taking advantage of with AI that they should be doing right now? I always recommend to students, and when I give talks to universities, that they should lean into the tools and become incredibly native with them. 
+
+There is so much value in what these tools can do already today. They will kind of be like superpowering the youth of today to be able to do incredible things that you could barely imagine a few years ago. And I think that will create... anytime there's a lot of disruption, it also means there's a huge amount of new opportunity. And so, that's how I see the future of jobs going. 
+
+What do you tell students right now who are so nervous about where the world is? They hear the stories that jobs aren't going to be there for them because of AI, internships don't exist, and they have no idea what to study in college. What would you tell them to study? 
+
+I would ignore all the noise around that and just be confident about your capability. The next generation will own how this goes. And I would first of all say, still study the basic STEM subjects. 
+
+Get really good at math and computer science and physics and all the normal subjects because that will make you better at using whatever these tools become and understanding them better, just like my generation did with computers and the internet back in the day. It's another one of those big transitions. 
+
+When that comes, there's always a lot of uncertainty, and I get the worries about that. But the best of the next generation will create incredible new opportunities and take advantage of the opportunities that are going to come with any type of disruption like this. 
+
+What kind of human skills are most important? First of all, getting really natively good with the tools and understanding what they can do for you and how to incorporate that into your workflow. I think that's going to become more important with the agentic era. 
+
+And then, I think it's going to be things like creativity, having taste, and bringing sort of what I would call the soul to a product or a design or a feature. I think those are the kinds of things that are going to differentiate what people output and what other people want, beyond just the underlying technology. 
+
+And where does that soul come from, in your view? I think it comes from human ingenuity, our experience, and our intuitions. 
+
+So, I often say in science, for example, what separates the great scientists from the good scientists is not their technical ability. If you're a professional scientist, you're already technically really able. It's actually creativity and having a kind of great taste, as we sometimes call it, for what's the right question, what's the right hypothesis, and what's the real, meaningful experiment that needs to be done. 
+
+And for now, that's all going to be natively driven by the human component of all of these technologies. What's the question we're not asking right now about AI that we should be? 
+
+I think we should be asking ourselves: what is this kind of future society, and how should the world work, including the economy? I think all of the top people in the various fields need to really take that seriously. 
+
+When I talk to economists, I'm not sure they're really taking seriously what change is coming down the road, nor are the social scientists or philosophers about how we should adapt society to these enormous, impactful transformations that are coming down the road. 
+
+How do you answer that question? When you look out five years from now, what does it look like? 
+
+Well, what I'd like to see is the benefits of this spread across the world. I'd like to see the latest systems deployed after serious amounts of testing, and that they're secure and safe, and we understand that those guardrails are robust around the technologies, especially as they get more powerful. 
+
+And then, I want to see incredible new breakthroughs in science and medicine, and energy, and all these types of fields where I think AI, as this amazing tool, is going to allow experts to make probably 50 years' worth of advances in five. 
+
+50 years' worth of advances in five? Mm-hmm. And why? How does that work? 
+
+Well, it's basically accelerating the pace of discoveries by finding patterns in data, finding correlations and connections between different subjects, and just allowing human scientists and experts to get on top of so much more information. So, they can ask the right questions and set the right problems to crack. 
+
+I talked earlier about the fact that you were a chess prodigy. How did you learn chess? I mean, I was four years old, so I don't really remember, but apparently I saw my dad and my uncle play. 
+
+They don't play very well, but apparently I asked to play, and after a couple of weeks, I was beating them. So, they took me to the chess clubs, and I started winning there, and it sort of took off from there. 
+
+Do you see a four-year-old like you in the future learning from AI to do what you did with your dad and your uncle? Sure, I think so. Not necessarily learning from AI, but I think a kid like me who grew up with computers and programming—I can't wait to see what an equivalent kid like that would do today, growing up with all these amazing AI tools and expanding what they're capable of doing. 
+
+I think the next generation is going to come up with amazing things. So, how do we make sure that, in everybody's hands, people don't do the wrong things with it, especially when that's becoming more and more easy to do? 
+
+Yeah, so that's one of the worries: to make sure, of course, you want all the people who are going to do good things with it to be able to access it widely, through things like open source and so on. We open-sourced AlphaFold, and everyone in the scientific community can make use of the structures that we've predicted. 
+
+But as the systems get more powerful, we do have to work out how we can build robust enough guardrails that can't be removed by a bad actor once you deploy it. And that's a very difficult cybersecurity challenge that all the leading labs are working on. 
+
+If I came to you and said, &quot;Sir Demis, what do I study in college, given everything you know about AI and the world you are building?&quot; what do you tell me? 
+
+I would say, still study the basic, core STEM subjects of maths and physics and computer science, and biology. I think all of those foundations will still be critical in the AI era. 
+
+And what's more, I think a lot of the big advances will come by applying AI and combining it with one of the other subjects, whether that's creative arts or biology. I think that's where in the next 10 years all of the most amazing advances are going to come from. 
+
+So, you're saying don't give up on the humanities, either, if that's your interest. I think, actually, maybe the humanities are going to be more important than ever because of charting out what should happen in the next era for humanity. 
+
+Is there anything at this point that keeps you up at night? I don't sleep very much given the amount of work I have to do, but yeah, all these things worry me. 
+
+On the one hand, I'm unbelievably excited about the potential of where we are now with things, and we're trying to cure diseases with AI through Isomorphic Labs—we're on the cusp of all of those amazing things. But also, I worry a lot about the downsides and making sure we can mitigate that for society. 
+
+And when you wrestle with those topics, are you talking to a human or AI? I'm mostly thinking about it to myself in quiet moments of reflection, and talking with my friends. So, you're not asking Gemini yet. Not yet, but maybe in the future.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
