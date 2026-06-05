@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - June 05, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">June 05, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=u0Nw6QugZOs" target="_blank" rel="noopener">CrowdStrike CEO George Kurtz goes one-on-one with Jim Cramer</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">CNBC Television</span><span class="channel-subs">(3.4M)</span></span>
+                        <span class="meta-sep">·</span><span>11:10</span>
+                        <span class="meta-sep">·</span><span>1.7K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-06-05</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">George Kurtz (CEO, CrowdStrike)</span> <span class="tag tag-person">Jim Cramer (Host, Mad Money)</span></div>
+                </div>
+                <div class="tldr">Despite a minor post-earnings stock dip caused by lofty market expectations, CrowdStrike delivered strong Q1 results and raised its full-year ARR guidance by over $50 million, fueled by a 250% quarter-over-quarter surge in its AI pipeline.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR  Despite a minor post-earnings stock dip caused by lofty market expectations, CrowdStrike delivered strong Q1 results and raised its full-year ARR guidance by over $50 million, fueled by a 250% quarter-over-quarter surge in its AI pipeline.  Key Financial Metrics:    ...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Despite a minor post-earnings stock dip caused by lofty market expectations, CrowdStrike delivered strong Q1 results and raised its full-year ARR guidance by over $50 million, fueled by a 250% quarter-over-quarter surge in its AI pipeline.</p>
+<h3>Financial Performance and Raised Outlook</h3>
+<ul>
+<li><strong>Key Financial Metrics:</strong> </li>
+<ul>
+<li>Achieved record new annual recurring revenue (ARR), accelerating revenue growth, and record free cash flow.</li>
+<li>Posted a <strong>Rule of 40 score of 59</strong>, demonstrating elite-tier balance between growth and cash generation.</li>
+</ul>
+<li><strong>Raised Guidance:</strong> </li>
+<ul>
+<li>Increased full-year net new ARR guidance by over $50 million, translating to a substantial <strong>520 basis point raise</strong>.</li>
+<li>The mid-April emergence of the "mythos" security vulnerability occurred too late in the quarter (ending April 30) to impact Q1 results but heavily bolsters the forward-looking pipeline.</li>
+</ul>
+<li><strong>Stock Split:</strong> Announced a 4-for-1 stock split, a move designed to lower the barrier of entry for individual retail investors.</li>
+</ul>
+<h3>AI Security and Strategic Partner Initiatives</h3>
+<ul>
+<li><strong>AIDR Pipeline Growth:</strong> </li>
+<ul>
+<li>CrowdStrike entered Q2 with an <strong>AI Detection and Response (AIDR) pipeline of over $50 million</strong>, representing 250% quarter-over-quarter growth. </li>
+<li>The technology helps enterprises deploy AI safely by detecting and neutralizing rogue AI agents.</li>
+</ul>
+<li><strong>Project Glasswing &amp; OpenAI:</strong> </li>
+<ul>
+<li>Partnering with Anthropic on Project Glasswing to secure AI models. </li>
+<li>Actively participating in OpenAI’s TAC program, positioning CrowdStrike at the epicenter of AI-driven cybersecurity.</li>
+</ul>
+<li><strong>Project Quiltworks:</strong> </li>
+<ul>
+<li>A strategic coalition involving top-tier integrators like Accenture and EY. </li>
+<li>Partners use Falcon technology to conduct AI readiness assessments, identifying millions of exposures in target companies and serving as an acquisition funnel to turn non-customers into active buyers.</li>
+</ul>
+</ul>
+<h3>The Evolving Threat Landscape and the Falcon Data Moat</h3>
+<ul>
+<li><strong>The Vulnerability Misconception:</strong> Kurtz clarified that finding vulnerabilities in source code (which LLMs do well) does not stop breaches. True security requires defense against credential and identity theft, where attackers bypass code completely using stolen tokens.</li>
+<li><strong>AI Weaponization:</strong> AI tools have lowered the entry barrier for cybercriminals, giving rise to more sophisticated, widespread ransomware and extortionware attacks.</li>
+<li><strong>The Data Advantage:</strong> CrowdStrike relies on a proprietary data moat built over 15 years through its Falcon technology to train its defense models far more effectively than newer market entrants.</li>
+</ul>
+<h3>Market Consolidation and Competitive Strategy</h3>
+<ul>
+<li><strong>Platform Dominance:</strong> Kurtz agreed with Cramer that the market is consolidating around a few dominant platform players, heavily favoring comprehensive security suites over point products.</li>
+<li><strong>Organic Integration vs. M&amp;A:</strong> </li>
+<ul>
+<li>Differentiated CrowdStrike from its primary platform competitor, Palo Alto Networks, by highlighting its ground-up, natively integrated architecture.</li>
+<li>Positioned CrowdStrike's organic innovation model as superior to competitor strategies reliant on acquiring and stitching together disparate technologies.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Our rule of 40 was 59. So, when you think about the growth and the cash flow generation, it's insane at our scale."
+— <strong>George Kurtz</strong>, CEO of CrowdStrike
+</blockquote>
+<blockquote>
+"You can get rid of all the vulnerabilities in the world and you would still have break-ins because you have... things like identity theft. [Your] credentials, your username, your password, your tokens get stolen, people log into a system and steal all that data."
+— <strong>George Kurtz</strong>, CEO of CrowdStrike
+</blockquote>
+<blockquote>
+"What AI has done is it's created more adversaries with greater sophistication because they're leveraging the models themselves. So, what does that mean? It means more tailwinds for companies like CrowdStrike."
+— <strong>George Kurtz</strong>, CEO of CrowdStrike
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        Last night, CrowdStrike reported what I thought was an excellent quarter. But the stock got hammered today. Mainly because the cybersecurity company didn't beat the estimates by as much as people have become accustomed to. The guidance was strong, too. And they even announced a 4-for-1 stock split, which shouldn't matter in theory, but in practice tends to attract more individual investors. 
+
+I think this is a buying opportunity. But don't take it from me. Earlier today, I had the chance to speak with George Kurtz, the founder and CEO of CrowdStrike. Take a look. 
+
+&quot;George, welcome back to Mad Money.&quot;
+
+&quot;Jim, great to be here.&quot;
+
+&quot;You know, George, I gotta tell you, I followed your company since you came public, and I saw you had record new annual recurring revenue. You had accelerating revenue growth. You had record cash flow. Your free cash flow was terrific. You had new... new ARR that was great. But somehow, it was regarded as disappointing. So, I have to believe that at some level, you might have been surprised that this quarter was disappointing.&quot;
+
+&quot;Well, Jim, the way I look at it is we have the best products and we're taking care of our customers in an era where AI is obviously going to be pervasive, and you're going to need security. So, I thought we posted a fantastic quarter. Obviously, you went through some of the stats. The other stat that I'll point out to you is our Rule of 40 was 59. So, when you think about the growth and the cash flow generation, it's insane at our scale. We're very proud of the quarter, and we're excited about the future and the tailwinds that we're seeing from AI.&quot;
+
+&quot;All right, well, let me, let me posit something. We've had this terrible discovery, basically, this mythos, where it looks like things are way out of control. And I figured that you would have a huge amount of business when this news broke. But it doesn't seem like maybe it turned into a lot of business. Was I wrong?&quot;
+
+&quot;Well, Jim, you have to look at the calendar. You're talking about mythos breaking in the middle of April, and our quarter ends at the end of April, right? So, we're selling enterprise software, not necessarily shipping boxes. So, these things take time to get into customers' hands. You've got to go through a sales cycle. 
+
+But what I want to point out is you have to look at the guidance of the next quarter. We raised the full-year guidance across the entire year, our net new ARR guidance, by over 50 million—over 520 basis points, which is an incredible raise. So, we have the confidence to do that because we see the opportunity that's in front of us. 
+
+And we see what customers are looking for, which is CrowdStrike—which is our AIDR technology, AI detection and response—to be able to identify rogue AI agents and be able to protect those and allow people to actually accelerate their AI adoption in an enterprise.&quot;
+
+&quot;Well, I mean, is it possible that people are concerned that you did not raise your near-term ARR? You came in with 5.51 billion versus 5.503 billion, and people thought, maybe the spring rally wasn't justified.&quot;
+
+&quot;Well, I would point you to the whole year, Jim. You know, 520 basis points is a big move, and we see this taking place across the entirety of the year. So, we feel really good about the raise. I think we feel fantastic about the pipeline. 
+
+As an example, our AIDR technology, we're entering the pipeline with over 50 million in Q2 alone. We saw 250% quarter-over-quarter growth just in that product alone. And what I know from talking to customers is they want to roll out more AI. And if you need more AI, you want to consume more AI, you're going to need security. So, yeah, I thought it was a great Q1, and we're excited about the future and the guidance that we provide.&quot;
+
+&quot;All right, well, I couldn't agree more. It's why I told our people who belong to the investing club, 'Don't believe what you read. This is an amazing quarter.' I want to ask about Project Glasswing from Anthropic. 
+
+What I understand from the people I talk to, you're pretty much leading the cybersecurity efforts to try to figure out what to do here, despite the fact that Anthropic thought at one point that they could handle it themselves. I don't think that insurance companies wanted Anthropic to handle it themselves, and I think they wanted you to do it because I think you actually know how to stop it.&quot;
+
+&quot;Well, Jim, what's important to realize is that security is an ecosystem. And, to be successful, you need to have an ecosystem that's going to help customers and help partners. So, when you look at what Anthropic has come out with, you know, they've got some great models, no doubt. But in order to be able to work with customers, you have to take advantage of those deep, trusted relationships which companies like CrowdStrike have built over the last 15 years. 
+
+You have to leverage the deep data moat that we have with our Falcon technology. And you have to leverage the fact that we're in the middle of helping to stop these big breaches, or helping non-customers respond to the breaches they have and then we turn them into customers. So, I think the ecosystem is a key part. They recognize that, and we're happy to be part of that coalition. 
+
+And, you know, again, we're also working with OpenAI in their TAC program. So, we're at the epicenter of AI and security, and I think that goes to show you the leadership position that we have.&quot;
+
+&quot;Well, can you talk to me about Project Quiltworks and what you are doing there? Because that seems to be equally as important for the future as what you might be doing in Glasswing.&quot;
+
+&quot;It is. Well, when you think about Glasswing, when it came out, you had only a handful of companies that have access to mythos. So, you have a lot of customers, their boards, their CEOs, saying, 'What can we do?' I have CEOs calling me in the middle of the night, Fortune 10 companies, going, 'Mythos, you know, help us. What can we do? How does all this work, and how do we make sure we're secure?' 
+
+So, we're in the middle of these conversations, and the opportunity is so large that you need to create a coalition around this. The Accentures, the EYs of the world, etc., can work using our technology to help customers understand where their exposures are. We're finding millions of exposures in companies that we go into. 
+
+Those need to be prioritized, and you need to understand what mitigating controls, like Falcon, are in place to be able to prevent against those. So, the great opportunity here is we have our partners drop into either customers or non-customers that we turn into customers because they're using our technology as part of this AI readiness assessment. It's really a multiplier effect for us.&quot;
+
+&quot;Aren't you surprised that when everything first broke—even in the winter when we realized all the different vulnerabilities—that somehow all of this stuff was believed that it was bad for CrowdStrike? When I know, I know when I first saw it, I said, 'Oh my god, bonanza.' And yet all I read for so long was, 'This is the end of CrowdStrike.' How did people just get it completely backward? What do you think went wrong with that narrative?&quot;
+
+&quot;Well, Jim, you have to look at security. There's many different facets. And finding vulnerabilities in source code is one facet of it, okay? And that's what the LLM models do pretty well. 
+
+But then you have to look at the overall purpose of security: it's to stop the breach. You have to be in line. You have to get it right the first time you see a threat. You've got to be able to create data that allows you to understand what's happening and train that data, and we have a massive proprietary data moat from, you know, over a decade of doing this. 
+
+So, at the end of the day, we can use these LLMs to be more successful and have greater impact with our customers, but it's only one aspect of what you need to do to build a security platform like Falcon. So, when this came out, I think a lot of people were confused that if you got rid of all the vulnerabilities, the world would be safe. That's not the case. 
+
+You can get rid of all the vulnerabilities in the world and you would still have break-ins because you have things like identity theft. And what I mean by that is your credentials—your username, your password, your tokens—get stolen, people log into a system, and steal all that data. So, there are many ways to get into a system. Exploiting a vulnerability is just one of those, and you're never going to get rid of all of them. You're still going to need a full lifecycle system, a system of record like Falcon, to be able to stop those breaches.&quot;
+
+&quot;And look, I know that I've been limiting my questions to this notion of what happens with the Anthropic and mythos. There's been no diminution of the just plain vanilla 'I'm going to wreck your company, pay me' kind of things that CrowdStrike does for a living.&quot;
+
+&quot;Absolutely not. You know, Jim, we have talked extensively about extortionware and ransomware, right, where these cyber gangs will basically get into a large company or even small companies that don't have the level of protection. It's really shameful. 
+
+They get in and they extort these folks, and you need security up and down the entire business stack, whether it's a small business or whether it's a large enterprise. And we're only seeing more and more of these sort of attacks. What AI has done is it's created more adversaries with greater sophistication because they're leveraging the models themselves. So, what does that mean? It means more tailwinds for companies like CrowdStrike.&quot;
+
+&quot;Okay, last question. You know there were so many people in cybersecurity when I first started talking to you. I kind of feel like that it's gotten so big and the threats are so horrible that you need a complete suite. And the only one other than you that has a pretty complete suite would be Nikesh Arora's company, Palo Alto Networks. Is it just you and them? Is it just a duopoly now?&quot;
+
+&quot;Well, I think the platform vendors are ultimately going to win. Obviously, it's a big market and, you know, it's a competitive market. But we like where we are given our position, given how we've built the technology from the ground up as being sort of native, integrated technology. 
+
+And, you know, we come at it just from a different approach of how we drive innovation as opposed to just acquiring a bunch of technologies. But at the end of the day, you have just a few big players that are out there, and I think there's a lot of opportunity for the companies that are out there, though there's only a handful of them, as you pointed out. And I like—I like our chances.&quot;
+
+&quot;I don't blame you. I'm going to do something that I think someone at least should have done last night: congratulations on a good quarter, George Kurtz, founder and CEO of CrowdStrike. Good to talk to you.&quot;
+
+&quot;Thanks so much, Jim.&quot;
+
+&quot;Mad Money will be back after the break.&quot;
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
