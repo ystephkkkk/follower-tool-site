@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Briefing - June 06, 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-tertiary: #6e7681;
+            --accent: #58a6ff;
+            --accent-subtle: #388bfd26;
+            --border: #30363d;
+            --green: #3fb950;
+            --green-subtle: rgba(63, 185, 80, 0.15);
+            --yellow: #d29922;
+            --yellow-subtle: rgba(210, 153, 34, 0.15);
+            --red: #f85149;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text: #1f2328;
+                --text-secondary: #656d76;
+                --text-tertiary: #8b949e;
+                --accent: #0969da;
+                --accent-subtle: #0969da1a;
+                --border: #d0d7de;
+                --green: #1a7f37;
+                --green-subtle: rgba(26, 127, 55, 0.12);
+                --yellow: #9a6700;
+                --yellow-subtle: rgba(154, 103, 0, 0.12);
+                --red: #cf222e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video Cards */
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            scroll-margin-top: 1rem;
+        }
+
+        .video-header {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .video-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .video-title a:hover {
+            color: var(--accent);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .channel-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .channel-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-tertiary);
+        }
+
+        .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Channel Pill */
+        .channel-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .channel-pill .channel-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .channel-pill .channel-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .channel-pill .channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-left: 0.15rem;
+        }
+
+        /* Tags */
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .tag-person {
+            background: rgba(136, 87, 255, 0.15);
+            color: #a371f7;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .tag-person {
+                background: rgba(130, 80, 223, 0.12);
+                color: #6639ba;
+            }
+        }
+
+        .channel-badge {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .high-trust-badge {
+            background: var(--green-subtle);
+            color: var(--green);
+        }
+
+        .meta-sep {
+            color: var(--border);
+        }
+
+        /* TL;DR Section */
+        .tldr {
+            padding: 0.9rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            padding: 1rem 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-preview {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .summary-full {
+            display: none;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .summary-full.expanded {
+            display: block;
+        }
+
+        .summary-full h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .summary-full h3:first-child {
+            margin-top: 0;
+        }
+
+        .summary-full h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1rem 0 0.4rem;
+        }
+
+        .summary-full ul {
+            margin: 0.4rem 0;
+            padding-left: 1.3rem;
+        }
+
+        .summary-full li {
+            margin: 0.35rem 0;
+        }
+
+        /* Nested lists - indentation only, no color/size change */
+        .summary-full ul ul {
+            margin: 0.2rem 0;
+        }
+
+        .summary-full ul ul li {
+            margin: 0.25rem 0;
+        }
+
+        .summary-full strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-full p {
+            margin: 0.6rem 0;
+            line-height: 1.65;
+        }
+
+        .summary-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .summary-full em {
+            font-style: italic;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: opacity 0.15s ease;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .transcript-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .transcript-content.expanded {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        /* Index Page Styles */
+        .day-list {
+            list-style: none;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.15s ease;
+        }
+
+        .day-header-link {
+            display: block;
+            padding: 1.25rem 1.5rem 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .day-header-link:hover .day-date {
+            color: var(--accent);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            transition: color 0.15s ease;
+        }
+
+        .day-count {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .day-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.12s ease;
+        }
+
+        .day-preview-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .day-preview-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preview-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .preview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
+            border-radius: 14px;
+        }
+
+        .preview-channel-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .preview-channel-name {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+        }
+
+        .preview-channel-subs {
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+        }
+
+        .preview-details {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .preview-tags {
+            display: inline-flex;
+            gap: 0.3rem;
+        }
+
+        .tag-sm {
+            padding: 0.1rem 0.45rem;
+            font-size: 0.65rem;
+        }
+
+        .preview-tldr {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            line-height: 1.45;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .video-header, .tldr, .summary-section, .transcript-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .transcript-content {
+                max-height: 300px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Briefing</h1>
+            <p class="subtitle">June 06, 2026</p>
+            <div class="stats">
+                <span><span class="stat-value">1</span> videos</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">&larr; All Briefings</a>
+            </nav>
+        </header>
+
+        <main>
+            
+            <article class="video-card" id="video-0">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <a href="https://www.youtube.com/watch?v=yyXCQHX55N4" target="_blank" rel="noopener">Emergent: How Six Months of Tinkering Led To A $100M ARR Company</a>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Y Combinator</span><span class="channel-subs">(2.3M)</span></span>
+                        <span class="meta-sep">·</span><span>29:05</span>
+                        <span class="meta-sep">·</span><span>5.7K views</span>
+                        <span class="meta-sep">·</span>
+                        <span>2026-06-06</span>
+                    </div>
+                    <div class="video-tags"><span class="tag tag-person">Mukund Jha (Co-founder and CEO, Emergent)</span> <span class="tag tag-person">Jared Friedman (Managing Partner, Y Combinator)</span></div>
+                </div>
+                <div class="tldr">Emergent, an AI-native platform that enables non-programmers to build and ship functional software through natural language, scaled to $100M ARR and 8.5 million global users within nine months of launch by leveraging deep multi-agent orchestration and a global-first mindset from Bangalore, India.</div>
+                <div class="summary-section">
+                    <div class="summary-preview" id="preview-0">TL;DR   Emergent, an AI-native platform that enables non-programmers to build and ship functional software through natural language, scaled to $100M ARR and 8.5 million global users within nine months of launch by leveraging deep multi-agent orchestration and a global-first...</div>
+                    <div class="summary-full" id="full-0">
+                        <p><strong>TL;DR</strong></p>
+<p>Emergent, an AI-native platform that enables non-programmers to build and ship functional software through natural language, scaled to $100M ARR and 8.5 million global users within nine months of launch by leveraging deep multi-agent orchestration and a global-first mindset from Bangalore, India.</p>
+<h3>The Meteoric Rise of Emergent</h3>
+<ul>
+<li><strong>Rapid Scale:</strong> Within just nine months of launching its current product, Emergent reached over $100 million in annualized run rate (ARR).</li>
+<ul>
+<li><strong>User Adoption:</strong> The platform has over 8.5 million users across 190 countries, with more than 10 million apps built to date.</li>
+<li><strong>Geographic Breakdown:</strong> While 95% of the team is based in Bangalore, India, the primary revenue is generated from the US and Europe, with India accounting for roughly 10%.</li>
+</ul>
+<li><strong>Democratizing Software:</strong> Emergent allows non-technical users to build, deploy, host, maintain, and monetize real applications purely through natural language chat.</li>
+<ul>
+<li><strong>Target Audience:</strong> The tool specifically solves critical technical bottlenecks for solo entrepreneurs and small businesses without dedicated software engineering teams.</li>
+</ul>
+</ul>
+<h3>Technical Foundations and "Living at the Edge"</h3>
+<ul>
+<li><strong>Solving the Benchmark:</strong> Emergent originated from a four-person research lab. To focus the team's engineering efforts, they targeted the Swebench benchmark (the premier test for software engineering agents) and successfully ranked World #1.</li>
+<li><strong>Multi-Agent Architecture:</strong> Rather than building simple co-pilots, Emergent engineered a multi-agent orchestrated system.</li>
+<ul>
+<li><strong>Specialized Agents:</strong> Separate autonomous agents handle specific workflows, such as design and automated testing, coordinated through a large, self-learning memory system.</li>
+<li><strong>Data and RL:</strong> The system extracts learnable data from every new app built on the platform to constantly improve the agents via reinforcement learning (RL) and fine-tuning.</li>
+</ul>
+<li><strong>Custom Infrastructure:</strong> The team had to invent its own container systems, disk snapshotting, and memory snapshotting to preserve state across multiple parallel agents.</li>
+<li><strong>Aggressive Adaptation:</strong> Because underlying foundation models change rapidly, the team has completely rewritten Emergent’s core architecture three times in nine months. </li>
+<ul>
+<li><strong>Predictive Engineering:</strong> The team actively skips engineering temporary patches for current model limitations. For example, they chose not to build custom JSON parsers, correctly betting that the next wave of foundation models (like Claude 3 Opus) would solve that natively.</li>
+</ul>
+</ul>
+<h3>From Dunzo to Emergent: Lessons in Failure and Tinkering</h3>
+<ul>
+<li><strong>The Dunzo Legacy:</strong> Prior to Emergent, Mukund Jha co-founded Dunzo, a massive Indian hyperlocal delivery startup that raised $500M+, deployed 1 million riders, and peaked at 10 million monthly orders. </li>
+<ul>
+<li><strong>Operational Rigor:</strong> Jha ported Dunzo’s "watchtower" concept (monitoring physical deliveries 24/7) to Emergent to monitor, flag, and patch failing AI agent tasks in real time.</li>
+<li><strong>The Trap of Dilution:</strong> A key lesson from Dunzo was the importance of focus. Dunzo diluted its success by simultaneously chasing dark stores, direct shipping, and marketplaces, whereas Emergent maintains a tight, vertical focus on software automation.</li>
+</ul>
+<li><strong>The Power of Tinkering:</strong> After leaving Dunzo in late 2023, Jha spent six months in a state of unstructured "tinkering" with GPT-4 and early LLMs. Building tools purely for curiosity and joy yielded the deep, non-consensus insights needed to start Emergent.</li>
+<li><strong>Intuition Over Consensus:</strong> Jha advocates for solving highly personal problems. Dunzo started as a simple WhatsApp group to solve his own chores; Emergent started because Jha and his twin brother (and co-founder, Madhav) wanted a way to instantly bring their own endless product ideas to life.</li>
+</ul>
+<h3>Strategic Playbook for Global AI Startups</h3>
+<ul>
+<li><strong>The Second-Mover Advantage:</strong> When Emergent launched, there were already established AI website builders in the market. Emergent won by focusing on "finishing" rather than "starting."</li>
+<ul>
+<li><strong>Real Code vs. Demoware:</strong> While competitors built simple front-end prototypes, Emergent focused on the complex, ground-up automation of real backends, databases, and live deployments.</li>
+</ul>
+<li><strong>Growth as a Formula:</strong> The company turned user acquisition into a structured math equation, mapping out the precise conversion funnel from social media impressions and influencer partnerships to active platform users.</li>
+<li><strong>Thinking Global from Day One:</strong> Jha strongly urges founders, especially those in India, to target a global audience immediately. </li>
+<ul>
+<li><strong>Equal Effort:</strong> It takes the exact same amount of founder energy and struggle to build a highly localized company as it does to build a global powerhouse.</li>
+<li><strong>Technological Parity:</strong> Generative AI serves as an equalizer, giving engineers anywhere in the world instant access to the exact same cutting-edge tools.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"If you remove all the software companies from Nasdaq and the S&amp;P, you'll see it's been just a flat line [for 30 years]. And we started thinking: what if we can bring this power to almost everybody in the world?" — <strong>Mukund Jha</strong>
+</blockquote>
+<blockquote>
+"We took this very massive view that AI progress is going to be exponential and we will always build in the direction of AI, and that sort of led us to think from a problem perspective—let’s automate all of software engineering versus piece-by-piece." — <strong>Mukund Jha</strong>
+</blockquote>
+<blockquote>
+"It’s been a prevalent wisdom that actually starting a harder idea is easier, because you can inspire a lot more people to go after a harder problem." — <strong>Mukund Jha</strong>
+</blockquote>
+<blockquote>
+"With AI, a lot of things are changing and it's not a time to sort of attack the floor—it's the time to attack the ceiling and think really big." — <strong>Mukund Jha</strong>
+</blockquote>
+                    </div>
+                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="transcript-section">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
+                        View transcript
+                    </button>
+                    <div class="transcript-content" id="transcript-0">
+                        If you look at like the last 30 years, most of the economic gain in the world has come from software companies. If you remove all the software companies from Nasdaq and S&amp;P, you'll see it's been just a flat line. And we started thinking, &quot;Okay, what if we can bring this power to almost everybody in the world?&quot;
+
+Welcome. Super excited to be here. What a crowd! So Mukund, maybe not everybody knows what Emergent is and also what a big deal it is. For those who don't know, Emergent is one of the fastest-growing AI companies in the world, and really, I would say, one of the first truly AI-native companies in India to get to real scale. 
+
+Right. And so you're going to get to hear from—I really see you as like a pioneer of a next generation of startups coming out of India—and you're going to get to hear how he's done it. To start with, maybe you can just tell everybody what Emergent is. 
+
+Yeah, so, I mean, thanks for inviting me. I'm super excited to be here. I can't imagine so many people coming to this school, and the whole energy in India about the whole YC trip has been amazing. I was at IIT Delhi a couple of days back, and it was the same energy, so I am super excited to be here. 
+
+Emergent is a platform that allows anybody, without any programming knowledge, to be able to build software that you can actually ship, that your users can use, and that you can monetize. Essentially, we are riding on this whole wave of coding becoming easier with AI. 
+
+When we started our journey, we actually started off as a research lab building coding agents. We became world number one on Swebench, which is the benchmark for all coding agents. It was just a four-person team that actually got us there, and then we started thinking about, &quot;Hey, what would happen in the world if we can democratize coding for everybody?&quot;
+
+Me being a programmer, and Madhav, who is my co-founder and twin brother, both of us have been programming since age 12 and are super, super passionate about programming. One of the things that we realized is that if you look at the last 30 years, most of the economic gain in the world has come from software companies. If you remove all the software companies from Nasdaq and S&amp;P, you'll see it's been just a flat line.
+
+And we started thinking about, &quot;Okay, what if we can bring this power to almost everybody in the world?&quot; There are a billion people with so many ideas, and so many ideas just die because you do not have access to sort of bring them to life. And that was the mission that we started with. 
+
+Today, we have more than 8.5 million people who are using the platform, and more than 10 million apps have been built. We recently crossed 100 million dollars in annualized run rate. Today, we are one of the fastest-growing startups in the world. 
+
+The reason is that we are able to allow people to actually really ship an idea that they dream of. It's as easy as just chatting with your agent, and we take care of everything from hosting, deployment, and maintenance of the product, truly unlocking the power of bringing an idea to life with just chatting with your agent. 
+
+How long since you launched the current version of the product? Yeah, we launched about nine months back. Nine months? Okay, so keep in mind this is basically a nine-month-old company. Tell us about the scale that you're operating at just nine months in. 
+
+Yeah, so we have close to about 8.5 million users on the platform, and we are well over 100 million in annualized revenue run rate. And again, I think the latent demand in the market is really, really high. People—there are a lot of people who want to build software and so far have not been able to have access to these tools. 
+
+A platform like ours truly enables them to ship an idea that they have in mind. A lot of our users are actually entrepreneurs who do not have a tech team and have been sort of handicapped by access to technology, and now they are able to build. 
+
+Who are your users, and also, where are your users? Yeah, so we have users all across the globe in 190 countries. When I started—when I actually, just to give you a little bit of background, when I came to India in 2014, before that, I was at Google in the US. 
+
+I've always had this thought: &quot;Hey, why is there no Google from India? Why is there no Facebook from India?&quot; We have so much talent, so much engineering talent. In fact, you look at the top leadership of all of these companies, like Microsoft and Google, and there are sort of Indian folks who have gone there. I've always wondered, why is there no technology-first global company from India?
+
+So, after Dunzo, when I was thinking about what to do next, one of the things that I had in the back of my mind was that I truly want to build a global company from India, just like Facebook and Google. Today, we have people using us in over 190 countries. Most of the revenue comes from the US and Europe; India accounts for about 10% of our revenue, but yeah, the audience is fully global. 
+
+And I'm not sure that people know, but before you started Emergent, you started another company that I'm sure they all know called Dunzo, which was like a really big deal. You raised what, like half a billion dollars, and it was a huge company? 
+
+Yeah, I'm sure in Bangalore, a lot of people would know us. We were pretty popular in Bangalore. At our peak, we were one of the most loved consumer brands in the country. Even today, when people ship something, they say, &quot;Hey, Dunzo it,&quot; and it almost became a verb in the country. 
+
+At our peak, we were doing about 10 million monthly orders. We were one of the first people to start the trend of quick commerce in the country, the 10-minute delivery trend. It was a pretty different journey. I was solving problems which were very operational in nature, like last-mile logistics, and how you sort of set up the dark store network. 
+
+The lesson that I would say was applicable there, and is applicable here as well, is that we picked up to solve the hard problems. When we started Dunzo, there were about 87 companies which were doing exactly the same thing. It was very simple: you could just WhatsApp us and we would help you. We were kind of like a concierge on WhatsApp, so it was super easy to get started. 
+
+But I think the hard part was the last mile. How do you sort of really make sure the end consumer actually gets the product, and the product is delivered in the right state? We chose to sort of do that. We were actually doing deliveries ourselves early on. I had a bike and a car, and in the night if I got an order, I would jump on a bike myself and go and deliver. 
+
+I think in the early days, just doing things yourself—and this is one of the YC mantras, doing things that don't scale—really, really helps you get close to the customer. It helps you understand the real pain point, and whether there is value or not. I think just being a customer yourself, or doing things for the customer, really, really helps. 
+
+Can we actually go back in time a bit and talk a little bit about your personal background? I learned just a couple of days ago that Emergent is actually not just your second company, but your fifth startup. This guy's actually started five startups! Tell us, maybe tell us a bit about your early career, where you grew up and went to school, coming to the US, and just sort of getting started. 
+
+Yeah, so I actually grew up in a very, I would say, middle-class or upper-middle-class family. My dad is an engineer, and obviously, I got into engineering college and did my engineering. I always had this idea that I wanted to do something of my own. Very early on, I saw a lot of videos of Steve Jobs and was really, really inspired. 
+
+I saw him launching the first iPhone in 2007, and that was the moment I thought, &quot;Oh, I want to bring something to the world in a similar fashion.&quot; In fact, I went to Spain for an internship in 2008 and bought an iPhone. It didn't work in India, but I just bought it because I liked it so much, and brought it as a souvenir for myself to try to hack it and make it work. 
+
+Then, in 2009, is when I went to the US to do my PhD. I did an internship at Google and liked it so much. Whatever research I was going to do, Google had actually done that research already two years back, so I thought there was no point. I dropped out of the PhD program and joined Google. 
+
+I was in the search ranking team. There was a 50-person team that controlled all of Google's search ranking. I was the youngest person in that team, so I got a lot of liberty to sort of question a lot of things because I was a young person who could just challenge the system. 
+
+At that time, Google was very anti-machine learning. They didn't want to have machine learning in search, and I was a machine learning engineer. So, I got a lot of leeway in terms of asking a lot of questions, saying, &quot;Hey, why are we not using machine learning here?&quot; Eventually, I got to push some of the biggest changes in search ranking when I was there for a couple of years. 
+
+Then, I got bitten by the startup bug. I left Google and started a company which was trying to build a group education platform where you can actually bring a group class together. We raised a bunch of money, but eventually, we pivoted into a B2B software company. I realized that my passion was not that—I really wanted to solve education and build something consumer-first. 
+
+So, we returned the money, shut down that startup, and started another company in sort of habit creation: how do you sort of help people form better habits? At the same time, I got married. My wife didn't want to move to the US, so I moved back to India. I thought I could do a startup from anywhere. 
+
+I had an engineering team in New York and I was working from India, but I realized the hard way it's really hard to coordinate without being there at that time, so I gave that up. One of the things that sort of has stuck with me since the beginning, and which over time I've sort of realized to do more of, is just to trust my intuition more. 
+
+So, even with Dunzo, I started with this personal problem. When I moved to Bangalore, there were too many things to be done. I had a car to be serviced, I had electricity to be set up, gas, all of those things. I thought there must be an easier way to do this, and I just started a WhatsApp group and gave that number to a lot of my friends. 
+
+I told them, &quot;Hey, if you need anything, just ping me on this group and we'll help you get that done.&quot; It started with a personal pain point that we wanted to sort of make life more convenient in urban cities. I think that has sort of stuck with me throughout, that whenever I've been able to solve a personal pain point, the feedback loop is much stronger. 
+
+You relate to the problem more deeply, and you relate to the customer more deeply. Even with Emergent, the same thing happened. Me and Maddie, both of us are like idea guys. We have thousands of ideas all the time, and we wanted to sort of automate and get more of these ideas out into life. That's why we started automating programming and got started on the journey. 
+
+Dunzo was a huge deal. I mean, you scaled a massive company. Maybe you can remember some of the stats about how big it got. How many? Yeah, so, Dunzo—we had almost a million riders on the ground, and we were doing 10 million monthly orders from almost 5,000 stores overall. So, it was a pretty large scale, yeah. 
+
+Do you have lessons that you took away from that experience, either things you think you did right in order to scale something so large, or maybe even things that you would do differently a second time? Yeah, I mean, I think Dunzo—even though it was a bittersweet ending for us—the takeaway for me was like two or three things. 
+
+One was solving the hard problem. As I said, there were 87 companies doing the same thing, and we really, really cared about the consumer a lot. I remember back then there was no AI, so all the chatting had to be manual. Every evening, there would be a spike in traffic, and every single engineer would drop what they were working on, get back on the chat screen, and talk to our customers. 
+
+Very early on, we had this culture where we really deeply cared about the customer. There was a customer who wanted to ship something to a different city, and we actually put a driver—one of the riders—on a plane to send that packet. We would go that extra mile for every single customer, and that's how we created this genuine love from all the customers. 
+
+Second, I think one of the things that I learned from us not being able to sort of scale eventually was that focus is really important. I think for us, the dark store was really working, and working really well, but at that point, we were doing ten other things. We were doing a marketplace model, we were doing pickup and drop, we were doing a bunch of those things. 
+
+So, I think us knowing that, &quot;Hey, this is working, let's double down on this model,&quot; would have really, really helped. But eventually, I just see this as a series of steps, me being a builder, as a stepping stone to do something bigger, yeah. 
+
+Okay, so you worked on Dunzo for a bunch of years, and you scaled it to this really huge company. It must have been a very intense experience running an atoms-based business where all kinds of things go wrong every day, I'm sure. Very, very hard. 
+
+Yeah, I mean, we had a team called Watch Tower which would watch over every single order, and it was almost like a war room. You're in a war room continuously because operational things break pretty often. A lot of that is sort of what I've borrowed here. 
+
+The way we run Emergent as well is we monitor all the tasks that are getting built, all the software that is getting built, and if some things are breaking, we flag that. So, a lot of the operational rigor I've been able to borrow from Dunzo to Emergent as well, yes. 
+
+So in 2023, you've been doing this for a number of years, and you left Dunzo. Tell us the story of leaving Dunzo and then what Emergent came out of. Yeah, I think in 2023, at one point we thought Dunzo was too big to fail. We had raised 200 million dollars in a recent round, and I actually told my co-founder, &quot;Hey, I think now we are too big to fail.&quot; Of course, it didn't end that way. 
+
+So when I got out in September '23, I was actually pretty depressed. I didn't want to do anything in my life, and for the first six months, I was just reflecting on, &quot;Hey, what could we have done better?&quot; Luckily, AI was happening at that time. ChatGPT was just taking off, and GPT-4 had just come out. 
+
+I think it was a little bit easy for us to sort of build things, and sort of building and coding became my escape from all the noise that was there. I would actually spend like 10 or 12 hours just sitting on my computer, tinkering with all of the things that were coming out. 
+
+The new voice models were coming out, and there were new open-source models coming out at that point. So, I actually got this luxury of six months of just pure tinkering on things that I really liked, with no sort of objective in mind. I built an assistant on my Mac where it could actually talk to me, which was a very early version of something similar to OpenAI, and I was just following whatever was exciting to me at that point. 
+
+It became very clear to me very early on that coding as a space is going to be one that's going to get disrupted very quickly. I spent a bunch of time in the US with my friends and with people at the labs, but I think it was just pure joy of tinkering, pure joy of just building something without any pressure that sort of led us to think of this idea and led us to build Emergent in some way. 
+
+All the insights that we got while tinkering, we were able to apply while we were building the product, and that really helped. I think just having this sense of curiosity and sense of building things just for the pure joy of it—because you want to solve a problem—allows you to go really, really deep into the problem and bring insights that are otherwise very hard to get. 
+
+I kind of love this picture of you. You just had this super intense experience, you built one of the top companies in India, you're burnt out, you're basically just recuperating. And in your spare time, because you have some time, then you're just tinkering with the latest model, just seeing, &quot;Oh, maybe we could get like ChatGPT to write some code,&quot; I don't know. 
+
+Yeah, I mean, it was practically like just going back to the old times when I was a kid. I would just pick something new and play with it, and it just felt like the same thing. I was just playing with this new technology, and the pace at which models were sort of accelerating was really, really fascinating for us to see. 
+
+That allowed us to build a lot of deep insight into how LLMs are going to progress. For example, when we started Emergent, most of the companies were building co-pilots. That was the fashion; that was what every VC wanted to hear. We, in fact, went and pitched to like 10 or 12 VCs and got rejected by most of them. 
+
+This is a Dunzo founder who's just had a big company, coming out and getting rejected by most VCs because we told them, &quot;Hey, we're going to automate software engineering,&quot; and they thought it was crazy. They thought the AI is not there yet, but we could see the models are capable if you just project it out a little bit. 
+
+The steps that they are failing at could be easily trained back, so we took this very massive view that AI progress is going to be exponential, and we will always build in the direction of AI. That sort of led us to think from a problem perspective: &quot;Hey, let's automate all of software engineering versus piece-by-piece thinking.&quot; I think having that down time and just that tinkering energy really, really helped us find the way, yeah. 
+
+I just want to pull on a thread from this because I think this is really good general advice for everyone in the room. What Mukund was doing, we have a name for this at Y Combinator: we call it &quot;living at the edge.&quot; It's like the models weren't good at writing code yet, and when you pitched to VCs, they were like, &quot;The models aren't going to be able to do this.&quot; 
+
+They weren't quite able to do it yet, but you could tell that if you project it out a little bit, you could see the sparks. Right, and this is where a lot of the best startup ideas come from—it's the things that aren't quite possible yet. That's maybe a good segue to talk about some of the tactical details of Emergent. If you just go to Emergent, maybe you don't realize the sort of deep tactical foundations that it's built on. Can you talk about that? 
+
+Yeah, so I mean, we actually, when we started our journey, most people were building co-pilots. We thought we'll build autonomous agents. &quot;Agents&quot; was not even a word then, now it's obviously everywhere, but we built this multi-agent orchestrated system where you have different agents which will come in at different points of time and perform different actions. 
+
+For example, we have an automated testing agent which will test your app, and we have a design agent that'll design your app. All of this is coordinated through a large memory system that we have built, which sort of self-learns every time a new app gets built on Emergent. 
+
+Our agents actually extract from that what are the learnable aspects and sort of store it in memory, so every new app getting built on Emergent makes the platform even better. A lot of the energy has gone into us collecting a lot of the data that we have now. We do a lot of RL on top of that, we do some amount of fine-tuning, but a lot of the things that we have built essentially is all of the infrastructure that we have built ourselves. 
+
+We have built all of the coding agents, and we have built all of the infrastructure. For example, when we started, there was nobody building deep container technology, so we had to invent a lot of the container technology ourselves. We wanted to preserve state so that you could have multiple parallel agents running on the same snapshot, so we had to invent disk snapshotting, memory snapshotting, and all of those things. 
+
+I think one of the things that, as you said, living on the edge, you actually discover these problems much earlier on before other ecosystems discover them. Oftentimes you'll have to go solve them yourself. For example, today we have multiple different sort of parallel agents that can sort of swarm together and complete a task, which we think is going to be the future. 
+
+What we are observing is that every time a new model comes out—for example, a new class of model, like Opus—you have to actually delete whatever you have learned so far and sort of reimagine the world from the lens of this new model. So far, in nine months, we have already rewritten our system three times. 
+
+Just when a new model comes out, we have to sort of start rethinking: &quot;Okay, what are the new possibilities that are going to open up, and where is this model going to be in six months?&quot; One of the things I was telling you before is that when we started Emergent, one of the biggest challenges was actually that models could not do a good JSON output. 
+
+There were at least 20 or 30 YC companies that were solving exactly that same problem: JSON parsing. We took this view that the next model will be able to solve this, so let's skip it. We completely skipped that problem, started building the agent, and went on the journey. I think living on the edge and trying to imagine what is possible in the next six months is really important as you sort of progress through your startup journey. 
+
+Can you talk about beating the benchmark? Because that's a core, core part of the founding story here. Yeah, so one of the things that happened when we went to YC was that—and this happens with a lot of YC founders—you come in with a different idea and you sort of stumble upon a different idea. 
+
+When we actually went to YC, we were building testing agents initially. When we were coming from India, we drew this on a whiteboard, that very soon you'll be able to build web apps and mobile apps through AI. We had this diagram, and day one we went to our YC partner and told them we want to build a consumer app-building company. 
+
+They said, &quot;Okay, maybe you should think about enterprise. This seems too ambitious.&quot; For the first three months—it's a three-month program—every week we would have a new idea on the board. The idea of the week is, let's say, an AI Zapier, and we'll spend a week building that or tinkering with that. 
+
+Eventually, every week we had a new idea. We were pivoting like crazy, and the team was getting frustrated. &quot;Hey, you have a new idea every week. What are we going to do?&quot; So, almost just to distract them, I actually picked this benchmark, Swebench, which was the hardest benchmark at that time. 
+
+I told them, &quot;Hey, while I figure out what we are going to build, let's just attack this benchmark because it allows us to solve harder problems.&quot; I almost sent them in that direction. It took us three months to crack that benchmark, and we became world number one on it, but that really set the foundation for Emergent. 
+
+We were able to build the world's best coding agent. All of the innovation that we have in Emergent right now, whether it's parallelized test-time compute, all of the memory, or agent-to-agent communication, a lot of those things we were able to discover when we were on this benchmark. I think even today, attaching yourself to a number which can sort of show you progress is a really good way to attack a goal or go towards building a company, because that focuses you in the right direction and gives you really good feedback. 
+
+Yeah, super, super impressive what you guys did, beating that benchmark before you even really had a startup idea for what to do around it. A recurring theme of the talks today has been this concept of second-mover advantage. You know, like Zepto wasn't the first grocery delivery company, and Giga wasn't the first AI customer support thing. 
+
+Emergent was also not the first AI website builder to launch. When you launched Emergent, there were already a couple of pretty big players, and probably a whole bunch of small ones, much like, I guess, your story of starting Dunzo when there were already 87 similar companies. What gave you the confidence to launch this anyway, even though you weren't the first to the market, and how have you been able to carve out such a big space for yourself? 
+
+Yeah, I mean, for us, when we looked at the problem space, we realized that most of the other platforms out there were mostly focused on the front-end and building &quot;demoware,&quot; and that's where a lot of these were finding product-market fit. But what we realized was that users are actually going to want real software to be shipped, and the problem is far from solved. 
+
+We saw that the expectation that users have—and I'm sure the same thing is with Giga as well, where the expectation that the user has is that their queries get solved—the same expectation our users have is that their software should actually work when they are prompting something. 
+
+Most of the solutions out there, even though they were good at getting started, were really bad at finishing. You will not get working software out of that, you will not have a real back-end, and you will not have real databases attached. So, we came to this from a very different angle, saying that if you were to automate all of software engineering, how would you approach the problem? 
+
+We almost built everything ground up, and we could see in practice, when we ran prompts on all the platforms, we were massively outperforming everybody else in the market. That allowed us to sort of really attack the market in a big way. But again, we came to this from a very sort of consumer insight, that consumers are actually going to want real software that is working, and not just prototypes and demos. 
+
+Nobody in the market was solving that, and there were no good solutions that actually could take you to the finish line, so that's why we attacked that. Once we had the product, we had to think through GTM, how do we market it. We looked at which companies are growing really fast and what they have done, and almost converted our growth into a math problem. 
+
+We asked, how many social views do we need, how many impressions do we need, how many clicks will we get, and how many users will we get? At that point, we knew that influencers were a good strategy for us to really launch, because we knew the product was really good and working really well. We just needed to get it in front of as many users as possible, and that has sort of been the growth engine for us. 
+
+Where is the Emergent team based, and how do you think about building an AI-native company that targets a global audience here? Yeah, so most of the team is actually in Bangalore. We have 95% of our team in Bangalore, pretty much built out of India completely. We have a very small team in SF; we have recently opened a new office in SF, so a small team is there. 
+
+And by the way, we are hiring, so if people want to apply and work at a strong AI-native company, please write to me: mukund@emergent.sh. Happy to take a look at that. I think one of the things that I've realized is that we generally hire for learning slope—people who are really, really passionate about solving a problem, people who get excited about solving some of these problems. 
+
+What we have seen is that I think one of the things that separates us right now from other companies is that everybody in the company generally enjoys solving and working with AI. I think there is this added—of course, the growth is great and we get to solve real user problems—but I think just the complexities of the problem and the possibilities are so much that we generally enjoy day-to-day problem solving with AI right now, so that's amazing. 
+
+You've had a chance to build two very different companies. You built Dunzo in the sort of first wave of great Indian startups that were building things like Zepto, a lot of local stuff, and now you're building Emergent, which is part of this second wave of AI-native companies post-ChatGPT. 
+
+I'm curious: first, what are some of your takeaways from building those two kinds of companies? And second, what would your advice be to folks in the audience who are thinking about where to look for startup ideas, and what kind of things to build? 
+
+Yeah, I mean, my realization after building the two companies is that building a company for India, a local company, versus building a global company is actually exactly the same effort. It's equally hard to build a company in India versus building a global company. 
+
+So, my advice to a lot of people right now is just to think global from day one, because it's going to be equally hard to build both startups. It's kind of like prevalent wisdom that actually starting a harder idea is easier, because you can inspire a lot more people to go after a harder problem, and you can sort of inspire yourself to go after these. 
+
+So, I would recommend that you think global from day one. Now you have the reach, the access, and the internet is with everyone. Technology is a big leveler for everyone; everybody has the same access to the same technology, and you can actually just reach global customers from day zero from India today. 
+
+The other thing I would say is that, one, I think just following your intuition is really, really—I mean, you'll get a lot of advice, but I think following your intuition as a founder is actually much better because you probably have a better sense of generally what your customer wants and what your customer needs. 
+
+Also, I think just thinking big and ambitious is key. I think whatever you are thinking right now, just 10x that, 100x that. With AI, I think a lot of things are changing, and it's not a time to sort of attack the floor—it's the time to attack the ceiling and think really big. The bigger you think, the higher the probability that you'll get to success. 
+
+That's an amazing piece of advice for us to end on, Mukund. You're an inspiration to us. Thank you so much. Thank you. Thank you so much for having me here. The energy is electric here, and I'm looking forward to a lot more of Gigas and Emergents coming out of India over the next year or so, and looking forward to meeting people here. Cheers.
+                    </div>
+                </div>
+                
+            </article>
+            
+        </main>
+
+        <footer>
+            Generated by Follower Tool
+        </footer>
+    </div>
+    <script>
+        function toggleSummary(id) {
+            const preview = document.getElementById('preview-' + id);
+            const full = document.getElementById('full-' + id);
+            const btn = document.getElementById('sum-btn-' + id);
+
+            if (full.classList.contains('expanded')) {
+                full.classList.remove('expanded');
+                preview.style.display = 'block';
+                btn.classList.remove('expanded');
+                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            } else {
+                full.classList.add('expanded');
+                preview.style.display = 'none';
+                btn.classList.add('expanded');
+                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+
+        function toggleTranscript(id) {
+            const content = document.getElementById('transcript-' + id);
+            const btn = document.getElementById('trans-btn-' + id);
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = 'View transcript';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = 'Hide transcript';
+            }
+        }
+        </script>
+</body>
+</html>
