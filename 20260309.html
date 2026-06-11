@@ -3,633 +3,880 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Briefing - March 09, 2026</title>
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Monday, March 9, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
-            --bg: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --text: #e6edf3;
-            --text-secondary: #8b949e;
-            --text-tertiary: #6e7681;
-            --accent: #58a6ff;
-            --accent-subtle: #388bfd26;
-            --border: #30363d;
-            --green: #3fb950;
-            --green-subtle: rgba(63, 185, 80, 0.15);
-            --yellow: #d29922;
-            --yellow-subtle: rgba(210, 153, 34, 0.15);
-            --red: #f85149;
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         @media (prefers-color-scheme: light) {
-            :root {
-                --bg: #ffffff;
-                --bg-secondary: #f6f8fa;
-                --bg-tertiary: #eaeef2;
-                --text: #1f2328;
-                --text-secondary: #656d76;
-                --text-tertiary: #8b949e;
-                --accent: #0969da;
-                --accent-subtle: #0969da1a;
-                --border: #d0d7de;
-                --green: #1a7f37;
-                --green-subtle: rgba(26, 127, 55, 0.12);
-                --yellow: #9a6700;
-                --yellow-subtle: rgba(154, 103, 0, 0.12);
-                --red: #cf222e;
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
             }
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
-            padding: 0;
+            line-height: 1.65;
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
+        a { color: inherit; }
 
-        header {
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
         }
 
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.02em;
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
         }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
 
         .stats {
             display: flex;
-            gap: 1.5rem;
-            margin-top: 0.75rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
         }
 
-        .stat-value {
-            color: var(--text);
-            font-weight: 600;
-        }
+        .stat-value { color: var(--text); font-weight: 600; }
 
-        .nav-links {
+        /* ------- search results meta ------- */
+        .search-meta {
             display: flex;
+            align-items: baseline;
+            justify-content: space-between;
             gap: 1rem;
-            margin-top: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
         }
 
-        .nav-links a {
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
             color: var(--accent);
-            text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
         }
 
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
+        .search-clear:hover { text-decoration: underline; }
 
-        /* Video Cards */
-        .video-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            margin-bottom: 1.25rem;
-            overflow: hidden;
-            scroll-margin-top: 1rem;
-        }
-
-        .video-header {
-            padding: 1.25rem 1.5rem 1rem;
-        }
-
-        .video-title {
-            font-size: 1.05rem;
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
             font-weight: 600;
-            margin-bottom: 0.6rem;
-            line-height: 1.4;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
-        .video-title a {
-            color: var(--text);
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
             text-decoration: none;
             transition: color 0.15s ease;
         }
 
-        .video-title a:hover {
-            color: var(--accent);
-        }
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
 
-        .video-meta {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.8rem;
-            color: var(--text-tertiary);
-        }
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
 
-        .channel-info {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-        }
-
-        .channel-icon {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-            background: var(--bg-tertiary);
-        }
-
-        .channel-name {
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .channel-subs {
-            color: var(--text-tertiary);
-            font-size: 0.75rem;
-        }
-
-        /* Channel Pill */
-        .channel-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: var(--bg-tertiary);
-            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .channel-pill .channel-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        .channel-pill .channel-name {
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .channel-pill .channel-subs {
-            color: var(--text-tertiary);
-            font-size: 0.7rem;
-            margin-left: 0.15rem;
-        }
-
-        /* Tags */
-        .video-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-top: 0.6rem;
-        }
-
-        .tag {
-            display: inline-block;
-            background: var(--accent-subtle);
-            color: var(--accent);
-            padding: 0.2rem 0.6rem;
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            font-size: 0.72rem;
-            font-weight: 500;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
         }
 
-        .tag-person {
-            background: rgba(136, 87, 255, 0.15);
-            color: #a371f7;
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
         }
 
-        @media (prefers-color-scheme: light) {
-            .tag-person {
-                background: rgba(130, 80, 223, 0.12);
-                color: #6639ba;
-            }
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
         }
 
-        .channel-badge {
-            background: var(--accent-subtle);
-            color: var(--accent);
-            padding: 0.2rem 0.55rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
         }
 
-        .high-trust-badge {
-            background: var(--green-subtle);
-            color: var(--green);
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
         }
 
-        .meta-sep {
-            color: var(--border);
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
         }
 
-        /* TL;DR Section */
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
         .tldr {
-            padding: 0.9rem 1.5rem;
-            background: var(--bg-tertiary);
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
             border-top: 1px solid var(--border);
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: var(--text);
             line-height: 1.55;
         }
 
-        /* Summary Section */
-        .summary-section {
-            padding: 1rem 1.5rem 1.25rem;
+        .tldr > span:last-child { max-width: 70ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
             border-top: 1px solid var(--border);
         }
 
-        .summary-preview {
-            font-size: 0.92rem;
-            line-height: 1.7;
-            color: var(--text);
-        }
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 70ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 70ch; }
+        .sum-full.expanded { display: block; }
 
-        .summary-full {
-            display: none;
-            font-size: 0.92rem;
-            line-height: 1.7;
-        }
-
-        .summary-full.expanded {
-            display: block;
-        }
-
-        .summary-full h3 {
-            font-size: 0.95rem;
+        .sum-full h3 {
+            font-size: 1.05rem;
             font-weight: 600;
-            color: var(--text);
-            margin: 1.25rem 0 0.6rem;
+            margin: 1.3rem 0 0.6rem;
         }
 
-        .summary-full h3:first-child {
-            margin-top: 0;
-        }
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
 
-        .summary-full h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1rem 0 0.4rem;
-        }
-
-        .summary-full ul {
-            margin: 0.4rem 0;
-            padding-left: 1.3rem;
-        }
-
-        .summary-full li {
-            margin: 0.35rem 0;
-        }
-
-        /* Nested lists - indentation only, no color/size change */
-        .summary-full ul ul {
-            margin: 0.2rem 0;
-        }
-
-        .summary-full ul ul li {
-            margin: 0.25rem 0;
-        }
-
-        .summary-full strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .summary-full p {
-            margin: 0.6rem 0;
-            line-height: 1.65;
-        }
-
-        .summary-full blockquote {
+        .sum-full blockquote {
             margin: 1rem 0;
             padding: 0.75rem 1rem;
-            background: var(--bg-tertiary);
+            background: var(--bg-2);
             border-left: 3px solid var(--accent);
-            border-radius: 0 6px 6px 0;
+            border-radius: 0 8px 8px 0;
             font-style: italic;
-            color: var(--text-secondary);
+            color: var(--text-2);
         }
 
-        .summary-full em {
-            font-style: italic;
-        }
-
-        /* Toggle Buttons */
-        .toggle-btn {
+        .linklike {
             background: none;
             border: none;
             color: var(--accent);
             padding: 0;
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             margin-top: 0.6rem;
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            transition: opacity 0.15s ease;
         }
 
-        .toggle-btn:hover {
-            opacity: 0.8;
-        }
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
 
-        .toggle-btn svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.2s ease;
-        }
-
-        .toggle-btn.expanded svg {
-            transform: rotate(180deg);
-        }
-
-        /* Transcript Section */
-        .transcript-section {
-            padding: 0 1.5rem 1.25rem;
-        }
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
 
         .transcript-toggle {
-            background: var(--bg-tertiary);
+            background: var(--bg-2);
             border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 0.5rem 0.9rem;
-            border-radius: 6px;
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
             font-size: 0.8rem;
             font-weight: 500;
+            font-family: inherit;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: border-color 0.15s ease, color 0.15s ease;
         }
 
-        .transcript-toggle:hover {
-            background: var(--border);
-            color: var(--text);
-        }
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
 
         .transcript-content {
             display: none;
             margin-top: 0.75rem;
             padding: 1rem;
             background: var(--bg);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 0.85rem;
             line-height: 1.75;
             white-space: pre-wrap;
-            max-height: 400px;
+            overflow-wrap: anywhere;
+            max-height: 420px;
             overflow-y: auto;
             border: 1px solid var(--border);
-            color: var(--text-secondary);
+            color: var(--text-2);
         }
 
-        .transcript-content.expanded {
-            display: block;
-            animation: fadeIn 0.2s ease;
-        }
+        .transcript-content.expanded { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Empty State */
-        .empty-state {
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
             text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-secondary);
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
         }
 
-        .empty-state h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.4rem;
-            color: var(--text);
-        }
-
-        /* Index Page Styles */
-        .day-list {
-            list-style: none;
-        }
-
-        .day-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            transition: border-color 0.15s ease;
-        }
-
-        .day-header-link {
-            display: block;
-            padding: 1.25rem 1.5rem 0.75rem;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .day-header-link:hover .day-date {
-            color: var(--accent);
-        }
-
-        .day-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .day-date {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--text);
-            transition: color 0.15s ease;
-        }
-
-        .day-count {
-            color: var(--text-tertiary);
-            font-size: 0.85rem;
-        }
-
-        .day-previews {
-            display: flex;
-            flex-direction: column;
-            padding: 0 1.5rem 1rem;
-        }
-
-        .day-preview-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid var(--border);
-            text-decoration: none;
-            color: inherit;
-            border-radius: 4px;
-            transition: background 0.12s ease;
-        }
-
-        .day-preview-item:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .day-preview-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .preview-title {
-            font-size: 0.88rem;
-            font-weight: 500;
-            color: var(--text);
-            line-height: 1.35;
-        }
-
-        .preview-meta {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-        }
-
-        .preview-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: var(--bg-tertiary);
-            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
-            border-radius: 14px;
-        }
-
-        .preview-channel-icon {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .preview-channel-name {
-            font-weight: 500;
-            color: var(--text-secondary);
-            font-size: 0.72rem;
-        }
-
-        .preview-channel-subs {
-            color: var(--text-tertiary);
-            font-size: 0.68rem;
-        }
-
-        .preview-details {
-            font-size: 0.72rem;
-            color: var(--text-tertiary);
-        }
-
-        .preview-tags {
-            display: inline-flex;
-            gap: 0.3rem;
-        }
-
-        .tag-sm {
-            padding: 0.1rem 0.45rem;
-            font-size: 0.65rem;
-        }
-
-        .preview-tldr {
-            font-size: 0.78rem;
-            color: var(--text-tertiary);
-            line-height: 1.45;
-        }
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
 
         footer {
             margin-top: 3rem;
-            padding-top: 1.5rem;
+            padding-top: 1.4rem;
             border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-tertiary);
-            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            .container {
-                padding: 1.25rem 1rem;
-            }
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
 
-            .video-header, .tldr, .summary-section, .transcript-section {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-
-            .video-title {
-                font-size: 1rem;
-            }
-
-            .transcript-content {
-                max-height: 300px;
-            }
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
         }
-        </style>
+</style>
 </head>
 <body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
     <div class="container">
-        <header>
-            <h1>Daily Briefing</h1>
-            <p class="subtitle">March 09, 2026</p>
-            <div class="stats">
-                <span><span class="stat-value">5</span> videos</span>
-            </div>
-            <nav class="nav-links">
-                <a href="index.html">&larr; All Briefings</a>
-            </nav>
-        </header>
 
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260308.html">&larr; Mar 8</a><a href="20260310.html">Mar 10 &rarr;</a></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Monday, March 9, 2026</h1>
+            <p class="day-sub">5 videos &middot; 5 channels</p>
+        </header>
+        <nav class="toc"><div class="toc-label">In this briefing</div><ol><li><a href="#video-0">$1B DEFENSE PUSH: <strong>GE Aerospace</strong> makes major investment in US manufacturing</a></li><li><a href="#video-1">Anthropic and Alignment | <strong>Stratechery</strong> by <strong>Ben Thompson</strong></a></li><li><a href="#video-2">BREAKING NEWS: <strong>JD Vance</strong> Delivers Remarks To The International Association Of Firefighters In D.C.</a></li><li><a href="#video-3">ETF Edge on crypto's rebound, the new ETFs to watch and what's different this time</a></li><li><a href="#video-4">The Future Of Brain-Computer Interfaces</a></li></ol></nav>
         <main>
-            
+
             <article class="video-card" id="video-0">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=Uj4aGC8ZjeI" target="_blank" rel="noopener">Anthropic and Alignment | Stratechery by Ben Thompson</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/G3KKbnKufJOIVSn2K-p-4DrmYkR50LHZileEND4IhJ38sLdznQIYOUShN7qqvG1G5vPvB63Mml8=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Stratechery</span><span class="channel-subs">(13.1K)</span></span>
-                        <span class="meta-sep">·</span><span>20:13</span>
-                        <span class="meta-sep">·</span><span>682 views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-03-09</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Ben Thompson (Author and Host, Stratechery)</span></div>
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=2L-15JYxS8c" target="_blank" rel="noopener">$1B DEFENSE PUSH: GE Aerospace makes major investment in US manufacturing<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/QpEnztyD6_IW7_LM3t3j7j8l3XKdZFN9HmbF-_sa8y2-ORUz2IgajHoZ8SMREv4ZHO2LeGM2gg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Fox Business Clips</b><span class="subs">(76.6K)</span></span><span class="dot">&middot;</span><span>13:08</span><span class="dot">&middot;</span><span>12.3K views</span><span class="dot">&middot;</span><span>2026-03-09</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Larry%20Culp%22">Larry Culp<span class="chip-desc">CEO and Chairman, GE Aerospace</span></a> <a class="chip" href="index.html?q=%22Maria%20Bartiromo%22">Maria Bartiromo<span class="chip-desc">Host, Fox Business</span></a></div>
                 </div>
-                <div class="tldr">Anthropic’s refusal to allow the U.S.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-0">TL;DR Anthropic’s refusal to allow the U.S. military to use its models for surveillance or autonomous weapons creates a fundamental conflict of sovereignty; if AI is as transformative as nuclear weapons, the U.S. government cannot tolerate a private corporation acting as an...</div>
-                    <div class="summary-full" id="full-0">
-                        <p><strong>TL;DR</strong></p>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;We power the better part of three quarters of all commercial departures around the world on a daily basis.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">GE Aerospace is launching a $1 billion investment in 2026 across 30 U.S. communities to accelerate engine production and clear a $200 billion backlog, a move that includes $275 million for defense upgrades and the creation of 5,000 new American jobs.    Domestic...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR:</strong> GE Aerospace is launching a $1 billion investment in 2026 across 30 U.S. communities to accelerate engine production and clear a $200 billion backlog, a move that includes $275 million for defense upgrades and the creation of 5,000 new American jobs.</p>
+<h3>Strategic Capital Investment &amp; Job Creation</h3>
+<ul>
+<li><strong>Domestic Expansion:</strong> GE Aerospace will invest $1 billion throughout 2026 across 17 states.</li>
+<ul>
+<ul>
+<li>The Durham, North Carolina facility—GE’s largest engine assembly site—is a primary focus for ramping up Leap engine production for Boeing and Airbus fleets.</li>
+</ul>
+</ul>
+<li><strong>Workforce Growth:</strong> The company aims to hire 5,000 new employees in 2026.</li>
+<ul>
+<ul>
+<li>This follows a previous hire of 5,000 workers in 2025, aimed at building technical expertise for production demands lasting into the 2030s.</li>
+</ul>
+</ul>
+<li><strong>Modernization &amp; AI:</strong> Investment includes deploying AI on the shop floor to improve productivity, safety, and quality.</li>
+<ul>
+<ul>
+<li><strong>Data Utilization:</strong> AI leverages data from 20- to 30-year engine lifecycles to enhance both new manufacturing and long-term maintenance.</li>
+</ul>
+</ul>
+</ul>
+<h3>Defense Infrastructure &amp; Military Readiness</h3>
+<ul>
+<li><strong>Defense Funding:</strong> $275 million of the $1 billion investment is specifically earmarked for defense facility upgrades.</li>
+<ul>
+<ul>
+<li>This brings GE’s total three-year investment in its defense footprint to $600 million.</li>
+</ul>
+</ul>
+<li><strong>Critical Military Support:</strong> GE currently powers two-thirds of U.S. military aircraft, including combat jets and helicopters.</li>
+<ul>
+<ul>
+<li><strong>J85 Engine Contract:</strong> A new deal with the Defense Logistics Agency will optimize the supply chain for the J85 engine, which powers the Air Force’s T-38 trainer aircraft.</li>
+</ul>
+</ul>
+<li><strong>Procurement Reform:</strong> CEO Larry Culp expressed strong support for streamlining government procurement to reduce lead times for tooling and testing without sacrificing safety.</li>
+</ul>
+<h3>Operational Scaling &amp; Supply Chain Recovery</h3>
+<ul>
+<li><strong>Massive Backlog:</strong> The company is managing a nearly $200 billion backlog driven by surging commercial airline expansion and rising global defense budgets.</li>
+<li><strong>Supply Chain Gains:</strong> GE reported a 40% increase in inputs from key suppliers over the last year.</li>
+<ul>
+<ul>
+<li>This collaboration resulted in engine shipments increasing by 25% to 30% in 2025.</li>
+</ul>
+</ul>
+<li><strong>Cost of Ownership:</strong> Culp emphasized that for engines costing $10M+, the focus is on reliability over a 20- to 30-year lifecycle. GE currently powers approximately 75% of all global commercial departures.</li>
+</ul>
+<h3>Financial Performance &amp; Trade Policy</h3>
+<ul>
+<li><strong>Record Growth:</strong> In 2025, GE Aerospace saw revenue grow by 21%, earnings by 38%, and cash flow by 24%.</li>
+<li><strong>Trade Advocacy:</strong> The company supports "zero-for-zero" tariff constructs to maintain the U.S. aerospace industry’s status as a top net exporter ($75 billion annually).</li>
+<li><strong>Market Leverage:</strong> Culp noted that President Trump views aerospace as a key point of leverage in international trade relations, particularly regarding China.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"We power the better part of three quarters of all commercial departures around the world on a daily basis. We have a million people in the air currently with GE technology under wing. It’s an incredible responsibility we all take very seriously."
+</blockquote>
+<p>— <strong>Larry Culp, CEO of GE Aerospace</strong></p>
+<blockquote>
+"One of the things the president has initiated is really a look at procurement reform. And we’re big supporters of that because the more that we can streamline the processes... we’re going to take time out of the system, we’re going to take cost out of the system, without sacrificing safety or quality."
+</blockquote>
+<p>— <strong>Larry Culp, CEO of GE Aerospace</strong></p>
+<blockquote>
+"This is the ultimate long-cycle business; we’re going to continue to play the long game... to not only have another good 2026, but really put together a decade of outstanding performance that sets us up for the 2030s."
+</blockquote>
+<p>— <strong>Larry Culp, CEO of GE Aerospace</strong></p></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Welcome back. New this morning, GE Aerospace is announcing a billion-dollar investment in the company's manufacturing operations and facilities across the country. It's part of an effort accelerating engine deliveries and increasing production of parts to keep pace with military demand. More than 275 million dollars are going toward defense facility upgrades. That will create 5,000 American jobs.
+
+Joining me now in this Fox Business exclusive is GE Aerospace CEO and Chairman, Larry Culp. Larry, it's great to have you this morning. Welcome back. Thank you, Maria. Good to be with you. Well, let me just say first off, congratulations. You have been running this company incredibly well, and it is showing through the stock and through your operations and your earnings.
+
+Tell us first, given the fact that you are running the most valuable industrial aerospace company in the world right now, tell us right now what is driving business before we get into this latest investment. Well, Maria, you're very kind. We have a team nearly 60,000 strong around the world doing, I think, a phenomenal job supporting our airline customers, our airframer partners, and our military customers, particularly the US military, at a time where we're seeing tremendous demand.
+
+We have, here coming into 2026, nearly 200 billion dollars of backlog. People are flying; airlines are looking to expand and modernize, as is the US military and our allies around the world. And given the install base that we have, both in commercial and on the military side of things, we could not be busier, but happily so.
+
+That's wonderful. And of course, airline demand is booming, defense budgets are rising, and the president's calling for a one-and-a-half trillion-dollar defense budget in 2027. And you have heeded the call from President Trump to ramp up investment in the United States. Tell us about this most recent investment in your facility, sir.
+
+Maria, what we're rolling out this morning is the news that we're going to invest another billion dollars here in 2026. We'll do that in 30 communities across 17 states where we operate. I'm here today in Durham, North Carolina. This is our largest engine assembly facility in the country. Behind me is one of our Leap engines. 
+
+These are the engines that are under-wing with both the Boeing 737 MAX and the Airbus A320neo family. We are ramping production here dramatically, and this investment will allow us to continue to deliver more engines as airlines expand and modernize their fleets. It'll also give us the ability to deliver a number of reliability and durability enhancements to our engines, all the while supporting the US warfighter. 
+
+275 million, in fact, of that billion-dollar investment is geared towards supporting our ramping in defense production. Yeah, I want to hear more about that because we're talking all morning about the defense infrastructure and what the government is relying on here, particularly as it relates to the Iran conflict. These are long-term contracts and these are long-term investments that you're talking about, whether it's an airline or contracts from the government. 
+
+How much does one of those engines cost? Well, depends, Maria, on what engine you're talking about, but we're clearly talking about initial purchases that are well in excess of, say, 10 million dollars. But what's important for our customers is the cost of ownership over the 20 to 30-year lifecycle that that engine will be in operation.
+
+One of the wonderful aspects of this business is we not only sell that engine when those new airplanes are delivered, we live with that engine side-by-side with our airline customers throughout the course of that lifecycle. So it really is that all-in cost of ownership that is critical and part of the reason we're putting in the capital that we are to enhance the reliability and durability of the engines. 
+
+We power the better part of three-quarters of all commercial departures around the world on a daily basis. We have a million people in the air currently with GE technology under-wing. It's an incredible responsibility we all take very seriously. These investments, which come on the heels—you'll recall a year ago we were together, we talked about investing another billion dollars in 2025—we did that. 
+
+But we're on a multi-year ramp, Maria. Given that 200 billion-dollar backlog, we'll need to continue to invest to support our commercial customers, but again, we're doing the same thing to support the US warfighter and our allies around the world. So, what do you want to say about a bottleneck in the supply chain? Explain to us what's going on with regard to the supply chain and how fast you can turn these products out. 
+
+Well, Maria, I think the last several years we've made tremendous progress hand-in-hand with our suppliers to come out of the pandemic and ramp production as not only fleets are expanded, but the current fleets are used at record levels. We saw last year a 40 percent increase in the inputs we receive from our key suppliers, really as a result of that collaboration. 
+
+And in turn, depending on the platform that you're talking about, our engine shipments were up 25 to 30 percent. So we think we know what we need to do here, but this is going to be a multi-year effort given the nature of the demand curve that we're looking at. It's a high-class challenge to have, but one I think the GE Aerospace team and our supplier partners are keen to tackle.
+
+And Larry, what do you want to say about jobs here? Given this one billion dollars, this additional one billion dollars that you're investing in your facilities, how many jobs does that create? What can you tell us about the use of AI and how that's complementing certain jobs? Give us the picture of jobs at GE Aerospace today.
+
+Maria, coupled with today's announcements, we are also sharing our intent to expand our workforce by another 5,000 people here in 2026. We did that same number, ironically, in 2025. That really gives us the expertise and the capacity to continue to increase production, not only in 2026, but it sets the stage for us to do so every year into the 2030s.
+
+That's the nature of the mountain that we're climbing here at GE Aerospace. Certainly AI is a part of what we're doing, not only to improve productivity on the shop floor, but frankly to enhance safety and quality. The more that we can put into the hands of our operators—not only here in Durham but around the country—the latest tools that make the most impact given the incredible data access we have through those 20 to 30-year lifecycles in these engines, the better off we're going to be.
+
+This is true not only when we're manufacturing a new engine, but when we're looking after those engines for decades over those lifecycles I mentioned earlier. Now, in terms of being a government contractor, GE Aerospace is landing this contract from the Defense Logistics Agency to accelerate the readiness of that J85 engine, powering the US Air Force's primary training aircraft.
+
+GE will provide fleet management and supply optimization capabilities, supporting the Air Force's training mission and goals. Larry, congrats on that deal. Tell us more about this product and how GE is playing a key part in the military's goals right now, specifically as we're talking about the Middle East. 
+
+Well, Maria, we talk so often about our commercial business, but about a third of what we do is in the defense realm. We're fortunate that over time we have built up a position where we power two-thirds of the US military aircraft, be they combat jets, be they helicopters and the like. There's a lot that we're doing.
+
+We were up again 30 percent in terms of our engine deliveries to the military in 2025. The announcement that you're referring to will enable us to support our J85 engine on the Air Force's T-38 trainer. The more that we're able to orchestrate the delivery of the 6,000 parts that go into that engine, that will enable those trainers to be in the air more with pilots getting more training hours. 
+
+That has a direct knock-on effect for US readiness. So we're happy to contribute. It's one of many things that we do across the US military portfolio, but an important part particularly in today's world. Yeah, I mean, you know the president met with the defense contractors at the White House on Friday. I know you were not there, but the president came out of that meeting and said that they have promised to quadruple production of some of these weapons. 
+
+Larry, why is it that it takes as long as it does to actually meet the incredible demand that we're talking about? And can you assess for us sort of the issues that are at hand in that regard? Well, in many respects the issues with respect to lead times on the defense side of things, Maria, are very similar to the ones on the commercial side. 
+
+The tooling required to build these engines has very long lead times. We've been looking to reduce those lead times across our supply base; I think we're making progress. But also, one of the things the president has initiated is really a look at procurement reform. And we're big supporters of that because the more that we can streamline the processes by which we develop an engine, and in turn an aircraft, we know we're going to take time out of the system. 
+
+If we can deploy some of our commercial techniques in the defense realm, we're going to take cost out of the system without sacrificing safety or quality. So there's a lot of opportunity. We've got a role to play and part of this multi-year investment effort that we've made—it'll be 600 million dollars that we will have invested in our defense footprint over the last three years—is very much geared toward not only raising production but quickening the pace of what we're doing for the US warfighter. 
+
+That's a no-fail mission for us at GE Aerospace, and we're proud to be on board. And Larry, this is all coming across in all of your earnings releases. I mean, you recently released your fourth quarter 2025 numbers, surpassing expectations. Your board authorized a quarterly dividend. You are really operating at an incredibly high level. 
+
+I want to get your take on policy and what you'd like to see in terms of changes there. You were pushing in the past for zero tariffs in aviation. And you know, when I've interviewed President Trump in the past, the president told me when we talked about China, look, they need us as much as we need them. And he mentioned jet engines; he mentioned aerospace as sort of one leverage point that the United States has. 
+
+What would be your best advice for the president as he gears up for this meeting with Xi Jinping at the end of March? Well, the president, I think, has been an exceptionally strong supporter of the aerospace industry. He's fully aware that aerospace is a net exporter for the country to the tune of 75 billion dollars annually. 
+
+I think as we saw a number of the trade deals come together last year, we were encouraged by the zero-for-zero tariff construct that was put in many of those deals. I think that will continue to be a priority for the administration. We support that because it allows American companies in aerospace to invest in technology, invest in people, build capacity, and deliver our products all around the world. That's good for American workers, and that's certainly good for the economy at large.
+
+Yeah, I mean, you know GE, as much as it's a customer, it's the number one adversary of the United States. So that's why I raise the issue. I saw the presentation at the Singapore Airshow, which was very, very positive, and investors talked about that in terms of the performance of the company. 
+
+We just looked at the stock chart of GE, and it's doing so well over the last couple of years—straight line up. Larry, what do you want to say about the future and what drives the business in the coming couple of years? Well, Maria, you're very kind. We had an exceptional 2025. Revenues up, what, 21 percent? Earnings up 38 percent, cash flow was up 24 percent. 
+
+But we are not a team that will rest on its laurels. We know our airline customers, our airframer partners, and our defense customers all need more from us in 2026. We're investing, we're improving processes, we're bringing on new people to make sure that we not only have another good 2026, but really put together a decade of outstanding performance that sets us up for the 2030s.
+
+This is the ultimate long-cycle business. We're going to continue to play the long game, and I couldn't be more thankful for the great work that our teams—not only here in Durham but around the world—do with that mission in mind. And of course you've got the pricing power to go along with it. Larry, it's good to see you this morning. We'll be watching the story. Thank you, sir. Thank you, Maria.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-1">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=Uj4aGC8ZjeI" target="_blank" rel="noopener">Anthropic and Alignment | Stratechery by Ben Thompson<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/G3KKbnKufJOIVSn2K-p-4DrmYkR50LHZileEND4IhJ38sLdznQIYOUShN7qqvG1G5vPvB63Mml8=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Stratechery</b><span class="subs">(13.1K)</span></span><span class="dot">&middot;</span><span>20:13</span><span class="dot">&middot;</span><span>682 views</span><span class="dot">&middot;</span><span>2026-03-09</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Ben%20Thompson%22">Ben Thompson<span class="chip-desc">Author and Host, Stratechery</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Anthropic’s refusal to allow the U.S.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">military to use its models for surveillance or autonomous weapons creates a fundamental conflict of sovereignty; if AI is as transformative as nuclear weapons, the U.S. government cannot tolerate a private corporation acting as an...</div>
+                    <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Anthropic’s refusal to allow the U.S. military to use its models for surveillance or autonomous weapons creates a fundamental conflict of sovereignty; if AI is as transformative as nuclear weapons, the U.S. government cannot tolerate a private corporation acting as an independent power base that dictates national security terms.</p>
 <h3>The Anthropic vs. Department of Defense Standoff</h3>
 <ul>
@@ -676,19 +923,15 @@
 </blockquote>
 <blockquote>
 "I believe deeply in the existential importance of using AI to defend the United States... [but] using these systems for mass domestic surveillance is incompatible with democratic values. AI-driven mass surveillance presents serious, novel risks to our fundamental liberties." — <strong>Dario Amodei</strong>
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                 </div>
                 
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-0">
-                        This is a verbatim transcript of the video. Anthropic and Alignment. &quot;Just because you do not take an interest in politics doesn’t mean politics won’t take an interest in you,&quot; as Pericles once said.
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">This is a verbatim transcript of the video. Anthropic and Alignment. &quot;Just because you do not take an interest in politics doesn’t mean politics won’t take an interest in you,&quot; as Pericles once said.
 
 This is not an article about the campaign being waged by the U.S. against Iran, but it’s a useful and timely analogy. There is a never-ending debate that can be had about the concept of International Law and who might be violating it. Some will argue that the U.S. is in violation for the attacks; others will note that Iran has been serially violating International Law with both its overt actions and its support of terror networks for my entire life.
 
@@ -774,32 +1017,200 @@ It concerns me that he consistently fails to acknowledge that the implication of
 
 Second, the idea that AI safety can only be guaranteed by a limited number of responsible stewards ignores the massive incentives that exist to build other models. This was clear years ago when only a few companies were working on AI models, and has been proven out by what has happened in reality so far.
 
-Third, in a world of AI proliferation, the best defense against AI will be AI; this means that more AI is actually safer than limited AI, which means open source is ultimately safer.
-                    </div>
+Third, in a world of AI proliferation, the best defense against AI will be AI; this means that more AI is actually safer than limited AI, which means open source is ultimately safer.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-2">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=cX_Yc8NcyfM" target="_blank" rel="noopener">BREAKING NEWS: JD Vance Delivers Remarks To The International Association Of Firefighters In D.C.<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>17:12</span><span class="dot">&middot;</span><span>2.0K views</span><span class="dot">&middot;</span><span>2026-03-09</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22JD%20Vance%22">JD Vance<span class="chip-desc">Vice President</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance emphasized the Trump administration’s commitment to firefighters through proactive labor engagement, personal gratitude for their role in community stability, and specific legislative support for healthcare and retirement benefits.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">Engagement with...</div>
+                    <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
+<p>Vice President JD Vance emphasized the Trump administration’s commitment to firefighters through proactive labor engagement, personal gratitude for their role in community stability, and specific legislative support for healthcare and retirement benefits.</p>
+<h3>Support for Organized Labor and First Responders</h3>
+<ul>
+<li><strong>Engagement with Unions:</strong> Vance asserted that the administration has been "unique among Republicans" by actively seeking partnerships with organized labor, citing collaborations with Ed Kelly (IAFF) and Sean O'Brien (Teamsters).</li>
+<li><strong>The "Glue" of Communities:</strong> He described firefighters, police, and military as a "brotherhood" that provides the essential security required for a functioning society.</li>
+<li><strong>Universal Public Safety:</strong> Vance argued that the hallmark of the U.S. is that public safety services are not reserved for the wealthy but are accessible to everyone regardless of socioeconomic status.</li>
+<ul>
+<ul>
+<li><strong>Equal Access:</strong> "Every person deserves to know that if, God forbid, their house catches on fire, there's going to be somebody with water there to put it out, not just the powerful."</li>
+</ul>
+</ul>
+</ul>
+<h3>Personal Connection to Fire and EMS Services</h3>
+<ul>
+<li><strong>Impact of Opioid Crisis:</strong> Vance shared a personal narrative regarding his mother’s struggle with addiction in Middletown, Ohio, noting that firefighters and EMTs provided critical support during her darkest moments.</li>
+<li><strong>A Success Story:</strong> He credited first responders for his mother’s 11 years of sobriety, noting that her recovery allowed her to celebrate at the White House and become a grandmother to his children.</li>
+<ul>
+<ul>
+<li><strong>Second Chances:</strong> He highlighted that firefighters provide the "second chances" that allow families to stay together and recover from crises.</li>
+</ul>
+</ul>
+</ul>
+<h3>Legislative and Policy Priorities</h3>
+<ul>
+<li><strong>Social Security Fairness Act:</strong> Vance credited President Trump’s leadership for ensuring congressional Republicans prioritized this legislation to benefit first responders.</li>
+<li><strong>Railway Safety Act:</strong> Born out of the East Palestine train derailment, this act aims to address the long-term health consequences of toxic chemical exposure for first responders.</li>
+<ul>
+<ul>
+<li><strong>Medical Research:</strong> The administration appropriated millions to study the effects of toxic exposure to ensure firefighters receive proper long-term medical treatment.</li>
+</ul>
+</ul>
+<li><strong>Honoring Our Fallen Heroes Act:</strong> Vance highlighted this law, which extends federal benefits to the families of firefighters who pass away from cancers developed in the line of duty.</li>
+<ul>
+<ul>
+<li><strong>Earned Benefits:</strong> He emphasized that these are not handouts but benefits "earned" through hazardous service to the public.</li>
+</ul>
+</ul>
+</ul>
+<h3>Economic and Social Vision</h3>
+<ul>
+<li><strong>Rewarding "Grit":</strong> The administration's goal is to ensure the "American Dream" is attainable through hard work rather than luck or wealth.</li>
+<li><strong>Working-Class Focus:</strong> Vance linked the specific needs of firefighters to broader national goals, such as:</li>
+<ul>
+<ul>
+<li>Reversing inflation to ensure families do not live paycheck to paycheck.</li>
+<li>Reducing crime rates to ensure first responders operate in safer environments.</li>
+<li>Improving local schools to support the families of those in uniform.</li>
+</ul>
+</ul>
+</ul>
+<blockquote>
+"We have been unique among Republicans in that we haven't turned away organized labor. We have tried to find ways to work with organized labor... to serve working people." — JD Vance
+</blockquote>
+<blockquote>
+"Every country, every empire, every society in history made it possible for a rich person to get what they needed. But what makes the United States so unique is that whether you're rich or poor... you have access to [public safety] in that critical moment." — JD Vance
+</blockquote>
+<blockquote>
+"When a firefighter... becomes ill or, God forbid, loses your life because of cancer that was developed in the line of duty, their families are entitled to federal benefits that they earned." — JD Vance
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
                 </div>
                 
-            </article>
-            
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">Thank you all. Thank you so much, Ed. It's great to be here. It's great to have you in our nation's capital. I always say to everybody, this is a very big group. I can't see any of you because these spotlights are glaring bright. The person who runs these spotlights, Ed, must be a Democrat because I cannot see a single person in that crowd.
 
-            <article class="video-card" id="video-1">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=UbuxyWi0CXE" target="_blank" rel="noopener">ETF Edge on crypto's rebound, the new ETFs to watch and what's different this time</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">CNBC Television</span><span class="channel-subs">(3.3M)</span></span>
-                        <span class="meta-sep">·</span><span>18:50</span>
-                        <span class="meta-sep">·</span><span>2.3K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-03-09</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Simeon Hyman (Global Investment Strategist, ProShares Advisors)</span> <span class="tag tag-person">Kim Arthur (CEO, Main Management)</span> <span class="tag tag-person">Dominic Chu (Host, CNBC)</span></div>
+But I'm told there's about 700 of you out there. And so I say to everybody, whether it's a small school group or 700 great firefighters from all across our country, that this is your nation's capital. This is your capital. Your tax dollars built these beautiful monuments and museums. 
+
+I know you got a lot of work to do while you're here in Washington, but I hope each and every one of you gets to enjoy this beautiful city, especially as the weather turns really nice here in Washington, D.C. Now, the one bad thing about the weather is when it starts to get warm, you know as a politician, we're gearing up for political campaign season. 
+
+And I'm probably as sick of politics as you all are. So that's the one downside, but I hope you enjoy this beautiful spring weather and enjoy your nation's capital while you're here. We're thrilled to have you. And I just want to say thank you so much to Ed and to the entire team at the International Association of Firefighters. 
+
+Ed Kelly has been a great advocate for you and for firefighters all across the United States of America. In fact, when we met backstage very briefly, we talked a little bit about some of the great legislative accomplishments of the Trump administration, and we'll talk a bit about that here in a second. 
+
+But then the second half of the conversation was Ed trying to shake me down even more. He was trying to think, what else can we get out of this administration? And I love that. I love a guy who fights for his people. I love a firefighter who knows who he stands for and represents. 
+
+And I hope all of you know that we're going to work with you over the next few years to continue to solve the problems that exist for our firefighting community. One of the things that a lot of you know about this administration and hopefully appreciate about this administration, but I'm going to make my pitch here, is that we have been unique among Republicans in that we haven't turned away organized labor. 
+
+We have tried to find ways to work with organized labor. Not that we're always going to agree, but another great Bostonian, Sean O'Brien, the head of the Teamsters union, we found ways to work together to serve working people. And there is no group of people that is harder working and more important for our community than our firefighters. 
+
+So thank you all for being here and thank you for honoring me by inviting me to give you a few remarks today. Now, before I get into some of my other remarks, I want to just start on a slightly somber note here, because on a personal level, I was honored to be able to participate in the dignified transfer of six American soldiers who were killed overseas in this conflict with Iran. 
+
+I had never done that before. And a lot of you served our nation in uniform; I know a number of our firefighters have all across our country. And I just want to say that if you're the praying type, and I certainly am, I hope you'll spare a prayer for the six souls that we lost, for the seventh soul who will be coming home tonight, and for all of their families. 
+
+You all know better than almost any category of Americans what it means to put on a uniform and to sacrifice for our country. And so I hope you'll share a moment of prayer for our brothers in arms, for your brothers in arms, who keep this country safe in their own way, just as you keep the country safe in your particular way. 
+
+So, to move on a little bit, let me just say that what we have tried to do in the Trump administration, what we have tried to accomplish, is to make your lives easier, knowing, of course, that we're never going to be able to make your lives completely easy. 
+
+You guys have some of the hardest jobs that exist anywhere in the United States of America. You represent thousands and thousands of firefighters all across the United States of America who make it possible for our communities to be safe, who make it possible for our communities to run smoothly, and who make it possible for a kid to be able to call 911 if they have to.
+
+They know that a man or a woman who is professional, who is competent, and who is caring is going to show up when we need them. And that's the thing that I admire so much about all of you. You know, every country, every empire, every society in history made it possible for a rich person to get what they needed. 
+
+But what makes the United States so unique is that whether you're rich or poor, you're black or white, when you need public services, when you need your police officers, when you need your firefighters, when you need those EMT specialists, we make it and we try hard to make it so that everybody who needs something in that critical moment has access to it. 
+
+Everybody deserves public safety, not just rich people. Every person deserves to know that if, God forbid, their house catches on fire, there's going to be somebody with water there to put it out, not just the powerful. 
+
+And what I admire about this spirit of public service that exists in this community is that every single one of you put on a uniform. The people that you serve put on a uniform and make it possible for kids like me, kids who didn't grow up with a silver spoon in their mouth, to have access to that critical public safety and that security in their neighborhoods. 
+
+Now, a lot of you, you know, I came and spoke in Boston a couple of years ago, and so what I say may come, well, you may have heard me say it in Boston, but I'm going to repeat it for those of you who didn't hear me say it in Boston. 
+
+A couple of times I was one of those scared little kids who had to call the firefighters, who had to call the EMTs. My own mother struggled with opioid addiction for a very large chunk of my life. And I remember when she was having a particularly dark moment and she needed some help, I needed some help, our family needed some help. 
+
+I picked up the phone, I called 911, and a number of brave, professional, compassionate firefighters from Middletown, Ohio showed up. They calmed my mom down and they made it possible for us to go on with the rest of our day. They made a kid who was scared to death feel like he had an ally in this world. I will never forget that. 
+
+I will never forget also when we had to call 911, it wasn't a firefighter, it was an EMT who came and took my mom to the hospital because she had had a very terrible overdose. And I remember holding her hand, hoping to God that she would be okay, that she would wake up. 
+
+We know a lot of our people have not woken up when they have those opioid overdoses, but by the grace of God, my mom did wake up. And by the way, she's now been clean and sober for north of 11 years. We celebrated her 10-year sobriety. Thank you. 
+
+We celebrated her 10 years of sobriety in the West Wing of the White House. What an incredible testament to the American Dream, that a woman I thought would never live to meet my children is now the best grandmother to those children that they could ever ask for. And we celebrated that sobriety in the people's White House. 
+
+But that moment, the many moments of second chances that we've gotten with my mom—and I love you, Mom, if you're watching this, she probably is, she watches everything. I don't know why, but she does. But Mom, we would not have gotten that second chance were it not for the firefighters all across our country and the EMT specialists who make it possible for second chances again and again and again. 
+
+What you guys do is not easy, and as you all know, it doesn't always pay as well as it should. But it does give people, millions of Americans all across this nation, a sense that somebody is looking out for them. 
+
+That's one of the reasons why I love what you do, why I'm so honored to be here, is because you are the glue that holds so many of American communities together. You know, I talked a little bit about the folks that we lost in Iran and we're so thankful for their service and so hopeful that nobody else comes home having lost their life. 
+
+But I think there's a brotherhood, a sisterhood, between the military, the police officers, and the firefighters because you are the three categories of people who put on a uniform and put your lives at risk for your communities. You've got different jobs, you have different roles to play, but I think it's an amazing testament to our country. 
+
+Maybe the single most important resource that we have as a United States of America is that every single one of you is willing to sacrifice your life. Hopefully, you never will. But every single one of you is willing to sacrifice your life for this great country and for the people that you serve in your communities. 
+
+I just want you to know, from the President of the United States, but from everybody, I think I can say comfortably even in partisan and difficult times, that I represent the whole country when I say to all of our members of the International Association of Firefighters: we are thankful to you, we are proud of you, we love you, and we're going to do everything that we can to support you. 
+
+Now, let me talk just a little bit about what it means to really support you, because I think it's important. It's, of course, important that the Vice President stand up here and say how grateful he is, and I certainly am. I'm grateful to each and every one of you and the people you serve. 
+
+But it's not just about words, it's about action. And that's one of the things I'm proudest about this administration is that we have actually backed up the pride and the support and the gratitude that we have for all of you with very meaningful action. 
+
+You heard Ed talk a little bit about the Social Security Fairness Act. Well, one of the reasons why that happened is because the President of the United States, and I believe it was even before the inauguration, the President of the United States made sure that congressional Republicans stayed on top of that legislation and we worked to get it done. 
+
+That happened because of presidential leadership. Do you think Joe Biden was making those phone calls, ladies and gentlemen? I just got to say, I don't think so. Sorry, I got a little partisan there. 
+
+But we owe it to Americans who have suffered through exposure to toxic chemicals, especially the first responders who seek to protect others from harm. We owe it to you to actually look after you and to take care of you. In that vein, one of the first pieces of legislation I ever worked on was the Railway Safety Act. 
+
+And I'll never forget your support in making that act a possibility. We actually got it, by the way, into the most recent transportation package. I'm sure Ed and all of you will use your very able lobbying and persuasion tactics to make sure that that legislation actually becomes law. 
+
+When I met the firefighters who dealt with that terrible train derailment in East Palestine, one of the things that I picked up is, you know, they weren't angry. They weren't mad. That was their job. They went into a very dangerous situation because that was their job and that's what they expected to do. 
+
+But they were worried about one thing. What might happen with all these toxic chemicals that were in the air? Would they have long-term problems? Would they suffer some consequences? And one of the things that Secretary Kennedy and I worked on is making sure that we are studying the long-term effects of toxic chemical exposure in East Palestine. 
+
+We appropriated millions of dollars, and trust me, when I was a senator, I worked to get that money from the last administration just to understand the effects of toxic chemical exposure over time. And we didn't have that until this administration came along and Secretary Kennedy made it a priority. 
+
+We want you all to know, if God forbid you run into harm's way, what are the consequences going to be you for the be to you over the long haul? And importantly, what are the kinds of medical treatments that you're going to need if you're in that situation to make sure that the sacrifice that you make in the line of duty doesn't become more than it has to be? 
+
+Those are the kinds of tangible steps that we are trying to take. Now, we know that President Kelly and President Trump—we all have our own presidents, my friends—he was a huge proponent, and I'm glad for this, of the Honoring Our Fallen Heroes Act. 
+
+That was critically important legislation that you all know President Trump signed into law just a few months ago. Now, as Ed can tell you, this law extends legal benefits for firefighters and first responders who pass away from cancers caused by exposure in the line of duty. 
+
+Now, when a firefighter, when one of you becomes ill or, God forbid, loses your life because of cancer that was developed in the line of duty, their families are entitled to federal benefits that they earned. Now, I say they already earned them because we owe it to Americans who suffered through exposure to toxic chemicals. 
+
+That is what this administration is all about. Making sure that the Social Security system treats you fairly, making sure that you get the benefits or, if God forbid, you pass away, your families get the benefits that you deserved. Making sure that we take care of the people who take care of us. 
+
+That is the legacy of the Trump administration when it comes to our firefighters, and that is a legacy that we're going to keep on building on over the next three years of President Trump's leadership. Now, I want to close with a very simple point. 
+
+This is an administration that is fighting first and foremost for working men and women. I talked about that a little bit at the beginning. We're especially fighting for working men and women who serve the public interest. And that's what all of you do. 
+
+When I was a little kid, I wanted to be a United States Marine. Some kids want to be doctors, other kids want to be teachers, some want to be astronauts, but as you know, a lot of kids, a lot of little kids all across our country, they want to be firefighters. That's a great testament to the work that you do every single day. 
+
+I guess my point here is that every kid in our country has dreams, and those dreams come in many shapes and sizes. And what I want most of all is for your service and your sacrifice to be rewarded by all of us living in a country where you don't have to be rich or lucky to obtain the American Dream. 
+
+You just got to have a little grit, a little determination, and a lot of hard work. I want all of us, your kids and mine, to live in safe neighborhoods. I want us to send our kids to good schools. I want our families to not have to live paycheck to paycheck. 
+
+And that's why our administration is fighting for all the policies that we've been fighting for, from lower crime to reversing the inflation of the Biden years, because we want every single person in our community to be able to live a good life. 
+
+What is the work of all of you, of our firefighters and our EMTs, if it's not to ensure that every kid has an opportunity to live in safety and security? You do your part every single day, and I'm proud of you for it. But that means that we've got to honor your service by doing our part here in Washington, D.C. 
+
+So let me just say that all of you deserve to live in this great country and all of us in this administration are proud to stand shoulder to shoulder with you as we rebuild the United States of America. I want you to be proud in your country because I know that your country and your president are very, very proud of you and we're grateful to you. Thank you. Thanks, everyone, and God bless you.</div>
                 </div>
-                <div class="tldr">Despite ongoing geopolitical turmoil in the Middle East, cryptocurrency is maintaining its role as a strategic portfolio diversifier with low correlation to traditional assets, while the industry shifts from a &quot;crypto winter&quot; toward institutional mat...</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-1">TL;DR Despite ongoing geopolitical turmoil in the Middle East, cryptocurrency is maintaining its role as a strategic portfolio diversifier with low correlation to traditional assets, while the industry shifts from a &quot;crypto winter&quot; toward institutional maturity through new...</div>
-                    <div class="summary-full" id="full-1">
-                        <p><strong>TL;DR</strong></p>
+            </article>
+
+            <article class="video-card" id="video-3">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=UbuxyWi0CXE" target="_blank" rel="noopener">ETF Edge on crypto's rebound, the new ETFs to watch and what's different this time<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.3M)</span></span><span class="dot">&middot;</span><span>18:50</span><span class="dot">&middot;</span><span>2.3K views</span><span class="dot">&middot;</span><span>2026-03-09</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Simeon%20Hyman%22">Simeon Hyman<span class="chip-desc">Global Investment Strategist, ProShares Advisors</span></a> <a class="chip" href="index.html?q=%22Kim%20Arthur%22">Kim Arthur<span class="chip-desc">CEO, Main Management</span></a> <a class="chip" href="index.html?q=%22Dominic%20Chu%22">Dominic Chu<span class="chip-desc">Host, CNBC</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite ongoing geopolitical turmoil in the Middle East, cryptocurrency is maintaining its role as a strategic portfolio diversifier with low correlation to traditional assets, while the industry shifts from a &quot;crypto winter&quot; toward institutional…</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-3">maturity through new...</div>
+                    <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Despite ongoing geopolitical turmoil in the Middle East, cryptocurrency is maintaining its role as a strategic portfolio diversifier with low correlation to traditional assets, while the industry shifts from a "crypto winter" toward institutional maturity through new index-based ETFs and regulatory-compliant infrastructure.</p>
 <h3>Cryptocurrency as a Portfolio Diversifier</h3>
 <ul>
@@ -867,19 +1278,15 @@ Third, in a world of AI proliferation, the best defense against AI will be AI; t
 </blockquote>
 <blockquote>
 "I've been doing this for almost 40 years... there's been no less than nine times that the market has corrected 20 plus percent. But over that whole period, it's time in the market because the markets are up 10 plus percent." — <strong>Kim Arthur</strong>
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-3" onclick="toggleSummary(3)" type="button" aria-expanded="false" aria-controls="full-3">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                 </div>
                 
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-1">
-                        Welcome to ETF Edge, your go-to place for all things exchange-traded funds. I'm your host, Dominic Chu. Turmoil in the Middle East has been just the latest test for the stability of the cryptocurrency market. But at least part of the recent wild price swings might be more intrinsic than extrinsic. 
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-3" onclick="toggleTranscript(3)" type="button" aria-expanded="false" aria-controls="transcript-3">View transcript</button>
+                    <div class="transcript-content" id="transcript-3">Welcome to ETF Edge, your go-to place for all things exchange-traded funds. I'm your host, Dominic Chu. Turmoil in the Middle East has been just the latest test for the stability of the cryptocurrency market. But at least part of the recent wild price swings might be more intrinsic than extrinsic. 
 
 So here to explain that case is Simeon Hyman, the global investment strategist over at ProShares Advisors, alongside Kim Arthur, the CEO and portfolio manager over at Main Management. Thank you both for being here with us right now. And perhaps Simeon, I'll start with you on this one. 
 
@@ -983,32 +1390,20 @@ But over that whole period, it's time in the market because the markets are up 1
 
 And we have a big another thing in the Middle East that we didn't have the last time that the US was involved seriously in a conflict like this, and that's the fact that you have Qatar, Dubai, you have all these places where they've put a lot of assets in there now. And they rely on tourism and robust economies. They are going to want to make sure this thing settles ASAP.
 
-All right, interesting context for sure. My thanks to you both, Kim Arthur and Simeon Hyman. Now we've asked Simeon to stick around for the ETF Edge podcast. You can catch that and all of our other content over at etfedge.cnbc.com. Thanks to Simeon and to Kim, and thanks for you for watching. We'll see you next week.
-                    </div>
+All right, interesting context for sure. My thanks to you both, Kim Arthur and Simeon Hyman. Now we've asked Simeon to stick around for the ETF Edge podcast. You can catch that and all of our other content over at etfedge.cnbc.com. Thanks to Simeon and to Kim, and thanks for you for watching. We'll see you next week.</div>
                 </div>
-                
             </article>
-            
 
-            <article class="video-card" id="video-2">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=5gspRJVp9dI" target="_blank" rel="noopener">The Future Of Brain-Computer Interfaces</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Y Combinator</span><span class="channel-subs">(2.2M)</span></span>
-                        <span class="meta-sep">·</span><span>53:21</span>
-                        <span class="meta-sep">·</span><span>14.4K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-03-09</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Max Hodak (Founder, Science)</span> <span class="tag tag-person">Garry Tan (President &amp; CEO, Y Combinator)</span></div>
+            <article class="video-card" id="video-4">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=5gspRJVp9dI" target="_blank" rel="noopener">The Future Of Brain-Computer Interfaces<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Y Combinator</b><span class="subs">(2.2M)</span></span><span class="dot">&middot;</span><span>53:21</span><span class="dot">&middot;</span><span>14.4K views</span><span class="dot">&middot;</span><span>2026-03-09</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Max%20Hodak%22">Max Hodak<span class="chip-desc">Founder, Science</span></a> <a class="chip" href="index.html?q=%22Garry%20Tan%22">Garry Tan<span class="chip-desc">President &amp; CEO, Y Combinator</span></a></div>
                 </div>
-                <div class="tldr">Max Hodak, founder of Science and co-founder of Neuralink, discusses how the field of Brain-Computer Interfaces (BCI) is shifting medicine from incremental drug discovery to a precise neural engineering paradigm capable of restoring sight today and p...</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-2">TL;DR Max Hodak, founder of Science and co-founder of Neuralink, discusses how the field of Brain-Computer Interfaces (BCI) is shifting medicine from incremental drug discovery to a precise neural engineering paradigm capable of restoring sight today and potentially enabling...</div>
-                    <div class="summary-full" id="full-2">
-                        <p><strong>TL;DR</strong></p>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Max Hodak, founder of Science and co-founder of Neuralink, discusses how the field of Brain-Computer Interfaces (BCI) is shifting medicine from incremental drug discovery to a precise neural engineering paradigm capable of restoring sight today and…</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-4">potentially enabling...</div>
+                    <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Max Hodak, founder of Science and co-founder of Neuralink, discusses how the field of Brain-Computer Interfaces (BCI) is shifting medicine from incremental drug discovery to a precise neural engineering paradigm capable of restoring sight today and potentially enabling human-to-human consciousness sharing by 2035.</p>
 <h3>Restoring Sight: The PRIMA Retinal Implant</h3>
 <p>Science has successfully completed a clinical trial for its PRIMA implant, a breakthrough that restores "form vision" to patients with age-related macular degeneration.</p>
@@ -1057,19 +1452,15 @@ All right, interesting context for sure. My thanks to you both, Kim Arthur and S
 </blockquote>
 <blockquote>
 "If the end of the quest of artificial intelligence is super-intelligent machines, then I think the end of the BCI quest is actually conscious machines." — <strong>Max Hodak</strong>
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-2" onclick="toggleSummary(2)">
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-4" onclick="toggleSummary(4)" type="button" aria-expanded="false" aria-controls="full-4">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                 </div>
                 
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-2">
-                        I think it is very possible that the first people to live to a thousand are alive right now. It still takes some suspension of disbelief because I think biotech has just been so incremental. One of the things that’s so exciting about what’s happening now is that it no longer really feels so incremental to me.
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-4" onclick="toggleTranscript(4)" type="button" aria-expanded="false" aria-controls="transcript-4">View transcript</button>
+                    <div class="transcript-content" id="transcript-4">I think it is very possible that the first people to live to a thousand are alive right now. It still takes some suspension of disbelief because I think biotech has just been so incremental. One of the things that’s so exciting about what’s happening now is that it no longer really feels so incremental to me.
 
 I think that BCI we're going to come to see as is not is not a specific product. I think there are going to be a bunch of BCI companies going after different applications where different types of probes will make sense. To me, it feels like we're firmly in like the takeoff era now. Like something new has happened on Earth. 
 
@@ -1431,413 +1822,73 @@ Intelligence is going to become widely available for those that have the agency 
 
 Yeah, I don't know if we'll have cured all disease. In fact, I definitely wouldn't use that term. I wouldn't say, &quot;Well, we've cured all diseases by 2035.&quot; But I think that there will be kind of new lateral options that totally reframe how we think about the human condition on that time scale. 
 
-And totally reconfiguring, basically, that sort of interface between computers and humans—and humans and each other. If a brain-computer interface is equivalent to a brain-to-brain interface in many cases, this takes you to totally new territory. Max, thank you so much for joining us. Thanks for building the future, and we can't wait to see what you build next. Thanks, Garry.
-                    </div>
+And totally reconfiguring, basically, that sort of interface between computers and humans—and humans and each other. If a brain-computer interface is equivalent to a brain-to-brain interface in many cases, this takes you to totally new territory. Max, thank you so much for joining us. Thanks for building the future, and we can't wait to see what you build next. Thanks, Garry.</div>
                 </div>
-                
             </article>
-            
-
-            <article class="video-card" id="video-3">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=2L-15JYxS8c" target="_blank" rel="noopener">$1B DEFENSE PUSH: GE Aerospace makes major investment in US manufacturing</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/QpEnztyD6_IW7_LM3t3j7j8l3XKdZFN9HmbF-_sa8y2-ORUz2IgajHoZ8SMREv4ZHO2LeGM2gg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Fox Business Clips</span><span class="channel-subs">(76.6K)</span></span>
-                        <span class="meta-sep">·</span><span>13:08</span>
-                        <span class="meta-sep">·</span><span>12.3K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-03-09</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Larry Culp (CEO and Chairman, GE Aerospace)</span> <span class="tag tag-person">Maria Bartiromo (Host, Fox Business)</span></div>
-                </div>
-                <div class="tldr">&gt; &quot;We power the better part of three quarters of all commercial departures around the world on a daily basis.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-3">TL;DR: GE Aerospace is launching a $1 billion investment in 2026 across 30 U.S. communities to accelerate engine production and clear a $200 billion backlog, a move that includes $275 million for defense upgrades and the creation of 5,000 new American jobs.    Domestic...</div>
-                    <div class="summary-full" id="full-3">
-                        <p><strong>TL;DR:</strong> GE Aerospace is launching a $1 billion investment in 2026 across 30 U.S. communities to accelerate engine production and clear a $200 billion backlog, a move that includes $275 million for defense upgrades and the creation of 5,000 new American jobs.</p>
-<h3>Strategic Capital Investment &amp; Job Creation</h3>
-<ul>
-<li><strong>Domestic Expansion:</strong> GE Aerospace will invest $1 billion throughout 2026 across 17 states.</li>
-<ul>
-<ul>
-<li>The Durham, North Carolina facility—GE’s largest engine assembly site—is a primary focus for ramping up Leap engine production for Boeing and Airbus fleets.</li>
-</ul>
-</ul>
-<li><strong>Workforce Growth:</strong> The company aims to hire 5,000 new employees in 2026.</li>
-<ul>
-<ul>
-<li>This follows a previous hire of 5,000 workers in 2025, aimed at building technical expertise for production demands lasting into the 2030s.</li>
-</ul>
-</ul>
-<li><strong>Modernization &amp; AI:</strong> Investment includes deploying AI on the shop floor to improve productivity, safety, and quality.</li>
-<ul>
-<ul>
-<li><strong>Data Utilization:</strong> AI leverages data from 20- to 30-year engine lifecycles to enhance both new manufacturing and long-term maintenance.</li>
-</ul>
-</ul>
-</ul>
-<h3>Defense Infrastructure &amp; Military Readiness</h3>
-<ul>
-<li><strong>Defense Funding:</strong> $275 million of the $1 billion investment is specifically earmarked for defense facility upgrades.</li>
-<ul>
-<ul>
-<li>This brings GE’s total three-year investment in its defense footprint to $600 million.</li>
-</ul>
-</ul>
-<li><strong>Critical Military Support:</strong> GE currently powers two-thirds of U.S. military aircraft, including combat jets and helicopters.</li>
-<ul>
-<ul>
-<li><strong>J85 Engine Contract:</strong> A new deal with the Defense Logistics Agency will optimize the supply chain for the J85 engine, which powers the Air Force’s T-38 trainer aircraft.</li>
-</ul>
-</ul>
-<li><strong>Procurement Reform:</strong> CEO Larry Culp expressed strong support for streamlining government procurement to reduce lead times for tooling and testing without sacrificing safety.</li>
-</ul>
-<h3>Operational Scaling &amp; Supply Chain Recovery</h3>
-<ul>
-<li><strong>Massive Backlog:</strong> The company is managing a nearly $200 billion backlog driven by surging commercial airline expansion and rising global defense budgets.</li>
-<li><strong>Supply Chain Gains:</strong> GE reported a 40% increase in inputs from key suppliers over the last year.</li>
-<ul>
-<ul>
-<li>This collaboration resulted in engine shipments increasing by 25% to 30% in 2025.</li>
-</ul>
-</ul>
-<li><strong>Cost of Ownership:</strong> Culp emphasized that for engines costing $10M+, the focus is on reliability over a 20- to 30-year lifecycle. GE currently powers approximately 75% of all global commercial departures.</li>
-</ul>
-<h3>Financial Performance &amp; Trade Policy</h3>
-<ul>
-<li><strong>Record Growth:</strong> In 2025, GE Aerospace saw revenue grow by 21%, earnings by 38%, and cash flow by 24%.</li>
-<li><strong>Trade Advocacy:</strong> The company supports "zero-for-zero" tariff constructs to maintain the U.S. aerospace industry’s status as a top net exporter ($75 billion annually).</li>
-<li><strong>Market Leverage:</strong> Culp noted that President Trump views aerospace as a key point of leverage in international trade relations, particularly regarding China.</li>
-</ul>
-<h3>Notable Quotes</h3>
-<blockquote>
-"We power the better part of three quarters of all commercial departures around the world on a daily basis. We have a million people in the air currently with GE technology under wing. It’s an incredible responsibility we all take very seriously."
-</blockquote>
-<p>— <strong>Larry Culp, CEO of GE Aerospace</strong></p>
-<blockquote>
-"One of the things the president has initiated is really a look at procurement reform. And we’re big supporters of that because the more that we can streamline the processes... we’re going to take time out of the system, we’re going to take cost out of the system, without sacrificing safety or quality."
-</blockquote>
-<p>— <strong>Larry Culp, CEO of GE Aerospace</strong></p>
-<blockquote>
-"This is the ultimate long-cycle business; we’re going to continue to play the long game... to not only have another good 2026, but really put together a decade of outstanding performance that sets us up for the 2030s."
-</blockquote>
-<p>— <strong>Larry Culp, CEO of GE Aerospace</strong></p>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-3" onclick="toggleSummary(3)">
-                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                </div>
-                
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-3" onclick="toggleTranscript(3)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-3">
-                        Welcome back. New this morning, GE Aerospace is announcing a billion-dollar investment in the company's manufacturing operations and facilities across the country. It's part of an effort accelerating engine deliveries and increasing production of parts to keep pace with military demand. More than 275 million dollars are going toward defense facility upgrades. That will create 5,000 American jobs.
-
-Joining me now in this Fox Business exclusive is GE Aerospace CEO and Chairman, Larry Culp. Larry, it's great to have you this morning. Welcome back. Thank you, Maria. Good to be with you. Well, let me just say first off, congratulations. You have been running this company incredibly well, and it is showing through the stock and through your operations and your earnings.
-
-Tell us first, given the fact that you are running the most valuable industrial aerospace company in the world right now, tell us right now what is driving business before we get into this latest investment. Well, Maria, you're very kind. We have a team nearly 60,000 strong around the world doing, I think, a phenomenal job supporting our airline customers, our airframer partners, and our military customers, particularly the US military, at a time where we're seeing tremendous demand.
-
-We have, here coming into 2026, nearly 200 billion dollars of backlog. People are flying; airlines are looking to expand and modernize, as is the US military and our allies around the world. And given the install base that we have, both in commercial and on the military side of things, we could not be busier, but happily so.
-
-That's wonderful. And of course, airline demand is booming, defense budgets are rising, and the president's calling for a one-and-a-half trillion-dollar defense budget in 2027. And you have heeded the call from President Trump to ramp up investment in the United States. Tell us about this most recent investment in your facility, sir.
-
-Maria, what we're rolling out this morning is the news that we're going to invest another billion dollars here in 2026. We'll do that in 30 communities across 17 states where we operate. I'm here today in Durham, North Carolina. This is our largest engine assembly facility in the country. Behind me is one of our Leap engines. 
-
-These are the engines that are under-wing with both the Boeing 737 MAX and the Airbus A320neo family. We are ramping production here dramatically, and this investment will allow us to continue to deliver more engines as airlines expand and modernize their fleets. It'll also give us the ability to deliver a number of reliability and durability enhancements to our engines, all the while supporting the US warfighter. 
-
-275 million, in fact, of that billion-dollar investment is geared towards supporting our ramping in defense production. Yeah, I want to hear more about that because we're talking all morning about the defense infrastructure and what the government is relying on here, particularly as it relates to the Iran conflict. These are long-term contracts and these are long-term investments that you're talking about, whether it's an airline or contracts from the government. 
-
-How much does one of those engines cost? Well, depends, Maria, on what engine you're talking about, but we're clearly talking about initial purchases that are well in excess of, say, 10 million dollars. But what's important for our customers is the cost of ownership over the 20 to 30-year lifecycle that that engine will be in operation.
-
-One of the wonderful aspects of this business is we not only sell that engine when those new airplanes are delivered, we live with that engine side-by-side with our airline customers throughout the course of that lifecycle. So it really is that all-in cost of ownership that is critical and part of the reason we're putting in the capital that we are to enhance the reliability and durability of the engines. 
-
-We power the better part of three-quarters of all commercial departures around the world on a daily basis. We have a million people in the air currently with GE technology under-wing. It's an incredible responsibility we all take very seriously. These investments, which come on the heels—you'll recall a year ago we were together, we talked about investing another billion dollars in 2025—we did that. 
-
-But we're on a multi-year ramp, Maria. Given that 200 billion-dollar backlog, we'll need to continue to invest to support our commercial customers, but again, we're doing the same thing to support the US warfighter and our allies around the world. So, what do you want to say about a bottleneck in the supply chain? Explain to us what's going on with regard to the supply chain and how fast you can turn these products out. 
-
-Well, Maria, I think the last several years we've made tremendous progress hand-in-hand with our suppliers to come out of the pandemic and ramp production as not only fleets are expanded, but the current fleets are used at record levels. We saw last year a 40 percent increase in the inputs we receive from our key suppliers, really as a result of that collaboration. 
-
-And in turn, depending on the platform that you're talking about, our engine shipments were up 25 to 30 percent. So we think we know what we need to do here, but this is going to be a multi-year effort given the nature of the demand curve that we're looking at. It's a high-class challenge to have, but one I think the GE Aerospace team and our supplier partners are keen to tackle.
-
-And Larry, what do you want to say about jobs here? Given this one billion dollars, this additional one billion dollars that you're investing in your facilities, how many jobs does that create? What can you tell us about the use of AI and how that's complementing certain jobs? Give us the picture of jobs at GE Aerospace today.
-
-Maria, coupled with today's announcements, we are also sharing our intent to expand our workforce by another 5,000 people here in 2026. We did that same number, ironically, in 2025. That really gives us the expertise and the capacity to continue to increase production, not only in 2026, but it sets the stage for us to do so every year into the 2030s.
-
-That's the nature of the mountain that we're climbing here at GE Aerospace. Certainly AI is a part of what we're doing, not only to improve productivity on the shop floor, but frankly to enhance safety and quality. The more that we can put into the hands of our operators—not only here in Durham but around the country—the latest tools that make the most impact given the incredible data access we have through those 20 to 30-year lifecycles in these engines, the better off we're going to be.
-
-This is true not only when we're manufacturing a new engine, but when we're looking after those engines for decades over those lifecycles I mentioned earlier. Now, in terms of being a government contractor, GE Aerospace is landing this contract from the Defense Logistics Agency to accelerate the readiness of that J85 engine, powering the US Air Force's primary training aircraft.
-
-GE will provide fleet management and supply optimization capabilities, supporting the Air Force's training mission and goals. Larry, congrats on that deal. Tell us more about this product and how GE is playing a key part in the military's goals right now, specifically as we're talking about the Middle East. 
-
-Well, Maria, we talk so often about our commercial business, but about a third of what we do is in the defense realm. We're fortunate that over time we have built up a position where we power two-thirds of the US military aircraft, be they combat jets, be they helicopters and the like. There's a lot that we're doing.
-
-We were up again 30 percent in terms of our engine deliveries to the military in 2025. The announcement that you're referring to will enable us to support our J85 engine on the Air Force's T-38 trainer. The more that we're able to orchestrate the delivery of the 6,000 parts that go into that engine, that will enable those trainers to be in the air more with pilots getting more training hours. 
-
-That has a direct knock-on effect for US readiness. So we're happy to contribute. It's one of many things that we do across the US military portfolio, but an important part particularly in today's world. Yeah, I mean, you know the president met with the defense contractors at the White House on Friday. I know you were not there, but the president came out of that meeting and said that they have promised to quadruple production of some of these weapons. 
-
-Larry, why is it that it takes as long as it does to actually meet the incredible demand that we're talking about? And can you assess for us sort of the issues that are at hand in that regard? Well, in many respects the issues with respect to lead times on the defense side of things, Maria, are very similar to the ones on the commercial side. 
-
-The tooling required to build these engines has very long lead times. We've been looking to reduce those lead times across our supply base; I think we're making progress. But also, one of the things the president has initiated is really a look at procurement reform. And we're big supporters of that because the more that we can streamline the processes by which we develop an engine, and in turn an aircraft, we know we're going to take time out of the system. 
-
-If we can deploy some of our commercial techniques in the defense realm, we're going to take cost out of the system without sacrificing safety or quality. So there's a lot of opportunity. We've got a role to play and part of this multi-year investment effort that we've made—it'll be 600 million dollars that we will have invested in our defense footprint over the last three years—is very much geared toward not only raising production but quickening the pace of what we're doing for the US warfighter. 
-
-That's a no-fail mission for us at GE Aerospace, and we're proud to be on board. And Larry, this is all coming across in all of your earnings releases. I mean, you recently released your fourth quarter 2025 numbers, surpassing expectations. Your board authorized a quarterly dividend. You are really operating at an incredibly high level. 
-
-I want to get your take on policy and what you'd like to see in terms of changes there. You were pushing in the past for zero tariffs in aviation. And you know, when I've interviewed President Trump in the past, the president told me when we talked about China, look, they need us as much as we need them. And he mentioned jet engines; he mentioned aerospace as sort of one leverage point that the United States has. 
-
-What would be your best advice for the president as he gears up for this meeting with Xi Jinping at the end of March? Well, the president, I think, has been an exceptionally strong supporter of the aerospace industry. He's fully aware that aerospace is a net exporter for the country to the tune of 75 billion dollars annually. 
-
-I think as we saw a number of the trade deals come together last year, we were encouraged by the zero-for-zero tariff construct that was put in many of those deals. I think that will continue to be a priority for the administration. We support that because it allows American companies in aerospace to invest in technology, invest in people, build capacity, and deliver our products all around the world. That's good for American workers, and that's certainly good for the economy at large.
-
-Yeah, I mean, you know GE, as much as it's a customer, it's the number one adversary of the United States. So that's why I raise the issue. I saw the presentation at the Singapore Airshow, which was very, very positive, and investors talked about that in terms of the performance of the company. 
-
-We just looked at the stock chart of GE, and it's doing so well over the last couple of years—straight line up. Larry, what do you want to say about the future and what drives the business in the coming couple of years? Well, Maria, you're very kind. We had an exceptional 2025. Revenues up, what, 21 percent? Earnings up 38 percent, cash flow was up 24 percent. 
-
-But we are not a team that will rest on its laurels. We know our airline customers, our airframer partners, and our defense customers all need more from us in 2026. We're investing, we're improving processes, we're bringing on new people to make sure that we not only have another good 2026, but really put together a decade of outstanding performance that sets us up for the 2030s.
-
-This is the ultimate long-cycle business. We're going to continue to play the long game, and I couldn't be more thankful for the great work that our teams—not only here in Durham but around the world—do with that mission in mind. And of course you've got the pricing power to go along with it. Larry, it's good to see you this morning. We'll be watching the story. Thank you, sir. Thank you, Maria.
-                    </div>
-                </div>
-                
-            </article>
-            
-
-            <article class="video-card" id="video-4">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=cX_Yc8NcyfM" target="_blank" rel="noopener">BREAKING NEWS: JD Vance Delivers Remarks To The International Association Of Firefighters In D.C.</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Forbes Breaking News</span><span class="channel-subs">(5.5M)</span></span>
-                        <span class="meta-sep">·</span><span>17:12</span>
-                        <span class="meta-sep">·</span><span>2.0K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-03-09</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">JD Vance (Vice President)</span></div>
-                </div>
-                <div class="tldr">Vice President JD Vance emphasized the Trump administration’s commitment to firefighters through proactive labor engagement, personal gratitude for their role in community stability, and specific legislative support for healthcare and retirement benefits.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-4">TL;DR Vice President JD Vance emphasized the Trump administration’s commitment to firefighters through proactive labor engagement, personal gratitude for their role in community stability, and specific legislative support for healthcare and retirement benefits.  Engagement with...</div>
-                    <div class="summary-full" id="full-4">
-                        <p><strong>TL;DR</strong></p>
-<p>Vice President JD Vance emphasized the Trump administration’s commitment to firefighters through proactive labor engagement, personal gratitude for their role in community stability, and specific legislative support for healthcare and retirement benefits.</p>
-<h3>Support for Organized Labor and First Responders</h3>
-<ul>
-<li><strong>Engagement with Unions:</strong> Vance asserted that the administration has been "unique among Republicans" by actively seeking partnerships with organized labor, citing collaborations with Ed Kelly (IAFF) and Sean O'Brien (Teamsters).</li>
-<li><strong>The "Glue" of Communities:</strong> He described firefighters, police, and military as a "brotherhood" that provides the essential security required for a functioning society.</li>
-<li><strong>Universal Public Safety:</strong> Vance argued that the hallmark of the U.S. is that public safety services are not reserved for the wealthy but are accessible to everyone regardless of socioeconomic status.</li>
-<ul>
-<ul>
-<li><strong>Equal Access:</strong> "Every person deserves to know that if, God forbid, their house catches on fire, there's going to be somebody with water there to put it out, not just the powerful."</li>
-</ul>
-</ul>
-</ul>
-<h3>Personal Connection to Fire and EMS Services</h3>
-<ul>
-<li><strong>Impact of Opioid Crisis:</strong> Vance shared a personal narrative regarding his mother’s struggle with addiction in Middletown, Ohio, noting that firefighters and EMTs provided critical support during her darkest moments.</li>
-<li><strong>A Success Story:</strong> He credited first responders for his mother’s 11 years of sobriety, noting that her recovery allowed her to celebrate at the White House and become a grandmother to his children.</li>
-<ul>
-<ul>
-<li><strong>Second Chances:</strong> He highlighted that firefighters provide the "second chances" that allow families to stay together and recover from crises.</li>
-</ul>
-</ul>
-</ul>
-<h3>Legislative and Policy Priorities</h3>
-<ul>
-<li><strong>Social Security Fairness Act:</strong> Vance credited President Trump’s leadership for ensuring congressional Republicans prioritized this legislation to benefit first responders.</li>
-<li><strong>Railway Safety Act:</strong> Born out of the East Palestine train derailment, this act aims to address the long-term health consequences of toxic chemical exposure for first responders.</li>
-<ul>
-<ul>
-<li><strong>Medical Research:</strong> The administration appropriated millions to study the effects of toxic exposure to ensure firefighters receive proper long-term medical treatment.</li>
-</ul>
-</ul>
-<li><strong>Honoring Our Fallen Heroes Act:</strong> Vance highlighted this law, which extends federal benefits to the families of firefighters who pass away from cancers developed in the line of duty.</li>
-<ul>
-<ul>
-<li><strong>Earned Benefits:</strong> He emphasized that these are not handouts but benefits "earned" through hazardous service to the public.</li>
-</ul>
-</ul>
-</ul>
-<h3>Economic and Social Vision</h3>
-<ul>
-<li><strong>Rewarding "Grit":</strong> The administration's goal is to ensure the "American Dream" is attainable through hard work rather than luck or wealth.</li>
-<li><strong>Working-Class Focus:</strong> Vance linked the specific needs of firefighters to broader national goals, such as:</li>
-<ul>
-<ul>
-<li>Reversing inflation to ensure families do not live paycheck to paycheck.</li>
-<li>Reducing crime rates to ensure first responders operate in safer environments.</li>
-<li>Improving local schools to support the families of those in uniform.</li>
-</ul>
-</ul>
-</ul>
-<blockquote>
-"We have been unique among Republicans in that we haven't turned away organized labor. We have tried to find ways to work with organized labor... to serve working people." — JD Vance
-</blockquote>
-<blockquote>
-"Every country, every empire, every society in history made it possible for a rich person to get what they needed. But what makes the United States so unique is that whether you're rich or poor... you have access to [public safety] in that critical moment." — JD Vance
-</blockquote>
-<blockquote>
-"When a firefighter... becomes ill or, God forbid, loses your life because of cancer that was developed in the line of duty, their families are entitled to federal benefits that they earned." — JD Vance
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-4" onclick="toggleSummary(4)">
-                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                </div>
-                
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-4" onclick="toggleTranscript(4)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-4">
-                        Thank you all. Thank you so much, Ed. It's great to be here. It's great to have you in our nation's capital. I always say to everybody, this is a very big group. I can't see any of you because these spotlights are glaring bright. The person who runs these spotlights, Ed, must be a Democrat because I cannot see a single person in that crowd.
-
-But I'm told there's about 700 of you out there. And so I say to everybody, whether it's a small school group or 700 great firefighters from all across our country, that this is your nation's capital. This is your capital. Your tax dollars built these beautiful monuments and museums. 
-
-I know you got a lot of work to do while you're here in Washington, but I hope each and every one of you gets to enjoy this beautiful city, especially as the weather turns really nice here in Washington, D.C. Now, the one bad thing about the weather is when it starts to get warm, you know as a politician, we're gearing up for political campaign season. 
-
-And I'm probably as sick of politics as you all are. So that's the one downside, but I hope you enjoy this beautiful spring weather and enjoy your nation's capital while you're here. We're thrilled to have you. And I just want to say thank you so much to Ed and to the entire team at the International Association of Firefighters. 
-
-Ed Kelly has been a great advocate for you and for firefighters all across the United States of America. In fact, when we met backstage very briefly, we talked a little bit about some of the great legislative accomplishments of the Trump administration, and we'll talk a bit about that here in a second. 
-
-But then the second half of the conversation was Ed trying to shake me down even more. He was trying to think, what else can we get out of this administration? And I love that. I love a guy who fights for his people. I love a firefighter who knows who he stands for and represents. 
-
-And I hope all of you know that we're going to work with you over the next few years to continue to solve the problems that exist for our firefighting community. One of the things that a lot of you know about this administration and hopefully appreciate about this administration, but I'm going to make my pitch here, is that we have been unique among Republicans in that we haven't turned away organized labor. 
-
-We have tried to find ways to work with organized labor. Not that we're always going to agree, but another great Bostonian, Sean O'Brien, the head of the Teamsters union, we found ways to work together to serve working people. And there is no group of people that is harder working and more important for our community than our firefighters. 
-
-So thank you all for being here and thank you for honoring me by inviting me to give you a few remarks today. Now, before I get into some of my other remarks, I want to just start on a slightly somber note here, because on a personal level, I was honored to be able to participate in the dignified transfer of six American soldiers who were killed overseas in this conflict with Iran. 
-
-I had never done that before. And a lot of you served our nation in uniform; I know a number of our firefighters have all across our country. And I just want to say that if you're the praying type, and I certainly am, I hope you'll spare a prayer for the six souls that we lost, for the seventh soul who will be coming home tonight, and for all of their families. 
-
-You all know better than almost any category of Americans what it means to put on a uniform and to sacrifice for our country. And so I hope you'll share a moment of prayer for our brothers in arms, for your brothers in arms, who keep this country safe in their own way, just as you keep the country safe in your particular way. 
-
-So, to move on a little bit, let me just say that what we have tried to do in the Trump administration, what we have tried to accomplish, is to make your lives easier, knowing, of course, that we're never going to be able to make your lives completely easy. 
-
-You guys have some of the hardest jobs that exist anywhere in the United States of America. You represent thousands and thousands of firefighters all across the United States of America who make it possible for our communities to be safe, who make it possible for our communities to run smoothly, and who make it possible for a kid to be able to call 911 if they have to.
-
-They know that a man or a woman who is professional, who is competent, and who is caring is going to show up when we need them. And that's the thing that I admire so much about all of you. You know, every country, every empire, every society in history made it possible for a rich person to get what they needed. 
-
-But what makes the United States so unique is that whether you're rich or poor, you're black or white, when you need public services, when you need your police officers, when you need your firefighters, when you need those EMT specialists, we make it and we try hard to make it so that everybody who needs something in that critical moment has access to it. 
-
-Everybody deserves public safety, not just rich people. Every person deserves to know that if, God forbid, their house catches on fire, there's going to be somebody with water there to put it out, not just the powerful. 
-
-And what I admire about this spirit of public service that exists in this community is that every single one of you put on a uniform. The people that you serve put on a uniform and make it possible for kids like me, kids who didn't grow up with a silver spoon in their mouth, to have access to that critical public safety and that security in their neighborhoods. 
-
-Now, a lot of you, you know, I came and spoke in Boston a couple of years ago, and so what I say may come, well, you may have heard me say it in Boston, but I'm going to repeat it for those of you who didn't hear me say it in Boston. 
-
-A couple of times I was one of those scared little kids who had to call the firefighters, who had to call the EMTs. My own mother struggled with opioid addiction for a very large chunk of my life. And I remember when she was having a particularly dark moment and she needed some help, I needed some help, our family needed some help. 
-
-I picked up the phone, I called 911, and a number of brave, professional, compassionate firefighters from Middletown, Ohio showed up. They calmed my mom down and they made it possible for us to go on with the rest of our day. They made a kid who was scared to death feel like he had an ally in this world. I will never forget that. 
-
-I will never forget also when we had to call 911, it wasn't a firefighter, it was an EMT who came and took my mom to the hospital because she had had a very terrible overdose. And I remember holding her hand, hoping to God that she would be okay, that she would wake up. 
-
-We know a lot of our people have not woken up when they have those opioid overdoses, but by the grace of God, my mom did wake up. And by the way, she's now been clean and sober for north of 11 years. We celebrated her 10-year sobriety. Thank you. 
-
-We celebrated her 10 years of sobriety in the West Wing of the White House. What an incredible testament to the American Dream, that a woman I thought would never live to meet my children is now the best grandmother to those children that they could ever ask for. And we celebrated that sobriety in the people's White House. 
-
-But that moment, the many moments of second chances that we've gotten with my mom—and I love you, Mom, if you're watching this, she probably is, she watches everything. I don't know why, but she does. But Mom, we would not have gotten that second chance were it not for the firefighters all across our country and the EMT specialists who make it possible for second chances again and again and again. 
-
-What you guys do is not easy, and as you all know, it doesn't always pay as well as it should. But it does give people, millions of Americans all across this nation, a sense that somebody is looking out for them. 
-
-That's one of the reasons why I love what you do, why I'm so honored to be here, is because you are the glue that holds so many of American communities together. You know, I talked a little bit about the folks that we lost in Iran and we're so thankful for their service and so hopeful that nobody else comes home having lost their life. 
-
-But I think there's a brotherhood, a sisterhood, between the military, the police officers, and the firefighters because you are the three categories of people who put on a uniform and put your lives at risk for your communities. You've got different jobs, you have different roles to play, but I think it's an amazing testament to our country. 
-
-Maybe the single most important resource that we have as a United States of America is that every single one of you is willing to sacrifice your life. Hopefully, you never will. But every single one of you is willing to sacrifice your life for this great country and for the people that you serve in your communities. 
-
-I just want you to know, from the President of the United States, but from everybody, I think I can say comfortably even in partisan and difficult times, that I represent the whole country when I say to all of our members of the International Association of Firefighters: we are thankful to you, we are proud of you, we love you, and we're going to do everything that we can to support you. 
-
-Now, let me talk just a little bit about what it means to really support you, because I think it's important. It's, of course, important that the Vice President stand up here and say how grateful he is, and I certainly am. I'm grateful to each and every one of you and the people you serve. 
-
-But it's not just about words, it's about action. And that's one of the things I'm proudest about this administration is that we have actually backed up the pride and the support and the gratitude that we have for all of you with very meaningful action. 
-
-You heard Ed talk a little bit about the Social Security Fairness Act. Well, one of the reasons why that happened is because the President of the United States, and I believe it was even before the inauguration, the President of the United States made sure that congressional Republicans stayed on top of that legislation and we worked to get it done. 
-
-That happened because of presidential leadership. Do you think Joe Biden was making those phone calls, ladies and gentlemen? I just got to say, I don't think so. Sorry, I got a little partisan there. 
-
-But we owe it to Americans who have suffered through exposure to toxic chemicals, especially the first responders who seek to protect others from harm. We owe it to you to actually look after you and to take care of you. In that vein, one of the first pieces of legislation I ever worked on was the Railway Safety Act. 
-
-And I'll never forget your support in making that act a possibility. We actually got it, by the way, into the most recent transportation package. I'm sure Ed and all of you will use your very able lobbying and persuasion tactics to make sure that that legislation actually becomes law. 
-
-When I met the firefighters who dealt with that terrible train derailment in East Palestine, one of the things that I picked up is, you know, they weren't angry. They weren't mad. That was their job. They went into a very dangerous situation because that was their job and that's what they expected to do. 
-
-But they were worried about one thing. What might happen with all these toxic chemicals that were in the air? Would they have long-term problems? Would they suffer some consequences? And one of the things that Secretary Kennedy and I worked on is making sure that we are studying the long-term effects of toxic chemical exposure in East Palestine. 
-
-We appropriated millions of dollars, and trust me, when I was a senator, I worked to get that money from the last administration just to understand the effects of toxic chemical exposure over time. And we didn't have that until this administration came along and Secretary Kennedy made it a priority. 
-
-We want you all to know, if God forbid you run into harm's way, what are the consequences going to be you for the be to you over the long haul? And importantly, what are the kinds of medical treatments that you're going to need if you're in that situation to make sure that the sacrifice that you make in the line of duty doesn't become more than it has to be? 
-
-Those are the kinds of tangible steps that we are trying to take. Now, we know that President Kelly and President Trump—we all have our own presidents, my friends—he was a huge proponent, and I'm glad for this, of the Honoring Our Fallen Heroes Act. 
-
-That was critically important legislation that you all know President Trump signed into law just a few months ago. Now, as Ed can tell you, this law extends legal benefits for firefighters and first responders who pass away from cancers caused by exposure in the line of duty. 
-
-Now, when a firefighter, when one of you becomes ill or, God forbid, loses your life because of cancer that was developed in the line of duty, their families are entitled to federal benefits that they earned. Now, I say they already earned them because we owe it to Americans who suffered through exposure to toxic chemicals. 
-
-That is what this administration is all about. Making sure that the Social Security system treats you fairly, making sure that you get the benefits or, if God forbid, you pass away, your families get the benefits that you deserved. Making sure that we take care of the people who take care of us. 
-
-That is the legacy of the Trump administration when it comes to our firefighters, and that is a legacy that we're going to keep on building on over the next three years of President Trump's leadership. Now, I want to close with a very simple point. 
-
-This is an administration that is fighting first and foremost for working men and women. I talked about that a little bit at the beginning. We're especially fighting for working men and women who serve the public interest. And that's what all of you do. 
-
-When I was a little kid, I wanted to be a United States Marine. Some kids want to be doctors, other kids want to be teachers, some want to be astronauts, but as you know, a lot of kids, a lot of little kids all across our country, they want to be firefighters. That's a great testament to the work that you do every single day. 
-
-I guess my point here is that every kid in our country has dreams, and those dreams come in many shapes and sizes. And what I want most of all is for your service and your sacrifice to be rewarded by all of us living in a country where you don't have to be rich or lucky to obtain the American Dream. 
-
-You just got to have a little grit, a little determination, and a lot of hard work. I want all of us, your kids and mine, to live in safe neighborhoods. I want us to send our kids to good schools. I want our families to not have to live paycheck to paycheck. 
-
-And that's why our administration is fighting for all the policies that we've been fighting for, from lower crime to reversing the inflation of the Biden years, because we want every single person in our community to be able to live a good life. 
-
-What is the work of all of you, of our firefighters and our EMTs, if it's not to ensure that every kid has an opportunity to live in safety and security? You do your part every single day, and I'm proud of you for it. But that means that we've got to honor your service by doing our part here in Washington, D.C. 
-
-So let me just say that all of you deserve to live in this great country and all of us in this administration are proud to stand shoulder to shoulder with you as we rebuild the United States of America. I want you to be proud in your country because I know that your country and your president are very, very proud of you and we're grateful to you. Thank you. Thanks, everyone, and God bless you.
-                    </div>
-                </div>
-                
-            </article>
-            
         </main>
-
         <footer>
-            Generated by Follower Tool
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
         </footer>
     </div>
     <script>
-        function toggleSummary(id) {
-            const preview = document.getElementById('preview-' + id);
-            const full = document.getElementById('full-' + id);
-            const btn = document.getElementById('sum-btn-' + id);
-
-            if (full.classList.contains('expanded')) {
-                full.classList.remove('expanded');
-                preview.style.display = 'block';
-                btn.classList.remove('expanded');
-                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-            } else {
-                full.classList.add('expanded');
-                preview.style.display = 'none';
-                btn.classList.add('expanded');
-                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-            }
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
         }
-
-        function toggleTranscript(id) {
-            const content = document.getElementById('transcript-' + id);
-            const btn = document.getElementById('trans-btn-' + id);
-
-            if (content.classList.contains('expanded')) {
-                content.classList.remove('expanded');
-                btn.textContent = 'View transcript';
-            } else {
-                content.classList.add('expanded');
-                btn.textContent = 'Hide transcript';
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
             }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
         }
-        </script>
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+</script>
+    
 </body>
 </html>

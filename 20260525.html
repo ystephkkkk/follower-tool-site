@@ -3,633 +3,1225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Briefing - May 25, 2026</title>
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Monday, May 25, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
-            --bg: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --text: #e6edf3;
-            --text-secondary: #8b949e;
-            --text-tertiary: #6e7681;
-            --accent: #58a6ff;
-            --accent-subtle: #388bfd26;
-            --border: #30363d;
-            --green: #3fb950;
-            --green-subtle: rgba(63, 185, 80, 0.15);
-            --yellow: #d29922;
-            --yellow-subtle: rgba(210, 153, 34, 0.15);
-            --red: #f85149;
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         @media (prefers-color-scheme: light) {
-            :root {
-                --bg: #ffffff;
-                --bg-secondary: #f6f8fa;
-                --bg-tertiary: #eaeef2;
-                --text: #1f2328;
-                --text-secondary: #656d76;
-                --text-tertiary: #8b949e;
-                --accent: #0969da;
-                --accent-subtle: #0969da1a;
-                --border: #d0d7de;
-                --green: #1a7f37;
-                --green-subtle: rgba(26, 127, 55, 0.12);
-                --yellow: #9a6700;
-                --yellow-subtle: rgba(154, 103, 0, 0.12);
-                --red: #cf222e;
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
             }
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
-            padding: 0;
+            line-height: 1.65;
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
+        a { color: inherit; }
 
-        header {
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
         }
 
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.02em;
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
         }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
 
         .stats {
             display: flex;
-            gap: 1.5rem;
-            margin-top: 0.75rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
         }
 
-        .stat-value {
-            color: var(--text);
-            font-weight: 600;
-        }
+        .stat-value { color: var(--text); font-weight: 600; }
 
-        .nav-links {
+        /* ------- search results meta ------- */
+        .search-meta {
             display: flex;
+            align-items: baseline;
+            justify-content: space-between;
             gap: 1rem;
-            margin-top: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
         }
 
-        .nav-links a {
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
             color: var(--accent);
-            text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
         }
 
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
+        .search-clear:hover { text-decoration: underline; }
 
-        /* Video Cards */
-        .video-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            margin-bottom: 1.25rem;
-            overflow: hidden;
-            scroll-margin-top: 1rem;
-        }
-
-        .video-header {
-            padding: 1.25rem 1.5rem 1rem;
-        }
-
-        .video-title {
-            font-size: 1.05rem;
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
             font-weight: 600;
-            margin-bottom: 0.6rem;
-            line-height: 1.4;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
-        .video-title a {
-            color: var(--text);
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
             text-decoration: none;
             transition: color 0.15s ease;
         }
 
-        .video-title a:hover {
-            color: var(--accent);
-        }
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
 
-        .video-meta {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.8rem;
-            color: var(--text-tertiary);
-        }
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
 
-        .channel-info {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-        }
-
-        .channel-icon {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-            background: var(--bg-tertiary);
-        }
-
-        .channel-name {
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .channel-subs {
-            color: var(--text-tertiary);
-            font-size: 0.75rem;
-        }
-
-        /* Channel Pill */
-        .channel-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: var(--bg-tertiary);
-            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .channel-pill .channel-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        .channel-pill .channel-name {
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .channel-pill .channel-subs {
-            color: var(--text-tertiary);
-            font-size: 0.7rem;
-            margin-left: 0.15rem;
-        }
-
-        /* Tags */
-        .video-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-top: 0.6rem;
-        }
-
-        .tag {
-            display: inline-block;
-            background: var(--accent-subtle);
-            color: var(--accent);
-            padding: 0.2rem 0.6rem;
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            font-size: 0.72rem;
-            font-weight: 500;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
         }
 
-        .tag-person {
-            background: rgba(136, 87, 255, 0.15);
-            color: #a371f7;
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
         }
 
-        @media (prefers-color-scheme: light) {
-            .tag-person {
-                background: rgba(130, 80, 223, 0.12);
-                color: #6639ba;
-            }
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
         }
 
-        .channel-badge {
-            background: var(--accent-subtle);
-            color: var(--accent);
-            padding: 0.2rem 0.55rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
         }
 
-        .high-trust-badge {
-            background: var(--green-subtle);
-            color: var(--green);
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
         }
 
-        .meta-sep {
-            color: var(--border);
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
         }
 
-        /* TL;DR Section */
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
         .tldr {
-            padding: 0.9rem 1.5rem;
-            background: var(--bg-tertiary);
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
             border-top: 1px solid var(--border);
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: var(--text);
             line-height: 1.55;
         }
 
-        /* Summary Section */
-        .summary-section {
-            padding: 1rem 1.5rem 1.25rem;
+        .tldr > span:last-child { max-width: 70ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
             border-top: 1px solid var(--border);
         }
 
-        .summary-preview {
-            font-size: 0.92rem;
-            line-height: 1.7;
-            color: var(--text);
-        }
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 70ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 70ch; }
+        .sum-full.expanded { display: block; }
 
-        .summary-full {
-            display: none;
-            font-size: 0.92rem;
-            line-height: 1.7;
-        }
-
-        .summary-full.expanded {
-            display: block;
-        }
-
-        .summary-full h3 {
-            font-size: 0.95rem;
+        .sum-full h3 {
+            font-size: 1.05rem;
             font-weight: 600;
-            color: var(--text);
-            margin: 1.25rem 0 0.6rem;
+            margin: 1.3rem 0 0.6rem;
         }
 
-        .summary-full h3:first-child {
-            margin-top: 0;
-        }
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
 
-        .summary-full h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1rem 0 0.4rem;
-        }
-
-        .summary-full ul {
-            margin: 0.4rem 0;
-            padding-left: 1.3rem;
-        }
-
-        .summary-full li {
-            margin: 0.35rem 0;
-        }
-
-        /* Nested lists - indentation only, no color/size change */
-        .summary-full ul ul {
-            margin: 0.2rem 0;
-        }
-
-        .summary-full ul ul li {
-            margin: 0.25rem 0;
-        }
-
-        .summary-full strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .summary-full p {
-            margin: 0.6rem 0;
-            line-height: 1.65;
-        }
-
-        .summary-full blockquote {
+        .sum-full blockquote {
             margin: 1rem 0;
             padding: 0.75rem 1rem;
-            background: var(--bg-tertiary);
+            background: var(--bg-2);
             border-left: 3px solid var(--accent);
-            border-radius: 0 6px 6px 0;
+            border-radius: 0 8px 8px 0;
             font-style: italic;
-            color: var(--text-secondary);
+            color: var(--text-2);
         }
 
-        .summary-full em {
-            font-style: italic;
-        }
-
-        /* Toggle Buttons */
-        .toggle-btn {
+        .linklike {
             background: none;
             border: none;
             color: var(--accent);
             padding: 0;
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             margin-top: 0.6rem;
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            transition: opacity 0.15s ease;
         }
 
-        .toggle-btn:hover {
-            opacity: 0.8;
-        }
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
 
-        .toggle-btn svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.2s ease;
-        }
-
-        .toggle-btn.expanded svg {
-            transform: rotate(180deg);
-        }
-
-        /* Transcript Section */
-        .transcript-section {
-            padding: 0 1.5rem 1.25rem;
-        }
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
 
         .transcript-toggle {
-            background: var(--bg-tertiary);
+            background: var(--bg-2);
             border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 0.5rem 0.9rem;
-            border-radius: 6px;
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
             font-size: 0.8rem;
             font-weight: 500;
+            font-family: inherit;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: border-color 0.15s ease, color 0.15s ease;
         }
 
-        .transcript-toggle:hover {
-            background: var(--border);
-            color: var(--text);
-        }
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
 
         .transcript-content {
             display: none;
             margin-top: 0.75rem;
             padding: 1rem;
             background: var(--bg);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 0.85rem;
             line-height: 1.75;
             white-space: pre-wrap;
-            max-height: 400px;
+            overflow-wrap: anywhere;
+            max-height: 420px;
             overflow-y: auto;
             border: 1px solid var(--border);
-            color: var(--text-secondary);
+            color: var(--text-2);
         }
 
-        .transcript-content.expanded {
-            display: block;
-            animation: fadeIn 0.2s ease;
-        }
+        .transcript-content.expanded { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Empty State */
-        .empty-state {
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
             text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-secondary);
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
         }
 
-        .empty-state h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.4rem;
-            color: var(--text);
-        }
-
-        /* Index Page Styles */
-        .day-list {
-            list-style: none;
-        }
-
-        .day-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            transition: border-color 0.15s ease;
-        }
-
-        .day-header-link {
-            display: block;
-            padding: 1.25rem 1.5rem 0.75rem;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .day-header-link:hover .day-date {
-            color: var(--accent);
-        }
-
-        .day-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .day-date {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--text);
-            transition: color 0.15s ease;
-        }
-
-        .day-count {
-            color: var(--text-tertiary);
-            font-size: 0.85rem;
-        }
-
-        .day-previews {
-            display: flex;
-            flex-direction: column;
-            padding: 0 1.5rem 1rem;
-        }
-
-        .day-preview-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid var(--border);
-            text-decoration: none;
-            color: inherit;
-            border-radius: 4px;
-            transition: background 0.12s ease;
-        }
-
-        .day-preview-item:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .day-preview-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .preview-title {
-            font-size: 0.88rem;
-            font-weight: 500;
-            color: var(--text);
-            line-height: 1.35;
-        }
-
-        .preview-meta {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-        }
-
-        .preview-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: var(--bg-tertiary);
-            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
-            border-radius: 14px;
-        }
-
-        .preview-channel-icon {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .preview-channel-name {
-            font-weight: 500;
-            color: var(--text-secondary);
-            font-size: 0.72rem;
-        }
-
-        .preview-channel-subs {
-            color: var(--text-tertiary);
-            font-size: 0.68rem;
-        }
-
-        .preview-details {
-            font-size: 0.72rem;
-            color: var(--text-tertiary);
-        }
-
-        .preview-tags {
-            display: inline-flex;
-            gap: 0.3rem;
-        }
-
-        .tag-sm {
-            padding: 0.1rem 0.45rem;
-            font-size: 0.65rem;
-        }
-
-        .preview-tldr {
-            font-size: 0.78rem;
-            color: var(--text-tertiary);
-            line-height: 1.45;
-        }
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
 
         footer {
             margin-top: 3rem;
-            padding-top: 1.5rem;
+            padding-top: 1.4rem;
             border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-tertiary);
-            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            .container {
-                padding: 1.25rem 1rem;
-            }
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
 
-            .video-header, .tldr, .summary-section, .transcript-section {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-
-            .video-title {
-                font-size: 1rem;
-            }
-
-            .transcript-content {
-                max-height: 300px;
-            }
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
         }
-        </style>
+</style>
 </head>
 <body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
     <div class="container">
-        <header>
-            <h1>Daily Briefing</h1>
-            <p class="subtitle">May 25, 2026</p>
-            <div class="stats">
-                <span><span class="stat-value">5</span> videos</span>
-            </div>
-            <nav class="nav-links">
-                <a href="index.html">&larr; All Briefings</a>
-            </nav>
-        </header>
 
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260523.html">&larr; May 23</a><a href="20260526.html">May 26 &rarr;</a></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Monday, May 25, 2026</h1>
+            <p class="day-sub">5 videos &middot; 5 channels</p>
+        </header>
+        <nav class="toc"><div class="toc-label">In this briefing</div><ol><li><a href="#video-0">CNA speaks with <strong>Nvidia</strong> CEO <strong>Jensen Huang</strong> | East Asia Tonight (May 25)</a></li><li><a href="#video-1"><strong>Demis Hassabis</strong> On What AI Will Do Next</a></li><li><a href="#video-2">How Silicon Valley Took Over the Defense Industry with <strong>Peter Arment</strong> | <strong>The Real Eisman Playbook</strong> Ep 61</a></li><li><a href="#video-3">Robinhood’s <strong>Baiju Bhatt</strong> on Launching Space-Based AI Data Centers</a></li><li><a href="#video-4">The First All Electric <strong>Ferrari</strong>, explained by its designers</a></li></ol></nav>
         <main>
-            
+
             <article class="video-card" id="video-0">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=VElWGgso2FY" target="_blank" rel="noopener">How Silicon Valley Took Over the Defense Industry with Peter Arment | The Real Eisman Playbook Ep 61</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Steve Eisman</span><span class="channel-subs">(175.0K)</span></span>
-                        <span class="meta-sep">·</span><span>68:05</span>
-                        <span class="meta-sep">·</span><span>27.4K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-05-25</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Steve Eisman (Host, The Real Eisman Playbook)</span> <span class="tag tag-person">Peter Arment (Aerospace and Defense Analyst, Baird)</span></div>
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=vj8717xBZ_M" target="_blank" rel="noopener">CNA speaks with Nvidia CEO Jensen Huang | East Asia Tonight (May 25)<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_n00DzE39o-4IFJ07IP3gG__TMqKxXXbwYaARinwTXTDFM=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNA</b><span class="subs">(3.2M)</span></span><span class="dot">&middot;</span><span>48:14</span><span class="dot">&middot;</span><span>18.2K views</span><span class="dot">&middot;</span><span>2026-05-25</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Jensen%20Huang%22">Jensen Huang<span class="chip-desc">CEO, NVIDIA</span></a></div>
                 </div>
-                <div class="tldr">The U.S.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-0">TL;DR   The U.S. defense sector is undergoing a massive shift as $66 billion in venture capital disrupts an over-consolidated, slow-moving military-industrial complex, while a parallel nuclear renaissance is driving overlooked growth for specialty suppliers.  The Atrophied...</div>
-                    <div class="summary-full" id="full-0">
-                        <p><strong>TL;DR</strong></p>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Nvidia CEO Jensen Huang affirmed the company's commitment to competing in China despite a vacuum created by US export controls that fueled Huawei’s rapid growth, while regional dynamics shift with key state visits, energy market fluctuations, and China’s historic Shenzhou-23 space mission.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0"></div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
+<p>Nvidia CEO Jensen Huang affirmed the company's commitment to competing in China despite a vacuum created by US export controls that fueled Huawei’s rapid growth, while regional dynamics shift with key state visits, energy market fluctuations, and China’s historic Shenzhou-23 space mission.</p>
+<h3>AI &amp; Semiconductors: Nvidia’s Strategy and China's Domestic Push</h3>
+<ul>
+<li><strong>Nvidia's China Commitment:</strong> CEO Jensen Huang clarified that Nvidia has no plans to step back from the Chinese market, despite US export restrictions severely limiting the company's growth.</li>
+<ul>
+<ul>
+<li><strong>Market Vacuum:</strong> Huang conceded that US bans on advanced AI chips left a market vacuum that Chinese companies like Huawei and local startups rapidly filled, leading to record-growth years for these domestic firms.</li>
+<li><strong>The "Five-Layer Cake" of AI:</strong> Huang described AI as a "five-layer cake," noting that Nvidia only competes in one layer. By continuing to participate in the Chinese market, Nvidia hopes to support the growth of the other four layers of the local ecosystem.</li>
+</ul>
+</ul>
+<li><strong>Huawei’s Lithography Workaround:</strong> Huawei announced a timeline to produce next-generation 1.4-nanometer chips by 2031, aiming to trail Taiwan's TSMC by only three years.</li>
+<ul>
+<ul>
+<li><strong>Logic Folding Technology:</strong> To bypass US sanctions that block access to advanced lithography tools, Huawei is using a design process called "logic folding." This approach makes chips faster by shortening internal component communication times rather than relying solely on shrinking transistor sizes.</li>
+</ul>
+</ul>
+</ul>
+<h3>Regional Geopolitics: Strategic Alliances in East Asia</h3>
+<ul>
+<li><strong>China-Pakistan Diplomacy:</strong> Chinese President Xi Jinping welcomed Pakistan's Prime Minister Shehbaz Sharif in Beijing, highlighting their "unshakable 75-year friendship" and thanking Pakistan for its role in mediating US-Iran tensions in the Middle East.</li>
+<ul>
+<ul>
+<li><strong>Economic and Corporate Ties:</strong> Sharif’s four-day visit concluded with the signing of $1.2 billion in corporate agreements in Hangzhou, involving major Chinese firms such as Alibaba and CATL.</li>
+</ul>
+</ul>
+<li><strong>Japan-Philippines Defense Alignment:</strong> Philippine President Ferdinand Marcos Jr. initiated a historic four-day state visit to Japan, meeting with Prime Minister Sanae Takaichi to upgrade bilateral relations to a "comprehensive strategic partnership."</li>
+<ul>
+<ul>
+<li><strong>Maritime Security Cooperation:</strong> Driven by mutual concerns over Chinese maritime assertiveness near Taiwan and the Senkaku/Diaoyu Islands, the two nations began laying the groundwork for a General Security of Military Information Agreement (GSOMIA).</li>
+<li><strong>Defense Acquisitions:</strong> The Philippines is actively exploring the acquisition of second-hand Japanese Abukuma-class destroyers, alongside participating in the joint Balikatan 26 military exercises.</li>
+</ul>
+</ul>
+</ul>
+<h3>Global Finance &amp; Energy: Oil Slumps, Japan's Budget, and Capital Crackdowns</h3>
+<ul>
+<li><strong>Hormuz Breakthrough Optimism:</strong> Global crude prices fell by roughly 5%, with Brent sliding to $97 per barrel and WTI to $91.80, following reports of progress in US-Iran talks to reopen the critical Strait of Hormuz.</li>
+<li><strong>Japan's $19 Billion Cushion:</strong> Prime Minister Sanae Takaichi announced plans to submit a $19 billion supplementary budget next week to fund household utility and gasoline subsidies. The emergency funding will be financed through new deficit-financing bonds.</li>
+<li><strong>China’s Capital Flight Crackdown:</strong> Beijing launched an aggressive campaign targeting unauthorized offshore investment services, prohibiting overseas firms from opening accounts or trading on behalf of mainland Chinese clients.</li>
+<ul>
+<ul>
+<li><strong>Hong Kong Liquidity Hit:</strong> Analysts estimate the regulatory clampdown could impact up to $32 billion of assets in Hong Kong, directly threatening the city's IPO market.</li>
+</ul>
+</ul>
+<li><strong>Plunging Consumer Credit in China:</strong> In a stark sign of weak consumer spending, Chinese citizens discarded 9 million credit cards in Q1. This extends a 14-quarter contraction from the peak in September 2022, compounding rising default rates for mainland banks.</li>
+</ul>
+<h3>Space Exploration: China’s Shenzhou-23 Mission and Hong Kong’s Historic Milestone</h3>
+<ul>
+<li><strong>Shenzhou-23 Launch:</strong> Three Chinese astronauts safely boarded the Tiangong space station after completing an automated, highly efficient three-hour docking sequence.</li>
+<li><strong>Hong Kong's First Astronaut:</strong> Payload specialist Lai Ka-ying, a former Hong Kong police officer with a PhD in forensic science, became the first Hong Kong citizen to join a Chinese space mission.</li>
+<ul>
+<ul>
+<li><strong>Scientific Role:</strong> Prof. Quentin Parker of the University of Hong Kong highlighted that Lai’s scientific and forensic background makes her uniquely suited to manage the complex array of 100+ microgravity experiments planned for the mission.</li>
+</ul>
+</ul>
+<li><strong>Year-Long Endurance Test:</strong> One of the three astronauts will be selected for a historic 12-month orbit. This extended mission is designed to study the physiological impacts of long-duration spaceflight as China prepares to land humans on the moon by 2030.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"When we were banned from going to China through export controls, it left a vacuum that the Chinese companies were able to fill... in our absence, available technology is the best you can get, and it's plenty good."
+— <strong>Jensen Huang</strong>, Nvidia CEO
+</blockquote>
+<blockquote>
+"China is going to be everybody's greatest rival. I mean, that goes without saying because they have such an extraordinary local market that is completely uniform, just like the United States."
+— <strong>Jensen Huang</strong>, Nvidia CEO
+</blockquote>
+<blockquote>
+"The Tiangong space station basically is one huge laboratory experiment... [Lai Ka-ying] is going to be in charge of many of those experiments. You need someone who can calibrate the equipment, operate it accurately and professionally, and troubleshoot on the fly."
+— <strong>Prof. Quentin Parker</strong>, Director at the Lab for Space Research, HKU
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">This is East Asia Tonight.
+
+Good evening, I'm Otelli Edwards. Tonight's top stories from East Asia. In a candid one-on-one with CNA, Nvidia boss Jensen Huang says that the company is not stepping back from the tech showdown between major powers, despite losing ground in China. But China's chip race is heating up, too. Huawei says that its latest design breakthrough could help narrow the gap with TSMC and produce advanced semiconductors within 5 years, despite US sanctions.
+
+It's confirmed: Japan's Prime Minister Sanae Takaichi is preparing a 19 billion US dollar supplementary budget to cushion the economic hit from surging costs linked to the Iran war. And Chinese President Xi Jinping has met Pakistan's Prime Minister Shehbaz Sharif in Beijing, as Islamabad says that US-Iran mediation has made significant progress and is moving in the right direction.
+
+Also tonight, a new batch of astronauts arrives at China's space station. One of them will call it home for the next 12 months. And rising to the occasion, competitors at Hong Kong's Bun Festival are on a roll in a century-old tradition to usher in an abundance of good luck.
+
+A US chip juggernaut, Nvidia, is standing firm on its commitment to doing business in China, where US export controls have limited its growth. Founder and Chief Executive Jensen Huang, in an interview with CNA, conceded that Chinese group Huawei has filled a void, but says that Nvidia continues to participate on many levels of the AI landscape. And for more, we are joined now by CNA senior correspondent Victoria Jen, who got a sit-down with the Nvidia chief a little earlier today. So Victoria, what did Jensen Huang have to say about Nvidia's relationship with China?
+
+Well, Jensen Huang made it very clear that Nvidia is not giving up on China. But he also said that US export controls have changed the market in a big way. Huang says restrictions on advanced AI chips created space for Chinese companies like Huawei and local startups to grow quickly. He said that even if Nvidia's technology is stronger, Chinese companies will use whatever is available and improve from there.
+
+At the same time, Huang stressed that Nvidia still believes that it can add value to China's AI market if it is allowed to compete there. Now, let's listen to what he has to say. But reports suggest that China hasn't purchased any of Nvidia's H200 chips, despite US export approval.
+
+&quot;We're not stepping back from China. I, I would say, I would say that the Chinese government, when we were banned from going to China through export controls, it left a vacuum that the Chinese companies were able to fill. And, as a result, Huawei and many of the startup companies in China had record years. They are now growing at an incredible pace.
+
+And, and, in our absence, even though Nvidia's technology is better, available technology is the best you can get, and it's plenty good. The Chinese government is, understandably, as every government would and should, encouraging and wanting to have conditions for their local companies to be successful. However, I also believe that Nvidia could add an enormous amount of value to the Chinese market.&quot;
+
+As it pushes for its own chips, could that actually, eventually make China your greatest rival?
+
+&quot;Well, China is going to be everybody's greatest rival. I mean, that goes without saying because they have such an extraordinary local market that is completely uniform, just like the United States. For China, Nvidia's technology competes with one layer of the five, of the five-layer cake.
+
+We compete with one layer of the five-layer cake, but don't forget, AI is a five-layer cake. And so, when Nvidia is participating in China and serving the Chinese market, as we have in the past, it supports the expansion of the other five layers. And so, when you look at the market in a more holistic way—and I surely believe that the leaders and the local market will, when they look at it in the holistic way—Nvidia could be of great service to that industry, and we could add a lot of value to the China market as well.&quot;
+
+What stood out is that Huang sees China as both a major opportunity and a growing competitor. He said China could become everyone's rival because of the size of its market and how fast its AI industry is developing. But he also argued that AI is bigger than just chips.
+
+Huang described it as a full ecosystem and said Nvidia still wants to be part of that growth in China. So his message was clear: restricting China may slow Nvidia's business there, but it could also speed up China's push to build its own AI industry. Otelli.
+
+Well, thanks for that for now, CNA senior correspondent Victoria Jen live from Taipei. Now, could AI lead to more job cuts, and can Taiwan maintain its strategic relevance in a global supply chain? Well, we'll be bringing you more insights from Victoria's interview with Nvidia's CEO later this hour.
+
+Chinese President Xi Jinping has thanked Pakistan for its constructive role in mediating peace in the Middle East during his meeting with visiting Prime Minister Shehbaz Sharif in Beijing. Calling the Pakistani leader an old friend, Mr. Xi says that Beijing is prioritizing ties with Islamabad among China's neighbors. And we've got Crystal joining us now live from Shanghai for more. Crystal, what are going to be some of the top items on the agenda during this meeting?
+
+Yeah, so we are just seeing some new lines coming in. State media reporting that during the meeting they said that they share an unshakable 75-year friendship and that China always values this close partnership. They plan to expand cooperation across various sectors, deepen bilateral ties, and agree that they will work together on security matters.
+
+Now, the Pakistan Prime Minister is the third leader from the country to have visited China in the last two months, signaling a very back-to-back top-level push. Earlier, the President visited Hunan and Hainan, and the Foreign Minister also visited in March at that time to discuss tensions in the Middle East.
+
+This meeting is coming as Pakistan is seeking support for its efforts to mediate the conflict between Iran and the US. Analysts say that Beijing would be reluctant to be drawn directly into the conflict, but would be willing to offer its support for peace efforts. And indeed, during the Foreign Minister's visit to Beijing in March, they had a five-point initiative. Foreign Minister Wang Yi at that meeting had also earlier asked Pakistan to step up its mediation efforts.
+
+So, Crystal, tell us why ties with Pakistan are so important to China.
+
+So, observers say that the timing of this trip, coming right after visits by the US and Russian presidents, helps China to signal its role as a global stabilizer. It shows that it is still prioritizing its core allies and the Global South. But both countries still face a balancing act, especially as the US steps up its outreach to Pakistan.
+
+Now, Pakistan is one of China's closest partners, supporting Beijing on a range of sensitive issues from Taiwan to Xinjiang, Tibet, and the South China Sea. In exchange, Beijing has invested billions into the country through CPEC. That's an economic corridor under China's Belt and Road project.
+
+So, the meetings today conclude Mr. Sharif's four-day trip. He was in Hangzhou earlier, which is a city about a 2-hour drive from Shanghai. In Hangzhou, he met with companies such as Alibaba and CATL, signed a sister province agreement, and other agreements worth 1.2 billion dollars. Otelli.
+
+Oh, Crystal Chia, live in Shanghai. Thanks for that report.
+
+Philippine President Ferdinand Marcos Jr. is set for a four-day state visit to Japan starting tomorrow. The leader has a packed itinerary, including holding a summit meeting with Japanese Prime Minister Sanae Takaichi, and also being welcomed by Emperor Naruhito and Empress Masako at the Imperial Palace. Now, for more on what would be Philippine President Marcos Jr.'s first state visit to Japan, let's bring in CNA senior correspondent Michiyo Ishida, who is speaking to us from Tokyo. Michiyo, what does Marcos's state visit to Japan indicate about relations between Japan and the Philippines?
+
+Well, a Japanese government official told me that it's a relationship between like-minded nations, and basically, Japan has just one state visitor a year. Last year it was President Luiz Lula of Brazil to celebrate 130 years since the establishment of diplomatic relations with Brazil. And, with the Philippines, Japan celebrates 70 years since normalizing relations.
+
+Now, another reason to host Mr. Marcos this time with the highest possibility of hospitality is that the Philippines is ASEAN Chair. Also, Japan positions the Philippines as an important partner to achieve its ambition of a free and open Indo-Pacific, which is a concept introduced by then-Shinzo Abe, the former Prime Minister, 10 years ago.
+
+Media reports suggest the two countries will upgrade their relationship from a strategic one to a comprehensive strategic partnership. This is regarded as the highest-level relationship with another country for the Philippines.
+
+And, when Marcos meets Takaichi, what sort of topics are likely to dominate their conversation?
+
+Well, actually, President Marcos talked to Japanese media ahead of his Tokyo visit. He said discussing security cooperation is vital. Now, this includes information, technology sharing, and joint drills. One significant exercise the Japan Self-Defense Force is participating in for the first time is a multinational drill, which includes the Philippines, called Balikatan 26.
+
+Now, Japan for the first time tested its Type 88 ground-to-surface missile system outside of its own country. And if you recall in April, Prime Minister Takaichi's government decided to ease its transfer of defense equipment. Mr. Marcos told Japanese media he wished to know the Japanese government's thinking behind this.
+
+Now, Tokyo thinks the Philippines is interested in acquiring Japan's second-hand Abukuma-class destroyer. So far, under Japan's Official Security Assistance program, the Philippines received a coastal and air surveillance radar system.
+
+And this year, Japan will help construct boathouses and slipways for rigid hull inflatable boats, which Japan has previously offered. To improve information and technology sharing, sources say the two countries will start to lay the groundwork for GSOMIA, or the General Security of Military Information Agreement.
+
+Now, both Japan and the Philippines face common security concerns when it comes to China. Philippine boats have been harassed, and in and around Okinawa's Senkaku Island, which China also claims and calls Diaoyu, Chinese and Japanese coast guard vessels have been watching over each other. Whatever may happen in the Taiwan Straits could impact the security environment for the two countries as they are both geographically close.
+
+Many thanks for unpacking Japan-Philippines ties, CNA senior correspondent Michiyo Ishida live from Tokyo. Staying in Japan, more than a dozen people were taken to hospital after a man sprayed an unknown substance in a crowded area in Tokyo. Well, the incident happened on the first floor of the Ginza Six luxury shopping mall. At least 25 people reported feeling unwell, many complaining of a sore throat.
+
+The fire department sent more than 50 vehicles to the scene. Japanese broadcaster NTV says the security footage showed a man in a dark jacket and white pants spraying what appeared to be tear gas. Tokyo police are now trying to identify and locate him.
+
+匂いなし。色もなし。もう急に近づい、まあ５メートルぐらい近づいたら、喉が痛くなって、むせて咳が出た。
+
+Coming up on East Asia Tonight, oil future prices extending their declines on hopes of a possible deal between the US and Iran to reopen the Strait of Hormuz. And millions of Chinese are cutting up their credit cards in another sign of weak spending and a growing pain for banks already facing rising defaults.
+
+Hello again. You're watching East Asia Tonight, and we've got Olivia Marzuki joining us now for the latest in business. Liz, big moves apparently in oil markets to start this week, and we're seeing crude prices falling sharply apparently. Tell us more about that.
+
+Yes, Otelli, so energy traders are reacting to the fresh progress in US-Iran talks, and with the signs of that progress, oil prices are extending their declines on hopes for a possible deal between the two sides to reopen the Strait of Hormuz. Brent is now hovering at levels of 97 dollars a barrel, and WTI is at 91.80. Both contracts are falling around 5 percent, easing from recent highs sparked by the effective closure of the key energy corridor.
+
+Optimism is building over a possible diplomatic breakthrough. US Secretary of State Marco Rubio said a deal could be announced as early as today, although several sticking points remain unsolved. There are reports of ships starting to move towards Hormuz in anticipation of a deal that would reopen the critical waterway. But analysts say that even if oil prices fall back on a deal, any sustained drop in oil prices will depend on production and refining facilities returning to pre-war operating levels.
+
+Optimism for a deal to end the war in Iran is boosting demand for risk assets in the region. Japan's Nikkei 225 surged past the 65,000 level for the first time, ending the day nearly 3 percent to the upside. Mainland China stocks closed higher as well, lifted by the coal sector.
+
+The country's worst coal mine disaster in 17 years raised expectations that stricter safety, security, and scrutiny would tighten supply in China. Semiconductor shares were also among the top gainers in the market in Greater China.
+
+Japanese Prime Minister Sanae Takaichi says her government will submit a supplementary budget of around 19 billion US dollars as early as next week. It is looking to relieve households of the burdens of rising energy costs brought on by the war in Iran. And that includes around 3 billion dollars from contingency reserves to fund utility subsidies.
+
+Japan has also been extending separate subsidies to keep gasoline prices steady. Miss Takaichi also announced a new fund that will be used to support measures to keep fuel prices affordable, among other things. The government has been dipping into its reserves to fund existing measures, and economists have been warning for weeks that the money is about to run out.
+
+But the PM is playing down the likely impact on government finances, saying that the extra budget will be financed by new deficit-financing bonds, which could be implemented without affecting the bond market.
+
+Investors are rushing to find alternatives to buy and sell overseas equities after China began an unprecedented campaign against illegal cross-border trading to stem capital outflows. And this comes after eight regulators issued a joint statement last week vowing a campaign against these trades. The government is going after unauthorized offshore investment services that have been targeting investors on the mainland.
+
+Under the new plan put out by the country's top securities regulator along with other government bodies, overseas firms will no longer be able to open accounts for Chinese clients, carry out trades on their behalf, or move their money across borders. And it's not just foreigners and foreign firms in the crosshairs; domestic firms could also face action if they're caught helping these offshore operators.
+
+The fallout is likely to spread to Hong Kong as it threatens to curb the city's liquidity and its booming IPOs. Citic Securities estimates that the clampdown could affect as much as 32 billion dollars of assets in Hong Kong. The clampdown triggered a swift reaction in markets last week, with the Nasdaq Golden Dragon China Index slumping 2.2 percent at close on Friday. US-listed shares of broker Futu Holdings also closed down 27 percent, with more than a quarter of its market value wiped out.
+
+Huawei says it has found a new way to make advanced chips, one that could help it work around US restrictions. The Chinese tech giant has been under US sanctions since 2019, cutting it off from key technologies used to make the world's most advanced semiconductors. But Huawei says it can now produce next-generation 1.4-nanometer chips by 2031. That would trail Taiwan's TSMC, which aims to reach that level by 2028.
+
+China is generally viewed as unlikely to reach that level through conventional manufacturing alone because of limited access to advanced lithography tools and other key semiconductor technologies. So instead of making transistors smaller, Huawei says it can make chips faster by shortening the time it takes different parts of a chip to communicate. The company says the approach is feasible, affordable, and able to compete with conventional chipmaking.
+
+Its next chip, Kirin, due later this year, will be the first to use a related design called logic folding, which would improve performance considerably. Analysts say that the move signals Huawei's ambition to lead in the global chip race and could raise new concerns in Washington.
+
+Millions of Chinese are giving up their credit cards as the economy continues to be dogged by weak consumer spending. A report by the People's Bank of China showed that the number of credit cards owned in the first three months of the year dropped by 9 million from the preceding quarter, extending a 14-straight-quarter decline from the peak in September 2022.
+
+This decline is impacting banks' profits, who are also facing higher default risks as the non-performing loan ratio rises. Some banks have also tightened criteria for issuing new cards. Only about 40 percent of Chinese own credit cards, and the market faces competition from e-payment systems like Alipay and WeChat Pay.
+
+International issuers are also finding it hard to maintain a foothold in China, with HSBC pulling its credit card operations in 2024, citing difficulties in achieving profitability.
+
+And that's all I have in business, Otelli, back to you.
+
+Oh, thanks, Liz. Olivia. Right, on that note, we are going to go for another break now, but coming up on East Asia Tonight, we'll be hearing more from Nvidia's Jensen Huang, including his scathing pushback against CEOs who blame job cuts on AI.
+
+Three Chinese astronauts from the Shenzhou-23 mission have safely arrived at the Tiangong space station, following a lengthy docking process that lasted some three hours. They were welcomed by the Shenzhou-21 crew, kick-starting a crew handover process which could last a week or more, where they will be working together to transfer station management and supplies needed in the coming months. The Shenzhou-23 spacecraft lifted off as scheduled last night from the Jiuquan Satellite Launch Center in Gansu Province.
+
+The crew includes flight engineer Zhu Yangzhu, pilot Zhang Zhixian, and payload specialist Lai Ka-ying, a former Hong Kong police officer and the first astronaut from the city to join a Chinese space mission. Prior to lifting off, the three-member crew were given a send-off at a ceremony at the launch center. China's Space Agency says the astronaut selected for a year-long stay in orbit will be announced later, depending on the mission's progress. Now, the extended flight would mark a record duration for China, allowing scientists to study the effects of long-duration spaceflight on the human body.
+
+中國載人航天一路走來，從一人一天到多人多天，到現在即將突破一年期的在軌駐留。這一個又一個全新的首次，串起了中國航天事業一次次發展突破的步伐。
+
+Well, the mission is also part of China's preparations to send humans to the moon by 2030, amid an accelerating space race with the US. The outgoing Shenzhou-21 crew is expected to set a new record for China's longest crewed spaceflight, having already spent more than 200 days in orbit.
+
+任務的主要目的是，與神舟二十一號乘組完成在軌輪換，繼續開展空間科學與應用工作，實施航天員出艙活動及貨物進出艙，進行艙外載荷和艙外設施設備安裝與回收等任務。開展科普教育和公益活動，以及空間搭載試驗，持續發揮空間站綜合應用效益。
+
+Right, for more, we are joined now by Professor Quentin Parker, Director at the Lab for Space Research at the University of Hong Kong. Well, thanks, Professor Parker, for joining us yet again. So, I know that you've championed the historic inclusion of Hong Kong payload specialist, Lai Ka-ying, on the Shenzhou-23 flight. What does this moment actually say about Hong Kong's place in China's space ambition?
+
+Well, I think it shows that a city like Hong Kong has what it takes to be part of it. I think this was a strategic decision for both Macau and Hong Kong to have taikonauts trained under their taikonaut program. And Lai Ka-ying—I should pronounce that properly, it's in Cantonese—is the first Hong Konger, born and bred, to be part of that program. So that's extremely significant for our city.
+
+She's actually an expert payload specialist because she's come from a forensic science and computing background. And this is what she did in the police force. She's actually a graduate of Hong Kong U, my university. She did her Master's and PhD there, and so that was very proud for my university as well. So this is a very proud moment for our city.
+
+I think she's going to perform extremely well as a payload specialist. She's not from a military background, so it's almost like another civilian going into the space station. That's the second one, actually; there was another one a little earlier. So this is a really important milestone for our city.
+
+She's only the fourth woman, as well, to go into space from China, and so there are many firsts here. And I should just make a little point about, you know, you said a long docking. In fact, three and a half hours is really short. It takes almost 16 to 19 hours for the International Space Station crew to dock. And China's kind of automated it, and it's actually really efficient now.
+
+Right, thanks for that clarification there, Professor Parker, we can always count on you on that. I want to pick up on what you said about you saying that Hong Kong has what it takes. So, Ka-ying, she's going up as a payload specialist, not the commander, not the pilot. So, for viewers who may not understand, viewers and myself who don't understand the distinction, what does that actually tell us about the kind of expertise Hong Kong is actually bringing to this mission?
+
+Well, it's the training as a forensic scientist. You know, the attention to detail, they are able to do tasks repeatedly and accurately. Don't forget that the Tiangong space station basically is one huge laboratory experiment, you know. There are about 100 experiments planned for this particular mission.
+
+There have been many experiments done in previous Shenzhou missions, of course. And so this is a very important part of the overall space program for China, to use the microgravity environment on board such a space station to do all sorts of very valuable investigations into material science, manufacturing in space, growing things in space, physiological things that you can do, drug development, 3D printing, so many different things that the Chinese scientists and international scientists, by the way, who have payloads on board, do for this process.
+
+And so she is going to be in charge of many of those experiments. You need someone who can calibrate the equipment and operate it accurately and professionally. If there's a problem, fix it, you know, and know how to gather the data accurately and properly. And all these kinds of things require someone that has the right skill set professionally, scientifically, and has the ability to work on the fly sometimes, troubleshoot, and get things going.
+
+And so, across a broad range of different kinds of experiments as well, so she's done all the training for that, and her work as a forensic scientist has put her in very good stead for that, I would say.
+
+So there is a much bigger endurance test in this mission because one astronaut will be staying in orbit for a full year. Firstly, could Lai Ka-ying be that person, and secondly, what does this year-long mission allow China to test that a six-month mission cannot?
+
+Very good question. And first of all, you know, just statistically, you've got a one-in-three chance of being picked. But it won't be on the basis of chance. China is extremely careful, assiduous about what it does, especially in space. And so they'll be looking at the overall performance of every taikonaut on board, but particularly they'll be looking at the physiological effects of space on each individual.
+
+They'll be taking, you know, medical records continuously of these taikonauts, I would say, and they'll be looking at overall who they would recommend based on the overall body of evidence and data that they've collected over the next few months or weeks until they decide, &quot;Well, we think overall that this particular taikonaut is best suited to maximize what we will learn going forward.&quot;
+
+So, a whole series of different decisions that will be made to come up with the final decision. I mean, they're all suitable, because they've all been chosen—it's a very competitive program. You have to be super good even to get on board and fly in space to start with. And so, of course, Lai Ka-ying has passed everything with flying colors, I heard.
+
+It's been an accelerated program of training for her to get to the stage where she's now already on board, you know, on the Tiangong space station after Shenzhou-23 got there. So it's very exciting for her. I'm sure she has a family. I know she's a mother of three as well, so she's got a lot going on. And this is perhaps one of the most exciting and important things she will have ever done in her entire life.
+
+And so, that's a very important milestone for her personally. But if she was to be selected to be out there for a year, that's even more significant. And, you know, it's not like that's the first human to have spent more than a year in space. The Russians have done it, and, of course, you learn a lot.
+
+Six months your body changes. You start to lose muscle mass, you start to lose calcium from your bones. So after a year that process progresses more, and so, when you've seen probably pictures of those taikonauts and cosmonauts who have been up there for many months and when they come down, they're very weak. They need time to adjust to gravity.
+
+So the thing is, the difference between then and now, after many years since an astronaut, taikonaut, or cosmonaut, however you want to call it, spent such a long time in space, our ability to measure things more accurately, the kinds of tests we can do, has gone on in technology, and medical science has progressed. So what we can learn now is probably a little bit more than you could have learned by doing those same tests 10 years ago, for example.
+
+So I think that's an important difference about this, you know, and also it can validate life support, it can look at the human physiology over a year's timeline in space rather than six months. And it can, of course, also show that for the lunar bases that are planned, you're going to have taikonauts on the moon for extended periods of time also in lower gravity—not as low as in microgravity, of course, but 1/6 of the earth on the moon.
+
+But nevertheless, this is part of the understanding, and China needs to have its own data. You know, it can get data from the other missions that have been done in the past by the other space powers, but getting its own data, validating its own data, doing things in its way with its technologies is very important for their understanding, and for their progress, and for their planning.
+
+Well, fabulous insights as always. Thank you so much for unpacking China's big space mission, Professor Quentin Parker, Director of the Lab for Space Research at the University of Hong Kong.
+
+Right. And, just before we go, we are going to take you to Hong Kong, where one of the city's quirkiest traditions has taken over the island yet again. Now at the stroke of midnight, a dozen climbers raced up a 14-meter tower in the annual Cheung Chau Bun Festival. Nine men and three women had just three minutes to grab as many buns as possible, with those placed highest worth the most points and believed to bring the greatest luck.
+
+Well, the contest is one of Hong Kong's oldest traditions held on the outlying island of Cheung Chau. Residents have celebrated it for more than a century to ward off disaster and pray for peace and good fortune. The competition was suspended after a tower collapse in 1978, injuring dozens, before returning in 2005. It was later paused during the COVID-19 pandemic and resumed in 2023.
+
+And this year's newly crowned Bun King and Bun Queen were all smiles after defending their titles.
+
+今年係好開心啦，因為今年係我玩咗第十一啦，係最激烈競爭嘅一年。原因係佳恩喺我隔籬啦，左邊係前包山王，所以都好緊張。我嘅目標就係快過佢哋上頂啦，機會大啲，咁我都做到，所以好開心。同埋今年係連續第三年贏，所以就更加有一份喜悅啦。
+
+第十一啦，攞冠軍，我覺得都好難得嘅。其實我頭先個狀態，我覺得係有啲攰，可能等得太耐啦，同埋開始嘅時候有少少失手，好彩跟住拿捏返上返去，追返上去，拿返足夠嘅九分包啦。
+
+Well, I hope you've enjoyed Monday's edition of East Asia Tonight. And don't forget your headlines, anytime at cna.asia, and look us up on all socials including Facebook and YouTube. Thanks for watching and, see you again tomorrow.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-1">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=huAwz_BR8WM" target="_blank" rel="noopener">Demis Hassabis On What AI Will Do Next<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.googleusercontent.com/ytc/AIdro_ljAkSpv16cJNUsE_rI1X-Kz9s78w1WNojUga-aZ1uVzEQ=s900-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Two Minute Papers</b><span class="subs">(1.8M)</span></span><span class="dot">&middot;</span><span>21:28</span><span class="dot">&middot;</span><span>126.1K views</span><span class="dot">&middot;</span><span>2026-05-25</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Demis%20Hassabis%22">Demis Hassabis<span class="chip-desc">CEO, DeepMind</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>DeepMind CEO Demis Hassabis projects that AI could help cure all diseases within the next 10 to 20 years by utilizing a suite of &quot;AlphaFold-level&quot; models, while advanced AI tools like &quot;Co-Scientist&quot; are beginning to transition science toward closed-loop automated physical discovery.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1"></div>
+                    <div class="sum-full" id="full-1"><h3>TL;DR</h3>
+<p>DeepMind CEO Demis Hassabis projects that AI could help cure all diseases within the next 10 to 20 years by utilizing a suite of "AlphaFold-level" models, while advanced AI tools like "Co-Scientist" are beginning to transition science toward closed-loop automated physical discovery.</p>
+<h3>AI-Driven Drug Discovery &amp; The 10-20 Year Cure Horizon</h3>
+<ul>
+<li><strong>The Ultimate Timeline:</strong> Hassabis stands by his prediction that AI-assisted platforms can help cure all diseases within the next 10 to 20 years, stating that no laws of physics prevent this timeline.</li>
+<li><strong>Isomorphic Labs Platform:</strong> Rather than relying solely on protein folding, DeepMind's spin-out is building a comprehensive drug-discovery engine.</li>
+<ul>
+<li>The team is developing 6 to 12 "AlphaFold-level" models targeting distinct stages of the drug discovery pipeline.</li>
+<li>Future models will focus on biochemistry compounding, predicting absorption/toxicity (ADME properties), and modeling drug interactions within the human body.</li>
+</ul>
+<li><strong>Clinical Trial Acceleration:</strong> Hassabis notes that AI can drastically speed up the clinical trial bottleneck by better stratifying patient groups and predicting optimal dosages.</li>
+<li><strong>Regulatory Evolution:</strong> Trust in AI-designed drugs will require an initial batch of successes.</li>
+<ul>
+<li>Once approximately 10 AI-designed drugs successfully clear traditional clinical trials, the retrospective data will allow regulators like the FDA to safely streamline, skip, or replace certain traditional testing steps.</li>
+</ul>
+</ul>
+<h3>"Co-Scientist" &amp; The Path to Closed-Loop Discovery</h3>
+<ul>
+<li><strong>The Co-Scientist Assistant:</strong> Currently deployed as a fine-tuned version of Gemini, Co-Scientist operates with specialized harnesses to assist researchers.</li>
+<ul>
+<li><strong>Core Capabilities:</strong> It is optimized for hypothesis generation, complex data analysis, and literature summarization.</li>
+<li><strong>Self-Improvement:</strong> Early versions of these tools have already been used to optimize computer science algorithms, such as finding more efficient matrix multiplication techniques.</li>
+</ul>
+<li><strong>The "Einstein Test" for AI:</strong> To prove true scientific creativity, Hassabis proposes a historical back-test.</li>
+<ul>
+<li>By setting an AI's knowledge cutoff to 1901, researchers can test if the model can autonomously replicate Einstein's 1905 *annus mirabilis* breakthroughs (such as special relativity).</li>
+<li>Success in this test would indicate that the AI is capable of generating paradigm-shifting theories (e.g., post-string theory) when trained on modern data.</li>
+</ul>
+<li><strong>Overcoming the Physical Verification Bottleneck:</strong> Recursive self-improvement loops work rapidly in math and coding because digital verification is instantaneous. Natural sciences require physical validation in the world of atoms.</li>
+<ul>
+<li>DeepMind is addressing this by building an automated material science lab in London.</li>
+<li>This lab will physically test a repository of 200,000 AI-designed materials, which potentially contain new superconductors. </li>
+<li>Hassabis expects robotics to be advanced enough in 18 to 24 months to support broader automated physical validation loops.</li>
+</ul>
+</ul>
+<h3>Gaming Sandbox: The EVE Online Partnership</h3>
+<ul>
+<li><strong>AI Proving Ground:</strong> DeepMind has partnered with CCP Games, creators of the massive multiplayer game *EVE Online*, to utilize the game's complex player-driven universe as an AI sandbox.</li>
+<ul>
+<li><strong>Strategic Focus:</strong> The project will study how AI agents interact with functioning player economies, complex alliances, and deep storytelling.</li>
+<li><strong>Agent Roles:</strong> Early-stage exploration includes deploying AI agents to actively assist human players or utilizing AI as an automated "games master" to dynamically drive game narratives.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"We're building... another half dozen to a dozen AlphaFold-level models that are on different parts of the drug discovery process... Then we may have a platform that can be applied to almost any disease area." - Demis Hassabis on the future of Isomorphic Labs
+</blockquote>
+<blockquote>
+"If you took [an AI] back to 1901 with a knowledge cutoff, could it have invented Einstein's annus mirabilis of 1905? If it was able to do that, then presumably you could turn that model—trained on all modern-day physics—and ask it for something better than string theory." - Demis Hassabis on testing AI's scientific reasoning
+</blockquote>
+<blockquote>
+"For most of the science domains, the verify step is going to require some physical verification... The question is: what's the bottleneck in the discovery loop? Is it the hypothesis generation or the validation step?" - Demis Hassabis on the limitation of purely digital AI models
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">Weak and easy questions. Please try to answer in one sentence, sometimes one word. Oh, wow. That's hard. Feynman or Newton? Oh, wow. That's even harder. 
+
+Demis, I don't know if I told you, but my mother recently got some health scan results. It was a massive video file, and we had to wait for weeks for the evaluation, and we were really anxious. And then I thought, wait, Gemini, long context, you know, why not give it a look? 
+
+And it analyzed the scan and said, &quot;Don't worry, it's fine.&quot; And later, the doctor verified that. Fantastic, it nailed it! And I am really grateful for that, and I was about to say thank you. Mhm. 
+
+But in the meantime, you also released Gemma 4, a free local AI that can likely do the same with a little compassion. I just wanted to say these are a gift to humanity, and thank you so much for doing this for the little man. 
+
+Fantastic. Well, I'm glad to hear that. I'm glad to hear your mom's fine. We've had a lot of anecdotes like that of people using Gemini for health reasons and actually, in some cases, receiving life-saving advice. So, I think it's an incredible use case, and I'm glad it helped. 
+
+Yeah. Yeah. Thank you very much. Now, Jensen Huang of Nvidia says that he uses LLMs as a confidant for decision-making. What about you? Do you use Gemini for things beyond research? 
+
+Yes, I don't use it quite as a confidant yet, although maybe at some point I will. I use it a lot for brainstorming—so, you know, project ideas, project names, creative ideas. I quite like it as a kind of sparring partner for that, and that's probably the main use. 
+
+And then I also use it to look at and summarize some new area of research, some new body of research I'm not so expert in, but I want to get a quick take on the main key points. Do you use it to get your ideas criticized? Like, fire up DeepThink, mathematical Olympiad, and say, &quot;Now criticize my idea&quot;? 
+
+Yes, I have. Yes, I mostly use it for helping me kind of think through some of the steps I've been thinking of as well. I mean, I guess you could call it critiquing it, but I try to use it in a more collaborative frame. Maybe I should try it with more of a &quot;Be harsher, come up with the flaws in this&quot; approach, but I definitely use it as a kind of sparring partner. 
+
+Amazing. Now, when I heard you got the Nobel Prize, I thought, finally some proper recognition for Theme Park AI. Exactly, exactly—took a while. Yes, and then I heard John Jumper say something that really stuck with me. 
+
+He said that he's looking forward to seeing someone use your AlphaFold technique to invent something to win the prize. I thought, let's call it the second-order Nobel. Yeah, so, do you expect that to happen? 
+
+Second-order Nobel—that's a really interesting idea. I think it's possible given the number of researchers who are using AlphaFold, you know, over three million at this point, and they're all doing incredibly important work and impactful work. So, yeah, I guess John's right, that may happen at some point. That would be an amazing moment. 
+
+Amazing. Now, you have a system called Co-Scientist that can invent new things. Can you tell me about it? Yeah, you can think of Co-Scientist as a sort of fine-tuned version of Gemini that is specifically equipped with extra tools and extra harnesses on top. 
+
+It is specific for helping with hypothesis generation, helping you analyze data, and helping you summarize literature as well. So, it's the beginnings of almost like having a great research assistant that's helping you in your daily work. It's incredible. 
+
+By the way, with the new hypothesis generator, they also tried it. Oh, great. Gave it some ideas. Yes. And then it was interesting because it wants you to narrow down the idea. 
+
+Because you just say something, and then the result was absolutely amazing. Like, we had to wait the eight hours, and then I was like, &quot;This is incredible.&quot; And I tried it on my original area, ray tracing global illumination—very little training data, very few people do that. 
+
+So, I think it's pretty cool to see it perform on that, and it came back with some interesting, sensible ideas that helped you. Okay, I wish—I wish I had more time. Me too, me too. 
+
+This is the problem, is actually finding the time now to do that. We almost need, I feel like we almost need really good AI assistants to help deal with our admin work. We have to do all of that stuff so we have more time for using Co-Scientist. Right, this is my dream too. 
+
+On April 20th, 2025, you said, &quot;I think one day, maybe we can cure all disease with the help of AI, maybe within the next decade. I don't see why not.&quot; When I saw that, I got so excited. I made a website for that. Oh, cool. Curealldisease.com. Okay. 
+
+And I have some data in there, and I wrote, &quot;Check back often because I will update it with new data.&quot; Fantastic. And never updated. Yeah, well, we're working hard. 
+
+No, yeah, but it won't be—it won't be a gradual thing. It'll be more like AlphaFold, which is the way I'm thinking about it. We're building Isomorphic Labs, and also our spin-out, and also at DeepMind as well in our science group, more and more tools. You can think of it as building a platform. 
+
+You know, AlphaFold's one of the components of that—the advanced versions of AlphaFold. But as you know, protein structure is only one component. It's an important component, but it's only one step in the drug discovery process. 
+
+So, we're building, you can think, another half-dozen to a dozen AlphaFold-level models that are on different parts of the drug discovery process. And then we've got to put that all together and, of course, test it on some disease profiles, which is what we're doing now in the preclinical stage. 
+
+And then once we've proven that out, which I think will take a few more years, then we may have an engine that can be applied to—you know, a platform that can be applied to almost any disease area. That's the hope. 
+
+So, a bit like with AlphaFold 2, you know, you get it accurate enough, and then suddenly you can fold all 200 million proteins in one year. So, it's going to be more like that. So, you may not have any updates on your website for a few years, and then suddenly, I hope, there will be some big breakthroughs where then you'll have—you know, you won't be able to—you'll have to update it every day. 
+
+Okay. I think I've heard something similar from Watson's talk. He said that the process is going to be exponential. Mhm. And then at year five, they said that, &quot;Well, you're only at, I don't know, 8%. What are you doing?&quot; And he said, &quot;No, that's fantastic. I mean, if it's doubling every year, we are way ahead.&quot; 
+
+Yes, he may have been referred to by the Genome Project, probably, or the Human Genome Project. That's exactly right. And we've already seen this once with AlphaFold. So, we need to replicate that success. Obviously, it's much, much more complex. 
+
+And I also meant by that as well that we would potentially have a platform that could come up with those potential cures. You still would need to test them in the clinic and go through that process. That could still take more time. Speed that up. 
+
+I think actually AI could also help with that, too. Like, stratify patients, maybe predict dosages better, all of those things. So, I actually think AI could probably speed that up, too. 
+
+So, there's two parts, you know, to drug discovery. You've got to do the drug discovery process, and then you've got to do the clinical trials. Right now, we're focusing on the first part, but I think AI could also help with the second part. That's when we would then have a step-change in human health. 
+
+So with that, I think we are on track, right? So, cure all disease in nine years? You know, I won't say specifically, roughly that kind of time frame. But I think in the next 10 to 20 years, there's—I don't see any laws of physics that prevent that, right? Yeah, think entropy. Yeah, exactly. 
+
+And when I read drug discovery papers—it's not my area, but I get really excited. And then I ask an expert, and they say, &quot;Yes, exactly what you said, that's just one step and there's a thousand other steps.&quot; Yes. So, I'm wondering: what can we now do with AI that we couldn't before in drug development? 
+
+Well, I think the kind of things we're working on—so, there's obviously advanced versions of AlphaFold. You can imagine we can predict lots of interactions now. So, not just a static picture of a protein: proteins interacting with other proteins, proteins interacting with molecules. 
+
+And then the next hard parts are then predicting what is it going to do in the body. So, you know, where does it bind to? Are there—what's the ADME properties, absorption, and toxicity? All of these things, which end up being side effects. 
+
+So, we've got to build models that predict all of these different things and then put that all kind of all together, as well as like kind of biochemistry models of like what exact compound would you design, and how is it going to be made, and how and where—how will it bind to the particular pocket or whatever it is that you're targeting in the protein. 
+
+Mhm. My impression is that there's a lot of things in drug discovery that we cannot do at the moment, and we will be able to do with AI, like as of now and whatever follows. What are the things that we cannot do at the moment, and you see that that's maybe not changing? I don't know, maybe something about regulations that, you know, evades physics basically? 
+
+Regulations—obviously, that's a bit outside the scope of AI to help with. But what I hope with there, you know, if you think about regulations, FDA, these types of things, obviously they're an incredibly important part of the process, but they could be sped up, like we were saying earlier, with more evidence. 
+
+Once a few AI-designed drugs, I think, get through the whole regulatory process, then you might have enough data. Say there's 10 AI-designed drugs and nine of them worked, right? Then you would be able to back-test. How accurate really were your models in their predictions? Which ones can you trust, which ones can't you? 
+
+And then that would be evidence to the regulator. I think that some of those processes could be sped up, and maybe some of the steps could be skipped or replaced with something more efficient. But I think it's going to require evidence first of all, that a few of these AI-assisted or AI-designed drugs get all the way through to actually help the patient in the probably traditional way, and then we can think about changing the way that that's done. 
+
+Maybe similarly to what we had with the mRNA vaccines, right? Yes, potentially. Right, so, you know, there was a new technique there, there was this emergency need obviously with COVID, and then that accelerated the tests and the trials on those things. 
+
+You know, that's one potential way it could go. But this is something about human health for the next, you know, next 10 centuries, right? We don't need to rush it in the next 5 to 10 years, but I just think what I see is such exciting technology coming down the road. I just think anything may be possible. 
+
+That's incredible. Now, as a former player, can you tell me a bit about your new partnership with the EVE Online game? Oh yes. Oh, you're a former player? Oh, yeah. Okay, fantastic. Yeah, well, it's an awesome game, and I think its community is very special, actually. 
+
+You know, very rare. The community sort of builds the game, too, really, with the way they build their alliances and factions. It's an incredibly deep game, you know, a massive multiplayer. It's a whole universe, really, that's created not just by the game designers but also by the players. 
+
+And it has a functioning economy and really interesting, kind of dynamic storylines. So, we've admired their work for a long time. I know Hilmar, the CEO of the company, very well. We're good friends going way back to when I was still doing games, and we think it's a fantastic sort of sandbox, if you like, for testing out some interesting AI ideas that will help the gameplay. 
+
+It will be interesting to test out how it interacts with economies and the storylines and player alliances and things like that. So, it's going to be an interesting proving ground. I think it's fascinating for the game and the community, and also, they've always been at the cutting edge, really. 
+
+So, this is continuing that tradition, and then for us, it also continues in the tradition of DeepMind of using games as a safe kind of proving ground. Would the concept work in a way that some AI agents would be embedded, playing with the players? 
+
+Yeah, potentially, or maybe assisting the players. I think we're still in the early days of exploring that. We want to imagine, also, maybe it's almost like a games master that drives the storyline, as well. 
+
+That is so cool. Look, I cannot wait to see an AI bot get scammed in Jita. So, you'll have to start playing again. Yeah, and by the way, if you need someone to double your money... I know a guy. 
+
+You're the guy? Okay, look. All the others, those are scams. This one is guaranteed. We'll make sure our AI agent comes to you for that one. 
+
+Now, can you tell me a bit about the things that the Co-Scientist has invented already? My understanding is that it's not directly writing papers. Scientists are writing up the papers and—that's right. So, it's more like an assistant today rather than autonomously discovering things. 
+
+You know, maybe that's the next step, but right now it's assisting scientists and mathematicians in their work. I hope we'll be announcing some things pretty soon, but earlier versions of these types of systems were doing things like finding more efficient matrix multiplication, or like we used it for AlphaFold and other tools as well, for basically improving computer science algorithms. 
+
+So, it's kind of turning invention on itself to make itself more efficient, which is pretty cool. And I think, obviously, we're just putting it out there now, and we're just scratching the surface of what I hope we'll see the potential of it is going to be. 
+
+Now, wouldn't this be the ultimate Turing test of AI? Like, you have the Einstein test where you stop it at 1901 or somewhere else, and see if it can invent special relativity. Yes. Now, what about the Einstein test squared, assuming it's bigger than one? 
+
+So, the cutoff is today—like, invent something new that's a Nobel Prize-worthy thing. That's obviously what we would want. But in order to prove that that's the case, this Einstein test that I've been saying about—you know, if you took it back to 1901 with a knowledge cutoff, could it have invented Einstein's annus mirabilis of 1905? 
+
+He came up with four amazing papers, all breakthroughs in their different areas, right? Including special relativity. So, if it was able to do that, then presumably you could turn that model, obviously trained on all modern-day physics, and then ask it for something better than string theory, right? 
+
+And then maybe you should take quite seriously what it came back with. So, that would be the kind of back-test to show that that kind of system, those types of techniques, would be ready to actually invent new science. 
+
+I'm going to try to put in this one because I really want you to hear about this. Now, I'm thinking that in ray tracing research, we do a lot of Monte Carlo integration, and we pray to John von Neumann. Yes. And essentially, you get a noisy image from a module that we call a sampler, and then you pass it over to a denoiser. 
+
+So, you get a cleaner image. Now, that kind of works, but the best systems do more than that. They have a connection between the denoiser and the sampler. So, the denoiser actually tells the sampler, &quot;Hey, I want this image with more samples in the high-frequency regions,&quot; so that the denoiser can do a better job. 
+
+So, it's not two separate units anymore; it's fused into one unit. Now, what I'm thinking is: do you have something like this between the hypothesis generator and the verifier? 
+
+Well, that would be kind of like closed-loop automated discovery, right? If one could fuse that. Most of the frontier labs are working on trying to think about recursive self-improvement. 
+
+I think it could work in some domains like coding and math, because with the verifier, you can verify very easily and very quickly whether the answer is correct or making progress. And you can also generate synthetic data that way, as well. 
+
+So, I think it's a bit harder if it's a physical science or kind of natural science like physics, chemistry, or biology, where the verifier will probably also require an automated lab or something in the world of atoms, and that will obviously make the loop a lot longer. 
+
+We are thinking about things like automated labs in Isomorphic, and I think at some point we will do that. I'm waiting a little bit to see what type of data do we really need that we can't get from a CRO or something like that. And I'm also waiting for robotics to get a little bit more advanced, too, which we're doing at DeepMind. 
+
+So, that is going well. So, maybe in 18 months, 24 months, I could imagine setting up some kind of lab like that. We're actually doing one for material science. We're putting an automated lab together. 
+
+We're building one out in London because we have material designs. Actually, we're sitting on 200,000 designs of new materials which we don't know—there could be an amazing material in there, but we haven't got a way of testing that fast enough. There's some superconductors in there, all sorts of really interesting things. Sometimes hard. 
+
+Yeah, so, I think for those types of domains, most of the science domains, the verify step is going to require some physical verification. And then the question is, what's the bottleneck in the discovery loop, right? Is it the hypothesis generation, or is it the validation step? 
+
+So, it may not be so easy to do that kind of recursive self-improvement. The other issue is, even in math and coding—all of the frontier labs are kind of thinking about this—you've got to think about the safety of that type of process, because it's just sort of with no human in the loop. 
+
+Now, at the end, this is going to be a quick lightning round. Okay. Quick and easy questions. Please try to answer in one sentence, sometimes one word. Okay. Discrete or continuous mathematics? Hint, there's only one good answer. 
+
+Really? Okay. Well, I prefer discrete, but I don't know. You know, is that the right answer? For you, yes. For me? Yes. For me? Yes. Exactly. I think all of this is discrete. 
+
+Okay. Feynman or Einstein? Oh, wow. That's hard. Probably Feynman for me—my personal favorite. Okay. Feynman or Newton? Oh, wow. That's even harder. Maybe I have to go—maybe I have to go with Newton for my Cambridge connections. 
+
+All right. Favorite Two Minute Papers episode? Oh, wow. Okay. Oh, I love loads of your—I use it a lot to get up to speed with things. But I tell you what, I loved your AlphaFold videos. 
+
+I thought they were excellent, all of them. Some of the best explanations out there of how AlphaFold works. That is very kind. Thank you. Best Asimov novel? Foundation series. Yes, that's what was really influential for me. 
+
+Have you read the Robot series? Caves of Steel? No, I haven't, interestingly. Please. Yeah, I just read the Foundation series. So, that's—but I should probably read the robot ones, too. 
+
+Please. And now, Sir Demis Hassabis, a knighthood is one thing. But for your contributions to humanity today, I shall bestow upon you the Two Minute Papers badge of honor. Oh, wow. You're the first scientist to ever receive it. 
+
+Amazing. So, with that said... Oh, thank you very much. Thank you very much. I will wear it with pride when I'm watching all your videos. Awesome. Thank you, Demis. Thank you so much. I learned a lot today. So much fun. Yeah. Thank you so much, and thanks for the badge. Brilliant. 
+
+Now, this is me from back home with some behind-the-scenes footage, literally, because you can't see us properly. Okay, better now. So, this was a huge honor and a dream come true. I can't believe that I got to be there. But what happened afterwards? 
+
+Well, I put this pillow on the table and told Demis that I couldn't get a proper one. So, I asked, &quot;Want to see the other side?&quot; And this is what it looks like. And when I showed him, there was huge laughter, which unfortunately we couldn't get on camera. 
+
+However, Lucy Collyer was in the room and shot a photo of it. So, check it out. Thank you so much. If everything goes well, the next interview is Jeff Dean. So, subscribe and hit the bell if you enjoy this and would like to see that too. 
+
+Here you see me running the full DeepSeek AI model through Lambda GPU Cloud. 671 billion parameters running super fast and super reliably. This is insane. I love it and I use it on a regular basis. 
+
+Lambda provides you with powerful NVIDIA GPUs to run your own chatbots and experiments. Seriously, try it out now at lambda.ai/papers or click the link in the description.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-2">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=VElWGgso2FY" target="_blank" rel="noopener">How Silicon Valley Took Over the Defense Industry with Peter Arment | The Real Eisman Playbook Ep 61<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(175.0K)</span></span><span class="dot">&middot;</span><span>68:05</span><span class="dot">&middot;</span><span>27.4K views</span><span class="dot">&middot;</span><span>2026-05-25</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Real Eisman Playbook</span></a> <a class="chip" href="index.html?q=%22Peter%20Arment%22">Peter Arment<span class="chip-desc">Aerospace and Defense Analyst, Baird</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">defense sector is undergoing a massive shift as $66 billion in venture capital disrupts an over-consolidated, slow-moving military-industrial complex, while a parallel nuclear renaissance is driving overlooked growth for specialty suppliers.  The Atrophied...</div>
+                    <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The U.S. defense sector is undergoing a massive shift as $66 billion in venture capital disrupts an over-consolidated, slow-moving military-industrial complex, while a parallel nuclear renaissance is driving overlooked growth for specialty suppliers.</p>
 <h3>The Great Defense Shake-Up: Silicon Valley vs. Legacy Primes</h3>
 <ul>
@@ -698,19 +1290,15 @@
 <blockquote>
 "We have to spend billions to lose billions to make billions. That is the commercial aerospace manufacturing cycle."
 — <strong>Peter Arment</strong>
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                 </div>
                 
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-0">
-                        Intro music.
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">Intro music.
 
 Hi, Steve Eisman here. So, we talk to a lot of analysts who cover a lot of different sectors. Some are more timely than others. Today is going to be a very timely sector. We're going to be talking to Peter Arment, who is at Baird, and he covers the defense sector and the aerospace sector.
 
@@ -1510,279 +2098,20 @@ And then we finished up with two fascinating companies, one is called Curtiss-Wr
 
 [Outro music]
 
-This podcast is for informational purposes only and does not constitute investment advice. The hosts and guests may hold positions in stocks discussed. Opinions expressed are their own and not recommendations. Please do your own due diligence and consult a licensed financial advisor before making any investment decisions.
-                    </div>
+This podcast is for informational purposes only and does not constitute investment advice. The hosts and guests may hold positions in stocks discussed. Opinions expressed are their own and not recommendations. Please do your own due diligence and consult a licensed financial advisor before making any investment decisions.</div>
                 </div>
-                
             </article>
-            
 
-            <article class="video-card" id="video-1">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=huAwz_BR8WM" target="_blank" rel="noopener">Demis Hassabis On What AI Will Do Next</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.googleusercontent.com/ytc/AIdro_ljAkSpv16cJNUsE_rI1X-Kz9s78w1WNojUga-aZ1uVzEQ=s900-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Two Minute Papers</span><span class="channel-subs">(1.8M)</span></span>
-                        <span class="meta-sep">·</span><span>21:28</span>
-                        <span class="meta-sep">·</span><span>126.1K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-05-25</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Demis Hassabis (CEO, DeepMind)</span></div>
+            <article class="video-card" id="video-3">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=xCXRb-sLtbw" target="_blank" rel="noopener">Robinhood’s Baiju Bhatt on Launching Space-Based AI Data Centers<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nulMc6GNIrLUi_wcTCKojfsfro0dsNLAueuj4edxt_Kl4T=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes</b><span class="subs">(2.1M)</span></span><span class="dot">&middot;</span><span>15:09</span><span class="dot">&middot;</span><span>1.4K views</span><span class="dot">&middot;</span><span>2026-05-25</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Baiju%20Bhatt%22">Baiju Bhatt<span class="chip-desc">CEO, Cowboy Space Corporation</span></a></div>
                 </div>
-                <div class="tldr">DeepMind CEO Demis Hassabis projects that AI could help cure all diseases within the next 10 to 20 years by utilizing a suite of &quot;AlphaFold-level&quot; models, while advanced AI tools like &quot;Co-Scientist&quot; are beginning to transition science toward closed-loop automated physical discovery.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-1">DeepMind CEO Demis Hassabis projects that AI could help cure all diseases within the next 10 to 20 years by utilizing a suite of &quot;AlphaFold-level&quot; models, while advanced AI tools like &quot;Co-Scientist&quot; are beginning to transition science toward closed-loop automated physical...</div>
-                    <div class="summary-full" id="full-1">
-                        <h3>TL;DR</h3>
-<p>DeepMind CEO Demis Hassabis projects that AI could help cure all diseases within the next 10 to 20 years by utilizing a suite of "AlphaFold-level" models, while advanced AI tools like "Co-Scientist" are beginning to transition science toward closed-loop automated physical discovery.</p>
-<h3>AI-Driven Drug Discovery &amp; The 10-20 Year Cure Horizon</h3>
-<ul>
-<li><strong>The Ultimate Timeline:</strong> Hassabis stands by his prediction that AI-assisted platforms can help cure all diseases within the next 10 to 20 years, stating that no laws of physics prevent this timeline.</li>
-<li><strong>Isomorphic Labs Platform:</strong> Rather than relying solely on protein folding, DeepMind's spin-out is building a comprehensive drug-discovery engine.</li>
-<ul>
-<li>The team is developing 6 to 12 "AlphaFold-level" models targeting distinct stages of the drug discovery pipeline.</li>
-<li>Future models will focus on biochemistry compounding, predicting absorption/toxicity (ADME properties), and modeling drug interactions within the human body.</li>
-</ul>
-<li><strong>Clinical Trial Acceleration:</strong> Hassabis notes that AI can drastically speed up the clinical trial bottleneck by better stratifying patient groups and predicting optimal dosages.</li>
-<li><strong>Regulatory Evolution:</strong> Trust in AI-designed drugs will require an initial batch of successes.</li>
-<ul>
-<li>Once approximately 10 AI-designed drugs successfully clear traditional clinical trials, the retrospective data will allow regulators like the FDA to safely streamline, skip, or replace certain traditional testing steps.</li>
-</ul>
-</ul>
-<h3>"Co-Scientist" &amp; The Path to Closed-Loop Discovery</h3>
-<ul>
-<li><strong>The Co-Scientist Assistant:</strong> Currently deployed as a fine-tuned version of Gemini, Co-Scientist operates with specialized harnesses to assist researchers.</li>
-<ul>
-<li><strong>Core Capabilities:</strong> It is optimized for hypothesis generation, complex data analysis, and literature summarization.</li>
-<li><strong>Self-Improvement:</strong> Early versions of these tools have already been used to optimize computer science algorithms, such as finding more efficient matrix multiplication techniques.</li>
-</ul>
-<li><strong>The "Einstein Test" for AI:</strong> To prove true scientific creativity, Hassabis proposes a historical back-test.</li>
-<ul>
-<li>By setting an AI's knowledge cutoff to 1901, researchers can test if the model can autonomously replicate Einstein's 1905 *annus mirabilis* breakthroughs (such as special relativity).</li>
-<li>Success in this test would indicate that the AI is capable of generating paradigm-shifting theories (e.g., post-string theory) when trained on modern data.</li>
-</ul>
-<li><strong>Overcoming the Physical Verification Bottleneck:</strong> Recursive self-improvement loops work rapidly in math and coding because digital verification is instantaneous. Natural sciences require physical validation in the world of atoms.</li>
-<ul>
-<li>DeepMind is addressing this by building an automated material science lab in London.</li>
-<li>This lab will physically test a repository of 200,000 AI-designed materials, which potentially contain new superconductors. </li>
-<li>Hassabis expects robotics to be advanced enough in 18 to 24 months to support broader automated physical validation loops.</li>
-</ul>
-</ul>
-<h3>Gaming Sandbox: The EVE Online Partnership</h3>
-<ul>
-<li><strong>AI Proving Ground:</strong> DeepMind has partnered with CCP Games, creators of the massive multiplayer game *EVE Online*, to utilize the game's complex player-driven universe as an AI sandbox.</li>
-<ul>
-<li><strong>Strategic Focus:</strong> The project will study how AI agents interact with functioning player economies, complex alliances, and deep storytelling.</li>
-<li><strong>Agent Roles:</strong> Early-stage exploration includes deploying AI agents to actively assist human players or utilizing AI as an automated "games master" to dynamically drive game narratives.</li>
-</ul>
-</ul>
-<h3>Notable Quotes</h3>
-<blockquote>
-"We're building... another half dozen to a dozen AlphaFold-level models that are on different parts of the drug discovery process... Then we may have a platform that can be applied to almost any disease area." - Demis Hassabis on the future of Isomorphic Labs
-</blockquote>
-<blockquote>
-"If you took [an AI] back to 1901 with a knowledge cutoff, could it have invented Einstein's annus mirabilis of 1905? If it was able to do that, then presumably you could turn that model—trained on all modern-day physics—and ask it for something better than string theory." - Demis Hassabis on testing AI's scientific reasoning
-</blockquote>
-<blockquote>
-"For most of the science domains, the verify step is going to require some physical verification... The question is: what's the bottleneck in the discovery loop? Is it the hypothesis generation or the validation step?" - Demis Hassabis on the limitation of purely digital AI models
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
-                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                </div>
-                
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-1">
-                        Weak and easy questions. Please try to answer in one sentence, sometimes one word. Oh, wow. That's hard. Feynman or Newton? Oh, wow. That's even harder. 
-
-Demis, I don't know if I told you, but my mother recently got some health scan results. It was a massive video file, and we had to wait for weeks for the evaluation, and we were really anxious. And then I thought, wait, Gemini, long context, you know, why not give it a look? 
-
-And it analyzed the scan and said, &quot;Don't worry, it's fine.&quot; And later, the doctor verified that. Fantastic, it nailed it! And I am really grateful for that, and I was about to say thank you. Mhm. 
-
-But in the meantime, you also released Gemma 4, a free local AI that can likely do the same with a little compassion. I just wanted to say these are a gift to humanity, and thank you so much for doing this for the little man. 
-
-Fantastic. Well, I'm glad to hear that. I'm glad to hear your mom's fine. We've had a lot of anecdotes like that of people using Gemini for health reasons and actually, in some cases, receiving life-saving advice. So, I think it's an incredible use case, and I'm glad it helped. 
-
-Yeah. Yeah. Thank you very much. Now, Jensen Huang of Nvidia says that he uses LLMs as a confidant for decision-making. What about you? Do you use Gemini for things beyond research? 
-
-Yes, I don't use it quite as a confidant yet, although maybe at some point I will. I use it a lot for brainstorming—so, you know, project ideas, project names, creative ideas. I quite like it as a kind of sparring partner for that, and that's probably the main use. 
-
-And then I also use it to look at and summarize some new area of research, some new body of research I'm not so expert in, but I want to get a quick take on the main key points. Do you use it to get your ideas criticized? Like, fire up DeepThink, mathematical Olympiad, and say, &quot;Now criticize my idea&quot;? 
-
-Yes, I have. Yes, I mostly use it for helping me kind of think through some of the steps I've been thinking of as well. I mean, I guess you could call it critiquing it, but I try to use it in a more collaborative frame. Maybe I should try it with more of a &quot;Be harsher, come up with the flaws in this&quot; approach, but I definitely use it as a kind of sparring partner. 
-
-Amazing. Now, when I heard you got the Nobel Prize, I thought, finally some proper recognition for Theme Park AI. Exactly, exactly—took a while. Yes, and then I heard John Jumper say something that really stuck with me. 
-
-He said that he's looking forward to seeing someone use your AlphaFold technique to invent something to win the prize. I thought, let's call it the second-order Nobel. Yeah, so, do you expect that to happen? 
-
-Second-order Nobel—that's a really interesting idea. I think it's possible given the number of researchers who are using AlphaFold, you know, over three million at this point, and they're all doing incredibly important work and impactful work. So, yeah, I guess John's right, that may happen at some point. That would be an amazing moment. 
-
-Amazing. Now, you have a system called Co-Scientist that can invent new things. Can you tell me about it? Yeah, you can think of Co-Scientist as a sort of fine-tuned version of Gemini that is specifically equipped with extra tools and extra harnesses on top. 
-
-It is specific for helping with hypothesis generation, helping you analyze data, and helping you summarize literature as well. So, it's the beginnings of almost like having a great research assistant that's helping you in your daily work. It's incredible. 
-
-By the way, with the new hypothesis generator, they also tried it. Oh, great. Gave it some ideas. Yes. And then it was interesting because it wants you to narrow down the idea. 
-
-Because you just say something, and then the result was absolutely amazing. Like, we had to wait the eight hours, and then I was like, &quot;This is incredible.&quot; And I tried it on my original area, ray tracing global illumination—very little training data, very few people do that. 
-
-So, I think it's pretty cool to see it perform on that, and it came back with some interesting, sensible ideas that helped you. Okay, I wish—I wish I had more time. Me too, me too. 
-
-This is the problem, is actually finding the time now to do that. We almost need, I feel like we almost need really good AI assistants to help deal with our admin work. We have to do all of that stuff so we have more time for using Co-Scientist. Right, this is my dream too. 
-
-On April 20th, 2025, you said, &quot;I think one day, maybe we can cure all disease with the help of AI, maybe within the next decade. I don't see why not.&quot; When I saw that, I got so excited. I made a website for that. Oh, cool. Curealldisease.com. Okay. 
-
-And I have some data in there, and I wrote, &quot;Check back often because I will update it with new data.&quot; Fantastic. And never updated. Yeah, well, we're working hard. 
-
-No, yeah, but it won't be—it won't be a gradual thing. It'll be more like AlphaFold, which is the way I'm thinking about it. We're building Isomorphic Labs, and also our spin-out, and also at DeepMind as well in our science group, more and more tools. You can think of it as building a platform. 
-
-You know, AlphaFold's one of the components of that—the advanced versions of AlphaFold. But as you know, protein structure is only one component. It's an important component, but it's only one step in the drug discovery process. 
-
-So, we're building, you can think, another half-dozen to a dozen AlphaFold-level models that are on different parts of the drug discovery process. And then we've got to put that all together and, of course, test it on some disease profiles, which is what we're doing now in the preclinical stage. 
-
-And then once we've proven that out, which I think will take a few more years, then we may have an engine that can be applied to—you know, a platform that can be applied to almost any disease area. That's the hope. 
-
-So, a bit like with AlphaFold 2, you know, you get it accurate enough, and then suddenly you can fold all 200 million proteins in one year. So, it's going to be more like that. So, you may not have any updates on your website for a few years, and then suddenly, I hope, there will be some big breakthroughs where then you'll have—you know, you won't be able to—you'll have to update it every day. 
-
-Okay. I think I've heard something similar from Watson's talk. He said that the process is going to be exponential. Mhm. And then at year five, they said that, &quot;Well, you're only at, I don't know, 8%. What are you doing?&quot; And he said, &quot;No, that's fantastic. I mean, if it's doubling every year, we are way ahead.&quot; 
-
-Yes, he may have been referred to by the Genome Project, probably, or the Human Genome Project. That's exactly right. And we've already seen this once with AlphaFold. So, we need to replicate that success. Obviously, it's much, much more complex. 
-
-And I also meant by that as well that we would potentially have a platform that could come up with those potential cures. You still would need to test them in the clinic and go through that process. That could still take more time. Speed that up. 
-
-I think actually AI could also help with that, too. Like, stratify patients, maybe predict dosages better, all of those things. So, I actually think AI could probably speed that up, too. 
-
-So, there's two parts, you know, to drug discovery. You've got to do the drug discovery process, and then you've got to do the clinical trials. Right now, we're focusing on the first part, but I think AI could also help with the second part. That's when we would then have a step-change in human health. 
-
-So with that, I think we are on track, right? So, cure all disease in nine years? You know, I won't say specifically, roughly that kind of time frame. But I think in the next 10 to 20 years, there's—I don't see any laws of physics that prevent that, right? Yeah, think entropy. Yeah, exactly. 
-
-And when I read drug discovery papers—it's not my area, but I get really excited. And then I ask an expert, and they say, &quot;Yes, exactly what you said, that's just one step and there's a thousand other steps.&quot; Yes. So, I'm wondering: what can we now do with AI that we couldn't before in drug development? 
-
-Well, I think the kind of things we're working on—so, there's obviously advanced versions of AlphaFold. You can imagine we can predict lots of interactions now. So, not just a static picture of a protein: proteins interacting with other proteins, proteins interacting with molecules. 
-
-And then the next hard parts are then predicting what is it going to do in the body. So, you know, where does it bind to? Are there—what's the ADME properties, absorption, and toxicity? All of these things, which end up being side effects. 
-
-So, we've got to build models that predict all of these different things and then put that all kind of all together, as well as like kind of biochemistry models of like what exact compound would you design, and how is it going to be made, and how and where—how will it bind to the particular pocket or whatever it is that you're targeting in the protein. 
-
-Mhm. My impression is that there's a lot of things in drug discovery that we cannot do at the moment, and we will be able to do with AI, like as of now and whatever follows. What are the things that we cannot do at the moment, and you see that that's maybe not changing? I don't know, maybe something about regulations that, you know, evades physics basically? 
-
-Regulations—obviously, that's a bit outside the scope of AI to help with. But what I hope with there, you know, if you think about regulations, FDA, these types of things, obviously they're an incredibly important part of the process, but they could be sped up, like we were saying earlier, with more evidence. 
-
-Once a few AI-designed drugs, I think, get through the whole regulatory process, then you might have enough data. Say there's 10 AI-designed drugs and nine of them worked, right? Then you would be able to back-test. How accurate really were your models in their predictions? Which ones can you trust, which ones can't you? 
-
-And then that would be evidence to the regulator. I think that some of those processes could be sped up, and maybe some of the steps could be skipped or replaced with something more efficient. But I think it's going to require evidence first of all, that a few of these AI-assisted or AI-designed drugs get all the way through to actually help the patient in the probably traditional way, and then we can think about changing the way that that's done. 
-
-Maybe similarly to what we had with the mRNA vaccines, right? Yes, potentially. Right, so, you know, there was a new technique there, there was this emergency need obviously with COVID, and then that accelerated the tests and the trials on those things. 
-
-You know, that's one potential way it could go. But this is something about human health for the next, you know, next 10 centuries, right? We don't need to rush it in the next 5 to 10 years, but I just think what I see is such exciting technology coming down the road. I just think anything may be possible. 
-
-That's incredible. Now, as a former player, can you tell me a bit about your new partnership with the EVE Online game? Oh yes. Oh, you're a former player? Oh, yeah. Okay, fantastic. Yeah, well, it's an awesome game, and I think its community is very special, actually. 
-
-You know, very rare. The community sort of builds the game, too, really, with the way they build their alliances and factions. It's an incredibly deep game, you know, a massive multiplayer. It's a whole universe, really, that's created not just by the game designers but also by the players. 
-
-And it has a functioning economy and really interesting, kind of dynamic storylines. So, we've admired their work for a long time. I know Hilmar, the CEO of the company, very well. We're good friends going way back to when I was still doing games, and we think it's a fantastic sort of sandbox, if you like, for testing out some interesting AI ideas that will help the gameplay. 
-
-It will be interesting to test out how it interacts with economies and the storylines and player alliances and things like that. So, it's going to be an interesting proving ground. I think it's fascinating for the game and the community, and also, they've always been at the cutting edge, really. 
-
-So, this is continuing that tradition, and then for us, it also continues in the tradition of DeepMind of using games as a safe kind of proving ground. Would the concept work in a way that some AI agents would be embedded, playing with the players? 
-
-Yeah, potentially, or maybe assisting the players. I think we're still in the early days of exploring that. We want to imagine, also, maybe it's almost like a games master that drives the storyline, as well. 
-
-That is so cool. Look, I cannot wait to see an AI bot get scammed in Jita. So, you'll have to start playing again. Yeah, and by the way, if you need someone to double your money... I know a guy. 
-
-You're the guy? Okay, look. All the others, those are scams. This one is guaranteed. We'll make sure our AI agent comes to you for that one. 
-
-Now, can you tell me a bit about the things that the Co-Scientist has invented already? My understanding is that it's not directly writing papers. Scientists are writing up the papers and—that's right. So, it's more like an assistant today rather than autonomously discovering things. 
-
-You know, maybe that's the next step, but right now it's assisting scientists and mathematicians in their work. I hope we'll be announcing some things pretty soon, but earlier versions of these types of systems were doing things like finding more efficient matrix multiplication, or like we used it for AlphaFold and other tools as well, for basically improving computer science algorithms. 
-
-So, it's kind of turning invention on itself to make itself more efficient, which is pretty cool. And I think, obviously, we're just putting it out there now, and we're just scratching the surface of what I hope we'll see the potential of it is going to be. 
-
-Now, wouldn't this be the ultimate Turing test of AI? Like, you have the Einstein test where you stop it at 1901 or somewhere else, and see if it can invent special relativity. Yes. Now, what about the Einstein test squared, assuming it's bigger than one? 
-
-So, the cutoff is today—like, invent something new that's a Nobel Prize-worthy thing. That's obviously what we would want. But in order to prove that that's the case, this Einstein test that I've been saying about—you know, if you took it back to 1901 with a knowledge cutoff, could it have invented Einstein's annus mirabilis of 1905? 
-
-He came up with four amazing papers, all breakthroughs in their different areas, right? Including special relativity. So, if it was able to do that, then presumably you could turn that model, obviously trained on all modern-day physics, and then ask it for something better than string theory, right? 
-
-And then maybe you should take quite seriously what it came back with. So, that would be the kind of back-test to show that that kind of system, those types of techniques, would be ready to actually invent new science. 
-
-I'm going to try to put in this one because I really want you to hear about this. Now, I'm thinking that in ray tracing research, we do a lot of Monte Carlo integration, and we pray to John von Neumann. Yes. And essentially, you get a noisy image from a module that we call a sampler, and then you pass it over to a denoiser. 
-
-So, you get a cleaner image. Now, that kind of works, but the best systems do more than that. They have a connection between the denoiser and the sampler. So, the denoiser actually tells the sampler, &quot;Hey, I want this image with more samples in the high-frequency regions,&quot; so that the denoiser can do a better job. 
-
-So, it's not two separate units anymore; it's fused into one unit. Now, what I'm thinking is: do you have something like this between the hypothesis generator and the verifier? 
-
-Well, that would be kind of like closed-loop automated discovery, right? If one could fuse that. Most of the frontier labs are working on trying to think about recursive self-improvement. 
-
-I think it could work in some domains like coding and math, because with the verifier, you can verify very easily and very quickly whether the answer is correct or making progress. And you can also generate synthetic data that way, as well. 
-
-So, I think it's a bit harder if it's a physical science or kind of natural science like physics, chemistry, or biology, where the verifier will probably also require an automated lab or something in the world of atoms, and that will obviously make the loop a lot longer. 
-
-We are thinking about things like automated labs in Isomorphic, and I think at some point we will do that. I'm waiting a little bit to see what type of data do we really need that we can't get from a CRO or something like that. And I'm also waiting for robotics to get a little bit more advanced, too, which we're doing at DeepMind. 
-
-So, that is going well. So, maybe in 18 months, 24 months, I could imagine setting up some kind of lab like that. We're actually doing one for material science. We're putting an automated lab together. 
-
-We're building one out in London because we have material designs. Actually, we're sitting on 200,000 designs of new materials which we don't know—there could be an amazing material in there, but we haven't got a way of testing that fast enough. There's some superconductors in there, all sorts of really interesting things. Sometimes hard. 
-
-Yeah, so, I think for those types of domains, most of the science domains, the verify step is going to require some physical verification. And then the question is, what's the bottleneck in the discovery loop, right? Is it the hypothesis generation, or is it the validation step? 
-
-So, it may not be so easy to do that kind of recursive self-improvement. The other issue is, even in math and coding—all of the frontier labs are kind of thinking about this—you've got to think about the safety of that type of process, because it's just sort of with no human in the loop. 
-
-Now, at the end, this is going to be a quick lightning round. Okay. Quick and easy questions. Please try to answer in one sentence, sometimes one word. Okay. Discrete or continuous mathematics? Hint, there's only one good answer. 
-
-Really? Okay. Well, I prefer discrete, but I don't know. You know, is that the right answer? For you, yes. For me? Yes. For me? Yes. Exactly. I think all of this is discrete. 
-
-Okay. Feynman or Einstein? Oh, wow. That's hard. Probably Feynman for me—my personal favorite. Okay. Feynman or Newton? Oh, wow. That's even harder. Maybe I have to go—maybe I have to go with Newton for my Cambridge connections. 
-
-All right. Favorite Two Minute Papers episode? Oh, wow. Okay. Oh, I love loads of your—I use it a lot to get up to speed with things. But I tell you what, I loved your AlphaFold videos. 
-
-I thought they were excellent, all of them. Some of the best explanations out there of how AlphaFold works. That is very kind. Thank you. Best Asimov novel? Foundation series. Yes, that's what was really influential for me. 
-
-Have you read the Robot series? Caves of Steel? No, I haven't, interestingly. Please. Yeah, I just read the Foundation series. So, that's—but I should probably read the robot ones, too. 
-
-Please. And now, Sir Demis Hassabis, a knighthood is one thing. But for your contributions to humanity today, I shall bestow upon you the Two Minute Papers badge of honor. Oh, wow. You're the first scientist to ever receive it. 
-
-Amazing. So, with that said... Oh, thank you very much. Thank you very much. I will wear it with pride when I'm watching all your videos. Awesome. Thank you, Demis. Thank you so much. I learned a lot today. So much fun. Yeah. Thank you so much, and thanks for the badge. Brilliant. 
-
-Now, this is me from back home with some behind-the-scenes footage, literally, because you can't see us properly. Okay, better now. So, this was a huge honor and a dream come true. I can't believe that I got to be there. But what happened afterwards? 
-
-Well, I put this pillow on the table and told Demis that I couldn't get a proper one. So, I asked, &quot;Want to see the other side?&quot; And this is what it looks like. And when I showed him, there was huge laughter, which unfortunately we couldn't get on camera. 
-
-However, Lucy Collyer was in the room and shot a photo of it. So, check it out. Thank you so much. If everything goes well, the next interview is Jeff Dean. So, subscribe and hit the bell if you enjoy this and would like to see that too. 
-
-Here you see me running the full DeepSeek AI model through Lambda GPU Cloud. 671 billion parameters running super fast and super reliably. This is insane. I love it and I use it on a regular basis. 
-
-Lambda provides you with powerful NVIDIA GPUs to run your own chatbots and experiments. Seriously, try it out now at lambda.ai/papers or click the link in the description.
-                    </div>
-                </div>
-                
-            </article>
-            
-
-            <article class="video-card" id="video-2">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=xCXRb-sLtbw" target="_blank" rel="noopener">Robinhood’s Baiju Bhatt on Launching Space-Based AI Data Centers</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/ytc/AIdro_nulMc6GNIrLUi_wcTCKojfsfro0dsNLAueuj4edxt_Kl4T=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Forbes</span><span class="channel-subs">(2.1M)</span></span>
-                        <span class="meta-sep">·</span><span>15:09</span>
-                        <span class="meta-sep">·</span><span>1.4K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-05-25</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Baiju Bhatt (CEO, Cowboy Space Corporation)</span></div>
-                </div>
-                <div class="tldr">Cowboy Space Corporation, led by Robinhood co-founder Baiju Bhatt, is developing vertically integrated, space-based data centers to solve Earth's AI energy crisis by deploying orbital computing hubs that utilize unfiltered solar power.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-2">Cowboy Space Corporation, led by Robinhood co-founder Baiju Bhatt, is developing vertically integrated, space-based data centers to solve Earth's AI energy crisis by deploying orbital computing hubs that utilize unfiltered solar power. By bypassing terrestrial infrastructure...</div>
-                    <div class="summary-full" id="full-2">
-                        <h3>TL;DR</h3>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Cowboy Space Corporation, led by Robinhood co-founder Baiju Bhatt, is developing vertically integrated, space-based data centers to solve Earth's AI energy crisis by deploying orbital computing hubs that utilize unfiltered solar power.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-3">By bypassing terrestrial infrastructure...</div>
+                    <div class="sum-full" id="full-3"><h3>TL;DR</h3>
 <p>Cowboy Space Corporation, led by Robinhood co-founder Baiju Bhatt, is developing vertically integrated, space-based data centers to solve Earth's AI energy crisis by deploying orbital computing hubs that utilize unfiltered solar power. By bypassing terrestrial infrastructure delays, the company aims to launch its first proprietary rocket-turned-satellite by the end of 2028, shifting AI compute capacity scaling timelines from years to weeks.</p>
 <p>***</p>
 <h3>The Transition from Fintech to Frontier Tech</h3>
@@ -1855,19 +2184,15 @@ Lambda provides you with powerful NVIDIA GPUs to run your own chatbots and exper
 </blockquote>
 <blockquote>
 "We've set a very, very ambitious goal for ourselves to launch our first in-house built rocket before the end of 2028... if you don't try—look, if a person like me were not trying, there's no reason for me to be on this stage. You have to be ambitious if you want to do amazing things." — <strong>Baiju Bhatt</strong>
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-2" onclick="toggleSummary(2)">
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-3" onclick="toggleSummary(3)" type="button" aria-expanded="false" aria-controls="full-3">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                 </div>
                 
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-2">
-                        ...thought kind of captivated us all recently, the Artemis 2 lunar mission. Yeah. What, what were you feeling and thinking as you watched that? 
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-3" onclick="toggleTranscript(3)" type="button" aria-expanded="false" aria-controls="transcript-3">View transcript</button>
+                    <div class="transcript-content" id="transcript-3">...thought kind of captivated us all recently, the Artemis 2 lunar mission. Yeah. What, what were you feeling and thinking as you watched that? 
 
 Oh man. Well, one, so I was actually at the office when it was happening with a lot of our team kind of watching it happen. And I think the biggest thing is I think it's kind of hard for us to kind of wrap our heads around how much this is going to capture the American psyche in the next couple of years because the last time there was a lunar mission, I mean, I wouldn't have been born for the next 20 years, right? 
 
@@ -1957,314 +2282,20 @@ A last question for me, Baiju. Do you want to go into space?
 
 Yeah, I think so. I mean, kind of, I don't know, it, it seems like it would be like pretty rough on the body. So that—I don't know, I don't know if I really want to be in space for that long, maybe for a little while. Yeah. Yeah. 
 
-Well, that's a good place to end it. Thank you so much. Appreciate it. Yeah.
-                    </div>
+Well, that's a good place to end it. Thank you so much. Appreciate it. Yeah.</div>
                 </div>
-                
             </article>
-            
-
-            <article class="video-card" id="video-3">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=vj8717xBZ_M" target="_blank" rel="noopener">CNA speaks with Nvidia CEO Jensen Huang | East Asia Tonight (May 25)</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/ytc/AIdro_n00DzE39o-4IFJ07IP3gG__TMqKxXXbwYaARinwTXTDFM=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">CNA</span><span class="channel-subs">(3.2M)</span></span>
-                        <span class="meta-sep">·</span><span>48:14</span>
-                        <span class="meta-sep">·</span><span>18.2K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-05-25</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Jensen Huang (CEO, NVIDIA)</span></div>
-                </div>
-                <div class="tldr">Nvidia CEO Jensen Huang affirmed the company's commitment to competing in China despite a vacuum created by US export controls that fueled Huawei’s rapid growth, while regional dynamics shift with key state visits, energy market fluctuations, and China’s historic Shenzhou-23 space mission.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-3">TL;DR  Nvidia CEO Jensen Huang affirmed the company's commitment to competing in China despite a vacuum created by US export controls that fueled Huawei’s rapid growth, while regional dynamics shift with key state visits, energy market fluctuations, and China’s historic...</div>
-                    <div class="summary-full" id="full-3">
-                        <p><strong>TL;DR</strong></p>
-<p>Nvidia CEO Jensen Huang affirmed the company's commitment to competing in China despite a vacuum created by US export controls that fueled Huawei’s rapid growth, while regional dynamics shift with key state visits, energy market fluctuations, and China’s historic Shenzhou-23 space mission.</p>
-<h3>AI &amp; Semiconductors: Nvidia’s Strategy and China's Domestic Push</h3>
-<ul>
-<li><strong>Nvidia's China Commitment:</strong> CEO Jensen Huang clarified that Nvidia has no plans to step back from the Chinese market, despite US export restrictions severely limiting the company's growth.</li>
-<ul>
-<ul>
-<li><strong>Market Vacuum:</strong> Huang conceded that US bans on advanced AI chips left a market vacuum that Chinese companies like Huawei and local startups rapidly filled, leading to record-growth years for these domestic firms.</li>
-<li><strong>The "Five-Layer Cake" of AI:</strong> Huang described AI as a "five-layer cake," noting that Nvidia only competes in one layer. By continuing to participate in the Chinese market, Nvidia hopes to support the growth of the other four layers of the local ecosystem.</li>
-</ul>
-</ul>
-<li><strong>Huawei’s Lithography Workaround:</strong> Huawei announced a timeline to produce next-generation 1.4-nanometer chips by 2031, aiming to trail Taiwan's TSMC by only three years.</li>
-<ul>
-<ul>
-<li><strong>Logic Folding Technology:</strong> To bypass US sanctions that block access to advanced lithography tools, Huawei is using a design process called "logic folding." This approach makes chips faster by shortening internal component communication times rather than relying solely on shrinking transistor sizes.</li>
-</ul>
-</ul>
-</ul>
-<h3>Regional Geopolitics: Strategic Alliances in East Asia</h3>
-<ul>
-<li><strong>China-Pakistan Diplomacy:</strong> Chinese President Xi Jinping welcomed Pakistan's Prime Minister Shehbaz Sharif in Beijing, highlighting their "unshakable 75-year friendship" and thanking Pakistan for its role in mediating US-Iran tensions in the Middle East.</li>
-<ul>
-<ul>
-<li><strong>Economic and Corporate Ties:</strong> Sharif’s four-day visit concluded with the signing of $1.2 billion in corporate agreements in Hangzhou, involving major Chinese firms such as Alibaba and CATL.</li>
-</ul>
-</ul>
-<li><strong>Japan-Philippines Defense Alignment:</strong> Philippine President Ferdinand Marcos Jr. initiated a historic four-day state visit to Japan, meeting with Prime Minister Sanae Takaichi to upgrade bilateral relations to a "comprehensive strategic partnership."</li>
-<ul>
-<ul>
-<li><strong>Maritime Security Cooperation:</strong> Driven by mutual concerns over Chinese maritime assertiveness near Taiwan and the Senkaku/Diaoyu Islands, the two nations began laying the groundwork for a General Security of Military Information Agreement (GSOMIA).</li>
-<li><strong>Defense Acquisitions:</strong> The Philippines is actively exploring the acquisition of second-hand Japanese Abukuma-class destroyers, alongside participating in the joint Balikatan 26 military exercises.</li>
-</ul>
-</ul>
-</ul>
-<h3>Global Finance &amp; Energy: Oil Slumps, Japan's Budget, and Capital Crackdowns</h3>
-<ul>
-<li><strong>Hormuz Breakthrough Optimism:</strong> Global crude prices fell by roughly 5%, with Brent sliding to $97 per barrel and WTI to $91.80, following reports of progress in US-Iran talks to reopen the critical Strait of Hormuz.</li>
-<li><strong>Japan's $19 Billion Cushion:</strong> Prime Minister Sanae Takaichi announced plans to submit a $19 billion supplementary budget next week to fund household utility and gasoline subsidies. The emergency funding will be financed through new deficit-financing bonds.</li>
-<li><strong>China’s Capital Flight Crackdown:</strong> Beijing launched an aggressive campaign targeting unauthorized offshore investment services, prohibiting overseas firms from opening accounts or trading on behalf of mainland Chinese clients.</li>
-<ul>
-<ul>
-<li><strong>Hong Kong Liquidity Hit:</strong> Analysts estimate the regulatory clampdown could impact up to $32 billion of assets in Hong Kong, directly threatening the city's IPO market.</li>
-</ul>
-</ul>
-<li><strong>Plunging Consumer Credit in China:</strong> In a stark sign of weak consumer spending, Chinese citizens discarded 9 million credit cards in Q1. This extends a 14-quarter contraction from the peak in September 2022, compounding rising default rates for mainland banks.</li>
-</ul>
-<h3>Space Exploration: China’s Shenzhou-23 Mission and Hong Kong’s Historic Milestone</h3>
-<ul>
-<li><strong>Shenzhou-23 Launch:</strong> Three Chinese astronauts safely boarded the Tiangong space station after completing an automated, highly efficient three-hour docking sequence.</li>
-<li><strong>Hong Kong's First Astronaut:</strong> Payload specialist Lai Ka-ying, a former Hong Kong police officer with a PhD in forensic science, became the first Hong Kong citizen to join a Chinese space mission.</li>
-<ul>
-<ul>
-<li><strong>Scientific Role:</strong> Prof. Quentin Parker of the University of Hong Kong highlighted that Lai’s scientific and forensic background makes her uniquely suited to manage the complex array of 100+ microgravity experiments planned for the mission.</li>
-</ul>
-</ul>
-<li><strong>Year-Long Endurance Test:</strong> One of the three astronauts will be selected for a historic 12-month orbit. This extended mission is designed to study the physiological impacts of long-duration spaceflight as China prepares to land humans on the moon by 2030.</li>
-</ul>
-<h3>Notable Quotes</h3>
-<blockquote>
-"When we were banned from going to China through export controls, it left a vacuum that the Chinese companies were able to fill... in our absence, available technology is the best you can get, and it's plenty good."
-— <strong>Jensen Huang</strong>, Nvidia CEO
-</blockquote>
-<blockquote>
-"China is going to be everybody's greatest rival. I mean, that goes without saying because they have such an extraordinary local market that is completely uniform, just like the United States."
-— <strong>Jensen Huang</strong>, Nvidia CEO
-</blockquote>
-<blockquote>
-"The Tiangong space station basically is one huge laboratory experiment... [Lai Ka-ying] is going to be in charge of many of those experiments. You need someone who can calibrate the equipment, operate it accurately and professionally, and troubleshoot on the fly."
-— <strong>Prof. Quentin Parker</strong>, Director at the Lab for Space Research, HKU
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-3" onclick="toggleSummary(3)">
-                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                </div>
-                
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-3" onclick="toggleTranscript(3)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-3">
-                        This is East Asia Tonight.
-
-Good evening, I'm Otelli Edwards. Tonight's top stories from East Asia. In a candid one-on-one with CNA, Nvidia boss Jensen Huang says that the company is not stepping back from the tech showdown between major powers, despite losing ground in China. But China's chip race is heating up, too. Huawei says that its latest design breakthrough could help narrow the gap with TSMC and produce advanced semiconductors within 5 years, despite US sanctions.
-
-It's confirmed: Japan's Prime Minister Sanae Takaichi is preparing a 19 billion US dollar supplementary budget to cushion the economic hit from surging costs linked to the Iran war. And Chinese President Xi Jinping has met Pakistan's Prime Minister Shehbaz Sharif in Beijing, as Islamabad says that US-Iran mediation has made significant progress and is moving in the right direction.
-
-Also tonight, a new batch of astronauts arrives at China's space station. One of them will call it home for the next 12 months. And rising to the occasion, competitors at Hong Kong's Bun Festival are on a roll in a century-old tradition to usher in an abundance of good luck.
-
-A US chip juggernaut, Nvidia, is standing firm on its commitment to doing business in China, where US export controls have limited its growth. Founder and Chief Executive Jensen Huang, in an interview with CNA, conceded that Chinese group Huawei has filled a void, but says that Nvidia continues to participate on many levels of the AI landscape. And for more, we are joined now by CNA senior correspondent Victoria Jen, who got a sit-down with the Nvidia chief a little earlier today. So Victoria, what did Jensen Huang have to say about Nvidia's relationship with China?
-
-Well, Jensen Huang made it very clear that Nvidia is not giving up on China. But he also said that US export controls have changed the market in a big way. Huang says restrictions on advanced AI chips created space for Chinese companies like Huawei and local startups to grow quickly. He said that even if Nvidia's technology is stronger, Chinese companies will use whatever is available and improve from there.
-
-At the same time, Huang stressed that Nvidia still believes that it can add value to China's AI market if it is allowed to compete there. Now, let's listen to what he has to say. But reports suggest that China hasn't purchased any of Nvidia's H200 chips, despite US export approval.
-
-&quot;We're not stepping back from China. I, I would say, I would say that the Chinese government, when we were banned from going to China through export controls, it left a vacuum that the Chinese companies were able to fill. And, as a result, Huawei and many of the startup companies in China had record years. They are now growing at an incredible pace.
-
-And, and, in our absence, even though Nvidia's technology is better, available technology is the best you can get, and it's plenty good. The Chinese government is, understandably, as every government would and should, encouraging and wanting to have conditions for their local companies to be successful. However, I also believe that Nvidia could add an enormous amount of value to the Chinese market.&quot;
-
-As it pushes for its own chips, could that actually, eventually make China your greatest rival?
-
-&quot;Well, China is going to be everybody's greatest rival. I mean, that goes without saying because they have such an extraordinary local market that is completely uniform, just like the United States. For China, Nvidia's technology competes with one layer of the five, of the five-layer cake.
-
-We compete with one layer of the five-layer cake, but don't forget, AI is a five-layer cake. And so, when Nvidia is participating in China and serving the Chinese market, as we have in the past, it supports the expansion of the other five layers. And so, when you look at the market in a more holistic way—and I surely believe that the leaders and the local market will, when they look at it in the holistic way—Nvidia could be of great service to that industry, and we could add a lot of value to the China market as well.&quot;
-
-What stood out is that Huang sees China as both a major opportunity and a growing competitor. He said China could become everyone's rival because of the size of its market and how fast its AI industry is developing. But he also argued that AI is bigger than just chips.
-
-Huang described it as a full ecosystem and said Nvidia still wants to be part of that growth in China. So his message was clear: restricting China may slow Nvidia's business there, but it could also speed up China's push to build its own AI industry. Otelli.
-
-Well, thanks for that for now, CNA senior correspondent Victoria Jen live from Taipei. Now, could AI lead to more job cuts, and can Taiwan maintain its strategic relevance in a global supply chain? Well, we'll be bringing you more insights from Victoria's interview with Nvidia's CEO later this hour.
-
-Chinese President Xi Jinping has thanked Pakistan for its constructive role in mediating peace in the Middle East during his meeting with visiting Prime Minister Shehbaz Sharif in Beijing. Calling the Pakistani leader an old friend, Mr. Xi says that Beijing is prioritizing ties with Islamabad among China's neighbors. And we've got Crystal joining us now live from Shanghai for more. Crystal, what are going to be some of the top items on the agenda during this meeting?
-
-Yeah, so we are just seeing some new lines coming in. State media reporting that during the meeting they said that they share an unshakable 75-year friendship and that China always values this close partnership. They plan to expand cooperation across various sectors, deepen bilateral ties, and agree that they will work together on security matters.
-
-Now, the Pakistan Prime Minister is the third leader from the country to have visited China in the last two months, signaling a very back-to-back top-level push. Earlier, the President visited Hunan and Hainan, and the Foreign Minister also visited in March at that time to discuss tensions in the Middle East.
-
-This meeting is coming as Pakistan is seeking support for its efforts to mediate the conflict between Iran and the US. Analysts say that Beijing would be reluctant to be drawn directly into the conflict, but would be willing to offer its support for peace efforts. And indeed, during the Foreign Minister's visit to Beijing in March, they had a five-point initiative. Foreign Minister Wang Yi at that meeting had also earlier asked Pakistan to step up its mediation efforts.
-
-So, Crystal, tell us why ties with Pakistan are so important to China.
-
-So, observers say that the timing of this trip, coming right after visits by the US and Russian presidents, helps China to signal its role as a global stabilizer. It shows that it is still prioritizing its core allies and the Global South. But both countries still face a balancing act, especially as the US steps up its outreach to Pakistan.
-
-Now, Pakistan is one of China's closest partners, supporting Beijing on a range of sensitive issues from Taiwan to Xinjiang, Tibet, and the South China Sea. In exchange, Beijing has invested billions into the country through CPEC. That's an economic corridor under China's Belt and Road project.
-
-So, the meetings today conclude Mr. Sharif's four-day trip. He was in Hangzhou earlier, which is a city about a 2-hour drive from Shanghai. In Hangzhou, he met with companies such as Alibaba and CATL, signed a sister province agreement, and other agreements worth 1.2 billion dollars. Otelli.
-
-Oh, Crystal Chia, live in Shanghai. Thanks for that report.
-
-Philippine President Ferdinand Marcos Jr. is set for a four-day state visit to Japan starting tomorrow. The leader has a packed itinerary, including holding a summit meeting with Japanese Prime Minister Sanae Takaichi, and also being welcomed by Emperor Naruhito and Empress Masako at the Imperial Palace. Now, for more on what would be Philippine President Marcos Jr.'s first state visit to Japan, let's bring in CNA senior correspondent Michiyo Ishida, who is speaking to us from Tokyo. Michiyo, what does Marcos's state visit to Japan indicate about relations between Japan and the Philippines?
-
-Well, a Japanese government official told me that it's a relationship between like-minded nations, and basically, Japan has just one state visitor a year. Last year it was President Luiz Lula of Brazil to celebrate 130 years since the establishment of diplomatic relations with Brazil. And, with the Philippines, Japan celebrates 70 years since normalizing relations.
-
-Now, another reason to host Mr. Marcos this time with the highest possibility of hospitality is that the Philippines is ASEAN Chair. Also, Japan positions the Philippines as an important partner to achieve its ambition of a free and open Indo-Pacific, which is a concept introduced by then-Shinzo Abe, the former Prime Minister, 10 years ago.
-
-Media reports suggest the two countries will upgrade their relationship from a strategic one to a comprehensive strategic partnership. This is regarded as the highest-level relationship with another country for the Philippines.
-
-And, when Marcos meets Takaichi, what sort of topics are likely to dominate their conversation?
-
-Well, actually, President Marcos talked to Japanese media ahead of his Tokyo visit. He said discussing security cooperation is vital. Now, this includes information, technology sharing, and joint drills. One significant exercise the Japan Self-Defense Force is participating in for the first time is a multinational drill, which includes the Philippines, called Balikatan 26.
-
-Now, Japan for the first time tested its Type 88 ground-to-surface missile system outside of its own country. And if you recall in April, Prime Minister Takaichi's government decided to ease its transfer of defense equipment. Mr. Marcos told Japanese media he wished to know the Japanese government's thinking behind this.
-
-Now, Tokyo thinks the Philippines is interested in acquiring Japan's second-hand Abukuma-class destroyer. So far, under Japan's Official Security Assistance program, the Philippines received a coastal and air surveillance radar system.
-
-And this year, Japan will help construct boathouses and slipways for rigid hull inflatable boats, which Japan has previously offered. To improve information and technology sharing, sources say the two countries will start to lay the groundwork for GSOMIA, or the General Security of Military Information Agreement.
-
-Now, both Japan and the Philippines face common security concerns when it comes to China. Philippine boats have been harassed, and in and around Okinawa's Senkaku Island, which China also claims and calls Diaoyu, Chinese and Japanese coast guard vessels have been watching over each other. Whatever may happen in the Taiwan Straits could impact the security environment for the two countries as they are both geographically close.
-
-Many thanks for unpacking Japan-Philippines ties, CNA senior correspondent Michiyo Ishida live from Tokyo. Staying in Japan, more than a dozen people were taken to hospital after a man sprayed an unknown substance in a crowded area in Tokyo. Well, the incident happened on the first floor of the Ginza Six luxury shopping mall. At least 25 people reported feeling unwell, many complaining of a sore throat.
-
-The fire department sent more than 50 vehicles to the scene. Japanese broadcaster NTV says the security footage showed a man in a dark jacket and white pants spraying what appeared to be tear gas. Tokyo police are now trying to identify and locate him.
-
-匂いなし。色もなし。もう急に近づい、まあ５メートルぐらい近づいたら、喉が痛くなって、むせて咳が出た。
-
-Coming up on East Asia Tonight, oil future prices extending their declines on hopes of a possible deal between the US and Iran to reopen the Strait of Hormuz. And millions of Chinese are cutting up their credit cards in another sign of weak spending and a growing pain for banks already facing rising defaults.
-
-Hello again. You're watching East Asia Tonight, and we've got Olivia Marzuki joining us now for the latest in business. Liz, big moves apparently in oil markets to start this week, and we're seeing crude prices falling sharply apparently. Tell us more about that.
-
-Yes, Otelli, so energy traders are reacting to the fresh progress in US-Iran talks, and with the signs of that progress, oil prices are extending their declines on hopes for a possible deal between the two sides to reopen the Strait of Hormuz. Brent is now hovering at levels of 97 dollars a barrel, and WTI is at 91.80. Both contracts are falling around 5 percent, easing from recent highs sparked by the effective closure of the key energy corridor.
-
-Optimism is building over a possible diplomatic breakthrough. US Secretary of State Marco Rubio said a deal could be announced as early as today, although several sticking points remain unsolved. There are reports of ships starting to move towards Hormuz in anticipation of a deal that would reopen the critical waterway. But analysts say that even if oil prices fall back on a deal, any sustained drop in oil prices will depend on production and refining facilities returning to pre-war operating levels.
-
-Optimism for a deal to end the war in Iran is boosting demand for risk assets in the region. Japan's Nikkei 225 surged past the 65,000 level for the first time, ending the day nearly 3 percent to the upside. Mainland China stocks closed higher as well, lifted by the coal sector.
-
-The country's worst coal mine disaster in 17 years raised expectations that stricter safety, security, and scrutiny would tighten supply in China. Semiconductor shares were also among the top gainers in the market in Greater China.
-
-Japanese Prime Minister Sanae Takaichi says her government will submit a supplementary budget of around 19 billion US dollars as early as next week. It is looking to relieve households of the burdens of rising energy costs brought on by the war in Iran. And that includes around 3 billion dollars from contingency reserves to fund utility subsidies.
-
-Japan has also been extending separate subsidies to keep gasoline prices steady. Miss Takaichi also announced a new fund that will be used to support measures to keep fuel prices affordable, among other things. The government has been dipping into its reserves to fund existing measures, and economists have been warning for weeks that the money is about to run out.
-
-But the PM is playing down the likely impact on government finances, saying that the extra budget will be financed by new deficit-financing bonds, which could be implemented without affecting the bond market.
-
-Investors are rushing to find alternatives to buy and sell overseas equities after China began an unprecedented campaign against illegal cross-border trading to stem capital outflows. And this comes after eight regulators issued a joint statement last week vowing a campaign against these trades. The government is going after unauthorized offshore investment services that have been targeting investors on the mainland.
-
-Under the new plan put out by the country's top securities regulator along with other government bodies, overseas firms will no longer be able to open accounts for Chinese clients, carry out trades on their behalf, or move their money across borders. And it's not just foreigners and foreign firms in the crosshairs; domestic firms could also face action if they're caught helping these offshore operators.
-
-The fallout is likely to spread to Hong Kong as it threatens to curb the city's liquidity and its booming IPOs. Citic Securities estimates that the clampdown could affect as much as 32 billion dollars of assets in Hong Kong. The clampdown triggered a swift reaction in markets last week, with the Nasdaq Golden Dragon China Index slumping 2.2 percent at close on Friday. US-listed shares of broker Futu Holdings also closed down 27 percent, with more than a quarter of its market value wiped out.
-
-Huawei says it has found a new way to make advanced chips, one that could help it work around US restrictions. The Chinese tech giant has been under US sanctions since 2019, cutting it off from key technologies used to make the world's most advanced semiconductors. But Huawei says it can now produce next-generation 1.4-nanometer chips by 2031. That would trail Taiwan's TSMC, which aims to reach that level by 2028.
-
-China is generally viewed as unlikely to reach that level through conventional manufacturing alone because of limited access to advanced lithography tools and other key semiconductor technologies. So instead of making transistors smaller, Huawei says it can make chips faster by shortening the time it takes different parts of a chip to communicate. The company says the approach is feasible, affordable, and able to compete with conventional chipmaking.
-
-Its next chip, Kirin, due later this year, will be the first to use a related design called logic folding, which would improve performance considerably. Analysts say that the move signals Huawei's ambition to lead in the global chip race and could raise new concerns in Washington.
-
-Millions of Chinese are giving up their credit cards as the economy continues to be dogged by weak consumer spending. A report by the People's Bank of China showed that the number of credit cards owned in the first three months of the year dropped by 9 million from the preceding quarter, extending a 14-straight-quarter decline from the peak in September 2022.
-
-This decline is impacting banks' profits, who are also facing higher default risks as the non-performing loan ratio rises. Some banks have also tightened criteria for issuing new cards. Only about 40 percent of Chinese own credit cards, and the market faces competition from e-payment systems like Alipay and WeChat Pay.
-
-International issuers are also finding it hard to maintain a foothold in China, with HSBC pulling its credit card operations in 2024, citing difficulties in achieving profitability.
-
-And that's all I have in business, Otelli, back to you.
-
-Oh, thanks, Liz. Olivia. Right, on that note, we are going to go for another break now, but coming up on East Asia Tonight, we'll be hearing more from Nvidia's Jensen Huang, including his scathing pushback against CEOs who blame job cuts on AI.
-
-Three Chinese astronauts from the Shenzhou-23 mission have safely arrived at the Tiangong space station, following a lengthy docking process that lasted some three hours. They were welcomed by the Shenzhou-21 crew, kick-starting a crew handover process which could last a week or more, where they will be working together to transfer station management and supplies needed in the coming months. The Shenzhou-23 spacecraft lifted off as scheduled last night from the Jiuquan Satellite Launch Center in Gansu Province.
-
-The crew includes flight engineer Zhu Yangzhu, pilot Zhang Zhixian, and payload specialist Lai Ka-ying, a former Hong Kong police officer and the first astronaut from the city to join a Chinese space mission. Prior to lifting off, the three-member crew were given a send-off at a ceremony at the launch center. China's Space Agency says the astronaut selected for a year-long stay in orbit will be announced later, depending on the mission's progress. Now, the extended flight would mark a record duration for China, allowing scientists to study the effects of long-duration spaceflight on the human body.
-
-中國載人航天一路走來，從一人一天到多人多天，到現在即將突破一年期的在軌駐留。這一個又一個全新的首次，串起了中國航天事業一次次發展突破的步伐。
-
-Well, the mission is also part of China's preparations to send humans to the moon by 2030, amid an accelerating space race with the US. The outgoing Shenzhou-21 crew is expected to set a new record for China's longest crewed spaceflight, having already spent more than 200 days in orbit.
-
-任務的主要目的是，與神舟二十一號乘組完成在軌輪換，繼續開展空間科學與應用工作，實施航天員出艙活動及貨物進出艙，進行艙外載荷和艙外設施設備安裝與回收等任務。開展科普教育和公益活動，以及空間搭載試驗，持續發揮空間站綜合應用效益。
-
-Right, for more, we are joined now by Professor Quentin Parker, Director at the Lab for Space Research at the University of Hong Kong. Well, thanks, Professor Parker, for joining us yet again. So, I know that you've championed the historic inclusion of Hong Kong payload specialist, Lai Ka-ying, on the Shenzhou-23 flight. What does this moment actually say about Hong Kong's place in China's space ambition?
-
-Well, I think it shows that a city like Hong Kong has what it takes to be part of it. I think this was a strategic decision for both Macau and Hong Kong to have taikonauts trained under their taikonaut program. And Lai Ka-ying—I should pronounce that properly, it's in Cantonese—is the first Hong Konger, born and bred, to be part of that program. So that's extremely significant for our city.
-
-She's actually an expert payload specialist because she's come from a forensic science and computing background. And this is what she did in the police force. She's actually a graduate of Hong Kong U, my university. She did her Master's and PhD there, and so that was very proud for my university as well. So this is a very proud moment for our city.
-
-I think she's going to perform extremely well as a payload specialist. She's not from a military background, so it's almost like another civilian going into the space station. That's the second one, actually; there was another one a little earlier. So this is a really important milestone for our city.
-
-She's only the fourth woman, as well, to go into space from China, and so there are many firsts here. And I should just make a little point about, you know, you said a long docking. In fact, three and a half hours is really short. It takes almost 16 to 19 hours for the International Space Station crew to dock. And China's kind of automated it, and it's actually really efficient now.
-
-Right, thanks for that clarification there, Professor Parker, we can always count on you on that. I want to pick up on what you said about you saying that Hong Kong has what it takes. So, Ka-ying, she's going up as a payload specialist, not the commander, not the pilot. So, for viewers who may not understand, viewers and myself who don't understand the distinction, what does that actually tell us about the kind of expertise Hong Kong is actually bringing to this mission?
-
-Well, it's the training as a forensic scientist. You know, the attention to detail, they are able to do tasks repeatedly and accurately. Don't forget that the Tiangong space station basically is one huge laboratory experiment, you know. There are about 100 experiments planned for this particular mission.
-
-There have been many experiments done in previous Shenzhou missions, of course. And so this is a very important part of the overall space program for China, to use the microgravity environment on board such a space station to do all sorts of very valuable investigations into material science, manufacturing in space, growing things in space, physiological things that you can do, drug development, 3D printing, so many different things that the Chinese scientists and international scientists, by the way, who have payloads on board, do for this process.
-
-And so she is going to be in charge of many of those experiments. You need someone who can calibrate the equipment and operate it accurately and professionally. If there's a problem, fix it, you know, and know how to gather the data accurately and properly. And all these kinds of things require someone that has the right skill set professionally, scientifically, and has the ability to work on the fly sometimes, troubleshoot, and get things going.
-
-And so, across a broad range of different kinds of experiments as well, so she's done all the training for that, and her work as a forensic scientist has put her in very good stead for that, I would say.
-
-So there is a much bigger endurance test in this mission because one astronaut will be staying in orbit for a full year. Firstly, could Lai Ka-ying be that person, and secondly, what does this year-long mission allow China to test that a six-month mission cannot?
-
-Very good question. And first of all, you know, just statistically, you've got a one-in-three chance of being picked. But it won't be on the basis of chance. China is extremely careful, assiduous about what it does, especially in space. And so they'll be looking at the overall performance of every taikonaut on board, but particularly they'll be looking at the physiological effects of space on each individual.
-
-They'll be taking, you know, medical records continuously of these taikonauts, I would say, and they'll be looking at overall who they would recommend based on the overall body of evidence and data that they've collected over the next few months or weeks until they decide, &quot;Well, we think overall that this particular taikonaut is best suited to maximize what we will learn going forward.&quot;
-
-So, a whole series of different decisions that will be made to come up with the final decision. I mean, they're all suitable, because they've all been chosen—it's a very competitive program. You have to be super good even to get on board and fly in space to start with. And so, of course, Lai Ka-ying has passed everything with flying colors, I heard.
-
-It's been an accelerated program of training for her to get to the stage where she's now already on board, you know, on the Tiangong space station after Shenzhou-23 got there. So it's very exciting for her. I'm sure she has a family. I know she's a mother of three as well, so she's got a lot going on. And this is perhaps one of the most exciting and important things she will have ever done in her entire life.
-
-And so, that's a very important milestone for her personally. But if she was to be selected to be out there for a year, that's even more significant. And, you know, it's not like that's the first human to have spent more than a year in space. The Russians have done it, and, of course, you learn a lot.
-
-Six months your body changes. You start to lose muscle mass, you start to lose calcium from your bones. So after a year that process progresses more, and so, when you've seen probably pictures of those taikonauts and cosmonauts who have been up there for many months and when they come down, they're very weak. They need time to adjust to gravity.
-
-So the thing is, the difference between then and now, after many years since an astronaut, taikonaut, or cosmonaut, however you want to call it, spent such a long time in space, our ability to measure things more accurately, the kinds of tests we can do, has gone on in technology, and medical science has progressed. So what we can learn now is probably a little bit more than you could have learned by doing those same tests 10 years ago, for example.
-
-So I think that's an important difference about this, you know, and also it can validate life support, it can look at the human physiology over a year's timeline in space rather than six months. And it can, of course, also show that for the lunar bases that are planned, you're going to have taikonauts on the moon for extended periods of time also in lower gravity—not as low as in microgravity, of course, but 1/6 of the earth on the moon.
-
-But nevertheless, this is part of the understanding, and China needs to have its own data. You know, it can get data from the other missions that have been done in the past by the other space powers, but getting its own data, validating its own data, doing things in its way with its technologies is very important for their understanding, and for their progress, and for their planning.
-
-Well, fabulous insights as always. Thank you so much for unpacking China's big space mission, Professor Quentin Parker, Director of the Lab for Space Research at the University of Hong Kong.
-
-Right. And, just before we go, we are going to take you to Hong Kong, where one of the city's quirkiest traditions has taken over the island yet again. Now at the stroke of midnight, a dozen climbers raced up a 14-meter tower in the annual Cheung Chau Bun Festival. Nine men and three women had just three minutes to grab as many buns as possible, with those placed highest worth the most points and believed to bring the greatest luck.
-
-Well, the contest is one of Hong Kong's oldest traditions held on the outlying island of Cheung Chau. Residents have celebrated it for more than a century to ward off disaster and pray for peace and good fortune. The competition was suspended after a tower collapse in 1978, injuring dozens, before returning in 2005. It was later paused during the COVID-19 pandemic and resumed in 2023.
-
-And this year's newly crowned Bun King and Bun Queen were all smiles after defending their titles.
-
-今年係好開心啦，因為今年係我玩咗第十一啦，係最激烈競爭嘅一年。原因係佳恩喺我隔籬啦，左邊係前包山王，所以都好緊張。我嘅目標就係快過佢哋上頂啦，機會大啲，咁我都做到，所以好開心。同埋今年係連續第三年贏，所以就更加有一份喜悅啦。
-
-第十一啦，攞冠軍，我覺得都好難得嘅。其實我頭先個狀態，我覺得係有啲攰，可能等得太耐啦，同埋開始嘅時候有少少失手，好彩跟住拿捏返上返去，追返上去，拿返足夠嘅九分包啦。
-
-Well, I hope you've enjoyed Monday's edition of East Asia Tonight. And don't forget your headlines, anytime at cna.asia, and look us up on all socials including Facebook and YouTube. Thanks for watching and, see you again tomorrow.
-                    </div>
-                </div>
-                
-            </article>
-            
 
             <article class="video-card" id="video-4">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=K-o0r2zSgCE" target="_blank" rel="noopener">The First All Electric Ferrari, explained by its designers</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/RdjombbmvvGQGTokXHgVRF7qijHDLcnXs7h4S6N0oOua-veEap9RO7htFE30v7xnWDM1GUlCmI4=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Cleo Abram</span><span class="channel-subs">(8.1M)</span></span>
-                        <span class="meta-sep">·</span><span>45:17</span>
-                        <span class="meta-sep">·</span><span>21.7K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-05-25</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Cleo Abram (Host)</span> <span class="tag tag-person">Jony Ive (Apple legend)</span> <span class="tag tag-person">Flavio Manzoni (Chief Designer, Ferrari)</span></div>
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=K-o0r2zSgCE" target="_blank" rel="noopener">The First All Electric Ferrari, explained by its designers<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/RdjombbmvvGQGTokXHgVRF7qijHDLcnXs7h4S6N0oOua-veEap9RO7htFE30v7xnWDM1GUlCmI4=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Cleo Abram</b><span class="subs">(8.1M)</span></span><span class="dot">&middot;</span><span>45:17</span><span class="dot">&middot;</span><span>21.7K views</span><span class="dot">&middot;</span><span>2026-05-25</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Cleo%20Abram%22">Cleo Abram<span class="chip-desc">Host</span></a> <a class="chip" href="index.html?q=%22Jony%20Ive%22">Jony Ive<span class="chip-desc">Apple legend</span></a> <a class="chip" href="index.html?q=%22Flavio%20Manzoni%22">Flavio Manzoni<span class="chip-desc">Chief Designer, Ferrari</span></a></div>
                 </div>
-                <div class="tldr">The Ferrari Luce, the brand's first-ever all-electric and five-seat vehicle, represents a high-risk collaboration between Ferrari Chief Designer Flavio Manzoni and designer Jony Ive.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-4">TL;DR   The Ferrari Luce, the brand's first-ever all-electric and five-seat vehicle, represents a high-risk collaboration between Ferrari Chief Designer Flavio Manzoni and designer Jony Ive. Rather than mimicking combustion-engine characteristics or adopting screen-heavy digital...</div>
-                    <div class="summary-full" id="full-4">
-                        <p><strong>TL;DR</strong></p>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Ferrari Luce, the brand's first-ever all-electric and five-seat vehicle, represents a high-risk collaboration between Ferrari Chief Designer Flavio Manzoni and designer Jony Ive.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-4">Rather than mimicking combustion-engine characteristics or adopting screen-heavy digital...</div>
+                    <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>The Ferrari Luce, the brand's first-ever all-electric and five-seat vehicle, represents a high-risk collaboration between Ferrari Chief Designer Flavio Manzoni and designer Jony Ive. Rather than mimicking combustion-engine characteristics or adopting screen-heavy digital interfaces, the Luce leverages a flat battery architecture to maximize interior space while prioritizing tactile, physical controls to keep the driver engaged and focused on the road.</p>
 <h3>A Radical Departure from Ferrari Tradition</h3>
 <ul>
@@ -2322,19 +2353,15 @@ Well, I hope you've enjoyed Monday's edition of East Asia Tonight. And don't for
 <blockquote>
 "The obvious thing or certainly the easy, lazy thing to do would be to mimic what people are familiar with. I think consumers and users are really smart... They know when it's fake."
 — *Jony Ive on refusing to add synthetic engine noises to the electric car*
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-4" onclick="toggleSummary(4)">
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-4" onclick="toggleSummary(4)" type="button" aria-expanded="false" aria-controls="full-4">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                 </div>
                 
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-4" onclick="toggleTranscript(4)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-4">
-                        You ready for this? This will be a controversial car. This technology is so extraordinary. Your question was very tricky, yeah. We could create something completely new. For me, there is no design without innovation. 
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-4" onclick="toggleTranscript(4)" type="button" aria-expanded="false" aria-controls="transcript-4">View transcript</button>
+                    <div class="transcript-content" id="transcript-4">You ready for this? This will be a controversial car. This technology is so extraordinary. Your question was very tricky, yeah. We could create something completely new. For me, there is no design without innovation. 
 
 You're about to see the first-ever all-electric Ferrari. This is a car Ferrari said they'd never make, which will probably be the most controversial car they've ever made and will definitely be a massive risk. It features new tech and a new design that will impact all of us, whether or not we ever drive a Ferrari. 
 
@@ -2512,49 +2539,73 @@ And that's truly how I've seen and understand my place in this practice, in this
 
 You are fantastic. My God, wow. She is incredible, because she—you transfer your feeling. Your feeling of emotional involvement, which is the best, the best. I appreciate it, coming from you. I understand why you are so famous. I'm going to write that down in my journal. 
 
-There are two more parts of this car that Ferrari hasn't released yet: how it sounds, and how it actually drives. But I've heard it, and I've driven it. So, if you want to see that, it's coming soon. And if you want to support more optimistic science and tech stories, subscribe.
-                    </div>
+There are two more parts of this car that Ferrari hasn't released yet: how it sounds, and how it actually drives. But I've heard it, and I've driven it. So, if you want to see that, it's coming soon. And if you want to support more optimistic science and tech stories, subscribe.</div>
                 </div>
-                
             </article>
-            
         </main>
-
         <footer>
-            Generated by Follower Tool
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
         </footer>
     </div>
     <script>
-        function toggleSummary(id) {
-            const preview = document.getElementById('preview-' + id);
-            const full = document.getElementById('full-' + id);
-            const btn = document.getElementById('sum-btn-' + id);
-
-            if (full.classList.contains('expanded')) {
-                full.classList.remove('expanded');
-                preview.style.display = 'block';
-                btn.classList.remove('expanded');
-                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-            } else {
-                full.classList.add('expanded');
-                preview.style.display = 'none';
-                btn.classList.add('expanded');
-                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-            }
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
         }
-
-        function toggleTranscript(id) {
-            const content = document.getElementById('transcript-' + id);
-            const btn = document.getElementById('trans-btn-' + id);
-
-            if (content.classList.contains('expanded')) {
-                content.classList.remove('expanded');
-                btn.textContent = 'View transcript';
-            } else {
-                content.classList.add('expanded');
-                btn.textContent = 'Hide transcript';
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
             }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
         }
-        </script>
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+</script>
+    
 </body>
 </html>

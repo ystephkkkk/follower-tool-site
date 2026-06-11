@@ -3,633 +3,1050 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Briefing - May 27, 2026</title>
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Wednesday, May 27, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
-            --bg: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --text: #e6edf3;
-            --text-secondary: #8b949e;
-            --text-tertiary: #6e7681;
-            --accent: #58a6ff;
-            --accent-subtle: #388bfd26;
-            --border: #30363d;
-            --green: #3fb950;
-            --green-subtle: rgba(63, 185, 80, 0.15);
-            --yellow: #d29922;
-            --yellow-subtle: rgba(210, 153, 34, 0.15);
-            --red: #f85149;
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         @media (prefers-color-scheme: light) {
-            :root {
-                --bg: #ffffff;
-                --bg-secondary: #f6f8fa;
-                --bg-tertiary: #eaeef2;
-                --text: #1f2328;
-                --text-secondary: #656d76;
-                --text-tertiary: #8b949e;
-                --accent: #0969da;
-                --accent-subtle: #0969da1a;
-                --border: #d0d7de;
-                --green: #1a7f37;
-                --green-subtle: rgba(26, 127, 55, 0.12);
-                --yellow: #9a6700;
-                --yellow-subtle: rgba(154, 103, 0, 0.12);
-                --red: #cf222e;
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
             }
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
-            padding: 0;
+            line-height: 1.65;
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
+        a { color: inherit; }
 
-        header {
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
         }
 
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.02em;
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
         }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
 
         .stats {
             display: flex;
-            gap: 1.5rem;
-            margin-top: 0.75rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
         }
 
-        .stat-value {
-            color: var(--text);
-            font-weight: 600;
-        }
+        .stat-value { color: var(--text); font-weight: 600; }
 
-        .nav-links {
+        /* ------- search results meta ------- */
+        .search-meta {
             display: flex;
+            align-items: baseline;
+            justify-content: space-between;
             gap: 1rem;
-            margin-top: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
         }
 
-        .nav-links a {
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
             color: var(--accent);
-            text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
         }
 
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
+        .search-clear:hover { text-decoration: underline; }
 
-        /* Video Cards */
-        .video-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            margin-bottom: 1.25rem;
-            overflow: hidden;
-            scroll-margin-top: 1rem;
-        }
-
-        .video-header {
-            padding: 1.25rem 1.5rem 1rem;
-        }
-
-        .video-title {
-            font-size: 1.05rem;
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
             font-weight: 600;
-            margin-bottom: 0.6rem;
-            line-height: 1.4;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
-        .video-title a {
-            color: var(--text);
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
             text-decoration: none;
             transition: color 0.15s ease;
         }
 
-        .video-title a:hover {
-            color: var(--accent);
-        }
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
 
-        .video-meta {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.8rem;
-            color: var(--text-tertiary);
-        }
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
 
-        .channel-info {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-        }
-
-        .channel-icon {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-            background: var(--bg-tertiary);
-        }
-
-        .channel-name {
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .channel-subs {
-            color: var(--text-tertiary);
-            font-size: 0.75rem;
-        }
-
-        /* Channel Pill */
-        .channel-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: var(--bg-tertiary);
-            padding: 0.3rem 0.7rem 0.3rem 0.4rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .channel-pill .channel-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        .channel-pill .channel-name {
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .channel-pill .channel-subs {
-            color: var(--text-tertiary);
-            font-size: 0.7rem;
-            margin-left: 0.15rem;
-        }
-
-        /* Tags */
-        .video-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-top: 0.6rem;
-        }
-
-        .tag {
-            display: inline-block;
-            background: var(--accent-subtle);
-            color: var(--accent);
-            padding: 0.2rem 0.6rem;
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            font-size: 0.72rem;
-            font-weight: 500;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
         }
 
-        .tag-person {
-            background: rgba(136, 87, 255, 0.15);
-            color: #a371f7;
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
         }
 
-        @media (prefers-color-scheme: light) {
-            .tag-person {
-                background: rgba(130, 80, 223, 0.12);
-                color: #6639ba;
-            }
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
         }
 
-        .channel-badge {
-            background: var(--accent-subtle);
-            color: var(--accent);
-            padding: 0.2rem 0.55rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
         }
 
-        .high-trust-badge {
-            background: var(--green-subtle);
-            color: var(--green);
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
         }
 
-        .meta-sep {
-            color: var(--border);
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
         }
 
-        /* TL;DR Section */
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
         .tldr {
-            padding: 0.9rem 1.5rem;
-            background: var(--bg-tertiary);
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
             border-top: 1px solid var(--border);
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: var(--text);
             line-height: 1.55;
         }
 
-        /* Summary Section */
-        .summary-section {
-            padding: 1rem 1.5rem 1.25rem;
+        .tldr > span:last-child { max-width: 70ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
             border-top: 1px solid var(--border);
         }
 
-        .summary-preview {
-            font-size: 0.92rem;
-            line-height: 1.7;
-            color: var(--text);
-        }
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 70ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 70ch; }
+        .sum-full.expanded { display: block; }
 
-        .summary-full {
-            display: none;
-            font-size: 0.92rem;
-            line-height: 1.7;
-        }
-
-        .summary-full.expanded {
-            display: block;
-        }
-
-        .summary-full h3 {
-            font-size: 0.95rem;
+        .sum-full h3 {
+            font-size: 1.05rem;
             font-weight: 600;
-            color: var(--text);
-            margin: 1.25rem 0 0.6rem;
+            margin: 1.3rem 0 0.6rem;
         }
 
-        .summary-full h3:first-child {
-            margin-top: 0;
-        }
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
 
-        .summary-full h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1rem 0 0.4rem;
-        }
-
-        .summary-full ul {
-            margin: 0.4rem 0;
-            padding-left: 1.3rem;
-        }
-
-        .summary-full li {
-            margin: 0.35rem 0;
-        }
-
-        /* Nested lists - indentation only, no color/size change */
-        .summary-full ul ul {
-            margin: 0.2rem 0;
-        }
-
-        .summary-full ul ul li {
-            margin: 0.25rem 0;
-        }
-
-        .summary-full strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .summary-full p {
-            margin: 0.6rem 0;
-            line-height: 1.65;
-        }
-
-        .summary-full blockquote {
+        .sum-full blockquote {
             margin: 1rem 0;
             padding: 0.75rem 1rem;
-            background: var(--bg-tertiary);
+            background: var(--bg-2);
             border-left: 3px solid var(--accent);
-            border-radius: 0 6px 6px 0;
+            border-radius: 0 8px 8px 0;
             font-style: italic;
-            color: var(--text-secondary);
+            color: var(--text-2);
         }
 
-        .summary-full em {
-            font-style: italic;
-        }
-
-        /* Toggle Buttons */
-        .toggle-btn {
+        .linklike {
             background: none;
             border: none;
             color: var(--accent);
             padding: 0;
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             margin-top: 0.6rem;
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            transition: opacity 0.15s ease;
         }
 
-        .toggle-btn:hover {
-            opacity: 0.8;
-        }
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
 
-        .toggle-btn svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.2s ease;
-        }
-
-        .toggle-btn.expanded svg {
-            transform: rotate(180deg);
-        }
-
-        /* Transcript Section */
-        .transcript-section {
-            padding: 0 1.5rem 1.25rem;
-        }
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
 
         .transcript-toggle {
-            background: var(--bg-tertiary);
+            background: var(--bg-2);
             border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 0.5rem 0.9rem;
-            border-radius: 6px;
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
             font-size: 0.8rem;
             font-weight: 500;
+            font-family: inherit;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: border-color 0.15s ease, color 0.15s ease;
         }
 
-        .transcript-toggle:hover {
-            background: var(--border);
-            color: var(--text);
-        }
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
 
         .transcript-content {
             display: none;
             margin-top: 0.75rem;
             padding: 1rem;
             background: var(--bg);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 0.85rem;
             line-height: 1.75;
             white-space: pre-wrap;
-            max-height: 400px;
+            overflow-wrap: anywhere;
+            max-height: 420px;
             overflow-y: auto;
             border: 1px solid var(--border);
-            color: var(--text-secondary);
+            color: var(--text-2);
         }
 
-        .transcript-content.expanded {
-            display: block;
-            animation: fadeIn 0.2s ease;
-        }
+        .transcript-content.expanded { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Empty State */
-        .empty-state {
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
             text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-secondary);
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
         }
 
-        .empty-state h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.4rem;
-            color: var(--text);
-        }
-
-        /* Index Page Styles */
-        .day-list {
-            list-style: none;
-        }
-
-        .day-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            transition: border-color 0.15s ease;
-        }
-
-        .day-header-link {
-            display: block;
-            padding: 1.25rem 1.5rem 0.75rem;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .day-header-link:hover .day-date {
-            color: var(--accent);
-        }
-
-        .day-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .day-date {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--text);
-            transition: color 0.15s ease;
-        }
-
-        .day-count {
-            color: var(--text-tertiary);
-            font-size: 0.85rem;
-        }
-
-        .day-previews {
-            display: flex;
-            flex-direction: column;
-            padding: 0 1.5rem 1rem;
-        }
-
-        .day-preview-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid var(--border);
-            text-decoration: none;
-            color: inherit;
-            border-radius: 4px;
-            transition: background 0.12s ease;
-        }
-
-        .day-preview-item:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .day-preview-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .preview-title {
-            font-size: 0.88rem;
-            font-weight: 500;
-            color: var(--text);
-            line-height: 1.35;
-        }
-
-        .preview-meta {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-        }
-
-        .preview-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: var(--bg-tertiary);
-            padding: 0.15rem 0.5rem 0.15rem 0.25rem;
-            border-radius: 14px;
-        }
-
-        .preview-channel-icon {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .preview-channel-name {
-            font-weight: 500;
-            color: var(--text-secondary);
-            font-size: 0.72rem;
-        }
-
-        .preview-channel-subs {
-            color: var(--text-tertiary);
-            font-size: 0.68rem;
-        }
-
-        .preview-details {
-            font-size: 0.72rem;
-            color: var(--text-tertiary);
-        }
-
-        .preview-tags {
-            display: inline-flex;
-            gap: 0.3rem;
-        }
-
-        .tag-sm {
-            padding: 0.1rem 0.45rem;
-            font-size: 0.65rem;
-        }
-
-        .preview-tldr {
-            font-size: 0.78rem;
-            color: var(--text-tertiary);
-            line-height: 1.45;
-        }
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
 
         footer {
             margin-top: 3rem;
-            padding-top: 1.5rem;
+            padding-top: 1.4rem;
             border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-tertiary);
-            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            .container {
-                padding: 1.25rem 1rem;
-            }
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
 
-            .video-header, .tldr, .summary-section, .transcript-section {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-
-            .video-title {
-                font-size: 1rem;
-            }
-
-            .transcript-content {
-                max-height: 300px;
-            }
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
         }
-        </style>
+</style>
 </head>
 <body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
     <div class="container">
-        <header>
-            <h1>Daily Briefing</h1>
-            <p class="subtitle">May 27, 2026</p>
-            <div class="stats">
-                <span><span class="stat-value">4</span> videos</span>
-            </div>
-            <nav class="nav-links">
-                <a href="index.html">&larr; All Briefings</a>
-            </nav>
-        </header>
 
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260526.html">&larr; May 26</a><a href="20260528.html">May 28 &rarr;</a></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Wednesday, May 27, 2026</h1>
+            <p class="day-sub">4 videos &middot; 4 channels</p>
+        </header>
+        <nav class="toc"><div class="toc-label">In this briefing</div><ol><li><a href="#video-0">Everyone Can Build a Robot: Open Source Embodied AI With <strong>Seeed Studio</strong> | NVIDIA AI Podcast Ep. 300</a></li><li><a href="#video-1">Inside YC's AI Playbook</a></li><li><a href="#video-2">Private Markets and The Future of Capital Allocation with <strong>Marc Rowan</strong> | <strong>The a16z Show</strong></a></li><li><a href="#video-3"><strong>Prosus</strong> CEO: Why AI Is Still Under-hyped and What to Do About It | Podcast | In Good Company</a></li></ol></nav>
         <main>
-            
+
             <article class="video-card" id="video-0">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=B246K_G7mHU" target="_blank" rel="noopener">Inside YC's AI Playbook</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Y Combinator</span><span class="channel-subs">(2.3M)</span></span>
-                        <span class="meta-sep">·</span><span>46:30</span>
-                        <span class="meta-sep">·</span><span>32.7K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-05-27</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Pete Koomen (Partner, Y Combinator)</span></div>
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=C3lcadfxTio" target="_blank" rel="noopener">Everyone Can Build a Robot: Open Source Embodied AI With Seeed Studio | NVIDIA AI Podcast Ep. 300<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/btm1_PK-7VRUr9GY2D0UV_2XfbUZPBjghyptjSO1crsfN86HyTYDWPmUbq7JxC3H0Lxe_s067nA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>NVIDIA</b><span class="subs">(2.2M)</span></span><span class="dot">&middot;</span><span>29:05</span><span class="dot">&middot;</span><span>4.2K views</span><span class="dot">&middot;</span><span>2026-05-27</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Eric%20Pan%22">Eric Pan<span class="chip-desc">CEO, Seeed Studio</span></a> <a class="chip" href="index.html?q=%22Elaine%20Wu%22">Elaine Wu<span class="chip-desc">Head of Robotics, Seeed Studio</span></a></div>
                 </div>
-                <div class="tldr">True organizational superintelligence requires shifting from treating AI as an external &quot;copilot&quot; to establishing it as a unified, self-improving operating system.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-0">TL;DR   True organizational superintelligence requires shifting from treating AI as an external &quot;copilot&quot; to establishing it as a unified, self-improving operating system. By integrating all company context into a single database, granting agents direct tool and SQL access, and...</div>
-                    <div class="summary-full" id="full-0">
-                        <p><strong>TL;DR</strong></p>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Seeed Studio is democratizing embodied AI by delivering affordable, open-source robotic hardware powered by NVIDIA Jetson, enabling developers to control and train physical agents using intuitive hand-guiding and natural-language commands.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Lowering the Barrier to Entry:...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
+<p>Seeed Studio is democratizing embodied AI by delivering affordable, open-source robotic hardware powered by NVIDIA Jetson, enabling developers to control and train physical agents using intuitive hand-guiding and natural-language commands.</p>
+<h3>The Power of Open Source in Embodied AI</h3>
+<ul>
+<li><strong>Lowering the Barrier to Entry:</strong> Seeed Studio aims to make physical AI accessible to everyone. By utilizing open source modules, customizable developer kits, and extensive tutorials, they allow hobbyists, researchers, and small businesses to quickly adopt advanced robotics.</li>
+<li><strong>Fostering a Collaborative Ecosystem:</strong> </li>
+<ul>
+<ul>
+<li><strong>Rapid Evolution:</strong> Open-source development operates like an ecosystem where diverse ideas compete and evolve quickly, rather than relying on a single closed-source humanoid design.</li>
+<li><strong>Establishing Trust:</strong> Open source ensures that users deploying physical AI in sensitive environments—such as homes, retail spaces, or factories—maintain complete control and customization of their devices without vendor lock-in.</li>
+</ul>
+</ul>
+<li><strong>Empowering Small and Medium Businesses (SMBs):</strong> Historically restricted by the high cost and complexity of industrial robotics, SMBs and startup innovation labs are using Seeed’s platforms to deploy specialized, domain-specific robots efficiently.</li>
+</ul>
+<h3>Democratizing Hardware: From the $200 SOR-ARM to the Re-Bot</h3>
+<ul>
+<li><strong>The $200 SOR-ARM:</strong> Developed in partnership with Hugging Face, this highly affordable robotic arm lowers the barrier to entry for schools, makers, and small businesses, shifting robots from expensive industrial investments to accessible tools for everyday tasks.</li>
+<li><strong>The Re-Bot Arm:</strong> </li>
+<ul>
+<ul>
+<li><strong>Affordable and Robust:</strong> Starting at under $1,000, the Re-Bot is designed for practical, real-world deployment. It features a robust design with 3D-printable parts, allowing users to customize physical components to fit their specific environments. </li>
+<li><strong>Sim-to-Real Integration:</strong> The Re-Bot is fully mirrored in NVIDIA Isaac Sim. This digital twin capability allows developers to simulate and validate trajectories in a virtual environment before deploying them to physical hardware.</li>
+</ul>
+</ul>
+</ul>
+<h3>Intuitive Training and Agentic Frameworks on NVIDIA Jetson</h3>
+<ul>
+<li><strong>"Dog-Like" Training Methods:</strong> Instead of writing complex spatial planning code over several months, users train the robot organically by physically holding the arm and guiding it through a task. </li>
+<ul>
+<ul>
+<li><strong>On-Device Execution:</strong> The guided training data is sent to the cloud for training, and the resulting diffusion model is deployed locally on NVIDIA Jetson devices, utilizing camera feeds to dynamically execute and adjust movements.</li>
+</ul>
+</ul>
+<li><strong>Natural-Language Control via OpenClaw (Open-COLA):</strong> By running OpenClaw locally on NVIDIA Jetson Orin alongside a Qwen 1.5 35B model, developers can bypass traditional programming entirely. Users can send text commands (e.g., "move up 20 centimeters" or "pick up the claw") to control the physical arm.</li>
+<li><strong>Hugging Face LeRobot Integration:</strong> Seeed’s hardware supports Hugging Face’s LeRobot framework, providing end-to-end learning policies, datasets, and models that allow developers of any technical background to train and operate physical agents.</li>
+</ul>
+<h3>Modular Hardware Design vs. Monolithic Humanoids</h3>
+<ul>
+<li><strong>The Modular Approach:</strong> Rather than building a single general-purpose humanoid robot that tries to do everything, Seeed Studio focuses on modular sub-assemblies.</li>
+<ul>
+<ul>
+<li><strong>Custom Assemblies:</strong> By manufacturing separate heads, torsos, arms, chassis, and wheels, Seeed allows developers to combine parts organically to suit their exact physical requirements.</li>
+</ul>
+</ul>
+<li><strong>Rapid Scale and Manufacturing Services:</strong> Beyond selling off-the-shelf kits, Seeed acts as an ODM partner to help hardware startups scale quickly. </li>
+<ul>
+<ul>
+<li><strong>Rapid Prototyping:</strong> As a demonstration of their design-to-manufacturing speed, Seeed co-developed, manufactured, and shipped 3,000 units of the Hugging Face "Re-Chair Mini" in just five months.</li>
+</ul>
+</ul>
+</ul>
+<p>***</p>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Previously, you need to spend months of training to understand spatial planning on the robots, how it moves. By now, what you do with the robots is after setting up, you train it. Yeah. Like you train a dog. You teach it how to do it by holding its hand to do the operations for several times." — <strong>Eric Pan, CEO of Seeed Studio</strong>
+</blockquote>
+<blockquote>
+"Open, the most important thing is lower the barrier... with the open module, customizable, affordable, and also a bunch of tutorials that Seeed is keeping and moving... to help developers to get easily hands-on." — <strong>Elaine Wu, Head of Robotics at Seeed Studio</strong>
+</blockquote>
+<blockquote>
+"We are actually doing the reversed way as humanoids. We don't want to build one robot that do everything... We build like the head and the torso, we build the arms, and we build the wheels, so we start building more parts of the robots. And then people can combine them according to their usages." — <strong>Eric Pan, CEO of Seeed Studio</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Previously, you need to spend months of trainings to understand the spatial, like, planning on the robots, how it moves. By now, what you do with the robots is after the setting up, you train it. Yeah. Like you train a dog. You teach it how to do it by holding its hand to do the operations for several times. Then you send all the data back to train on the cloud, deploy on the Jetson.
+
+Welcome to the NVIDIA AI Podcast. I'm Noah Kravitz. Our guests today are Elaine Wu and Eric Pan from Seeed Studio. Eric is the CEO, and Elaine is the Head of Robotics. And if you're not watching this on video, if you're listening on audio, you might want to check out the video stream. We've got a handful of robot companions with us today.
+
+We're going to get some demos, we're going to talk about open robotics, Open-COLA, edge computing, robotics, and AI—all kinds of great stuff. So let's get into it. Eric, Elaine, welcome. Thanks for joining the NVIDIA AI Podcast. 
+
+Pleasure. Thank you for inviting us. Thank you for having us, and thank you for bringing your friends.
+
+So maybe we can start, and Eric, I'll ask you first, for a little bit of an overview for listeners and viewers who might not know Seeed Studio. What is the company, and how did you move from open hardware into robotics and edge AI? 
+
+Sure. So, Seeed Studio, we have been supporting the global communities on open source hardware from 2008, for 18 years. So, we started with open source hardware modules, but we moved on to all kinds of devices. We worked with NVIDIA for several years around Jetson Nanos. 
+
+But now we have a lot more robotics, open source robotics, from arms to little desktop embodiments. So this goes on. Yeah. So, as an NVIDIA elite partner, Seeed, our AI robotics team, has built a line-up of the Jetson Orin devices as the most powerful and advanced robot brain. 
+
+Together with that, we also have a full stack of robotic components from perception and control. So, Seeed, our mission is to make technology more accessible to everyone. 
+
+And so, how is this convergence of AI, open AI, robotics hardware, and technologies now like Open-COLA? How is this shaping the world of robotics and open robotics?
+
+I think it's a very evolving and progressive trend. People are starting to understand microcontrollers; okay, everybody can use microcontrollers. So, there is all the open source hardware and the maker movement. Then gradually, people realize, &quot;Okay, I have open source hardware. Can I use it for industries? Can I do real projects with that?&quot; 
+
+So, you see a lot of IoT and a lot of robotics in the early times start to pop up because it's easier for everyone to cross boundaries coming from different industries. Now they can use technology for themselves, no matter where they are all over the world. And with all the edge AI, all this agentic AI, people see it differently. Okay, I can really get things talking.
+
+I can really give a soul to my creations. It's not just a machine; it's a machine that can talk to you and can be assigned to tasks. And this is becoming a new society of robots. And the community, I think, is the root because you don't need one robot for everything for now. It's actually going to be specialized robots with open source models covering a specific domain.
+
+And it has to be done by millions of people all over the world. So, we're happy to support NVIDIA in this whole process. 
+
+So along those lines, why is open, the idea of open, so important to robotics? And you hinted at this, and we've been talking with frontier AI companies, you know, building models and building software tools and just talking about how the open source community is just advancing so much faster than they would be otherwise with everybody collaborating. Is it a similar thing in the robotics community?
+
+Why is open—Seeed Studio has always been built on open—why is that so important? 
+
+Yeah, I think a very important factor is people don't know what to build to be the number one creations. So, this is not a game. People are trying all kinds of diversities.
+
+It's like biology, where you have all kinds of creatures. They compete with each other, they evolve with each other, and then we have the best creations for every domain. And, through open source, it's not only that technology is evolving fast because people can contribute with their own talents, but also it is about trust and adoption. 
+
+So imagine you need to have an edge AI in your home, in your factories, in your retail stores. You want it controllable, you want to be able to modify it, and you don't want to be locked away. So open source is facilitating a lot of new technologies to push to new boundaries. Instead of salespersons, we have the makers and developers who naturally, with their curiosity, try to find out what's happening and integrate it into their business.
+
+This is, I think, by default, if you're talking about robots, that's the best way. Of course, there are close-source humanoids, and there are traditional companies doing this forever in very expensive ways. But I think what we are looking at is that's not everything. We, at least, give the possibility to everyone to create their own physical AI for their belongings.
+
+Yeah, and open also means accessible. It is accessible to all developers and everyone can get in touch with, for example, physical AI and embodied AI. So, I think with open, the most important thing is lowering the barrier. We do this with the open module, which is customizable and also affordable, and also with a bunch of the tutorials that Seeed is keeping and moving, keeping on creating.
+
+And to help developers get very easily hands-on with these different products, hardware, and also the open source dev kit, we are also growing together with our ecosystem. 
+
+Right. I should have maybe asked you this at the beginning, but who are your customers? Who is Seeed's user base, and what are some of the—are there particular domains?
+
+You mentioned, you know, manufacturing and industry. Are there particular domains that you sell to, where your products and your robots are being used more than others? 
+
+We have millions of customers. So, most of them call themselves makers, right? So, it can be everyone: hobbyists, students, but a lot of them are researchers.
+
+And they start to understand the possibility of technology and to integrate it into their own domain. But they don't stop there. They move on, they become employees, they become startups, and they become the project needs in big companies. So, you see them, like micro-veins, going into every industry.
+
+So, it's very hard to define who our customers are, but we see the majority by number are the students and researchers. And if we move on, we see a lot of revenue, or a lot of productivity, coming from small and medium businesses. Because previously they didn't have the power to do that, and now they have all the resources, and they can help each other to very fast adapt technology.
+
+And also the big companies, they have problems in innovation because the company might be too big. But they are trying to have their innovation labs. In the innovation labs, how do you find people who can do everything in a fast pace? So, the developers and the makers very naturally grow into all kinds of domains.
+
+What's your best-selling product? Do you sell a kit? How do you—what does—if I'm a maker and I want to get into robotics, what do I buy from Seeed Studio? 
+
+So, for now, for robotics, what we sold most is called the SO-ARM. 
+
+Okay. So, it's a project we are working on with Hugging Face. It's an open source arm, but costing only $200.
+
+I've seen that. Yes, I've seen this arm, yeah, yeah. It's super. 
+
+Yeah, it's a new generation of robots. Previously, you needed a professional roboticist to program it over a very long time, debug it, and they had to maintain it. So, it was going to be very expensive. So, you see robots more for medical or for automotive. But these robots are more disposable.
+
+Yeah, $200. $200, and the kids can use that. Yeah. How about every business, we can have some robots to help us? We did a lot of hackathons last year, and a lot of people just used it for cooking, for barbecues.
+
+So, it might be like a toy to many professionals, but we have to respect the possibility underneath. If they grow up, if they think seriously, &quot;How can I use affordable robots for street business, for a lot of pervasive possibilities?&quot; This is actually happening. And I think that's a root, a foundation for more premium robots and premium business.
+
+And a lot of people get to learn, and a lot of people get to develop this into more mature belongings. 
+
+Yeah, and customers can get all of our products on our website. And we also have the global distribution channel. And also we are pretty active in the developer ecosystem. Like Eric mentioned, we host hackathons and workshops in different cities and countries.
+
+Yeah, so developers can easily find us. 
+
+And how easy is—how quickly could I, and I'm not a developer, I'm fairly technical for a content person, how quickly if I got one of your arms, could I get up and running with it?
+
+Yeah, previously, you needed to spend months of training to understand the spatial, like, planning on the robots and how it moves. 
+
+Spatial planning, I'd need an extra couple of months, but yeah.
+
+But now, what you do with the robots is, after the setting up, you train it. Yeah. Like you train a dog. You teach it how to do it by holding its hand to do the operations for several times.
+
+Then, you send all the data back to train on the cloud, deploy on the Jetson. Jetson will use a diffusion model to detect with the cameras to try to find the best way to execute the projects. If it's not doing right, retrain it.
+
+Yeah. So, it's very organic and natural. It should be for the skilled person, who is like a chef or who is a blacksmith, trying to teach a robot in an organic way to make it happen. But it's not for someone else; it can be done for themselves. &quot;This is my robot.
+
+It inherits, or it's my apprentice. It helps me to do something, and it can help me in my business, but not giving away my business. It's not replacing me.&quot; Mhm. It's the robot I acquired, and it's going to enhance my operations.
+
+Absolutely, yeah, yeah, yeah. This is really like, I think, a different mechanism and a different business model. And it's the same way that we talk about, you know, screen-based AI, right? That it's not replacing, it's augmenting. I use AI tools all the time.
+
+They help me do things faster, better, you know, but they're not taking my job. So, yeah, it's wild to see this coming into the physical world in, you know, sort of a bigger, mainstream kind of way. It's just, it's amazing. I wanted to ask you about, you mentioned, Elaine, the partnership, being an elite partner with NVIDIA.
+
+Could you speak a little bit to that relationship and what it brings to the Seeed community?
+
+So, we started working with NVIDIA back to six or seven years ago, starting from the Jetson Nano. And then, we became the NVIDIA elite partner.
+
+And then, by making the NVIDIA Jetson carrier boards and also the devices. So, by this, NVIDIA helped us a lot. So first, I would say, first of all, thanks for the trust in building up this partnership. And then, becoming the partner of NVIDIA, we get very deep tech support to help us to get this hardware and products ready to market.
+
+And secondly, I think NVIDIA's emerging technologies are pretty active in their community, like Jetson AI Lab, and also their forum, and also their tech stack, like Isaac Sim and the GR00T, from the SDK to the models. So, we're pretty actively working together with the ecosystem to put these emerging technologies into our devices, making that as a solution, as a tutorial, or as demos.
+
+Yeah. And can I ask you how—everybody's talking about Open-COLA, we've got a claw on the table here. How has the integration of Open-COLA onto Jetson accelerated or enhanced your development process?
+
+Yeah. So, for the Open-COLA, we have a different angle to try.
+
+So, first is in application-wise. Before, as Eric mentioned, previously, if you wanted to program a robotic application, that would be very complex. You needed to program from the perception, mhm, and its control. I mean, almost every part of the robot, you needed to hardcode that.
+
+And now, through the Open-COLA, we have tried, we have installed Open-COLA, mhm, locally on the Jetson Orin. And also, it called the local API of the model. We tried the Qwen 1.5 35B model. And then, if I text on the chat box of the Open-COLA, like &quot;move up the robot arm,&quot; &quot;move down,&quot; or &quot;pick up the claw,&quot;
+
+it can directly execute the task. So, that is also transforming the way we are coding. It's not coding anymore. It's just texting, mhm, and controlling the arm.
+
+In another way, for Jetson users, I think the update, the necessary thing on the Jetson, that would be an upgrade in efficiency, yes.
+
+Right. And to sum up, I think it's not only just a tool; the robot arm is becoming a claw itself. It's very agentic. So, the process is we connected this about two weeks ago to Open-COLA, mhm, and tried to ask it.
+
+We gave it a while to try. &quot;Find yourself the libraries you are in a SO-ARM, find your libraries, read instructions, and build yourself into a physical world.&quot; Mhm. Now, it pulled together all the libraries and tried to plan there. &quot;How do you—what do you mean by moving 20 centimeters up?&quot;
+
+So, it did all these dimensions, and we actually gave Open-COLA a physical body. Not only to help you to understand the world, but to help you to build the world, to help you to move the physical things around you. And the way you master it is you talk to a claw through a message, through WhatsApp, or through a microphone array.
+
+So, I think this is totally liberating the claw. Sometimes it feels a bit scary. Right, right. You know, you just talk to it, then, mhm, it starts to move.
+
+I was speaking with Harrison Chase from LangChain, and we were talking about agents and this idea of giving an agent an identity, mhm, what that means, right? And you mentioned before about, you know, putting a soul into the robots. Exactly. Right, and so, does the robot arm, like, does it communicate to you that it now understands, &quot;Oh, I have a physical embodiment&quot;?
+
+Mhm. Like, is it getting into that kind of thing with the identity of, yeah?
+
+Exactly, because you can write in the soul. Yeah. What is, like, what's your role, what are your definitions, mhm, and what are your skills.
+
+So, we gave—it's very controllable. We don't ask it to try all the wild gestures; we just give it the actions you want with all the peripherals, with all the objects on the table. Ask you, &quot;Now you are a chef. You should help us to cook this egg.&quot;
+
+Now it knows, okay, what it should be following, what kind of SOPs. But I think this is just a start for a lot of people to use Open-COLA as their personal agents, mhm, like &quot;be part of my job.&quot; But I think with all the robots, all the physical AI, you install Open-COLA into more projects, they are actually far from you.
+
+But everybody can talk to them, mhm, and they can talk to each other to collaborate. Right. We have a new society of them. But, of course, we need to control them with some privileges on their authorities.
+
+Right, yes. But it's a different way we can use agents. And, mhm, they can have their sub-agents as well. You need like a home assistant to manage all the stuff, mhm, and to coordinate them.
+
+You maybe need like an AI camera to look at everybody working, mhm, and teach them, &quot;Okay, you are going the wrong way.&quot; And you can ask an AGV to feed the robot arm with something, and the robot arm can operate according to you, &quot;Okay, I taught you to do this, now it's for you to repeat it 10 times.&quot;
+
+Oh, I'm imagining in my home an orchestrator and then a robot to feed the dog. What I really want is a clothes-folding robot, and I know that's very difficult with the articulations, mhm, and such. But we've got these robots here.
+
+So, this is our very newly released re-board arm. So, that is also another of our open source projects now on GitHub; it has already hit 1.3k stars. And so, for this demo we are showing, it is doing the trajectory planning. It is showing very smooth, very stable movements. Compared to the SO-ARM 100, it shows it's more robust.
+
+And also, we have mirrored this real-to-scene to the NVIDIA Isaac Sim. And to the—so every position and every actuator moving, you can see in the Isaac Sim for the simulation. Yes. So, we give it two missions for the robot. It's called re-bot. 
+
+Okay. 
+
+It's like, redefine robots, okay, got it, with all the agentic AI. But it actually has three features.
+
+First, it is open source, right? So, everybody can contribute. Right. You see some of the parts are 3D printed. And we'll release all the files, so people can turn this into, like, a microphone holder for you. Yeah, yeah.
+
+To respond to you, they can, according to the purpose and scenarios, rebuild the robots according to their needs. And the second thing, it's more applied. You can see it's not designed for learning only.
+
+People see it and feel like, &quot;Okay, I want to use it.&quot; You can do something with it. And then, the other angle is, how much? Will it be too expensive for my, like, cooking, or for my small business?
+
+No, it's just $1,000 to start with.
+
+This one's $1,000?
+
+$1,000. It will be less than $1,000. And we'll pack it with a Jetson Nano, mhm, to do the local functions.
+
+You don't need a token; you buy a Jetson Nano, right? Everything is running on it. And you can work with, of course, the cloud, or bigger like Thor to do more complex planning.
+
+So, you can have a management system with more edge AI, but this small AI will be executing the SOPs accordingly. Mhm. So, we hope this can enable open source, applied, and agentic usages. 
+
+Amazing. Do you, you know, you mentioned obviously that we want to stay as humans in control of the system, right? Of the robots. And mhm, when you're working with tools like Open-COLA, can Open-COLA write skills for robots?
+
+Sure, it extends. It doesn't matter, yeah. Exactly.
+
+Right. So, are there concerns around safety issues? Are there particular guidelines that are specific to the robotics domain when you're working with, you know, AI and thinking about AGI?
+
+No, because we just started to use the cloud to do that. Okay, yeah. We're still testing on the limits. But for now, I think—I forget this just came out like a month ago.
+
+Exactly. We wake up every day and go, &quot;Okay, where are we now?&quot; The terrain has been changing too fast, every day. But what we are trying to start with is we see it as a robot first.
+
+So, it has all the robot guidelines we should follow, mhm. And, if we connect to an IT system, mhm, it should have all the controls as if it's a human being. So, we apply the basic layer first, then we'll explore the boundaries.
+
+And we have a panic button; we can just shut it off. It's easier, mhm, because you don't need to unplug your wires from the laptop, you just unplug it, right? We'll show it start. Right, yeah.
+
+Thinking kind of, I don't know, a little bit abstractly and kind of thinking ahead, you know, with so many people using Open-COLA and low-code and these agentic tools and LangSmith, and creating all of these—just thousands, millions of digital creations every day being built by these agents—how do you think about applying that mentality and applying these digital creations and kind of manifesting them in the physical world through robotics?
+
+Yeah, I think it's like following the Open-COLA discussion. Mhm. Open-COLA is becoming an interface, an inter-link, mhm, between the digital worlds and the physical world. Now we can control robot arms.
+
+But in, like, a lot of details, how do you really move the parts? Mhm. How do you really interact with your environment? So, I think that's where Isaac Sim is coming to play. It's mirroring all the modeling, and you can simulate before you deploy them.
+
+And you get very precise renderings afterwards, so you can have the digital twin between them. And a lot of more people, before, they didn't have the resources. Not, I think until now, we don't have one robot for everyone. Yeah. So, how about more people can participate first through the online simulations?
+
+Right. But we build more scene-to-real, real-to-scene bridges, and as we have more cheap, affordable robots, the scene-to-real gap will be very easily closed. Because a lot of people are validating, mhm, a lot of people are improving on the controls, on the details to make them smooth and practical, and you train the way you train on these simulations and deploy in the field. They can very naturally, organically, for most of the people, use them as if they are talking to a creature, mhm.
+
+Yeah, yeah. This is going to be very exciting.
+
+It's amazing, it's amazing. So, Elaine, can you talk about how open robotics, open frameworks, open models, sort of help developers kind of bridge that gap, bringing their ideas into the physical world through robotics?
+
+Yeah, first, I want to point out the Hugging Face LeRobot framework. So, that is transforming the way how we build the robot. So as we mentioned, Open-COLA makes it very easy. You can control the robot arm through the text, the chat box.
+
+By using LeRobot, there's a lot of researchers, and the engineers doing the algorithms or the hardware engineers, they can get in touch with embodied AI, no matter what their background is. Because LeRobot framework provides datasets, the model, and also the policy into one set of the framework to train the robot. That is end-to-end learning rather than you needing to code each part of the robots.
+
+Yes. So, and also, Seeed, we focus on the hardware. So together with LeRobot, we bring the SO-ARM, and we also have our re-board arm compatible with LeRobot to help the developers to get easily quick-started.
+
+Yeah, and also besides our hardware, Seeed, we also provide the services, the custom-made services, and also manufacturing services. How quickly we help the startups to get into that.
+
+For example, we work with Hugging Face for this Re-Chair mini, mhm, so we quickly, in 5 months, went from the design to development and manufacturing. In 5 months, we started 3,000, and 3,000 units shipped to every customer.
+
+Amazing. Wow, that is so fast. So, what's next? What is on Seeed Studio's agenda for the year? Are there different types of robots? Are there different frameworks, is it all in on Open-COLA? What can you tell us?
+
+Yeah, I think what we created is the beginning, mhm. And what we offered is a reference design. Because we're an open source company, whatever robots we build, they are open source, so we don't have expectations that we build something everybody will just use.
+
+They will come back to us, and they always ask, &quot;Can I change this a little bit for my creations?&quot; &quot;I'm doing a startup, can I base it on your creations and wrap it up with my practices?&quot; Why not? So, one key part of our business is we help people to scale.
+
+So, we give people reference designs as a framework, they do the development, they come back to us, &quot;Okay, let's change and make it into some different creations.&quot; So, we hope to see more of this happening; they have more physical AI, they look at the open source design, they have a problem to resolve, and now they have a much faster, better, easier solution.
+
+And that's what—where we want to facilitate. We hope we can foster and support a big fleet of physical AI creations. I think that will be very fast to happen in the next 1 or 3 years. Yeah.
+
+So, you're able to customize the physical design of the robot to meet the customer's needs. Are you building—are you getting into, I don't know, like humanoids or quadrupeds, bipeds, that kind of thing, or is it mostly arms?
+
+We're actually doing the reverse way of humanoids. We don't want to build one robot that does everything. Mhm. We don't want to build general robots. Yeah, yeah, right. But we disassemble the humanoids.
+
+We build, like, the head and the torso, we build the arms, and we build the wheels, so we start building more parts of the robots. And then people can combine them according to their usages. So, very organically they can find their practical loop, a flywheel of physical demands and possible hardware.
+
+Yeah.
+
+Yeah.
+
+Yeah, and also, for our product line, we have a line-up of LeRobot compatible robots. We have arms, we have chassis, we have hands, and also desktop robots.
+
+Oh, fantastic. Amazing.
+
+Yeah. I think a very important trend is that we don't wait for someone to build a humanoid for us, right, mhm. Maybe we don't trust it, maybe we cannot wait, maybe it's too expensive. But now, everyone can build a robot for themselves.
+
+And if they have a cluster of needs, a community with similar scenarios, someone can create a business on the physical AI. I think that's more organic.
+
+No, it's amazing. There's—there's something about the physical world, right? For all that, you know, we're talking and using and developing these on-screen tools, seeing them embodied in the physical world is just a mind shift, and it's just amazing to see. Eric, Elaine, for viewers and listeners who want to learn more, maybe they want to find out about getting some robot parts of their own, is it seeedstudio.com?
+
+Yeah, with three E's in Seeed.
+
+Yeah, mhm, especially with three E's. Okay. And other places they can go to learn more, like social media?
+
+Yeah, we are on most of the social media: Twitter, Facebook, Instagram, mhm, so just search us and you'll find us.
+
+Perfect. Well again, Eric and Elaine, this has been fascinating, and as you said, it's just the beginning. So, looking around at what's on the table now makes me think, mhm, what might be on the table next year. Appreciate you coming, thank you so much for joining the podcast, and obviously, all the best with everything Seeed is doing.
+
+Very nice talking, and proud to share what we have been doing. Thank you.
+
+That's great. Thank you—thank you for having us, our pleasure.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-1">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=B246K_G7mHU" target="_blank" rel="noopener">Inside YC's AI Playbook<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Y Combinator</b><span class="subs">(2.3M)</span></span><span class="dot">&middot;</span><span>46:30</span><span class="dot">&middot;</span><span>32.7K views</span><span class="dot">&middot;</span><span>2026-05-27</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Pete%20Koomen%22">Pete Koomen<span class="chip-desc">Partner, Y Combinator</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>True organizational superintelligence requires shifting from treating AI as an external &quot;copilot&quot; to establishing it as a unified, self-improving operating system.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">By integrating all company context into a single database, granting agents direct tool and SQL access, and...</div>
+                    <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>True organizational superintelligence requires shifting from treating AI as an external "copilot" to establishing it as a unified, self-improving operating system. By integrating all company context into a single database, granting agents direct tool and SQL access, and maintaining an egalitarian, transparent culture, organizations can create a shared collective brain that continuously optimizes itself.</p>
 <h3>The Unified Data Foundation and the Jevons Paradox</h3>
 <ul>
@@ -681,19 +1098,15 @@
 <blockquote>
 "It's like a shared organizational brain... It's the closest thing to us being able to connect our brains."
 — <strong>Pete Koomen</strong>
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-0" onclick="toggleSummary(0)">
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                 </div>
                 
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-0">
-                        How do you build super-intelligence inside a company? Part of the key thing is not to just use AI as a copilot. This is the thing where you use it as the building layer for everything, and you need to start recording all the artifacts. 
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">How do you build super-intelligence inside a company? Part of the key thing is not to just use AI as a copilot. This is the thing where you use it as the building layer for everything, and you need to start recording all the artifacts. 
 
 It's like a shared organizational brain. It's like the closest thing to us being able to, like, connect our brains, right? If you frame this as a way for everyone in an organization to get better at what they do, using the, like, collective skill and instinct of the people they work with, it's incredibly powerful.
 
@@ -1071,370 +1484,20 @@ And these are all choices, and the people who are watching are going to be the p
 
 Well, that's all the time we have for today. I mean, I think we covered some pretty heavy stuff, but Pete, thanks for joining us. 
 
-Thanks, Garry. Thank you. Thanks for watching, guys, we'll see you guys on the next one.
-                    </div>
+Thanks, Garry. Thank you. Thanks for watching, guys, we'll see you guys on the next one.</div>
                 </div>
-                
             </article>
-            
-
-            <article class="video-card" id="video-1">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=C3lcadfxTio" target="_blank" rel="noopener">Everyone Can Build a Robot: Open Source Embodied AI With Seeed Studio | NVIDIA AI Podcast Ep. 300</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/btm1_PK-7VRUr9GY2D0UV_2XfbUZPBjghyptjSO1crsfN86HyTYDWPmUbq7JxC3H0Lxe_s067nA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">NVIDIA</span><span class="channel-subs">(2.2M)</span></span>
-                        <span class="meta-sep">·</span><span>29:05</span>
-                        <span class="meta-sep">·</span><span>4.2K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-05-27</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Eric Pan (CEO, Seeed Studio)</span> <span class="tag tag-person">Elaine Wu (Head of Robotics, Seeed Studio)</span></div>
-                </div>
-                <div class="tldr">Seeed Studio is democratizing embodied AI by delivering affordable, open-source robotic hardware powered by NVIDIA Jetson, enabling developers to control and train physical agents using intuitive hand-guiding and natural-language commands.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-1">TL;DR  Seeed Studio is democratizing embodied AI by delivering affordable, open-source robotic hardware powered by NVIDIA Jetson, enabling developers to control and train physical agents using intuitive hand-guiding and natural-language commands.  Lowering the Barrier to Entry:...</div>
-                    <div class="summary-full" id="full-1">
-                        <p><strong>TL;DR</strong></p>
-<p>Seeed Studio is democratizing embodied AI by delivering affordable, open-source robotic hardware powered by NVIDIA Jetson, enabling developers to control and train physical agents using intuitive hand-guiding and natural-language commands.</p>
-<h3>The Power of Open Source in Embodied AI</h3>
-<ul>
-<li><strong>Lowering the Barrier to Entry:</strong> Seeed Studio aims to make physical AI accessible to everyone. By utilizing open source modules, customizable developer kits, and extensive tutorials, they allow hobbyists, researchers, and small businesses to quickly adopt advanced robotics.</li>
-<li><strong>Fostering a Collaborative Ecosystem:</strong> </li>
-<ul>
-<ul>
-<li><strong>Rapid Evolution:</strong> Open-source development operates like an ecosystem where diverse ideas compete and evolve quickly, rather than relying on a single closed-source humanoid design.</li>
-<li><strong>Establishing Trust:</strong> Open source ensures that users deploying physical AI in sensitive environments—such as homes, retail spaces, or factories—maintain complete control and customization of their devices without vendor lock-in.</li>
-</ul>
-</ul>
-<li><strong>Empowering Small and Medium Businesses (SMBs):</strong> Historically restricted by the high cost and complexity of industrial robotics, SMBs and startup innovation labs are using Seeed’s platforms to deploy specialized, domain-specific robots efficiently.</li>
-</ul>
-<h3>Democratizing Hardware: From the $200 SOR-ARM to the Re-Bot</h3>
-<ul>
-<li><strong>The $200 SOR-ARM:</strong> Developed in partnership with Hugging Face, this highly affordable robotic arm lowers the barrier to entry for schools, makers, and small businesses, shifting robots from expensive industrial investments to accessible tools for everyday tasks.</li>
-<li><strong>The Re-Bot Arm:</strong> </li>
-<ul>
-<ul>
-<li><strong>Affordable and Robust:</strong> Starting at under $1,000, the Re-Bot is designed for practical, real-world deployment. It features a robust design with 3D-printable parts, allowing users to customize physical components to fit their specific environments. </li>
-<li><strong>Sim-to-Real Integration:</strong> The Re-Bot is fully mirrored in NVIDIA Isaac Sim. This digital twin capability allows developers to simulate and validate trajectories in a virtual environment before deploying them to physical hardware.</li>
-</ul>
-</ul>
-</ul>
-<h3>Intuitive Training and Agentic Frameworks on NVIDIA Jetson</h3>
-<ul>
-<li><strong>"Dog-Like" Training Methods:</strong> Instead of writing complex spatial planning code over several months, users train the robot organically by physically holding the arm and guiding it through a task. </li>
-<ul>
-<ul>
-<li><strong>On-Device Execution:</strong> The guided training data is sent to the cloud for training, and the resulting diffusion model is deployed locally on NVIDIA Jetson devices, utilizing camera feeds to dynamically execute and adjust movements.</li>
-</ul>
-</ul>
-<li><strong>Natural-Language Control via OpenClaw (Open-COLA):</strong> By running OpenClaw locally on NVIDIA Jetson Orin alongside a Qwen 1.5 35B model, developers can bypass traditional programming entirely. Users can send text commands (e.g., "move up 20 centimeters" or "pick up the claw") to control the physical arm.</li>
-<li><strong>Hugging Face LeRobot Integration:</strong> Seeed’s hardware supports Hugging Face’s LeRobot framework, providing end-to-end learning policies, datasets, and models that allow developers of any technical background to train and operate physical agents.</li>
-</ul>
-<h3>Modular Hardware Design vs. Monolithic Humanoids</h3>
-<ul>
-<li><strong>The Modular Approach:</strong> Rather than building a single general-purpose humanoid robot that tries to do everything, Seeed Studio focuses on modular sub-assemblies.</li>
-<ul>
-<ul>
-<li><strong>Custom Assemblies:</strong> By manufacturing separate heads, torsos, arms, chassis, and wheels, Seeed allows developers to combine parts organically to suit their exact physical requirements.</li>
-</ul>
-</ul>
-<li><strong>Rapid Scale and Manufacturing Services:</strong> Beyond selling off-the-shelf kits, Seeed acts as an ODM partner to help hardware startups scale quickly. </li>
-<ul>
-<ul>
-<li><strong>Rapid Prototyping:</strong> As a demonstration of their design-to-manufacturing speed, Seeed co-developed, manufactured, and shipped 3,000 units of the Hugging Face "Re-Chair Mini" in just five months.</li>
-</ul>
-</ul>
-</ul>
-<p>***</p>
-<h3>Notable Quotes</h3>
-<blockquote>
-"Previously, you need to spend months of training to understand spatial planning on the robots, how it moves. By now, what you do with the robots is after setting up, you train it. Yeah. Like you train a dog. You teach it how to do it by holding its hand to do the operations for several times." — <strong>Eric Pan, CEO of Seeed Studio</strong>
-</blockquote>
-<blockquote>
-"Open, the most important thing is lower the barrier... with the open module, customizable, affordable, and also a bunch of tutorials that Seeed is keeping and moving... to help developers to get easily hands-on." — <strong>Elaine Wu, Head of Robotics at Seeed Studio</strong>
-</blockquote>
-<blockquote>
-"We are actually doing the reversed way as humanoids. We don't want to build one robot that do everything... We build like the head and the torso, we build the arms, and we build the wheels, so we start building more parts of the robots. And then people can combine them according to their usages." — <strong>Eric Pan, CEO of Seeed Studio</strong>
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-1" onclick="toggleSummary(1)">
-                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                </div>
-                
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-1">
-                        Previously, you need to spend months of trainings to understand the spatial, like, planning on the robots, how it moves. By now, what you do with the robots is after the setting up, you train it. Yeah. Like you train a dog. You teach it how to do it by holding its hand to do the operations for several times. Then you send all the data back to train on the cloud, deploy on the Jetson.
-
-Welcome to the NVIDIA AI Podcast. I'm Noah Kravitz. Our guests today are Elaine Wu and Eric Pan from Seeed Studio. Eric is the CEO, and Elaine is the Head of Robotics. And if you're not watching this on video, if you're listening on audio, you might want to check out the video stream. We've got a handful of robot companions with us today.
-
-We're going to get some demos, we're going to talk about open robotics, Open-COLA, edge computing, robotics, and AI—all kinds of great stuff. So let's get into it. Eric, Elaine, welcome. Thanks for joining the NVIDIA AI Podcast. 
-
-Pleasure. Thank you for inviting us. Thank you for having us, and thank you for bringing your friends.
-
-So maybe we can start, and Eric, I'll ask you first, for a little bit of an overview for listeners and viewers who might not know Seeed Studio. What is the company, and how did you move from open hardware into robotics and edge AI? 
-
-Sure. So, Seeed Studio, we have been supporting the global communities on open source hardware from 2008, for 18 years. So, we started with open source hardware modules, but we moved on to all kinds of devices. We worked with NVIDIA for several years around Jetson Nanos. 
-
-But now we have a lot more robotics, open source robotics, from arms to little desktop embodiments. So this goes on. Yeah. So, as an NVIDIA elite partner, Seeed, our AI robotics team, has built a line-up of the Jetson Orin devices as the most powerful and advanced robot brain. 
-
-Together with that, we also have a full stack of robotic components from perception and control. So, Seeed, our mission is to make technology more accessible to everyone. 
-
-And so, how is this convergence of AI, open AI, robotics hardware, and technologies now like Open-COLA? How is this shaping the world of robotics and open robotics?
-
-I think it's a very evolving and progressive trend. People are starting to understand microcontrollers; okay, everybody can use microcontrollers. So, there is all the open source hardware and the maker movement. Then gradually, people realize, &quot;Okay, I have open source hardware. Can I use it for industries? Can I do real projects with that?&quot; 
-
-So, you see a lot of IoT and a lot of robotics in the early times start to pop up because it's easier for everyone to cross boundaries coming from different industries. Now they can use technology for themselves, no matter where they are all over the world. And with all the edge AI, all this agentic AI, people see it differently. Okay, I can really get things talking.
-
-I can really give a soul to my creations. It's not just a machine; it's a machine that can talk to you and can be assigned to tasks. And this is becoming a new society of robots. And the community, I think, is the root because you don't need one robot for everything for now. It's actually going to be specialized robots with open source models covering a specific domain.
-
-And it has to be done by millions of people all over the world. So, we're happy to support NVIDIA in this whole process. 
-
-So along those lines, why is open, the idea of open, so important to robotics? And you hinted at this, and we've been talking with frontier AI companies, you know, building models and building software tools and just talking about how the open source community is just advancing so much faster than they would be otherwise with everybody collaborating. Is it a similar thing in the robotics community?
-
-Why is open—Seeed Studio has always been built on open—why is that so important? 
-
-Yeah, I think a very important factor is people don't know what to build to be the number one creations. So, this is not a game. People are trying all kinds of diversities.
-
-It's like biology, where you have all kinds of creatures. They compete with each other, they evolve with each other, and then we have the best creations for every domain. And, through open source, it's not only that technology is evolving fast because people can contribute with their own talents, but also it is about trust and adoption. 
-
-So imagine you need to have an edge AI in your home, in your factories, in your retail stores. You want it controllable, you want to be able to modify it, and you don't want to be locked away. So open source is facilitating a lot of new technologies to push to new boundaries. Instead of salespersons, we have the makers and developers who naturally, with their curiosity, try to find out what's happening and integrate it into their business.
-
-This is, I think, by default, if you're talking about robots, that's the best way. Of course, there are close-source humanoids, and there are traditional companies doing this forever in very expensive ways. But I think what we are looking at is that's not everything. We, at least, give the possibility to everyone to create their own physical AI for their belongings.
-
-Yeah, and open also means accessible. It is accessible to all developers and everyone can get in touch with, for example, physical AI and embodied AI. So, I think with open, the most important thing is lowering the barrier. We do this with the open module, which is customizable and also affordable, and also with a bunch of the tutorials that Seeed is keeping and moving, keeping on creating.
-
-And to help developers get very easily hands-on with these different products, hardware, and also the open source dev kit, we are also growing together with our ecosystem. 
-
-Right. I should have maybe asked you this at the beginning, but who are your customers? Who is Seeed's user base, and what are some of the—are there particular domains?
-
-You mentioned, you know, manufacturing and industry. Are there particular domains that you sell to, where your products and your robots are being used more than others? 
-
-We have millions of customers. So, most of them call themselves makers, right? So, it can be everyone: hobbyists, students, but a lot of them are researchers.
-
-And they start to understand the possibility of technology and to integrate it into their own domain. But they don't stop there. They move on, they become employees, they become startups, and they become the project needs in big companies. So, you see them, like micro-veins, going into every industry.
-
-So, it's very hard to define who our customers are, but we see the majority by number are the students and researchers. And if we move on, we see a lot of revenue, or a lot of productivity, coming from small and medium businesses. Because previously they didn't have the power to do that, and now they have all the resources, and they can help each other to very fast adapt technology.
-
-And also the big companies, they have problems in innovation because the company might be too big. But they are trying to have their innovation labs. In the innovation labs, how do you find people who can do everything in a fast pace? So, the developers and the makers very naturally grow into all kinds of domains.
-
-What's your best-selling product? Do you sell a kit? How do you—what does—if I'm a maker and I want to get into robotics, what do I buy from Seeed Studio? 
-
-So, for now, for robotics, what we sold most is called the SO-ARM. 
-
-Okay. So, it's a project we are working on with Hugging Face. It's an open source arm, but costing only $200.
-
-I've seen that. Yes, I've seen this arm, yeah, yeah. It's super. 
-
-Yeah, it's a new generation of robots. Previously, you needed a professional roboticist to program it over a very long time, debug it, and they had to maintain it. So, it was going to be very expensive. So, you see robots more for medical or for automotive. But these robots are more disposable.
-
-Yeah, $200. $200, and the kids can use that. Yeah. How about every business, we can have some robots to help us? We did a lot of hackathons last year, and a lot of people just used it for cooking, for barbecues.
-
-So, it might be like a toy to many professionals, but we have to respect the possibility underneath. If they grow up, if they think seriously, &quot;How can I use affordable robots for street business, for a lot of pervasive possibilities?&quot; This is actually happening. And I think that's a root, a foundation for more premium robots and premium business.
-
-And a lot of people get to learn, and a lot of people get to develop this into more mature belongings. 
-
-Yeah, and customers can get all of our products on our website. And we also have the global distribution channel. And also we are pretty active in the developer ecosystem. Like Eric mentioned, we host hackathons and workshops in different cities and countries.
-
-Yeah, so developers can easily find us. 
-
-And how easy is—how quickly could I, and I'm not a developer, I'm fairly technical for a content person, how quickly if I got one of your arms, could I get up and running with it?
-
-Yeah, previously, you needed to spend months of training to understand the spatial, like, planning on the robots and how it moves. 
-
-Spatial planning, I'd need an extra couple of months, but yeah.
-
-But now, what you do with the robots is, after the setting up, you train it. Yeah. Like you train a dog. You teach it how to do it by holding its hand to do the operations for several times.
-
-Then, you send all the data back to train on the cloud, deploy on the Jetson. Jetson will use a diffusion model to detect with the cameras to try to find the best way to execute the projects. If it's not doing right, retrain it.
-
-Yeah. So, it's very organic and natural. It should be for the skilled person, who is like a chef or who is a blacksmith, trying to teach a robot in an organic way to make it happen. But it's not for someone else; it can be done for themselves. &quot;This is my robot.
-
-It inherits, or it's my apprentice. It helps me to do something, and it can help me in my business, but not giving away my business. It's not replacing me.&quot; Mhm. It's the robot I acquired, and it's going to enhance my operations.
-
-Absolutely, yeah, yeah, yeah. This is really like, I think, a different mechanism and a different business model. And it's the same way that we talk about, you know, screen-based AI, right? That it's not replacing, it's augmenting. I use AI tools all the time.
-
-They help me do things faster, better, you know, but they're not taking my job. So, yeah, it's wild to see this coming into the physical world in, you know, sort of a bigger, mainstream kind of way. It's just, it's amazing. I wanted to ask you about, you mentioned, Elaine, the partnership, being an elite partner with NVIDIA.
-
-Could you speak a little bit to that relationship and what it brings to the Seeed community?
-
-So, we started working with NVIDIA back to six or seven years ago, starting from the Jetson Nano. And then, we became the NVIDIA elite partner.
-
-And then, by making the NVIDIA Jetson carrier boards and also the devices. So, by this, NVIDIA helped us a lot. So first, I would say, first of all, thanks for the trust in building up this partnership. And then, becoming the partner of NVIDIA, we get very deep tech support to help us to get this hardware and products ready to market.
-
-And secondly, I think NVIDIA's emerging technologies are pretty active in their community, like Jetson AI Lab, and also their forum, and also their tech stack, like Isaac Sim and the GR00T, from the SDK to the models. So, we're pretty actively working together with the ecosystem to put these emerging technologies into our devices, making that as a solution, as a tutorial, or as demos.
-
-Yeah. And can I ask you how—everybody's talking about Open-COLA, we've got a claw on the table here. How has the integration of Open-COLA onto Jetson accelerated or enhanced your development process?
-
-Yeah. So, for the Open-COLA, we have a different angle to try.
-
-So, first is in application-wise. Before, as Eric mentioned, previously, if you wanted to program a robotic application, that would be very complex. You needed to program from the perception, mhm, and its control. I mean, almost every part of the robot, you needed to hardcode that.
-
-And now, through the Open-COLA, we have tried, we have installed Open-COLA, mhm, locally on the Jetson Orin. And also, it called the local API of the model. We tried the Qwen 1.5 35B model. And then, if I text on the chat box of the Open-COLA, like &quot;move up the robot arm,&quot; &quot;move down,&quot; or &quot;pick up the claw,&quot;
-
-it can directly execute the task. So, that is also transforming the way we are coding. It's not coding anymore. It's just texting, mhm, and controlling the arm.
-
-In another way, for Jetson users, I think the update, the necessary thing on the Jetson, that would be an upgrade in efficiency, yes.
-
-Right. And to sum up, I think it's not only just a tool; the robot arm is becoming a claw itself. It's very agentic. So, the process is we connected this about two weeks ago to Open-COLA, mhm, and tried to ask it.
-
-We gave it a while to try. &quot;Find yourself the libraries you are in a SO-ARM, find your libraries, read instructions, and build yourself into a physical world.&quot; Mhm. Now, it pulled together all the libraries and tried to plan there. &quot;How do you—what do you mean by moving 20 centimeters up?&quot;
-
-So, it did all these dimensions, and we actually gave Open-COLA a physical body. Not only to help you to understand the world, but to help you to build the world, to help you to move the physical things around you. And the way you master it is you talk to a claw through a message, through WhatsApp, or through a microphone array.
-
-So, I think this is totally liberating the claw. Sometimes it feels a bit scary. Right, right. You know, you just talk to it, then, mhm, it starts to move.
-
-I was speaking with Harrison Chase from LangChain, and we were talking about agents and this idea of giving an agent an identity, mhm, what that means, right? And you mentioned before about, you know, putting a soul into the robots. Exactly. Right, and so, does the robot arm, like, does it communicate to you that it now understands, &quot;Oh, I have a physical embodiment&quot;?
-
-Mhm. Like, is it getting into that kind of thing with the identity of, yeah?
-
-Exactly, because you can write in the soul. Yeah. What is, like, what's your role, what are your definitions, mhm, and what are your skills.
-
-So, we gave—it's very controllable. We don't ask it to try all the wild gestures; we just give it the actions you want with all the peripherals, with all the objects on the table. Ask you, &quot;Now you are a chef. You should help us to cook this egg.&quot;
-
-Now it knows, okay, what it should be following, what kind of SOPs. But I think this is just a start for a lot of people to use Open-COLA as their personal agents, mhm, like &quot;be part of my job.&quot; But I think with all the robots, all the physical AI, you install Open-COLA into more projects, they are actually far from you.
-
-But everybody can talk to them, mhm, and they can talk to each other to collaborate. Right. We have a new society of them. But, of course, we need to control them with some privileges on their authorities.
-
-Right, yes. But it's a different way we can use agents. And, mhm, they can have their sub-agents as well. You need like a home assistant to manage all the stuff, mhm, and to coordinate them.
-
-You maybe need like an AI camera to look at everybody working, mhm, and teach them, &quot;Okay, you are going the wrong way.&quot; And you can ask an AGV to feed the robot arm with something, and the robot arm can operate according to you, &quot;Okay, I taught you to do this, now it's for you to repeat it 10 times.&quot;
-
-Oh, I'm imagining in my home an orchestrator and then a robot to feed the dog. What I really want is a clothes-folding robot, and I know that's very difficult with the articulations, mhm, and such. But we've got these robots here.
-
-So, this is our very newly released re-board arm. So, that is also another of our open source projects now on GitHub; it has already hit 1.3k stars. And so, for this demo we are showing, it is doing the trajectory planning. It is showing very smooth, very stable movements. Compared to the SO-ARM 100, it shows it's more robust.
-
-And also, we have mirrored this real-to-scene to the NVIDIA Isaac Sim. And to the—so every position and every actuator moving, you can see in the Isaac Sim for the simulation. Yes. So, we give it two missions for the robot. It's called re-bot. 
-
-Okay. 
-
-It's like, redefine robots, okay, got it, with all the agentic AI. But it actually has three features.
-
-First, it is open source, right? So, everybody can contribute. Right. You see some of the parts are 3D printed. And we'll release all the files, so people can turn this into, like, a microphone holder for you. Yeah, yeah.
-
-To respond to you, they can, according to the purpose and scenarios, rebuild the robots according to their needs. And the second thing, it's more applied. You can see it's not designed for learning only.
-
-People see it and feel like, &quot;Okay, I want to use it.&quot; You can do something with it. And then, the other angle is, how much? Will it be too expensive for my, like, cooking, or for my small business?
-
-No, it's just $1,000 to start with.
-
-This one's $1,000?
-
-$1,000. It will be less than $1,000. And we'll pack it with a Jetson Nano, mhm, to do the local functions.
-
-You don't need a token; you buy a Jetson Nano, right? Everything is running on it. And you can work with, of course, the cloud, or bigger like Thor to do more complex planning.
-
-So, you can have a management system with more edge AI, but this small AI will be executing the SOPs accordingly. Mhm. So, we hope this can enable open source, applied, and agentic usages. 
-
-Amazing. Do you, you know, you mentioned obviously that we want to stay as humans in control of the system, right? Of the robots. And mhm, when you're working with tools like Open-COLA, can Open-COLA write skills for robots?
-
-Sure, it extends. It doesn't matter, yeah. Exactly.
-
-Right. So, are there concerns around safety issues? Are there particular guidelines that are specific to the robotics domain when you're working with, you know, AI and thinking about AGI?
-
-No, because we just started to use the cloud to do that. Okay, yeah. We're still testing on the limits. But for now, I think—I forget this just came out like a month ago.
-
-Exactly. We wake up every day and go, &quot;Okay, where are we now?&quot; The terrain has been changing too fast, every day. But what we are trying to start with is we see it as a robot first.
-
-So, it has all the robot guidelines we should follow, mhm. And, if we connect to an IT system, mhm, it should have all the controls as if it's a human being. So, we apply the basic layer first, then we'll explore the boundaries.
-
-And we have a panic button; we can just shut it off. It's easier, mhm, because you don't need to unplug your wires from the laptop, you just unplug it, right? We'll show it start. Right, yeah.
-
-Thinking kind of, I don't know, a little bit abstractly and kind of thinking ahead, you know, with so many people using Open-COLA and low-code and these agentic tools and LangSmith, and creating all of these—just thousands, millions of digital creations every day being built by these agents—how do you think about applying that mentality and applying these digital creations and kind of manifesting them in the physical world through robotics?
-
-Yeah, I think it's like following the Open-COLA discussion. Mhm. Open-COLA is becoming an interface, an inter-link, mhm, between the digital worlds and the physical world. Now we can control robot arms.
-
-But in, like, a lot of details, how do you really move the parts? Mhm. How do you really interact with your environment? So, I think that's where Isaac Sim is coming to play. It's mirroring all the modeling, and you can simulate before you deploy them.
-
-And you get very precise renderings afterwards, so you can have the digital twin between them. And a lot of more people, before, they didn't have the resources. Not, I think until now, we don't have one robot for everyone. Yeah. So, how about more people can participate first through the online simulations?
-
-Right. But we build more scene-to-real, real-to-scene bridges, and as we have more cheap, affordable robots, the scene-to-real gap will be very easily closed. Because a lot of people are validating, mhm, a lot of people are improving on the controls, on the details to make them smooth and practical, and you train the way you train on these simulations and deploy in the field. They can very naturally, organically, for most of the people, use them as if they are talking to a creature, mhm.
-
-Yeah, yeah. This is going to be very exciting.
-
-It's amazing, it's amazing. So, Elaine, can you talk about how open robotics, open frameworks, open models, sort of help developers kind of bridge that gap, bringing their ideas into the physical world through robotics?
-
-Yeah, first, I want to point out the Hugging Face LeRobot framework. So, that is transforming the way how we build the robot. So as we mentioned, Open-COLA makes it very easy. You can control the robot arm through the text, the chat box.
-
-By using LeRobot, there's a lot of researchers, and the engineers doing the algorithms or the hardware engineers, they can get in touch with embodied AI, no matter what their background is. Because LeRobot framework provides datasets, the model, and also the policy into one set of the framework to train the robot. That is end-to-end learning rather than you needing to code each part of the robots.
-
-Yes. So, and also, Seeed, we focus on the hardware. So together with LeRobot, we bring the SO-ARM, and we also have our re-board arm compatible with LeRobot to help the developers to get easily quick-started.
-
-Yeah, and also besides our hardware, Seeed, we also provide the services, the custom-made services, and also manufacturing services. How quickly we help the startups to get into that.
-
-For example, we work with Hugging Face for this Re-Chair mini, mhm, so we quickly, in 5 months, went from the design to development and manufacturing. In 5 months, we started 3,000, and 3,000 units shipped to every customer.
-
-Amazing. Wow, that is so fast. So, what's next? What is on Seeed Studio's agenda for the year? Are there different types of robots? Are there different frameworks, is it all in on Open-COLA? What can you tell us?
-
-Yeah, I think what we created is the beginning, mhm. And what we offered is a reference design. Because we're an open source company, whatever robots we build, they are open source, so we don't have expectations that we build something everybody will just use.
-
-They will come back to us, and they always ask, &quot;Can I change this a little bit for my creations?&quot; &quot;I'm doing a startup, can I base it on your creations and wrap it up with my practices?&quot; Why not? So, one key part of our business is we help people to scale.
-
-So, we give people reference designs as a framework, they do the development, they come back to us, &quot;Okay, let's change and make it into some different creations.&quot; So, we hope to see more of this happening; they have more physical AI, they look at the open source design, they have a problem to resolve, and now they have a much faster, better, easier solution.
-
-And that's what—where we want to facilitate. We hope we can foster and support a big fleet of physical AI creations. I think that will be very fast to happen in the next 1 or 3 years. Yeah.
-
-So, you're able to customize the physical design of the robot to meet the customer's needs. Are you building—are you getting into, I don't know, like humanoids or quadrupeds, bipeds, that kind of thing, or is it mostly arms?
-
-We're actually doing the reverse way of humanoids. We don't want to build one robot that does everything. Mhm. We don't want to build general robots. Yeah, yeah, right. But we disassemble the humanoids.
-
-We build, like, the head and the torso, we build the arms, and we build the wheels, so we start building more parts of the robots. And then people can combine them according to their usages. So, very organically they can find their practical loop, a flywheel of physical demands and possible hardware.
-
-Yeah.
-
-Yeah.
-
-Yeah, and also, for our product line, we have a line-up of LeRobot compatible robots. We have arms, we have chassis, we have hands, and also desktop robots.
-
-Oh, fantastic. Amazing.
-
-Yeah. I think a very important trend is that we don't wait for someone to build a humanoid for us, right, mhm. Maybe we don't trust it, maybe we cannot wait, maybe it's too expensive. But now, everyone can build a robot for themselves.
-
-And if they have a cluster of needs, a community with similar scenarios, someone can create a business on the physical AI. I think that's more organic.
-
-No, it's amazing. There's—there's something about the physical world, right? For all that, you know, we're talking and using and developing these on-screen tools, seeing them embodied in the physical world is just a mind shift, and it's just amazing to see. Eric, Elaine, for viewers and listeners who want to learn more, maybe they want to find out about getting some robot parts of their own, is it seeedstudio.com?
-
-Yeah, with three E's in Seeed.
-
-Yeah, mhm, especially with three E's. Okay. And other places they can go to learn more, like social media?
-
-Yeah, we are on most of the social media: Twitter, Facebook, Instagram, mhm, so just search us and you'll find us.
-
-Perfect. Well again, Eric and Elaine, this has been fascinating, and as you said, it's just the beginning. So, looking around at what's on the table now makes me think, mhm, what might be on the table next year. Appreciate you coming, thank you so much for joining the podcast, and obviously, all the best with everything Seeed is doing.
-
-Very nice talking, and proud to share what we have been doing. Thank you.
-
-That's great. Thank you—thank you for having us, our pleasure.
-                    </div>
-                </div>
-                
-            </article>
-            
 
             <article class="video-card" id="video-2">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=oYK_MmZW9XI" target="_blank" rel="noopener">Private Markets and The Future of Capital Allocation with Marc Rowan | The a16z Show</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/hkiO7UAtALrbqOcewo4CIrbd0j8XDeWttKkdtihfX1emeV4iUMwjIe1KKn4zd6wT2OOwANDnIA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">a16z</span><span class="channel-subs">(275.0K)</span></span>
-                        <span class="meta-sep">·</span><span>55:24</span>
-                        <span class="meta-sep">·</span><span>2.7K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-05-27</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Marc Rowan (Cofounder, CEO, and Chair of Apollo Global Management)</span> <span class="tag tag-person">David Haber (Host, The a16z Show)</span></div>
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=oYK_MmZW9XI" target="_blank" rel="noopener">Private Markets and The Future of Capital Allocation with Marc Rowan | The a16z Show<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/hkiO7UAtALrbqOcewo4CIrbd0j8XDeWttKkdtihfX1emeV4iUMwjIe1KKn4zd6wT2OOwANDnIA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>a16z</b><span class="subs">(275.0K)</span></span><span class="dot">&middot;</span><span>55:24</span><span class="dot">&middot;</span><span>2.7K views</span><span class="dot">&middot;</span><span>2026-05-27</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Marc%20Rowan%22">Marc Rowan<span class="chip-desc">Cofounder, CEO, and Chair of Apollo Global Management</span></a> <a class="chip" href="index.html?q=%22David%20Haber%22">David Haber<span class="chip-desc">Host, The a16z Show</span></a></div>
                 </div>
-                <div class="tldr">&gt; &quot;You either accept change or change is visited upon you.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-2">TL;DR: As public markets face extreme concentration, Apollo Global Management is scaling past $1 trillion in assets by shifting from traditional private equity to investment-grade private credit—bridging long-term retirement liabilities with the massive, capital-intensive...</div>
-                    <div class="summary-full" id="full-2">
-                        <p><strong>TL;DR:</strong> As public markets face extreme concentration, Apollo Global Management is scaling past $1 trillion in assets by shifting from traditional private equity to investment-grade private credit—bridging long-term retirement liabilities with the massive, capital-intensive infrastructure demands of AI, energy, and robotics.</p>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;You either accept change or change is visited upon you.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">As public markets face extreme concentration, Apollo Global Management is scaling past $1 trillion in assets by shifting from traditional private equity to investment-grade private credit—bridging long-term retirement liabilities with the massive, capital-intensive...</div>
+                    <div class="sum-full" id="full-2"><p><strong>TL;DR:</strong> As public markets face extreme concentration, Apollo Global Management is scaling past $1 trillion in assets by shifting from traditional private equity to investment-grade private credit—bridging long-term retirement liabilities with the massive, capital-intensive infrastructure demands of AI, energy, and robotics.</p>
 <h3>The Evolution of Apollo: From Private Equity to Investment-Grade Credit</h3>
 <ul>
 <li><strong>Asset Composition Shift:</strong> Contrary to public perception, Apollo Global Management is no longer primarily a private equity firm. </li>
@@ -1511,19 +1574,15 @@ That's great. Thank you—thank you for having us, our pleasure.
 </blockquote>
 <blockquote>
 "We are the luckiest people in the world... It's now going not from success to success, but from success to significance. What can we do to change the world?" — Marc Rowan
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-2" onclick="toggleSummary(2)">
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                 </div>
                 
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-2">
-                        10 stocks right now in the US are nearly 50% of the S&amp;P, and they're all levered to the same trend. The same thing is happening in the global fixed income market. And so if you're an investor and you're looking for diversification, there's no place to get it other than private markets. Great companies: Anthropic, Anduril. Every one of those companies is private, multiple trillion dollars, and yet, most investors have zero exposure to them. 
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">10 stocks right now in the US are nearly 50% of the S&amp;P, and they're all levered to the same trend. The same thing is happening in the global fixed income market. And so if you're an investor and you're looking for diversification, there's no place to get it other than private markets. Great companies: Anthropic, Anduril. Every one of those companies is private, multiple trillion dollars, and yet, most investors have zero exposure to them. 
 
 Andreesen wrote this piece over a decade ago that &quot;Software is eating the world.&quot; And that feels more true than ever as AI proliferates all parts of the economy. We operate under the assumption that every job is going to be replaced or enhanced. 2025 was just proof of concept that data centers and chips and energy were all needed. 2026, the market is starting to recognize that if this continues, everyone who is an investor is going to be... 
 
@@ -1777,32 +1836,20 @@ Moments that matter. This is a lifetime job for people. The business ultimately 
 
 And so, yeah, let's be really intellectually engaged, let's have a challenge culture, let's be really informal, let's get to the right answer, let's accept that the power hierarchy is at risk with technology especially, but let's also be human, let's deal with people as people. And how you balance those two, and how you put them together, I think is the magic. And the team that's around me, I wouldn't trade for the team anywhere. Maybe it's just because we know each other, but I really do think they're exceptional.
 
-It's awesome. Mark, thank you so much for joining us. It's been awesome. An absolute pleasure. Thank you so much. This is great.
-                    </div>
+It's awesome. Mark, thank you so much for joining us. It's been awesome. An absolute pleasure. Thank you so much. This is great.</div>
                 </div>
-                
             </article>
-            
 
             <article class="video-card" id="video-3">
-                <div class="video-header">
-                    <h2 class="video-title">
-                        <a href="https://www.youtube.com/watch?v=yU68BbLp1Y0" target="_blank" rel="noopener">Prosus CEO: Why AI Is Still Under-hyped and What to Do About It | Podcast | In Good Company</a>
-                    </h2>
-                    <div class="video-meta">
-                        <span class="channel-pill"><img class="channel-icon" src="https://yt3.ggpht.com/d6-Qg0SBaVFUWQYFcY1A92OgyamR1lZdMCmUZKeE-3Z7b8nNlCFufCfQfFg5B-Q-EkyJxR04=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><span class="channel-name">Norges Bank Investment Management</span><span class="channel-subs">(119.0K)</span></span>
-                        <span class="meta-sep">·</span><span>33:43</span>
-                        <span class="meta-sep">·</span><span>2.7K views</span>
-                        <span class="meta-sep">·</span>
-                        <span>2026-05-27</span>
-                    </div>
-                    <div class="video-tags"><span class="tag tag-person">Fabricio Bloisi (CEO, Prosus)</span> <span class="tag tag-person">Nicolai Tangen (CEO, Norges Bank Investment Management)</span></div>
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=yU68BbLp1Y0" target="_blank" rel="noopener">Prosus CEO: Why AI Is Still Under-hyped and What to Do About It | Podcast | In Good Company<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/d6-Qg0SBaVFUWQYFcY1A92OgyamR1lZdMCmUZKeE-3Z7b8nNlCFufCfQfFg5B-Q-EkyJxR04=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Norges Bank Investment Management</b><span class="subs">(119.0K)</span></span><span class="dot">&middot;</span><span>33:43</span><span class="dot">&middot;</span><span>2.7K views</span><span class="dot">&middot;</span><span>2026-05-27</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Fabricio%20Bloisi%22">Fabricio Bloisi<span class="chip-desc">CEO, Prosus</span></a> <a class="chip" href="index.html?q=%22Nicolai%20Tangen%22">Nicolai Tangen<span class="chip-desc">CEO, Norges Bank Investment Management</span></a></div>
                 </div>
-                <div class="tldr">Prosus CEO Fabricio Bloisi is driving a radical transformation of the global tech giant into an &quot;agentic lifestyle ecosystem,&quot; utilizing a fast-paced &quot;Jet Ski&quot; innovation model and AI-first operations.</div>
-                <div class="summary-section">
-                    <div class="summary-preview" id="preview-3">TL;DR   Prosus CEO Fabricio Bloisi is driving a radical transformation of the global tech giant into an &quot;agentic lifestyle ecosystem,&quot; utilizing a fast-paced &quot;Jet Ski&quot; innovation model and AI-first operations. Bloisi believes AI remains fundamentally under-hyped and aims to...</div>
-                    <div class="summary-full" id="full-3">
-                        <p><strong>TL;DR</strong></p>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Prosus CEO Fabricio Bloisi is driving a radical transformation of the global tech giant into an &quot;agentic lifestyle ecosystem,&quot; utilizing a fast-paced &quot;Jet Ski&quot; innovation model and AI-first operations.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-3">Bloisi believes AI remains fundamentally under-hyped and aims to...</div>
+                    <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Prosus CEO Fabricio Bloisi is driving a radical transformation of the global tech giant into an "agentic lifestyle ecosystem," utilizing a fast-paced "Jet Ski" innovation model and AI-first operations. Bloisi believes AI remains fundamentally under-hyped and aims to scale Prosus from its current footprint into a half-trillion-dollar global powerhouse over the next decade.</p>
 <h3>## The Prosus Ecosystem and Regional Strategies</h3>
 <p>Prosus operates as an active, hands-on operational technology builder—not a passive investor—reaching over 1.5 billion customers across three core regions:</p>
@@ -1860,19 +1907,15 @@ It's awesome. Mark, thank you so much for joining us. It's been awesome. An abso
 </blockquote>
 <blockquote>
 "In 10 years' time we will be a half trillion dollar company or bigger and a clear global leader... creating the future of the world through technology with innovation done in Latin America and India and Europe." — <strong>Fabricio Bloisi</strong>
-</blockquote>
-                    </div>
-                    <button class="toggle-btn" id="sum-btn-3" onclick="toggleSummary(3)">
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-3" onclick="toggleSummary(3)" type="button" aria-expanded="false" aria-controls="full-3">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                 </div>
                 
-                <div class="transcript-section">
-                    <button class="transcript-toggle" id="trans-btn-3" onclick="toggleTranscript(3)">
-                        View transcript
-                    </button>
-                    <div class="transcript-content" id="transcript-3">
-                        Hi everyone, I'm Nicolai Tangen, the CEO of the Norwegian Sovereign Wealth Fund, and today, hey, I'm in really good company with Fabricio Bloisi, the CEO of Prosus. 
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-3" onclick="toggleTranscript(3)" type="button" aria-expanded="false" aria-controls="transcript-3">View transcript</button>
+                    <div class="transcript-content" id="transcript-3">Hi everyone, I'm Nicolai Tangen, the CEO of the Norwegian Sovereign Wealth Fund, and today, hey, I'm in really good company with Fabricio Bloisi, the CEO of Prosus. 
 
 Now, you may not know what Prosus is, but they basically have incredible companies: iFood, which is the equivalent of DoorDash in Brazil; Just Eat, which feeds millions and millions of people across Europe; Swiggy in India; and PayU, one of the biggest fintech platforms in emerging markets. So all in all, they reach like a billion and a half people across the world. 
 
@@ -2138,49 +2181,73 @@ Dream big; it's possible to change everything. Young people usually look to the 
 
 Everything is going to change so much in the next one, two, three, or four years, and the young people who can learn and build the future can do much more than they think. So study a lot, do something that you are passionate about, because the opportunities are much better ahead of us than behind us.
 
-Well, this has been tremendous. I'm not sure I've met anybody who's been dreaming bigger than you, so it's been a real pleasure. Oh my god, great fun. You know, good luck and go get them.
-                    </div>
+Well, this has been tremendous. I'm not sure I've met anybody who's been dreaming bigger than you, so it's been a real pleasure. Oh my god, great fun. You know, good luck and go get them.</div>
                 </div>
-                
             </article>
-            
         </main>
-
         <footer>
-            Generated by Follower Tool
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
         </footer>
     </div>
     <script>
-        function toggleSummary(id) {
-            const preview = document.getElementById('preview-' + id);
-            const full = document.getElementById('full-' + id);
-            const btn = document.getElementById('sum-btn-' + id);
-
-            if (full.classList.contains('expanded')) {
-                full.classList.remove('expanded');
-                preview.style.display = 'block';
-                btn.classList.remove('expanded');
-                btn.innerHTML = 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-            } else {
-                full.classList.add('expanded');
-                preview.style.display = 'none';
-                btn.classList.add('expanded');
-                btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-            }
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
         }
-
-        function toggleTranscript(id) {
-            const content = document.getElementById('transcript-' + id);
-            const btn = document.getElementById('trans-btn-' + id);
-
-            if (content.classList.contains('expanded')) {
-                content.classList.remove('expanded');
-                btn.textContent = 'View transcript';
-            } else {
-                content.classList.add('expanded');
-                btn.textContent = 'Hide transcript';
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
             }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
         }
-        </script>
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+</script>
+    
 </body>
 </html>
