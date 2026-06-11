@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AWS has effectively ended Microsoft’s exclusivity over OpenAI by integrating its frontier models into the Bedrock platform while simultaneously launching &quot;Amazon Quick,&quot; a new desktop AI productivity application, signaling a strategic push into the enterprise software layer.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR AWS has effectively ended Microsoft’s exclusivity over OpenAI by integrating its frontier models into the Bedrock platform while simultaneously launching &quot;Amazon Quick,&quot; a new desktop AI productivity application, signaling a strategic push into the enterprise software...</div>
+                    <div class="sum-preview" id="preview-0"></div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>AWS has effectively ended Microsoft’s exclusivity over OpenAI by integrating its frontier models into the Bedrock platform while simultaneously launching "Amazon Quick," a new desktop AI productivity application, signaling a strategic push into the enterprise software layer.</p>
 <h3>The OpenAI Partnership &amp; Bedrock Integration</h3>
@@ -878,9 +910,9 @@ We think that that is going to take off like inkbusters. It's launching in previ
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.4M)</span></span><span class="dot">&middot;</span><span>11:24</span><span class="dot">&middot;</span><span>155 views</span><span class="dot">&middot;</span><span>2026-04-28</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jonathan%20Cirtain%22">Jonathan Cirtain<span class="chip-desc">CEO and President, Axiom Space</span></a> <a class="chip" href="index.html?q=%22Morgan%20Brennan%22">Morgan Brennan<span class="chip-desc">Anchor, CNBC</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Axiom Space is positioning itself as the primary successor to the International Space Station (ISS) by integrating three core business pillars—spacesuit development, private astronaut training, and modular commercial infrastructure—to meet a global d...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Axiom Space is positioning itself as the primary successor to the International Space Station (ISS) by integrating three core business pillars—spacesuit development, private astronaut training, and modular commercial infrastructure—to meet a global…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Axiom Space is positioning itself as the primary successor to the International Space Station (ISS) by integrating three core business pillars—spacesuit development, private astronaut training, and modular commercial infrastructure—to meet a global demand for space access...</div>
+                    <div class="sum-preview" id="preview-1">demand for space access...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Axiom Space is positioning itself as the primary successor to the International Space Station (ISS) by integrating three core business pillars—spacesuit development, private astronaut training, and modular commercial infrastructure—to meet a global demand for space access that currently exceeds available supply.</p>
 <h3>Core Business Pillars &amp; The Artemis Program</h3>
@@ -1046,9 +1078,9 @@ Okay. Jonathan Syrten of Axiom, great to speak with you. Yeah, it was great to b
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/hkiO7UAtALrbqOcewo4CIrbd0j8XDeWttKkdtihfX1emeV4iUMwjIe1KKn4zd6wT2OOwANDnIA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>a16z</b><span class="subs">(270.0K)</span></span><span class="dot">&middot;</span><span>58:23</span><span class="dot">&middot;</span><span>12.1K views</span><span class="dot">&middot;</span><span>2026-04-28</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Aaron%20Levie%22">Aaron Levie<span class="chip-desc">CEO, Box</span></a> <a class="chip" href="index.html?q=%22Steven%20Sinofsky%22">Steven Sinofsky<span class="chip-desc">Board Partner, a16z</span></a> <a class="chip" href="index.html?q=%22Martin%20Casado%22">Martin Casado<span class="chip-desc">General Partner, a16z</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The gap between Silicon Valley’s AI adoption and the rest of the world is driven by a fundamental technology divide; enterprise success requires shifting from &quot;integrating AI into software&quot; to treating AI as an autonomous user while overcoming a mass...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The gap between Silicon Valley’s AI adoption and the rest of the world is driven by a fundamental technology divide; enterprise success requires shifting from &quot;integrating AI into software&quot; to treating AI as an autonomous user while overcoming a…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The gap between Silicon Valley’s AI adoption and the rest of the world is driven by a fundamental technology divide; enterprise success requires shifting from &quot;integrating AI into software&quot; to treating AI as an autonomous user while overcoming a massive &quot;integration wall&quot;...</div>
+                    <div class="sum-preview" id="preview-2">massive &quot;integration wall&quot;...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The gap between Silicon Valley’s AI adoption and the rest of the world is driven by a fundamental technology divide; enterprise success requires shifting from "integrating AI into software" to treating AI as an autonomous user while overcoming a massive "integration wall" that AI cannot solve on its own.</p>
 <h3>The Silicon Valley vs. Enterprise Divide</h3>
@@ -2160,7 +2192,7 @@ Because I do think this is something for, you know, some some reality to settle 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>iRocket is leveraging a fully robotic, AI-driven factory to revolutionize aerospace manufacturing, significantly reducing the &quot;cost to kill&quot; for counter-drone systems and working toward 100% reusable launch vehicles capable of 24-hour mission turnarounds.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR iRocket is leveraging a fully robotic, AI-driven factory to revolutionize aerospace manufacturing, significantly reducing the &quot;cost to kill&quot; for counter-drone systems and working toward 100% reusable launch vehicles capable of 24-hour mission turnarounds.    The Robotic...</div>
+                    <div class="sum-preview" id="preview-3">The Robotic...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>iRocket is leveraging a fully robotic, AI-driven factory to revolutionize aerospace manufacturing, significantly reducing the "cost to kill" for counter-drone systems and working toward 100% reusable launch vehicles capable of 24-hour mission turnarounds.</p>
 <h3>Advanced Robotic Manufacturing and Scaling</h3>
@@ -2294,9 +2326,9 @@ Yes, we absolutely have plans to go public, and we're going to share more inform
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/4BC0ntll3pg401CRl9pi_cXxVLayYpl6VGNjhIQfHp9GpTqlj3qwGDtgG_YABpXTiOec9GABBQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Invest Like The Best</b><span class="subs">(55.2K)</span></span><span class="dot">&middot;</span><span>71:16</span><span class="dot">&middot;</span><span>113.0K views</span><span class="dot">&middot;</span><span>2026-04-28</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Paul%20Tudor%20Jones%22">Paul Tudor Jones<span class="chip-desc">Founder, Tudor Investment Corporation</span></a> <a class="chip" href="index.html?q=%22Patrick%20O%27Shaughnessy%22">Patrick O'Shaughnessy<span class="chip-desc">Host, Invest Like The Best</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Warren [Buffett], if you happen to hear this, I'm deeply apologetic.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Warren [Buffett], if you happen to hear this, I'm deeply apologetic.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR: Legendary trader Paul Tudor Jones reflects on a 50-year career defined by &quot;fighting in the trenches&quot; of macro markets, contrasts his high-volatility trading style with the &quot;genius&quot; of Warren Buffett’s compounding, and issues urgent warnings regarding a global sovereign...</div>
+                    <div class="sum-preview" id="preview-4">Legendary trader Paul Tudor Jones reflects on a 50-year career defined by &quot;fighting in the trenches&quot; of macro markets, contrasts his high-volatility trading style with the &quot;genius&quot; of Warren Buffett’s compounding, and issues urgent warnings regarding a global sovereign...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR:</strong> Legendary trader Paul Tudor Jones reflects on a 50-year career defined by "fighting in the trenches" of macro markets, contrasts his high-volatility trading style with the "genius" of Warren Buffett’s compounding, and issues urgent warnings regarding a global sovereign debt bubble and the unregulated existential risks of AI.</p>
 <h3>Trading Philosophy and the Macro Outlook</h3>
 <ul>
@@ -2700,7 +2732,7 @@ The best AI and software companies, from OpenAI to Cursor to Perplexity, use Wor
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Bank of Japan (BoJ) has signaled its intention to continue raising interest rates as inflation is projected to remain aligned with its 2% target through FY2028, despite significant economic risks posed by geopolitical tensions in the Middle East.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR The Bank of Japan (BoJ) has signaled its intention to continue raising interest rates as inflation is projected to remain aligned with its 2% target through FY2028, despite significant economic risks posed by geopolitical tensions in the Middle East.  Price Projections:...</div>
+                    <div class="sum-preview" id="preview-5">Price Projections:...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>The Bank of Japan (BoJ) has signaled its intention to continue raising interest rates as inflation is projected to remain aligned with its 2% target through FY2028, despite significant economic risks posed by geopolitical tensions in the Middle East.</p>
 <h3>Economic and Inflation Outlook (FY2026–2028)</h3>
@@ -2782,7 +2814,7 @@ The best AI and software companies, from OpenAI to Cursor to Perplexity, use Wor
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>T-Mobile delivered a strong Q1 2026 performance, raising full-year guidance for EBITDA and free cash flow while emphasizing a &quot;widening differentiation&quot; strategy that leverages network superiority to drive industry-leading growth in mobile, broadband, and emerging AI sectors.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR T-Mobile delivered a strong Q1 2026 performance, raising full-year guidance for EBITDA and free cash flow while emphasizing a &quot;widening differentiation&quot; strategy that leverages network superiority to drive industry-leading growth in mobile, broadband, and emerging AI...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>T-Mobile delivered a strong Q1 2026 performance, raising full-year guidance for EBITDA and free cash flow while emphasizing a "widening differentiation" strategy that leverages network superiority to drive industry-leading growth in mobile, broadband, and emerging AI sectors.</p>
 <h3>Financial Performance and Guidance Raise</h3>
@@ -3065,7 +3097,7 @@ All right, thanks Tim, and thanks everybody for joining us today. We're looking 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The 2026 oil shock, triggered by the Iran war and the closure of the Strait of Hormuz, represents the largest energy supply disruption in history, forcing a global shift away from energy interdependence toward domestic &quot;autarky&quot; and accelerated electrification.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR The 2026 oil shock, triggered by the Iran war and the closure of the Strait of Hormuz, represents the largest energy supply disruption in history, forcing a global shift away from energy interdependence toward domestic &quot;autarky&quot; and accelerated electrification.    Historic...</div>
+                    <div class="sum-preview" id="preview-7">Historic...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>The 2026 oil shock, triggered by the Iran war and the closure of the Strait of Hormuz, represents the largest energy supply disruption in history, forcing a global shift away from energy interdependence toward domestic "autarky" and accelerated electrification.</p>
 <h3>The Magnitude of the 2026 Oil Shock</h3>
@@ -3328,7 +3360,7 @@ The World Economic Forum has three weekly podcasts: this one, Radio Davos, as we
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Tim Cook’s 15-year tenure as Apple CEO transitioned the company from a &quot;zero-to-one&quot; innovator under Steve Jobs to a &quot;1-to-n&quot; operational juggernaut, increasing Apple's valuation from $297 billion to $4 trillion while leaving behind critical long-term questions regarding AI and China.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Tim Cook’s 15-year tenure as Apple CEO transitioned the company from a &quot;zero-to-one&quot; innovator under Steve Jobs to a &quot;1-to-n&quot; operational juggernaut, increasing Apple's valuation from $297 billion to $4 trillion while leaving behind critical long-term questions regarding...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Tim Cook’s 15-year tenure as Apple CEO transitioned the company from a "zero-to-one" innovator under Steve Jobs to a "1-to-n" operational juggernaut, increasing Apple's valuation from $297 billion to $4 trillion while leaving behind critical long-term questions regarding AI and China.</p>
 <h3>The Financial and Operational Legacy</h3>
@@ -3500,7 +3532,7 @@ It’s a testimony to his capabilities and execution that Apple didn’t suffer 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>OpenAI researchers Sébastien Bubeck and Ernest Ryu detail how AI has evolved from basic arithmetic to solving 40-year-old open mathematical problems, signaling a shift toward &quot;automated researchers&quot; that can reason over weeks or months—a critical milestone for AGI.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR OpenAI researchers Sébastien Bubeck and Ernest Ryu detail how AI has evolved from basic arithmetic to solving 40-year-old open mathematical problems, signaling a shift toward &quot;automated researchers&quot; that can reason over weeks or months—a critical milestone for AGI.  From...</div>
+                    <div class="sum-preview" id="preview-9">From...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>OpenAI researchers Sébastien Bubeck and Ernest Ryu detail how AI has evolved from basic arithmetic to solving 40-year-old open mathematical problems, signaling a shift toward "automated researchers" that can reason over weeks or months—a critical milestone for AGI.</p>
 <h3>The Rapid Ascent of AI Math Capabilities</h3>
@@ -3859,7 +3891,7 @@ You can start to have this real wonderful conversation and start asking these qu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>While strategy and technology can be easily replicated, corporate culture is the ultimate, non-copyable competitive advantage that determines long-term survival.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">While strategy and technology can be easily replicated, corporate culture is the ultimate, non-copyable competitive advantage that determines long-term survival. As organizations navigate the disruptive rise of AI and generational leadership transitions, winning companies are...</div>
+                    <div class="sum-preview" id="preview-10">As organizations navigate the disruptive rise of AI and generational leadership transitions, winning companies are...</div>
                     <div class="sum-full" id="full-10"><h3>TL;DR</h3>
 <p>While strategy and technology can be easily replicated, corporate culture is the ultimate, non-copyable competitive advantage that determines long-term survival. As organizations navigate the disruptive rise of AI and generational leadership transitions, winning companies are defined by high-agency decision-making, extreme execution, and the alignment of human talent.</p>
 <h3>Redefining "Winning" and the Core of Corporate Culture</h3>

@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(169.0K)</span></span><span class="dot">&middot;</span><span>25:38</span><span class="dot">&middot;</span><span>81.1K views</span><span class="dot">&middot;</span><span>2026-04-17</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Investor</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;As the banks go, so goes the economy.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;As the banks go, so goes the economy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR: Despite fears of a private credit downturn, latest earnings from major banks show &quot;benign&quot; credit quality and a resilient U.S. economy, suggesting no imminent recession even as AI disruption looms over the software sector.    Credit Quality Benchmarks: To gauge the...</div>
+                    <div class="sum-preview" id="preview-0">Despite fears of a private credit downturn, latest earnings from major banks show &quot;benign&quot; credit quality and a resilient U.S. economy, suggesting no imminent recession even as AI disruption looms over the software sector.    Credit Quality Benchmarks: To gauge the...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR:</strong> Despite fears of a private credit downturn, latest earnings from major banks show "benign" credit quality and a resilient U.S. economy, suggesting no imminent recession even as AI disruption looms over the software sector.</p>
 <h3>State of the U.S. Credit Cycle &amp; Economy</h3>
 <ul>
@@ -920,7 +952,7 @@ Be sure to check out our website realeismanplaybook.com. If you're enjoying thes
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Error generating summary: 429 RESOURCE_EXHAUSTED.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">Error generating summary: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your...</div>
+                    <div class="sum-preview" id="preview-1">{'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your...</div>
                     <div class="sum-full" id="full-1"><p>Error generating summary: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash\nPlease retry in 14.801657228s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '14s'}]}}</p></div>
                     <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -1899,7 +1931,7 @@ Okay, thank you for that. Northwest Indiana, largest steel producer in the count
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>To prevent a repeat of the &quot;China shock&quot; displacement of the 1980s, the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR To prevent a repeat of the &quot;China shock&quot; displacement of the 1980s, the U.S. must establish a &quot;grand bargain&quot; where employers and universities co-design a continuous, &quot;K to grey&quot; learning system that prioritizes individual empowerment over shareholder-only gains.   ...</div>
+                    <div class="sum-preview" id="preview-2">must establish a &quot;grand bargain&quot; where employers and universities co-design a continuous, &quot;K to grey&quot; learning system that prioritizes individual empowerment over shareholder-only gains.   ...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>To prevent a repeat of the "China shock" displacement of the 1980s, the U.S. must establish a "grand bargain" where employers and universities co-design a continuous, "K to grey" learning system that prioritizes individual empowerment over shareholder-only gains.</p>
 <h3>The "Grand Bargain" for Workforce Security</h3>
@@ -2224,7 +2256,7 @@ Friends, the times they are a-changin', but we're going to make sure that this c
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Demis Hassabis, the Nobel-winning founder of DeepMind, is driven by a unique blend of scientific rigor and &quot;spiritual&quot; ambition to build AGI, balancing a high-stakes rivalry with OpenAI against his desire to remain a &quot;good&quot; steward of humanity's most powerful invention.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Demis Hassabis, the Nobel-winning founder of DeepMind, is driven by a unique blend of scientific rigor and &quot;spiritual&quot; ambition to build AGI, balancing a high-stakes rivalry with OpenAI against his desire to remain a &quot;good&quot; steward of humanity's most powerful invention.  A...</div>
+                    <div class="sum-preview" id="preview-3">A...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Demis Hassabis, the Nobel-winning founder of DeepMind, is driven by a unique blend of scientific rigor and "spiritual" ambition to build AGI, balancing a high-stakes rivalry with OpenAI against his desire to remain a "good" steward of humanity's most powerful invention.</p>
 <h3>The Evolution of a "Jedi" Polymath</h3>
@@ -2669,9 +2701,9 @@ And so I'm willing to say that Demis Hassabis is both great and good. The book i
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/a9R_JLEdfQfjv94rA3wqjHlcJY5mSIhrp5ffW5rLTtm-TlwCJA8iLELCZArsWebWTiagPIN9=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Pivot with Kara Swisher and Scott Galloway</b><span class="subs">(233.0K)</span></span><span class="dot">&middot;</span><span>54:35</span><span class="dot">&middot;</span><span>60.8K views</span><span class="dot">&middot;</span><span>2026-04-17</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Kara%20Swisher%22">Kara Swisher<span class="chip-desc">Co-host, Pivot</span></a> <a class="chip" href="index.html?q=%22Scott%20Galloway%22">Scott Galloway<span class="chip-desc">Co-host, Pivot</span></a> <a class="chip" href="index.html?q=%22JD%20Vance%22">JD Vance<span class="chip-desc">Vice President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The stock market is now a proxy for companies that are mostly invested in technology and some oil companies...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The stock market is now a proxy for companies that are mostly invested in technology and some oil…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR: While global geopolitical tensions escalate, the stock market remains dislocated from consumer reality; meanwhile, Anthropic has overtaken OpenAI in revenue momentum as Amazon positions itself to challenge Starlink’s satellite dominance.  Conflict in the Middle East:...</div>
+                    <div class="sum-preview" id="preview-4">While global geopolitical tensions escalate, the stock market remains dislocated from consumer reality; meanwhile, Anthropic has overtaken OpenAI in revenue momentum as Amazon positions itself to challenge Starlink’s satellite dominance.  Conflict in the Middle East:...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR:</strong> While global geopolitical tensions escalate, the stock market remains dislocated from consumer reality; meanwhile, Anthropic has overtaken OpenAI in revenue momentum as Amazon positions itself to challenge Starlink’s satellite dominance.</p>
 <h3>Geopolitical Tensions and Market Dislocation</h3>
 <ul>
@@ -3596,7 +3628,7 @@ Producers: Lara Naaman, Zoe Marcus, Taylor Griffin, Todd Wiseman. Video Editor: 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Error generating summary: 429 RESOURCE_EXHAUSTED.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">Error generating summary: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your...</div>
+                    <div class="sum-preview" id="preview-5">{'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your...</div>
                     <div class="sum-full" id="full-5"><p>Error generating summary: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash\nPlease retry in 52.540378661s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-3-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '52s'}]}}</p></div>
                     <button class="linklike" id="sum-btn-5" onclick="toggleSummary(5)" type="button" aria-expanded="false" aria-controls="full-5">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -4709,7 +4741,7 @@ Rabois当时是在斯坦福的校园中，在宿舍里面骂同性恋的学生�
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global economy faces a &quot;new normal&quot; of persistent uncertainty driven by Middle East conflicts and supply disruptions, prompting the IMF to call for fiscal discipline and the adoption of the landmark &quot;Daria Principles&quot; to reform fund governance for the first time in 15 years.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR The global economy faces a &quot;new normal&quot; of persistent uncertainty driven by Middle East conflicts and supply disruptions, prompting the IMF to call for fiscal discipline and the adoption of the landmark &quot;Daria Principles&quot; to reform fund governance for the first time in 15...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>The global economy faces a "new normal" of persistent uncertainty driven by Middle East conflicts and supply disruptions, prompting the IMF to call for fiscal discipline and the adoption of the landmark "Daria Principles" to reform fund governance for the first time in 15 years.</p>
 <h3>Geopolitical Risks and Energy Stability</h3>
@@ -4892,7 +4924,7 @@ Okay. And now, I will bring the press briefing to a close. Thank you all very mu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>As AI capabilities outpace traditional bot detection, World (formerly Worldcoin) proposes iris-based biometric verification as the only scalable, privacy-preserving method to distinguish unique humans from autonomous agents in an increasingly deepfaked digital economy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR As AI capabilities outpace traditional bot detection, World (formerly Worldcoin) proposes iris-based biometric verification as the only scalable, privacy-preserving method to distinguish unique humans from autonomous agents in an increasingly deepfaked digital economy.   ...</div>
+                    <div class="sum-preview" id="preview-7"></div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>As AI capabilities outpace traditional bot detection, World (formerly Worldcoin) proposes iris-based biometric verification as the only scalable, privacy-preserving method to distinguish unique humans from autonomous agents in an increasingly deepfaked digital economy.</p>
 <h3>The Escalating Crisis of Digital Personhood</h3>
@@ -5252,7 +5284,7 @@ Yeah, thank you. Thank you. That was great. Thanks for having me.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR The U.S. is pivoting toward an aggressive &quot;Build in America&quot; industrial policy, targeting 6% GDP growth through massive domestic infrastructure investment and strategic equity stakes in tech companies, while simultaneously racing to lead the &quot;Genesis Mission&quot; of AI-driven...</div>
+                    <div class="sum-preview" id="preview-8">is pivoting toward an aggressive &quot;Build in America&quot; industrial policy, targeting 6% GDP growth through massive domestic infrastructure investment and strategic equity stakes in tech companies, while simultaneously racing to lead the &quot;Genesis Mission&quot; of AI-driven...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The U.S. is pivoting toward an aggressive "Build in America" industrial policy, targeting 6% GDP growth through massive domestic infrastructure investment and strategic equity stakes in tech companies, while simultaneously racing to lead the "Genesis Mission" of AI-driven scientific discovery and the commercialization of space and fusion energy.</p>
 <h3>The New American Industrial Policy</h3>
@@ -5818,7 +5850,7 @@ Semafor World Economy. April 13-17, 2026. Washington, DC. Live Agenda. This live
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump highlighted the impact of the 2025 &quot;great big beautiful&quot; tax bill, which has led to record-high tax refunds for workers through the elimination of taxes on tips, overtime, and Social Security, while incentivizing domestic manufacturing through auto-loan deductions and tariffs.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR President Trump highlighted the impact of the 2025 &quot;great big beautiful&quot; tax bill, which has led to record-high tax refunds for workers through the elimination of taxes on tips, overtime, and Social Security, while incentivizing domestic manufacturing through auto-loan...</div>
+                    <div class="sum-preview" id="preview-9"></div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>President Trump highlighted the impact of the 2025 "great big beautiful" tax bill, which has led to record-high tax refunds for workers through the elimination of taxes on tips, overtime, and Social Security, while incentivizing domestic manufacturing through auto-loan deductions and tariffs.</p>
 <h3>Key Tax Reforms and Financial Relief</h3>
@@ -6145,7 +6177,7 @@ Hey I just want to thank you all. We love you all. The country is doing really w
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Global liquidity has peaked and is entering a multi-year &quot;downswing&quot; that likely won't bottom until 2027, driven by a &quot;debt-refinancing wall&quot; and a robust real economy that is draining capital away from financial markets.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Global liquidity has peaked and is entering a multi-year &quot;downswing&quot; that likely won't bottom until 2027, driven by a &quot;debt-refinancing wall&quot; and a robust real economy that is draining capital away from financial markets. Investors must transition from speculative...</div>
+                    <div class="sum-preview" id="preview-10">Investors must transition from speculative...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Global liquidity has peaked and is entering a multi-year "downswing" that likely won't bottom until 2027, driven by a "debt-refinancing wall" and a robust real economy that is draining capital away from financial markets. Investors must transition from speculative risk-taking to defensive positioning, focusing on gold, bond duration, and commodities.</p>
 <h3>The Global Liquidity Cycle and the 2027 Trough</h3>
@@ -6484,9 +6516,9 @@ Thanks again for being so generous with your time, all of your knowledge, wisdom
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>90:57</span><span class="dot">&middot;</span><span>236.8K views</span><span class="dot">&middot;</span><span>2026-04-17</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Travis%20Kalanick%22">Travis Kalanick<span class="chip-desc">Entrepreneur and Guest</span></a> <a class="chip" href="index.html?q=%22Eric%20Swalwell%22">Eric Swalwell<span class="chip-desc">Former U.S. Representative</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Growth is king right now...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Growth is king right…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR: OpenAI is facing an &quot;identity crisis&quot; and strategic pivot toward enterprise as Anthropic’s 10x growth rate threatens its dominance, while the tech industry confronts a rising tide of populism targeting data centers and luxury assets.  Competitive Escalation: OpenAI’s...</div>
+                    <div class="sum-preview" id="preview-11">OpenAI is facing an &quot;identity crisis&quot; and strategic pivot toward enterprise as Anthropic’s 10x growth rate threatens its dominance, while the tech industry confronts a rising tide of populism targeting data centers and luxury assets.  Competitive Escalation: OpenAI’s...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR:</strong> OpenAI is facing an "identity crisis" and strategic pivot toward enterprise as Anthropic’s 10x growth rate threatens its dominance, while the tech industry confronts a rising tide of populism targeting data centers and luxury assets.</p>
 <h3>OpenAI’s Identity Crisis and the Enterprise Pivot</h3>
 <ul>
@@ -7039,7 +7071,7 @@ Oh and by the way, the All-In Summit tickets are on sale, go to allin.com and ye
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Error generating summary: 429 RESOURCE_EXHAUSTED.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">Error generating summary: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your...</div>
+                    <div class="sum-preview" id="preview-12">{'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your...</div>
                     <div class="sum-full" id="full-12"><p>Error generating summary: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash\nPlease retry in 1.580523736s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '1s'}]}}</p></div>
                     <button class="linklike" id="sum-btn-12" onclick="toggleSummary(12)" type="button" aria-expanded="false" aria-controls="full-12">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -7134,7 +7166,7 @@ Thank you, Stavros. So I just want to say this is a special state. It's a specia
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Public sentiment toward AI has shifted from optimism to existential dread, leading to physical violence against tech leaders and a &quot;broken&quot; job market where recent college graduates face significant underemployment and a mismatch between education and industry needs.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Public sentiment toward AI has shifted from optimism to existential dread, leading to physical violence against tech leaders and a &quot;broken&quot; job market where recent college graduates face significant underemployment and a mismatch between education and industry needs....</div>
+                    <div class="sum-preview" id="preview-13"></div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Public sentiment toward AI has shifted from optimism to existential dread, leading to physical violence against tech leaders and a "broken" job market where recent college graduates face significant underemployment and a mismatch between education and industry needs.</p>
 <h3>The Rise of AI Backlash and Physical Threats</h3>
@@ -7527,7 +7559,7 @@ And if you have a story that should be our business, send us an email at Everybo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Public sentiment toward AI is shifting toward radicalization and violence, driven by deep economic anxiety, a perceived lack of democratic oversight, and rising local opposition to massive data center infrastructure.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR Public sentiment toward AI is shifting toward radicalization and violence, driven by deep economic anxiety, a perceived lack of democratic oversight, and rising local opposition to massive data center infrastructure.  Incidents of Physical Violence: Recent events suggest a...</div>
+                    <div class="sum-preview" id="preview-14">Incidents of Physical Violence: Recent events suggest a...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Public sentiment toward AI is shifting toward radicalization and violence, driven by deep economic anxiety, a perceived lack of democratic oversight, and rising local opposition to massive data center infrastructure.</p>
 <h3>Radicalization and Violent Backlash</h3>
@@ -7910,7 +7942,7 @@ And it's going to sell out instantly, I don't know what to tell you. By the time
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Scaling a world-class company requires preserving the &quot;founder magic&quot; through long-term leadership while adopting a &quot;pro-athlete&quot; mentality toward executive health and prioritizing high-conviction &quot;big swings&quot; in transformative sectors like AI.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Scaling a world-class company requires preserving the &quot;founder magic&quot; through long-term leadership while adopting a &quot;pro-athlete&quot; mentality toward executive health and prioritizing high-conviction &quot;big swings&quot; in transformative sectors like AI.  The &quot;Trigo&quot; Inflection...</div>
+                    <div class="sum-preview" id="preview-15">The &quot;Trigo&quot; Inflection...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Scaling a world-class company requires preserving the "founder magic" through long-term leadership while adopting a "pro-athlete" mentality toward executive health and prioritizing high-conviction "big swings" in transformative sectors like AI.</p>
 <h3>The Founder’s Path and the "Operator-Investor" Balance</h3>

@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The current macro environment offers a &quot;sweet spot&quot; for financial assets, driven by significant stimulus and a capital investment super cycle that's poised to drive strong M&amp;A and IPO activity.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">The current macro environment offers a &quot;sweet spot&quot; for financial assets, driven by significant stimulus and a capital investment super cycle that's poised to drive strong M&amp;A and IPO activity. Both Goldman Sachs and Andreessen Horowitz are strategically adapting to this...</div>
+                    <div class="sum-preview" id="preview-0">Both Goldman Sachs and Andreessen Horowitz are strategically adapting to this...</div>
                     <div class="sum-full" id="full-0"><h3>TL;DR</h3>
 <p>The current macro environment offers a "sweet spot" for financial assets, driven by significant stimulus and a capital investment super cycle that's poised to drive strong M&amp;A and IPO activity. Both Goldman Sachs and Andreessen Horowitz are strategically adapting to this landscape, with Goldman focusing on scale and funding diversification, while a16z is growing its venture influence and actively shaping crucial policy for emerging technologies like AI and crypto.</p>
 <h3>Current Economic &amp; Market Outlook</h3>
@@ -968,7 +1000,7 @@ Awesome. Thank you guys so much for doing this. Thank you, David. Awesome.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Galaxy Space, a rapidly expanding Chinese commercial satellite company, is leveraging strong government support and innovative, cost-effective technologies to deploy its mega-constellations and explore global markets.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">Galaxy Space, a rapidly expanding Chinese commercial satellite company, is leveraging strong government support and innovative, cost-effective technologies to deploy its mega-constellations and explore global markets. The company is focused on integrating its satellite...</div>
+                    <div class="sum-preview" id="preview-1">The company is focused on integrating its satellite...</div>
                     <div class="sum-full" id="full-1"><h3>TL;DR</h3>
 <p>Galaxy Space, a rapidly expanding Chinese commercial satellite company, is leveraging strong government support and innovative, cost-effective technologies to deploy its mega-constellations and explore global markets. The company is focused on integrating its satellite communication services with terrestrial 5G/6G networks to achieve ubiquitous connectivity, while also navigating the critical challenge of international spectrum coordination.</p>
 <h3>Galaxy Space Overview &amp; Strategic Context</h3>
@@ -1270,7 +1302,7 @@ The more interesting thing to me as the CEO is that this technology allows us to
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Populism is driving a new economic phase marked by higher inflation and robust nominal growth, favoring hard assets and specific sectors like industrials.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">Populism is driving a new economic phase marked by higher inflation and robust nominal growth, favoring hard assets and specific sectors like industrials. While the public market is expensive due to Fed backstops, significant risks are accumulating in opaque private markets, and...</div>
+                    <div class="sum-preview" id="preview-3">While the public market is expensive due to Fed backstops, significant risks are accumulating in opaque private markets, and...</div>
                     <div class="sum-full" id="full-3"><h3>TL;DR</h3>
 <p>Populism is driving a new economic phase marked by higher inflation and robust nominal growth, favoring hard assets and specific sectors like industrials. While the public market is expensive due to Fed backstops, significant risks are accumulating in opaque private markets, and new investment frontiers are emerging in AI and prediction markets.</p>
 <h3>The Economic Landscape &amp; Populist Drivers</h3>
@@ -1750,9 +1782,9 @@ My pleasure, my pleasure. Thank you.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/btm1_PK-7VRUr9GY2D0UV_2XfbUZPBjghyptjSO1crsfN86HyTYDWPmUbq7JxC3H0Lxe_s067nA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>NVIDIA</b><span class="subs">(2.1M)</span></span><span class="dot">&middot;</span><span>58:44</span><span class="dot">&middot;</span><span>2026-02-02</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jensen%20Huang%22">Jensen Huang<span class="chip-desc">CEO, NVIDIA</span></a> <a class="chip" href="index.html?q=%22David%20Ricks%22">David Ricks<span class="chip-desc">CEO, Eli Lilly</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;In the last 10 years, we've accelerated AI about a million times.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;In the last 10 years, we've accelerated AI about a million times.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR: NVIDIA and Eli Lilly are partnering to revolutionize drug discovery by building the world's largest dedicated on-prem biology supercomputer and a co-innovation lab, applying advanced AI to simulate human biology and accelerate the development of new medicines.   ...</div>
+                    <div class="sum-preview" id="preview-4">NVIDIA and Eli Lilly are partnering to revolutionize drug discovery by building the world's largest dedicated on-prem biology supercomputer and a co-innovation lab, applying advanced AI to simulate human biology and accelerate the development of new medicines.   ...</div>
                     <div class="sum-full" id="full-4"><h3>Executive Briefing: NVIDIA &amp; Eli Lilly: The AI Revolution in Drug Discovery</h3>
 <p><strong>TL;DR:</strong> NVIDIA and Eli Lilly are partnering to revolutionize drug discovery by building the world's largest dedicated on-prem biology supercomputer and a co-innovation lab, applying advanced AI to simulate human biology and accelerate the development of new medicines.</p>
 <h3>## The NVIDIA AI Advantage &amp; Accelerated Computing</h3>

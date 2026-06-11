@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Over the past decade, the French tech ecosystem has matured from a corporate-centric landscape into a robust global hub driven by early-stage funding, deep academic talent, and rapid AI adoption.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR  Over the past decade, the French tech ecosystem has matured from a corporate-centric landscape into a robust global hub driven by early-stage funding, deep academic talent, and rapid AI adoption. To build enduring European leaders, companies must cultivate high talent...</div>
+                    <div class="sum-preview" id="preview-0">To build enduring European leaders, companies must cultivate high talent...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Over the past decade, the French tech ecosystem has matured from a corporate-centric landscape into a robust global hub driven by early-stage funding, deep academic talent, and rapid AI adoption. To build enduring European leaders, companies must cultivate high talent density to manage AI agents effectively and pursue global markets early without always succumbing to pressures to physically relocate.</p>
 <h3>Evolution of the French Tech Ecosystem</h3>
@@ -1054,9 +1086,9 @@ Ce que l'on peut se souhaiter dans dix ans, c'est d'avoir réussi à créer un v
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/4BC0ntll3pg401CRl9pi_cXxVLayYpl6VGNjhIQfHp9GpTqlj3qwGDtgG_YABpXTiOec9GABBQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Invest Like The Best</b><span class="subs">(70.4K)</span></span><span class="dot">&middot;</span><span>73:09</span><span class="dot">&middot;</span><span>26.3K views</span><span class="dot">&middot;</span><span>2026-05-28</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Dan%20Loeb%22">Dan Loeb<span class="chip-desc">Founder, Third Point</span></a> <a class="chip" href="index.html?q=%22Patrick%20O%27Shaughnessy%22">Patrick O'Shaughnessy<span class="chip-desc">Host, Invest Like The Best</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Over his 30-year career, Third Point founder Dan Loeb has transitioned from a deep-value, event-driven credit investor into a multi-asset capital allocator, emphasizing that modern investors must understand technology, prioritize corporate governance...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Over his 30-year career, Third Point founder Dan Loeb has transitioned from a deep-value, event-driven credit investor into a multi-asset capital allocator, emphasizing that modern investors must understand technology, prioritize corporate…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR  Over his 30-year career, Third Point founder Dan Loeb has transitioned from a deep-value, event-driven credit investor into a multi-asset capital allocator, emphasizing that modern investors must understand technology, prioritize corporate governance, and exploit market...</div>
+                    <div class="sum-preview" id="preview-1">governance, and exploit market...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Over his 30-year career, Third Point founder Dan Loeb has transitioned from a deep-value, event-driven credit investor into a multi-asset capital allocator, emphasizing that modern investors must understand technology, prioritize corporate governance, and exploit market structure anomalies to generate consistent alpha.</p>
 <h3>The Evolution of Third Point's Investment Philosophy</h3>
@@ -1473,7 +1505,7 @@ Ridgeline is redefining asset management technology as a true partner, not just 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Mistral AI is transitioning from generic AI to a fully verticalized, full-stack enterprise offering, combining owned compute infrastructure with tailored multimodal models and agentic workflows.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">Mistral AI is transitioning from generic AI to a fully verticalized, full-stack enterprise offering, combining owned compute infrastructure with tailored multimodal models and agentic workflows. By integrating physical and language intelligence through strategic acquisitions...</div>
+                    <div class="sum-preview" id="preview-2">By integrating physical and language intelligence through strategic acquisitions...</div>
                     <div class="sum-full" id="full-2"><h3>TL;DR</h3>
 <p>Mistral AI is transitioning from generic AI to a fully verticalized, full-stack enterprise offering, combining owned compute infrastructure with tailored multimodal models and agentic workflows. By integrating physical and language intelligence through strategic acquisitions like Emmi AI and Koyeb, Mistral is enabling deep customization for global leaders in engineering, finance, and public services.</p>
 <h3>Full-Stack Infrastructure Control</h3>
@@ -1788,9 +1820,9 @@ You should be able to exchange with our team and also with everyone here about t
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/IZt6rJxlvGmTE1lxo9UNtYXzr_AaJ75YtTsVruXB8FKAPbg6SMJiaxZ3i5PKmB4LLWBGNKOUqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>World Economic Forum</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>41:08</span><span class="dot">&middot;</span><span>728 views</span><span class="dot">&middot;</span><span>2026-05-28</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Ilaria%20Maselli%22">Ilaria Maselli<span class="chip-desc">Head of Macro &amp; Market Insights, Maersk</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The ongoing closure of the Strait of Hormuz has triggered one of the most severe energy and trade crises in modern capitalism, with World Economic Forum economists warning that a prolonged shutdown into the second half of 2026 will inflict an economi...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The ongoing closure of the Strait of Hormuz has triggered one of the most severe energy and trade crises in modern capitalism, with World Economic Forum economists warning that a prolonged shutdown into the second half of 2026 will inflict an…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  The ongoing closure of the Strait of Hormuz has triggered one of the most severe energy and trade crises in modern capitalism, with World Economic Forum economists warning that a prolonged shutdown into the second half of 2026 will inflict an economic shock equivalent to...</div>
+                    <div class="sum-preview" id="preview-3">economic shock equivalent to...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The ongoing closure of the Strait of Hormuz has triggered one of the most severe energy and trade crises in modern capitalism, with World Economic Forum economists warning that a prolonged shutdown into the second half of 2026 will inflict an economic shock equivalent to nearly 84% of the impact of the COVID-19 pandemic.</p>
 <h3>The Scale of the Hormuz Chokepoint Crisis</h3>
@@ -2187,7 +2219,7 @@ Please follow Radio Davos wherever you get podcasts, and if you like the show, p
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite current bilateral frictions and the end of the post-Cold War era, the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR  Despite current bilateral frictions and the end of the post-Cold War era, the U.S. and Canada are bound by a &quot;triple destiny&quot; of geography, democracy, and technology. To counter rising authoritarian coercion and secure critical supply chains, the two nations must...</div>
+                    <div class="sum-preview" id="preview-4">and Canada are bound by a &quot;triple destiny&quot; of geography, democracy, and technology. To counter rising authoritarian coercion and secure critical supply chains, the two nations must...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Despite current bilateral frictions and the end of the post-Cold War era, the U.S. and Canada are bound by a "triple destiny" of geography, democracy, and technology. To counter rising authoritarian coercion and secure critical supply chains, the two nations must transition to a deeply integrated, tech-forward alliance connected to a global network of democratic partners.</p>
 <h3>Navigating the "Rupture" in U.S.-Canada Relations</h3>
@@ -2368,7 +2400,7 @@ So, let us choose that destiny, let us embrace that responsibility, and let's ge
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent announced the public rollout of &quot;Trump accounts&quot; for children, reported robust economic indicators and deficit-reduction progress, and outlined the administration's strict red lines for a tentative 60-day ceasefire deal with Iran.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR  Treasury Secretary Scott Bessent announced the public rollout of &quot;Trump accounts&quot; for children, reported robust economic indicators and deficit-reduction progress, and outlined the administration's strict red lines for a tentative 60-day ceasefire deal with Iran. **   ...</div>
+                    <div class="sum-preview" id="preview-5"></div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent announced the public rollout of "Trump accounts" for children, reported robust economic indicators and deficit-reduction progress, and outlined the administration's strict red lines for a tentative 60-day ceasefire deal with Iran.</p>
 <p>***</p>
@@ -2676,7 +2708,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Neuralink is transitioning from early clinical trials to a scalable platform, leveraging deep vertical integration and surgical robotics to restore human motor and visual faculties.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR  Neuralink is transitioning from early clinical trials to a scalable platform, leveraging deep vertical integration and surgical robotics to restore human motor and visual faculties. Ultimately, the company aims to bridge the input/output bottleneck between humans and AI,...</div>
+                    <div class="sum-preview" id="preview-6">Ultimately, the company aims to bridge the input/output bottleneck between humans and AI,...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Neuralink is transitioning from early clinical trials to a scalable platform, leveraging deep vertical integration and surgical robotics to restore human motor and visual faculties. Ultimately, the company aims to bridge the input/output bottleneck between humans and AI, transforming artificial intelligence into a high-bandwidth "exocortex" that integrates directly with human thought.</p>
 <h3>Current Clinical Progress and Product Pipeline</h3>
@@ -2884,7 +2916,7 @@ Really inspiring.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Salesforce reported a strong Q1 with 14% year-over-year revenue growth to $11 billion and massive EPS growth, driven by its aggressive $27 billion buyback strategy and the rapid enterprise adoption of its AI-powered Agentforce platform.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR  Salesforce reported a strong Q1 with 14% year-over-year revenue growth to $11 billion and massive EPS growth, driven by its aggressive $27 billion buyback strategy and the rapid enterprise adoption of its AI-powered Agentforce platform. Reaffirming a full-year guidance of...</div>
+                    <div class="sum-preview" id="preview-7">Reaffirming a full-year guidance of...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Salesforce reported a strong Q1 with 14% year-over-year revenue growth to $11 billion and massive EPS growth, driven by its aggressive $27 billion buyback strategy and the rapid enterprise adoption of its AI-powered Agentforce platform. Reaffirming a full-year guidance of over $46 billion in revenue, Salesforce CEO Marc Benioff dismissed fears of an AI-driven "SaaS-pocalypse," emphasizing that the company is successfully integrating AI rather than being disrupted by it.</p>
 <h3>Strong Q1 Financials &amp; Aggressive Share Buybacks</h3>
@@ -3029,7 +3061,7 @@ Coming up, earnings season is wrapping up for retailers, so Cramer is breaking o
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent highlighted the rollout of &quot;Trump Accounts&quot; designed to foster nationwide financial literacy and detailed the administration's economic achievements, while reiterating strict, non-negotiable red lines for ongoing security and energy negotiations with Iran.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR  Treasury Secretary Scott Bessent highlighted the rollout of &quot;Trump Accounts&quot; designed to foster nationwide financial literacy and detailed the administration's economic achievements, while reiterating strict, non-negotiable red lines for ongoing security and energy...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent highlighted the rollout of "Trump Accounts" designed to foster nationwide financial literacy and detailed the administration's economic achievements, while reiterating strict, non-negotiable red lines for ongoing security and energy negotiations with Iran.</p>
 <h3>"Trump Accounts" and Financial Literacy Initiative</h3>
@@ -3334,7 +3366,7 @@ I had breakfast with Chair Powell 41 times, and I never did that. Okay. Okay. Th
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent highlighted the nationwide rollout of the newly launched &quot;Trump Accounts&quot; for children, reported on a historic tax filing season with rising refunds, and addressed critical foreign policy negotiations regarding Iran and the Strait of Hormuz.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR  Treasury Secretary Scott Bessent highlighted the nationwide rollout of the newly launched &quot;Trump Accounts&quot; for children, reported on a historic tax filing season with rising refunds, and addressed critical foreign policy negotiations regarding Iran and the Strait of...</div>
+                    <div class="sum-preview" id="preview-9"></div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent highlighted the nationwide rollout of the newly launched "Trump Accounts" for children, reported on a historic tax filing season with rising refunds, and addressed critical foreign policy negotiations regarding Iran and the Strait of Hormuz.</p>
 <h3>Economic Performance &amp; the Launch of "Trump Accounts"</h3>

@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>94:57</span><span class="dot">&middot;</span><span>189.2K views</span><span class="dot">&middot;</span><span>2026-05-29</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Bill%20Gurley%22">Bill Gurley<span class="chip-desc">Venture Capitalist &amp; Guest</span></a> <a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Co-host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22Jason%20Calacanis%22">Jason Calacanis<span class="chip-desc">Co-host, All-In Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Tech leaders and frontier AI founders are shifting away from the &quot;job apocalypse&quot; narrative toward productivity-driven growth, while a high-stakes battle intensifies over potential government crackdowns on open-source AI and the underlying motivation...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Tech leaders and frontier AI founders are shifting away from the &quot;job apocalypse&quot; narrative toward productivity-driven growth, while a high-stakes battle intensifies over potential government crackdowns on open-source AI and the underlying…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR   Tech leaders and frontier AI founders are shifting away from the &quot;job apocalypse&quot; narrative toward productivity-driven growth, while a high-stakes battle intensifies over potential government crackdowns on open-source AI and the underlying motivations of creators aiming...</div>
+                    <div class="sum-preview" id="preview-0">motivations of creators aiming...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Tech leaders and frontier AI founders are shifting away from the "job apocalypse" narrative toward productivity-driven growth, while a high-stakes battle intensifies over potential government crackdowns on open-source AI and the underlying motivations of creators aiming to build a superior digital species.</p>
 <h3>The Narrative Shift on AI &amp; Employment</h3>
@@ -1492,7 +1524,7 @@ We need to get more. I'm going all in.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The journey of physics is defined by a centuries-long quest to unify the forces of nature into a single &quot;Theory of Everything.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR  The journey of physics is defined by a centuries-long quest to unify the forces of nature into a single &quot;Theory of Everything.&quot; However, experimental validation remains stalled by a quadrillion-fold energy gap, leaving profound cosmological mysteries—such as dark matter,...</div>
+                    <div class="sum-preview" id="preview-1">&quot; However, experimental validation remains stalled by a quadrillion-fold energy gap, leaving profound cosmological mysteries—such as dark matter,...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>The journey of physics is defined by a centuries-long quest to unify the forces of nature into a single "Theory of Everything." However, experimental validation remains stalled by a quadrillion-fold energy gap, leaving profound cosmological mysteries—such as dark matter, dark energy, and the survival of matter over antimatter—unsolved.</p>
 <h3>## The History of Physical Unification</h3>
@@ -2274,7 +2306,7 @@ Thanks for listening to this conversation with Don Lincoln. To support this podc
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Matias Castello (Product Lead at Alchemy) leverages Codex and GPT-5.5 to automate the software development lifecycle, proving that non-engineers can build production-ready software by managing AI agents that autonomously research, draft plans, write code, and execute pull requests.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR   Matias Castello (Product Lead at Alchemy) leverages Codex and GPT-5.5 to automate the software development lifecycle, proving that non-engineers can build production-ready software by managing AI agents that autonomously research, draft plans, write code, and execute...</div>
+                    <div class="sum-preview" id="preview-2"></div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Matias Castello (Product Lead at Alchemy) leverages Codex and GPT-5.5 to automate the software development lifecycle, proving that non-engineers can build production-ready software by managing AI agents that autonomously research, draft plans, write code, and execute pull requests.</p>
 <h3>Integrating AI at Alchemy: From Documentation to Peer Review</h3>
@@ -2516,7 +2548,7 @@ I love that. And it feels like the perfect note to end, anyone can just build an
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Gemini project was established by consolidating Google's fragmented AI research teams and compute resources into a unified effort.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR   The Gemini project was established by consolidating Google's fragmented AI research teams and compute resources into a unified effort. This strategic alignment has accelerated multimodal &quot;world modeling,&quot; yielded highly efficient model distillation (packing &quot;Pro&quot;...</div>
+                    <div class="sum-preview" id="preview-3">This strategic alignment has accelerated multimodal &quot;world modeling,&quot; yielded highly efficient model distillation (packing &quot;Pro&quot;...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The Gemini project was established by consolidating Google's fragmented AI research teams and compute resources into a unified effort. This strategic alignment has accelerated multimodal "world modeling," yielded highly efficient model distillation (packing "Pro" capabilities into "Flash" versions), and set the stage for agentic self-learning systems.</p>
 <h3>The Origins and Consolidation of Project Gemini</h3>
@@ -2911,7 +2943,7 @@ It was wonderful to sit down and talk, and thank you all. Thank you all for list
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Lloyd Blankfein warns that a 15-year absence of a major financial reckoning has allowed overvalued, mismarked private assets to accumulate like &quot;dry tinder&quot; awaiting a spark.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Lloyd Blankfein warns that a 15-year absence of a major financial reckoning has allowed overvalued, mismarked private assets to accumulate like &quot;dry tinder&quot; awaiting a spark. However, he notes that the US economy remains highly resilient due to its flexible labor market,...</div>
+                    <div class="sum-preview" id="preview-4">However, he notes that the US economy remains highly resilient due to its flexible labor market,...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Lloyd Blankfein warns that a 15-year absence of a major financial reckoning has allowed overvalued, mismarked private assets to accumulate like "dry tinder" awaiting a spark. However, he notes that the US economy remains highly resilient due to its flexible labor market, and the Federal Reserve possesses stronger tools to manage a downturn today than it did in 2008.</p>
 <h3>Market Cycles, Animal Spirits, and the "Dry Tinder" Risk</h3>
@@ -3136,7 +3168,7 @@ Would you like to be a part of the conversation at the Economic Club of New York
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>JPMorgan Chase CEO Jamie Dimon warns that shifting global geopolitics and domestic bureaucratic inertia are the greatest threats to Western democracy, urging the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR  JPMorgan Chase CEO Jamie Dimon warns that shifting global geopolitics and domestic bureaucratic inertia are the greatest threats to Western democracy, urging the U.S. to deploy &quot;smart industrial policy&quot; to secure critical supply chains, enact aggressive regulatory reforms...</div>
+                    <div class="sum-preview" id="preview-5">to deploy &quot;smart industrial policy&quot; to secure critical supply chains, enact aggressive regulatory reforms...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>JPMorgan Chase CEO Jamie Dimon warns that shifting global geopolitics and domestic bureaucratic inertia are the greatest threats to Western democracy, urging the U.S. to deploy "smart industrial policy" to secure critical supply chains, enact aggressive regulatory reforms to spark GDP growth, and take a decisive stance against foreign adversaries.</p>
 <h3>Geopolitics, Alliances, and Dollar Dominance</h3>
@@ -3570,9 +3602,9 @@ Ladies and gentlemen, this concludes our conversation.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/Lno6v8lhLRCARERkAK6zTwyUFLCIy_wNjCaT0uxdcMF7AURQXWuYjhkX3OU2ZEqZNAqCfQA8Ut4=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Sun</b><span class="subs">(6.5M)</span></span><span class="dot">&middot;</span><span>259:50</span><span class="dot">&middot;</span><span>1.3K views</span><span class="dot">&middot;</span><span>2026-05-29</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Andrew%20Bailey%22">Andrew Bailey<span class="chip-desc">Governor, Bank of England</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>At the Reykjavik economic conference, central bankers from the UK and US emphasized that persistent inflation—exacerbated by Middle East energy shocks and structural shifts like AI and aging demographics—requires highly flexible, state-contingent mon...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>At the Reykjavik economic conference, central bankers from the UK and US emphasized that persistent inflation—exacerbated by Middle East energy shocks and structural shifts like AI and aging demographics—requires highly flexible, state-contingent…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR  At the Reykjavik economic conference, central bankers from the UK and US emphasized that persistent inflation—exacerbated by Middle East energy shocks and structural shifts like AI and aging demographics—requires highly flexible, state-contingent monetary frameworks and...</div>
+                    <div class="sum-preview" id="preview-6">monetary frameworks and...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>At the Reykjavik economic conference, central bankers from the UK and US emphasized that persistent inflation—exacerbated by Middle East energy shocks and structural shifts like AI and aging demographics—requires highly flexible, state-contingent monetary frameworks and prolonged "higher-for-longer" interest rate environments.</p>
 <h3>Geopolitical Energy Shocks and the Bank of England's Response</h3>
@@ -4105,7 +4137,7 @@ That's... Yeah, that's not how it is now.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Nvidia founder and CEO Jensen Huang outlines an optimistic future for the AI revolution, rejecting lazy narratives of widespread job loss and detailing how AI will expand global GDP, elevate human ambition, and inject trillions into technology and manufacturing supply chains.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR   Nvidia founder and CEO Jensen Huang outlines an optimistic future for the AI revolution, rejecting lazy narratives of widespread job loss and detailing how AI will expand global GDP, elevate human ambition, and inject trillions into technology and manufacturing supply...</div>
+                    <div class="sum-preview" id="preview-7"></div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Nvidia founder and CEO Jensen Huang outlines an optimistic future for the AI revolution, rejecting lazy narratives of widespread job loss and detailing how AI will expand global GDP, elevate human ambition, and inject trillions into technology and manufacturing supply chains.</p>
 <h3>The "5-Layer Cake" of AI and the Rise of Agentic AI</h3>
@@ -4223,7 +4255,7 @@ That's... Yeah, that's not how it is now.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The rapid advancement of AI is transitioning the workforce from individual execution to agentic management, where knowledge workers must act as &quot;managers of agents&quot; utilizing closed-loop, compounding systems.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR  The rapid advancement of AI is transitioning the workforce from individual execution to agentic management, where knowledge workers must act as &quot;managers of agents&quot; utilizing closed-loop, compounding systems. This cognitive industrial revolution is poised to drastically...</div>
+                    <div class="sum-preview" id="preview-8">This cognitive industrial revolution is poised to drastically...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The rapid advancement of AI is transitioning the workforce from individual execution to agentic management, where knowledge workers must act as "managers of agents" utilizing closed-loop, compounding systems. This cognitive industrial revolution is poised to drastically accelerate scientific discovery, particularly in complex biological fields like oncology, provided startups can successfully bridge the gap between academic research and business value.</p>
 <h3>The Shift from Generative AI to Agentic Workflows</h3>
@@ -4495,7 +4527,7 @@ Well, ladies and gentlemen, please help me in thanking Reid.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent details the devastating impact of &quot;Operation Economic Fury,&quot; a joint Treasury and U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR  Treasury Secretary Scott Bessent details the devastating impact of &quot;Operation Economic Fury,&quot; a joint Treasury and U.S. Navy financial blockade that has pushed Iran to the brink of collapse. Meanwhile, the domestic U.S. economy remains highly resilient, supported by...</div>
+                    <div class="sum-preview" id="preview-9">Navy financial blockade that has pushed Iran to the brink of collapse. Meanwhile, the domestic U.S. economy remains highly resilient, supported by...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent details the devastating impact of "Operation Economic Fury," a joint Treasury and U.S. Navy financial blockade that has pushed Iran to the brink of collapse. Meanwhile, the domestic U.S. economy remains highly resilient, supported by permanent tax reforms, the rollout of wealth-building "Trump Accounts" for children, and a new era of independent Federal Reserve leadership under Chairman Kevin Warsh.</p>
 <h3>Operation Economic Fury and the Iranian Financial Blockade</h3>
@@ -4715,7 +4747,7 @@ Well, thank you, Larry. Good.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The generative AI market is driving unprecedented revenue scale and massive exit outcomes far faster than previous technology cycles, though identifying durable winners remains highly challenging due to rapid technological shifts and acute infrastructure supply constraints.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR  The generative AI market is driving unprecedented revenue scale and massive exit outcomes far faster than previous technology cycles, though identifying durable winners remains highly challenging due to rapid technological shifts and acute infrastructure supply...</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>The generative AI market is driving unprecedented revenue scale and massive exit outcomes far faster than previous technology cycles, though identifying durable winners remains highly challenging due to rapid technological shifts and acute infrastructure supply constraints.</p>
 <h3>The Unprecedented Scale of Frontier AI</h3>
@@ -4959,7 +4991,7 @@ Same here. I mean, the, the opportunity is so great. I think, you know, changing
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>SpaceX's upcoming IPO seeks an unprecedented $1.75 to $2 trillion valuation (~100x sales) that relies on sci-fi narrative appeal and relaxed Nasdaq index rules rather than its decelerating fundamentals.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR  SpaceX's upcoming IPO seeks an unprecedented $1.75 to $2 trillion valuation (~100x sales) that relies on sci-fi narrative appeal and relaxed Nasdaq index rules rather than its decelerating fundamentals. Meanwhile, traditional tech showcases a sharp split: hardware giants...</div>
+                    <div class="sum-preview" id="preview-11">Meanwhile, traditional tech showcases a sharp split: hardware giants...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>SpaceX's upcoming IPO seeks an unprecedented $1.75 to $2 trillion valuation (~100x sales) that relies on sci-fi narrative appeal and relaxed Nasdaq index rules rather than its decelerating fundamentals. Meanwhile, traditional tech showcases a sharp split: hardware giants like Dell are booming on real AI infrastructure spend, while software players like Salesforce face pressure as AI disruption fears linger.</p>
 <h3>The SpaceX IPO: Sci-Fi Valuation vs. Fundamental Reality</h3>
@@ -5139,9 +5171,9 @@ This podcast is for informational purposes only and does not constitute investme
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/xQurJbK0b-iJAr-IVZUI3dsKw74vHSBN6-lGaofLwWYUwsywFqdnmrCD2qm2VeeOXiC99A8f=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Ronald Reagan Presidential Foundation &amp; Institute</b><span class="subs">(1.2M)</span></span><span class="dot">&middot;</span><span>44:47</span><span class="dot">&middot;</span><span>345 views</span><span class="dot">&middot;</span><span>2026-05-29</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">U.S. Treasury Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent outlines the Trump administration's &quot;economic security is national security&quot; doctrine, detailing the devastating impacts of the &quot;Operation Economic Fury&quot; financial blockade on Iran, alongside domestic policies aimed a...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent outlines the Trump administration's &quot;economic security is national security&quot; doctrine, detailing the devastating impacts of the &quot;Operation Economic Fury&quot; financial blockade on Iran, alongside domestic policies aimed…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR  Treasury Secretary Scott Bessent outlines the Trump administration's &quot;economic security is national security&quot; doctrine, detailing the devastating impacts of the &quot;Operation Economic Fury&quot; financial blockade on Iran, alongside domestic policies aimed at reshoring critical...</div>
+                    <div class="sum-preview" id="preview-12">at reshoring critical...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent outlines the Trump administration's "economic security is national security" doctrine, detailing the devastating impacts of the "Operation Economic Fury" financial blockade on Iran, alongside domestic policies aimed at reshoring critical supply chains, implementing permanent tax cuts, and establishing Trump Savings Accounts for American children.</p>
 <h3>The "Economic Security is National Security" Doctrine</h3>
@@ -5442,7 +5474,7 @@ Good. Well, thank you, Larry.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent outlines how the administration's &quot;Operation Economic Fury&quot; and naval blockade have financially crippled Iran, forcing them to negotiate on nuclear enrichment, while domestic supply-side economic reforms and the newly launched Trump Savings Accounts continue to drive historic U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR  Treasury Secretary Scott Bessent outlines how the administration's &quot;Operation Economic Fury&quot; and naval blockade have financially crippled Iran, forcing them to negotiate on nuclear enrichment, while domestic supply-side economic reforms and the newly launched Trump...</div>
+                    <div class="sum-preview" id="preview-13"></div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent outlines how the administration's "Operation Economic Fury" and naval blockade have financially crippled Iran, forcing them to negotiate on nuclear enrichment, while domestic supply-side economic reforms and the newly launched Trump Savings Accounts continue to drive historic U.S. business investment and consumer resilience.</p>
 <p>***</p>
@@ -5678,9 +5710,9 @@ Good. Well, thank you, Larry.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/JZyo1WZheiYXPpeIEvtVU3ORcwndwpawICHfzJuUXEiMGZSAZP1oyZoZsPe8Dqa-ZR4KIPQA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Face the Nation</b><span class="subs">(801.0K)</span></span><span class="dot">&middot;</span><span>31:30</span><span class="dot">&middot;</span><span>2.7K views</span><span class="dot">&middot;</span><span>2026-05-29</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent outlined a highly resilient US economic outlook, clarified that any tentative 60-day ceasefire deal with Iran is contingent on strict nuclear and maritime red lines, and previewed the July 4th launch of &quot;Trump account...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent outlined a highly resilient US economic outlook, clarified that any tentative 60-day ceasefire deal with Iran is contingent on strict nuclear and maritime red lines, and previewed the July 4th launch of &quot;Trump…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR Treasury Secretary Scott Bessent outlined a highly resilient US economic outlook, clarified that any tentative 60-day ceasefire deal with Iran is contingent on strict nuclear and maritime red lines, and previewed the July 4th launch of &quot;Trump accounts&quot; designed to build a...</div>
+                    <div class="sum-preview" id="preview-14">accounts&quot; designed to build a...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent outlined a highly resilient US economic outlook, clarified that any tentative 60-day ceasefire deal with Iran is contingent on strict nuclear and maritime red lines, and previewed the July 4th launch of "Trump accounts" designed to build a new generation of American shareholders.</p>
 <h3>Iran Negotiations and Energy Security</h3>
@@ -5993,7 +6025,7 @@ There's no cure for stupid. Okay, okay, okay, thank you all. Thank you.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Varun Vummadi turned down a $550,000 quant finance offer and a Stanford PhD to build GigaML, eventually leveraging Y Combinator's network and a lean 8-person team to secure major enterprise clients like DoorDash over well-funded, 400-person competitors.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR  Varun Vummadi turned down a $550,000 quant finance offer and a Stanford PhD to build GigaML, eventually leveraging Y Combinator's network and a lean 8-person team to secure major enterprise clients like DoorDash over well-funded, 400-person competitors.  Rejecting Elite...</div>
+                    <div class="sum-preview" id="preview-15">Rejecting Elite...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Varun Vummadi turned down a $550,000 quant finance offer and a Stanford PhD to build GigaML, eventually leveraging Y Combinator's network and a lean 8-person team to secure major enterprise clients like DoorDash over well-funded, 400-person competitors.</p>
 <h3>The Non-Linear Path to Product-Market Fit</h3>

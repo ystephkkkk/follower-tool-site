@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Scaling AI in Life Sciences requires a shift from isolated pilots to a production-first mentality where AI is &quot;everyone's responsibility,&quot; supported by industrial-scale platforms like the newly launched Amazon Bio Discovery and Bedrock AgentCore to accelerate drug development from years to months.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Scaling AI in Life Sciences requires a shift from isolated pilots to a production-first mentality where AI is &quot;everyone's responsibility,&quot; supported by industrial-scale platforms like the newly launched Amazon Bio Discovery and Bedrock AgentCore to accelerate drug...</div>
+                    <div class="sum-preview" id="preview-0"></div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Scaling AI in Life Sciences requires a shift from isolated pilots to a production-first mentality where AI is "everyone's responsibility," supported by industrial-scale platforms like the newly launched Amazon Bio Discovery and Bedrock AgentCore to accelerate drug development from years to months.</p>
 <h3>Moving from "Pilot Purgatory" to Enterprise Scale</h3>
@@ -1321,7 +1353,7 @@ We're glad to be able to join forces with Amazon Bio Discovery to really optimiz
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary Howard Lutnick defended a $9.2 billion FY 2027 budget request that proposes a 16.5% spending cut, largely through the elimination of domestic grant programs (EDA, MBDA, MEP), while seeking historic funding increases for trade enforcement and export controls to counter China.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Secretary Howard Lutnick defended a $9.2 billion FY 2027 budget request that proposes a 16.5% spending cut, largely through the elimination of domestic grant programs (EDA, MBDA, MEP), while seeking historic funding increases for trade enforcement and export controls to...</div>
+                    <div class="sum-preview" id="preview-1"></div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Secretary Howard Lutnick defended a $9.2 billion FY 2027 budget request that proposes a 16.5% spending cut, largely through the elimination of domestic grant programs (EDA, MBDA, MEP), while seeking historic funding increases for trade enforcement and export controls to counter China. The hearing featured intense disputes over the efficacy of "America First" tariffs, the administration's handling of the National Weather Service, and Lutnick’s alleged personal ties to Jeffrey Epstein.</p>
 <h3>FY 2027 Budget Strategy and Domestic Program Eliminations</h3>
@@ -1833,7 +1865,7 @@ Without objection, members may have seven days to submit additional questions fo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary Howard Lutnick presented a $9.2 billion FY 2027 budget request—a 16.5% decrease from current levels—that prioritizes aggressive trade enforcement and large-scale domestic manufacturing while eliminating long-standing regional development and small-business support programs.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Secretary Howard Lutnick presented a $9.2 billion FY 2027 budget request—a 16.5% decrease from current levels—that prioritizes aggressive trade enforcement and large-scale domestic manufacturing while eliminating long-standing regional development and small-business...</div>
+                    <div class="sum-preview" id="preview-2"></div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Secretary Howard Lutnick presented a $9.2 billion FY 2027 budget request—a 16.5% decrease from current levels—that prioritizes aggressive trade enforcement and large-scale domestic manufacturing while eliminating long-standing regional development and small-business support programs.</p>
 <h3>Budget Strategy and Agency Reorganization</h3>
@@ -2571,7 +2603,7 @@ Gentleman yields back. That concludes today's hearing. I'd like to thank our wit
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Lloyd Blankfein’s career journey from Brooklyn public housing to the helm of Goldman Sachs underscores that elite leadership requires &quot;streetwise&quot; authenticity, the ability to pivot into &quot;risk management mode&quot; during uncertainty, and a commitment to ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Lloyd Blankfein’s career journey from Brooklyn public housing to the helm of Goldman Sachs underscores that elite leadership requires &quot;streetwise&quot; authenticity, the ability to pivot into &quot;risk management mode&quot; during uncertainty, and a commitment to radical transparency...</div>
+                    <div class="sum-preview" id="preview-3">radical transparency...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Lloyd Blankfein’s career journey from Brooklyn public housing to the helm of Goldman Sachs underscores that elite leadership requires "streetwise" authenticity, the ability to pivot into "risk management mode" during uncertainty, and a commitment to radical transparency with stakeholders during existential crises.</p>
 <h3>From the Brooklyn Projects to the Executive Floor</h3>
@@ -2902,7 +2934,7 @@ Oh, me too. Honestly, giving you a hug through the TV here. But thank you. And g
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Technological supremacy, particularly in AI and production scale, has become the primary driver of geopolitical power, requiring the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Technological supremacy, particularly in AI and production scale, has become the primary driver of geopolitical power, requiring the U.S. to abandon laissez-faire economics for a modern industrial strategy to counter China’s state-directed model and navigate increasingly...</div>
+                    <div class="sum-preview" id="preview-4">to abandon laissez-faire economics for a modern industrial strategy to counter China’s state-directed model and navigate increasingly...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Technological supremacy, particularly in AI and production scale, has become the primary driver of geopolitical power, requiring the U.S. to abandon laissez-faire economics for a modern industrial strategy to counter China’s state-directed model and navigate increasingly volatile global flashpoints.</p>
 <h3>Technology as the New Currency of Power</h3>
@@ -3241,9 +3273,9 @@ Special thanks as well to Irina Hogan. Make sure you subscribe to the show where
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/sguWB8BkkNzcpT9pWTIOj7XNnyAZZjqXkAZvC8rA2UlVGxBG0cxJIvKeP3i9AExWxCGsZtoR6A=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Citizen McCain with Meghan McCain</b><span class="subs">(30.2K)</span></span><span class="dot">&middot;</span><span>69:46</span><span class="dot">&middot;</span><span>3.4K views</span><span class="dot">&middot;</span><span>2026-04-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22John%20Fetterman%22">John Fetterman<span class="chip-desc">US Senator</span></a> <a class="chip" href="index.html?q=%22Meghan%20McCain%22">Meghan McCain<span class="chip-desc">Host, Citizen McCain</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Senator John Fetterman discusses his recovery from depression and his commitment to bipartisanship, while host Meghan McCain expresses deep alarm over Virginia’s recent redistricting, which she argues effectively disenfranchises Republican voters and...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Senator John Fetterman discusses his recovery from depression and his commitment to bipartisanship, while host Meghan McCain expresses deep alarm over Virginia’s recent redistricting, which she argues effectively disenfranchises Republican voters…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Senator John Fetterman discusses his recovery from depression and his commitment to bipartisanship, while host Meghan McCain expresses deep alarm over Virginia’s recent redistricting, which she argues effectively disenfranchises Republican voters and signals a dangerous...</div>
+                    <div class="sum-preview" id="preview-5">and signals a dangerous...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Senator John Fetterman discusses his recovery from depression and his commitment to bipartisanship, while host Meghan McCain expresses deep alarm over Virginia’s recent redistricting, which she argues effectively disenfranchises Republican voters and signals a dangerous national trend toward extreme gerrymandering.</p>
 <h3>Virginia Redistricting and the "Lobster" Map</h3>
@@ -3668,7 +3700,7 @@ Thank you. All right, I like that. See you guys on Monday. Thank you guys. Bye!<
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary Howard Lutnick presented a FY 2027 budget focused on aggressive export controls, semiconductor reshoring, and agency modernization, while facing intense criticism from committee members over proposed cuts to domestic development programs, tariff impacts, and personal ethics.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Secretary Howard Lutnick presented a FY 2027 budget focused on aggressive export controls, semiconductor reshoring, and agency modernization, while facing intense criticism from committee members over proposed cuts to domestic development programs, tariff impacts, and...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Secretary Howard Lutnick presented a FY 2027 budget focused on aggressive export controls, semiconductor reshoring, and agency modernization, while facing intense criticism from committee members over proposed cuts to domestic development programs, tariff impacts, and personal ethics.</p>
 <h3>Economic Priorities and Industrial Strategy</h3>
@@ -4074,9 +4106,9 @@ You brought along your wife, your kids, and your nannies to the predator's islan
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/0eHBR-ZS_IG0TwN1muu16s40WPm6oXxSWtw-Y85fx4jOgAMbvn9WjuR2dZb9BEhk3u_hDZ4TgI0=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Mint</b><span class="subs">(1.4M)</span></span><span class="dot">&middot;</span><span>149:50</span><span class="dot">&middot;</span><span>164 views</span><span class="dot">&middot;</span><span>2026-04-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent defended a proposed 12% reduction in the department’s FY2027 budget, prioritizing President Trump’s &quot;Working Families&quot; tax cuts and a digital-first IRS modernization while facing intense questioning over inflation, IR...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent defended a proposed 12% reduction in the department’s FY2027 budget, prioritizing President Trump’s &quot;Working Families&quot; tax cuts and a digital-first IRS modernization while facing intense questioning over inflation,…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Treasury Secretary Scott Bessent defended a proposed 12% reduction in the department’s FY2027 budget, prioritizing President Trump’s &quot;Working Families&quot; tax cuts and a digital-first IRS modernization while facing intense questioning over inflation, IRS enforcement cuts, and...</div>
+                    <div class="sum-preview" id="preview-7">IRS enforcement cuts, and...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent defended a proposed 12% reduction in the department’s FY2027 budget, prioritizing President Trump’s "Working Families" tax cuts and a digital-first IRS modernization while facing intense questioning over inflation, IRS enforcement cuts, and oil sanctions relief for Russia and Iran.</p>
 <h3>FY2027 Budget Strategy and Tax Relief</h3>
@@ -5963,9 +5995,9 @@ Senator, thank you for your leadership on this and the entire main delegation. I
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>103:55</span><span class="dot">&middot;</span><span>3.1K views</span><span class="dot">&middot;</span><span>2026-04-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Howard%20Lutnick%22">Howard Lutnick<span class="chip-desc">US Commerce Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary Howard Lutnick presented a $9.2 billion FY27 budget request for the Department of Commerce—a 16.5% decrease from current levels—focusing on &quot;America First&quot; trade policies and private-sector investment while facing intense criticism over pro...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary Howard Lutnick presented a $9.2 billion FY27 budget request for the Department of Commerce—a 16.5% decrease from current levels—focusing on &quot;America First&quot; trade policies and private-sector investment while facing intense criticism over…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Secretary Howard Lutnick presented a $9.2 billion FY27 budget request for the Department of Commerce—a 16.5% decrease from current levels—focusing on &quot;America First&quot; trade policies and private-sector investment while facing intense criticism over program eliminations, late...</div>
+                    <div class="sum-preview" id="preview-8">program eliminations, late...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Secretary Howard Lutnick presented a $9.2 billion FY27 budget request for the Department of Commerce—a 16.5% decrease from current levels—focusing on "America First" trade policies and private-sector investment while facing intense criticism over program eliminations, late reporting, and personal ethical allegations.</p>
 <h3>FY27 Budget Priorities and Economic Strategy</h3>
@@ -7391,9 +7423,9 @@ Thank you, Mr. Chairman, and thank you for having me here. Thank you, Representa
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/k6bDbWwngaO6KSyL1lxkmFIbW6ncdoLKITtcqTumbD5wBazaJltUEkJdrfHjuMtDrHltYaIbLd0=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>MS NOW</b><span class="subs">(9.8M)</span></span><span class="dot">&middot;</span><span>104:51</span><span class="dot">&middot;</span><span>36.3K views</span><span class="dot">&middot;</span><span>2026-04-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Howard%20Lutnick%22">Howard Lutnick<span class="chip-desc">US Commerce Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;These agents bring between three and 10 times their revenue annually in fines...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;These agents bring between three and 10 times their revenue annually in…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR: Secretary Howard Lutnick defended a &quot;record-setting&quot; influx of manufacturing and energy investments under the Trump administration while justifying significant budget cuts to &quot;broken&quot; legacy programs like the EDA and MBDA. The hearing was marked by sharp partisan divides...</div>
+                    <div class="sum-preview" id="preview-9">Secretary Howard Lutnick defended a &quot;record-setting&quot; influx of manufacturing and energy investments under the Trump administration while justifying significant budget cuts to &quot;broken&quot; legacy programs like the EDA and MBDA. The hearing was marked by sharp partisan divides...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR:</strong> Secretary Howard Lutnick defended a "record-setting" influx of manufacturing and energy investments under the Trump administration while justifying significant budget cuts to "broken" legacy programs like the EDA and MBDA. The hearing was marked by sharp partisan divides over manufacturing job losses, the impact of tariffs, and the Secretary’s past associations with Jeffrey Epstein.</p>
 <h3>Industrial Growth and National Security</h3>
 <ul>
@@ -7857,7 +7889,7 @@ Without objection, members may have seven days to submit additional questions fo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The era of &quot;zero marginal costs&quot; that defined the 2010s is ending as AI creates massive capital intensity and compute constraints, forcing tech giants to prioritize internal workloads over external customers based on opportunity costs rather than traditional supply/demand.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR The era of &quot;zero marginal costs&quot; that defined the 2010s is ending as AI creates massive capital intensity and compute constraints, forcing tech giants to prioritize internal workloads over external customers based on opportunity costs rather than traditional supply/demand....</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>The era of "zero marginal costs" that defined the 2010s is ending as AI creates massive capital intensity and compute constraints, forcing tech giants to prioritize internal workloads over external customers based on opportunity costs rather than traditional supply/demand.</p>
 <h3>The Shift from Marginal Cost to Opportunity Cost</h3>
@@ -8047,7 +8079,7 @@ Then again, if more compute is the key to better products, then does supply matt
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>GPT-5.5 (codename “Spud”) represents OpenAI’s shift from language-only models to proactive AI agents capable of autonomous computer use, signaling a transition toward a &quot;compute-powered economy&quot; where intelligence is the primary resource for solving complex real-world problems.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR GPT-5.5 (codename “Spud”) represents OpenAI’s shift from language-only models to proactive AI agents capable of autonomous computer use, signaling a transition toward a &quot;compute-powered economy&quot; where intelligence is the primary resource for solving complex real-world...</div>
+                    <div class="sum-preview" id="preview-11"></div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>GPT-5.5 (codename “Spud”) represents OpenAI’s shift from language-only models to proactive AI agents capable of autonomous computer use, signaling a transition toward a "compute-powered economy" where intelligence is the primary resource for solving complex real-world problems.</p>
 <h3>GPT-5.5: From Language Model to Computer-Use Agent</h3>
@@ -8262,7 +8294,7 @@ We're going to do our best, but I think that we are heading into a world of comp
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump announced that 17 of the world’s largest pharmaceutical companies, including Regeneron, have agreed to &quot;Most Favored Nation&quot; (MFN) pricing, resulting in the largest drug price reductions in U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR President Trump announced that 17 of the world’s largest pharmaceutical companies, including Regeneron, have agreed to &quot;Most Favored Nation&quot; (MFN) pricing, resulting in the largest drug price reductions in U.S. history while simultaneously moving medical marijuana to...</div>
+                    <div class="sum-preview" id="preview-12">history while simultaneously moving medical marijuana to...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>President Trump announced that 17 of the world’s largest pharmaceutical companies, including Regeneron, have agreed to "Most Favored Nation" (MFN) pricing, resulting in the largest drug price reductions in U.S. history while simultaneously moving medical marijuana to Schedule III and reshoring $448 billion in manufacturing.</p>
 <h3>Healthcare Affordability and Pharmaceutical Agreements</h3>
@@ -8779,9 +8811,9 @@ And we have to get to that. On top of that, he's been terrible on interest rates
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/GlGSJqNBRmSUQc5dn92nXxaWqQr7Ghf65ktun4yU7mEPy-AKdy6BcvvfGstxznLAKktDR7GKvqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The White House</b><span class="subs">(3.1M)</span></span><span class="dot">&middot;</span><span>67:08</span><span class="dot">&middot;</span><span>41.7K views</span><span class="dot">&middot;</span><span>2026-04-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump announced that Regeneron has become the 17th major pharmaceutical company to adopt &quot;Most Favored Nation&quot; pricing, ensuring Americans pay the lowest global prices for drugs, while also revealing a $27 billion domestic manufacturing inv...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump announced that Regeneron has become the 17th major pharmaceutical company to adopt &quot;Most Favored Nation&quot; pricing, ensuring Americans pay the lowest global prices for drugs, while also revealing a $27 billion domestic manufacturing…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR President Trump announced that Regeneron has become the 17th major pharmaceutical company to adopt &quot;Most Favored Nation&quot; pricing, ensuring Americans pay the lowest global prices for drugs, while also revealing a $27 billion domestic manufacturing investment and the...</div>
+                    <div class="sum-preview" id="preview-13">investment and the...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>President Trump announced that Regeneron has become the 17th major pharmaceutical company to adopt "Most Favored Nation" pricing, ensuring Americans pay the lowest global prices for drugs, while also revealing a $27 billion domestic manufacturing investment and the rescheduling of medical marijuana to Schedule 3.</p>
 <h3>Prescription Drug Affordability &amp; "Most Favored Nation" (MFN) Pricing</h3>
@@ -9209,7 +9241,7 @@ Okay guys, start moving. Thank you. Thank you guys. Keep moving. Thank you. Than
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Founded by former trader Nik Storonsky, Revolut has grown from a niche currency exchange app into a $75 billion global &quot;super-app&quot; aiming to become the world’s first truly global digital bank with a target of 100 million daily active users.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR Founded by former trader Nik Storonsky, Revolut has grown from a niche currency exchange app into a $75 billion global &quot;super-app&quot; aiming to become the world’s first truly global digital bank with a target of 100 million daily active users.  Product Ecosystem: Revolut...</div>
+                    <div class="sum-preview" id="preview-14">Product Ecosystem: Revolut...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Founded by former trader Nik Storonsky, Revolut has grown from a niche currency exchange app into a $75 billion global "super-app" aiming to become the world’s first truly global digital bank with a target of 100 million daily active users.</p>
 <h3>The Growth and Scale of the Revolut "Super-App"</h3>
@@ -9492,7 +9524,7 @@ So I just continue to work on, you know, what's necessary to build the first glo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Modern tech billionaires are attempting to bypass traditional nation-state governance by creating &quot;startup nations&quot; and private jurisdictions, evolving from historical precedents like Svalbard to modern experiments like Próspera.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Modern tech billionaires are attempting to bypass traditional nation-state governance by creating &quot;startup nations&quot; and private jurisdictions, evolving from historical precedents like Svalbard to modern experiments like Próspera. This movement prioritizes &quot;exit&quot; from...</div>
+                    <div class="sum-preview" id="preview-15">This movement prioritizes &quot;exit&quot; from...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Modern tech billionaires are attempting to bypass traditional nation-state governance by creating "startup nations" and private jurisdictions, evolving from historical precedents like Svalbard to modern experiments like Próspera. This movement prioritizes "exit" from existing regulations in favor of corporate optimization, often leading to significant conflicts with national sovereignty.</p>
 <h3>The Historical Precedent: Svalbard and "Terra Nullius"</h3>
@@ -9935,9 +9967,9 @@ Drivers who save with Jerry could save over $1,300 a year. Switch with confidenc
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/IZt6rJxlvGmTE1lxo9UNtYXzr_AaJ75YtTsVruXB8FKAPbg6SMJiaxZ3i5PKmB4LLWBGNKOUqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>World Economic Forum</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>54:33</span><span class="dot">&middot;</span><span>1.0K views</span><span class="dot">&middot;</span><span>2026-04-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Erik%20Peterson%22">Erik Peterson<span class="chip-desc">Managing Director, Global Business Policy Council, Kearney</span></a> <a class="chip" href="index.html?q=%22Lizhi%20Liu%22">Lizhi Liu<span class="chip-desc">Assistant Professor, McDonough School of Business, Georgetown University</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;We're moving from a system that's optimized for efficiency to one that's optimized for security.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;We're moving from a system that's optimized for efficiency to one that's optimized for security.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR: Industrial policy has returned as a central tool of geostrategy, shifting the global economic focus from market-driven efficiency to national security, self-reliance, and the control of strategic &quot;choke points.&quot;  Defining the New Era: Lizhi Liu defines industrial policy...</div>
+                    <div class="sum-preview" id="preview-16">Industrial policy has returned as a central tool of geostrategy, shifting the global economic focus from market-driven efficiency to national security, self-reliance, and the control of strategic &quot;choke points.&quot;  Defining the New Era: Lizhi Liu defines industrial policy...</div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR:</strong> Industrial policy has returned as a central tool of geostrategy, shifting the global economic focus from market-driven efficiency to national security, self-reliance, and the control of strategic "choke points."</p>
 <h3>The Resurgence of State Intervention</h3>
 <ul>
@@ -10297,7 +10329,7 @@ My thanks very much to Lizhi Liu. Thanks very much from Georgetown University. T
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The economic bottleneck has shifted from execution to ideation as AI makes implementation nearly instantaneous, leading to an explosion in token demand that is outpacing the physical limits of the semiconductor supply chain.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR  The economic bottleneck has shifted from execution to ideation as AI makes implementation nearly instantaneous, leading to an explosion in token demand that is outpacing the physical limits of the semiconductor supply chain.  Exponential Token Spend: Dylan Patel reports...</div>
+                    <div class="sum-preview" id="preview-17">Exponential Token Spend: Dylan Patel reports...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>The economic bottleneck has shifted from execution to ideation as AI makes implementation nearly instantaneous, leading to an explosion in token demand that is outpacing the physical limits of the semiconductor supply chain.</p>
 <h3>The Transformation of Professional Productivity</h3>
@@ -10746,9 +10778,9 @@ The best AI and software companies, from OpenAI to Cursor to Perplexity, use Wor
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/3qIMp79Z-ynhtXTYyNcdybHwvtILVk_jNMKTLbasP8F1UYCdtU-FFjTJPNGQCp5KZuNUQ62n9Gk=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>PBS NewsHour</b><span class="subs">(5.2M)</span></span><span class="dot">&middot;</span><span>67:21</span><span class="dot">&middot;</span><span>6.4K views</span><span class="dot">&middot;</span><span>2026-04-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The United States is just 4% of the world's population and consumes only 13% of all prescription drugs, yet pharmaceutical companies have been making 75% of their profits from American customers.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The United States is just 4% of the world's population and consumes only 13% of all prescription drugs, yet pharmaceutical companies have been making 75% of their profits from American customers.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR: President Trump announced a landmark &quot;Most Favored Nation&quot; pricing agreement with 17 major pharmaceutical companies to slash U.S. drug prices to the lowest in the world, while also confirming the rescheduling of medical marijuana to Schedule III and highlighting the...</div>
+                    <div class="sum-preview" id="preview-18">President Trump announced a landmark &quot;Most Favored Nation&quot; pricing agreement with 17 major pharmaceutical companies to slash U.S. drug prices to the lowest in the world, while also confirming the rescheduling of medical marijuana to Schedule III and highlighting the...</div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR:</strong> President Trump announced a landmark "Most Favored Nation" pricing agreement with 17 major pharmaceutical companies to slash U.S. drug prices to the lowest in the world, while also confirming the rescheduling of medical marijuana to Schedule III and highlighting the reshoring of American manufacturing via tariff policy.</p>
 <h3>Healthcare Reform and Drug Pricing</h3>
 <ul>
@@ -11239,9 +11271,9 @@ That a small building can cost 4 billion dollars? It may never open. It may neve
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/MugZdQOKGJRgWpK4f_tGu9gdQ7enocCv0XLwRqvX2wVYiqYVneNzSNzzXIwF0FTEGPE94THZYg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>How I Invest w/David Weisburd</b><span class="subs">(13.3K)</span></span><span class="dot">&middot;</span><span>45:54</span><span class="dot">&middot;</span><span>139 views</span><span class="dot">&middot;</span><span>2026-04-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22David%20Weisburd%22">David Weisburd<span class="chip-desc">Host, How I Invest</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;You know what Eric, we're just trying to make good investments.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;You know what Eric, we're just trying to make good investments.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR: High-performance venture capital is less about chasing &quot;magical&quot; unicorn frameworks and more about returning to the fundamentals of value investing: selecting singular, non-conforming founders, protecting their leadership at all costs, and focusing on the next 3-5x growth...</div>
+                    <div class="sum-preview" id="preview-19">High-performance venture capital is less about chasing &quot;magical&quot; unicorn frameworks and more about returning to the fundamentals of value investing: selecting singular, non-conforming founders, protecting their leadership at all costs, and focusing on the next 3-5x growth...</div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR:</strong> High-performance venture capital is less about chasing "magical" unicorn frameworks and more about returning to the fundamentals of value investing: selecting singular, non-conforming founders, protecting their leadership at all costs, and focusing on the next 3-5x growth cycle rather than hindsight-driven power laws.</p>
 <h3>The Foundations of Investment Selection</h3>
 <ul>

@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mvdJx2QT4WkxWNyS5VhmvRft5eFFV8tkyzrjDEvfZUABg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Dassault Systèmes</b><span class="subs">(88.0K)</span></span><span class="dot">&middot;</span><span>41:40</span><span class="dot">&middot;</span><span>2026-02-03</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pascal%20Daloz%22">Pascal Daloz<span class="chip-desc">CEO, Dassault Systèmes</span></a> <a class="chip" href="index.html?q=%22Jensen%20Huang%22">Jensen Huang<span class="chip-desc">Founder and CEO, NVIDIA</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Dassault Systèmes and NVIDIA are forging their deepest partnership yet, combining Dassault Systèmes' virtual twin technology with NVIDIA's accelerated computing and AI to power a new &quot;generative economy&quot; and &quot;knowledge factories,&quot; enabling real-time,...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Dassault Systèmes and NVIDIA are forging their deepest partnership yet, combining Dassault Systèmes' virtual twin technology with NVIDIA's accelerated computing and AI to power a new &quot;generative economy&quot; and &quot;knowledge factories,&quot; enabling…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Dassault Systèmes and NVIDIA are forging their deepest partnership yet, combining Dassault Systèmes' virtual twin technology with NVIDIA's accelerated computing and AI to power a new &quot;generative economy&quot; and &quot;knowledge factories,&quot; enabling real-time, AI-driven design,...</div>
+                    <div class="sum-preview" id="preview-0">real-time, AI-driven design,...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Dassault Systèmes and NVIDIA are forging their deepest partnership yet, combining Dassault Systèmes' virtual twin technology with NVIDIA's accelerated computing and AI to power a new "generative economy" and "knowledge factories," enabling real-time, AI-driven design, simulation, and operation across all industries.</p>
 <h3>A New Era of Industrial AI</h3>
@@ -914,7 +946,7 @@ A unique partnership combining Dassault Systèmes' virtual twin factory and NVID
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Peter Muller, founder of PDT Partners, established one of the most successful quantitative trading firms by cultivating a unique, collaborative culture and disciplined growth over sheer scale.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Peter Muller, founder of PDT Partners, established one of the most successful quantitative trading firms by cultivating a unique, collaborative culture and disciplined growth over sheer scale. He balanced this highly successful finance career with a rich personal life...</div>
+                    <div class="sum-preview" id="preview-1">He balanced this highly successful finance career with a rich personal life...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Peter Muller, founder of PDT Partners, established one of the most successful quantitative trading firms by cultivating a unique, collaborative culture and disciplined growth over sheer scale. He balanced this highly successful finance career with a rich personal life dedicated to music and other diverse pursuits.</p>
 <h3>Pete Muller: A Quantitative Finance Maverick</h3>
@@ -1189,9 +1221,9 @@ Awesome. All right. Well, great doing this, Pete. Really appreciate it.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mimj_qpJ9zIz6FX3wJb9PWDRiip7NS73uW9xRtXy2RZL0=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Fortt Knox</b><span class="subs">(10.7K)</span></span><span class="dot">&middot;</span><span>10:58</span><span class="dot">&middot;</span><span>2026-02-03</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Fei-Fei%20Li%22">Fei-Fei Li<span class="chip-desc">CEO, World Labs</span></a> <a class="chip" href="index.html?q=%22Jon%20Fortt%22">Jon Fortt<span class="chip-desc">Host, Fortt Knox</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;This is a civilizational technology...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;This is a civilizational…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Dr. Fei Fei Li, CEO of World Labs, asserts AI's status as a pervasive &quot;civilizational technology&quot; impacting every aspect of life, underscoring the critical need for diverse global participation and localized understanding, while identifying spatial intelligence as the next...</div>
+                    <div class="sum-preview" id="preview-2">Dr. Fei Fei Li, CEO of World Labs, asserts AI's status as a pervasive &quot;civilizational technology&quot; impacting every aspect of life, underscoring the critical need for diverse global participation and localized understanding, while identifying spatial intelligence as the next...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong> Dr. Fei Fei Li, CEO of World Labs, asserts AI's status as a pervasive "civilizational technology" impacting every aspect of life, underscoring the critical need for diverse global participation and localized understanding, while identifying spatial intelligence as the next major frontier beyond current language models.</p>
 <h3>The Pervasive Nature of AI</h3>
 <ul>
@@ -1291,9 +1323,9 @@ Dr. Fei-Fei Li, thank you for your time.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/1QdlbXwJRXYY6leF-ULTE8ahNmTYEgezebSqVDZqI2DLGSkRCCcvcUtdkAhOj5mLB8C0AK_J=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>TBPN</b><span class="subs">(48.1K)</span></span><span class="dot">&middot;</span><span>43:42</span><span class="dot">&middot;</span><span>2026-02-03</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Dylan%20Patel%22">Dylan Patel<span class="chip-desc">Founder and CEO, SemiAnalysis</span></a> <a class="chip" href="index.html?q=%22John%20Coogan%22">John Coogan<span class="chip-desc">Host, TBPN</span></a> <a class="chip" href="index.html?q=%22Jordi%20Hays%22">Jordi Hays<span class="chip-desc">Host, TBPN</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;I think the big challenge is that chips are just really unreliable...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;I think the big challenge is that chips are just really…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR The primary bottleneck for AI infrastructure is rapidly shifting from energy supply to the limited capacity of leading-edge chip manufacturing (TSMC and memory), while AI hardware companies like Nvidia and Google are diversifying their chip offerings to meet the...</div>
+                    <div class="sum-preview" id="preview-3">The primary bottleneck for AI infrastructure is rapidly shifting from energy supply to the limited capacity of leading-edge chip manufacturing (TSMC and memory), while AI hardware companies like Nvidia and Google are diversifying their chip offerings to meet the...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong> The primary bottleneck for AI infrastructure is rapidly shifting from energy supply to the limited capacity of leading-edge chip manufacturing (TSMC and memory), while AI hardware companies like Nvidia and Google are diversifying their chip offerings to meet the fast-evolving, specialized demands of the AI market.</p>
 <h3>The Future of Data Centers: Space vs. Earthly Constraints</h3>
 <ul>
@@ -1666,7 +1698,7 @@ Thank you. This was really fun.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Senate Antitrust Subcommittee met to examine Netflix's proposed acquisition of Warner Bros.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR: The Senate Antitrust Subcommittee convened to scrutinize Netflix's proposed $83 billion acquisition of Warner Bros. Discovery, with senators raising significant concerns about market concentration, potential harm to consumers and creative labor, and ideological content...</div>
+                    <div class="sum-preview" id="preview-5">The Senate Antitrust Subcommittee convened to scrutinize Netflix's proposed $83 billion acquisition of Warner Bros. Discovery, with senators raising significant concerns about market concentration, potential harm to consumers and creative labor, and ideological content...</div>
                     <div class="sum-full" id="full-5"><h3>Executive Briefing: Senate Hearing on Netflix-Warner Bros. Discovery Merger</h3>
 <p><strong>TL;DR:</strong> The Senate Antitrust Subcommittee convened to scrutinize Netflix's proposed $83 billion acquisition of Warner Bros. Discovery, with senators raising significant concerns about market concentration, potential harm to consumers and creative labor, and ideological content bias, while company executives defended the deal as pro-consumer, pro-growth, and beneficial for the American entertainment industry.</p>
 <h3>1. Overview of Proposed Merger &amp; Antitrust Scrutiny</h3>
@@ -2147,7 +2179,7 @@ The Chairman then light-heartedly noted that Netflix isn't in poetry yet, but &q
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signed the Consolidated Appropriations Act to immediately reopen the federal government and fund operations through the fiscal year, highlighting its role in cutting wasteful spending, bolstering national security, and implementing fiscally conservative reforms.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR President Trump signed the Consolidated Appropriations Act to immediately reopen the federal government and fund operations through the fiscal year, highlighting its role in cutting wasteful spending, bolstering national security, and implementing fiscally conservative...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>President Trump signed the Consolidated Appropriations Act to immediately reopen the federal government and fund operations through the fiscal year, highlighting its role in cutting wasteful spending, bolstering national security, and implementing fiscally conservative reforms.</p>
 <h3>Bill Signing and Key Contributors</h3>
@@ -2372,7 +2404,7 @@ Reagan plus. Yes. Well, whatever. Thank you very much. Thank you. Thank you ever
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/zbPzRWTIiIg_sNPoAgBf4COWvAoac3vgbiTEu1dfpqH3YPDNvnxMjDtAGftuw5EPx8wfSjMzr2I=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Wall Street Journal</b><span class="subs">(6.5M)</span></span><span class="dot">&middot;</span><span>33:08</span><span class="dot">&middot;</span><span>27.6K views</span><span class="dot">&middot;</span><span>2026-02-03</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Ken%20Griffin%22">Ken Griffin<span class="chip-desc">CEO, Citadel</span></a> <a class="chip" href="index.html?q=%22Emma%20Tucker%22">Emma Tucker<span class="chip-desc">Editor-in-Chief, The Wall Street Journal</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;If you're in your 20s, even though the equity markets is somewhat frothy right now, you're still going to be investing the preponderance of that money in in equity markets around the world.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;If you're in your 20s, even though the equity markets is somewhat frothy right now, you're still going to be investing the preponderance of that money in in equity markets around the world.</span></div>
                 <div class="vc-body">
                     <div class="sum-preview" id="preview-7">Executive Briefing: Ken Griffin at WSJ Invest Live TL;DR Citadel CEO Ken Griffin outlined his concerns over US fiscal policy, government overreach in business, and eroding public ethics, while defending the dollar's long-term strength and explaining Citadel's strategic shift to...</div>
                     <div class="sum-full" id="full-7"><p><strong>Executive Briefing: Ken Griffin at WSJ Invest Live</strong></p>
@@ -2640,7 +2672,7 @@ Thank you. That was great.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/zbPzRWTIiIg_sNPoAgBf4COWvAoac3vgbiTEu1dfpqH3YPDNvnxMjDtAGftuw5EPx8wfSjMzr2I=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Wall Street Journal</b><span class="subs">(6.5M)</span></span><span class="dot">&middot;</span><span>18:40</span><span class="dot">&middot;</span><span>8.4K views</span><span class="dot">&middot;</span><span>2026-02-03</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Nelson%20Peltz%22">Nelson Peltz<span class="chip-desc">CEO, Trian Fund Management</span></a> <a class="chip" href="index.html?q=%22Lauren%20Thomas%22">Lauren Thomas<span class="chip-desc">Reporter, The Wall Street Journal</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;I don't like the word activism.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;I don't like the word activism.</span></div>
                 <div class="vc-body">
                     <div class="sum-preview" id="preview-8">Here is an executive briefing summarizing Nelson Peltz's discussion at WSJ Invest Live: TL;DR: Nelson Peltz, CEO of Trian Fund Management, discussed Trian's evolution from &quot;activism&quot; to &quot;constructivism,&quot; emphasizing a strategic shift towards whole company acquisitions,...</div>
                     <div class="sum-full" id="full-8"><p>Here is an executive briefing summarizing Nelson Peltz's discussion at WSJ Invest Live:</p>
@@ -2782,7 +2814,7 @@ That will be interesting to watch. We're running out of time. One more thing I'd
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Pace, led by CEO Jamie Cuffe, is disrupting the $400 billion BPO market, starting with insurance, by replacing traditional human outsourcing with AI agents that handle end-to-end mission-critical processes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Pace, led by CEO Jamie Cuffe, is disrupting the $400 billion BPO market, starting with insurance, by replacing traditional human outsourcing with AI agents that handle end-to-end mission-critical processes. Through a strategy of deep customer partnership, forward-deployed...</div>
+                    <div class="sum-preview" id="preview-9">Through a strategy of deep customer partnership, forward-deployed...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Pace, led by CEO Jamie Cuffe, is disrupting the $400 billion BPO market, starting with insurance, by replacing traditional human outsourcing with AI agents that handle end-to-end mission-critical processes. Through a strategy of deep customer partnership, forward-deployed engineering, and a focus on transforming industry economics, Pace achieves 50-75% cost savings and significantly higher accuracy for its clients.</p>
 <h3>Pace's Vision: Transforming the Services Market with AI</h3>

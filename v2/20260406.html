@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Y Combinator</b><span class="subs">(2.2M)</span></span><span class="dot">&middot;</span><span>20:50</span><span class="dot">&middot;</span><span>8.0K views</span><span class="dot">&middot;</span><span>2026-04-06</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jared%20Friedman%22">Jared Friedman<span class="chip-desc">Partner, Y Combinator</span></a> <a class="chip" href="index.html?q=%22David%20Tsao%22">David Tsao<span class="chip-desc">Co-founder, BillionToOne</span></a> <a class="chip" href="index.html?q=%22Oguzhan%20Atay%22">Oguzhan Atay<span class="chip-desc">Co-founder &amp; CEO, BillionToOne</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;We have realized that DNA that is coming from the fetus and the tumor is both very dilute and rare...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;We have realized that DNA that is coming from the fetus and the tumor is both very dilute and…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR: BillionToOne has scaled from a Y Combinator startup to a $4B molecular diagnostics leader by developing a unique &quot;molecular counting&quot; technology that filters noise from DNA samples, enabling highly accurate prenatal screening and the future of early-stage cancer...</div>
+                    <div class="sum-preview" id="preview-0">BillionToOne has scaled from a Y Combinator startup to a $4B molecular diagnostics leader by developing a unique &quot;molecular counting&quot; technology that filters noise from DNA samples, enabling highly accurate prenatal screening and the future of early-stage cancer...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR:</strong> BillionToOne has scaled from a Y Combinator startup to a $4B molecular diagnostics leader by developing a unique "molecular counting" technology that filters noise from DNA samples, enabling highly accurate prenatal screening and the future of early-stage cancer detection.</p>
 <h3>The Core Innovation: Solving the "Needle in a Haystack"</h3>
 <ul>
@@ -894,7 +926,7 @@ So we make it very clear to, you know, everyone that, you know, it is probably g
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Cisco CEO Chuck Robbins asserts that the company is pivoting to meet &quot;insatiable&quot; AI demand through custom silicon and integrated security, while predicting that data centers will eventually move into space to bypass terrestrial power and political constraints.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Cisco CEO Chuck Robbins asserts that the company is pivoting to meet &quot;insatiable&quot; AI demand through custom silicon and integrated security, while predicting that data centers will eventually move into space to bypass terrestrial power and political constraints.  Data...</div>
+                    <div class="sum-preview" id="preview-1">Data...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Cisco CEO Chuck Robbins asserts that the company is pivoting to meet "insatiable" AI demand through custom silicon and integrated security, while predicting that data centers will eventually move into space to bypass terrestrial power and political constraints.</p>
 <h3>The Future of Infrastructure: Space and Power</h3>
@@ -1328,7 +1360,7 @@ You can email us at decoder@theverge.com. We really do read all the emails. Or y
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former Commerce Secretary Gina Raimondo argues that the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Former Commerce Secretary Gina Raimondo argues that the U.S. must prioritize bipartisan industrial policy and international alliances to win the AI and semiconductor race against China, warning that failing to create a &quot;transition system&quot; for displaced workers could lead...</div>
+                    <div class="sum-preview" id="preview-2">must prioritize bipartisan industrial policy and international alliances to win the AI and semiconductor race against China, warning that failing to create a &quot;transition system&quot; for displaced workers could lead...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Former Commerce Secretary Gina Raimondo argues that the U.S. must prioritize bipartisan industrial policy and international alliances to win the AI and semiconductor race against China, warning that failing to create a "transition system" for displaced workers could lead to mass unemployment and the collapse of democratic stability.</p>
 <h3>The Fraying U.S.-Europe Alliance</h3>
@@ -1634,7 +1666,7 @@ And if you enjoy Odd Lots, if you like it when we do these live events, then ple
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Applied Intuition is a $15B &quot;physical AI&quot; powerhouse that has scaled to nearly 20 global sites while preserving almost $1B in raised capital, prioritizing &quot;radical pragmatism&quot; and industrial execution over the typical Silicon Valley &quot;hobbyist&quot; culture.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Applied Intuition is a $15B &quot;physical AI&quot; powerhouse that has scaled to nearly 20 global sites while preserving almost $1B in raised capital, prioritizing &quot;radical pragmatism&quot; and industrial execution over the typical Silicon Valley &quot;hobbyist&quot; culture.  Capital Efficiency:...</div>
+                    <div class="sum-preview" id="preview-3">Capital Efficiency:...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Applied Intuition is a $15B "physical AI" powerhouse that has scaled to nearly 20 global sites while preserving almost $1B in raised capital, prioritizing "radical pragmatism" and industrial execution over the typical Silicon Valley "hobbyist" culture.</p>
 <h3>Strategic Capital &amp; Market Positioning</h3>
@@ -1876,7 +1908,7 @@ Hey, it's Molly. If you enjoyed our interviews, check out our newsletter sourcer
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bill Dally (Chief Scientist and SVP of Research) oversees a 500-person organization divided into &quot;Supply&quot; (architecture/circuits) and &quot;Demand&quot; (creating markets like autonomous vehicles and quantum computing).</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR: NVIDIA Research is pivoting toward architectural breakthroughs to achieve 10,000+ tokens-per-second inference, utilizing reinforcement learning during pre-training to overcome the global AI data shortage, and scaling general-purpose robotics through &quot;self-play&quot; and...</div>
+                    <div class="sum-preview" id="preview-4">NVIDIA Research is pivoting toward architectural breakthroughs to achieve 10,000+ tokens-per-second inference, utilizing reinforcement learning during pre-training to overcome the global AI data shortage, and scaling general-purpose robotics through &quot;self-play&quot; and...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR:</strong> NVIDIA Research is pivoting toward architectural breakthroughs to achieve 10,000+ tokens-per-second inference, utilizing reinforcement learning during pre-training to overcome the global AI data shortage, and scaling general-purpose robotics through "self-play" and synthetic data generation.</p>
 <h3>I. Strategic Impact: From GPU Supply to Market Demand</h3>
 <p>Bill Dally (Chief Scientist and SVP of Research) oversees a 500-person organization divided into "Supply" (architecture/circuits) and "Demand" (creating markets like autonomous vehicles and quantum computing).</p>
@@ -2239,7 +2271,7 @@ We've actually built agentic systems to do exploration where they'll basically s
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>While the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR While the U.S. economy demonstrates &quot;unforecastable resilience,&quot; the combination of opaque private credit markets, potential oil &quot;stock&quot; shocks, and political gridlock at the Federal Reserve creates a high-uncertainty environment that disproportionately threatens...</div>
+                    <div class="sum-preview" id="preview-5">economy demonstrates &quot;unforecastable resilience,&quot; the combination of opaque private credit markets, potential oil &quot;stock&quot; shocks, and political gridlock at the Federal Reserve creates a high-uncertainty environment that disproportionately threatens...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>While the U.S. economy demonstrates "unforecastable resilience," the combination of opaque private credit markets, potential oil "stock" shocks, and political gridlock at the Federal Reserve creates a high-uncertainty environment that disproportionately threatens lower-income consumers.</p>
 <h3>U.S. Economic Resilience and Oil Scenarios</h3>
@@ -2564,9 +2596,9 @@ The last point that Steve brought up with respect to the K-shaped economy is tha
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mEiSBOHT3zUGET-fXEAILCjadkWuffrvrqo9oSfcPO-ss=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Axios</b><span class="subs">(83.1K)</span></span><span class="dot">&middot;</span><span>22:04</span><span class="dot">&middot;</span><span>51.3K views</span><span class="dot">&middot;</span><span>2026-04-06</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Mike%20Allen%22">Mike Allen<span class="chip-desc">Co-founder, Axios</span></a> <a class="chip" href="index.html?q=%22Sam%20Altman%22">Sam Altman<span class="chip-desc">CEO, OpenAI</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The next generation of models will be a very significant step forward...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The next generation of models will be a very significant step…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR: OpenAI CEO Sam Altman warns that the next generation of AI models will represent a &quot;significant step forward,&quot; potentially enabling career-defining scientific discoveries while simultaneously creating urgent, &quot;world-shaking&quot; cybersecurity and biosecurity risks that...</div>
+                    <div class="sum-preview" id="preview-6">OpenAI CEO Sam Altman warns that the next generation of AI models will represent a &quot;significant step forward,&quot; potentially enabling career-defining scientific discoveries while simultaneously creating urgent, &quot;world-shaking&quot; cybersecurity and biosecurity risks that...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR:</strong> OpenAI CEO Sam Altman warns that the next generation of AI models will represent a "significant step forward," potentially enabling career-defining scientific discoveries while simultaneously creating urgent, "world-shaking" cybersecurity and biosecurity risks that Washington is currently unprepared to manage.</p>
 <h3>The Imminent Leap in Capability</h3>
 <ul>
@@ -2830,7 +2862,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Personal AI agents and &quot;vibe coding&quot; are shifting the software landscape from execution-heavy manual tasks toward high-leverage thinking, enabling radically smaller teams and the potential displacement of task-oriented SaaS apps.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Personal AI agents and &quot;vibe coding&quot; are shifting the software landscape from execution-heavy manual tasks toward high-leverage thinking, enabling radically smaller teams and the potential displacement of task-oriented SaaS apps.  The &quot;Zoe&quot; Experience: Peter Yang (Product...</div>
+                    <div class="sum-preview" id="preview-7">The &quot;Zoe&quot; Experience: Peter Yang (Product...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Personal AI agents and "vibe coding" are shifting the software landscape from execution-heavy manual tasks toward high-leverage thinking, enabling radically smaller teams and the potential displacement of task-oriented SaaS apps.</p>
 <h3>The Evolution of the Personal Agent (OpenClaw)</h3>
@@ -3134,7 +3166,7 @@ Cool. Well awesome man, maybe that's a good positive note to end on. Yeah. Was g
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Tesla, SpaceX, and xAI are launching &quot;Terafab,&quot; an unprecedented vertically integrated chip-manufacturing initiative designed to scale AI compute to a terawatt level and eventually move the majority of processing into space to overcome terrestrial power constraints.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Tesla, SpaceX, and xAI are launching &quot;Terafab,&quot; an unprecedented vertically integrated chip-manufacturing initiative designed to scale AI compute to a terawatt level and eventually move the majority of processing into space to overcome terrestrial power constraints.    The...</div>
+                    <div class="sum-preview" id="preview-8">The...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Tesla, SpaceX, and xAI are launching "Terafab," an unprecedented vertically integrated chip-manufacturing initiative designed to scale AI compute to a terawatt level and eventually move the majority of processing into space to overcome terrestrial power constraints.</p>
 <h3>The Terafab Initiative: Vertical Integration &amp; Rapid Iteration</h3>
@@ -3346,7 +3378,7 @@ So join us on this journey and help us design incredible chips and make incredib
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The United States has lost its &quot;Arsenal of Democracy&quot; edge, facing a massive production gap with China that threatens global deterrence.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR The United States has lost its &quot;Arsenal of Democracy&quot; edge, facing a massive production gap with China that threatens global deterrence. Regaining military primacy requires a shift from legacy &quot;cost-plus&quot; bureaucratic models to a &quot;neo-prime&quot; approach—defined by private R&amp;D...</div>
+                    <div class="sum-preview" id="preview-9">Regaining military primacy requires a shift from legacy &quot;cost-plus&quot; bureaucratic models to a &quot;neo-prime&quot; approach—defined by private R&amp;D...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>The United States has lost its "Arsenal of Democracy" edge, facing a massive production gap with China that threatens global deterrence. Regaining military primacy requires a shift from legacy "cost-plus" bureaucratic models to a "neo-prime" approach—defined by private R&amp;D investment, modular software-driven manufacturing, and autonomous, low-cost mass systems.</p>
 <h3>The Crisis of Modern Deterrence</h3>

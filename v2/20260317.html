@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Cisco is transitioning to an &quot;Agent Era&quot; where AI acts as an autonomous co-worker rather than just a tool, with plans to have 60–70% of its entire product portfolio written by AI by the end of 2027.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Cisco is transitioning to an &quot;Agent Era&quot; where AI acts as an autonomous co-worker rather than just a tool, with plans to have 60–70% of its entire product portfolio written by AI by the end of 2027. This shift demands a new focus on agent-specific security and a...</div>
+                    <div class="sum-preview" id="preview-0">This shift demands a new focus on agent-specific security and a...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Cisco is transitioning to an "Agent Era" where AI acts as an autonomous co-worker rather than just a tool, with plans to have 60–70% of its entire product portfolio written by AI by the end of 2027. This shift demands a new focus on agent-specific security and a heterogeneous infrastructure strategy that revitalizes the role of the CPU alongside GPUs.</p>
 <h3>The Evolution of AI-Generated Engineering</h3>
@@ -942,9 +974,9 @@ Thank you, thank you for having me. Let's do this again soon. I'd love to. Take 
                     <div class="vc-meta"><span class="pill"><b>The German Marshall Fund of the United States</b></span><span class="dot">&middot;</span><span>2026-03-17</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Da%20Wei%22">Da Wei<span class="chip-desc">Director, Center for International Strategy and Security, Tsinghua University</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;I think the if we are discussing the power, the hegemony, the leadership of the US, I think it's basically lies in the international institutions that US led after the World War II...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;I think the if we are discussing the power, the hegemony, the leadership of the US, I think it's basically lies in the international institutions that US led after the World War…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR: The upcoming March 31–April 2 summit between President Trump and Xi Jinping aims to stabilize a &quot;stable but distracted&quot; relationship through major trade purchases (soybeans, Boeing aircraft), though significant geopolitical breakthroughs on Taiwan or Iran are unlikely due...</div>
+                    <div class="sum-preview" id="preview-1">The upcoming March 31–April 2 summit between President Trump and Xi Jinping aims to stabilize a &quot;stable but distracted&quot; relationship through major trade purchases (soybeans, Boeing aircraft), though significant geopolitical breakthroughs on Taiwan or Iran are unlikely due...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR:</strong> The upcoming March 31–April 2 summit between President Trump and Xi Jinping aims to stabilize a "stable but distracted" relationship through major trade purchases (soybeans, Boeing aircraft), though significant geopolitical breakthroughs on Taiwan or Iran are unlikely due to late planning and misaligned strategic goals.</p>
 <h3>Strategic Climate and Economic Leverage</h3>
 <ul>
@@ -1199,7 +1231,7 @@ Particularly after the summit, the two presidents could instruct the two militar
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Kalshi is the first federally regulated prediction market in the US, achieving 11x volume growth in six months ($10.4B in February 2024) after successfully suing its own regulator, the CFTC, to permit election markets.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Kalshi is the first federally regulated prediction market in the US, achieving 11x volume growth in six months ($10.4B in February 2024) after successfully suing its own regulator, the CFTC, to permit election markets. By leveraging a decentralized network of...</div>
+                    <div class="sum-preview" id="preview-2">By leveraging a decentralized network of...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Kalshi is the first federally regulated prediction market in the US, achieving 11x volume growth in six months ($10.4B in February 2024) after successfully suing its own regulator, the CFTC, to permit election markets. By leveraging a decentralized network of "super-forecasters" rather than traditional institutions, Kalshi is evolving from a binary "yes/no" platform into a full-scale financial exchange for non-traditional commodities like GPU compute and weather events.</p>
 <h3>Regulatory Strategy and the CFTC Lawsuit</h3>
@@ -1695,7 +1727,7 @@ But there's tens of thousands of these people that know a bunch about a bunch of
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Starcloud is migrating AI compute to space to bypass terrestrial energy and land constraints, leveraging plummeting launch costs and superior solar efficiency to make space-based data centers the primary infrastructure for AI inference within the next decade.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Starcloud is migrating AI compute to space to bypass terrestrial energy and land constraints, leveraging plummeting launch costs and superior solar efficiency to make space-based data centers the primary infrastructure for AI inference within the next decade.   ...</div>
+                    <div class="sum-preview" id="preview-3"></div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Starcloud is migrating AI compute to space to bypass terrestrial energy and land constraints, leveraging plummeting launch costs and superior solar efficiency to make space-based data centers the primary infrastructure for AI inference within the next decade.</p>
 <h3>The Economic and Logistical Case for Space</h3>
@@ -2035,7 +2067,7 @@ That graph is not stopping until it gets to 99.9 percent. Awesome. This was so c
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Jenny Johnson, CEO of Franklin Templeton, is transforming the $1.7 trillion investment giant by blending a multigenerational legacy of long-term stewardship with aggressive &quot;native&quot; adoption of blockchain and AI.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Jenny Johnson, CEO of Franklin Templeton, is transforming the $1.7 trillion investment giant by blending a multigenerational legacy of long-term stewardship with aggressive &quot;native&quot; adoption of blockchain and AI. She emphasizes a leadership philosophy of &quot;people, passion,...</div>
+                    <div class="sum-preview" id="preview-4">She emphasizes a leadership philosophy of &quot;people, passion,...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Jenny Johnson, CEO of Franklin Templeton, is transforming the $1.7 trillion investment giant by blending a multigenerational legacy of long-term stewardship with aggressive "native" adoption of blockchain and AI. She emphasizes a leadership philosophy of "people, passion, purpose, and persistence" to navigate market volatility and technological disruption.</p>
 <h3>Leadership and Family Legacy</h3>
@@ -2325,7 +2357,7 @@ One more thing before we go. We hope you'll join us at our upcoming Changemakers
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>William Hockey, founder of Column and co-founder of Plaid, argues that the modern venture capital model encourages &quot;safe&quot; entrepreneurship and consensus-driven thinking.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR William Hockey, founder of Column and co-founder of Plaid, argues that the modern venture capital model encourages &quot;safe&quot; entrepreneurship and consensus-driven thinking. By self-funding a nationally chartered bank and focusing on the &quot;boring&quot; infrastructure of the global...</div>
+                    <div class="sum-preview" id="preview-5">By self-funding a nationally chartered bank and focusing on the &quot;boring&quot; infrastructure of the global...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>William Hockey, founder of Column and co-founder of Plaid, argues that the modern venture capital model encourages "safe" entrepreneurship and consensus-driven thinking. By self-funding a nationally chartered bank and focusing on the "boring" infrastructure of the global US dollar, Hockey advocates for a high-risk, high-conviction model of specialist building that prioritizes long-term profitability and national security interests over the "VC hamster wheel."</p>
 <h3>Rejecting the "VC Hamster Wheel"</h3>
@@ -2875,7 +2907,7 @@ Second, it understands your workflows, how work really happens across a deal or 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and Vice President JD Vance detailed the near-total decimation of Iran’s military and leadership following targeted strikes, while concurrently launching a massive domestic &quot;fraud task force&quot; to recoup billions in misappropriated funds from U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR President Trump and Vice President JD Vance detailed the near-total decimation of Iran’s military and leadership following targeted strikes, while concurrently launching a massive domestic &quot;fraud task force&quot; to recoup billions in misappropriated funds from U.S. cities.   ...</div>
+                    <div class="sum-preview" id="preview-6">cities.   ...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>President Trump and Vice President JD Vance detailed the near-total decimation of Iran’s military and leadership following targeted strikes, while concurrently launching a massive domestic "fraud task force" to recoup billions in misappropriated funds from U.S. cities.</p>
 <h3>Military Strategy and the Iranian Conflict</h3>
@@ -3269,9 +3301,9 @@ The Democrats don't want to pay. These are bad people, these are not people that
                     <div class="vc-meta"><span class="pill"><b>Anthony Scaramucci</b></span><span class="dot">&middot;</span><span>2026-03-17</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Bill%20Gurley%22">Bill Gurley<span class="chip-desc">General Partner, Benchmark</span></a> <a class="chip" href="index.html?q=%22Anthony%20Scaramucci%22">Anthony Scaramucci<span class="chip-desc">Founder and Managing Partner, SkyBridge Capital</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The thing you never tried is the thing that eats at you as you get older.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The thing you never tried is the thing that eats at you as you get older.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR: True career security in the age of AI comes from pursuing deep &quot;fascination&quot; rather than traditional safety, as obsessive curiosity fuels the continuous learning and high energy required to reach the top 1% of any field.  Regrets of Inaction: Citing Daniel Pink’s...</div>
+                    <div class="sum-preview" id="preview-7">True career security in the age of AI comes from pursuing deep &quot;fascination&quot; rather than traditional safety, as obsessive curiosity fuels the continuous learning and high energy required to reach the top 1% of any field.  Regrets of Inaction: Citing Daniel Pink’s...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR:</strong> True career security in the age of AI comes from pursuing deep "fascination" rather than traditional safety, as obsessive curiosity fuels the continuous learning and high energy required to reach the top 1% of any field.</p>
 <h3>The Psychology of Career Regret</h3>
 <ul>
@@ -3557,7 +3589,7 @@ Well listen, I really appreciate you and thank you so much for coming on. The ti
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>David Ulevitch, head of Andreessen Horowitz’s $1.776 billion &quot;American Dynamism&quot; fund, details a strategic shift in Silicon Valley toward &quot;heavy&quot; industries—defense, energy, and manufacturing—where advanced software can disrupt legacy government contractors.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR David Ulevitch, head of Andreessen Horowitz’s $1.776 billion &quot;American Dynamism&quot; fund, details a strategic shift in Silicon Valley toward &quot;heavy&quot; industries—defense, energy, and manufacturing—where advanced software can disrupt legacy government contractors. The core...</div>
+                    <div class="sum-preview" id="preview-8">The core...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>David Ulevitch, head of Andreessen Horowitz’s $1.776 billion "American Dynamism" fund, details a strategic shift in Silicon Valley toward "heavy" industries—defense, energy, and manufacturing—where advanced software can disrupt legacy government contractors. The core thesis posits that private venture capital can solve national security and infrastructure challenges more efficiently than traditional government-funded R&amp;D by applying Silicon Valley’s high-speed, high-automation "bits meet atoms" approach.</p>
 <h3>The "American Dynamism" Investment Thesis</h3>
@@ -3945,9 +3977,9 @@ Our engineer is Bob Mallory. Our theme music is by Steve Bone. If you like Compo
                     <div class="vc-meta"><span class="pill"><b>All-In Podcast</b></span><span class="dot">&middot;</span><span>2026-03-17</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Travis%20Kalanick%22">Travis Kalanick<span class="chip-desc">Founder and CEO, Atoms</span></a> <a class="chip" href="index.html?q=%22Michael%20Dell%22">Michael Dell<span class="chip-desc">CEO, Dell Technologies</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; **Travis Kalanick:** &quot;Truth and justice are the immune system for society.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>**Travis Kalanick:** &quot;Truth and justice are the immune system for society.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR: Travis Kalanick officially exits stealth mode with &quot;Atoms,&quot; a company focused on automating the physical world across food, mining, and robotics, while Michael Dell details Dell Technologies' $50B pivot toward AI infrastructure and a landmark $6.25B gift to seed...</div>
+                    <div class="sum-preview" id="preview-9">Travis Kalanick officially exits stealth mode with &quot;Atoms,&quot; a company focused on automating the physical world across food, mining, and robotics, while Michael Dell details Dell Technologies' $50B pivot toward AI infrastructure and a landmark $6.25B gift to seed...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR:</strong> Travis Kalanick officially exits stealth mode with "Atoms," a company focused on automating the physical world across food, mining, and robotics, while Michael Dell details Dell Technologies' $50B pivot toward AI infrastructure and a landmark $6.25B gift to seed investment accounts for 25 million American children.</p>
 <h3>Travis Kalanick: Exiting Stealth with "Atoms"</h3>
 <ul>
@@ -4401,7 +4433,7 @@ And of course finally I'm just going to say, you know, Brad also adopted his hom
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump is pushing for a &quot;coalition of the willing&quot; to secure the Strait of Hormuz amid escalating Iran tensions, while the financial sector prepares for the &quot;Super Bowl&quot; of regulation with the formal Basel III Endgame proposal this Thursday.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR President Trump is pushing for a &quot;coalition of the willing&quot; to secure the Strait of Hormuz amid escalating Iran tensions, while the financial sector prepares for the &quot;Super Bowl&quot; of regulation with the formal Basel III Endgame proposal this Thursday.    Strait of Hormuz...</div>
+                    <div class="sum-preview" id="preview-10">Strait of Hormuz...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>President Trump is pushing for a "coalition of the willing" to secure the Strait of Hormuz amid escalating Iran tensions, while the financial sector prepares for the "Super Bowl" of regulation with the formal Basel III Endgame proposal this Thursday.</p>
 <h3>Geopolitics and the Iran Conflict</h3>
@@ -4593,9 +4625,9 @@ Our thanks to Nathan Dean, Bloomberg Intelligence senior policy analyst, bringin
                     <div class="vc-meta"><span class="pill"><b>a16z</b></span><span class="dot">&middot;</span><span>2026-03-17</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Vishal%20Misra%22">Vishal Misra<span class="chip-desc">Professor, Columbia University</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Anthropic makes great products...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Anthropic makes great…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR: While LLMs are mathematically precise Bayesian inference engines, they are limited by their inability to learn continuously (plasticity) and their reliance on correlation over causation; true AGI requires a shift from pattern matching (Shannon entropy) to causal...</div>
+                    <div class="sum-preview" id="preview-11">While LLMs are mathematically precise Bayesian inference engines, they are limited by their inability to learn continuously (plasticity) and their reliance on correlation over causation; true AGI requires a shift from pattern matching (Shannon entropy) to causal...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR:</strong> While LLMs are mathematically precise Bayesian inference engines, they are limited by their inability to learn continuously (plasticity) and their reliance on correlation over causation; true AGI requires a shift from pattern matching (Shannon entropy) to causal simulation (Kolmogorov complexity).</p>
 <h3>The LLM as a "Giant Matrix"</h3>
 <ul>

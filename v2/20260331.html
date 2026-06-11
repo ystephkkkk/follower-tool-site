@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Error generating summary: 503 UNAVAILABLE.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">Error generating summary: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}</div>
+                    <div class="sum-preview" id="preview-0">{'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}</div>
                     <div class="sum-full" id="full-0"><p>Error generating summary: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}</p></div>
                     <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -763,7 +795,7 @@ I would defer to the negotiating team there. They're the ones talking to them, b
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vanta has scaled to over 15,000 customers by reframing compliance as a &quot;painkiller&quot; rather than a &quot;vitamin,&quot; leveraging a real-time &quot;unit test&quot; model for security and now deploying AI to automate over 90% of security questionnaires.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR  Vanta has scaled to over 15,000 customers by reframing compliance as a &quot;painkiller&quot; rather than a &quot;vitamin,&quot; leveraging a real-time &quot;unit test&quot; model for security and now deploying AI to automate over 90% of security questionnaires.    The Buying Moment: Christina...</div>
+                    <div class="sum-preview" id="preview-1">The Buying Moment: Christina...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Vanta has scaled to over 15,000 customers by reframing compliance as a "painkiller" rather than a "vitamin," leveraging a real-time "unit test" model for security and now deploying AI to automate over 90% of security questionnaires.</p>
 <h3>The Strategy: Compliance as a "Painkiller"</h3>
@@ -1243,9 +1275,9 @@ Exciting. Well, Christina, thank you. Thank you.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.4M)</span></span><span class="dot">&middot;</span><span>36:29</span><span class="dot">&middot;</span><span>31.6K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of Defense</span></a> <a class="chip" href="index.html?q=%22Dan%20Caine%22">Dan Caine<span class="chip-desc">Chairman of the Joint Chiefs of Staff</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;What I witnessed was motivation.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;What I witnessed was motivation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR: One month into Operation Epic Fury, the U.S. has struck 11,000 targets and effectively neutralized the Iranian Navy to compel a peace deal; the Pentagon reports high troop morale and a shift toward &quot;dynamic&quot; strikes as Iran’s command structure and industrial base...</div>
+                    <div class="sum-preview" id="preview-2">One month into Operation Epic Fury, the U.S. has struck 11,000 targets and effectively neutralized the Iranian Navy to compel a peace deal; the Pentagon reports high troop morale and a shift toward &quot;dynamic&quot; strikes as Iran’s command structure and industrial base...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR:</strong> One month into Operation Epic Fury, the U.S. has struck 11,000 targets and effectively neutralized the Iranian Navy to compel a peace deal; the Pentagon reports high troop morale and a shift toward "dynamic" strikes as Iran’s command structure and industrial base collapse.</p>
 <h3>Operational Progress and Tactical Evolution</h3>
 <ul>
@@ -1512,7 +1544,7 @@ I would defer to the negotiating team there. They're the ones talking to him, bu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>One month into Operation Epic Fury, U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets, severely degrading Iran’s military morale and industrial capacity while the administration pursues a diplomatic deal backed by &quot;wartime speed&quot; kinetic pressure.  Targeting Success: The joint...</div>
+                    <div class="sum-preview" id="preview-3">forces have struck over 11,000 targets, severely degrading Iran’s military morale and industrial capacity while the administration pursues a diplomatic deal backed by &quot;wartime speed&quot; kinetic pressure.  Targeting Success: The joint...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets, severely degrading Iran’s military morale and industrial capacity while the administration pursues a diplomatic deal backed by "wartime speed" kinetic pressure.</p>
 <h3>Operational Milestones and Strategic Impact</h3>
@@ -1740,9 +1772,9 @@ I would defer to the negotiating team there. They're the ones talking to them bu
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/0f2SJ-DChszzQtUjnQ_Y6uVTv9g7kiCpU0cBSHjO7X2h8XyjdjCaRrkBtpoCQxXUj2WUoAsLHwI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The National Desk</b><span class="subs">(744.0K)</span></span><span class="dot">&middot;</span><span>35:44</span><span class="dot">&middot;</span><span>4.9K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of Defense</span></a> <a class="chip" href="index.html?q=%22Dan%20Caine%22">Dan Caine<span class="chip-desc">Chairman of the Joint Chiefs of Staff</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;What those Americans said to me, young and old...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;What those Americans said to me, young and…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR: One month into &quot;Operation Epic Fury,&quot; the U.S. has achieved air superiority and struck over 11,000 targets, significantly degrading Iran’s military-industrial base and naval power. While the Trump administration remains open to a diplomatic deal with the current Iranian...</div>
+                    <div class="sum-preview" id="preview-4">One month into &quot;Operation Epic Fury,&quot; the U.S. has achieved air superiority and struck over 11,000 targets, significantly degrading Iran’s military-industrial base and naval power. While the Trump administration remains open to a diplomatic deal with the current Iranian...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR:</strong> One month into "Operation Epic Fury," the U.S. has achieved air superiority and struck over 11,000 targets, significantly degrading Iran’s military-industrial base and naval power. While the Trump administration remains open to a diplomatic deal with the current Iranian regime, the military is maintaining "wartime speed" to ensure Iran never acquires nuclear weapons.</p>
 <h3>Operational Status and Tactical Dominance</h3>
 <ul>
@@ -2072,7 +2104,7 @@ I would defer to the negotiating team. They're the ones talking to them, but the
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has entered a decisive phase, with U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Operation Epic Fury has entered a decisive phase, with U.S. forces striking over 11,000 targets in 30 days and severely degrading Iranian naval and missile capabilities to force a diplomatic resolution that ensures Iran never obtains a nuclear weapon.  High-Tempo Strike...</div>
+                    <div class="sum-preview" id="preview-5">forces striking over 11,000 targets in 30 days and severely degrading Iranian naval and missile capabilities to force a diplomatic resolution that ensures Iran never obtains a nuclear weapon.  High-Tempo Strike...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has entered a decisive phase, with U.S. forces striking over 11,000 targets in 30 days and severely degrading Iranian naval and missile capabilities to force a diplomatic resolution that ensures Iran never obtains a nuclear weapon.</p>
 <h3>Current Operational Status: "Wartime Speed"</h3>
@@ -2382,7 +2414,7 @@ Ambos líderes reafirmaron el compromiso con los objetivos militares y la posibi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The United States must commit to a decade-long industrial policy and technologist-led leadership to reclaim semiconductor dominance, mitigate extreme supply chain dependencies on Taiwan, and ensure AI is developed with human-centric values.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR The United States must commit to a decade-long industrial policy and technologist-led leadership to reclaim semiconductor dominance, mitigate extreme supply chain dependencies on Taiwan, and ensure AI is developed with human-centric values.  The 30-Year Decline: The U.S....</div>
+                    <div class="sum-preview" id="preview-6">The 30-Year Decline: The U.S....</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>The United States must commit to a decade-long industrial policy and technologist-led leadership to reclaim semiconductor dominance, mitigate extreme supply chain dependencies on Taiwan, and ensure AI is developed with human-centric values.</p>
 <h3>The State of U.S. Semiconductor Manufacturing</h3>
@@ -2893,7 +2925,7 @@ The blog is about non-obvious idea sharing on business, talent, data, longevity,
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI factories represent a fundamental shift from data storage to revenue-generating production centers, necessitating a synergy between high-performance computing (NVIDIA DGX/Blackwell) and globally distributed, secure physical infrastructure (Equinix).</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR AI factories represent a fundamental shift from data storage to revenue-generating production centers, necessitating a synergy between high-performance computing (NVIDIA DGX/Blackwell) and globally distributed, secure physical infrastructure (Equinix).  From Retrieval to...</div>
+                    <div class="sum-preview" id="preview-7">).  From Retrieval to...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>AI factories represent a fundamental shift from data storage to revenue-generating production centers, necessitating a synergy between high-performance computing (NVIDIA DGX/Blackwell) and globally distributed, secure physical infrastructure (Equinix).</p>
 <h3>The Evolution of the AI Factory</h3>
@@ -3121,9 +3153,9 @@ Let's start with you, D.D. Can you tell me about what you've been doing at Equin
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/JjZloYXFSe1eiA6p5qFsLV7jS7Z-3q8lQX7hxRzt2rwo_QwUEJPaFiAXZ9qcMWG288a3V4Gw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Pepperdine School of Public Policy</b><span class="subs">(24.4K)</span></span><span class="dot">&middot;</span><span>27:41</span><span class="dot">&middot;</span><span>4 views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Grace%20Olmstead%22">Grace Olmstead<span class="chip-desc">Author and Journalist</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Less than 1% of the United States population is still on a farm...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Less than 1% of the United States population is still on a…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR: Author Grace Olmstead discusses the profound human need for &quot;rootedness&quot; and the social costs of mobility, arguing that addressing modern loneliness requires individuals to embrace a sense of &quot;indebtedness&quot; to their home communities.  Agriculture as Identity: Grace...</div>
+                    <div class="sum-preview" id="preview-8">Author Grace Olmstead discusses the profound human need for &quot;rootedness&quot; and the social costs of mobility, arguing that addressing modern loneliness requires individuals to embrace a sense of &quot;indebtedness&quot; to their home communities.  Agriculture as Identity: Grace...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong>: Author Grace Olmstead discusses the profound human need for "rootedness" and the social costs of mobility, arguing that addressing modern loneliness requires individuals to embrace a sense of "indebtedness" to their home communities.</p>
 <h3>The Motivation Behind *Uprooted*</h3>
 <ul>
@@ -3324,9 +3356,9 @@ And I think we are, and maybe it was exacerbated by COVID, a lot of other things
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nuEbAa4HkVFvQ748cHlcGaTKy3vNJi-zaq6rOM1-YkENU=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Vanity Fair España</b><span class="subs">(76.6K)</span></span><span class="dot">&middot;</span><span>84:14</span><span class="dot">&middot;</span><span>0 views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jordi%20P%C3%A9rez%20Colom%C3%A9%22">Jordi Pérez Colomé<span class="chip-desc">Periodista de tecnología, El País</span></a> <a class="chip" href="index.html?q=%22Mark%20Zuckerberg%22">Mark Zuckerberg<span class="chip-desc">Founder and CEO, Meta</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The narrative surrounding Mark Zuckerberg and Facebook has shifted from visionary utopianism to a &quot;Wall Street with hoodies&quot; reality, where the platform's role in political manipulation and subconscious data mining has turned its creator into a polar...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The narrative surrounding Mark Zuckerberg and Facebook has shifted from visionary utopianism to a &quot;Wall Street with hoodies&quot; reality, where the platform's role in political manipulation and subconscious data mining has turned its creator into a…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR The narrative surrounding Mark Zuckerberg and Facebook has shifted from visionary utopianism to a &quot;Wall Street with hoodies&quot; reality, where the platform's role in political manipulation and subconscious data mining has turned its creator into a polarizing,...</div>
+                    <div class="sum-preview" id="preview-9">polarizing,...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>The narrative surrounding Mark Zuckerberg and Facebook has shifted from visionary utopianism to a "Wall Street with hoodies" reality, where the platform's role in political manipulation and subconscious data mining has turned its creator into a polarizing, hyper-competitive figure under constant regulatory and social scrutiny.</p>
 <h3>The Transformation of Mark Zuckerberg and "Brotopia"</h3>
@@ -3758,9 +3790,9 @@ Pues con estas recomendaciones vamos cerrando. Me ha encantado charlar contigo, 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/uOxfdYTevjqB6SjPRXCyqNkkRswHYlqziocw1B4ShK1sXdht2i48JENHQefqS3S1zMydz8kYQw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Telegraph</b><span class="subs">(6.1M)</span></span><span class="dot">&middot;</span><span>36:14</span><span class="dot">&middot;</span><span>12.4K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of Defense</span></a> <a class="chip" href="index.html?q=%22Dan%20Caine%22">Dan Caine<span class="chip-desc">Chairman of the Joint Chiefs of Staff</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Our job is to ensure that we compel Iran to realize that this new regime...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Our job is to ensure that we compel Iran to realize that this new…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR (1-2 sentences): One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets, severely degrading Iran’s naval and missile capabilities. Defense leaders emphasize that while diplomatic negotiations are active, military pressure will intensify until Iran...</div>
+                    <div class="sum-preview" id="preview-10">(1-2 sentences): One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets, severely degrading Iran’s naval and missile capabilities. Defense leaders emphasize that while diplomatic negotiations are active, military pressure will intensify until Iran...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong> (1-2 sentences): One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets, severely degrading Iran’s naval and missile capabilities. Defense leaders emphasize that while diplomatic negotiations are active, military pressure will intensify until Iran renounces its nuclear ambitions and ensures safe passage in the Strait of Hormuz.</p>
 <h3>Operational Status and Tactical Achievements</h3>
 <ul>
@@ -4051,7 +4083,7 @@ All right, thank you very much, I appreciate it. Thank you. Thank you. Thank you
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has reached a decisive phase, having struck over 11,000 targets in 30 days and severely degrading Iranian morale and military infrastructure.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Operation Epic Fury has reached a decisive phase, having struck over 11,000 targets in 30 days and severely degrading Iranian morale and military infrastructure. The U.S. is utilizing high-tempo &quot;dynamic strikes&quot; and naval dominance to compel a nuclear deal, while...</div>
+                    <div class="sum-preview" id="preview-11">The U.S. is utilizing high-tempo &quot;dynamic strikes&quot; and naval dominance to compel a nuclear deal, while...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has reached a decisive phase, having struck over 11,000 targets in 30 days and severely degrading Iranian morale and military infrastructure. The U.S. is utilizing high-tempo "dynamic strikes" and naval dominance to compel a nuclear deal, while maintaining that all options—including ground forces—remain on the table.</p>
 <h3>Operational Progress and Tactical Lethality</h3>
@@ -4344,7 +4376,7 @@ I would defer to the negotiating team there. They're the ones talking to them bu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Federal Reserve Chair Jerome Powell highlighted that the US economy achieved a &quot;soft landing&quot; in late 2024, but warned that the Fed must remain highly vigilant against ongoing supply shocks, unsustainable national debt, and untested cybersecurity threats.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR  Federal Reserve Chair Jerome Powell highlighted that the US economy achieved a &quot;soft landing&quot; in late 2024, but warned that the Fed must remain highly vigilant against ongoing supply shocks, unsustainable national debt, and untested cybersecurity threats. While...</div>
+                    <div class="sum-preview" id="preview-12">While...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Federal Reserve Chair Jerome Powell highlighted that the US economy achieved a "soft landing" in late 2024, but warned that the Fed must remain highly vigilant against ongoing supply shocks, unsustainable national debt, and untested cybersecurity threats. While acknowledging a challenging near-term job market for new graduates, Powell expressed strong long-term optimism driven by US economic dynamism and the productivity benefits of artificial intelligence.</p>
 <h3>Monetary Policy, Inflation, and the "Soft Landing"</h3>
@@ -5287,7 +5319,7 @@ The other thing is, I'll just note that the Fed's not a perfect institution; don
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has successfully struck over 11,000 targets in 30 days, severely degrading Iran’s naval and missile capabilities while the administration leverages this military &quot;lethality&quot; to compel a diplomatic deal.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Operation Epic Fury has successfully struck over 11,000 targets in 30 days, severely degrading Iran’s naval and missile capabilities while the administration leverages this military &quot;lethality&quot; to compel a diplomatic deal. Leadership reports high troop morale and a...</div>
+                    <div class="sum-preview" id="preview-13">Leadership reports high troop morale and a...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has successfully struck over 11,000 targets in 30 days, severely degrading Iran’s naval and missile capabilities while the administration leverages this military "lethality" to compel a diplomatic deal. Leadership reports high troop morale and a "wartime speed" mentality focused on finishing the mission rather than managing long-term rotations.</p>
 <h3>Operational Progress and Tactical Shifts</h3>
@@ -5570,7 +5602,7 @@ I would defer to the negotiating team there. They're the ones talking to them, b
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has transitioned into a high-intensity phase of dynamic targeting, with over 11,000 Iranian targets struck in 30 days and the total degradation of the Iranian Navy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR Operation Epic Fury has transitioned into a high-intensity phase of dynamic targeting, with over 11,000 Iranian targets struck in 30 days and the total degradation of the Iranian Navy. The administration maintains that while a &quot;deal&quot; is possible with the new regime,...</div>
+                    <div class="sum-preview" id="preview-14">The administration maintains that while a &quot;deal&quot; is possible with the new regime,...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has transitioned into a high-intensity phase of dynamic targeting, with over 11,000 Iranian targets struck in 30 days and the total degradation of the Iranian Navy. The administration maintains that while a "deal" is possible with the new regime, military pressure will increase until Iran permanently abandons its nuclear and missile programs.</p>
 <h3>Operational Progress and "Wartime Speed"</h3>
@@ -5882,7 +5914,7 @@ Thank you very much everyone. Appreciate it. Thank you. Thank you. Thank you, Mr
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has reached a decisive phase, with over 11,000 targets struck in 30 days and the systematic dismantling of Iran’s defense industrial base.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Operation Epic Fury has reached a decisive phase, with over 11,000 targets struck in 30 days and the systematic dismantling of Iran’s defense industrial base. Defense Secretary Pete Hegseth and Gen. Dan Caine report a collapsing Iranian military morale and a strategic...</div>
+                    <div class="sum-preview" id="preview-15">Defense Secretary Pete Hegseth and Gen. Dan Caine report a collapsing Iranian military morale and a strategic...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has reached a decisive phase, with over 11,000 targets struck in 30 days and the systematic dismantling of Iran’s defense industrial base. Defense Secretary Pete Hegseth and Gen. Dan Caine report a collapsing Iranian military morale and a strategic shift toward "negotiating with bombs" to ensure Iran never acquires nuclear weapons.</p>
 <h3>Operational Status and Battlefield Momentum</h3>
@@ -6156,7 +6188,7 @@ Thank you. Thank you, sir.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Federal Reserve Chair Jerome Powell reaffirms the Fed’s commitment to a 2% inflation target despite emerging supply shocks from tariffs and energy prices, while emphasizing that institutional independence and bipartisan stewardship are critical to maintaining economic stability.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR Federal Reserve Chair Jerome Powell reaffirms the Fed’s commitment to a 2% inflation target despite emerging supply shocks from tariffs and energy prices, while emphasizing that institutional independence and bipartisan stewardship are critical to maintaining economic...</div>
+                    <div class="sum-preview" id="preview-16"></div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>Federal Reserve Chair Jerome Powell reaffirms the Fed’s commitment to a 2% inflation target despite emerging supply shocks from tariffs and energy prices, while emphasizing that institutional independence and bipartisan stewardship are critical to maintaining economic stability.</p>
 <h3>Monetary Policy and the Path to 2% Inflation</h3>
@@ -6565,7 +6597,7 @@ This is not the Fed's job, of course, and I pretty much limit myself to those hi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>One month into Operation Epic Fury, the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR One month into Operation Epic Fury, the U.S. has struck over 11,000 targets and neutralized the Iranian Navy to compel a diplomatic settlement, maintaining a &quot;wartime speed&quot; posture that leverages massive air superiority and dynamic targeting.  Strike Volume: U.S. forces...</div>
+                    <div class="sum-preview" id="preview-17">has struck over 11,000 targets and neutralized the Iranian Navy to compel a diplomatic settlement, maintaining a &quot;wartime speed&quot; posture that leverages massive air superiority and dynamic targeting.  Strike Volume: U.S. forces...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>One month into Operation Epic Fury, the U.S. has struck over 11,000 targets and neutralized the Iranian Navy to compel a diplomatic settlement, maintaining a "wartime speed" posture that leverages massive air superiority and dynamic targeting.</p>
 <h3>Operational Status and Tactical Progress</h3>
@@ -6790,7 +6822,7 @@ I would defer to the negotiating team there. They're the ones talking to them bu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has entered its second month with over 11,000 targets struck, resulting in the systematic degradation of Iran’s military morale, naval fleet, and defense industrial base.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR Operation Epic Fury has entered its second month with over 11,000 targets struck, resulting in the systematic degradation of Iran’s military morale, naval fleet, and defense industrial base. While the administration remains open to a diplomatic deal, military operations...</div>
+                    <div class="sum-preview" id="preview-18">While the administration remains open to a diplomatic deal, military operations...</div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has entered its second month with over 11,000 targets struck, resulting in the systematic degradation of Iran’s military morale, naval fleet, and defense industrial base. While the administration remains open to a diplomatic deal, military operations are accelerating with "dynamic strikes" and B-52 overland missions to ensure Iran never acquires a nuclear weapon.</p>
 <h3>Operational Progress and Tactical Milestones</h3>
@@ -7086,9 +7118,9 @@ They're the ones talking to them, but they're getting a back-and-forth on terms,
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/4ENaMtu51_99obOsPf-gGspWP-EOnSG0EI7vYoOQagRY_yo3n5bnBbMXUSYSFMNhZIb6N32Ejvw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>ABC 7 News - WJLA</b><span class="subs">(263.0K)</span></span><span class="dot">&middot;</span><span>50:57</span><span class="dot">&middot;</span><span>1.2K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of War</span></a> <a class="chip" href="index.html?q=%22Dan%20Caine%22">Dan Caine<span class="chip-desc">Chairman of the Joint Chiefs of Staff</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Our job is to ensure that we compel Iran to realize that this new regime...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Our job is to ensure that we compel Iran to realize that this new…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR: Operation Epic Fury has struck over 11,000 targets in 30 days, systematically dismantling Iran’s navy and missile infrastructure to compel a nuclear deal; the administration is maintaining a high-tempo &quot;dynamic&quot; bombing campaign while criticizing allies for insufficient...</div>
+                    <div class="sum-preview" id="preview-19">Operation Epic Fury has struck over 11,000 targets in 30 days, systematically dismantling Iran’s navy and missile infrastructure to compel a nuclear deal; the administration is maintaining a high-tempo &quot;dynamic&quot; bombing campaign while criticizing allies for insufficient...</div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR:</strong> Operation Epic Fury has struck over 11,000 targets in 30 days, systematically dismantling Iran’s navy and missile infrastructure to compel a nuclear deal; the administration is maintaining a high-tempo "dynamic" bombing campaign while criticizing allies for insufficient support.</p>
 <h3>Operational Status and Tactical Achievements</h3>
 <ul>
@@ -7351,7 +7383,7 @@ I would defer to the negotiating team there; they're the ones talking to them. B
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>One month into &quot;Operation Epic Fury,&quot; the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-20">TL;DR One month into &quot;Operation Epic Fury,&quot; the U.S. has struck over 11,000 targets and crippled the Iranian Navy, while the Trump administration maintains a dual-track strategy of &quot;negotiating with bombs&quot; to force a diplomatic resolution regarding Iran’s nuclear ambitions.   ...</div>
+                    <div class="sum-preview" id="preview-20">has struck over 11,000 targets and crippled the Iranian Navy, while the Trump administration maintains a dual-track strategy of &quot;negotiating with bombs&quot; to force a diplomatic resolution regarding Iran’s nuclear ambitions.   ...</div>
                     <div class="sum-full" id="full-20"><p><strong>TL;DR</strong></p>
 <p>One month into "Operation Epic Fury," the U.S. has struck over 11,000 targets and crippled the Iranian Navy, while the Trump administration maintains a dual-track strategy of "negotiating with bombs" to force a diplomatic resolution regarding Iran’s nuclear ambitions.</p>
 <h3>Operational Progress and Tactical Advancements</h3>
@@ -7629,7 +7661,7 @@ All right. Thank you very much, sir. Appreciate it. Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has entered a decisive phase, with over 11,000 targets struck in 30 days and Iranian military morale collapsing amid desertions and command failures.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-21">TL;DR Operation Epic Fury has entered a decisive phase, with over 11,000 targets struck in 30 days and Iranian military morale collapsing amid desertions and command failures. While the U.S. is actively negotiating with a &quot;third&quot; Iranian regime, military intensity will continue...</div>
+                    <div class="sum-preview" id="preview-21">While the U.S. is actively negotiating with a &quot;third&quot; Iranian regime, military intensity will continue...</div>
                     <div class="sum-full" id="full-21"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has entered a decisive phase, with over 11,000 targets struck in 30 days and Iranian military morale collapsing amid desertions and command failures. While the U.S. is actively negotiating with a "third" Iranian regime, military intensity will continue to increase until Iran’s nuclear ambitions and power-projection capabilities are permanently neutralized.</p>
 <h3>Operational Status and Tactical Achievements</h3>
@@ -7910,7 +7942,7 @@ Thank you. Secretary, what happened at Esfahan? On the status of... yeah, exactl
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has completed its first month of engagement, successfully striking over 11,000 targets and effectively neutralizing the Iranian Navy's primary combatants.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-22">TL;DR Operation Epic Fury has completed its first month of engagement, successfully striking over 11,000 targets and effectively neutralizing the Iranian Navy's primary combatants. While the U.S. remains open to a diplomatic &quot;deal&quot; regarding Iran’s nuclear ambitions, military...</div>
+                    <div class="sum-preview" id="preview-22">While the U.S. remains open to a diplomatic &quot;deal&quot; regarding Iran’s nuclear ambitions, military...</div>
                     <div class="sum-full" id="full-22"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has completed its first month of engagement, successfully striking over 11,000 targets and effectively neutralizing the Iranian Navy's primary combatants. While the U.S. remains open to a diplomatic "deal" regarding Iran’s nuclear ambitions, military operations are maintaining "wartime speed" to systematically dismantle Iran’s defense industrial base and command structure.</p>
 <h3>Operational Status and Tactical Success</h3>
@@ -8188,7 +8220,7 @@ I would defer to the negotiating team there. They're the ones talking to them, b
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>One month into Operation Epic Fury, U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-23">TL;DR One month into Operation Epic Fury, U.S. leadership reports the successful degradation of Iranian military morale and infrastructure through 11,000+ strikes, while maintaining &quot;very real&quot; negotiations backed by a &quot;win-first&quot; military posture.    Strike Volume: U.S. forces...</div>
+                    <div class="sum-preview" id="preview-23">leadership reports the successful degradation of Iranian military morale and infrastructure through 11,000+ strikes, while maintaining &quot;very real&quot; negotiations backed by a &quot;win-first&quot; military posture.    Strike Volume: U.S. forces...</div>
                     <div class="sum-full" id="full-23"><p><strong>TL;DR</strong></p>
 <p>One month into Operation Epic Fury, U.S. leadership reports the successful degradation of Iranian military morale and infrastructure through 11,000+ strikes, while maintaining "very real" negotiations backed by a "win-first" military posture.</p>
 <h3>Operational Progress and Battlefield Lethality</h3>
@@ -8526,9 +8558,9 @@ THANK YOU FOR WATCHING</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/SHQE0Y5rb996mAAUmkQZbJdSWj_rcce07GwKk4LTYkf9PKABaWtCEc_a6SjzZPqOgM8pP4kByXE=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNN-News18</b><span class="subs">(10.5M)</span></span><span class="dot">&middot;</span><span>91:06</span><span class="dot">&middot;</span><span>6.7K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of Defense</span></a> <a class="chip" href="index.html?q=%22Dan%20Caine%22">Dan Caine<span class="chip-desc">Chairman, Joint Chiefs of Staff</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Defense Pete Hegseth and General Dan Caine reported that Operation Epic Fury has struck over 11,000 Iranian targets in 30 days, achieving significant air superiority and degrading Iranian morale to the point of widespread desertion while...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Defense Pete Hegseth and General Dan Caine reported that Operation Epic Fury has struck over 11,000 Iranian targets in 30 days, achieving significant air superiority and degrading Iranian morale to the point of widespread desertion…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-24">TL;DR Secretary of Defense Pete Hegseth and General Dan Caine reported that Operation Epic Fury has struck over 11,000 Iranian targets in 30 days, achieving significant air superiority and degrading Iranian morale to the point of widespread desertion while simultaneously...</div>
+                    <div class="sum-preview" id="preview-24">while simultaneously...</div>
                     <div class="sum-full" id="full-24"><p><strong>TL;DR</strong></p>
 <p>Secretary of Defense Pete Hegseth and General Dan Caine reported that Operation Epic Fury has struck over 11,000 Iranian targets in 30 days, achieving significant air superiority and degrading Iranian morale to the point of widespread desertion while simultaneously pursuing high-level diplomatic negotiations.</p>
 <h3>Operational Progress and Tactical Evolution</h3>
@@ -8971,7 +9003,7 @@ All right. Thank you very much, sir. Appreciate it. Thank you. No, for me. Thank
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has entered a &quot;decisive&quot; phase where the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-25">TL;DR Operation Epic Fury has entered a &quot;decisive&quot; phase where the U.S. has systematically degraded Iran’s military industrial base and naval power, forcing a shift toward active diplomatic negotiations that remain backed by high-intensity &quot;dynamic&quot; strikes.    Strike Volume:...</div>
+                    <div class="sum-preview" id="preview-25">has systematically degraded Iran’s military industrial base and naval power, forcing a shift toward active diplomatic negotiations that remain backed by high-intensity &quot;dynamic&quot; strikes.    Strike Volume:...</div>
                     <div class="sum-full" id="full-25"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has entered a "decisive" phase where the U.S. has systematically degraded Iran’s military industrial base and naval power, forcing a shift toward active diplomatic negotiations that remain backed by high-intensity "dynamic" strikes.</p>
 <h3>Operational Status: Degraded Enemy Capabilities</h3>
@@ -9245,9 +9277,9 @@ I would defer to the negotiating team there. They're the ones talking to them, b
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/GlGSJqNBRmSUQc5dn92nXxaWqQr7Ghf65ktun4yU7mEPy-AKdy6BcvvfGstxznLAKktDR7GKvqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The White House</b><span class="subs">(3.0M)</span></span><span class="dot">&middot;</span><span>41:37</span><span class="dot">&middot;</span><span>226.9K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signed an Executive Order aimed at eliminating mail-in ballot fraud through federal data sharing and a new USPS barcode tracking system, while also addressing ongoing White House construction, the &quot;Save America Act,&quot; and pending Supre...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signed an Executive Order aimed at eliminating mail-in ballot fraud through federal data sharing and a new USPS barcode tracking system, while also addressing ongoing White House construction, the &quot;Save America Act,&quot; and pending…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-26">TL;DR President Trump signed an Executive Order aimed at eliminating mail-in ballot fraud through federal data sharing and a new USPS barcode tracking system, while also addressing ongoing White House construction, the &quot;Save America Act,&quot; and pending Supreme Court arguments...</div>
+                    <div class="sum-preview" id="preview-26">Supreme Court arguments...</div>
                     <div class="sum-full" id="full-26"><p><strong>TL;DR</strong></p>
 <p>President Trump signed an Executive Order aimed at eliminating mail-in ballot fraud through federal data sharing and a new USPS barcode tracking system, while also addressing ongoing White House construction, the "Save America Act," and pending Supreme Court arguments regarding birthright citizenship.</p>
 <h3>Election Integrity and Mail-in Ballot Reform</h3>
@@ -9636,9 +9668,9 @@ Because people don't believe them anymore and until they get... it's not the pap
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.4M)</span></span><span class="dot">&middot;</span><span>39:40</span><span class="dot">&middot;</span><span>24.0K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;If you don't have honest voting, you can't have really a nation, if you want to know the truth.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;If you don't have honest voting, you can't have really a nation, if you want to know the truth.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-27">TL;DR: President Trump signed an executive order requiring USPS barcodes on mail-in ballot envelopes to ensure &quot;voter integrity&quot; while announcing a full military withdrawal from Iran within weeks following a claimed &quot;regime change&quot; and the neutralization of their nuclear...</div>
+                    <div class="sum-preview" id="preview-27">President Trump signed an executive order requiring USPS barcodes on mail-in ballot envelopes to ensure &quot;voter integrity&quot; while announcing a full military withdrawal from Iran within weeks following a claimed &quot;regime change&quot; and the neutralization of their nuclear...</div>
                     <div class="sum-full" id="full-27"><p><strong>TL;DR:</strong> President Trump signed an executive order requiring USPS barcodes on mail-in ballot envelopes to ensure "voter integrity" while announcing a full military withdrawal from Iran within weeks following a claimed "regime change" and the neutralization of their nuclear capabilities.</p>
 <h3>Election Integrity and the Safe American Act</h3>
 <ul>
@@ -10049,7 +10081,7 @@ Hey Peter, can Biden do that? I don't think so. He said &quot;I've got more ques
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signed an executive order aimed at &quot;voter integrity&quot; and mail-in voting while announcing an expected U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-28">TL;DR President Trump signed an executive order aimed at &quot;voter integrity&quot; and mail-in voting while announcing an expected U.S. military withdrawal from Iran within 2–3 weeks following a claimed &quot;regime change&quot; and the neutralization of Iran’s nuclear capabilities.  Executive...</div>
+                    <div class="sum-preview" id="preview-28">military withdrawal from Iran within 2–3 weeks following a claimed &quot;regime change&quot; and the neutralization of Iran’s nuclear capabilities.  Executive...</div>
                     <div class="sum-full" id="full-28"><p><strong>TL;DR</strong></p>
 <p>President Trump signed an executive order aimed at "voter integrity" and mail-in voting while announcing an expected U.S. military withdrawal from Iran within 2–3 weeks following a claimed "regime change" and the neutralization of Iran’s nuclear capabilities.</p>
 <h3>Election Integrity and Legislative Priorities</h3>
@@ -10412,9 +10444,9 @@ You got the stick when you... You alright? Stick? I'll just drop it down the... 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_n_QTJ5-GLGnftQFkb7Kp36W2eBH3H-7ZqTQxzFkkqGrIE=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>FRANCE 24 English</b><span class="subs">(3.6M)</span></span><span class="dot">&middot;</span><span>36:07</span><span class="dot">&middot;</span><span>2.6K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">U.S. State Secretary</span></a> <a class="chip" href="index.html?q=%22Dan%20Caine%22">Dan Caine<span class="chip-desc">Chairman of the Joint Chiefs of Staff</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Our job is to ensure that we compel Iran to realize that this new regime...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Our job is to ensure that we compel Iran to realize that this new…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-29">TL;DR: One month into Operation Epic Fury, the U.S. has conducted over 11,000 strikes to systematically dismantle Iran’s military infrastructure, with leadership now leveraging intensified &quot;dynamic strikes&quot; and naval dominance to compel the Iranian regime to accept diplomatic...</div>
+                    <div class="sum-preview" id="preview-29">One month into Operation Epic Fury, the U.S. has conducted over 11,000 strikes to systematically dismantle Iran’s military infrastructure, with leadership now leveraging intensified &quot;dynamic strikes&quot; and naval dominance to compel the Iranian regime to accept diplomatic...</div>
                     <div class="sum-full" id="full-29"><p><strong>TL;DR</strong>: One month into Operation Epic Fury, the U.S. has conducted over 11,000 strikes to systematically dismantle Iran’s military infrastructure, with leadership now leveraging intensified "dynamic strikes" and naval dominance to compel the Iranian regime to accept diplomatic terms.</p>
 <h3>Operational Status and Military Progress</h3>
 <ul>
@@ -10658,9 +10690,9 @@ I would defer to the negotiating team there; they're the ones talking to them, b
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/TWszE9YjlFH4S5-i-r2-n5LdEqP_9GMbG4c9Nk-wsJvt2jdyOUTGyPHtbTiIQAhGkAnjVrwU=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Department of War</b><span class="subs">(310.0K)</span></span><span class="dot">&middot;</span><span>50:46</span><span class="dot">&middot;</span><span>55.2K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of War</span></a> <a class="chip" href="index.html?q=%22Dan%20Caine%22">Dan Caine<span class="chip-desc">Chairman of the Joint Chiefs of Staff</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;American firepower is only increasing.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;American firepower is only increasing.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-30">TL;DR: One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets, eliminated Iran’s frigate fleet, and shifted to high-intensity &quot;dynamic targeting&quot; to force a diplomatic resolution on American terms.  Targeting Success: The joint force has struck more than...</div>
+                    <div class="sum-preview" id="preview-30">One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets, eliminated Iran’s frigate fleet, and shifted to high-intensity &quot;dynamic targeting&quot; to force a diplomatic resolution on American terms.  Targeting Success: The joint force has struck more than...</div>
                     <div class="sum-full" id="full-30"><p><strong>TL;DR:</strong> One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets, eliminated Iran’s frigate fleet, and shifted to high-intensity "dynamic targeting" to force a diplomatic resolution on American terms.</p>
 <h3>Operational Milestones and Strategic Impact</h3>
 <ul>
@@ -10944,7 +10976,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Defense Pete Hegseth and General Dan Caine reported that &quot;Operation Epic Fury&quot; has struck over 11,000 Iranian targets in 30 days, successfully degrading Iran’s naval and missile capabilities while maintaining military pressure to force a diplomatic deal regarding nuclear disarmament.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-31">TL;DR Secretary of Defense Pete Hegseth and General Dan Caine reported that &quot;Operation Epic Fury&quot; has struck over 11,000 Iranian targets in 30 days, successfully degrading Iran’s naval and missile capabilities while maintaining military pressure to force a diplomatic deal...</div>
+                    <div class="sum-preview" id="preview-31"></div>
                     <div class="sum-full" id="full-31"><p><strong>TL;DR</strong></p>
 <p>Secretary of Defense Pete Hegseth and General Dan Caine reported that "Operation Epic Fury" has struck over 11,000 Iranian targets in 30 days, successfully degrading Iran’s naval and missile capabilities while maintaining military pressure to force a diplomatic deal regarding nuclear disarmament.</p>
 <h3>Operational Status: "Operation Epic Fury"</h3>
@@ -11226,9 +11258,9 @@ But they have dynamic targets and they are able to be mobile and move at a momen
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/MhleMZFVx9Rfr2_ZqhfEMorUXWsgIPzgYXu3pSKR8soliFvnbbFAhbPxpRdfFwAthvpdUK9y=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Brookings Institution</b><span class="subs">(164.0K)</span></span><span class="dot">&middot;</span><span>32:57</span><span class="dot">&middot;</span><span>158 views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a> <a class="chip" href="index.html?q=%22Xi%20Jinping%22">Xi Jinping<span class="chip-desc">President of China</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The postponement was purely due to logistics, it was not a pressure tactic on Beijing...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The postponement was purely due to logistics, it was not a pressure tactic on…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-32">TL;DR: The postponement of the Trump-Xi summit to May 14–15 due to the U.S.-Iran conflict provides Beijing with strategic &quot;time&quot; to build leverage, as Washington appears increasingly distracted and burdened by Middle East operations and upcoming midterm elections.  Rescheduled...</div>
+                    <div class="sum-preview" id="preview-32">The postponement of the Trump-Xi summit to May 14–15 due to the U.S.-Iran conflict provides Beijing with strategic &quot;time&quot; to build leverage, as Washington appears increasingly distracted and burdened by Middle East operations and upcoming midterm elections.  Rescheduled...</div>
                     <div class="sum-full" id="full-32"><p><strong>TL;DR:</strong> The postponement of the Trump-Xi summit to May 14–15 due to the U.S.-Iran conflict provides Beijing with strategic "time" to build leverage, as Washington appears increasingly distracted and burdened by Middle East operations and upcoming midterm elections.</p>
 <h3>Strategic Context of the Summit Postponement</h3>
 <ul>
@@ -11545,7 +11577,7 @@ Rachel Slattery designed the show's artwork. Also, thank you to our colleagues i
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Variance has emerged from three years in stealth with a $21M Series A to provide purpose-built AI agents that automate high-stakes risk, fraud, and compliance operations for Fortune 500 companies and major platforms.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-33">TL;DR Variance has emerged from three years in stealth with a $21M Series A to provide purpose-built AI agents that automate high-stakes risk, fraud, and compliance operations for Fortune 500 companies and major platforms.  Autonomous Risk Management: Variance builds AI agents...</div>
+                    <div class="sum-preview" id="preview-33">Autonomous Risk Management: Variance builds AI agents...</div>
                     <div class="sum-full" id="full-33"><p><strong>TL;DR</strong></p>
 <p>Variance has emerged from three years in stealth with a $21M Series A to provide purpose-built AI agents that automate high-stakes risk, fraud, and compliance operations for Fortune 500 companies and major platforms.</p>
 <h3>Core Product and Market Impact</h3>
@@ -11837,7 +11869,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Loneliness has become a public policy crisis driven by the collapse of &quot;little platoons&quot;—the local institutions like churches, civic groups, and neighborhoods that provide social capital.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-34">TL;DR Loneliness has become a public policy crisis driven by the collapse of &quot;little platoons&quot;—the local institutions like churches, civic groups, and neighborhoods that provide social capital. Reversing this epidemic requires moving beyond hyper-individualism toward a culture...</div>
+                    <div class="sum-preview" id="preview-34">Reversing this epidemic requires moving beyond hyper-individualism toward a culture...</div>
                     <div class="sum-full" id="full-34"><p><strong>TL;DR</strong></p>
 <p>Loneliness has become a public policy crisis driven by the collapse of "little platoons"—the local institutions like churches, civic groups, and neighborhoods that provide social capital. Reversing this epidemic requires moving beyond hyper-individualism toward a culture of communal interdependence and local service.</p>
 <h3>The Geography of Social Cohesion</h3>
@@ -12221,9 +12253,9 @@ Me and a very liberal guy working together on that in the dugout—that's the so
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/uV0b6SHlvk4Gfe7rnKQZTv3pWN8PE942j4Y91Ok8Z-Qh54MS8Gn24yz_Cbheb4acm1w06oup=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Defense Now</b><span class="subs">(219.0K)</span></span><span class="dot">&middot;</span><span>41:35</span><span class="dot">&middot;</span><span>4.7K views</span><span class="dot">&middot;</span><span>2026-03-31</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signed a major executive order to secure mail-in ballots and verify voter rolls through federal data sharing, while announcing that military operations in Iran are expected to conclude within two to three weeks following successful &quot;r...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signed a major executive order to secure mail-in ballots and verify voter rolls through federal data sharing, while announcing that military operations in Iran are expected to conclude within two to three weeks following successful…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-35">TL;DR President Trump signed a major executive order to secure mail-in ballots and verify voter rolls through federal data sharing, while announcing that military operations in Iran are expected to conclude within two to three weeks following successful &quot;regime change&quot; and the...</div>
+                    <div class="sum-preview" id="preview-35">&quot;regime change&quot; and the...</div>
                     <div class="sum-full" id="full-35"><p><strong>TL;DR</strong></p>
 <p>President Trump signed a major executive order to secure mail-in ballots and verify voter rolls through federal data sharing, while announcing that military operations in Iran are expected to conclude within two to three weeks following successful "regime change" and the neutralization of nuclear threats.</p>
 <h3>Election Integrity and Mail-In Ballots</h3>
@@ -12569,7 +12601,7 @@ New York Times, way down. Wall Street Journal, way down. Washington Post, number
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has entered a decisive phase, with U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-36">TL;DR Operation Epic Fury has entered a decisive phase, with U.S. forces successfully striking over 11,000 targets in 30 days to systematically dismantle Iran’s nuclear ambitions, defense industrial base, and naval capabilities while maintaining a 90% reduction in enemy missile...</div>
+                    <div class="sum-preview" id="preview-36">forces successfully striking over 11,000 targets in 30 days to systematically dismantle Iran’s nuclear ambitions, defense industrial base, and naval capabilities while maintaining a 90% reduction in enemy missile...</div>
                     <div class="sum-full" id="full-36"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has entered a decisive phase, with U.S. forces successfully striking over 11,000 targets in 30 days to systematically dismantle Iran’s nuclear ambitions, defense industrial base, and naval capabilities while maintaining a 90% reduction in enemy missile effectiveness.</p>
 <h3>Strategic Objectives and Operational Progress</h3>
@@ -13495,7 +13527,7 @@ And it's across all of the warfighting functions. I've asked them to look rigoro
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President J.D.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-37">TL;DR Vice President J.D. Vance’s visit to Rocky Mount underscores North Carolina's 1st Congressional District (NC-01) as a critical 2026 battleground, as the GOP attempts to flip the seat by labeling Democratic incumbent Don Davis a partisan loyalist despite his moderate voting...</div>
+                    <div class="sum-preview" id="preview-37">Vance’s visit to Rocky Mount underscores North Carolina's 1st Congressional District (NC-01) as a critical 2026 battleground, as the GOP attempts to flip the seat by labeling Democratic incumbent Don Davis a partisan loyalist despite his moderate voting...</div>
                     <div class="sum-full" id="full-37"><p><strong>TL;DR</strong></p>
 <p>Vice President J.D. Vance’s visit to Rocky Mount underscores North Carolina's 1st Congressional District (NC-01) as a critical 2026 battleground, as the GOP attempts to flip the seat by labeling Democratic incumbent Don Davis a partisan loyalist despite his moderate voting record.</p>
 <h3>Strategic Importance of NC-01 and Rocky Mount</h3>
@@ -13688,7 +13720,7 @@ Follow us on Twitter at @UnderTheDome and @NCInsider, and sign up for our weekly
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>One month into Operation Epic Fury, U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-38">TL;DR One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets and destroyed the bulk of the Iranian Navy, severely degrading enemy morale and industrial capacity while maintaining intense military pressure to compel a diplomatic resolution.  Strike...</div>
+                    <div class="sum-preview" id="preview-38">forces have struck over 11,000 targets and destroyed the bulk of the Iranian Navy, severely degrading enemy morale and industrial capacity while maintaining intense military pressure to compel a diplomatic resolution.  Strike...</div>
                     <div class="sum-full" id="full-38"><p><strong>TL;DR</strong></p>
 <p>One month into Operation Epic Fury, U.S. forces have struck over 11,000 targets and destroyed the bulk of the Iranian Navy, severely degrading enemy morale and industrial capacity while maintaining intense military pressure to compel a diplomatic resolution.</p>
 <h3>Operational Progress and Battlefield Success</h3>
@@ -14080,7 +14112,7 @@ Well, thank you very much everyone. Thank you. Thank you, secretary.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Physical Intelligence is developing general-purpose foundation models to serve as a universal &quot;brain&quot; for any robotic hardware, moving the field away from narrow, task-specific programming toward end-to-end learning models that combine web-scale knowledge with physical data.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-39">TL;DR Physical Intelligence is developing general-purpose foundation models to serve as a universal &quot;brain&quot; for any robotic hardware, moving the field away from narrow, task-specific programming toward end-to-end learning models that combine web-scale knowledge with physical...</div>
+                    <div class="sum-preview" id="preview-39"></div>
                     <div class="sum-full" id="full-39"><p><strong>TL;DR</strong></p>
 <p>Physical Intelligence is developing general-purpose foundation models to serve as a universal "brain" for any robotic hardware, moving the field away from narrow, task-specific programming toward end-to-end learning models that combine web-scale knowledge with physical data.</p>
 <h3>The Shift from Specialized to General Robotics</h3>

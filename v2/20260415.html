@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Liquid AI is pioneering a new class of &quot;Liquid Foundation Models&quot; (LFMs) that are two orders of magnitude smaller than traditional cloud-based models, enabling high-performance, proactive AI agents to run entirely offline on edge devices like AI PCs.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Liquid AI is pioneering a new class of &quot;Liquid Foundation Models&quot; (LFMs) that are two orders of magnitude smaller than traditional cloud-based models, enabling high-performance, proactive AI agents to run entirely offline on edge devices like AI PCs.  Brain-Inspired...</div>
+                    <div class="sum-preview" id="preview-0">Brain-Inspired...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Liquid AI is pioneering a new class of "Liquid Foundation Models" (LFMs) that are two orders of magnitude smaller than traditional cloud-based models, enabling high-performance, proactive AI agents to run entirely offline on edge devices like AI PCs.</p>
 <h3>Architectural Innovation: Liquid Neural Networks (LNNs)</h3>
@@ -905,9 +937,9 @@ Thank you for joining us today. I look forward to bringing you more in-depth con
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/4-w44catDebzaDSUWgereql0G5_z5o7VpJXuIYL_eZ3H1vXy0lTmrole9V500jTUXCnQPZ5CuKQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Television</b><span class="subs">(3.1M)</span></span><span class="dot">&middot;</span><span>22:46</span><span class="dot">&middot;</span><span>4.9K views</span><span class="dot">&middot;</span><span>2026-04-15</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Christine%20Lagarde%22">Christine Lagarde<span class="chip-desc">President, European Central Bank</span></a> <a class="chip" href="index.html?q=%22Francine%20Lacqua%22">Francine Lacqua<span class="chip-desc">Anchor, Bloomberg Television</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;We central bankers are left with defining the baseline...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;We central bankers are left with defining the…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR: ECB President Christine Lagarde characterizes the current European economy as sitting between &quot;baseline&quot; and &quot;adverse&quot; scenarios due to significant energy shocks, asserting that the ECB will remain agile and data-dependent rather than committed to a pre-defined rate path....</div>
+                    <div class="sum-preview" id="preview-1">ECB President Christine Lagarde characterizes the current European economy as sitting between &quot;baseline&quot; and &quot;adverse&quot; scenarios due to significant energy shocks, asserting that the ECB will remain agile and data-dependent rather than committed to a pre-defined rate path....</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR:</strong> ECB President Christine Lagarde characterizes the current European economy as sitting between "baseline" and "adverse" scenarios due to significant energy shocks, asserting that the ECB will remain agile and data-dependent rather than committed to a pre-defined rate path.</p>
 <h3>Economic Outlook and Forecasting Scenarios</h3>
 <ul>
@@ -1110,7 +1142,7 @@ Thank you again, Madame Lagarde and Francine Lacqua for that terrific interview.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The most effective leaders act as &quot;junction makers,&quot; fostering innovation by creating unexpected connections between disciplines, listening deeply to practitioners, and embracing serendipity over rigid master plans.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The most effective leaders act as &quot;junction makers,&quot; fostering innovation by creating unexpected connections between disciplines, listening deeply to practitioners, and embracing serendipity over rigid master plans.  Defining the Role: Hans Ulrich Obrist describes curation...</div>
+                    <div class="sum-preview" id="preview-2">Defining the Role: Hans Ulrich Obrist describes curation...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The most effective leaders act as "junction makers," fostering innovation by creating unexpected connections between disciplines, listening deeply to practitioners, and embracing serendipity over rigid master plans.</p>
 <h3>The Curator as "Junction Maker" and Enabler</h3>
@@ -1572,7 +1604,7 @@ And I think that idea of also breaking down silos and bringing different fields 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The primary currency of leadership is energy, not hours worked; startups ultimately fail when founders run out of energy, making personal physical, mental, and spiritual health a strategic business imperative rather than a luxury.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR The primary currency of leadership is energy, not hours worked; startups ultimately fail when founders run out of energy, making personal physical, mental, and spiritual health a strategic business imperative rather than a luxury. Mark MacLeod’s study of 11 founders...</div>
+                    <div class="sum-preview" id="preview-3">Mark MacLeod’s study of 11 founders...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The primary currency of leadership is energy, not hours worked; startups ultimately fail when founders run out of energy, making personal physical, mental, and spiritual health a strategic business imperative rather than a luxury.</p>
 <h3>The Trillion-Dollar Correlation: Health as a Scaling Strategy</h3>
@@ -2090,7 +2122,7 @@ Mark, thank you so much, this has been a wonderful chat and wishing you great su
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Science fiction author Andy Weir builds his &quot;hard&quot; sci-fi worlds through rigorous scientific derivation, using complex spreadsheets to ensure fictional elements—like alien biology and interstellar fuel—adhere to the laws of physics or logical &quot;wrong math.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Science fiction author Andy Weir builds his &quot;hard&quot; sci-fi worlds through rigorous scientific derivation, using complex spreadsheets to ensure fictional elements—like alien biology and interstellar fuel—adhere to the laws of physics or logical &quot;wrong math.&quot;  Scientific...</div>
+                    <div class="sum-preview" id="preview-4">&quot;  Scientific...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Science fiction author Andy Weir builds his "hard" sci-fi worlds through rigorous scientific derivation, using complex spreadsheets to ensure fictional elements—like alien biology and interstellar fuel—adhere to the laws of physics or logical "wrong math."</p>
 <h3>The Mechanics of "Hard" World-Building</h3>
@@ -2444,7 +2476,7 @@ Amazing. Thank you so much. Amazing, amazing, amazing. Thank you. Awesome. And I
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global economy faces a &quot;shock upon shock&quot; scenario driven by conflict in the Middle East, with growth projections slowing to 3.1% (and potentially 2% in adverse cases) as public debt is on track to reach post-WWII levels by 2029.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR The global economy faces a &quot;shock upon shock&quot; scenario driven by conflict in the Middle East, with growth projections slowing to 3.1% (and potentially 2% in adverse cases) as public debt is on track to reach post-WWII levels by 2029. Managing Director Kristalina Georgieva...</div>
+                    <div class="sum-preview" id="preview-5">Managing Director Kristalina Georgieva...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>The global economy faces a "shock upon shock" scenario driven by conflict in the Middle East, with growth projections slowing to 3.1% (and potentially 2% in adverse cases) as public debt is on track to reach post-WWII levels by 2029. Managing Director Kristalina Georgieva urges member nations to prioritize macroeconomic stability, avoid unargeted subsidies, and implement structural reforms to build resilience against a 21st-century landscape of frequent disruption.</p>
 <h3>Global Economic Outlook and Risks</h3>
@@ -2695,7 +2727,7 @@ All right, thank you very much everyone, and thank you, Managing Director. This 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Global markets are rallying on signals from President Trump that the war with Iran may be nearing an end, with investors increasingly prioritizing the &quot;AI boom&quot; and resilient US consumer data over the ongoing shipping crisis in the Strait of Hormuz.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Global markets are rallying on signals from President Trump that the war with Iran may be nearing an end, with investors increasingly prioritizing the &quot;AI boom&quot; and resilient US consumer data over the ongoing shipping crisis in the Strait of Hormuz.    War De-escalation:...</div>
+                    <div class="sum-preview" id="preview-6">War De-escalation:...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Global markets are rallying on signals from President Trump that the war with Iran may be nearing an end, with investors increasingly prioritizing the "AI boom" and resilient US consumer data over the ongoing shipping crisis in the Strait of Hormuz.</p>
 <h3>Geopolitical Outlook &amp; Market Reaction</h3>
@@ -3880,7 +3912,7 @@ I am not surprised that we're taking a little bit of profit this morning, maybe.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Nvidia CEO Jensen Huang argues that Nvidia’s moat is built on &quot;accelerated computing&quot; rather than mere chip manufacturing, leveraging a 20-year head start in the CUDA ecosystem to deliver 50x performance gains through algorithmic co-design.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Nvidia CEO Jensen Huang argues that Nvidia’s moat is built on &quot;accelerated computing&quot; rather than mere chip manufacturing, leveraging a 20-year head start in the CUDA ecosystem to deliver 50x performance gains through algorithmic co-design. He warns that aggressive export...</div>
+                    <div class="sum-preview" id="preview-7">He warns that aggressive export...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Nvidia CEO Jensen Huang argues that Nvidia’s moat is built on "accelerated computing" rather than mere chip manufacturing, leveraging a 20-year head start in the CUDA ecosystem to deliver 50x performance gains through algorithmic co-design. He warns that aggressive export controls on China risk ceding the world's second-largest market and forcing a shift toward non-American technology standards, potentially undermining long-term U.S. leadership.</p>
 <h3>The Business of "Electrons to Tokens"</h3>
@@ -4655,9 +4687,9 @@ Jensen, thank you so much. You're welcome. I enjoyed it. Me too.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>43:13</span><span class="dot">&middot;</span><span>834 views</span><span class="dot">&middot;</span><span>2026-04-15</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Brooke%20Rollins%22">Brooke Rollins<span class="chip-desc">Secretary of Agriculture</span></a> <a class="chip" href="index.html?q=%22Howard%20Lutnick%22">Howard Lutnick<span class="chip-desc">Secretary of Commerce</span></a> <a class="chip" href="index.html?q=%22Kevin%20Hassett%22">Kevin Hassett<span class="chip-desc">Director, National Economic Council</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Trump administration marked Tax Day by highlighting the &quot;Working Families Tax Cut Act,&quot; which delivers historic relief to middle-class Americans and rural communities, while simultaneously announcing the launch of the first-ever USDA Office of Se...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Trump administration marked Tax Day by highlighting the &quot;Working Families Tax Cut Act,&quot; which delivers historic relief to middle-class Americans and rural communities, while simultaneously announcing the launch of the first-ever USDA Office of…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR The Trump administration marked Tax Day by highlighting the &quot;Working Families Tax Cut Act,&quot; which delivers historic relief to middle-class Americans and rural communities, while simultaneously announcing the launch of the first-ever USDA Office of Seafood to integrate...</div>
+                    <div class="sum-preview" id="preview-8">Seafood to integrate...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The Trump administration marked Tax Day by highlighting the "Working Families Tax Cut Act," which delivers historic relief to middle-class Americans and rural communities, while simultaneously announcing the launch of the first-ever USDA Office of Seafood to integrate fishermen into federal agricultural support programs.</p>
 <h3>Economic Relief and Tax Implementation</h3>
@@ -4960,7 +4992,7 @@ Alright everybody. Happy working families tax cut tax day. So grateful to be fig
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Error generating summary: 429 RESOURCE_EXHAUSTED.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">Error generating summary: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your...</div>
+                    <div class="sum-preview" id="preview-9">{'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your...</div>
                     <div class="sum-full" id="full-9"><p>Error generating summary: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash\nPlease retry in 15.500489983s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '15s'}]}}</p></div>
                     <button class="linklike" id="sum-btn-9" onclick="toggleSummary(9)" type="button" aria-expanded="false" aria-controls="full-9">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -5137,9 +5169,9 @@ All right. Thank you very much, everyone, and thank you, Managing Director. This
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>74:20</span><span class="dot">&middot;</span><span>9.4K views</span><span class="dot">&middot;</span><span>2026-04-15</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Karoline%20Leavitt%22">Karoline Leavitt<span class="chip-desc">White House Press Secretary</span></a> <a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a> <a class="chip" href="index.html?q=%22Kelly%20Loeffler%22">Kelly Loeffler<span class="chip-desc">Administrator, Small Business Administration</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>On Tax Day, the Trump administration highlighted record tax refunds and the success of &quot;Working Families Tax Cuts&quot; (notably no tax on tips/overtime), while confirming a maximum-pressure economic blockade on Iran and announcing the construction of a 2...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>On Tax Day, the Trump administration highlighted record tax refunds and the success of &quot;Working Families Tax Cuts&quot; (notably no tax on tips/overtime), while confirming a maximum-pressure economic blockade on Iran and announcing the construction of a…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR On Tax Day, the Trump administration highlighted record tax refunds and the success of &quot;Working Families Tax Cuts&quot; (notably no tax on tips/overtime), while confirming a maximum-pressure economic blockade on Iran and announcing the construction of a 250-foot &quot;Triumphal Ark&quot;...</div>
+                    <div class="sum-preview" id="preview-10">250-foot &quot;Triumphal Ark&quot;...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>On Tax Day, the Trump administration highlighted record tax refunds and the success of "Working Families Tax Cuts" (notably no tax on tips/overtime), while confirming a maximum-pressure economic blockade on Iran and announcing the construction of a 250-foot "Triumphal Ark" for America’s 250th anniversary.</p>
 <h3>Tax Day Statistics and "Working Families" Provisions</h3>
@@ -5464,7 +5496,7 @@ And this triumphal ark should be a project that all Americans of all political p
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>OMB Director Russell Vought presented a FY 2027 budget proposal centered on a historic 42% increase in defense spending ($1.5 trillion) and deep non-defense cuts, while defending the administration’s controversial use of &quot;impoundments&quot; to withhold congressionally appropriated funds.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR OMB Director Russell Vought presented a FY 2027 budget proposal centered on a historic 42% increase in defense spending ($1.5 trillion) and deep non-defense cuts, while defending the administration’s controversial use of &quot;impoundments&quot; to withhold congressionally...</div>
+                    <div class="sum-preview" id="preview-11"></div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>OMB Director Russell Vought presented a FY 2027 budget proposal centered on a historic 42% increase in defense spending ($1.5 trillion) and deep non-defense cuts, while defending the administration’s controversial use of "impoundments" to withhold congressionally appropriated funds.</p>
 <h3>FY 2027 Budget Priorities &amp; Fiscal Strategy</h3>
@@ -6570,7 +6602,7 @@ Let's be honest with you. Thank you. And Mr. Chairman, this does include— Gent
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>On Tax Day, the administration highlighted the impact of the &quot;Working Families Tax Cuts,&quot; reporting an average refund of $3,400 and significant participation in new tax exemptions for tips and overtime.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR On Tax Day, the administration highlighted the impact of the &quot;Working Families Tax Cuts,&quot; reporting an average refund of $3,400 and significant participation in new tax exemptions for tips and overtime. Strategically, the White House is maintaining a naval blockade and...</div>
+                    <div class="sum-preview" id="preview-12">Strategically, the White House is maintaining a naval blockade and...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>On Tax Day, the administration highlighted the impact of the "Working Families Tax Cuts," reporting an average refund of $3,400 and significant participation in new tax exemptions for tips and overtime. Strategically, the White House is maintaining a naval blockade and "maximum pressure" sanctions on Iran, characterizing short-term energy price volatility as a necessary trade-off for global security.</p>
 <h3>Individual Tax Relief and IRS Performance</h3>
@@ -6871,9 +6903,9 @@ TODAY, ENERGY SECRETARY CHRIS WRIGHT TESTIFIES BEFORE A SUBCOMMITTEE ABOUT FUEL 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/btm1_PK-7VRUr9GY2D0UV_2XfbUZPBjghyptjSO1crsfN86HyTYDWPmUbq7JxC3H0Lxe_s067nA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>NVIDIA</b><span class="subs">(2.2M)</span></span><span class="dot">&middot;</span><span>36:39</span><span class="dot">&middot;</span><span>2.8K views</span><span class="dot">&middot;</span><span>2026-04-15</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Gerro%20Prinsloo%22">Gerro Prinsloo<span class="chip-desc">NVIDIA</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The traditional focus on hardware-centric metrics like &quot;FLOPs per dollar&quot; fails to capture the true cost of AI; &quot;Cost per Token&quot; is the definitive metric for Total Cost of Ownership (TCO) because it accounts for the entire efficiency stack—from power...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The traditional focus on hardware-centric metrics like &quot;FLOPs per dollar&quot; fails to capture the true cost of AI; &quot;Cost per Token&quot; is the definitive metric for Total Cost of Ownership (TCO) because it accounts for the entire efficiency stack—from…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR The traditional focus on hardware-centric metrics like &quot;FLOPs per dollar&quot; fails to capture the true cost of AI; &quot;Cost per Token&quot; is the definitive metric for Total Cost of Ownership (TCO) because it accounts for the entire efficiency stack—from power generation and cooling...</div>
+                    <div class="sum-preview" id="preview-13">power generation and cooling...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>The traditional focus on hardware-centric metrics like "FLOPs per dollar" fails to capture the true cost of AI; "Cost per Token" is the definitive metric for Total Cost of Ownership (TCO) because it accounts for the entire efficiency stack—from power generation and cooling to software optimization and throughput.</p>
 <h3>Redefining the Economics of AI Infrastructure</h3>

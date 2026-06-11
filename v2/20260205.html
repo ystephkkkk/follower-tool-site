@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.3M)</span></span><span class="dot">&middot;</span><span>31:21</span><span class="dot">&middot;</span><span>4.0K views</span><span class="dot">&middot;</span><span>2026-02-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Guillermo%20Rauch%22">Guillermo Rauch<span class="chip-desc">CEO, Vercel</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;It's a broad sweeping mass exodus of software stocks.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;It's a broad sweeping mass exodus of software stocks.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR: The AI landscape is experiencing unprecedented acceleration, with a fierce rivalry between OpenAI and Anthropic driving rapid advancements in AI agents and development tools that are making software creation effectively &quot;free&quot; and reshaping the entire industry from...</div>
+                    <div class="sum-preview" id="preview-0">The AI landscape is experiencing unprecedented acceleration, with a fierce rivalry between OpenAI and Anthropic driving rapid advancements in AI agents and development tools that are making software creation effectively &quot;free&quot; and reshaping the entire industry from...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR:</strong> The AI landscape is experiencing unprecedented acceleration, with a fierce rivalry between OpenAI and Anthropic driving rapid advancements in AI agents and development tools that are making software creation effectively "free" and reshaping the entire industry from enterprise to individual users.</p>
 <h3>The Intensifying AI Arms Race</h3>
 <ul>
@@ -916,7 +948,7 @@ See you next time. And a special thank you to producer Jasmine, who's doing all 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Arm CEO Rene Haas reports record revenue and royalties, driven by an &quot;exploding&quot; data center business (100%+ YoY growth) that is on track to surpass handsets as Arm's largest segment sooner than anticipated due to pervasive global AI investments.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Arm CEO Rene Haas reports record revenue and royalties, driven by an &quot;exploding&quot; data center business (100%+ YoY growth) that is on track to surpass handsets as Arm's largest segment sooner than anticipated due to pervasive global AI investments.    Exceptional Financial...</div>
+                    <div class="sum-preview" id="preview-1">Exceptional Financial...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Arm CEO Rene Haas reports record revenue and royalties, driven by an "exploding" data center business (100%+ YoY growth) that is on track to surpass handsets as Arm's largest segment sooner than anticipated due to pervasive global AI investments.</p>
 <h3>Record Performance and Shifting Market Focus</h3>
@@ -1026,9 +1058,9 @@ I have a lucky job. I get to work with just about everybody in the industry acro
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/btm1_PK-7VRUr9GY2D0UV_2XfbUZPBjghyptjSO1crsfN86HyTYDWPmUbq7JxC3H0Lxe_s067nA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>NVIDIA</b><span class="subs">(2.1M)</span></span><span class="dot">&middot;</span><span>37:04</span><span class="dot">&middot;</span><span>2026-02-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jensen%20Huang%22">Jensen Huang<span class="chip-desc">CEO, NVIDIA</span></a> <a class="chip" href="index.html?q=%22Pascal%20Daloz%22">Pascal Daloz<span class="chip-desc">CEO, Dassault Systèmes</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>NVIDIA and Dassault Systèmes announced a significant long-term strategic partnership, integrating Dassault Systèmes’ Virtual Twin technologies with NVIDIA’s AI and Omniverse platforms to create science-validated &quot;World Models&quot; that will redefine indu...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>NVIDIA and Dassault Systèmes announced a significant long-term strategic partnership, integrating Dassault Systèmes’ Virtual Twin technologies with NVIDIA’s AI and Omniverse platforms to create science-validated &quot;World Models&quot; that will redefine…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR NVIDIA and Dassault Systèmes announced a significant long-term strategic partnership, integrating Dassault Systèmes’ Virtual Twin technologies with NVIDIA’s AI and Omniverse platforms to create science-validated &quot;World Models&quot; that will redefine industrial design,...</div>
+                    <div class="sum-preview" id="preview-2">industrial design,...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>NVIDIA and Dassault Systèmes announced a significant long-term strategic partnership, integrating Dassault Systèmes’ Virtual Twin technologies with NVIDIA’s AI and Omniverse platforms to create science-validated "World Models" that will redefine industrial design, manufacturing, and operations through generative AI and real-time simulation.</p>
 <h3>The Evolving Partnership &amp; Generative AI</h3>
@@ -1182,9 +1214,9 @@ Now, you belong to this community. Oh, yeah. So, make sure. I am definitely a So
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/lG-z7sTfhFIW2Ne1oXMHvXMXyZSaA02_I17gUel0GAEj7OypsSHQ7PE91Vp4bTbpm3PTIAWJdko=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Dwarkesh Patel</b><span class="subs">(1.2M)</span></span><span class="dot">&middot;</span><span>169:45</span><span class="dot">&middot;</span><span>2026-02-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Elon%20Musk%22">Elon Musk<span class="chip-desc">CEO, Tesla &amp; xAI</span></a> <a class="chip" href="index.html?q=%22Dwarkesh%20Patel%22">Dwarkesh Patel<span class="chip-desc">Host, Dwarkesh Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;My prediction is that it will be by far the cheapest place to put AI.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;My prediction is that it will be by far the cheapest place to put AI.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Elon Musk predicts that within 36 months, space will become the most economical location for AI data centers due to Earth's power constraints and regulatory hurdles, enabling an unprecedented scale of AI compute, which will in turn drive advancements in humanoid robotics...</div>
+                    <div class="sum-preview" id="preview-3">Elon Musk predicts that within 36 months, space will become the most economical location for AI data centers due to Earth's power constraints and regulatory hurdles, enabling an unprecedented scale of AI compute, which will in turn drive advancements in humanoid robotics...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong> Elon Musk predicts that within 36 months, space will become the most economical location for AI data centers due to Earth's power constraints and regulatory hurdles, enabling an unprecedented scale of AI compute, which will in turn drive advancements in humanoid robotics and address critical global challenges like national debt.</p>
 <h3>The Future of AI Compute: From Earth to Orbit</h3>
 <ul>
@@ -1669,9 +1701,9 @@ You joked or were self-conscious about using the &quot;limiting factor&quot; phr
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/nugvoFYJuO3NhFEZ96x1yN61T1ZfiBGe2BV0WClQyggmdzb1m8d0JN3ydARmGCR6_Ih_UhuO_Q=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Generating Alpha Podcast</b><span class="subs">(1.1K)</span></span><span class="dot">&middot;</span><span>52:31</span><span class="dot">&middot;</span><span>18 views</span><span class="dot">&middot;</span><span>2026-02-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Dmitry%20Balyasny%22">Dmitry Balyasny<span class="chip-desc">Founder &amp; CIO, Balyasny Asset Management</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;You really need a particular approach like this is the type of trade that I look for, right? And this is the type of risk that I take.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;You really need a particular approach like this is the type of trade that I look for, right? And this is the type of risk that I take.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Dmitry Balyasny, Founder and CIO of Balyasny Asset Management (BAM), discusses his journey from an immigrant to building a leading $30B multi-strategy hedge fund, emphasizing a disciplined business model, partnership culture, continuous talent development, and adaptable...</div>
+                    <div class="sum-preview" id="preview-4">Dmitry Balyasny, Founder and CIO of Balyasny Asset Management (BAM), discusses his journey from an immigrant to building a leading $30B multi-strategy hedge fund, emphasizing a disciplined business model, partnership culture, continuous talent development, and adaptable...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong> Dmitry Balyasny, Founder and CIO of Balyasny Asset Management (BAM), discusses his journey from an immigrant to building a leading $30B multi-strategy hedge fund, emphasizing a disciplined business model, partnership culture, continuous talent development, and adaptable edge to generate consistent returns across market cycles.</p>
 <h3>Dmitry Balyasny's Formative Journey</h3>
 <ul>
@@ -1939,7 +1971,7 @@ My pleasure. Let's chat with him.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite stable global growth numbers in 2025, Harvard economist Gita Gopinath warns that the global economy has fundamentally shifted, moving away from a predictable order due to escalating tariffs, a breakdown of trust between major alliances, and an AI boom whose financial valuations carry significant systemic risk.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Despite stable global growth numbers in 2025, Harvard economist Gita Gopinath warns that the global economy has fundamentally shifted, moving away from a predictable order due to escalating tariffs, a breakdown of trust between major alliances, and an AI boom whose...</div>
+                    <div class="sum-preview" id="preview-5"></div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Despite stable global growth numbers in 2025, Harvard economist Gita Gopinath warns that the global economy has fundamentally shifted, moving away from a predictable order due to escalating tariffs, a breakdown of trust between major alliances, and an AI boom whose financial valuations carry significant systemic risk. This profound uncertainty makes the economy far more fragile than headline figures suggest.</p>
 <h3>The Disconnect: Stable Growth Amidst Fundamental Change</h3>
@@ -2138,7 +2170,7 @@ For more analysis of the global economy, check out the forum's chief economist o
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump discussed his administration's strong stance on immigration enforcement, claiming success in lowering crime rates nationwide and on the border, while also outlining his economic policies including tariffs and potential rebate checks, ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR President Trump discussed his administration's strong stance on immigration enforcement, claiming success in lowering crime rates nationwide and on the border, while also outlining his economic policies including tariffs and potential rebate checks, and his views on AI's...</div>
+                    <div class="sum-preview" id="preview-6">and his views on AI's...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>President Trump discussed his administration's strong stance on immigration enforcement, claiming success in lowering crime rates nationwide and on the border, while also outlining his economic policies including tariffs and potential rebate checks, and his views on AI's impact, election integrity, and global relations.</p>
 <h3>Immigration, Crime, and Law Enforcement Strategy</h3>
@@ -2919,7 +2951,7 @@ And we'll have even more of the interview coming up on Sunday during the Super B
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>OpenAI CEO Sam Altman discussed the launch of GPT-5.3-Codex, highlighting its role in enabling a future where users manage AI agents at higher levels of abstraction for complex tasks.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR OpenAI CEO Sam Altman discussed the launch of GPT-5.3-Codex, highlighting its role in enabling a future where users manage AI agents at higher levels of abstraction for complex tasks. He emphasized the growing importance of compute power as the &quot;new oil&quot; and the...</div>
+                    <div class="sum-preview" id="preview-7">He emphasized the growing importance of compute power as the &quot;new oil&quot; and the...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>OpenAI CEO Sam Altman discussed the launch of GPT-5.3-Codex, highlighting its role in enabling a future where users manage AI agents at higher levels of abstraction for complex tasks. He emphasized the growing importance of compute power as the "new oil" and the fundamental transformation of software, while also outlining OpenAI's advertising strategy focused on reducing AI's "capability overhang."</p>
 <h3>New Models &amp; Agent-Driven Workflows</h3>
@@ -3221,7 +3253,7 @@ Goodbye.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI landscape is experiencing unprecedented acceleration, disrupting traditional software markets and fueling an intense &quot;war&quot; among major AI labs for enterprise, developer, and consumer dominance through increasingly capable, agentic models that ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR The AI landscape is experiencing unprecedented acceleration, disrupting traditional software markets and fueling an intense &quot;war&quot; among major AI labs for enterprise, developer, and consumer dominance through increasingly capable, agentic models that empower even...</div>
+                    <div class="sum-preview" id="preview-8">empower even...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The AI landscape is experiencing unprecedented acceleration, disrupting traditional software markets and fueling an intense "war" among major AI labs for enterprise, developer, and consumer dominance through increasingly capable, agentic models that empower even non-technical users to build and deploy sophisticated applications.</p>
 <h3>The Accelerating AI Landscape &amp; Software Market Disruption</h3>
@@ -3439,9 +3471,9 @@ See you next time. And a special thank you to producer Jasmine who's doing all o
                     <div class="vc-meta"><span class="pill"><b>The White House</b></span><span class="dot">&middot;</span><span>2026-02-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;No president in modern history or perhaps all of history has done more structurally, substantively and sincerely to elevate and protect religious liberty.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;No president in modern history or perhaps all of history has done more structurally, substantively and sincerely to elevate and protect religious liberty.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR President Donald J. Trump addressed the National Prayer Breakfast, highlighting his administration's commitment to elevating religious liberty and traditional values, while also asserting significant achievements in military rebuilding, economic growth, and law...</div>
+                    <div class="sum-preview" id="preview-9">President Donald J. Trump addressed the National Prayer Breakfast, highlighting his administration's commitment to elevating religious liberty and traditional values, while also asserting significant achievements in military rebuilding, economic growth, and law...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong> President Donald J. Trump addressed the National Prayer Breakfast, highlighting his administration's commitment to elevating religious liberty and traditional values, while also asserting significant achievements in military rebuilding, economic growth, and law enforcement, crediting a national spiritual revival for American success.</p>
 <h3>Elevating Faith and Religious Liberty</h3>
 <ul>
@@ -3640,7 +3672,7 @@ Thank you everybody.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump discussed evolving law enforcement strategies in Minneapolis, emphasized national election integrity with mandatory voter identification, speculated on a strong 2028 ticket featuring JD Vance and Marco Rubio, and reiterated a firm stance against Iran's nuclear ambitions.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR President Trump discussed evolving law enforcement strategies in Minneapolis, emphasized national election integrity with mandatory voter identification, speculated on a strong 2028 ticket featuring JD Vance and Marco Rubio, and reiterated a firm stance against Iran's...</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>President Trump discussed evolving law enforcement strategies in Minneapolis, emphasized national election integrity with mandatory voter identification, speculated on a strong 2028 ticket featuring JD Vance and Marco Rubio, and reiterated a firm stance against Iran's nuclear ambitions.</p>
 <h3>Domestic Security and Immigration Enforcement</h3>
@@ -3790,9 +3822,9 @@ We also asked about Clinton's anticipated testimony to Congress over Jeffrey Eps
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/_NwkFeixjYh7VlH267bkjnJz9WciTzOuvWYhpjD_CdOICvWKPOS6nNsYAcgCX47WAGkNq_VPKA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Cisco</b><span class="subs">(417.0K)</span></span><span class="dot">&middot;</span><span>21:40</span><span class="dot">&middot;</span><span>2026-02-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jeetu%20Patel%22">Jeetu Patel<span class="chip-desc">EVP and GM, Cisco</span></a> <a class="chip" href="index.html?q=%22Lip-Bu%20Tan%22">Lip-Bu Tan<span class="chip-desc">CEO, Intel</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Lip-Bu Tan, CEO of Intel, outlines Intel's strategic turnaround, emphasizing its commitment to becoming a leading, general-purpose foundry and addressing critical AI infrastructure bottlenecks, while urging significant investment in US foundational r...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Lip-Bu Tan, CEO of Intel, outlines Intel's strategic turnaround, emphasizing its commitment to becoming a leading, general-purpose foundry and addressing critical AI infrastructure bottlenecks, while urging significant investment in US foundational…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Lip-Bu Tan, CEO of Intel, outlines Intel's strategic turnaround, emphasizing its commitment to becoming a leading, general-purpose foundry and addressing critical AI infrastructure bottlenecks, while urging significant investment in US foundational research and open-source...</div>
+                    <div class="sum-preview" id="preview-11">research and open-source...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Lip-Bu Tan, CEO of Intel, outlines Intel's strategic turnaround, emphasizing its commitment to becoming a leading, general-purpose foundry and addressing critical AI infrastructure bottlenecks, while urging significant investment in US foundational research and open-source development to counter escalating global competition.</p>
 <h3>Intel's Strategic Turnaround &amp; Foundry Ambition</h3>
@@ -3964,9 +3996,9 @@ We are exploring new materials. For example, glass is a very good insulator, so 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nulMc6GNIrLUi_wcTCKojfsfro0dsNLAueuj4edxt_Kl4T=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes</b><span class="subs">(2.1M)</span></span><span class="dot">&middot;</span><span>16:35</span><span class="dot">&middot;</span><span>609 views</span><span class="dot">&middot;</span><span>2026-02-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Denton%22">Steve Denton<span class="chip-desc">CEO, Opendorse</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Last year they made two billion dollars and by the end of the decade they're going to be making six.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Last year they made two billion dollars and by the end of the decade they're going to be making six.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR The collegiate Name, Image, and Likeness (NIL) market has rapidly grown from zero to $2 billion in five years, projected to reach $6 billion by decade's end, with Opendorse CEO Steve Denton highlighting its maturation through regulation and the surprising trend of female...</div>
+                    <div class="sum-preview" id="preview-12">The collegiate Name, Image, and Likeness (NIL) market has rapidly grown from zero to $2 billion in five years, projected to reach $6 billion by decade's end, with Opendorse CEO Steve Denton highlighting its maturation through regulation and the surprising trend of female...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong> The collegiate Name, Image, and Likeness (NIL) market has rapidly grown from zero to $2 billion in five years, projected to reach $6 billion by decade's end, with Opendorse CEO Steve Denton highlighting its maturation through regulation and the surprising trend of female student-athletes out-earning males in brand deals.</p>
 <h3>1. Rapid Growth and Evolution of the NIL Marketplace</h3>
 <ul>
@@ -4114,9 +4146,9 @@ Last thing, where do you want Open Doors to push going forward? How do you see t
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.3M)</span></span><span class="dot">&middot;</span><span>134:14</span><span class="dot">&middot;</span><span>30.9K views</span><span class="dot">&middot;</span><span>2026-02-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent highlighted the Trump administration's focus on economic growth and affordability, asserting that FSOC has appropriately refocused on economic security, while facing strong challenges from Democratic senators over ris...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent highlighted the Trump administration's focus on economic growth and affordability, asserting that FSOC has appropriately refocused on economic security, while facing strong challenges from Democratic senators over…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Treasury Secretary Scott Bessent highlighted the Trump administration's focus on economic growth and affordability, asserting that FSOC has appropriately refocused on economic security, while facing strong challenges from Democratic senators over rising household costs,...</div>
+                    <div class="sum-preview" id="preview-13">rising household costs,...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent highlighted the Trump administration's focus on economic growth and affordability, asserting that FSOC has appropriately refocused on economic security, while facing strong challenges from Democratic senators over rising household costs, manufacturing job losses, and potential conflicts of interest.</p>
 <h3>Economic Performance and Affordability: Contrasting Views</h3>

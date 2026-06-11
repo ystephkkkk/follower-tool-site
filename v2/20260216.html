@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/Omr_orQNkUhWUe0f2IrvNiiy5GyUsyeJ6U-5ppcgqjFTa55aFZHwPEmhhdFKTkAAeJX4437eqQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Sourcery with Molly O'Shea</b><span class="subs">(25.0K)</span></span><span class="dot">&middot;</span><span>48:13</span><span class="dot">&middot;</span><span>2.6K views</span><span class="dot">&middot;</span><span>2026-02-16</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Alex%20Blania%22">Alex Blania<span class="chip-desc">CEO, Tools for Humanity</span></a> <a class="chip" href="index.html?q=%22Molly%20O%27Shea%22">Molly O'Shea<span class="chip-desc">Host, Sourcery</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Alex Blania, CEO of Tools for Humanity and Co-Founder of Merge Labs, discusses the creation of a global &quot;Proof of Human&quot; network to combat an internet where 99.9% of traffic is AI-driven, while announcing a $250 million investment from OpenAI into Me...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Alex Blania, CEO of Tools for Humanity and Co-Founder of Merge Labs, discusses the creation of a global &quot;Proof of Human&quot; network to combat an internet where 99.9% of traffic is AI-driven, while announcing a $250 million investment from OpenAI into…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Alex Blania, CEO of Tools for Humanity and Co-Founder of Merge Labs, discusses the creation of a global &quot;Proof of Human&quot; network to combat an internet where 99.9% of traffic is AI-driven, while announcing a $250 million investment from OpenAI into Merge Labs to bridge...</div>
+                    <div class="sum-preview" id="preview-0">Merge Labs to bridge...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Alex Blania, CEO of Tools for Humanity and Co-Founder of Merge Labs, discusses the creation of a global "Proof of Human" network to combat an internet where 99.9% of traffic is AI-driven, while announcing a $250 million investment from OpenAI into Merge Labs to bridge biological and artificial intelligence.</p>
 <h3>The World Ecosystem: Establishing a "Real Human Network"</h3>
@@ -809,7 +841,7 @@ This work is driven by a belief that we are in the final stages before the arriv
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI will act as the ultimate social equalizer in India, providing every citizen with free, high-quality healthcare and personalized education by 2030, provided the government adopts proactive policies to pivot from traditional IT outsourcing to AI service exports.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR AI will act as the ultimate social equalizer in India, providing every citizen with free, high-quality healthcare and personalized education by 2030, provided the government adopts proactive policies to pivot from traditional IT outsourcing to AI service exports.  The...</div>
+                    <div class="sum-preview" id="preview-1">The...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>AI will act as the ultimate social equalizer in India, providing every citizen with free, high-quality healthcare and personalized education by 2030, provided the government adopts proactive policies to pivot from traditional IT outsourcing to AI service exports.</p>
 <h3>Universal Access to Expertise</h3>
@@ -899,7 +931,7 @@ Ultimately, the success of this vision depends on human agency—the drive to ch
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>India has emerged as Anthropic’s second-largest global user base, characterized by high technical intensity and a rapid shift from basic AI assistance to complex, agentic &quot;thinking&quot; software that solves large-scale societal and industrial problems.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR India has emerged as Anthropic’s second-largest global user base, characterized by high technical intensity and a rapid shift from basic AI assistance to complex, agentic &quot;thinking&quot; software that solves large-scale societal and industrial problems.    Rapid Growth and...</div>
+                    <div class="sum-preview" id="preview-2">Rapid Growth and...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>India has emerged as Anthropic’s second-largest global user base, characterized by high technical intensity and a rapid shift from basic AI assistance to complex, agentic "thinking" software that solves large-scale societal and industrial problems.</p>
 <h3>India as a Global AI Powerhouse</h3>
@@ -997,9 +1029,9 @@ A year ago, AI in production primarily meant chatbots, conversational AI, and co
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nNS5HIILZld8AJcyd0zn5M2MaudHidRWN5-OkwgsXeXyo=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Ecole polytechnique</b><span class="subs">(63.6K)</span></span><span class="dot">&middot;</span><span>28:55</span><span class="dot">&middot;</span><span>58.5K views</span><span class="dot">&middot;</span><span>2026-02-16</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Arthur%20Mensch%22">Arthur Mensch<span class="chip-desc">CEO, Mistral AI</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Since 2023, we can consider that the systems we put in place gain one year of seniority every year.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Since 2023, we can consider that the systems we put in place gain one year of seniority every year.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR: Arthur Mensch argues that AI is rapidly commoditizing traditional intellectual and engineering tasks, necessitating a shift toward higher levels of abstraction and human-centric problem-solving to maintain European strategic and cultural sovereignty.  Commoditization of...</div>
+                    <div class="sum-preview" id="preview-3">Arthur Mensch argues that AI is rapidly commoditizing traditional intellectual and engineering tasks, necessitating a shift toward higher levels of abstraction and human-centric problem-solving to maintain European strategic and cultural sovereignty.  Commoditization of...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR:</strong> Arthur Mensch argues that AI is rapidly commoditizing traditional intellectual and engineering tasks, necessitating a shift toward higher levels of abstraction and human-centric problem-solving to maintain European strategic and cultural sovereignty.</p>
 <h3>The Evolution of AI: From Chatbots to Operating Systems</h3>
 <ul>
@@ -1088,9 +1120,9 @@ Enfin, concernant la &quot;Gloire&quot; ou la réalité de l'entrepreneuriat, j'
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(153.0K)</span></span><span class="dot">&middot;</span><span>62:40</span><span class="dot">&middot;</span><span>52.0K views</span><span class="dot">&middot;</span><span>2026-02-16</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Real Eisman Playbook</span></a> <a class="chip" href="index.html?q=%22Daniel%20Guetta%22">Daniel Guetta<span class="chip-desc">Professor, Columbia Business School</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;What you should be surprised by is that [LLMs] ever *don't* hallucinate...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;What you should be surprised by is that [LLMs] ever *don't*…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR: While Large Language Models (LLMs) are &quot;statistical parrots&quot; that lack human-style reasoning, their ability to navigate unstructured data and act as &quot;agentic&quot; tools provides immense corporate value today, regardless of whether the technology ever achieves human-level...</div>
+                    <div class="sum-preview" id="preview-4">While Large Language Models (LLMs) are &quot;statistical parrots&quot; that lack human-style reasoning, their ability to navigate unstructured data and act as &quot;agentic&quot; tools provides immense corporate value today, regardless of whether the technology ever achieves human-level...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR:</strong> While Large Language Models (LLMs) are "statistical parrots" that lack human-style reasoning, their ability to navigate unstructured data and act as "agentic" tools provides immense corporate value today, regardless of whether the technology ever achieves human-level superintelligence.</p>
 <h3>The Technical Reality: How LLMs "Think"</h3>
 <ul>
@@ -1214,7 +1246,7 @@ Reflecting on these perspectives, there is significant overlap between AI critic
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Markets are entering a &quot;Goldilocks&quot; regime characterized by accelerating US cyclical growth and cooling inflation, driving a rotation out of high-CapEx &quot;hyperscalers&quot; and into the AI supply chain, energy, and global bonds.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Markets are entering a &quot;Goldilocks&quot; regime characterized by accelerating US cyclical growth and cooling inflation, driving a rotation out of high-CapEx &quot;hyperscalers&quot; and into the AI supply chain, energy, and global bonds.  Sector Disruption: AI is causing rapid valuation...</div>
+                    <div class="sum-preview" id="preview-5">Sector Disruption: AI is causing rapid valuation...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Markets are entering a "Goldilocks" regime characterized by accelerating US cyclical growth and cooling inflation, driving a rotation out of high-CapEx "hyperscalers" and into the AI supply chain, energy, and global bonds.</p>
 <h3>The AI "Kiss of Death" and Market Rotations</h3>
@@ -1316,7 +1348,7 @@ In terms of specific asset classes, oil currently stands out as a strong risk-re
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Hungary and the United States have entered a diplomatic &quot;Golden Age&quot; following the signing of a bilateral civil nuclear pact and a shared commitment to peace in Ukraine, driven by the close personal relationship between Prime Minister Viktor Orbán and the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Hungary and the United States have entered a diplomatic &quot;Golden Age&quot; following the signing of a bilateral civil nuclear pact and a shared commitment to peace in Ukraine, driven by the close personal relationship between Prime Minister Viktor Orbán and the U.S....</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Hungary and the United States have entered a diplomatic "Golden Age" following the signing of a bilateral civil nuclear pact and a shared commitment to peace in Ukraine, driven by the close personal relationship between Prime Minister Viktor Orbán and the U.S. administration.</p>
 <h3>A "Golden Age" of Bilateral Relations</h3>
@@ -1409,7 +1441,7 @@ Prime Minister Orbán concluded by addressing concerns regarding Chinese investm
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global economy is entering a &quot;gradual print&quot; era within a sovereign debt crisis, characterized by eroding Federal Reserve independence and a shift toward a multipolar monetary order where gold and Bitcoin serve as neutral reserve assets.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR The global economy is entering a &quot;gradual print&quot; era within a sovereign debt crisis, characterized by eroding Federal Reserve independence and a shift toward a multipolar monetary order where gold and Bitcoin serve as neutral reserve assets.    The 80-Year Cycle: Lyn Alden...</div>
+                    <div class="sum-preview" id="preview-7">The 80-Year Cycle: Lyn Alden...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>The global economy is entering a "gradual print" era within a sovereign debt crisis, characterized by eroding Federal Reserve independence and a shift toward a multipolar monetary order where gold and Bitcoin serve as neutral reserve assets.</p>
 <h3>The Macro Context: A "Fourth Turning" Debt Cycle</h3>
@@ -1550,9 +1582,9 @@ Crypto is risky, and you could lose what you put in, but we are headed West. Thi
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/SHQE0Y5rb996mAAUmkQZbJdSWj_rcce07GwKk4LTYkf9PKABaWtCEc_a6SjzZPqOgM8pP4kByXE=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNN-News18</b><span class="subs">(10.4M)</span></span><span class="dot">&middot;</span><span>59:55</span><span class="dot">&middot;</span><span>1.5K views</span><span class="dot">&middot;</span><span>2026-02-16</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Narendra%20Modi%22">Narendra Modi<span class="chip-desc">Prime Minister, India</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>India is positioning itself as the leader of a &quot;Sovereign AI&quot; movement, prioritizing the democratization of technology and affordable, multilingual, and offline-capable solutions designed specifically to address the challenges of the Global South whi...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>India is positioning itself as the leader of a &quot;Sovereign AI&quot; movement, prioritizing the democratization of technology and affordable, multilingual, and offline-capable solutions designed specifically to address the challenges of the Global South…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR India is positioning itself as the leader of a &quot;Sovereign AI&quot; movement, prioritizing the democratization of technology and affordable, multilingual, and offline-capable solutions designed specifically to address the challenges of the Global South while challenging the...</div>
+                    <div class="sum-preview" id="preview-8">while challenging the...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>India is positioning itself as the leader of a "Sovereign AI" movement, prioritizing the democratization of technology and affordable, multilingual, and offline-capable solutions designed specifically to address the challenges of the Global South while challenging the monopolies of Western and Chinese AI models.</p>
 <h3>The "India Model" of AI: Democratization vs. Monopoly</h3>
@@ -1630,7 +1662,7 @@ Crypto is risky, and you could lose what you put in, but we are headed West. Thi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of State Marco Rubio reported a &quot;historic&quot; joint meeting between Syrian authorities and Kurdish leaders to secure thousands of ISIS prisoners, while Slovak Prime Minister Robert Fico accused Ukraine of using energy transit as &quot;political blackmail&quot; against Central European nations.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Secretary of State Marco Rubio reported a &quot;historic&quot; joint meeting between Syrian authorities and Kurdish leaders to secure thousands of ISIS prisoners, while Slovak Prime Minister Robert Fico accused Ukraine of using energy transit as &quot;political blackmail&quot; against Central...</div>
+                    <div class="sum-preview" id="preview-9"></div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Secretary of State Marco Rubio reported a "historic" joint meeting between Syrian authorities and Kurdish leaders to secure thousands of ISIS prisoners, while Slovak Prime Minister Robert Fico accused Ukraine of using energy transit as "political blackmail" against Central European nations.</p>
 <h3>U.S. Diplomatic Strategy in Syria</h3>

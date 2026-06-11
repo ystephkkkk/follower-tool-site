@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR U.S. Attorney Jeanine Pirro announced the DOJ will appeal an &quot;activist&quot; ruling by Judge James Boasberg that blocked grand jury subpoenas investigating Federal Reserve Chairman Jerome Powell for $1 billion in renovation cost overruns. Pirro contends the decision creates a...</div>
+                    <div class="sum-preview" id="preview-0">Attorney Jeanine Pirro announced the DOJ will appeal an &quot;activist&quot; ruling by Judge James Boasberg that blocked grand jury subpoenas investigating Federal Reserve Chairman Jerome Powell for $1 billion in renovation cost overruns. Pirro contends the decision creates a...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>U.S. Attorney Jeanine Pirro announced the DOJ will appeal an "activist" ruling by Judge James Boasberg that blocked grand jury subpoenas investigating Federal Reserve Chairman Jerome Powell for $1 billion in renovation cost overruns. Pirro contends the decision creates a lawless precedent by allowing a judge to "neuter" the grand jury and shield a public official from standard investigative oversight.</p>
 <h3>The Investigation into Federal Reserve Misconduct</h3>
@@ -835,7 +867,7 @@ I'll tell you what's historic. What's historic is that I prosecute everything ot
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Palantir is positioning itself as the &quot;Iron Man suit&quot; for institutional experts, driving a shift from traditional software to AI-integrated operations that CEO Dr.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Palantir is positioning itself as the &quot;Iron Man suit&quot; for institutional experts, driving a shift from traditional software to AI-integrated operations that CEO Dr. Alex Karp argues will determine the winner of the US-China geopolitical struggle.    The &quot;Golden Child&quot; of...</div>
+                    <div class="sum-preview" id="preview-1">Alex Karp argues will determine the winner of the US-China geopolitical struggle.    The &quot;Golden Child&quot; of...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Palantir is positioning itself as the "Iron Man suit" for institutional experts, driving a shift from traditional software to AI-integrated operations that CEO Dr. Alex Karp argues will determine the winner of the US-China geopolitical struggle.</p>
 <h3>The AI Industrial Revolution and Market Outlook</h3>
@@ -1380,7 +1412,7 @@ And that's our show today folks. Thank you so much for tuning in to TBPN. Today 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The primary bottleneck for scaling AI compute is shifting from short-term constraints like power and data center construction to the long lead-time semiconductor supply chain, specifically EUV lithography tools and High Bandwidth Memory (HBM).</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The primary bottleneck for scaling AI compute is shifting from short-term constraints like power and data center construction to the long lead-time semiconductor supply chain, specifically EUV lithography tools and High Bandwidth Memory (HBM). Rapid scaling is currently...</div>
+                    <div class="sum-preview" id="preview-2">). Rapid scaling is currently...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The primary bottleneck for scaling AI compute is shifting from short-term constraints like power and data center construction to the long lead-time semiconductor supply chain, specifically EUV lithography tools and High Bandwidth Memory (HBM). Rapid scaling is currently driving a massive "memory crunch" that will significantly increase the cost and decrease the performance of consumer electronics as resources are diverted to AI.</p>
 <h3>The Economics of Hyperscale CapEx and Lab Scaling</h3>
@@ -2511,7 +2543,7 @@ And so maybe you can have the low low bandwidth because the reason you stack DRA
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Palantir is witnessing a dramatic &quot;step change&quot; in deployment velocity where complex enterprise applications are now operationalized in hours or days rather than years, shifting the technology's purpose from incremental efficiency to total market dominance.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Palantir is witnessing a dramatic &quot;step change&quot; in deployment velocity where complex enterprise applications are now operationalized in hours or days rather than years, shifting the technology's purpose from incremental efficiency to total market dominance. The pace of...</div>
+                    <div class="sum-preview" id="preview-3">The pace of...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Palantir is witnessing a dramatic "step change" in deployment velocity where complex enterprise applications are now operationalized in hours or days rather than years, shifting the technology's purpose from incremental efficiency to total market dominance.</p>
 <h3>Radical Acceleration in Deployment Velocity</h3>
@@ -2669,7 +2701,7 @@ We understand that it requires a lot of engagement from you all. Of course, that
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>This briefing analyzes the geopolitical and economic volatility of the Iran conflict, the unprecedented revenue scaling of AI leaders Anthropic and OpenAI amid a deepening PR crisis, and the accelerating migration of high-net-worth individuals following new state-level &quot;millionaire taxes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR This briefing analyzes the geopolitical and economic volatility of the Iran conflict, the unprecedented revenue scaling of AI leaders Anthropic and OpenAI amid a deepening PR crisis, and the accelerating migration of high-net-worth individuals following new state-level...</div>
+                    <div class="sum-preview" id="preview-4"></div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>This briefing analyzes the geopolitical and economic volatility of the Iran conflict, the unprecedented revenue scaling of AI leaders Anthropic and OpenAI amid a deepening PR crisis, and the accelerating migration of high-net-worth individuals following new state-level "millionaire taxes."</p>
 <h3>Geopolitical Conflict and Energy Volatility</h3>
@@ -3432,9 +3464,9 @@ Thank you Bestie Brad. Love you boys. Bye-bye.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>25:32</span><span class="dot">&middot;</span><span>4.1K views</span><span class="dot">&middot;</span><span>2026-03-13</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22JD%20Vance%22">JD Vance<span class="chip-desc">Vice President</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance visited Rocky Mount, North Carolina, to highlight the Trump administration's economic successes—including significant tax cuts and lowered inflation—while contrasting their &quot;America First&quot; policies against the records of Democ...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance visited Rocky Mount, North Carolina, to highlight the Trump administration's economic successes—including significant tax cuts and lowered inflation—while contrasting their &quot;America First&quot; policies against the records of…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Vice President JD Vance visited Rocky Mount, North Carolina, to highlight the Trump administration's economic successes—including significant tax cuts and lowered inflation—while contrasting their &quot;America First&quot; policies against the records of Democratic opponents...</div>
+                    <div class="sum-preview" id="preview-5">Democratic opponents...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance visited Rocky Mount, North Carolina, to highlight the Trump administration's economic successes—including significant tax cuts and lowered inflation—while contrasting their "America First" policies against the records of Democratic opponents regarding immigration and public safety.</p>
 <h3>Economic Revitalization and Tax Relief</h3>
@@ -3689,7 +3721,7 @@ Say a prayer not just for the North Carolinians but for the people of all of our
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR U.S. Attorney Jeanine Pirro condemned a federal judge's decision to quash grand jury subpoenas in a criminal investigation of Fed Chair Jerome Powell regarding $1 billion in renovation cost overruns, labeling the ruling &quot;judicial activism&quot; that grants Powell unlawful...</div>
+                    <div class="sum-preview" id="preview-6">Attorney Jeanine Pirro condemned a federal judge's decision to quash grand jury subpoenas in a criminal investigation of Fed Chair Jerome Powell regarding $1 billion in renovation cost overruns, labeling the ruling &quot;judicial activism&quot; that grants Powell unlawful...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>U.S. Attorney Jeanine Pirro condemned a federal judge's decision to quash grand jury subpoenas in a criminal investigation of Fed Chair Jerome Powell regarding $1 billion in renovation cost overruns, labeling the ruling "judicial activism" that grants Powell unlawful immunity.</p>
 <h3>The Investigation into Jerome Powell</h3>
@@ -3838,7 +3870,7 @@ I'm willing to take a not guilty, I'm willing to take a no true bill, because I'
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Project Maven has shifted from a technology-first AI approach to a &quot;decision-centric&quot; workflow model, leveraging the Maven Smart System to integrate disparate data feeds and collapse combat &quot;kill chain&quot; timelines from hours to minutes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Project Maven has shifted from a technology-first AI approach to a &quot;decision-centric&quot; workflow model, leveraging the Maven Smart System to integrate disparate data feeds and collapse combat &quot;kill chain&quot; timelines from hours to minutes.  The Third Offset: While historical...</div>
+                    <div class="sum-preview" id="preview-7">The Third Offset: While historical...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Project Maven has shifted from a technology-first AI approach to a "decision-centric" workflow model, leveraging the Maven Smart System to integrate disparate data feeds and collapse combat "kill chain" timelines from hours to minutes.</p>
 <h3>The Shift to Decision Advantage</h3>
@@ -3980,7 +4012,7 @@ That's why we do it. Palantir is very helpful in delivering this. Maven Smart Sy
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>US Treasury Secretary Scott Bessent asserts that the bond market remains the ultimate arbiter of global finance, while outlining a US strategy of aggressive energy releases and military escorting in the Strait of Hormuz to stabilize markets amidst the ongoing Iranian conflict.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR US Treasury Secretary Scott Bessent asserts that the bond market remains the ultimate arbiter of global finance, while outlining a US strategy of aggressive energy releases and military escorting in the Strait of Hormuz to stabilize markets amidst the ongoing Iranian...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>US Treasury Secretary Scott Bessent asserts that the bond market remains the ultimate arbiter of global finance, while outlining a US strategy of aggressive energy releases and military escorting in the Strait of Hormuz to stabilize markets amidst the ongoing Iranian conflict.</p>
 <h3>Investment Philosophy and the Primacy of the Bond Market</h3>
@@ -4281,7 +4313,7 @@ I can see we're very much out of time Mr. Secretary. I really do appreciate all 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Mario Draghi calls for a radical overhaul of European economic policy to bridge a widening &quot;innovation gap&quot; with the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Mario Draghi calls for a radical overhaul of European economic policy to bridge a widening &quot;innovation gap&quot; with the U.S. and China, warning that while global economies have shown remarkable post-pandemic resilience, Europe faces an existential threat from high energy...</div>
+                    <div class="sum-preview" id="preview-9">and China, warning that while global economies have shown remarkable post-pandemic resilience, Europe faces an existential threat from high energy...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Mario Draghi calls for a radical overhaul of European economic policy to bridge a widening "innovation gap" with the U.S. and China, warning that while global economies have shown remarkable post-pandemic resilience, Europe faces an existential threat from high energy costs and stagnant high-tech productivity.</p>
 <h3>Post-Pandemic Resilience and Emerging Fiscal "Cracks"</h3>
@@ -4565,7 +4597,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Journaling is a vital &quot;democratic&quot; creative tool that allows leaders to navigate uncertainty by prioritizing internal reflection over external productivity, ultimately &quot;alchemizing&quot; life's challenges into meaningful insights and deeper human connections.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Journaling is a vital &quot;democratic&quot; creative tool that allows leaders to navigate uncertainty by prioritizing internal reflection over external productivity, ultimately &quot;alchemizing&quot; life's challenges into meaningful insights and deeper human connections.    Beyond the...</div>
+                    <div class="sum-preview" id="preview-10">Beyond the...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Journaling is a vital "democratic" creative tool that allows leaders to navigate uncertainty by prioritizing internal reflection over external productivity, ultimately "alchemizing" life's challenges into meaningful insights and deeper human connections.</p>
 <h3>Redefining Journaling as a Leadership Practice</h3>
@@ -4793,9 +4825,9 @@ Find a transcript of this episode as well as transcripts for my colleague's podc
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(162.0K)</span></span><span class="dot">&middot;</span><span>38:47</span><span class="dot">&middot;</span><span>73.7K views</span><span class="dot">&middot;</span><span>2026-03-13</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Weekly Wrap</span></a> <a class="chip" href="index.html?q=%22Helima%20Croft%22">Helima Croft<span class="chip-desc">Global Head of Commodity Strategy, RBC</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The Strait of Hormuz is effectively a parking lot...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The Strait of Hormuz is effectively a parking…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR: The conflict with Iran has effectively closed the Strait of Hormuz, causing a massive 6.7 million barrel-per-day &quot;shut-in&quot; of Middle Eastern oil; if military operations extend beyond two weeks, the global economic ramifications could be catastrophic.  Strait of Hormuz...</div>
+                    <div class="sum-preview" id="preview-11">The conflict with Iran has effectively closed the Strait of Hormuz, causing a massive 6.7 million barrel-per-day &quot;shut-in&quot; of Middle Eastern oil; if military operations extend beyond two weeks, the global economic ramifications could be catastrophic.  Strait of Hormuz...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR:</strong> The conflict with Iran has effectively closed the Strait of Hormuz, causing a massive 6.7 million barrel-per-day "shut-in" of Middle Eastern oil; if military operations extend beyond two weeks, the global economic ramifications could be catastrophic.</p>
 <h3>The Energy Crisis and Strait of Hormuz Blockage</h3>
 <ul>
@@ -5105,7 +5137,7 @@ The host and guest may hold positions in stocks discussed. Opinions expressed ar
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Under Secretary Emil Michael is pivoting the Department of Defense from &quot;peacetime speed&quot; to &quot;wartime speed&quot; by prioritizing applied AI and dismantling restrictive commercial contracts that previously gave private vendors veto power over military operations.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Under Secretary Emil Michael is pivoting the Department of Defense from &quot;peacetime speed&quot; to &quot;wartime speed&quot; by prioritizing applied AI and dismantling restrictive commercial contracts that previously gave private vendors veto power over military operations.  Strategic...</div>
+                    <div class="sum-preview" id="preview-12">Strategic...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Under Secretary Emil Michael is pivoting the Department of Defense from "peacetime speed" to "wartime speed" by prioritizing applied AI and dismantling restrictive commercial contracts that previously gave private vendors veto power over military operations.</p>
 <h3>Reforming Defense Priorities for "Wartime Speed"</h3>

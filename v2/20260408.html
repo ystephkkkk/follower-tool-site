@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/i41YIoa4lMg_O20-XmEBcd9JYt-HcuJFbD_e6jfcX6FsPmYCmhMi4cw1Ao7aE44adE7AjJHt=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Everpure</b><span class="subs">(26.5K)</span></span><span class="dot">&middot;</span><span>25:13</span><span class="dot">&middot;</span><span>12 views</span><span class="dot">&middot;</span><span>2026-04-08</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Kaycee%20Lai%22">Kaycee Lai<span class="chip-desc">VP of AI, Everpure</span></a> <a class="chip" href="index.html?q=%22Shawn%20Rosemarin%22">Shawn Rosemarin<span class="chip-desc">Host, Beyond the IT Headlines</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The enterprise AI landscape has shifted from experimental training to &quot;always-on&quot; production (inference), requiring a fundamental transition toward &quot;AI Data Factories&quot;—architectural blueprints rather than single products—where data is continuously pr...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The enterprise AI landscape has shifted from experimental training to &quot;always-on&quot; production (inference), requiring a fundamental transition toward &quot;AI Data Factories&quot;—architectural blueprints rather than single products—where data is continuously…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR The enterprise AI landscape has shifted from experimental training to &quot;always-on&quot; production (inference), requiring a fundamental transition toward &quot;AI Data Factories&quot;—architectural blueprints rather than single products—where data is continuously processed by autonomous...</div>
+                    <div class="sum-preview" id="preview-0">processed by autonomous...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>The enterprise AI landscape has shifted from experimental training to "always-on" production (inference), requiring a fundamental transition toward "AI Data Factories"—architectural blueprints rather than single products—where data is continuously processed by autonomous agents to drive core business outcomes.</p>
 <h3>From AI Training to "Inference-First" Operations</h3>
@@ -866,9 +898,9 @@ So with that, Kaycee, I really, really appreciate your time today. And for those
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>14:23</span><span class="dot">&middot;</span><span>26.4K views</span><span class="dot">&middot;</span><span>2026-04-08</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22JD%20Vance%22">JD Vance<span class="chip-desc">Vice President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance confirmed a tenuous ceasefire is in effect with Iran, clarifying that upcoming negotiations in Islamabad will prioritize the permanent reopening of the Strait of Hormuz and the removal of nuclear fuel, while explicitly stating...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance confirmed a tenuous ceasefire is in effect with Iran, clarifying that upcoming negotiations in Islamabad will prioritize the permanent reopening of the Strait of Hormuz and the removal of nuclear fuel, while explicitly…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Vice President JD Vance confirmed a tenuous ceasefire is in effect with Iran, clarifying that upcoming negotiations in Islamabad will prioritize the permanent reopening of the Strait of Hormuz and the removal of nuclear fuel, while explicitly stating that Lebanon was never...</div>
+                    <div class="sum-preview" id="preview-1">stating that Lebanon was never...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance confirmed a tenuous ceasefire is in effect with Iran, clarifying that upcoming negotiations in Islamabad will prioritize the permanent reopening of the Strait of Hormuz and the removal of nuclear fuel, while explicitly stating that Lebanon was never included in the current truce.</p>
 <h3>Diplomatic Mission to Hungary</h3>
@@ -1031,7 +1063,7 @@ Thank you all. Have a safe trip back. Do you have concerns that the talks won't 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance’s visit to Budapest underscores a burgeoning &quot;conservative international&quot; alliance, where he defended Hungarian sovereignty against EU pressure and announced a &quot;fragile&quot; 12-hour-old ceasefire agreement with Iran.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Vice President JD Vance’s visit to Budapest underscores a burgeoning &quot;conservative international&quot; alliance, where he defended Hungarian sovereignty against EU pressure and announced a &quot;fragile&quot; 12-hour-old ceasefire agreement with Iran.  Ceasefire Terms: VP Vance announced...</div>
+                    <div class="sum-preview" id="preview-2">Ceasefire Terms: VP Vance announced...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance’s visit to Budapest underscores a burgeoning "conservative international" alliance, where he defended Hungarian sovereignty against EU pressure and announced a "fragile" 12-hour-old ceasefire agreement with Iran.</p>
 <h3>Breakthrough in the Middle East: Iran Ceasefire</h3>
@@ -1320,7 +1352,7 @@ Standing ovation at MCC. Vice President JD Vance, thank you very much and be a f
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Paul Sheard traces the 25-year evolution of Quantitative Easing (QE) from a 2001 Japanese experiment to a global monetary standard, highlighting how the technical ability to pay interest on bank reserves fundamentally changed how central banks manage liquidity and interest rates.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Paul Sheard traces the 25-year evolution of Quantitative Easing (QE) from a 2001 Japanese experiment to a global monetary standard, highlighting how the technical ability to pay interest on bank reserves fundamentally changed how central banks manage liquidity and interest...</div>
+                    <div class="sum-preview" id="preview-3"></div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Paul Sheard traces the 25-year evolution of Quantitative Easing (QE) from a 2001 Japanese experiment to a global monetary standard, highlighting how the technical ability to pay interest on bank reserves fundamentally changed how central banks manage liquidity and interest rates.</p>
 <h3>Origins and Global Adoption of Quantitative Easing</h3>
@@ -2839,9 +2871,9 @@ And sure enough, I used to play a little party trick at this point, but I'm not 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>61:52</span><span class="dot">&middot;</span><span>30.5K views</span><span class="dot">&middot;</span><span>2026-04-08</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Josh%20Shapiro%22">Josh Shapiro<span class="chip-desc">Governor of Pennsylvania</span></a> <a class="chip" href="index.html?q=%22Jason%20Calacanis%22">Jason Calacanis<span class="chip-desc">Co-host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Co-host, All-In Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The way we start the conversation is by recognizing permits are critically important to economic development...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The way we start the conversation is by recognizing permits are critically important to economic…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR: Governor Josh Shapiro details his &quot;Pennsylvania Model&quot; of governance—prioritizing operational efficiency (&quot;Getting Shit Done&quot;), pro-growth economic policies, and aggressive fraud prosecution—as a centrist blueprint for the Democratic Party to counter federal &quot;chaos and...</div>
+                    <div class="sum-preview" id="preview-4">Governor Josh Shapiro details his &quot;Pennsylvania Model&quot; of governance—prioritizing operational efficiency (&quot;Getting Shit Done&quot;), pro-growth economic policies, and aggressive fraud prosecution—as a centrist blueprint for the Democratic Party to counter federal &quot;chaos and...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR:</strong> Governor Josh Shapiro details his "Pennsylvania Model" of governance—prioritizing operational efficiency ("Getting Shit Done"), pro-growth economic policies, and aggressive fraud prosecution—as a centrist blueprint for the Democratic Party to counter federal "chaos and corruption."</p>
 <h3>The "Pennsylvania Model": Operational Efficiency &amp; Economic Growth</h3>
 <ul>
@@ -3259,9 +3291,9 @@ I will see you in the second round it looks like. Next year—or next time I'm o
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/4-w44catDebzaDSUWgereql0G5_z5o7VpJXuIYL_eZ3H1vXy0lTmrole9V500jTUXCnQPZ5CuKQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Television</b><span class="subs">(3.1M)</span></span><span class="dot">&middot;</span><span>96:04</span><span class="dot">&middot;</span><span>11.6K views</span><span class="dot">&middot;</span><span>2026-04-08</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;I like to say 'three is the new two' when it comes to long-term inflation rates.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;I like to say 'three is the new two' when it comes to long-term inflation rates.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR: Markets experienced a massive relief rally after the US and Iran agreed to a surprise two-week ceasefire just 90 minutes before a Trump-imposed deadline, sending Brent crude tumbling 14% and European equities surging over 5%. While the immediate risk of escalation has...</div>
+                    <div class="sum-preview" id="preview-5">Markets experienced a massive relief rally after the US and Iran agreed to a surprise two-week ceasefire just 90 minutes before a Trump-imposed deadline, sending Brent crude tumbling 14% and European equities surging over 5%. While the immediate risk of escalation has...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR:</strong> Markets experienced a massive relief rally after the US and Iran agreed to a surprise two-week ceasefire just 90 minutes before a Trump-imposed deadline, sending Brent crude tumbling 14% and European equities surging over 5%. While the immediate risk of escalation has subsided, significant uncertainty remains regarding the "maximalist" demands of both nations and the logistical complexities of reopening the Strait of Hormuz to over 800 trapped vessels.</p>
 <h3>Market Reaction and Volatility</h3>
 <ul>
@@ -3739,7 +3771,7 @@ Yeah, energy sector is the only one in negative territory for reasons we all und
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Prada Group CEO Andrea Guerra argues that the luxury industry must return to its &quot;old normal&quot; of exclusivity and patient brand-building, prioritizing emotional storytelling and creative tension over chasing short-term trends.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Prada Group CEO Andrea Guerra argues that the luxury industry must return to its &quot;old normal&quot; of exclusivity and patient brand-building, prioritizing emotional storytelling and creative tension over chasing short-term trends. By leveraging data-driven CRM and revitalizing...</div>
+                    <div class="sum-preview" id="preview-6">By leveraging data-driven CRM and revitalizing...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Prada Group CEO Andrea Guerra argues that the luxury industry must return to its "old normal" of exclusivity and patient brand-building, prioritizing emotional storytelling and creative tension over chasing short-term trends. By leveraging data-driven CRM and revitalizing iconic brands like Miu Miu and Versace, the group aims to scale to a €10 billion ambition while maintaining a founder-led, "rebellious" cultural identity.</p>
 <h3>The Return to "Old Normal" in Luxury</h3>
@@ -4033,7 +4065,7 @@ So, I would love to continue to work heavily fewer days. And my dream would love
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>- **Scale of Usage:** Aaron Levie (CEO, Box) posits a future with 100 to 1,000 times more agents than human users, necessitating a move toward software built primarily for agent interaction via APIs, CLIs, or Model Context Protocol (MCP).</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR: As AI agents increasingly outnumber human users, enterprise software must pivot from GUI-first to API/CLI-first architectures, though this transition faces significant hurdles in security, &quot;system of record&quot; stability, and a massive underestimation of future compute...</div>
+                    <div class="sum-preview" id="preview-7">As AI agents increasingly outnumber human users, enterprise software must pivot from GUI-first to API/CLI-first architectures, though this transition faces significant hurdles in security, &quot;system of record&quot; stability, and a massive underestimation of future compute...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR:</strong> As AI agents increasingly outnumber human users, enterprise software must pivot from GUI-first to API/CLI-first architectures, though this transition faces significant hurdles in security, "system of record" stability, and a massive underestimation of future compute economics.</p>
 <h3>The Shift to Agent-First Software Architecture</h3>
 <ul>
@@ -4515,7 +4547,7 @@ They were making MIPS faster than they could charge for them. And that's what's 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The &quot;Magnificent Seven&quot; trade is bifurcating as investors shift focus from pure infrastructure builds to the actual utility and ROI of AI, leaving laggards like Microsoft and Apple under pressure to deliver &quot;Google-level&quot; breakthroughs to justify their valuations.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR The &quot;Magnificent Seven&quot; trade is bifurcating as investors shift focus from pure infrastructure builds to the actual utility and ROI of AI, leaving laggards like Microsoft and Apple under pressure to deliver &quot;Google-level&quot; breakthroughs to justify their valuations. ...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The "Magnificent Seven" trade is bifurcating as investors shift focus from pure infrastructure builds to the actual utility and ROI of AI, leaving laggards like Microsoft and Apple under pressure to deliver "Google-level" breakthroughs to justify their valuations.</p>
 <h3>AI Infrastructure: The Hyperscaler CAPEX Reality</h3>
@@ -4816,7 +4848,7 @@ Let's do it again at some point in the next few weeks, hopefully once we're in e
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The American financial system has transitioned into a &quot;Factory Model&quot; where the industrialization of fundraising and fee-related earnings (FRE) has led to deteriorating underwriting standards and dangerous asset-liability mismatches, particularly within the retail wealth channel.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR The American financial system has transitioned into a &quot;Factory Model&quot; where the industrialization of fundraising and fee-related earnings (FRE) has led to deteriorating underwriting standards and dangerous asset-liability mismatches, particularly within the retail wealth...</div>
+                    <div class="sum-preview" id="preview-9"></div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>The American financial system has transitioned into a "Factory Model" where the industrialization of fundraising and fee-related earnings (FRE) has led to deteriorating underwriting standards and dangerous asset-liability mismatches, particularly within the retail wealth channel.</p>
 <h3>The Evolution of the U.S. Financial System</h3>
@@ -5274,7 +5306,7 @@ Thank you so much, Patrick. Appreciate it.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump has declared a two-week ceasefire following the 38-day &quot;Operation Epic Fury,&quot; which the White House claims successfully dismantled Iran’s military infrastructure and senior leadership.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR President Trump has declared a two-week ceasefire following the 38-day &quot;Operation Epic Fury,&quot; which the White House claims successfully dismantled Iran’s military infrastructure and senior leadership. High-level negotiations led by Vice President JD Vance will begin this...</div>
+                    <div class="sum-preview" id="preview-10">High-level negotiations led by Vice President JD Vance will begin this...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>President Trump has declared a two-week ceasefire following the 38-day "Operation Epic Fury," which the White House claims successfully dismantled Iran’s military infrastructure and senior leadership. High-level negotiations led by Vice President JD Vance will begin this weekend in Islamabad to seek a long-term diplomatic solution.</p>
 <h3>Military Outcomes of Operation Epic Fury</h3>

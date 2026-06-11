@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google has successfully merged DeepMind’s research culture with Google’s engineering scale to create a &quot;breakthrough machine&quot; that balances top-tier proprietary models (Gemini) with a rapidly expanding, community-driven open-source ecosystem (Gemma) ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Google has successfully merged DeepMind’s research culture with Google’s engineering scale to create a &quot;breakthrough machine&quot; that balances top-tier proprietary models (Gemini) with a rapidly expanding, community-driven open-source ecosystem (Gemma) aimed at global...</div>
+                    <div class="sum-preview" id="preview-0">) aimed at global...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Google has successfully merged DeepMind’s research culture with Google’s engineering scale to create a "breakthrough machine" that balances top-tier proprietary models (Gemini) with a rapidly expanding, community-driven open-source ecosystem (Gemma) aimed at global accessibility and specialized industrial use cases.</p>
 <h3>The Google-DeepMind "Breakthrough Machine"</h3>
@@ -790,7 +822,7 @@ Our development process is community-driven. Every time we plan a release, we re
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>As AI transitions from a tool to a governance actor, the global economy is shifting from a &quot;war on ignorance&quot; to a &quot;war on scarcity,&quot; necessitating a transition from paying for labor inputs to paying for verified, industrial-scale outcomes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR As AI transitions from a tool to a governance actor, the global economy is shifting from a &quot;war on ignorance&quot; to a &quot;war on scarcity,&quot; necessitating a transition from paying for labor inputs to paying for verified, industrial-scale outcomes.  AI-Led Corporations: Dr....</div>
+                    <div class="sum-preview" id="preview-1">AI-Led Corporations: Dr....</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>As AI transitions from a tool to a governance actor, the global economy is shifting from a "war on ignorance" to a "war on scarcity," necessitating a transition from paying for labor inputs to paying for verified, industrial-scale outcomes.</p>
 <h3>The Rise of the AI CEO and Autonomous Governance</h3>
@@ -925,7 +957,7 @@ Addressing concerns about the future, the discussion concludes that while the fi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>While 66% of consumers find value in Generative AI, only 5% of enterprise implementations succeed due to &quot;status-quo bias.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR While 66% of consumers find value in Generative AI, only 5% of enterprise implementations succeed due to &quot;status-quo bias.&quot; To scale AI for India’s 1.4 billion people, businesses must move beyond seeing AI as a mere &quot;enabler&quot; and embrace a modular, first-principles...</div>
+                    <div class="sum-preview" id="preview-2">&quot; To scale AI for India’s 1.4 billion people, businesses must move beyond seeing AI as a mere &quot;enabler&quot; and embrace a modular, first-principles...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>While 66% of consumers find value in Generative AI, only 5% of enterprise implementations succeed due to "status-quo bias." To scale AI for India’s 1.4 billion people, businesses must move beyond seeing AI as a mere "enabler" and embrace a modular, first-principles approach that anticipates an inevitable "AI Death Valley" before reaching peak ROI.</p>
 <h3>The Strategy Gap: First-Principles vs. Status Quo</h3>
@@ -1026,7 +1058,7 @@ Finally, we must consider the philosophy of AI. Because AI is purely rational, i
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The market is currently characterized by a &quot;shoot first, ask questions later&quot; mentality as AI-driven panic spreads from software into sectors like insurance and logistics, while structural failures in health insurance models and a struggling low-end consumer suggest underlying economic fragility.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR The market is currently characterized by a &quot;shoot first, ask questions later&quot; mentality as AI-driven panic spreads from software into sectors like insurance and logistics, while structural failures in health insurance models and a struggling low-end consumer suggest...</div>
+                    <div class="sum-preview" id="preview-3"></div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The market is currently characterized by a "shoot first, ask questions later" mentality as AI-driven panic spreads from software into sectors like insurance and logistics, while structural failures in health insurance models and a struggling low-end consumer suggest underlying economic fragility.</p>
 <h3>AI Panic and Market Volatility</h3>
@@ -1133,7 +1165,7 @@ This summary is for informational purposes only and does not constitute investme
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>DraftKings CEO Jason Robins details the company’s evolution from a fantasy sports startup to a $13 billion gaming leader, focusing on the strategic shift toward live betting and prediction markets while utilizing AI to enhance responsible gaming protocols.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR DraftKings CEO Jason Robins details the company’s evolution from a fantasy sports startup to a $13 billion gaming leader, focusing on the strategic shift toward live betting and prediction markets while utilizing AI to enhance responsible gaming protocols.  The &quot;Biggest...</div>
+                    <div class="sum-preview" id="preview-4">The &quot;Biggest...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>DraftKings CEO Jason Robins details the company’s evolution from a fantasy sports startup to a $13 billion gaming leader, focusing on the strategic shift toward live betting and prediction markets while utilizing AI to enhance responsible gaming protocols.</p>
 <h3>Super Bowl Strategy and Market Impact</h3>
@@ -1217,9 +1249,9 @@ For aspiring entrepreneurs, Robins offers a simple piece of advice: prioritize t
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/lG-z7sTfhFIW2Ne1oXMHvXMXyZSaA02_I17gUel0GAEj7OypsSHQ7PE91Vp4bTbpm3PTIAWJdko=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Dwarkesh Patel</b><span class="subs">(1.2M)</span></span><span class="dot">&middot;</span><span>142:20</span><span class="dot">&middot;</span><span>311.6K views</span><span class="dot">&middot;</span><span>2026-02-13</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Dario%20Amodei%22">Dario Amodei<span class="chip-desc">CEO, Anthropic</span></a> <a class="chip" href="index.html?q=%22Dwarkesh%20Patel%22">Dwarkesh Patel<span class="chip-desc">Host, Dwarkesh Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The hypothesis is basically the same.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The hypothesis is basically the same.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR: Dario Amodei (CEO of Anthropic) argues we are 1–3 years away from &quot;a country of geniuses in a data center&quot; (AGI), asserting that while technical scaling remains a predictable exponential, the primary challenges have shifted to economic diffusion, the financial risk of...</div>
+                    <div class="sum-preview" id="preview-5">Dario Amodei (CEO of Anthropic) argues we are 1–3 years away from &quot;a country of geniuses in a data center&quot; (AGI), asserting that while technical scaling remains a predictable exponential, the primary challenges have shifted to economic diffusion, the financial risk of...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR:</strong> Dario Amodei (CEO of Anthropic) argues we are 1–3 years away from "a country of geniuses in a data center" (AGI), asserting that while technical scaling remains a predictable exponential, the primary challenges have shifted to economic diffusion, the financial risk of trillion-dollar compute bets, and the geopolitical necessity of ensuring liberal democracies win the AI race.</p>
 <h3>The Scaling Hypothesis and the Path to AGI</h3>
 <ul>
@@ -1329,7 +1361,7 @@ Managing an organization of 2,500 people requires a focus on culture to prevent 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The rapid scaling of AI is driving a shift toward &quot;purpose-based&quot; work and a resurgence of on-premise infrastructure for data security, even as the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR The rapid scaling of AI is driving a shift toward &quot;purpose-based&quot; work and a resurgence of on-premise infrastructure for data security, even as the U.S. faces a projected $56 trillion &quot;debt death spiral&quot; that can only be mitigated by significant AI-driven GDP growth.  Work...</div>
+                    <div class="sum-preview" id="preview-6">faces a projected $56 trillion &quot;debt death spiral&quot; that can only be mitigated by significant AI-driven GDP growth.  Work...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>The rapid scaling of AI is driving a shift toward "purpose-based" work and a resurgence of on-premise infrastructure for data security, even as the U.S. faces a projected $56 trillion "debt death spiral" that can only be mitigated by significant AI-driven GDP growth.</p>
 <h3>AI Acceleration and the "On-Prem" Renaissance</h3>
@@ -1807,7 +1839,7 @@ We should all just get a room and just have one big huge orgy because they’re 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>EliseAI is a $2.2 billion AI unicorn transforming the housing and healthcare industries by deploying conversational AI to automate administrative workflows, currently powering one out of every six apartments in the United States.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR EliseAI is a $2.2 billion AI unicorn transforming the housing and healthcare industries by deploying conversational AI to automate administrative workflows, currently powering one out of every six apartments in the United States.  Solving the &quot;Ghosting&quot; Problem: In the...</div>
+                    <div class="sum-preview" id="preview-7">Solving the &quot;Ghosting&quot; Problem: In the...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>EliseAI is a $2.2 billion AI unicorn transforming the housing and healthcare industries by deploying conversational AI to automate administrative workflows, currently powering one out of every six apartments in the United States.</p>
 <h3>Strategic Market Disruption: Housing and Healthcare</h3>
@@ -1897,7 +1929,7 @@ Looking toward the future, Song remains focused on maximizing the impact of her 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Novo Nordisk expects 2026 to face sales growth headwinds due to U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Novo Nordisk expects 2026 to face sales growth headwinds due to U.S. pricing pressures, but aims to offset lower margins through massive volume increases driven by the Wegovy pill launch and expanded Medicare access. The company is also taking aggressive legal action...</div>
+                    <div class="sum-preview" id="preview-8">pricing pressures, but aims to offset lower margins through massive volume increases driven by the Wegovy pill launch and expanded Medicare access. The company is also taking aggressive legal action...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Novo Nordisk expects 2026 to face sales growth headwinds due to U.S. pricing pressures, but aims to offset lower margins through massive volume increases driven by the Wegovy pill launch and expanded Medicare access. The company is also taking aggressive legal action against compounders to protect its intellectual property and patient safety as supply shortages resolve.</p>
 <h3>2026 Strategic Outlook &amp; Pricing Pressures</h3>
@@ -1993,7 +2025,7 @@ In terms of market share, Doustdar pointed out that when combining the pill and 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Quantum computing has transitioned from theoretical research to a critical &quot;scaling&quot; phase, with industry leaders projecting commercial viability and &quot;practical quantum advantage&quot; by the late 2020s or early 2030s.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Quantum computing has transitioned from theoretical research to a critical &quot;scaling&quot; phase, with industry leaders projecting commercial viability and &quot;practical quantum advantage&quot; by the late 2020s or early 2030s. While the U.S. and China currently lead in massive...</div>
+                    <div class="sum-preview" id="preview-9">While the U.S. and China currently lead in massive...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Quantum computing has transitioned from theoretical research to a critical "scaling" phase, with industry leaders projecting commercial viability and "practical quantum advantage" by the late 2020s or early 2030s. While the U.S. and China currently lead in massive corporate investment, European firms are carving out a position of strength by dominating the essential supply chain components of error correction, networking, and algorithms.</p>
 <h3>The Path to Commercialization and "Quantum Advantage"</h3>
@@ -2102,7 +2134,7 @@ As European companies like Nu Quantum, Phasecraft, and Riverlane develop world-l
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The market is undergoing a major rotation away from high-beta &quot;animal spirits&quot; like Bitcoin and tech toward international value and cash-flow-positive assets, while the private AI sector—specifically OpenAI—exhibits characteristics of a speculative bubble and potential &quot;left-tail&quot; risk.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR The market is undergoing a major rotation away from high-beta &quot;animal spirits&quot; like Bitcoin and tech toward international value and cash-flow-positive assets, while the private AI sector—specifically OpenAI—exhibits characteristics of a speculative bubble and potential...</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>The market is undergoing a major rotation away from high-beta "animal spirits" like Bitcoin and tech toward international value and cash-flow-positive assets, while the private AI sector—specifically OpenAI—exhibits characteristics of a speculative bubble and potential "left-tail" risk.</p>
 <h3>The High-Beta Correction and "KOL" Capitulation</h3>
@@ -2216,7 +2248,7 @@ Reflecting on personal investment history, the greatest mistakes are often sins 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bitcoin was likely adopted early by a global power nexus—including the &quot;PayPal Mafia&quot; and Jeffrey Epstein—to serve as a strategic &quot;debt sink&quot; and reserve asset for the US dollar system, ensuring dollar hegemony survives through digital rails even as the underlying currency debases.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Bitcoin was likely adopted early by a global power nexus—including the &quot;PayPal Mafia&quot; and Jeffrey Epstein—to serve as a strategic &quot;debt sink&quot; and reserve asset for the US dollar system, ensuring dollar hegemony survives through digital rails even as the underlying currency...</div>
+                    <div class="sum-preview" id="preview-11"></div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Bitcoin was likely adopted early by a global power nexus—including the "PayPal Mafia" and Jeffrey Epstein—to serve as a strategic "debt sink" and reserve asset for the US dollar system, ensuring dollar hegemony survives through digital rails even as the underlying currency debases.</p>
 <h3>The Epstein Financial Nexus and Early Bitcoin Involvement</h3>
@@ -2334,7 +2366,7 @@ Bitcoin was not a random discovery; it was a carefully invented plan released at
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>As the global order shifts toward a permanent state of multipolar uncertainty, leaders in 2026 must abandon nostalgia for past stability in favor of &quot;thinking the unthinkable,&quot; prioritizing structural independence, and distinguishing between mere organizational momentum and meaningful impact.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR As the global order shifts toward a permanent state of multipolar uncertainty, leaders in 2026 must abandon nostalgia for past stability in favor of &quot;thinking the unthinkable,&quot; prioritizing structural independence, and distinguishing between mere organizational momentum...</div>
+                    <div class="sum-preview" id="preview-12"></div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>As the global order shifts toward a permanent state of multipolar uncertainty, leaders in 2026 must abandon nostalgia for past stability in favor of "thinking the unthinkable," prioritizing structural independence, and distinguishing between mere organizational momentum and meaningful impact.</p>
 <h3>Navigating a Multipolar and Volatile "New Normal"</h3>
@@ -2439,9 +2471,9 @@ Ultimately, the future is something to be created rather than feared. Musician J
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nulMc6GNIrLUi_wcTCKojfsfro0dsNLAueuj4edxt_Kl4T=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes</b><span class="subs">(2.1M)</span></span><span class="dot">&middot;</span><span>37:00</span><span class="dot">&middot;</span><span>626 views</span><span class="dot">&middot;</span><span>2026-02-13</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Alex%20Daly%22">Alex Daly<span class="chip-desc">Founder, Daly</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;If I have to do a lot of convincing of like your audience might not be the New York Times, it might be this Substack, this very niche community, and if they're like okay let's let's try that out, that's where we can have some fun.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;If I have to do a lot of convincing of like your audience might not be the New York Times, it might be this Substack, this very niche community, and if they're like okay let's let's try that out, that's where we can have some fun.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR: Modern communications is shifting from broad, institutional media toward &quot;niche power&quot; and individual creators, where brand success is driven by authentic founder storytelling and high-intimacy IRL connections rather than polished corporate messaging.  Shift to Niche...</div>
+                    <div class="sum-preview" id="preview-13">Modern communications is shifting from broad, institutional media toward &quot;niche power&quot; and individual creators, where brand success is driven by authentic founder storytelling and high-intimacy IRL connections rather than polished corporate messaging.  Shift to Niche...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR:</strong> Modern communications is shifting from broad, institutional media toward "niche power" and individual creators, where brand success is driven by authentic founder storytelling and high-intimacy IRL connections rather than polished corporate messaging.</p>
 <h3>The Fragmented Media Landscape</h3>
 <ul>
@@ -2539,7 +2571,7 @@ Looking ahead, the trend of micropayments and community-based funding through pl
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>India has successfully transitioned from a nation of aspirations to one of decisive execution, leveraging massive digital public infrastructure, strategic trade alliances, and aggressive policy reforms to position itself as a central pillar of the new global economic order.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR India has successfully transitioned from a nation of aspirations to one of decisive execution, leveraging massive digital public infrastructure, strategic trade alliances, and aggressive policy reforms to position itself as a central pillar of the new global economic...</div>
+                    <div class="sum-preview" id="preview-14"></div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>India has successfully transitioned from a nation of aspirations to one of decisive execution, leveraging massive digital public infrastructure, strategic trade alliances, and aggressive policy reforms to position itself as a central pillar of the new global economic order.</p>
 <h3>Geopolitical Strategy and Global Trade</h3>
@@ -2656,7 +2688,7 @@ This is India’s moment, and it is being shaped with purpose. As the ET Now Glo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>US Ambassador Mike Waltz detailed a paradigm shift in American foreign policy characterized by aggressive UN budgetary reforms and the &quot;Donroe Doctrine,&quot; prioritizing Western Hemisphere security and results-oriented &quot;focused multilateralism&quot; over traditional, symbolism-heavy diplomacy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR US Ambassador Mike Waltz detailed a paradigm shift in American foreign policy characterized by aggressive UN budgetary reforms and the &quot;Donroe Doctrine,&quot; prioritizing Western Hemisphere security and results-oriented &quot;focused multilateralism&quot; over traditional,...</div>
+                    <div class="sum-preview" id="preview-15"></div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>US Ambassador Mike Waltz detailed a paradigm shift in American foreign policy characterized by aggressive UN budgetary reforms and the "Donroe Doctrine," prioritizing Western Hemisphere security and results-oriented "focused multilateralism" over traditional, symbolism-heavy diplomacy.</p>
 <h3>UN Reform and "Make the UN Great Again" (MUNGA)</h3>
@@ -2748,7 +2780,7 @@ As the world enters a transition period between the system that was and the syst
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR The U.S. Defense Department briefly blacklisted major Chinese tech firms like Alibaba and Baidu before retracting the list, while Anthropic’s massive $30 billion funding round and a volatile &quot;AI scare trade&quot; underscored the extreme market sensitivity to AI disruption. ...</div>
+                    <div class="sum-preview" id="preview-16">Defense Department briefly blacklisted major Chinese tech firms like Alibaba and Baidu before retracting the list, while Anthropic’s massive $30 billion funding round and a volatile &quot;AI scare trade&quot; underscored the extreme market sensitivity to AI disruption. ...</div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>The U.S. Defense Department briefly blacklisted major Chinese tech firms like Alibaba and Baidu before retracting the list, while Anthropic’s massive $30 billion funding round and a volatile "AI scare trade" underscored the extreme market sensitivity to AI disruption.</p>
 <h3>Geopolitical Tensions and National Security</h3>
@@ -2840,7 +2872,7 @@ The venture capital landscape continues to evolve, with firms like Primary closi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>One year after Vice President J.D.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR One year after Vice President J.D. Vance’s &quot;Munich Shock,&quot; the Transatlantic Alliance is undergoing a painful rebalancing as the U.S. shifts its focus to the Western Hemisphere, forcing European allies to choose between rapid rearmament or strategic irrelevance.  The...</div>
+                    <div class="sum-preview" id="preview-17">Vance’s &quot;Munich Shock,&quot; the Transatlantic Alliance is undergoing a painful rebalancing as the U.S. shifts its focus to the Western Hemisphere, forcing European allies to choose between rapid rearmament or strategic irrelevance.  The...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>One year after Vice President J.D. Vance’s "Munich Shock," the Transatlantic Alliance is undergoing a painful rebalancing as the U.S. shifts its focus to the Western Hemisphere, forcing European allies to choose between rapid rearmament or strategic irrelevance.</p>
 <h3>The "Munich Shock" and the Shift in U.S. Strategy</h3>
@@ -2939,7 +2971,7 @@ As the Munich Security Conference meets again, the world finds itself in an era 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent announced a new FinCEN whistleblower program to recover billions in fraudulent government spending while projecting that the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR Treasury Secretary Scott Bessent announced a new FinCEN whistleblower program to recover billions in fraudulent government spending while projecting that the U.S. economy is transitioning from a &quot;table-setting&quot; phase in 2025 to a &quot;banquet&quot; of growth in 2026.  FinCEN...</div>
+                    <div class="sum-preview" id="preview-18">economy is transitioning from a &quot;table-setting&quot; phase in 2025 to a &quot;banquet&quot; of growth in 2026.  FinCEN...</div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent announced a new FinCEN whistleblower program to recover billions in fraudulent government spending while projecting that the U.S. economy is transitioning from a "table-setting" phase in 2025 to a "banquet" of growth in 2026.</p>
 <h3>Whistleblower Initiative and Fraud Recovery</h3>
@@ -3049,7 +3081,7 @@ Finally, the Secretary addressed the volatility in the cryptocurrency market. He
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global energy transition has shifted from a scientific possibility to an economic imperative driven by an 80% drop in battery costs, yet achieving a fully sustainable net-zero era requires massive advancements in grid-scale engineering, nuclear energy integration, and affordable carbon capture.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR The global energy transition has shifted from a scientific possibility to an economic imperative driven by an 80% drop in battery costs, yet achieving a fully sustainable net-zero era requires massive advancements in grid-scale engineering, nuclear energy integration, and...</div>
+                    <div class="sum-preview" id="preview-19"></div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR</strong></p>
 <p>The global energy transition has shifted from a scientific possibility to an economic imperative driven by an 80% drop in battery costs, yet achieving a fully sustainable net-zero era requires massive advancements in grid-scale engineering, nuclear energy integration, and affordable carbon capture.</p>
 <h3>The Economic Shift Toward "Harvesting" Energy</h3>

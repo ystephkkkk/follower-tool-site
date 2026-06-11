@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signaled a direct role in selecting Iran’s future leadership and claimed Cuba is nearing a &quot;fall&quot; due to U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR President Trump signaled a direct role in selecting Iran’s future leadership and claimed Cuba is nearing a &quot;fall&quot; due to U.S. pressure, while the administration manages a significant Cabinet shift with Kristi Noem’s departure from DHS.    Iran Succession Strategy:...</div>
+                    <div class="sum-preview" id="preview-0">pressure, while the administration manages a significant Cabinet shift with Kristi Noem’s departure from DHS.    Iran Succession Strategy:...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>President Trump signaled a direct role in selecting Iran’s future leadership and claimed Cuba is nearing a "fall" due to U.S. pressure, while the administration manages a significant Cabinet shift with Kristi Noem’s departure from DHS.</p>
 <h3>Foreign Policy: Iran, Cuba, and Venezuela</h3>
@@ -842,7 +874,7 @@ Dasha, this was a fascinating conversation. Thanks so much for sharing your insi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>To sustain growth through 2050, Asian economies must pivot from export-led manufacturing toward regional integration, service-oriented sectors, and digital innovation while institutionalizing macroeconomic stability to survive a &quot;new normal&quot; of constant global shocks.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR To sustain growth through 2050, Asian economies must pivot from export-led manufacturing toward regional integration, service-oriented sectors, and digital innovation while institutionalizing macroeconomic stability to survive a &quot;new normal&quot; of constant global shocks.   ...</div>
+                    <div class="sum-preview" id="preview-1"></div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>To sustain growth through 2050, Asian economies must pivot from export-led manufacturing toward regional integration, service-oriented sectors, and digital innovation while institutionalizing macroeconomic stability to survive a "new normal" of constant global shocks.</p>
 <h3>Macroeconomic Stability and Institutional Reform</h3>
@@ -1248,7 +1280,7 @@ Thank you very much. So with this we close this conference! Thank you very much.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The U.S. Treasury and the DFC have launched a $20 billion maritime reinsurance program to bypass private insurance withdrawals and restore shipping through the Strait of Hormuz, coinciding with a massive military strike tonight aimed at degrading Iranian infrastructure to...</div>
+                    <div class="sum-preview" id="preview-2">Treasury and the DFC have launched a $20 billion maritime reinsurance program to bypass private insurance withdrawals and restore shipping through the Strait of Hormuz, coinciding with a massive military strike tonight aimed at degrading Iranian infrastructure to...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The U.S. Treasury and the DFC have launched a $20 billion maritime reinsurance program to bypass private insurance withdrawals and restore shipping through the Strait of Hormuz, coinciding with a massive military strike tonight aimed at degrading Iranian infrastructure to stabilize global energy markets.</p>
 <h3>Maritime Reinsurance and Shipping Restoration</h3>
@@ -1419,7 +1451,7 @@ Okay, good to see you, Larry. Good to see you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former President Barack Obama honored Reverend Jesse Jackson as a transformational &quot;messenger of hope&quot; whose courage and political audacity dismantled racial barriers and established the foundational path for the first Black presidency.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Former President Barack Obama honored Reverend Jesse Jackson as a transformational &quot;messenger of hope&quot; whose courage and political audacity dismantled racial barriers and established the foundational path for the first Black presidency.  Biblical Inspiration: Obama framed...</div>
+                    <div class="sum-preview" id="preview-3">Biblical Inspiration: Obama framed...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Former President Barack Obama honored Reverend Jesse Jackson as a transformational "messenger of hope" whose courage and political audacity dismantled racial barriers and established the foundational path for the first Black presidency.</p>
 <h3>The "Send Me" Legacy: Early Activism and Civil Rights</h3>
@@ -1593,7 +1625,7 @@ And because if we don't step up, no one else will. How fortunate we were that Je
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Renaissance began as an idealistic attempt to resuscitate ancient Roman virtues through &quot;cosplaying&quot; classical culture, which ultimately failed to create better rulers but inadvertently built the information infrastructure and empirical methods necessary for the Scientific Revolution.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR The Renaissance began as an idealistic attempt to resuscitate ancient Roman virtues through &quot;cosplaying&quot; classical culture, which ultimately failed to create better rulers but inadvertently built the information infrastructure and empirical methods necessary for the...</div>
+                    <div class="sum-preview" id="preview-4"></div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>The Renaissance began as an idealistic attempt to resuscitate ancient Roman virtues through "cosplaying" classical culture, which ultimately failed to create better rulers but inadvertently built the information infrastructure and empirical methods necessary for the Scientific Revolution.</p>
 <h3>The Origins and Ideology of the Italian Republics</h3>
@@ -2199,9 +2231,9 @@ It's not what we expect, but history is never what we expect. Seems like a good 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.0M)</span></span><span class="dot">&middot;</span><span>82:59</span><span class="dot">&middot;</span><span>255.6K views</span><span class="dot">&middot;</span><span>2026-03-06</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Emil%20Michael%22">Emil Michael<span class="chip-desc">Under Secretary of War</span></a> <a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Co-host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22Jason%20Calacanis%22">Jason Calacanis<span class="chip-desc">Co-host, All-In Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Under Secretary of War Emil Michael details the &quot;weeks, not months&quot; strategy for Operation Epic Fury in Iran, framing recent actions as a geopolitical move to gain leverage against China while explaining the Pentagon’s unprecedented decision to desig...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Under Secretary of War Emil Michael details the &quot;weeks, not months&quot; strategy for Operation Epic Fury in Iran, framing recent actions as a geopolitical move to gain leverage against China while explaining the Pentagon’s unprecedented decision to…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Under Secretary of War Emil Michael details the &quot;weeks, not months&quot; strategy for Operation Epic Fury in Iran, framing recent actions as a geopolitical move to gain leverage against China while explaining the Pentagon’s unprecedented decision to designate Anthropic as a...</div>
+                    <div class="sum-preview" id="preview-5">designate Anthropic as a...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Under Secretary of War Emil Michael details the "weeks, not months" strategy for Operation Epic Fury in Iran, framing recent actions as a geopolitical move to gain leverage against China while explaining the Pentagon’s unprecedented decision to designate Anthropic as a supply-chain risk due to its refusal to support all lawful military use cases.</p>
 <h3>Military Strategy and Geopolitical Leverage</h3>
@@ -2835,7 +2867,7 @@ Bye-bye.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The narrative has shifted from &quot;all bullish&quot; to &quot;all bearish&quot; as the $1.8 trillion industry faces a liquidity crunch.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR: Market volatility is currently driven by the escalation of war in Iran and a rapidly deteriorating narrative in private credit, where rising fraud, redemption &quot;gating,&quot; and sudden devaluations suggest the first significant credit cycle since 2008.    Iran War Response:...</div>
+                    <div class="sum-preview" id="preview-6">Market volatility is currently driven by the escalation of war in Iran and a rapidly deteriorating narrative in private credit, where rising fraud, redemption &quot;gating,&quot; and sudden devaluations suggest the first significant credit cycle since 2008.    Iran War Response:...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR:</strong> Market volatility is currently driven by the escalation of war in Iran and a rapidly deteriorating narrative in private credit, where rising fraud, redemption "gating," and sudden devaluations suggest the first significant credit cycle since 2008.</p>
 <h3>Geopolitical Impacts &amp; Macro Volatility</h3>
 <ul>
@@ -3012,7 +3044,7 @@ And that's the wrap. See you real soon. This podcast is for informational purpos
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The software industry is transitioning from a 60-year era of &quot;digital filing cabinets&quot; (databases) to an era where software actively executes work; success in this shift depends on moving from static systems of record to dynamic &quot;systems of process&quot; ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR The software industry is transitioning from a 60-year era of &quot;digital filing cabinets&quot; (databases) to an era where software actively executes work; success in this shift depends on moving from static systems of record to dynamic &quot;systems of process&quot; while solving the...</div>
+                    <div class="sum-preview" id="preview-7">&quot; while solving the...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>The software industry is transitioning from a 60-year era of "digital filing cabinets" (databases) to an era where software actively executes work; success in this shift depends on moving from static systems of record to dynamic "systems of process" while solving the massive design challenge of human-AI trust.</p>
 <h3>The "SaaS-pocalypse" and Valuation Frameworks</h3>
@@ -3318,7 +3350,7 @@ Yeah, it was great meeting you Mike.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The dismissal of Kristi Noem and the expansion of the Iran conflict highlight a period of administrative chaos and economic volatility, while the AI sector sees a massive shift in user trust from OpenAI toward Anthropic following controversial military partnerships.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR The dismissal of Kristi Noem and the expansion of the Iran conflict highlight a period of administrative chaos and economic volatility, while the AI sector sees a massive shift in user trust from OpenAI toward Anthropic following controversial military partnerships. ...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The dismissal of Kristi Noem and the expansion of the Iran conflict highlight a period of administrative chaos and economic volatility, while the AI sector sees a massive shift in user trust from OpenAI toward Anthropic following controversial military partnerships.</p>
 <h3>The Dismissal of Kristi Noem and Republican Infighting</h3>
@@ -3852,7 +3884,7 @@ Yeah, had an idea and it's happened.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Andreessen Horowitz’s &quot;American Dynamism&quot; practice is capitalizing on a generational and geopolitical shift, moving venture capital toward &quot;hard&quot; industries—defense, energy, and manufacturing—to bolster U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Andreessen Horowitz’s &quot;American Dynamism&quot; practice is capitalizing on a generational and geopolitical shift, moving venture capital toward &quot;hard&quot; industries—defense, energy, and manufacturing—to bolster U.S. national resilience through profitable, high-tech innovation. ...</div>
+                    <div class="sum-preview" id="preview-9">national resilience through profitable, high-tech innovation. ...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Andreessen Horowitz’s "American Dynamism" practice is capitalizing on a generational and geopolitical shift, moving venture capital toward "hard" industries—defense, energy, and manufacturing—to bolster U.S. national resilience through profitable, high-tech innovation.</p>
 <h3>The "American Dynamism" Investment Thesis</h3>
@@ -4208,7 +4240,7 @@ I’m very excited that at this moment I’m more optimistic than I have ever be
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Dr.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Dr. Ngozi Okonjo-Iweala, Director-General of the WTO, asserts that institutional transparency and the strategic use of technology are the most effective deterrents to global corruption, emphasizing that the fight against fraud requires both strong systemic frameworks and...</div>
+                    <div class="sum-preview" id="preview-10">Ngozi Okonjo-Iweala, Director-General of the WTO, asserts that institutional transparency and the strategic use of technology are the most effective deterrents to global corruption, emphasizing that the fight against fraud requires both strong systemic frameworks and...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Dr. Ngozi Okonjo-Iweala, Director-General of the WTO, asserts that institutional transparency and the strategic use of technology are the most effective deterrents to global corruption, emphasizing that the fight against fraud requires both strong systemic frameworks and unwavering personal integrity.</p>
 <h3>The Intersection of Global Trade and Anti-Corruption</h3>
@@ -4404,7 +4436,7 @@ You can find every episode of Fraud Talk on ACFE.com, Apple Podcasts, Spotify, Y
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vast has secured $500M in its first major outside funding round to accelerate the development of Haven-1, a private space station set to launch in Q1 2025 as a primary contender to replace the International Space Station (ISS).</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Vast has secured $500M in its first major outside funding round to accelerate the development of Haven-1, a private space station set to launch in Q1 2025 as a primary contender to replace the International Space Station (ISS).    Funding Milestone: Vast announced a $500M...</div>
+                    <div class="sum-preview" id="preview-11">).    Funding Milestone: Vast announced a $500M...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Vast has secured $500M in its first major outside funding round to accelerate the development of Haven-1, a private space station set to launch in Q1 2025 as a primary contender to replace the International Space Station (ISS).</p>
 <h3>Capital Raise and Strategic Positioning</h3>

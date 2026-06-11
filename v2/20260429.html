@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The industry is shifting from &quot;vibe coding&quot; (raising the floor of software creation) to &quot;agentic engineering,&quot; a disciplined approach where neural networks act as the primary host process and humans serve as high-level directors focused on taste, judgment, and verifiable quality.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR The industry is shifting from &quot;vibe coding&quot; (raising the floor of software creation) to &quot;agentic engineering,&quot; a disciplined approach where neural networks act as the primary host process and humans serve as high-level directors focused on taste, judgment, and verifiable...</div>
+                    <div class="sum-preview" id="preview-0"></div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>The industry is shifting from "vibe coding" (raising the floor of software creation) to "agentic engineering," a disciplined approach where neural networks act as the primary host process and humans serve as high-level directors focused on taste, judgment, and verifiable quality.</p>
 <h3>Software 3.0: The Shift to Neural-Native Computing</h3>
@@ -967,9 +999,9 @@ Thank you.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>68:45</span><span class="dot">&middot;</span><span>79.6K views</span><span class="dot">&middot;</span><span>2026-04-29</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Hilton%22">Steve Hilton<span class="chip-desc">Republican Candidate for CA Governor</span></a> <a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Co-host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22Jason%20Calacanis%22">Jason Calacanis<span class="chip-desc">Co-host, All-In Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Republican gubernatorial candidate Steve Hilton proposes a radical &quot;pro-worker&quot; overhaul of California, centered on eliminating state income tax for households earning under $100,000 and slashing $80 billion in annual government waste through a &quot;Cali...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Republican gubernatorial candidate Steve Hilton proposes a radical &quot;pro-worker&quot; overhaul of California, centered on eliminating state income tax for households earning under $100,000 and slashing $80 billion in annual government waste through a…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Republican gubernatorial candidate Steve Hilton proposes a radical &quot;pro-worker&quot; overhaul of California, centered on eliminating state income tax for households earning under $100,000 and slashing $80 billion in annual government waste through a &quot;California Department of...</div>
+                    <div class="sum-preview" id="preview-1">&quot;California Department of...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Republican gubernatorial candidate Steve Hilton proposes a radical "pro-worker" overhaul of California, centered on eliminating state income tax for households earning under $100,000 and slashing $80 billion in annual government waste through a "California Department of Government Efficiency" (CalDOGE).</p>
 <h3>Fiscal Reform &amp; The "CalDOGE" Initiative</h3>
@@ -1387,9 +1419,9 @@ Alright, cheers now.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.4M)</span></span><span class="dot">&middot;</span><span>353:05</span><span class="dot">&middot;</span><span>23.5K views</span><span class="dot">&middot;</span><span>2026-04-29</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of Defense</span></a> <a class="chip" href="index.html?q=%22Dan%20Caine%22">Dan Caine<span class="chip-desc">Chairman of the Joint Chiefs of Staff</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The House Armed Services Committee reviewed President Trump’s historic $1.5 trillion Fiscal Year 2027 budget request, sparking sharp bipartisan debate over the military's shift to a private-sector business model, the strategic utility and rising econ...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The House Armed Services Committee reviewed President Trump’s historic $1.5 trillion Fiscal Year 2027 budget request, sparking sharp bipartisan debate over the military's shift to a private-sector business model, the strategic utility and rising…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR   The House Armed Services Committee reviewed President Trump’s historic $1.5 trillion Fiscal Year 2027 budget request, sparking sharp bipartisan debate over the military's shift to a private-sector business model, the strategic utility and rising economic costs of the...</div>
+                    <div class="sum-preview" id="preview-2">economic costs of the...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The House Armed Services Committee reviewed President Trump’s historic $1.5 trillion Fiscal Year 2027 budget request, sparking sharp bipartisan debate over the military's shift to a private-sector business model, the strategic utility and rising economic costs of the 60-day war with Iran, and controversial high-level military personnel decisions.</p>
 <h3>The $1.5 Trillion FY 2027 Defense Budget Request</h3>
@@ -4246,9 +4278,9 @@ This is about peace through strength. This budget will help us have peace throug
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mE7sPnKhbJKbqDc9ESEjaK0Ip3jwQkGY4a3USPkxEXSUw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>C-SPAN</b><span class="subs">(1.8M)</span></span><span class="dot">&middot;</span><span>354:10</span><span class="dot">&middot;</span><span>97.4K views</span><span class="dot">&middot;</span><span>2026-04-29</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of Defense</span></a> <a class="chip" href="index.html?q=%22Dan%20Caine%22">Dan Caine<span class="chip-desc">Chairman of the Joint Chiefs of Staff</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The House Armed Services Committee convened to review the Trump administration’s historic $1.5 trillion FY 2027 defense budget request, focusing on revitalizing the defense industrial base, while facing intense bipartisan debate over the strategic, f...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The House Armed Services Committee convened to review the Trump administration’s historic $1.5 trillion FY 2027 defense budget request, focusing on revitalizing the defense industrial base, while facing intense bipartisan debate over the strategic,…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  The House Armed Services Committee convened to review the Trump administration’s historic $1.5 trillion FY 2027 defense budget request, focusing on revitalizing the defense industrial base, while facing intense bipartisan debate over the strategic, financial, and...</div>
+                    <div class="sum-preview" id="preview-3">financial, and...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The House Armed Services Committee convened to review the Trump administration’s historic $1.5 trillion FY 2027 defense budget request, focusing on revitalizing the defense industrial base, while facing intense bipartisan debate over the strategic, financial, and personnel costs of the ongoing 60-day war with Iran (Operation Epic Fury).</p>
 <p>***</p>
@@ -6778,7 +6810,7 @@ We start this morning with the Justice Department, which secured an indictment�
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Demis Hassabis views AGI as a 20-year mission on track for completion by 2030, shifting AI’s role from a sophisticated tool to a foundational &quot;language&quot; capable of solving grand scientific challenges in biology, chemistry, and physics.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Demis Hassabis views AGI as a 20-year mission on track for completion by 2030, shifting AI’s role from a sophisticated tool to a foundational &quot;language&quot; capable of solving grand scientific challenges in biology, chemistry, and physics.    A Unified Career Path: Hassabis...</div>
+                    <div class="sum-preview" id="preview-4">A Unified Career Path: Hassabis...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Demis Hassabis views AGI as a 20-year mission on track for completion by 2030, shifting AI’s role from a sophisticated tool to a foundational "language" capable of solving grand scientific challenges in biology, chemistry, and physics.</p>
 <h3>The Evolution of the DeepMind Mission</h3>
@@ -7047,9 +7079,9 @@ All right. Well, Demis, you do it all. Thank you so much for being with us. Plea
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.4M)</span></span><span class="dot">&middot;</span><span>55:15</span><span class="dot">&middot;</span><span>71.0K views</span><span class="dot">&middot;</span><span>2026-04-29</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jerome%20Powell%22">Jerome Powell<span class="chip-desc">Chair, Federal Reserve</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Federal Reserve held interest rates steady at 3.5%–3.75% amid &quot;misbehaving&quot; inflation and geopolitical uncertainty, while Chair Jerome Powell announced he will remain on the Board as a Governor after his chairmanship ends to protect the instituti...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Federal Reserve held interest rates steady at 3.5%–3.75% amid &quot;misbehaving&quot; inflation and geopolitical uncertainty, while Chair Jerome Powell announced he will remain on the Board as a Governor after his chairmanship ends to protect the…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR The Federal Reserve held interest rates steady at 3.5%–3.75% amid &quot;misbehaving&quot; inflation and geopolitical uncertainty, while Chair Jerome Powell announced he will remain on the Board as a Governor after his chairmanship ends to protect the institution from unprecedented...</div>
+                    <div class="sum-preview" id="preview-5">institution from unprecedented...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>The Federal Reserve held interest rates steady at 3.5%–3.75% amid "misbehaving" inflation and geopolitical uncertainty, while Chair Jerome Powell announced he will remain on the Board as a Governor after his chairmanship ends to protect the institution from unprecedented political and legal attacks.</p>
 <h3>Monetary Policy and Inflation Outlook</h3>
@@ -7471,7 +7503,7 @@ Anyway, thank you very much, everyone. I won't see you next time.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Dassault Systèmes is transitioning its 3DEXPERIENCE platform from a SaaS model to an &quot;Agent-as-a-Service&quot; architecture, utilizing physics-grounded &quot;Industry World Models&quot; and AI virtual companions to automate complex industrial design, simulation, and manufacturing processes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Dassault Systèmes is transitioning its 3DEXPERIENCE platform from a SaaS model to an &quot;Agent-as-a-Service&quot; architecture, utilizing physics-grounded &quot;Industry World Models&quot; and AI virtual companions to automate complex industrial design, simulation, and manufacturing...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Dassault Systèmes is transitioning its 3DEXPERIENCE platform from a SaaS model to an "Agent-as-a-Service" architecture, utilizing physics-grounded "Industry World Models" and AI virtual companions to automate complex industrial design, simulation, and manufacturing processes.</p>
 <h3>From SaaS to Agent-as-a-Service</h3>
@@ -7662,7 +7694,7 @@ Excellent. Well Nicolas, again, congratulations on all the work and thank you fo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Frontier AI progress is increasingly dictated by the physical constraints of &quot;scale-up&quot; domains (single-rack interconnects), where the economic viability of models depends on amortizing memory bandwidth across massive batch sizes to balance the &quot;Memory Wall.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Frontier AI progress is increasingly dictated by the physical constraints of &quot;scale-up&quot; domains (single-rack interconnects), where the economic viability of models depends on amortizing memory bandwidth across massive batch sizes to balance the &quot;Memory Wall.&quot;    The Batch...</div>
+                    <div class="sum-preview" id="preview-7">&quot;    The Batch...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Frontier AI progress is increasingly dictated by the physical constraints of "scale-up" domains (single-rack interconnects), where the economic viability of models depends on amortizing memory bandwidth across massive batch sizes to balance the "Memory Wall."</p>
 <h3>The Economics of Inference: Batch Size and Latency</h3>
@@ -8358,7 +8390,7 @@ Interesting. Cool. That was super fun. Right, thank you so much for doing it. I 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>1.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR: AGI is likely achievable by 2030 through the refinement of current architectures and 1-2 remaining breakthroughs in memory and reasoning; the most immediate, defensible opportunities for founders lie in &quot;Deep Tech&quot; where AI intersects with physical sciences and complex...</div>
+                    <div class="sum-preview" id="preview-8">AGI is likely achievable by 2030 through the refinement of current architectures and 1-2 remaining breakthroughs in memory and reasoning; the most immediate, defensible opportunities for founders lie in &quot;Deep Tech&quot; where AI intersects with physical sciences and complex...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR:</strong> AGI is likely achievable by 2030 through the refinement of current architectures and 1-2 remaining breakthroughs in memory and reasoning; the most immediate, defensible opportunities for founders lie in "Deep Tech" where AI intersects with physical sciences and complex search spaces.</p>
 <h3>The Path to AGI: Missing Components and Architecture</h3>
 <ul>
@@ -8660,7 +8692,7 @@ So I just think you need to really take that seriously in in on the one hand is 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The humanoid robot industry is transitioning from viral hype to &quot;Physical AI&quot; commercialization, but the sector faces a massive &quot;robot data gap&quot; and significant engineering hurdles before achieving trillion-dollar market projections.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR The humanoid robot industry is transitioning from viral hype to &quot;Physical AI&quot; commercialization, but the sector faces a massive &quot;robot data gap&quot; and significant engineering hurdles before achieving trillion-dollar market projections.  Defining Physical AI: Unlike Large...</div>
+                    <div class="sum-preview" id="preview-9">Defining Physical AI: Unlike Large...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>The humanoid robot industry is transitioning from viral hype to "Physical AI" commercialization, but the sector faces a massive "robot data gap" and significant engineering hurdles before achieving trillion-dollar market projections.</p>
 <h3>The Shift to Physical AI and the "Data Gap"</h3>
@@ -8881,7 +8913,7 @@ So in some sense I don't want to sound discouraging. I'm very actually optimisti
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>While AI is a revolutionary technology, it is forming a massive, capital-intensive bubble where potential losses could be orders of magnitude larger than the dot-com era due to high infrastructure costs and underpriced Middle Eastern geopolitical risks.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR While AI is a revolutionary technology, it is forming a massive, capital-intensive bubble where potential losses could be orders of magnitude larger than the dot-com era due to high infrastructure costs and underpriced Middle Eastern geopolitical risks.    Scale of...</div>
+                    <div class="sum-preview" id="preview-10">Scale of...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>While AI is a revolutionary technology, it is forming a massive, capital-intensive bubble where potential losses could be orders of magnitude larger than the dot-com era due to high infrastructure costs and underpriced Middle Eastern geopolitical risks.</p>
 <h3>The AI Bubble and Capital Intensity</h3>
@@ -9124,9 +9156,9 @@ But in the meantime, it can be difficult. Great. Jack, thanks so much for joinin
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>72:26</span><span class="dot">&middot;</span><span>3.9K views</span><span class="dot">&middot;</span><span>2026-04-29</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jerome%20Powell%22">Jerome Powell<span class="chip-desc">Chairman, Federal Reserve Board</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;These legal actions by the administration are unprecedented in our 113-year history...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;These legal actions by the administration are unprecedented in our 113-year…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR: The Federal Open Market Committee (FOMC) held interest rates steady at 3.5%–3.75% amid elevated inflation and geopolitical uncertainty, while outgoing Chair Jerome Powell confirmed he will remain on the Board as a Governor to safeguard the Fed’s independence against...</div>
+                    <div class="sum-preview" id="preview-11">The Federal Open Market Committee (FOMC) held interest rates steady at 3.5%–3.75% amid elevated inflation and geopolitical uncertainty, while outgoing Chair Jerome Powell confirmed he will remain on the Board as a Governor to safeguard the Fed’s independence against...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR:</strong> The Federal Open Market Committee (FOMC) held interest rates steady at 3.5%–3.75% amid elevated inflation and geopolitical uncertainty, while outgoing Chair Jerome Powell confirmed he will remain on the Board as a Governor to safeguard the Fed’s independence against unprecedented "legal assaults" and political pressure.</p>
 <h3>Monetary Policy and Rate Decision</h3>
 <ul>
@@ -9467,7 +9499,7 @@ The energy inflation that we're getting should go through fairly quickly and we'
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Jamie Dimon emphasizes that long-term corporate success is built on a &quot;relentless&quot; culture of grit, small autonomous teams, and high-integrity leadership, while warning that geopolitical fragmentation and slipping credit standards currently pose the greatest risks to global stability.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Jamie Dimon emphasizes that long-term corporate success is built on a &quot;relentless&quot; culture of grit, small autonomous teams, and high-integrity leadership, while warning that geopolitical fragmentation and slipping credit standards currently pose the greatest risks to...</div>
+                    <div class="sum-preview" id="preview-12"></div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Jamie Dimon emphasizes that long-term corporate success is built on a "relentless" culture of grit, small autonomous teams, and high-integrity leadership, while warning that geopolitical fragmentation and slipping credit standards currently pose the greatest risks to global stability.</p>
 <h3>Leadership and Corporate Culture</h3>
@@ -9866,7 +9898,7 @@ And sometimes they whisper a complaint in my ear but I check—that's true, I al
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Stripe is shifting its focus toward &quot;Agent Experience&quot; (AX), evolving its platform to make AI agents smarter, more capable, and safer through deterministic tools, human-in-the-loop guardrails, and agent-optimized documentation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Stripe is shifting its focus toward &quot;Agent Experience&quot; (AX), evolving its platform to make AI agents smarter, more capable, and safer through deterministic tools, human-in-the-loop guardrails, and agent-optimized documentation.    Rapid Adoption of AI Agents: Michelle Bu...</div>
+                    <div class="sum-preview" id="preview-13">Rapid Adoption of AI Agents: Michelle Bu...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Stripe is shifting its focus toward "Agent Experience" (AX), evolving its platform to make AI agents smarter, more capable, and safer through deterministic tools, human-in-the-loop guardrails, and agent-optimized documentation.</p>
 <h3>The Evolution of Developer Experience (DX) to Agent Experience (AX)</h3>
@@ -10214,7 +10246,7 @@ Thank you. Thank you for joining us. To see what’s next, please check the Sess
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Stripe is repositioning itself as the &quot;economic infrastructure for the AI era,&quot; responding to a 2026 inflection point where autonomous agents have become primary economic actors.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR Stripe is repositioning itself as the &quot;economic infrastructure for the AI era,&quot; responding to a 2026 inflection point where autonomous agents have become primary economic actors. Key innovations include real-time &quot;token&quot; billing, a dedicated payments blockchain (Tempo),...</div>
+                    <div class="sum-preview" id="preview-14">Key innovations include real-time &quot;token&quot; billing, a dedicated payments blockchain (Tempo),...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Stripe is repositioning itself as the "economic infrastructure for the AI era," responding to a 2026 inflection point where autonomous agents have become primary economic actors. Key innovations include real-time "token" billing, a dedicated payments blockchain (Tempo), and the ability for agents to autonomously deploy code and execute financial transactions.</p>
 <h3>The "Agentic" Economy &amp; Autonomous Commerce</h3>
@@ -10785,7 +10817,7 @@ So I hope you leave today with a bunch of specific ideas for how to seize this m
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Stripe is positioning itself as the primary &quot;economic infrastructure&quot; for the AI era, transitioning from human-centric transactions to a world where AI agents act as independent economic actors through usage-based billing, stablecoin micropayments, and deeper platform integrations.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Stripe is positioning itself as the primary &quot;economic infrastructure&quot; for the AI era, transitioning from human-centric transactions to a world where AI agents act as independent economic actors through usage-based billing, stablecoin micropayments, and deeper platform...</div>
+                    <div class="sum-preview" id="preview-15"></div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Stripe is positioning itself as the primary "economic infrastructure" for the AI era, transitioning from human-centric transactions to a world where AI agents act as independent economic actors through usage-based billing, stablecoin micropayments, and deeper platform integrations.</p>
 <h3>The Rise of Agentic Commerce</h3>
@@ -10960,7 +10992,7 @@ You know, people see a little bit of Stripe consumer branding like, again, with 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI landscape is currently defined by a &quot;personal IPO&quot; for top talent and a temporary compute ceiling caused by memory bottlenecks, creating a unique two-year window of market parity and a critical 12-18 month exit opportunity for non-durable startups.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR The AI landscape is currently defined by a &quot;personal IPO&quot; for top talent and a temporary compute ceiling caused by memory bottlenecks, creating a unique two-year window of market parity and a critical 12-18 month exit opportunity for non-durable startups.  The Personal...</div>
+                    <div class="sum-preview" id="preview-16">The Personal...</div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>The AI landscape is currently defined by a "personal IPO" for top talent and a temporary compute ceiling caused by memory bottlenecks, creating a unique two-year window of market parity and a critical 12-18 month exit opportunity for non-durable startups.</p>
 <h3>The Talent "Personal IPO" and Compute Bottlenecks</h3>
@@ -11735,7 +11767,7 @@ Yeah, it was wonderful chatting with you as always. I really enjoy it so thanks 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI is being deployed to optimize food production for a growing population of 8 billion while reducing chemical dependency and waste.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR: AI is evolving beyond digital chatbots into &quot;physical world&quot; applications, leveraging edge computing and NVIDIA’s stack to solve global challenges in agriculture, climate resilience, energy security, and personalized medicine. AI is being deployed to optimize food...</div>
+                    <div class="sum-preview" id="preview-17">AI is evolving beyond digital chatbots into &quot;physical world&quot; applications, leveraging edge computing and NVIDIA’s stack to solve global challenges in agriculture, climate resilience, energy security, and personalized medicine. AI is being deployed to optimize food...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR:</strong> AI is evolving beyond digital chatbots into "physical world" applications, leveraging edge computing and NVIDIA’s stack to solve global challenges in agriculture, climate resilience, energy security, and personalized medicine.</p>
 <h3>Agriculture and Environmental Sustainability</h3>
 <p>AI is being deployed to optimize food production for a growing population of 8 billion while reducing chemical dependency and waste.</p>
@@ -12052,7 +12084,7 @@ And then lastly, if you're building a startup or you know someone that's buildin
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Bank of England held its benchmark interest rate steady at 3.75% in an 8-1 vote, taking previous expectations of rate cuts off the table due to Middle East conflict-driven energy price volatility.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR   The Bank of England held its benchmark interest rate steady at 3.75% in an 8-1 vote, taking previous expectations of rate cuts off the table due to Middle East conflict-driven energy price volatility. To navigate this uncertainty, the bank introduced three distinct...</div>
+                    <div class="sum-preview" id="preview-18">To navigate this uncertainty, the bank introduced three distinct...</div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>The Bank of England held its benchmark interest rate steady at 3.75% in an 8-1 vote, taking previous expectations of rate cuts off the table due to Middle East conflict-driven energy price volatility. To navigate this uncertainty, the bank introduced three distinct economic scenarios ranging from a rapid return to its 2% inflation target to a severe 6% inflation spike that would require aggressive interest rate hikes.</p>
 <h3>The Rate Decision and the "Active Hold"</h3>
@@ -12681,7 +12713,7 @@ You can see in the scenarios just how the difference happens. The difference in 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The ECB Governing Council kept its three key interest rates unchanged, adopting a strict data-dependent, meeting-by-meeting approach to return medium-term inflation to its 2% target amidst intensified geopolitical risks, rising energy prices, and slower economic growth.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR   The ECB Governing Council kept its three key interest rates unchanged, adopting a strict data-dependent, meeting-by-meeting approach to return medium-term inflation to its 2% target amidst intensified geopolitical risks, rising energy prices, and slower economic growth....</div>
+                    <div class="sum-preview" id="preview-19"></div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR</strong></p>
 <p>The ECB Governing Council kept its three key interest rates unchanged, adopting a strict data-dependent, meeting-by-meeting approach to return medium-term inflation to its 2% target amidst intensified geopolitical risks, rising energy prices, and slower economic growth.</p>
 <p>***</p>
@@ -12995,7 +13027,7 @@ Thank you very much, Vice President. And with that...</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Senate Banking Committee voted 13-11 to advance Kevin Warsh’s nomination for Federal Reserve Chair to the full Senate, following a contentious debate regarding central bank independence and allegations of executive interference by the Trump administration.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-20">TL;DR The Senate Banking Committee voted 13-11 to advance Kevin Warsh’s nomination for Federal Reserve Chair to the full Senate, following a contentious debate regarding central bank independence and allegations of executive interference by the Trump administration.  The Vote:...</div>
+                    <div class="sum-preview" id="preview-20">The Vote:...</div>
                     <div class="sum-full" id="full-20"><p><strong>TL;DR</strong></p>
 <p>The Senate Banking Committee voted 13-11 to advance Kevin Warsh’s nomination for Federal Reserve Chair to the full Senate, following a contentious debate regarding central bank independence and allegations of executive interference by the Trump administration.</p>
 <h3>Committee Vote and Procedural Context</h3>

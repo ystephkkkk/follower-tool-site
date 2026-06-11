@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>ActiveCampaign is shifting from marketing automation to &quot;Autonomous Marketing,&quot; introducing Active Intelligence as a proactive strategic advisor that uses persistent memory and background &quot;autonomous interactions&quot; to deliver personalized marketing outcomes with minimal manual intervention.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR ActiveCampaign is shifting from marketing automation to &quot;Autonomous Marketing,&quot; introducing Active Intelligence as a proactive strategic advisor that uses persistent memory and background &quot;autonomous interactions&quot; to deliver personalized marketing outcomes with minimal...</div>
+                    <div class="sum-preview" id="preview-0"></div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>ActiveCampaign is shifting from marketing automation to "Autonomous Marketing," introducing Active Intelligence as a proactive strategic advisor that uses persistent memory and background "autonomous interactions" to deliver personalized marketing outcomes with minimal manual intervention.</p>
 <h3>The Evolution to Autonomous Marketing</h3>
@@ -1004,7 +1036,7 @@ The successes you have seen so far, like increasing your marketing performance b
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>After exits with Teachable and Carry, Ankur Nagpal has joined AngelList to lead USVC—a pioneering public venture fund that utilizes recent SEC approvals to allow non-accredited investors to access private startup markets with as little as $500.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR After exits with Teachable and Carry, Ankur Nagpal has joined AngelList to lead USVC—a pioneering public venture fund that utilizes recent SEC approvals to allow non-accredited investors to access private startup markets with as little as $500.    The Carry Acquisition:...</div>
+                    <div class="sum-preview" id="preview-1">The Carry Acquisition:...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>After exits with Teachable and Carry, Ankur Nagpal has joined AngelList to lead USVC—a pioneering public venture fund that utilizes recent SEC approvals to allow non-accredited investors to access private startup markets with as little as $500.</p>
 <h3>The Shift from Founder to "Employee"</h3>
@@ -1347,7 +1379,7 @@ Great advice. Ankur, thank you so much for your time. Yeah, thanks for having me
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI sector has shifted from experimental technology to a &quot;transformation economy&quot; characterized by the rise of &quot;AI roll-ups&quot; taking legacy public companies private and a fundamental move toward autonomous &quot;agentic engineering&quot; where AI now writes 100% of its own code.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The AI sector has shifted from experimental technology to a &quot;transformation economy&quot; characterized by the rise of &quot;AI roll-ups&quot; taking legacy public companies private and a fundamental move toward autonomous &quot;agentic engineering&quot; where AI now writes 100% of its own code....</div>
+                    <div class="sum-preview" id="preview-2"></div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The AI sector has shifted from experimental technology to a "transformation economy" characterized by the rise of "AI roll-ups" taking legacy public companies private and a fundamental move toward autonomous "agentic engineering" where AI now writes 100% of its own code.</p>
 <h3>The Rise of the "AI Roll-Up" Strategy</h3>
@@ -1822,7 +1854,7 @@ And thank you everyone out there who was watching us. We'll be back again next w
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Wall Street is flirting with all-time highs fueled by strong corporate earnings and optimism surrounding a proposed deal to reopen the Strait of Hormuz, even as mixed reports from tech and banking sector guidance flash warning signs about the labor market and consumer sentiment.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  Wall Street is flirting with all-time highs fueled by strong corporate earnings and optimism surrounding a proposed deal to reopen the Strait of Hormuz, even as mixed reports from tech and banking sector guidance flash warning signs about the labor market and consumer...</div>
+                    <div class="sum-preview" id="preview-3"></div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Wall Street is flirting with all-time highs fueled by strong corporate earnings and optimism surrounding a proposed deal to reopen the Strait of Hormuz, even as mixed reports from tech and banking sector guidance flash warning signs about the labor market and consumer sentiment.</p>
 <h3>Geopolitical Shifts and Energy Market Impact</h3>
@@ -2158,7 +2190,7 @@ Bloomberg Washington correspondent Tyler Kendall joins us now.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AMD is capitalizing on a massive expansion in the data center CPU market driven by agentic AI inference, while new data reveals a &quot;circular financing&quot; loop where major AI labs like Anthropic commit hundreds of billions in future revenue back to their cloud-provider investors.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR AMD is capitalizing on a massive expansion in the data center CPU market driven by agentic AI inference, while new data reveals a &quot;circular financing&quot; loop where major AI labs like Anthropic commit hundreds of billions in future revenue back to their cloud-provider...</div>
+                    <div class="sum-preview" id="preview-4"></div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>AMD is capitalizing on a massive expansion in the data center CPU market driven by agentic AI inference, while new data reveals a "circular financing" loop where major AI labs like Anthropic commit hundreds of billions in future revenue back to their cloud-provider investors.</p>
 <h3>AMD: Shifting from "Share-Taking" to "Share-Grabbing"</h3>
@@ -2482,7 +2514,7 @@ Make sure to follow us on social media on X, Instagram, and TikTok. I'm already 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Modern UFO phenomena are increasingly viewed through a religious and &quot;preternatural&quot; lens by both scholars and high-level government officials, bridging the gap between physical evidence and metaphysical experience.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Modern UFO phenomena are increasingly viewed through a religious and &quot;preternatural&quot; lens by both scholars and high-level government officials, bridging the gap between physical evidence and metaphysical experience.    The &quot;Preternatural&quot; Category: Dr. Diana Pasulka...</div>
+                    <div class="sum-preview" id="preview-5">The &quot;Preternatural&quot; Category: Dr. Diana Pasulka...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Modern UFO phenomena are increasingly viewed through a religious and "preternatural" lens by both scholars and high-level government officials, bridging the gap between physical evidence and metaphysical experience.</p>
 <h3>The Intersection of UFOs and Religious Theology</h3>
@@ -2871,7 +2903,7 @@ Thank you, Ross. Good to see you again.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Boston Fed President Susan Collins supports the recent shift toward policy dissent, arguing against an &quot;easing bias&quot; as the war in Iran and persistent supply shocks delay inflation's return to the 2% target.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Boston Fed President Susan Collins supports the recent shift toward policy dissent, arguing against an &quot;easing bias&quot; as the war in Iran and persistent supply shocks delay inflation's return to the 2% target. As the Fed prepares for leadership under nominee Kevin Warsh,...</div>
+                    <div class="sum-preview" id="preview-6">As the Fed prepares for leadership under nominee Kevin Warsh,...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Boston Fed President Susan Collins supports the recent shift toward policy dissent, arguing against an "easing bias" as the war in Iran and persistent supply shocks delay inflation's return to the 2% target. As the Fed prepares for leadership under nominee Kevin Warsh, officials are bracing for potential "regime change" and structural reforms to the central bank’s communication and modeling.</p>
 <h3>FOMC Dissent and Policy Stance</h3>
@@ -3057,7 +3089,7 @@ This is the Big Take from Bloomberg News, I'm David Gura. To get more from the B
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Lula and President Trump have established a high-level working group with a 30-day deadline to resolve trade and tariff disputes, while signaling a renewed strategic partnership centered on critical minerals, infrastructure investment, and global security.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR President Lula and President Trump have established a high-level working group with a 30-day deadline to resolve trade and tariff disputes, while signaling a renewed strategic partnership centered on critical minerals, infrastructure investment, and global security.   ...</div>
+                    <div class="sum-preview" id="preview-7"></div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>President Lula and President Trump have established a high-level working group with a 30-day deadline to resolve trade and tariff disputes, while signaling a renewed strategic partnership centered on critical minerals, infrastructure investment, and global security.</p>
 <h3>Trade and Economic Recalibration</h3>
@@ -3249,7 +3281,7 @@ Thank you very much Mr. President. Aí já é demais querer que eu entenda ingl�
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global economy is entering a $10 trillion &quot;rewiring&quot; phase driven by AI and digital infrastructure needs, shifting the investment landscape from traditional assets to long-term &quot;continuity&quot; assets managed by private capital firms rather than debt-constrained governments.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR The global economy is entering a $10 trillion &quot;rewiring&quot; phase driven by AI and digital infrastructure needs, shifting the investment landscape from traditional assets to long-term &quot;continuity&quot; assets managed by private capital firms rather than debt-constrained...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The global economy is entering a $10 trillion "rewiring" phase driven by AI and digital infrastructure needs, shifting the investment landscape from traditional assets to long-term "continuity" assets managed by private capital firms rather than debt-constrained governments.</p>
 <h3>The $10 Trillion Infrastructure "Rewiring"</h3>
@@ -3471,7 +3503,7 @@ Well, Bruce, you've told me the best is yet to come. I couldn't be more excited 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>We are in a 1,000-day window of fundamental economic and educational transformation where AI agents and &quot;personal tutors&quot; allow for hyper-lean, billion-dollar scale.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR We are in a 1,000-day window of fundamental economic and educational transformation where AI agents and &quot;personal tutors&quot; allow for hyper-lean, billion-dollar scale. Success in this era requires a shift from passive social media consumption to a daily practice of &quot;building...</div>
+                    <div class="sum-preview" id="preview-9">Success in this era requires a shift from passive social media consumption to a daily practice of &quot;building...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>We are in a 1,000-day window of fundamental economic and educational transformation where AI agents and "personal tutors" allow for hyper-lean, billion-dollar scale. Success in this era requires a shift from passive social media consumption to a daily practice of "building AI muscle" through hands-on experimentation.</p>
 <h3>The New Economic Reality: The Rise of the "N-of-1" Giant</h3>
@@ -3727,7 +3759,7 @@ So yeah, thank you for that answer. Thank you, I think that was an amazing final
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>At a special Moonshots panel at MIT, Peter H.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">At a special Moonshots panel at MIT, Peter H. Diamandis and exponential technology experts analyzed the rapid scaling of humanoid robotics, the legal battle over OpenAI's corporate governance, and a future where AI-driven scientific discovery and advanced biotechnology reshape...</div>
+                    <div class="sum-preview" id="preview-10">Diamandis and exponential technology experts analyzed the rapid scaling of humanoid robotics, the legal battle over OpenAI's corporate governance, and a future where AI-driven scientific discovery and advanced biotechnology reshape...</div>
                     <div class="sum-full" id="full-10"><h3>TL;DR</h3>
 <p>At a special Moonshots panel at MIT, Peter H. Diamandis and exponential technology experts analyzed the rapid scaling of humanoid robotics, the legal battle over OpenAI's corporate governance, and a future where AI-driven scientific discovery and advanced biotechnology reshape global economics and human biology.</p>
 <p>***</p>
@@ -4515,7 +4547,7 @@ If you'd like to get access to the Metatrends newsletter every week, go to diama
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Post-market trading saw a sharp sell-off in major tech and ad-tech names as Trade Desk and Cloudflare plummeted on disappointing guidance and margin compression, overshadowing a massive $100 billion backlog report from AI-infrastructure provider CoreWeave.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Post-market trading saw a sharp sell-off in major tech and ad-tech names as Trade Desk and Cloudflare plummeted on disappointing guidance and margin compression, overshadowing a massive $100 billion backlog report from AI-infrastructure provider CoreWeave.    Market...</div>
+                    <div class="sum-preview" id="preview-11">Market...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Post-market trading saw a sharp sell-off in major tech and ad-tech names as Trade Desk and Cloudflare plummeted on disappointing guidance and margin compression, overshadowing a massive $100 billion backlog report from AI-infrastructure provider CoreWeave.</p>
 <h3>The Trade Desk (TTD): Decelerating Growth and Executive Turnover</h3>
@@ -4717,9 +4749,9 @@ Yeah, certainly as Akamai up about 24 and a half percent while on the flip of th
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/SHQE0Y5rb996mAAUmkQZbJdSWj_rcce07GwKk4LTYkf9PKABaWtCEc_a6SjzZPqOgM8pP4kByXE=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNN-News18</b><span class="subs">(10.6M)</span></span><span class="dot">&middot;</span><span>50:25</span><span class="dot">&middot;</span><span>4.2K views</span><span class="dot">&middot;</span><span>2026-05-07</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Howard%20Lutnick%22">Howard Lutnick<span class="chip-desc">CEO, Cantor Fitzgerald</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Commerce Secretary Howard Lutnick faced a four-and-a-half-hour closed-door grilling by the House Oversight Committee regarding contradictions between his public statements and his documented history with Jeffrey Epstein, while a federal judge unseale...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Commerce Secretary Howard Lutnick faced a four-and-a-half-hour closed-door grilling by the House Oversight Committee regarding contradictions between his public statements and his documented history with Jeffrey Epstein, while a federal judge…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Commerce Secretary Howard Lutnick faced a four-and-a-half-hour closed-door grilling by the House Oversight Committee regarding contradictions between his public statements and his documented history with Jeffrey Epstein, while a federal judge unsealed a 2019 suicide note...</div>
+                    <div class="sum-preview" id="preview-12">unsealed a 2019 suicide note...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Commerce Secretary Howard Lutnick faced a four-and-a-half-hour closed-door grilling by the House Oversight Committee regarding contradictions between his public statements and his documented history with Jeffrey Epstein, while a federal judge unsealed a 2019 suicide note from Epstein’s initial failed attempt.</p>
 <h3>Lutnick’s Testimony and Ties to Jeffrey Epstein</h3>
@@ -4998,7 +5030,7 @@ And a judge ruled today that this note should be released. So it was in the poss
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former Secretary of Agriculture Dan Glickman argues that self-deprecating humor is an essential, yet vanishing, tool for effective political leadership and bipartisan cooperation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Former Secretary of Agriculture Dan Glickman argues that self-deprecating humor is an essential, yet vanishing, tool for effective political leadership and bipartisan cooperation.  Leadership Utility: Glickman cites President Eisenhower’s belief that a sense of humor is...</div>
+                    <div class="sum-preview" id="preview-13">Leadership Utility: Glickman cites President Eisenhower’s belief that a sense of humor is...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Former Secretary of Agriculture Dan Glickman argues that self-deprecating humor is an essential, yet vanishing, tool for effective political leadership and bipartisan cooperation.</p>
 <h3>The Strategic Value of Political Humor</h3>
@@ -5364,7 +5396,7 @@ Yes, Daniel R. Glickman, I think this is best. Tell Summers that you're quitting
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The integration of AI into cybersecurity shifts the focus from building &quot;perfect&quot; perimeters to managing system integrity within &quot;dirty&quot; networks, necessitating a move from traditional technical indicators (IOCs) toward understanding the &quot;sources and methods&quot; of autonomous agents.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR The integration of AI into cybersecurity shifts the focus from building &quot;perfect&quot; perimeters to managing system integrity within &quot;dirty&quot; networks, necessitating a move from traditional technical indicators (IOCs) toward understanding the &quot;sources and methods&quot; of autonomous...</div>
+                    <div class="sum-preview" id="preview-14"></div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>The integration of AI into cybersecurity shifts the focus from building "perfect" perimeters to managing system integrity within "dirty" networks, necessitating a move from traditional technical indicators (IOCs) toward understanding the "sources and methods" of autonomous agents.</p>
 <h3>Redefining System Integrity in a "Dirty" Network</h3>
@@ -5738,7 +5770,7 @@ If I go down the line here and say, &quot;Do you feel you have all these questio
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Lula characterized his three-hour meeting with Donald Trump as a breakthrough in consolidating Brazil-US relations, highlighted by a new 30-day mandate to resolve trade disputes and a proposed joint task force to combat the financial structures of organized crime.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR President Lula characterized his three-hour meeting with Donald Trump as a breakthrough in consolidating Brazil-US relations, highlighted by a new 30-day mandate to resolve trade disputes and a proposed joint task force to combat the financial structures of organized...</div>
+                    <div class="sum-preview" id="preview-15"></div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>President Lula characterized his three-hour meeting with Donald Trump as a breakthrough in consolidating Brazil-US relations, highlighted by a new 30-day mandate to resolve trade disputes and a proposed joint task force to combat the financial structures of organized crime.</p>
 <h3>Trade and Economic Re-engagement</h3>
@@ -5998,7 +6030,7 @@ Vou no caminho já ver o que vocês publicaram porque, antigamente, eu tinha que
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>While Wall Street rallies on potential peace progress with Iran, a New York Fed report highlights a widening K-shaped economy driven by soaring gas prices, as significant developments unfold in public health, political corruption, and AI-generated campaign advertising.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR  While Wall Street rallies on potential peace progress with Iran, a New York Fed report highlights a widening K-shaped economy driven by soaring gas prices, as significant developments unfold in public health, political corruption, and AI-generated campaign advertising. ...</div>
+                    <div class="sum-preview" id="preview-16"></div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>While Wall Street rallies on potential peace progress with Iran, a New York Fed report highlights a widening K-shaped economy driven by soaring gas prices, as significant developments unfold in public health, political corruption, and AI-generated campaign advertising.</p>
 <h3>Geopolitics, Financial Markets, and the K-Shaped Economy</h3>
@@ -6537,7 +6569,7 @@ And thank you all as always for watching. That does it for us for this hour, but
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>To achieve wealth and contentement without relying on &quot;blind luck,&quot; individuals must move from linear labor to high-leverage activities by &quot;productizing&quot; their unique authenticity and decoupling their income from their time.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR To achieve wealth and contentement without relying on &quot;blind luck,&quot; individuals must move from linear labor to high-leverage activities by &quot;productizing&quot; their unique authenticity and decoupling their income from their time.  Defining Leverage: In the modern economy, the...</div>
+                    <div class="sum-preview" id="preview-17">Defining Leverage: In the modern economy, the...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>To achieve wealth and contentement without relying on "blind luck," individuals must move from linear labor to high-leverage activities by "productizing" their unique authenticity and decoupling their income from their time.</p>
 <h3>The Mechanics of Modern Leverage</h3>
@@ -6933,7 +6965,7 @@ People are incredibly unique and like the further you go in life, the more uniqu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Amidst paused US military operations in the Strait of Hormuz, Iran has bypassed the maritime blockade by shifting its China-bound oil exports to overland rail networks and has rejected direct talks with Washington, opting instead for a multilateral mediation strategy involving Russia, Oman, and Pakistan.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR  Amidst paused US military operations in the Strait of Hormuz, Iran has bypassed the maritime blockade by shifting its China-bound oil exports to overland rail networks and has rejected direct talks with Washington, opting instead for a multilateral mediation strategy...</div>
+                    <div class="sum-preview" id="preview-18"></div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>Amidst paused US military operations in the Strait of Hormuz, Iran has bypassed the maritime blockade by shifting its China-bound oil exports to overland rail networks and has rejected direct talks with Washington, opting instead for a multilateral mediation strategy involving Russia, Oman, and Pakistan. Concurrently, North Korea is exploiting US distractions in the Middle East to rapidly accelerate its nuclear and missile capabilities.</p>
 <h3>Iran's Strategic Pivot to Overland Rail Trade with China</h3>
@@ -7511,7 +7543,7 @@ People are incredibly unique and like the further you go in life, the more uniqu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>While public concern regarding climate change is at an all-time high due to the increasing frequency of extreme weather, social media algorithms are disproportionately amplifying denialist rhetoric, creating a perceived rise in skepticism that contradicts global polling data.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR While public concern regarding climate change is at an all-time high due to the increasing frequency of extreme weather, social media algorithms are disproportionately amplifying denialist rhetoric, creating a perceived rise in skepticism that contradicts global polling...</div>
+                    <div class="sum-preview" id="preview-19"></div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR</strong></p>
 <p>While public concern regarding climate change is at an all-time high due to the increasing frequency of extreme weather, social media algorithms are disproportionately amplifying denialist rhetoric, creating a perceived rise in skepticism that contradicts global polling data.</p>
 <h3>The Paradox of Climate Denialism vs. Public Concern</h3>
@@ -7826,7 +7858,7 @@ And find out what the World Economic Forum is doing on climate change by visitin
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Marco Rubio is emerging as a top-tier presidential prospect following a viral White House briefing performance, while J.D.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-20">TL;DR Marco Rubio is emerging as a top-tier presidential prospect following a viral White House briefing performance, while J.D. Vance strategically builds groundwork in Iowa and shifts focus toward aggressive federal fraud investigations.  The &quot;Acting&quot; Press Secretary: Rubio’s...</div>
+                    <div class="sum-preview" id="preview-20">Vance strategically builds groundwork in Iowa and shifts focus toward aggressive federal fraud investigations.  The &quot;Acting&quot; Press Secretary: Rubio’s...</div>
                     <div class="sum-full" id="full-20"><p><strong>TL;DR</strong></p>
 <p>Marco Rubio is emerging as a top-tier presidential prospect following a viral White House briefing performance, while J.D. Vance strategically builds groundwork in Iowa and shifts focus toward aggressive federal fraud investigations.</p>
 <h3>Marco Rubio’s Rising Political Stock</h3>
@@ -8268,7 +8300,7 @@ Well, if you enjoyed this content, make sure to like this video, subscribe, and 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former DOJ official Andrew Weissmann and Sarah Longwell analyze the Supreme Court’s rapid intervention in Louisiana redistricting and the surge of &quot;retributive&quot; investigations targeting the Federal Reserve, election workers, and political adversaries.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-21">TL;DR Former DOJ official Andrew Weissmann and Sarah Longwell analyze the Supreme Court’s rapid intervention in Louisiana redistricting and the surge of &quot;retributive&quot; investigations targeting the Federal Reserve, election workers, and political adversaries. They warn that the...</div>
+                    <div class="sum-preview" id="preview-21">They warn that the...</div>
                     <div class="sum-full" id="full-21"><p><strong>TL;DR</strong></p>
 <p>Former DOJ official Andrew Weissmann and Sarah Longwell analyze the Supreme Court’s rapid intervention in Louisiana redistricting and the surge of "retributive" investigations targeting the Federal Reserve, election workers, and political adversaries. They warn that the erosion of judicial and institutional guardrails is creating a "chilling effect" on civil servants and the democratic process.</p>
 <h3>The Supreme Court and Louisiana Redistricting</h3>
@@ -8610,7 +8642,7 @@ There's a 15% discount code for Bulwark listeners that we're going to drop in th
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AltFinance is a $90 million, 10-year nonprofit initiative backed by Apollo, Ares, and Oaktree to diversify the private investment industry by providing HBCU students with specialized training, mentorship, and career pathways.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-22">TL;DR AltFinance is a $90 million, 10-year nonprofit initiative backed by Apollo, Ares, and Oaktree to diversify the private investment industry by providing HBCU students with specialized training, mentorship, and career pathways. CEO Marcus Shaw emphasizes that while...</div>
+                    <div class="sum-preview" id="preview-22">CEO Marcus Shaw emphasizes that while...</div>
                     <div class="sum-full" id="full-22"><p><strong>TL;DR</strong></p>
 <p>AltFinance is a $90 million, 10-year nonprofit initiative backed by Apollo, Ares, and Oaktree to diversify the private investment industry by providing HBCU students with specialized training, mentorship, and career pathways. CEO Marcus Shaw emphasizes that while artificial intelligence will transform the sector, the core of future success remains human talent, grit, and intentional wealth-building through early investing.</p>
 <h3>The AltFinance Mission: Diversifying Private Capital</h3>
@@ -9020,7 +9052,7 @@ Marcus Shaw at the Enterprise Zone here at the Milken Institute in Beverly Hills
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Ryanair maintains its position as Europe’s most profitable airline through a ruthless, singular focus on cost-efficiency, a flat management structure, and the strategic use of controversial publicity to drive bookings.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-23">TL;DR Ryanair maintains its position as Europe’s most profitable airline through a ruthless, singular focus on cost-efficiency, a flat management structure, and the strategic use of controversial publicity to drive bookings.    Eliminating Intermediaries: Ryanair was the first...</div>
+                    <div class="sum-preview" id="preview-23">Eliminating Intermediaries: Ryanair was the first...</div>
                     <div class="sum-full" id="full-23"><p><strong>TL;DR</strong></p>
 <p>Ryanair maintains its position as Europe’s most profitable airline through a ruthless, singular focus on cost-efficiency, a flat management structure, and the strategic use of controversial publicity to drive bookings.</p>
 <h3>Radical Cost Efficiency and Behavioral Engineering</h3>
@@ -9170,9 +9202,9 @@ Okay, so to summarize: a cost focus, free marketing, and an incredible sense of 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/PXTURrVHPIkg8Vmb3AvphcIBcSKE33kqDOgyeUvVLFsDAkEGamXpaEhEYh9YNERkvrW1BBmC=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Podcasts</b><span class="subs">(478.0K)</span></span><span class="dot">&middot;</span><span>36:40</span><span class="dot">&middot;</span><span>269 views</span><span class="dot">&middot;</span><span>2026-05-07</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Madlin%20Mekelburg%22">Madlin Mekelburg<span class="chip-desc">Legal Reporter, Bloomberg</span></a> <a class="chip" href="index.html?q=%22Elon%20Musk%22">Elon Musk<span class="chip-desc">CEO, Tesla and SpaceX</span></a> <a class="chip" href="index.html?q=%22Sam%20Altman%22">Sam Altman<span class="chip-desc">CEO, OpenAI</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;It’s not okay to steal a charity.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;It’s not okay to steal a charity.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-24">TL;DR: Elon Musk is seeking to unwind OpenAI's for-profit conversion in a high-stakes trial alleging the &quot;theft&quot; of a non-profit charity, while Taylor Swift is pioneering a novel legal strategy using trademark law to combat AI deepfakes.  Core Allegations: Elon Musk claims Sam...</div>
+                    <div class="sum-preview" id="preview-24">Elon Musk is seeking to unwind OpenAI's for-profit conversion in a high-stakes trial alleging the &quot;theft&quot; of a non-profit charity, while Taylor Swift is pioneering a novel legal strategy using trademark law to combat AI deepfakes.  Core Allegations: Elon Musk claims Sam...</div>
                     <div class="sum-full" id="full-24"><p><strong>TL;DR:</strong> Elon Musk is seeking to unwind OpenAI's for-profit conversion in a high-stakes trial alleging the "theft" of a non-profit charity, while Taylor Swift is pioneering a novel legal strategy using trademark law to combat AI deepfakes.</p>
 <h3>The Musk vs. OpenAI Conflict: "Stealing a Charity"</h3>
 <ul>
@@ -9417,7 +9449,7 @@ You can find them on Apple Podcasts, Spotify and at www.bloomberg.com/podcast/la
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Elon Musk’s lawsuit against OpenAI is facing significant hurdles as recent testimony reveals his own past intentions to commercialize the entity, undermining his legal argument that the company must remain a non-profit.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-25">TL;DR Elon Musk’s lawsuit against OpenAI is facing significant hurdles as recent testimony reveals his own past intentions to commercialize the entity, undermining his legal argument that the company must remain a non-profit. Despite Musk's attempts to disrupt OpenAI's momentum...</div>
+                    <div class="sum-preview" id="preview-25">Despite Musk's attempts to disrupt OpenAI's momentum...</div>
                     <div class="sum-full" id="full-25"><p><strong>TL;DR</strong></p>
 <p>Elon Musk’s lawsuit against OpenAI is facing significant hurdles as recent testimony reveals his own past intentions to commercialize the entity, undermining his legal argument that the company must remain a non-profit. Despite Musk's attempts to disrupt OpenAI's momentum and damage Sam Altman’s reputation, the legal proceedings have so far highlighted Musk's own inconsistencies and personal friction rather than providing a "slam dunk" against OpenAI leadership.</p>
 <h3>The Core Legal Conflict and Musk’s Motivation</h3>
@@ -9608,7 +9640,7 @@ Well, Will Guyatt, thanks for taking the time. Thank you. If you enjoyed today's
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Trump administration is attempting to pivot from military escalation in the Middle East toward a face-saving diplomatic &quot;victory&quot; before high-level talks with China, even as the conflict’s ripple effects threaten to push 30 million people into poverty across Africa.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-26">TL;DR The Trump administration is attempting to pivot from military escalation in the Middle East toward a face-saving diplomatic &quot;victory&quot; before high-level talks with China, even as the conflict’s ripple effects threaten to push 30 million people into poverty across Africa.   ...</div>
+                    <div class="sum-preview" id="preview-26"></div>
                     <div class="sum-full" id="full-26"><p><strong>TL;DR</strong></p>
 <p>The Trump administration is attempting to pivot from military escalation in the Middle East toward a face-saving diplomatic "victory" before high-level talks with China, even as the conflict’s ripple effects threaten to push 30 million people into poverty across Africa.</p>
 <h3>U.S.-Iran De-escalation and the China Factor</h3>
@@ -9816,7 +9848,7 @@ That is at &quot;Christiane Amanpour Presents The Ex Files.&quot; Sorry, had to 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Ray Dalio warns that the United States is currently in the late stages of a predictable historical cycle defined by unsustainable debt, domestic social fracturing, and a crumbling international order.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-27">TL;DR Ray Dalio warns that the United States is currently in the late stages of a predictable historical cycle defined by unsustainable debt, domestic social fracturing, and a crumbling international order. He predicts a period of extreme disorder and a &quot;time warp&quot; of rapid...</div>
+                    <div class="sum-preview" id="preview-27">He predicts a period of extreme disorder and a &quot;time warp&quot; of rapid...</div>
                     <div class="sum-full" id="full-27"><p><strong>TL;DR</strong></p>
 <p>Ray Dalio warns that the United States is currently in the late stages of a predictable historical cycle defined by unsustainable debt, domestic social fracturing, and a crumbling international order. He predicts a period of extreme disorder and a "time warp" of rapid change over the next five years, necessitating a return to fundamental national "health" and defensive financial positioning.</p>
 <h3>The "Big Cycle" and the Three Orders of Decline</h3>
@@ -10295,7 +10327,7 @@ Okay. And I think of that creativity and all the wonderful things: broad-based e
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI represents a &quot;cognitive industrial revolution&quot; where success depends on shifting from being an individual contributor to an &quot;agent manager&quot; and adopting a mindset of &quot;strategic optimism&quot; to steer technology toward positive societal outcomes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-28">TL;DR AI represents a &quot;cognitive industrial revolution&quot; where success depends on shifting from being an individual contributor to an &quot;agent manager&quot; and adopting a mindset of &quot;strategic optimism&quot; to steer technology toward positive societal outcomes.  Strategic Optimism: Hoffman...</div>
+                    <div class="sum-preview" id="preview-28">Strategic Optimism: Hoffman...</div>
                     <div class="sum-full" id="full-28"><p><strong>TL;DR</strong></p>
 <p>AI represents a "cognitive industrial revolution" where success depends on shifting from being an individual contributor to an "agent manager" and adopting a mindset of "strategic optimism" to steer technology toward positive societal outcomes.</p>
 <h3>The Philosophy of Strategic Optimism</h3>
@@ -10571,7 +10603,7 @@ Thank you so much for your time today. Thank you. My pleasure. Thank you. And fo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI revolution is a &quot;techno-humanist&quot; shift comparable to the Industrial Revolution that will cause significant short-term labor market disruption while ultimately amplifying human agency and creating a future where professionals act as &quot;conductors&quot; of AI-driven systems.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-29">TL;DR The AI revolution is a &quot;techno-humanist&quot; shift comparable to the Industrial Revolution that will cause significant short-term labor market disruption while ultimately amplifying human agency and creating a future where professionals act as &quot;conductors&quot; of AI-driven...</div>
+                    <div class="sum-preview" id="preview-29"></div>
                     <div class="sum-full" id="full-29"><p><strong>TL;DR</strong></p>
 <p>The AI revolution is a "techno-humanist" shift comparable to the Industrial Revolution that will cause significant short-term labor market disruption while ultimately amplifying human agency and creating a future where professionals act as "conductors" of AI-driven systems.</p>
 <h3>The Philosophy of Techno-Humanism</h3>
@@ -10949,7 +10981,7 @@ Awesome.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Scaling a hyper-growth organization requires shifting from group consensus to a &quot;Bias to Yes&quot; culture, where decision-making is pushed down the stack and managers prioritize providing radical context over implementing rigid processes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-30">TL;DR Scaling a hyper-growth organization requires shifting from group consensus to a &quot;Bias to Yes&quot; culture, where decision-making is pushed down the stack and managers prioritize providing radical context over implementing rigid processes.    The &quot;Bias to Yes&quot; Principle: To...</div>
+                    <div class="sum-preview" id="preview-30">The &quot;Bias to Yes&quot; Principle: To...</div>
                     <div class="sum-full" id="full-30"><p><strong>TL;DR</strong></p>
 <p>Scaling a hyper-growth organization requires shifting from group consensus to a "Bias to Yes" culture, where decision-making is pushed down the stack and managers prioritize providing radical context over implementing rigid processes.</p>
 <h3>Engineering Velocity and Decision Architecture</h3>
@@ -11515,7 +11547,7 @@ He accuses Silicon Valley of being passive-aggressive. He said he's not, he's ag
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The strategic alliance between Donald Trump and the Silicon Valley elite is fracturing as the administration moves to centralize AI regulation and control, signaling a shift where the President may soon need the tech industry more than they need him.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-31">TL;DR The strategic alliance between Donald Trump and the Silicon Valley elite is fracturing as the administration moves to centralize AI regulation and control, signaling a shift where the President may soon need the tech industry more than they need him.  From Social Media to...</div>
+                    <div class="sum-preview" id="preview-31">From Social Media to...</div>
                     <div class="sum-full" id="full-31"><p><strong>TL;DR</strong></p>
 <p>The strategic alliance between Donald Trump and the Silicon Valley elite is fracturing as the administration moves to centralize AI regulation and control, signaling a shift where the President may soon need the tech industry more than they need him.</p>
 <h3>The New Hierarchy of Tech Influence</h3>
@@ -11771,7 +11803,7 @@ Wir bedanken uns nicht nur bei Felix, sondern auch bei Max Rex und Lukas Teppler
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The investigation into Jeffrey Epstein intensifies as Commerce Secretary Howard Lutnick faces allegations of lying to Congress regarding his ties to the financier, while a deadly hantavirus outbreak on a cruise ship triggers global health concerns and comparisons to the COVID-19 pandemic.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-32">TL;DR The investigation into Jeffrey Epstein intensifies as Commerce Secretary Howard Lutnick faces allegations of lying to Congress regarding his ties to the financier, while a deadly hantavirus outbreak on a cruise ship triggers global health concerns and comparisons to the...</div>
+                    <div class="sum-preview" id="preview-32"></div>
                     <div class="sum-full" id="full-32"><p><strong>TL;DR</strong></p>
 <p>The investigation into Jeffrey Epstein intensifies as Commerce Secretary Howard Lutnick faces allegations of lying to Congress regarding his ties to the financier, while a deadly hantavirus outbreak on a cruise ship triggers global health concerns and comparisons to the COVID-19 pandemic.</p>
 <h3>The Epstein Investigation &amp; Howard Lutnick’s Testimony</h3>
@@ -12046,7 +12078,7 @@ And thanks to Lowe's, members of our audience are going home with a $100 HomeCar
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Donald Trump’s public dismissal of &quot;Project Freedom&quot; just 90 minutes after Marco Rubio touted it illustrates a pattern of humiliation that undermines Rubio's diplomatic authority and creates a chaotic &quot;Rubik’s cube&quot; of directives for U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-33">TL;DR Donald Trump’s public dismissal of &quot;Project Freedom&quot; just 90 minutes after Marco Rubio touted it illustrates a pattern of humiliation that undermines Rubio's diplomatic authority and creates a chaotic &quot;Rubik’s cube&quot; of directives for U.S. military leadership.  Public...</div>
+                    <div class="sum-preview" id="preview-33">military leadership.  Public...</div>
                     <div class="sum-full" id="full-33"><p><strong>TL;DR</strong></p>
 <p>Donald Trump’s public dismissal of "Project Freedom" just 90 minutes after Marco Rubio touted it illustrates a pattern of humiliation that undermines Rubio's diplomatic authority and creates a chaotic "Rubik’s cube" of directives for U.S. military leadership.</p>
 <h3>The Humiliation of Marco Rubio and Diplomatic Erosion</h3>
@@ -12286,7 +12318,7 @@ Yeah, can you imagine the news cycle if Joe Biden like tweeted, &quot;The Pope i
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Global markets reached record highs as the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-34">TL;DR Global markets reached record highs as the U.S. and Iran weigh a 14-point peace proposal to end the Middle East conflict, though corporate earnings from Siemens Healthineers and Arm reveal persistent headwinds in China’s healthcare market and the global smartphone sector. ...</div>
+                    <div class="sum-preview" id="preview-34">and Iran weigh a 14-point peace proposal to end the Middle East conflict, though corporate earnings from Siemens Healthineers and Arm reveal persistent headwinds in China’s healthcare market and the global smartphone sector. ...</div>
                     <div class="sum-full" id="full-34"><p><strong>TL;DR</strong></p>
 <p>Global markets reached record highs as the U.S. and Iran weigh a 14-point peace proposal to end the Middle East conflict, though corporate earnings from Siemens Healthineers and Arm reveal persistent headwinds in China’s healthcare market and the global smartphone sector.</p>
 <h3>Geopolitical Negotiations and the U.S.-Iran Conflict</h3>
@@ -12655,7 +12687,7 @@ Lots of interviews on earnings coming up in the next hour. Maersk, Vestas and Pa
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>US Secretary of Defense Pete Hegseth and Chairman of the Joint Chiefs General Kaine announced the launch of &quot;Project Freedom,&quot; a temporary, defensive US-led operation to secure the Strait of Hormuz and rescue over 22,500 mariners currently trapped by illegal Iranian blockade efforts.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-35">TL;DR  US Secretary of Defense Pete Hegseth and Chairman of the Joint Chiefs General Kaine announced the launch of &quot;Project Freedom,&quot; a temporary, defensive US-led operation to secure the Strait of Hormuz and rescue over 22,500 mariners currently trapped by illegal Iranian...</div>
+                    <div class="sum-preview" id="preview-35"></div>
                     <div class="sum-full" id="full-35"><p><strong>TL;DR</strong></p>
 <p>US Secretary of Defense Pete Hegseth and Chairman of the Joint Chiefs General Kaine announced the launch of "Project Freedom," a temporary, defensive US-led operation to secure the Strait of Hormuz and rescue over 22,500 mariners currently trapped by illegal Iranian blockade efforts. While a fragile bilateral ceasefire remains in effect, the US military is fully postured and ready to resume major combat operations if Iran crosses critical escalation thresholds.</p>
 <h3>Project Freedom &amp; Maritime Security in the Strait of Hormuz</h3>
@@ -13228,7 +13260,7 @@ Rifles or small machine guns. There were some small coastal cruise missiles shot
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Fifty-five days into major combat operations against Iran, the United States is enforcing an ironclad global naval blockade, successfully turning back 34 vessels and seizing three major ships (the *Tuska*, *Tiffany*, and *Majestic X*).</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-36">TL;DR   Fifty-five days into major combat operations against Iran, the United States is enforcing an ironclad global naval blockade, successfully turning back 34 vessels and seizing three major ships (the Tuska, Tiffany, and Majestic X). Under the campaign &quot;Epic Fury,&quot; US forces...</div>
+                    <div class="sum-preview" id="preview-36">). Under the campaign &quot;Epic Fury,&quot; US forces...</div>
                     <div class="sum-full" id="full-36"><p><strong>TL;DR</strong></p>
 <p>Fifty-five days into major combat operations against Iran, the United States is enforcing an ironclad global naval blockade, successfully turning back 34 vessels and seizing three major ships (the *Tuska*, *Tiffany*, and *Majestic X*). Under the campaign "Epic Fury," US forces have struck over 7,000 targets, decimating Iran's air defenses and reducing its ballistic missile and drone capabilities by 90%.</p>
 <h3>Global Blockade and High-Seas Interdictions</h3>
@@ -14494,7 +14526,7 @@ And you mentioned embassies and consulates. Unlike previous administrations, we 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The upcoming May 2026 Trump-Xi summit in Beijing aims to stabilize bilateral relations amidst global volatility, though observers should expect symbolic de-escalation and leader-to-leader communication rather than a &quot;grand bargain&quot; or major substantive breakthroughs.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-37">TL;DR The upcoming May 2026 Trump-Xi summit in Beijing aims to stabilize bilateral relations amidst global volatility, though observers should expect symbolic de-escalation and leader-to-leader communication rather than a &quot;grand bargain&quot; or major substantive breakthroughs. ...</div>
+                    <div class="sum-preview" id="preview-37"></div>
                     <div class="sum-full" id="full-37"><p><strong>TL;DR</strong></p>
 <p>The upcoming May 2026 Trump-Xi summit in Beijing aims to stabilize bilateral relations amidst global volatility, though observers should expect symbolic de-escalation and leader-to-leader communication rather than a "grand bargain" or major substantive breakthroughs.</p>
 <h3>The May 2026 Summit and Diplomatic Outlook</h3>
@@ -14720,7 +14752,7 @@ Great. Thank you. On that positive note, thank you Susan for sharing your wisdom
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Elon Musk has transitioned from a political advisor to a &quot;global sovereign,&quot; wielding more power than many heads of state through his near-monopoly on satellite internet (Starlink) and his aggressive expansion into space-based AI infrastructure.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-38">TL;DR Elon Musk has transitioned from a political advisor to a &quot;global sovereign,&quot; wielding more power than many heads of state through his near-monopoly on satellite internet (Starlink) and his aggressive expansion into space-based AI infrastructure.    The Lawsuit: Musk is...</div>
+                    <div class="sum-preview" id="preview-38">The Lawsuit: Musk is...</div>
                     <div class="sum-full" id="full-38"><p><strong>TL;DR</strong></p>
 <p>Elon Musk has transitioned from a political advisor to a "global sovereign," wielding more power than many heads of state through his near-monopoly on satellite internet (Starlink) and his aggressive expansion into space-based AI infrastructure.</p>
 <h3>The OpenAI Legal Battle: Vision vs. Profit</h3>
@@ -14931,7 +14963,7 @@ That's it for the global story on YouTube. Thanks as always for tuning in. And i
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Marco Rubio is rapidly emerging as a 2028 Republican frontrunner, potentially eclipsing J.D.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-39">TL;DR Marco Rubio is rapidly emerging as a 2028 Republican frontrunner, potentially eclipsing J.D. Vance through high media likeability and cross-factional appeal, while critics warn that the media is failing to cover the geopolitical realities of the Iran conflict.    The Rubio...</div>
+                    <div class="sum-preview" id="preview-39">Vance through high media likeability and cross-factional appeal, while critics warn that the media is failing to cover the geopolitical realities of the Iran conflict.    The Rubio...</div>
                     <div class="sum-full" id="full-39"><p><strong>TL;DR</strong></p>
 <p>Marco Rubio is rapidly emerging as a 2028 Republican frontrunner, potentially eclipsing J.D. Vance through high media likeability and cross-factional appeal, while critics warn that the media is failing to cover the geopolitical realities of the Iran conflict.</p>
 <h3>The Republican 2028 Outlook: Rubio vs. Vance</h3>
@@ -15344,9 +15376,9 @@ All right, that's it for today's program. We'll be back on Tuesday, a whole bran
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/7_QJx0TlTCBskeVxWAD_aLakp0KBu5X66-5zsY_6faYulsBRZDHUbwrMbjFPSMXPJO03PVaPsw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Long Game Podcast</b><span class="subs">(14.3K)</span></span><span class="dot">&middot;</span><span>68:12</span><span class="dot">&middot;</span><span>4.7K views</span><span class="dot">&middot;</span><span>2026-05-07</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President, United States</span></a> <a class="chip" href="index.html?q=%22Jake%20Sullivan%22">Jake Sullivan<span class="chip-desc">National Security Advisor</span></a> <a class="chip" href="index.html?q=%22Jon%20Finer%22">Jon Finer<span class="chip-desc">Deputy National Security Advisor</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Iran has found itself in a standoff with a U.S.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Iran has found itself in a standoff with a U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-40">TL;DR: The Trump administration is reportedly nearing a framework agreement to end the war with Iran and begin a 30-day negotiation period, even as military readiness declines and a diplomatic rift with Germany triggers a significant drawdown of U.S. troops in Europe. ...</div>
+                    <div class="sum-preview" id="preview-40">The Trump administration is reportedly nearing a framework agreement to end the war with Iran and begin a 30-day negotiation period, even as military readiness declines and a diplomatic rift with Germany triggers a significant drawdown of U.S. troops in Europe. ...</div>
                     <div class="sum-full" id="full-40"><p><strong>TL;DR:</strong> The Trump administration is reportedly nearing a framework agreement to end the war with Iran and begin a 30-day negotiation period, even as military readiness declines and a diplomatic rift with Germany triggers a significant drawdown of U.S. troops in Europe.</p>
 <h3>The State of Play: Iran War and Potential Diplomacy</h3>
 <ul>

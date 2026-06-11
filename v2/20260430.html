@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>170:35</span><span class="dot">&middot;</span><span>6.0K views</span><span class="dot">&middot;</span><span>2026-04-30</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of Defense</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Defense Pete Hegseth defended President Trump’s historic $1.535 trillion FY 2027 defense budget request before the Senate Armed Services Committee, facing sharp bipartisan and partisan divides over the strategic and economic costs of the...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Defense Pete Hegseth defended President Trump’s historic $1.535 trillion FY 2027 defense budget request before the Senate Armed Services Committee, facing sharp bipartisan and partisan divides over the strategic and economic costs of…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR   Secretary of Defense Pete Hegseth defended President Trump’s historic $1.535 trillion FY 2027 defense budget request before the Senate Armed Services Committee, facing sharp bipartisan and partisan divides over the strategic and economic costs of the ongoing war with...</div>
+                    <div class="sum-preview" id="preview-0">the ongoing war with...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Secretary of Defense Pete Hegseth defended President Trump’s historic $1.535 trillion FY 2027 defense budget request before the Senate Armed Services Committee, facing sharp bipartisan and partisan divides over the strategic and economic costs of the ongoing war with Iran, high-level military firings, and the elimination of direct financial aid to Ukraine.</p>
 <h3>## The $1.535 Trillion Defense Budget &amp; Modernization Priorities</h3>
@@ -2164,7 +2196,7 @@ And my view is—and this observation is hardly novel—that China is watching w
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Big Tech is committing a staggering $700 billion in capital expenditures to sustain booming AI cloud growth, but this spending is cratering free cash flow and facing a new &quot;pricing divide&quot; as high-performing, low-cost Chinese models begin to dominate global traffic.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Big Tech is committing a staggering $700 billion in capital expenditures to sustain booming AI cloud growth, but this spending is cratering free cash flow and facing a new &quot;pricing divide&quot; as high-performing, low-cost Chinese models begin to dominate global traffic....</div>
+                    <div class="sum-preview" id="preview-1"></div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Big Tech is committing a staggering $700 billion in capital expenditures to sustain booming AI cloud growth, but this spending is cratering free cash flow and facing a new "pricing divide" as high-performing, low-cost Chinese models begin to dominate global traffic.</p>
 <h3>The Capex Crisis vs. Cloud Boom</h3>
@@ -2460,7 +2492,7 @@ Thank you to Jasmine, to Sammy, to Robert, to Evan, to Divya, to all of those in
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Defense Pete Hegseth and Joint Chiefs of Staff Chair Gen.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR  Secretary of Defense Pete Hegseth and Joint Chiefs of Staff Chair Gen. Dan Caine defended a historic $1.535 trillion FY 2027 budget request before the Senate Armed Services Committee, facing intense bipartisan scrutiny over the strategic stalemate and $25 billion cost of...</div>
+                    <div class="sum-preview" id="preview-2">Dan Caine defended a historic $1.535 trillion FY 2027 budget request before the Senate Armed Services Committee, facing intense bipartisan scrutiny over the strategic stalemate and $25 billion cost of...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Secretary of Defense Pete Hegseth and Joint Chiefs of Staff Chair Gen. Dan Caine defended a historic $1.535 trillion FY 2027 budget request before the Senate Armed Services Committee, facing intense bipartisan scrutiny over the strategic stalemate and $25 billion cost of the unauthorized war with Iran, as well as controversial purges of senior military leadership.</p>
 <h3>The $1.535 Trillion Budget &amp; Acquisition Reform</h3>
@@ -3670,7 +3702,7 @@ Join us for remarkable coast-to-coast coverage featuring key events from our pas
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The shift from retrieval-based to generative computing marks a new industrial revolution that offers a historic opportunity for U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR The shift from retrieval-based to generative computing marks a new industrial revolution that offers a historic opportunity for U.S. re-industrialization, provided the nation overcomes &quot;existential&quot; fears and prioritizes the rapid adoption of AI across all sectors of the...</div>
+                    <div class="sum-preview" id="preview-3">re-industrialization, provided the nation overcomes &quot;existential&quot; fears and prioritizes the rapid adoption of AI across all sectors of the...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The shift from retrieval-based to generative computing marks a new industrial revolution that offers a historic opportunity for U.S. re-industrialization, provided the nation overcomes "existential" fears and prioritizes the rapid adoption of AI across all sectors of the economy.</p>
 <h3>The Shift to Generative Computing</h3>
@@ -3961,7 +3993,7 @@ And so, I really do hope that every industry, every company takes advantage of i
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR The U.S. economy is currently buoyed by a massive $1 trillion infrastructure and AI CAPEX boom that is offsetting the inflationary pressure of high oil prices. While high energy costs are depleting consumer disposable income, the physical build-out of data centers and...</div>
+                    <div class="sum-preview" id="preview-4">economy is currently buoyed by a massive $1 trillion infrastructure and AI CAPEX boom that is offsetting the inflationary pressure of high oil prices. While high energy costs are depleting consumer disposable income, the physical build-out of data centers and...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>The U.S. economy is currently buoyed by a massive $1 trillion infrastructure and AI CAPEX boom that is offsetting the inflationary pressure of high oil prices. While high energy costs are depleting consumer disposable income, the physical build-out of data centers and domestic energy independence provide a unique structural advantage over global competitors.</p>
 <h3>The Physical Reality of the AI CAPEX Boom</h3>
@@ -4089,9 +4121,9 @@ But as Gary said, if it's gone it's gone. If it's not gone it's not gone. Look, 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mpuS6J3PwGJatG2czLGfmZHyE_kNicqukg0jBnCbENmiJl=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>USA TODAY</b><span class="subs">(7.5M)</span></span><span class="dot">&middot;</span><span>59:28</span><span class="dot">&middot;</span><span>3.5K views</span><span class="dot">&middot;</span><span>2026-04-30</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signed a historic executive order establishing &quot;Trump IRAs&quot; to expand retirement savings access with federal matching for low-income Americans, while simultaneously announcing an overhaul of federal contracting and providing updates o...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signed a historic executive order establishing &quot;Trump IRAs&quot; to expand retirement savings access with federal matching for low-income Americans, while simultaneously announcing an overhaul of federal contracting and providing updates…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR President Trump signed a historic executive order establishing &quot;Trump IRAs&quot; to expand retirement savings access with federal matching for low-income Americans, while simultaneously announcing an overhaul of federal contracting and providing updates on the &quot;military...</div>
+                    <div class="sum-preview" id="preview-5">on the &quot;military...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>President Trump signed a historic executive order establishing "Trump IRAs" to expand retirement savings access with federal matching for low-income Americans, while simultaneously announcing an overhaul of federal contracting and providing updates on the "military decimation" of Iran’s nuclear and defense capabilities.</p>
 <h3>Retirement Savings and Financial Initiatives</h3>
@@ -4545,7 +4577,7 @@ So take a Peter, take a look, tell your father if I did a good job. Thank you. T
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>NEC Director Kevin Hassett anticipates a &quot;sea change&quot; at the Federal Reserve under Kevin Warsh’s expected leadership, advocating for interest rate cuts to fuel a productivity-led growth cycle while dismissing current energy spikes as temporary disruptions that do not warrant rate hikes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR NEC Director Kevin Hassett anticipates a &quot;sea change&quot; at the Federal Reserve under Kevin Warsh’s expected leadership, advocating for interest rate cuts to fuel a productivity-led growth cycle while dismissing current energy spikes as temporary disruptions that do not...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>NEC Director Kevin Hassett anticipates a "sea change" at the Federal Reserve under Kevin Warsh’s expected leadership, advocating for interest rate cuts to fuel a productivity-led growth cycle while dismissing current energy spikes as temporary disruptions that do not warrant rate hikes.</p>
 <h3>Federal Reserve Leadership and Independence</h3>
@@ -4715,9 +4747,9 @@ And then also examine their own policies, which are so anti-free market that the
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/NWB9zYMgsqea4idG6muzZgnHoXQGmPHbzK15ibMcVPXMaWb9oqudS043ct6qehQxAscVc8mLaQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Wall Street Journal Opinion</b><span class="subs">(136.0K)</span></span><span class="dot">&middot;</span><span>27:08</span><span class="dot">&middot;</span><span>2.0K views</span><span class="dot">&middot;</span><span>2026-04-30</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jerome%20Powell%22">Jerome Powell<span class="chip-desc">Outgoing Chair, Federal Reserve</span></a> <a class="chip" href="index.html?q=%22Kevin%20Warsh%22">Kevin Warsh<span class="chip-desc">Federal Reserve</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Kevin Warsh is set to become Federal Reserve Chairman amid an AI-driven but inflationary economy, while outgoing Chair Jerome Powell’s unprecedented decision to remain on the Board of Governors creates a complex leadership dynamic that limits the Tru...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Kevin Warsh is set to become Federal Reserve Chairman amid an AI-driven but inflationary economy, while outgoing Chair Jerome Powell’s unprecedented decision to remain on the Board of Governors creates a complex leadership dynamic that limits the…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Kevin Warsh is set to become Federal Reserve Chairman amid an AI-driven but inflationary economy, while outgoing Chair Jerome Powell’s unprecedented decision to remain on the Board of Governors creates a complex leadership dynamic that limits the Trump administration’s...</div>
+                    <div class="sum-preview" id="preview-7">Trump administration’s...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Kevin Warsh is set to become Federal Reserve Chairman amid an AI-driven but inflationary economy, while outgoing Chair Jerome Powell’s unprecedented decision to remain on the Board of Governors creates a complex leadership dynamic that limits the Trump administration’s ability to appoint a new majority.</p>
 <h3>Economic Stagnation vs. The AI Investment Boom</h3>
@@ -4924,9 +4956,9 @@ I want to, we'll leave it at there today. Thanks to Joe Sternberg. Thanks to All
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>206:28</span><span class="dot">&middot;</span><span>13.1K views</span><span class="dot">&middot;</span><span>2026-04-30</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of Defense</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of War Pete Hegseth and Joint Chiefs of Staff Chairman General Dan Kane testified before the Senate Armed Services Committee to defend a historic $1.535 trillion FY2027 budget request amid intense bipartisan scrutiny over the cost and strat...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of War Pete Hegseth and Joint Chiefs of Staff Chairman General Dan Kane testified before the Senate Armed Services Committee to defend a historic $1.535 trillion FY2027 budget request amid intense bipartisan scrutiny over the cost and…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR  Secretary of War Pete Hegseth and Joint Chiefs of Staff Chairman General Dan Kane testified before the Senate Armed Services Committee to defend a historic $1.535 trillion FY2027 budget request amid intense bipartisan scrutiny over the cost and strategy of the war with...</div>
+                    <div class="sum-preview" id="preview-8">strategy of the war with...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Secretary of War Pete Hegseth and Joint Chiefs of Staff Chairman General Dan Kane testified before the Senate Armed Services Committee to defend a historic $1.535 trillion FY2027 budget request amid intense bipartisan scrutiny over the cost and strategy of the war with Iran, high-level military dismissals, and delayed Ukraine aid.</p>
 <h3>The $1.535 Trillion Budget and Defense Industrial Base</h3>
@@ -5609,9 +5641,9 @@ Thank you, Senator Blumenthal. This concludes today's hearing. I'd like to thank
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/uCN-D7KzMQY-Ti-xTsNAwilXVFFMYjEBRju_mXrR22HUYxJZjVZgP_SnamO9KbPo2XN-nE3O-A=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Sequoia Capital</b><span class="subs">(163.0K)</span></span><span class="dot">&middot;</span><span>28:27</span><span class="dot">&middot;</span><span>21.6K views</span><span class="dot">&middot;</span><span>2026-04-30</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Greg%20Brockman%22">Greg Brockman<span class="chip-desc">Co-founder and President, OpenAI</span></a> <a class="chip" href="index.html?q=%22Alfred%20Lin%22">Alfred Lin<span class="chip-desc">Partner, Sequoia Capital</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;We're about 80% of the way there [to AGI] in that we have models that are smart, they're very capable...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;We're about 80% of the way there [to AGI] in that we have models that are smart, they're very…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR: Greg Brockman believes OpenAI is 80% of the way to AGI, shifting the primary bottleneck of productivity from &quot;performing tasks&quot; to &quot;human attention and vision&quot; as agentic tools now handle up to 80% of complex workflows like software engineering.  Infinite Demand for...</div>
+                    <div class="sum-preview" id="preview-9">Greg Brockman believes OpenAI is 80% of the way to AGI, shifting the primary bottleneck of productivity from &quot;performing tasks&quot; to &quot;human attention and vision&quot; as agentic tools now handle up to 80% of complex workflows like software engineering.  Infinite Demand for...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR:</strong> Greg Brockman believes OpenAI is 80% of the way to AGI, shifting the primary bottleneck of productivity from "performing tasks" to "human attention and vision" as agentic tools now handle up to 80% of complex workflows like software engineering.</p>
 <h3>The Scaling Mystery and the Compute Hunger</h3>
 <ul>
@@ -5905,7 +5937,7 @@ Not as much time for it as maybe we'll hopefully have post-AGI. But you gotta ki
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump signed a landmark executive order establishing the &quot;Trump IRA&quot; program, providing millions of low-income Americans access to low-cost retirement accounts with a federal matching contribution of up to $1,000 per year.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR President Trump signed a landmark executive order establishing the &quot;Trump IRA&quot; program, providing millions of low-income Americans access to low-cost retirement accounts with a federal matching contribution of up to $1,000 per year.  The &quot;Trump IRA&quot; Initiative: Beginning...</div>
+                    <div class="sum-preview" id="preview-10">The &quot;Trump IRA&quot; Initiative: Beginning...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>President Trump signed a landmark executive order establishing the "Trump IRA" program, providing millions of low-income Americans access to low-cost retirement accounts with a federal matching contribution of up to $1,000 per year.</p>
 <h3>Expansion of Retirement Savings (Trump IRA)</h3>
@@ -6046,7 +6078,7 @@ Yeah, it's been a big thing for the First Lady, so this is in honor of our First
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global order is approaching a high-risk &quot;brink&quot; driven by unsustainable U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR The global order is approaching a high-risk &quot;brink&quot; driven by unsustainable U.S. debt and a shift toward &quot;power-rules&quot; geopolitics, while the stability of the public stock market increasingly hinges on Big Tech’s AI returns and the eventual transparency of OpenAI’s...</div>
+                    <div class="sum-preview" id="preview-11">debt and a shift toward &quot;power-rules&quot; geopolitics, while the stability of the public stock market increasingly hinges on Big Tech’s AI returns and the eventual transparency of OpenAI’s...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>The global order is approaching a high-risk "brink" driven by unsustainable U.S. debt and a shift toward "power-rules" geopolitics, while the stability of the public stock market increasingly hinges on Big Tech’s AI returns and the eventual transparency of OpenAI’s financials.</p>
 <h3>The Five Forces of the "Big Cycle"</h3>
@@ -6300,7 +6332,7 @@ Thanks for watching Prof G Markets from Prof G Media. If you liked this episode,
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Jim Fan argues that robotics is undergoing &quot;The Great Parallel&quot; to the LLM playbook, transitioning from language-heavy models to World Action Models (WAM) trained on massive egocentric video datasets and neural simulations, aiming to pass the physical Turing test within 2–3 years.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Jim Fan argues that robotics is undergoing &quot;The Great Parallel&quot; to the LLM playbook, transitioning from language-heavy models to World Action Models (WAM) trained on massive egocentric video datasets and neural simulations, aiming to pass the physical Turing test within...</div>
+                    <div class="sum-preview" id="preview-12"></div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Jim Fan argues that robotics is undergoing "The Great Parallel" to the LLM playbook, transitioning from language-heavy models to World Action Models (WAM) trained on massive egocentric video datasets and neural simulations, aiming to pass the physical Turing test within 2–3 years.</p>
 <h3>The Great Parallel: Copying the LLM Success</h3>
@@ -6495,7 +6527,7 @@ Well, it took the AI community 14 years to go from the first forward pass of Ale
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>OpenAI is entering its third phase as a &quot;mega-scale token factory for the world,&quot; aiming to become a low-margin, high-volume infrastructure utility that accelerates global economic output and scientific discovery.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR OpenAI is entering its third phase as a &quot;mega-scale token factory for the world,&quot; aiming to become a low-margin, high-volume infrastructure utility that accelerates global economic output and scientific discovery. Sam Altman predicts that AI will soon move beyond coding to...</div>
+                    <div class="sum-preview" id="preview-13">Sam Altman predicts that AI will soon move beyond coding to...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>OpenAI is entering its third phase as a "mega-scale token factory for the world," aiming to become a low-margin, high-volume infrastructure utility that accelerates global economic output and scientific discovery. Sam Altman predicts that AI will soon move beyond coding to automate the "drudgery" of all computer-based work, while significantly compressing the timeline for breakthroughs in material science and biotechnology.</p>
 <h3>The Evolution of OpenAI’s Mission and Strategy</h3>
@@ -6773,9 +6805,9 @@ By enabling people to explore this very wide opportunity space, we will give the
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dPJbpEZ3bgIeP0V6g5BMtpmrd00KOfbaXj3FK5KF2uItBfQ5uawE5h1ru4iAs1ws-basZ8MT=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Siemens</b><span class="subs">(31.8K)</span></span><span class="dot">&middot;</span><span>93:44</span><span class="dot">&middot;</span><span>42 views</span><span class="dot">&middot;</span><span>2026-04-30</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Roland%20Busch%22">Roland Busch<span class="chip-desc">CEO, Siemens</span></a> <a class="chip" href="index.html?q=%22Bj%C3%B6rn%20Gulden%22">Björn Gulden<span class="chip-desc">CEO, Adidas</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The integration of industrial AI, digital twins, and 3D printing is dramatically accelerating manufacturing speeds and enabling mass-personalization, though German bureaucracy and high energy costs pose significant risks to European competitiveness a...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The integration of industrial AI, digital twins, and 3D printing is dramatically accelerating manufacturing speeds and enabling mass-personalization, though German bureaucracy and high energy costs pose significant risks to European competitiveness…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR The integration of industrial AI, digital twins, and 3D printing is dramatically accelerating manufacturing speeds and enabling mass-personalization, though German bureaucracy and high energy costs pose significant risks to European competitiveness against the rapid...</div>
+                    <div class="sum-preview" id="preview-14">against the rapid...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>The integration of industrial AI, digital twins, and 3D printing is dramatically accelerating manufacturing speeds and enabling mass-personalization, though German bureaucracy and high energy costs pose significant risks to European competitiveness against the rapid scaling seen in China and the US.</p>
 <h3>Industrial AI &amp; The Digital Twin Strategy</h3>
@@ -7278,7 +7310,7 @@ So, Achtung. Kannst du fangen? Here we go. Die kann fangen und kann werfen. So, 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global economy is undergoing a structural &quot;replatforming&quot; around AI, characterized by a surge in high-revenue solopreneurship, &quot;global-day-one&quot; scaling for startups, and the emergence of autonomous agentic commerce supported by stablecoin infrastructure.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR The global economy is undergoing a structural &quot;replatforming&quot; around AI, characterized by a surge in high-revenue solopreneurship, &quot;global-day-one&quot; scaling for startups, and the emergence of autonomous agentic commerce supported by stablecoin infrastructure.  SaaS...</div>
+                    <div class="sum-preview" id="preview-15">SaaS...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>The global economy is undergoing a structural "replatforming" around AI, characterized by a surge in high-revenue solopreneurship, "global-day-one" scaling for startups, and the emergence of autonomous agentic commerce supported by stablecoin infrastructure.</p>
 <h3>Current Economic Indicators and Myths</h3>
@@ -7577,7 +7609,7 @@ Thank you. Gracias. Go raibh maith agaibh. Obrigada. Dankeschön. Mulțumesc. Me
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>At the Stripe Sessions event, key product and industry leaders detailed how the integration of AI agents, programmable command-line interfaces (CLIs), and stablecoins is driving a massive acceleration in global business creation and transforming the future of &quot;agentic commerce.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR  At the Stripe Sessions event, key product and industry leaders detailed how the integration of AI agents, programmable command-line interfaces (CLIs), and stablecoins is driving a massive acceleration in global business creation and transforming the future of &quot;agentic...</div>
+                    <div class="sum-preview" id="preview-16"></div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>At the Stripe Sessions event, key product and industry leaders detailed how the integration of AI agents, programmable command-line interfaces (CLIs), and stablecoins is driving a massive acceleration in global business creation and transforming the future of "agentic commerce."</p>
 <h3>The Intersection of AI Agents and Crypto Wallets</h3>
@@ -7854,7 +7886,7 @@ Yeah, the Mission stablecoin. Yeah, the Presidio stablecoin. Which one would you
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Artificial Intelligence has transitioned from a revolution in communication to a revolution in computation, shifting the focus from &quot;faster horses&quot; (incremental productivity) to &quot;cars&quot; (long-horizon agents).</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR Artificial Intelligence has transitioned from a revolution in communication to a revolution in computation, shifting the focus from &quot;faster horses&quot; (incremental productivity) to &quot;cars&quot; (long-horizon agents). This shift is transforming software into a $10 trillion services...</div>
+                    <div class="sum-preview" id="preview-17">). This shift is transforming software into a $10 trillion services...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>Artificial Intelligence has transitioned from a revolution in communication to a revolution in computation, shifting the focus from "faster horses" (incremental productivity) to "cars" (long-horizon agents). This shift is transforming software into a $10 trillion services market where cognitive labor is being commoditized at an unprecedented scale.</p>
 <h3>The Paradigm Shift: From Communication to Computation</h3>

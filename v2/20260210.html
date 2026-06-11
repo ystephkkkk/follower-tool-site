@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>As AI accelerates data exfiltration speeds from days to minutes, organizations must shift from fragmented point products to &quot;platformization&quot; to achieve the real-time, automated resilience required for the Intelligent Age.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR As AI accelerates data exfiltration speeds from days to minutes, organizations must shift from fragmented point products to &quot;platformization&quot; to achieve the real-time, automated resilience required for the Intelligent Age.  Moving Beyond Tool Proliferation: Large...</div>
+                    <div class="sum-preview" id="preview-0">Moving Beyond Tool Proliferation: Large...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>As AI accelerates data exfiltration speeds from days to minutes, organizations must shift from fragmented point products to "platformization" to achieve the real-time, automated resilience required for the Intelligent Age.</p>
 <h3>The Shift to Platformization and New ROI</h3>
@@ -785,7 +817,7 @@ For boards and CEOs looking ahead, the immediate priority should be assessing re
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Donald Trump projects an era of historic economic expansion, targeting 15% GDP growth through a combination of aggressive tariffs, energy deregulation, and a &quot;growth-first&quot; Federal Reserve.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR President Donald Trump projects an era of historic economic expansion, targeting 15% GDP growth through a combination of aggressive tariffs, energy deregulation, and a &quot;growth-first&quot; Federal Reserve. He credits his consolidated &quot;one big beautiful bill&quot; for driving $18...</div>
+                    <div class="sum-preview" id="preview-1">He credits his consolidated &quot;one big beautiful bill&quot; for driving $18...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>President Donald Trump projects an era of historic economic expansion, targeting 15% GDP growth through a combination of aggressive tariffs, energy deregulation, and a "growth-first" Federal Reserve. He credits his consolidated "one big beautiful bill" for driving $18 trillion in domestic investment and bringing the Dow to 50,000 within his first year.</p>
 <h3>Economic Milestones and Growth Projections</h3>
@@ -870,9 +902,9 @@ While traditional economists are often satisfied with two or three percent GDP g
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.0M)</span></span><span class="dot">&middot;</span><span>117:24</span><span class="dot">&middot;</span><span>144.2K views</span><span class="dot">&middot;</span><span>2026-02-10</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Changpeng%20Zhao%22">Changpeng Zhao<span class="chip-desc">Former CEO, Binance</span></a> <a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Co-host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22Jason%20Calacanis%22">Jason Calacanis<span class="chip-desc">Co-host, All-In Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Binance founder Changpeng Zhao (CZ) details his journey from a modest immigrant upbringing in Canada to the pinnacle of the crypto industry, emphasizing how his early experiences—from flipping burgers at McDonald's to self-funding his education—shape...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Binance founder Changpeng Zhao (CZ) details his journey from a modest immigrant upbringing in Canada to the pinnacle of the crypto industry, emphasizing how his early experiences—from flipping burgers at McDonald's to self-funding his…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Binance founder Changpeng Zhao (CZ) details his journey from a modest immigrant upbringing in Canada to the pinnacle of the crypto industry, emphasizing how his early experiences—from flipping burgers at McDonald's to self-funding his education—shaped the resilience and...</div>
+                    <div class="sum-preview" id="preview-2">education—shaped the resilience and...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Binance founder Changpeng Zhao (CZ) details his journey from a modest immigrant upbringing in Canada to the pinnacle of the crypto industry, emphasizing how his early experiences—from flipping burgers at McDonald's to self-funding his education—shaped the resilience and "normalcy" that define his approach to business and leadership.</p>
 <h3>Early Life and the Move to Canada</h3>
@@ -958,7 +990,7 @@ Throughout his university years, CZ was committed to financial independence. He 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance and President Ilham Aliyev signed a landmark Charter on Strategic Partnership in Baku, formalizing a new era of bilateral cooperation focused on regional peace, energy security, and the &quot;Trump Route for International Peace and Prosperity&quot; (TRIPP) transportation corridor.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Vice President JD Vance and President Ilham Aliyev signed a landmark Charter on Strategic Partnership in Baku, formalizing a new era of bilateral cooperation focused on regional peace, energy security, and the &quot;Trump Route for International Peace and Prosperity&quot; (TRIPP)...</div>
+                    <div class="sum-preview" id="preview-3"></div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance and President Ilham Aliyev signed a landmark Charter on Strategic Partnership in Baku, formalizing a new era of bilateral cooperation focused on regional peace, energy security, and the "Trump Route for International Peace and Prosperity" (TRIPP) transportation corridor.</p>
 <h3>Formalization of the Strategic Partnership</h3>
@@ -1039,7 +1071,7 @@ On a personal note, Vice President Vance praised President Aliyev’s unique abi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>One Click LCA is scaling its global impact through the acquisition of SimaPro and the launch of AI-driven tools, aiming to empower one million AEC professionals to achieve zero-carbon outcomes through standardized data, portfolio-wide analytics, and automated design optimization.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR One Click LCA is scaling its global impact through the acquisition of SimaPro and the launch of AI-driven tools, aiming to empower one million AEC professionals to achieve zero-carbon outcomes through standardized data, portfolio-wide analytics, and automated design...</div>
+                    <div class="sum-preview" id="preview-4"></div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>One Click LCA is scaling its global impact through the acquisition of SimaPro and the launch of AI-driven tools, aiming to empower one million AEC professionals to achieve zero-carbon outcomes through standardized data, portfolio-wide analytics, and automated design optimization.</p>
 <h3>Strategic Vision and Global Expansion</h3>
@@ -1130,7 +1162,7 @@ Finally, we are enhancing procurement and specification tools. Users can see exa
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Prime Intellect is democratizing frontier AI development by providing the full-stack infrastructure necessary for companies to move beyond static prompting into &quot;environment-based&quot; reinforcement learning, allowing them to compound institutional knowledge into bespoke, high-performance models.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Prime Intellect is democratizing frontier AI development by providing the full-stack infrastructure necessary for companies to move beyond static prompting into &quot;environment-based&quot; reinforcement learning, allowing them to compound institutional knowledge into bespoke,...</div>
+                    <div class="sum-preview" id="preview-5"></div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Prime Intellect is democratizing frontier AI development by providing the full-stack infrastructure necessary for companies to move beyond static prompting into "environment-based" reinforcement learning, allowing them to compound institutional knowledge into bespoke, high-performance models.</p>
 <h3>The Evolution from Prompting to "Environments"</h3>
@@ -1222,7 +1254,7 @@ Looking ahead, the focus of research is shifting toward synthetic data and self-
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Cisco is positioning itself as the &quot;critical infrastructure for the AI era,&quot; transitioning from simple productivity chatbots to a future of autonomous &quot;AI agents&quot; through a platform-first strategy that integrates networking, security, and observability.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Cisco is positioning itself as the &quot;critical infrastructure for the AI era,&quot; transitioning from simple productivity chatbots to a future of autonomous &quot;AI agents&quot; through a platform-first strategy that integrates networking, security, and observability.    Next-Generation...</div>
+                    <div class="sum-preview" id="preview-6">Next-Generation...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Cisco is positioning itself as the "critical infrastructure for the AI era," transitioning from simple productivity chatbots to a future of autonomous "AI agents" through a platform-first strategy that integrates networking, security, and observability.</p>
 <h3>AI-Ready Data Centers and Infrastructure</h3>
@@ -1358,9 +1390,9 @@ As Cisco Live continues, attendees are encouraged to visit the World of Solution
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.3M)</span></span><span class="dot">&middot;</span><span>85:26</span><span class="dot">&middot;</span><span>28.5K views</span><span class="dot">&middot;</span><span>2026-02-10</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Howard%20Lutnick%22">Howard Lutnick<span class="chip-desc">Secretary of Commerce</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Legend has it that Emperor Shen Nung discovered it when some wild tea leaves blew into his pot of boiling water.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Legend has it that Emperor Shen Nung discovered it when some wild tea leaves blew into his pot of boiling water.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR (1-2 sentences): Tea is a 5,000-year-old beverage originating from ancient China that has evolved into the most consumed drink in the world after water.  Ancient Chinese Heritage: The history of tea drinking spans over five millennia, beginning in ancient China.  The...</div>
+                    <div class="sum-preview" id="preview-7">(1-2 sentences): Tea is a 5,000-year-old beverage originating from ancient China that has evolved into the most consumed drink in the world after water.  Ancient Chinese Heritage: The history of tea drinking spans over five millennia, beginning in ancient China.  The...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong> (1-2 sentences): Tea is a 5,000-year-old beverage originating from ancient China that has evolved into the most consumed drink in the world after water.</p>
 <h3>Historical Origins and Legend</h3>
 <ul>
@@ -1404,7 +1436,7 @@ As Cisco Live continues, attendees are encouraged to visit the World of Solution
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Error generating summary: 503 UNAVAILABLE.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">Error generating summary: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}</div>
+                    <div class="sum-preview" id="preview-8">{'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}</div>
                     <div class="sum-full" id="full-8"><p>Error generating summary: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}</p></div>
                     <button class="linklike" id="sum-btn-8" onclick="toggleSummary(8)" type="button" aria-expanded="false" aria-controls="full-8">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -1473,7 +1505,7 @@ Thank you. C.S. Venkatakrishnan joining us uh this morning from Barclays. We'll 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Successful hyper-scaling requires a &quot;founder’s mentality&quot; that prioritizes cultural alignment, product-centricity over financial engineering, and the ruthless elimination of soul-crushing bureaucracy in favor of processes that liberate executors.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Successful hyper-scaling requires a &quot;founder’s mentality&quot; that prioritizes cultural alignment, product-centricity over financial engineering, and the ruthless elimination of soul-crushing bureaucracy in favor of processes that liberate executors.    Managing Talent...</div>
+                    <div class="sum-preview" id="preview-9">Managing Talent...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Successful hyper-scaling requires a "founder’s mentality" that prioritizes cultural alignment, product-centricity over financial engineering, and the ruthless elimination of soul-crushing bureaucracy in favor of processes that liberate executors.</p>
 <h3>Cultural Integrity and the "Antibody" Effect</h3>
@@ -1576,7 +1608,7 @@ Thank you. C.S. Venkatakrishnan joining us uh this morning from Barclays. We'll 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Error generating summary: 503 UNAVAILABLE.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">Error generating summary: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}</div>
+                    <div class="sum-preview" id="preview-10">{'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}</div>
                     <div class="sum-full" id="full-10"><p>Error generating summary: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}</p></div>
                     <button class="linklike" id="sum-btn-10" onclick="toggleSummary(10)" type="button" aria-expanded="false" aria-controls="full-10">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -1607,9 +1639,9 @@ Looking toward the future, the integration of crypto products into major wirehou
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/C9Rpv8PNOWPB5K5XtxcZtmBeJs64tfxU16v0X_ioS8djiNUAcmIeE0uZAl390jfQ4vYFFbleqA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Justice Department</b><span class="subs">(83.3K)</span></span><span class="dot">&middot;</span><span>122:56</span><span class="dot">&middot;</span><span>10.7K views</span><span class="dot">&middot;</span><span>2026-02-10</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jesse%20Panuccio%22">Jesse Panuccio<span class="chip-desc">Acting Associate Attorney General, U.S. Department of Justice</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Witnesses and commissioners at the Fifth Hearing of the Religious Liberty Commission detailed an unprecedented surge in systemic antisemitism on elite American campuses and at religious gatherings, advocating for aggressive federal intervention, incl...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Witnesses and commissioners at the Fifth Hearing of the Religious Liberty Commission detailed an unprecedented surge in systemic antisemitism on elite American campuses and at religious gatherings, advocating for aggressive federal intervention,…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Witnesses and commissioners at the Fifth Hearing of the Religious Liberty Commission detailed an unprecedented surge in systemic antisemitism on elite American campuses and at religious gatherings, advocating for aggressive federal intervention, including the withholding...</div>
+                    <div class="sum-preview" id="preview-11">including the withholding...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Witnesses and commissioners at the Fifth Hearing of the Religious Liberty Commission detailed an unprecedented surge in systemic antisemitism on elite American campuses and at religious gatherings, advocating for aggressive federal intervention, including the withholding of taxpayer funds from non-compliant institutions.</p>
 <h3>Campus Antisemitism and Institutional Failures</h3>
@@ -1720,7 +1752,7 @@ Despite this history, religious communities today face direct hostility. In San 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR The U.S. is executing a &quot;whole-of-government&quot; strategy to break China’s dominance in critical minerals while transitioning from multilateral trade agreements to high-stakes bilateral deals aimed at reducing the trade deficit and boosting domestic manufacturing.  Strategic...</div>
+                    <div class="sum-preview" id="preview-12">is executing a &quot;whole-of-government&quot; strategy to break China’s dominance in critical minerals while transitioning from multilateral trade agreements to high-stakes bilateral deals aimed at reducing the trade deficit and boosting domestic manufacturing.  Strategic...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>The U.S. is executing a "whole-of-government" strategy to break China’s dominance in critical minerals while transitioning from multilateral trade agreements to high-stakes bilateral deals aimed at reducing the trade deficit and boosting domestic manufacturing.</p>
 <h3>Critical Minerals Strategy and China Decoupling</h3>
@@ -1811,9 +1843,9 @@ The administration's trade policy remains focused on reducing the trade deficit 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nulMc6GNIrLUi_wcTCKojfsfro0dsNLAueuj4edxt_Kl4T=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes</b><span class="subs">(2.1M)</span></span><span class="dot">&middot;</span><span>20:29</span><span class="dot">&middot;</span><span>1.2K views</span><span class="dot">&middot;</span><span>2026-02-10</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Lindsay%20Barnett%22">Lindsay Barnett<span class="chip-desc">CEO, Playground Productions</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Playground Productions is successfully revitalizing the *Backyard Sports* franchise by combining technical reverse engineering of legacy titles with a modern, multi-channel strategy—including an upcoming new video game, animated specials, and high-en...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Playground Productions is successfully revitalizing the *Backyard Sports* franchise by combining technical reverse engineering of legacy titles with a modern, multi-channel strategy—including an upcoming new video game, animated specials, and…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Playground Productions is successfully revitalizing the Backyard Sports franchise by combining technical reverse engineering of legacy titles with a modern, multi-channel strategy—including an upcoming new video game, animated specials, and high-end merchandise—while...</div>
+                    <div class="sum-preview" id="preview-13">high-end merchandise—while...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Playground Productions is successfully revitalizing the *Backyard Sports* franchise by combining technical reverse engineering of legacy titles with a modern, multi-channel strategy—including an upcoming new video game, animated specials, and high-end merchandise—while prioritizing a "brand-safe" environment free from predatory monetization.</p>
 <h3>Technical Resurrection and Product Roadmap</h3>
@@ -1892,7 +1924,7 @@ The administration's trade policy remains focused on reducing the trade deficit 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of War Pete Hegseth asserts that American military strength is fundamentally dependent on domestic manufacturing, characterizing the production of the Abrams tank as a cornerstone of global stability and the &quot;Arsenal of Freedom.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR Secretary of War Pete Hegseth asserts that American military strength is fundamentally dependent on domestic manufacturing, characterizing the production of the Abrams tank as a cornerstone of global stability and the &quot;Arsenal of Freedom.&quot;  Economic Foundation of Power:...</div>
+                    <div class="sum-preview" id="preview-14">&quot;  Economic Foundation of Power:...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Secretary of War Pete Hegseth asserts that American military strength is fundamentally dependent on domestic manufacturing, characterizing the production of the Abrams tank as a cornerstone of global stability and the "Arsenal of Freedom."</p>
 <h3>The Strategic Link Between Manufacturing and Defense</h3>
@@ -1951,7 +1983,7 @@ We must continue to be the Arsenal of Freedom and lead the world in manufacturin
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Artificial intelligence is transitioning from a speculative tool to a core infrastructure in healthcare, agriculture, and the arts, necessitating a shift toward &quot;agentic&quot; co-piloting and personal data sovereignty to ensure human intelligence remains the ultimate arbiter of taste and safety.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Artificial intelligence is transitioning from a speculative tool to a core infrastructure in healthcare, agriculture, and the arts, necessitating a shift toward &quot;agentic&quot; co-piloting and personal data sovereignty to ensure human intelligence remains the ultimate arbiter of...</div>
+                    <div class="sum-preview" id="preview-15"></div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Artificial intelligence is transitioning from a speculative tool to a core infrastructure in healthcare, agriculture, and the arts, necessitating a shift toward "agentic" co-piloting and personal data sovereignty to ensure human intelligence remains the ultimate arbiter of taste and safety.</p>
 <h3>AI in Healthcare: Precision and Safety</h3>
@@ -2052,9 +2084,9 @@ will.i.am argues that we are currently using AI for the &quot;regurgitation of i
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_k-eq6Ur2sT6KLUn5fhVFYDIaswMRrAzKcykDADFGXpvA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>PGIM</b><span class="subs">(1.2K)</span></span><span class="dot">&middot;</span><span>35:20</span><span class="dot">&middot;</span><span>57 views</span><span class="dot">&middot;</span><span>2026-02-10</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jake%20Sullivan%22">Jake Sullivan<span class="chip-desc">Professor, Harvard University</span></a> <a class="chip" href="index.html?q=%22Daleep%20Singh%22">Daleep Singh<span class="chip-desc">Host, PGIM</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;There are big countries in the world, and there are small countries, and that's just a fact.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;There are big countries in the world, and there are small countries, and that's just a fact.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR: The world has transitioned from the post-Cold War &quot;unipolar moment&quot; to an &quot;old normal&quot; of great power rivalry where economics and national security are inextricably linked, requiring the U.S. to move beyond punitive measures toward &quot;offensive&quot; economic statecraft like a...</div>
+                    <div class="sum-preview" id="preview-16">The world has transitioned from the post-Cold War &quot;unipolar moment&quot; to an &quot;old normal&quot; of great power rivalry where economics and national security are inextricably linked, requiring the U.S. to move beyond punitive measures toward &quot;offensive&quot; economic statecraft like a...</div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR:</strong> The world has transitioned from the post-Cold War "unipolar moment" to an "old normal" of great power rivalry where economics and national security are inextricably linked, requiring the U.S. to move beyond punitive measures toward "offensive" economic statecraft like a national strategic investment fund.</p>
 <h3>The Shift to the "Old Normal" and Spheres of Influence</h3>
 <ul>
@@ -2145,9 +2177,9 @@ Managing these high-stakes risks requires a specific mental framework. Effective
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/4BC0ntll3pg401CRl9pi_cXxVLayYpl6VGNjhIQfHp9GpTqlj3qwGDtgG_YABpXTiOec9GABBQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Invest Like The Best</b><span class="subs">(38.6K)</span></span><span class="dot">&middot;</span><span>90:32</span><span class="dot">&middot;</span><span>3.4K views</span><span class="dot">&middot;</span><span>2026-02-10</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Alex%20Behring%22">Alex Behring<span class="chip-desc">Co-Managing Partner, 3G Capital</span></a> <a class="chip" href="index.html?q=%22Daniel%20Schwartz%22">Daniel Schwartz<span class="chip-desc">Co-Managing Partner, 3G Capital</span></a> <a class="chip" href="index.html?q=%22Patrick%20O%27Shaughnessy%22">Patrick O'Shaughnessy<span class="chip-desc">Host, Invest Like the Best</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; **Daniel Schwartz:** &quot;Pressure is something you put in a tire.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>**Daniel Schwartz:** &quot;Pressure is something you put in a tire.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR 3G Capital operates a high-conviction &quot;one investment per fund&quot; model, leveraging an operator-first mindset to transform iconic but under-optimized brands through extreme talent density, ownership incentives, and long-term strategic patience.    Deep Concentration: 3G...</div>
+                    <div class="sum-preview" id="preview-17">3G Capital operates a high-conviction &quot;one investment per fund&quot; model, leveraging an operator-first mindset to transform iconic but under-optimized brands through extreme talent density, ownership incentives, and long-term strategic patience.    Deep Concentration: 3G...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong> 3G Capital operates a high-conviction "one investment per fund" model, leveraging an operator-first mindset to transform iconic but under-optimized brands through extreme talent density, ownership incentives, and long-term strategic patience.</p>
 <h3>The "One Investment Per Fund" Model</h3>
 <ul>
@@ -2271,7 +2303,7 @@ The motivation to continue comes from a desire to see the firm and its people en
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The United States and Azerbaijan have signed a historic Charter on Strategic Partnership, formalizing a new era of cooperation focused on regional peace through the &quot;Trump Route,&quot; energy security for NATO allies, and expanded defense and technology sales.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR The United States and Azerbaijan have signed a historic Charter on Strategic Partnership, formalizing a new era of cooperation focused on regional peace through the &quot;Trump Route,&quot; energy security for NATO allies, and expanded defense and technology sales.    Formalization...</div>
+                    <div class="sum-preview" id="preview-18">Formalization...</div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>The United States and Azerbaijan have signed a historic Charter on Strategic Partnership, formalizing a new era of cooperation focused on regional peace through the "Trump Route," energy security for NATO allies, and expanded defense and technology sales.</p>
 <h3>Strategic Partnership and Diplomatic Realignment</h3>

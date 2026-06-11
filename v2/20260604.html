@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/kUa_ydk-cYKrVa3F2Xbrs54qzmIXl6ZCuSgrJR6lIMWj-VqZLtycN7M4DvxyeewPY3ldF3vL=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Stripe</b><span class="subs">(107.0K)</span></span><span class="dot">&middot;</span><span>43:23</span><span class="dot">&middot;</span><span>1.0K views</span><span class="dot">&middot;</span><span>2026-06-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Lou%20Grasser%22">Lou Grasser<span class="chip-desc">Chief Digital Operations Officer, Le Monde</span></a> <a class="chip" href="index.html?q=%22Carole%20Roth%22">Carole Roth<span class="chip-desc">Senior VP Hotel Experience, Accor</span></a> <a class="chip" href="index.html?q=%22Matthieu%20Stefani%22">Matthieu Stefani<span class="chip-desc">Host, Génération Do It Yourself</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>As iconic French enterprises like *Le Monde* and *Accor* navigate systemic digital transitions, the rise of &quot;agentic AI&quot; is shifting the corporate focus from superficial interfaces to automated back-office workflows, demanding absolute executive luci...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>As iconic French enterprises like *Le Monde* and *Accor* navigate systemic digital transitions, the rise of &quot;agentic AI&quot; is shifting the corporate focus from superficial interfaces to automated back-office workflows, demanding absolute executive…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR As iconic French enterprises like Le Monde and Accor navigate systemic digital transitions, the rise of &quot;agentic AI&quot; is shifting the corporate focus from superficial interfaces to automated back-office workflows, demanding absolute executive lucidity and rapid execution to...</div>
+                    <div class="sum-preview" id="preview-0">lucidity and rapid execution to...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>As iconic French enterprises like *Le Monde* and *Accor* navigate systemic digital transitions, the rise of "agentic AI" is shifting the corporate focus from superficial interfaces to automated back-office workflows, demanding absolute executive lucidity and rapid execution to keep pace with global competitors.</p>
 <h3>Le Monde: Scaling Digital Subscriptions and Pioneer AI Deals</h3>
@@ -1059,7 +1091,7 @@ Pour moi, c'est vraiment, je je crois, je veux croire en un monde où on va reve
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>True business value in the AI era is unlocked not by generic large language models, but by combining LLMs with Palantir’s Ontology and Apollo deployment infrastructure.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR   True business value in the AI era is unlocked not by generic large language models, but by combining LLMs with Palantir’s Ontology and Apollo deployment infrastructure. This integration allows organizations to digitally encode their unique, proprietary &quot;tradecraft&quot; to...</div>
+                    <div class="sum-preview" id="preview-1">This integration allows organizations to digitally encode their unique, proprietary &quot;tradecraft&quot; to...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>True business value in the AI era is unlocked not by generic large language models, but by combining LLMs with Palantir’s Ontology and Apollo deployment infrastructure. This integration allows organizations to digitally encode their unique, proprietary "tradecraft" to automate decisions, orchestrate complex physical and digital assets, and protect critical operations at machine speed.</p>
 <h3>Bridging AI with Operational Reality: The Power of the Ontology</h3>
@@ -1770,7 +1802,7 @@ And we're so proud to work hard alongside you and to be unpopular alongside you.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>NVIDIA CEO Jensen Huang announced the NVIDIA RTX Spark, a revolutionary superchip built in partnership with MediaTek and Microsoft, designed to completely reinvent the Windows PC for the era of local, autonomous AI agents.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR NVIDIA CEO Jensen Huang announced the NVIDIA RTX Spark, a revolutionary superchip built in partnership with MediaTek and Microsoft, designed to completely reinvent the Windows PC for the era of local, autonomous AI agents.   The &quot;N1X&quot; Architecture: Developed in close...</div>
+                    <div class="sum-preview" id="preview-2">The &quot;N1X&quot; Architecture: Developed in close...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>NVIDIA CEO Jensen Huang announced the NVIDIA RTX Spark, a revolutionary superchip built in partnership with MediaTek and Microsoft, designed to completely reinvent the Windows PC for the era of local, autonomous AI agents.</p>
 <h3>The Core Technology: NVIDIA RTX Spark Superchip</h3>
@@ -1905,9 +1937,9 @@ And so this is the beginning of that journey. This is the beginning of a new lin
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/12DXqfZQBwvHFBp31Teww9briF_9d45RTmGp6fiYScdvI4LZ3xPEfmw54EXV4o6tQMuG1I2t4Q=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Technology</b><span class="subs">(727.0K)</span></span><span class="dot">&middot;</span><span>23:28</span><span class="dot">&middot;</span><span>6.6K views</span><span class="dot">&middot;</span><span>2026-06-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Daniela%20Amodei%22">Daniela Amodei<span class="chip-desc">President &amp; Co-Founder, Anthropic</span></a> <a class="chip" href="index.html?q=%22Shirin%20Ghaffary%22">Shirin Ghaffary<span class="chip-desc">Bloomberg</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Anthropic President Daniela Amodei highlights the company's rapid scaling—marked by $7.3 billion raised and a projected $850 million annualized revenue run rate—while outlining how strategic, multi-cloud partnerships with Amazon and Google fuel capit...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Anthropic President Daniela Amodei highlights the company's rapid scaling—marked by $7.3 billion raised and a projected $850 million annualized revenue run rate—while outlining how strategic, multi-cloud partnerships with Amazon and Google fuel…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  Anthropic President Daniela Amodei highlights the company's rapid scaling—marked by $7.3 billion raised and a projected $850 million annualized revenue run rate—while outlining how strategic, multi-cloud partnerships with Amazon and Google fuel capital-intensive frontier...</div>
+                    <div class="sum-preview" id="preview-3">capital-intensive frontier...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Anthropic President Daniela Amodei highlights the company's rapid scaling—marked by $7.3 billion raised and a projected $850 million annualized revenue run rate—while outlining how strategic, multi-cloud partnerships with Amazon and Google fuel capital-intensive frontier training without compromising the startup's independent, safety-first mission.</p>
 <h3>Leadership Dynamics and Scaling Humility</h3>
@@ -2067,7 +2099,7 @@ Thank you so much. Great to be here.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI value is shifting from raw foundation models to an ecosystem-driven &quot;harness&quot; layer where enterprises use private evaluations and custom agentic workflows to hill-climb performance.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR  AI value is shifting from raw foundation models to an ecosystem-driven &quot;harness&quot; layer where enterprises use private evaluations and custom agentic workflows to hill-climb performance. To capture compounding value, organizations must transition from manual execution to...</div>
+                    <div class="sum-preview" id="preview-4">To capture compounding value, organizations must transition from manual execution to...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>AI value is shifting from raw foundation models to an ecosystem-driven "harness" layer where enterprises use private evaluations and custom agentic workflows to hill-climb performance. To capture compounding value, organizations must transition from manual execution to "meta-work"—building autonomous systems that capture institutional tacit knowledge directly onto the corporate balance sheet.</p>
 <h3>## The Platform Shift: From Foundation Models to "Harnesses"</h3>
@@ -2334,9 +2366,9 @@ Well, that has felt, perhaps impossible for a long time, but it's a great note t
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/auEbLloJq5MiV8s-Dz-3IQ-_w_EkSXotv9EaA9nRjh8tD1CEDxM4sxQDFOhDKgL8v_qJbFwiEg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Meta Developers</b><span class="subs">(308.0K)</span></span><span class="dot">&middot;</span><span>81:46</span><span class="dot">&middot;</span><span>41.6K views</span><span class="dot">&middot;</span><span>2026-06-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Mark%20Zuckerberg%22">Mark Zuckerberg<span class="chip-desc">CEO, Meta</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>At Meta's fifth annual Conversations conference, Meta announced the global expansion of the Meta Business Agent and the Meta Business Agent Platform, allowing businesses of all sizes to automate end-to-end customer engagement, lead qualification, and...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>At Meta's fifth annual Conversations conference, Meta announced the global expansion of the Meta Business Agent and the Meta Business Agent Platform, allowing businesses of all sizes to automate end-to-end customer engagement, lead qualification,…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR   At Meta's fifth annual Conversations conference, Meta announced the global expansion of the Meta Business Agent and the Meta Business Agent Platform, allowing businesses of all sizes to automate end-to-end customer engagement, lead qualification, and transaction...</div>
+                    <div class="sum-preview" id="preview-5">and transaction...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>At Meta's fifth annual Conversations conference, Meta announced the global expansion of the Meta Business Agent and the Meta Business Agent Platform, allowing businesses of all sizes to automate end-to-end customer engagement, lead qualification, and transaction processing directly within WhatsApp, Messenger, and Instagram.</p>
 <h3>Meta's AI Agent Strategy &amp; The Evolution of Business Messaging</h3>
@@ -2811,7 +2843,7 @@ So here's my ask: don't wait. Start building with us. You won't just adapt to th
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Federal Reserve Bank of San Francisco President Mary Daly remains highly bullish on AI's long-term economic potential despite a current lack of macro productivity gains, while cautioning that elevated economic uncertainty makes near-term interest rate forward guidance potentially misleading.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Federal Reserve Bank of San Francisco President Mary Daly remains highly bullish on AI's long-term economic potential despite a current lack of macro productivity gains, while cautioning that elevated economic uncertainty makes near-term interest rate forward guidance...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Federal Reserve Bank of San Francisco President Mary Daly remains highly bullish on AI's long-term economic potential despite a current lack of macro productivity gains, while cautioning that elevated economic uncertainty makes near-term interest rate forward guidance potentially misleading.</p>
 <h3>AI Adoption, Productivity, and Financial Stability</h3>
@@ -3002,7 +3034,7 @@ But at this point, you know, again, if you stack-rank the things that are worryi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Growing geopolitical tensions and the weaponization of global finance are driving severe financial fragmentation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR  Growing geopolitical tensions and the weaponization of global finance are driving severe financial fragmentation. If a full economic decoupling between East and West occurs, the global economy faces a worst-case GDP loss of over $6 trillion (roughly 5% of global GDP)—an...</div>
+                    <div class="sum-preview" id="preview-7">If a full economic decoupling between East and West occurs, the global economy faces a worst-case GDP loss of over $6 trillion (roughly 5% of global GDP)—an...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Growing geopolitical tensions and the weaponization of global finance are driving severe financial fragmentation. If a full economic decoupling between East and West occurs, the global economy faces a worst-case GDP loss of over $6 trillion (roughly 5% of global GDP)—an impact far exceeding that of the COVID-19 pandemic or the 2008 financial crisis.</p>
 <h3>The Drivers and Waves of Global Financial Fragmentation</h3>
@@ -3364,7 +3396,7 @@ Perfect. That was really good. Let's do a quick pickup of just Daniel Tannebaum,
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent defended the administration's economic policies before the House Ways and Means Committee, showcasing middle-class tax relief and manufacturing growth.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR  Treasury Secretary Scott Bessent defended the administration's economic policies before the House Ways and Means Committee, showcasing middle-class tax relief and manufacturing growth. However, he faced intense scrutiny from Democrats over a controversial IRS audit...</div>
+                    <div class="sum-preview" id="preview-8">However, he faced intense scrutiny from Democrats over a controversial IRS audit...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent defended the administration's economic policies before the House Ways and Means Committee, showcasing middle-class tax relief and manufacturing growth. However, he faced intense scrutiny from Democrats over a controversial IRS audit immunity settlement for Donald Trump, high cost-of-living inflation, and a GAO report exposing taxpayer data security breaches within the Department of Government Efficiency (DOGE).</p>
 <p>***</p>
@@ -5434,7 +5466,7 @@ With that, Mr. Secretary, thank you for being here with us today. Thank you for 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Goldman Sachs CEO David Solomon argues that while AI will dramatically boost productivity and reshape job structures, fears of a white-collar &quot;job apocalypse&quot; are overblown because emotional intelligence, trust, and human relationships remain irreplaceable business drivers.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR   Goldman Sachs CEO David Solomon argues that while AI will dramatically boost productivity and reshape job structures, fears of a white-collar &quot;job apocalypse&quot; are overblown because emotional intelligence, trust, and human relationships remain irreplaceable business...</div>
+                    <div class="sum-preview" id="preview-9"></div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Goldman Sachs CEO David Solomon argues that while AI will dramatically boost productivity and reshape job structures, fears of a white-collar "job apocalypse" are overblown because emotional intelligence, trust, and human relationships remain irreplaceable business drivers. Furthermore, the massive capital demands of the AI transition are shifting market dynamics, forcing tech giants to execute historic equity raises and prompting large private firms to seek public listings.</p>
 <h3>AI, Productivity, and the Myth of the "Job Apocalypse"</h3>
@@ -6008,7 +6040,7 @@ And if you enjoyed this conversation, then please leave a comment or like the vi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>An OpenAI general-purpose reasoning model has disproved Paul Erdős’s 80-year-old unit distance conjecture.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR   An OpenAI general-purpose reasoning model has disproved Paul Erdős’s 80-year-old unit distance conjecture. This breakthrough, driven by &quot;test-time compute&quot; (allowing the model to think longer before responding), highlights how AI reasoning can solve major open scientific...</div>
+                    <div class="sum-preview" id="preview-10">This breakthrough, driven by &quot;test-time compute&quot; (allowing the model to think longer before responding), highlights how AI reasoning can solve major open scientific...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>An OpenAI general-purpose reasoning model has disproved Paul Erdős’s 80-year-old unit distance conjecture. This breakthrough, driven by "test-time compute" (allowing the model to think longer before responding), highlights how AI reasoning can solve major open scientific problems and act as a powerful catalyst for human-AI collaborative research.</p>
 <h3>Cracking the Erdős Unit Distance Conjecture</h3>
@@ -6377,7 +6409,7 @@ Well, gentlemen, thank you very much. Yeah, thanks so much. Thank you so much.</
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bank of America CEO Brian Moynihan highlights the resilience of the American consumer and small businesses despite K-shaped economic pressures, while detailing the bank's disciplined approach to AI implementation and global sports investments.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR  Bank of America CEO Brian Moynihan highlights the resilience of the American consumer and small businesses despite K-shaped economic pressures, while detailing the bank's disciplined approach to AI implementation and global sports investments.    Program Philosophy: The...</div>
+                    <div class="sum-preview" id="preview-11">Program Philosophy: The...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Bank of America CEO Brian Moynihan highlights the resilience of the American consumer and small businesses despite K-shaped economic pressures, while detailing the bank's disciplined approach to AI implementation and global sports investments.</p>
 <h3>Global Sports and Community Engagement ("Sports with Us")</h3>
@@ -6620,7 +6652,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global economy is undergoing a historic inflection point as 80 years of post-WWII globalization and geopolitical cooperation reverse in favor of national security, onshoring, and energy diversification.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR   The global economy is undergoing a historic inflection point as 80 years of post-WWII globalization and geopolitical cooperation reverse in favor of national security, onshoring, and energy diversification. While geopolitical tail risks remain difficult for markets to...</div>
+                    <div class="sum-preview" id="preview-12">While geopolitical tail risks remain difficult for markets to...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>The global economy is undergoing a historic inflection point as 80 years of post-WWII globalization and geopolitical cooperation reverse in favor of national security, onshoring, and energy diversification. While geopolitical tail risks remain difficult for markets to price and private credit faces structural adjustments, the underlying financial system remains robust and presents vast opportunities for private capital.</p>
 <h3>The Rewiring of the Global Economic Model</h3>
@@ -6797,7 +6829,7 @@ Everybody, great to be here. Thanks so much. Good to see everybody.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Sen.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR  Sen. Patty Murray (D-WA) sharply criticized Secretary of State and National Security Advisor Marco Rubio over the ongoing war in Iran, a proposed $1.5 trillion defense budget, and deep cuts to diplomacy and global health. Rubio defended the administration's military...</div>
+                    <div class="sum-preview" id="preview-13">Patty Murray (D-WA) sharply criticized Secretary of State and National Security Advisor Marco Rubio over the ongoing war in Iran, a proposed $1.5 trillion defense budget, and deep cuts to diplomacy and global health. Rubio defended the administration's military...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Sen. Patty Murray (D-WA) sharply criticized Secretary of State and National Security Advisor Marco Rubio over the ongoing war in Iran, a proposed $1.5 trillion defense budget, and deep cuts to diplomacy and global health. Rubio defended the administration's military strategy as a necessary strike against a nuclear threat and argued that State Department structural reforms have made foreign aid delivery faster and more efficient.</p>
 <h3>The War in Iran and Executive Accountability</h3>
@@ -6986,7 +7018,7 @@ Mr. Secretary, so good to see you. Thank you for your...</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Enterprise AI is currently trapped in an addictive, superficial cycle of &quot;tokenmaxxing&quot; that fails to deliver true return on investment (ROI).</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR  Enterprise AI is currently trapped in an addictive, superficial cycle of &quot;tokenmaxxing&quot; that fails to deliver true return on investment (ROI). To survive and thrive, companies must move past generic LLMs, inject &quot;taste&quot; into their specialized software architectures, and...</div>
+                    <div class="sum-preview" id="preview-14">). To survive and thrive, companies must move past generic LLMs, inject &quot;taste&quot; into their specialized software architectures, and...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Enterprise AI is currently trapped in an addictive, superficial cycle of "tokenmaxxing" that fails to deliver true return on investment (ROI). To survive and thrive, companies must move past generic LLMs, inject "taste" into their specialized software architectures, and actively engage with political realities to avoid a populist backlash and eventual nationalization.</p>
 <h3>The Illusion of "Tokenmaxxing" vs. True Enterprise Value</h3>
@@ -7243,7 +7275,7 @@ Always fun.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bridgewater Associates Founder Ray Dalio warns of an impending sovereign debt crisis and a historic shift in global power, advising investors to combat extreme market concentration and geopolitical risk by building portfolios with at least 15 uncorrelated assets.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR  Bridgewater Associates Founder Ray Dalio warns of an impending sovereign debt crisis and a historic shift in global power, advising investors to combat extreme market concentration and geopolitical risk by building portfolios with at least 15 uncorrelated assets. To guide...</div>
+                    <div class="sum-preview" id="preview-15">To guide...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Bridgewater Associates Founder Ray Dalio warns of an impending sovereign debt crisis and a historic shift in global power, advising investors to combat extreme market concentration and geopolitical risk by building portfolios with at least 15 uncorrelated assets.</p>
 <h3>The Five Forces Shaping the Future</h3>
@@ -7488,7 +7520,7 @@ That's right. Thank you, Ray Dalio.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Digital credit—high-yield preferred equity backed by Bitcoin—is emerging as a critical transition asset to bridge the gap between fiat currency debasement and a hyper-bitcoinized future.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR  Digital credit—high-yield preferred equity backed by Bitcoin—is emerging as a critical transition asset to bridge the gap between fiat currency debasement and a hyper-bitcoinized future. By eliminating maturity and equity conversion risks for issuers while providing...</div>
+                    <div class="sum-preview" id="preview-16">By eliminating maturity and equity conversion risks for issuers while providing...</div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>Digital credit—high-yield preferred equity backed by Bitcoin—is emerging as a critical transition asset to bridge the gap between fiat currency debasement and a hyper-bitcoinized future. By eliminating maturity and equity conversion risks for issuers while providing double-digit yields to investors, instruments like Strive's daily-dividend-paying "Seta" are redefining institutional fixed-income portfolios.</p>
 <h3>Understanding Digital Credit and Its Value Proposition</h3>
@@ -7925,7 +7957,7 @@ Awesome. Thanks.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>A highly anticipated wave of mega-IPOs led by SpaceX and Anthropic signals a massive structural shift in capital markets, driven by unprecedented private-market value creation and a rapid physical-digital technology convergence that could accelerate ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR   A highly anticipated wave of mega-IPOs led by SpaceX and Anthropic signals a massive structural shift in capital markets, driven by unprecedented private-market value creation and a rapid physical-digital technology convergence that could accelerate real US GDP growth to...</div>
+                    <div class="sum-preview" id="preview-17">real US GDP growth to...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>A highly anticipated wave of mega-IPOs led by SpaceX and Anthropic signals a massive structural shift in capital markets, driven by unprecedented private-market value creation and a rapid physical-digital technology convergence that could accelerate real US GDP growth to 7–8% over the next five years.</p>
 <h3>The Impending IPO Wave and Macroeconomic Outlook</h3>
@@ -8155,9 +8187,9 @@ And so I do think this will be, you know, a historic cycle, a cycle without prec
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/lG-z7sTfhFIW2Ne1oXMHvXMXyZSaA02_I17gUel0GAEj7OypsSHQ7PE91Vp4bTbpm3PTIAWJdko=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Dwarkesh Patel</b><span class="subs">(1.3M)</span></span><span class="dot">&middot;</span><span>76:09</span><span class="dot">&middot;</span><span>40.4K views</span><span class="dot">&middot;</span><span>2026-06-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Alex%20Imas%22">Alex Imas<span class="chip-desc">Economist</span></a> <a class="chip" href="index.html?q=%22Phil%20Trammell%22">Phil Trammell<span class="chip-desc">Economist</span></a> <a class="chip" href="index.html?q=%22Dwarkesh%20Patel%22">Dwarkesh Patel<span class="chip-desc">Host, Dwarkesh Patel</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The economic impact of AGI will be determined by whether AI behaves like electricity (distributing downstream benefits widely) or social media (concentrating rents), making the strategic indexing of global capital gains a more vital survival strategy...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The economic impact of AGI will be determined by whether AI behaves like electricity (distributing downstream benefits widely) or social media (concentrating rents), making the strategic indexing of global capital gains a more vital survival…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR  The economic impact of AGI will be determined by whether AI behaves like electricity (distributing downstream benefits widely) or social media (concentrating rents), making the strategic indexing of global capital gains a more vital survival strategy for non-AI nations...</div>
+                    <div class="sum-preview" id="preview-18">strategy for non-AI nations...</div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>The economic impact of AGI will be determined by whether AI behaves like electricity (distributing downstream benefits widely) or social media (concentrating rents), making the strategic indexing of global capital gains a more vital survival strategy for non-AI nations than localized job-retraining programs.</p>
 <h3>Redefining Scarcity: The Relational Sector and Labor Share Dynamics</h3>
@@ -8673,7 +8705,7 @@ Okay, well, thanks.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>SpaceX’s highly speculative $2 trillion IPO valuation is driven by Elon Musk's unique ability to convert narrative-driven capital into physical infrastructure, positioning the company to bypass Earth-bound data center zoning and power constraints by ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR  SpaceX’s highly speculative $2 trillion IPO valuation is driven by Elon Musk's unique ability to convert narrative-driven capital into physical infrastructure, positioning the company to bypass Earth-bound data center zoning and power constraints by deploying...</div>
+                    <div class="sum-preview" id="preview-19">deploying...</div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR</strong></p>
 <p>SpaceX’s highly speculative $2 trillion IPO valuation is driven by Elon Musk's unique ability to convert narrative-driven capital into physical infrastructure, positioning the company to bypass Earth-bound data center zoning and power constraints by deploying laser-interconnected satellite "racks" in space optimized for the massive future market of agentic AI inference.</p>
 <h3>The Scale Playbook: From Tesla to Starlink</h3>
@@ -8879,9 +8911,9 @@ SpaceX has already invented a lot, and its early investors are going to make a l
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_lRvu0tqvKCabP6OVwYB-i82uW31tJyHlrreXfp4Oz-7P0=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Live</b><span class="subs">(187.0K)</span></span><span class="dot">&middot;</span><span>28:23</span><span class="dot">&middot;</span><span>25.7K views</span><span class="dot">&middot;</span><span>2026-06-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Mira%20Murati%22">Mira Murati<span class="chip-desc">Co-Founder &amp; CEO, Thinking Machines Lab</span></a> <a class="chip" href="index.html?q=%22Emily%20Chang%22">Emily Chang<span class="chip-desc">Bloomberg</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Mira Murati, Co-Founder and CEO of Thinking Machines Lab, outlines her company's core bet on &quot;interaction models&quot; designed for real-time human-AI collaboration, while reflecting on the governance failures of her former employer, OpenAI, and emphasizi...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Mira Murati, Co-Founder and CEO of Thinking Machines Lab, outlines her company's core bet on &quot;interaction models&quot; designed for real-time human-AI collaboration, while reflecting on the governance failures of her former employer, OpenAI, and…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-20">TL;DR  Mira Murati, Co-Founder and CEO of Thinking Machines Lab, outlines her company's core bet on &quot;interaction models&quot; designed for real-time human-AI collaboration, while reflecting on the governance failures of her former employer, OpenAI, and emphasizing the need for robust...</div>
+                    <div class="sum-preview" id="preview-20">emphasizing the need for robust...</div>
                     <div class="sum-full" id="full-20"><p><strong>TL;DR</strong></p>
 <p>Mira Murati, Co-Founder and CEO of Thinking Machines Lab, outlines her company's core bet on "interaction models" designed for real-time human-AI collaboration, while reflecting on the governance failures of her former employer, OpenAI, and emphasizing the need for robust institutional checks and balances in the AI sector.</p>
 <h3>Redefining Human-AI Collaboration: Time-Based Interaction</h3>
@@ -9087,9 +9119,9 @@ Thank you.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>32:45</span><span class="dot">&middot;</span><span>102.2K views</span><span class="dot">&middot;</span><span>2026-06-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Thomas%20Laffont%22">Thomas Laffont<span class="chip-desc">Coatue</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Coatue’s Thomas Laffont outlines an impending $4 trillion AI-driven IPO wave led by the &quot;Magnificent Eight&quot; (including SpaceX, OpenAI, and Anthropic), driven by unprecedented software scaling and a stark power-law dynamic where the largest &quot;centicorn...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Coatue’s Thomas Laffont outlines an impending $4 trillion AI-driven IPO wave led by the &quot;Magnificent Eight&quot; (including SpaceX, OpenAI, and Anthropic), driven by unprecedented software scaling and a stark power-law dynamic where the largest…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-21">TL;DR   Coatue’s Thomas Laffont outlines an impending $4 trillion AI-driven IPO wave led by the &quot;Magnificent Eight&quot; (including SpaceX, OpenAI, and Anthropic), driven by unprecedented software scaling and a stark power-law dynamic where the largest &quot;centicorn&quot; companies are...</div>
+                    <div class="sum-preview" id="preview-21">&quot;centicorn&quot; companies are...</div>
                     <div class="sum-full" id="full-21"><p><strong>TL;DR</strong></p>
 <p>Coatue’s Thomas Laffont outlines an impending $4 trillion AI-driven IPO wave led by the "Magnificent Eight" (including SpaceX, OpenAI, and Anthropic), driven by unprecedented software scaling and a stark power-law dynamic where the largest "centicorn" companies are compounding faster than ever before.</p>
 <h3>The Resurgence of the Unicorn Economy and the "Magnificent Eight"</h3>
@@ -9340,9 +9372,9 @@ I think it's a compliment or an insult, I'm not smart enough to know. Compliment
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.4M)</span></span><span class="dot">&middot;</span><span>261:15</span><span class="dot">&middot;</span><span>8.1K views</span><span class="dot">&middot;</span><span>2026-06-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent defended the administration's pro-growth tax policies and the newly launched &quot;Trump Accounts&quot; program before the House Ways and Means Committee, while clashing with Democrats over persistent inflation linked to the on...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent defended the administration's pro-growth tax policies and the newly launched &quot;Trump Accounts&quot; program before the House Ways and Means Committee, while clashing with Democrats over persistent inflation linked to the…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-22">TL;DR  Treasury Secretary Scott Bessent defended the administration's pro-growth tax policies and the newly launched &quot;Trump Accounts&quot; program before the House Ways and Means Committee, while clashing with Democrats over persistent inflation linked to the ongoing Iran conflict...</div>
+                    <div class="sum-preview" id="preview-22">ongoing Iran conflict...</div>
                     <div class="sum-full" id="full-22"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent defended the administration's pro-growth tax policies and the newly launched "Trump Accounts" program before the House Ways and Means Committee, while clashing with Democrats over persistent inflation linked to the ongoing Iran conflict and a controversial, now-defunct tax audit settlement.</p>
 <p>***</p>
@@ -10582,7 +10614,7 @@ All right. Well, if that thing gets moving, then yes, it makes our job much easi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Verizon CEO Dan Schulman is driving an aggressive cultural and technological turnaround to reverse five years of market share loss, prioritizing customer experience improvements and leveraging advanced AI agents that have already boosted customer satisfaction by 1,280 basis points.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-23">TL;DR  Verizon CEO Dan Schulman is driving an aggressive cultural and technological turnaround to reverse five years of market share loss, prioritizing customer experience improvements and leveraging advanced AI agents that have already boosted customer satisfaction by 1,280...</div>
+                    <div class="sum-preview" id="preview-23"></div>
                     <div class="sum-full" id="full-23"><p><strong>TL;DR</strong></p>
 <p>Verizon CEO Dan Schulman is driving an aggressive cultural and technological turnaround to reverse five years of market share loss, prioritizing customer experience improvements and leveraging advanced AI agents that have already boosted customer satisfaction by 1,280 basis points.</p>
 <h3>Cultural Turnaround and Strategic Pivot</h3>
@@ -10769,7 +10801,7 @@ So, I think Mythos was a real good look at what the capabilities of these models
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent testified before the House Ways and Means Committee to defend the administration’s economic agenda, highlighting $325 billion in refunds from the Working Families Tax Cuts.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-24">TL;DR   Treasury Secretary Scott Bessent testified before the House Ways and Means Committee to defend the administration’s economic agenda, highlighting $325 billion in refunds from the Working Families Tax Cuts. However, Democratic lawmakers aggressively challenged Bessent...</div>
+                    <div class="sum-preview" id="preview-24">However, Democratic lawmakers aggressively challenged Bessent...</div>
                     <div class="sum-full" id="full-24"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent testified before the House Ways and Means Committee to defend the administration’s economic agenda, highlighting $325 billion in refunds from the Working Families Tax Cuts. However, Democratic lawmakers aggressively challenged Bessent over persistent inflation, high gas prices, a critical data security error involving the Department of Government Efficiency (DOGE), and controversies surrounding President Trump’s tax audit status.</p>
 <p>***</p>
@@ -12462,7 +12494,7 @@ And with that, Mr. Secretary, thank you for being here with us today. Thank you 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The definitive trait shared by history’s greatest founders is an absolute, obsessive focus—the ability to &quot;mute the world and build your own&quot;—driven by a compulsive need for control and a deep founder-problem fit, rather than a desire for wealth or a well-balanced life.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-25">TL;DR   The definitive trait shared by history’s greatest founders is an absolute, obsessive focus—the ability to &quot;mute the world and build your own&quot;—driven by a compulsive need for control and a deep founder-problem fit, rather than a desire for wealth or a well-balanced life. ...</div>
+                    <div class="sum-preview" id="preview-25"></div>
                     <div class="sum-full" id="full-25"><p><strong>TL;DR</strong></p>
 <p>The definitive trait shared by history’s greatest founders is an absolute, obsessive focus—the ability to "mute the world and build your own"—driven by a compulsive need for control and a deep founder-problem fit, rather than a desire for wealth or a well-balanced life.</p>
 <h3>1. The Power of Absolute Focus and Obsession</h3>
@@ -13251,7 +13283,7 @@ When he was early in Airbnb, he kind of led from a position of fear. He had deep
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>During a Senate Appropriations Committee hearing, Sen.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-26">TL;DR   During a Senate Appropriations Committee hearing, Sen. Chris Coons pressed Secretary of State Marco Rubio on the administration's compliance with statutory U.S. troop minimums in Europe, while seeking updates on the transition timeline in Venezuela, global health...</div>
+                    <div class="sum-preview" id="preview-26">Chris Coons pressed Secretary of State Marco Rubio on the administration's compliance with statutory U.S. troop minimums in Europe, while seeking updates on the transition timeline in Venezuela, global health...</div>
                     <div class="sum-full" id="full-26"><p><strong>TL;DR</strong></p>
 <p>During a Senate Appropriations Committee hearing, Sen. Chris Coons pressed Secretary of State Marco Rubio on the administration's compliance with statutory U.S. troop minimums in Europe, while seeking updates on the transition timeline in Venezuela, global health compacts, and backlogged Afghan Special Immigrant Visas (SIVs). Rubio defended the administration's strategic redeployment of global military forces and outlined a three-phase transition plan for Venezuela, while committing to resolve delayed national security board appointments.</p>
 <p>***</p>
@@ -13409,7 +13441,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>World Labs Co-Founder and CEO Fei-Fei Li is betting on &quot;spatial intelligence&quot; over traditional Large Language Models (LLMs), developing simulator-class Large World Models (LWMs) to bridge the gap between digital text and physical-world AI action.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-27">TL;DR  World Labs Co-Founder and CEO Fei-Fei Li is betting on &quot;spatial intelligence&quot; over traditional Large Language Models (LLMs), developing simulator-class Large World Models (LWMs) to bridge the gap between digital text and physical-world AI action.   Beyond Words: Large...</div>
+                    <div class="sum-preview" id="preview-27">Beyond Words: Large...</div>
                     <div class="sum-full" id="full-27"><p><strong>TL;DR</strong></p>
 <p>World Labs Co-Founder and CEO Fei-Fei Li is betting on "spatial intelligence" over traditional Large Language Models (LLMs), developing simulator-class Large World Models (LWMs) to bridge the gap between digital text and physical-world AI action.</p>
 <h3>The Case for Spatial Intelligence and Large World Models</h3>

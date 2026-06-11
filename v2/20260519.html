@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nulMc6GNIrLUi_wcTCKojfsfro0dsNLAueuj4edxt_Kl4T=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes</b><span class="subs">(2.1M)</span></span><span class="dot">&middot;</span><span>26:01</span><span class="dot">&middot;</span><span>154.4K views</span><span class="dot">&middot;</span><span>2026-05-19</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Elon%20Musk%22">Elon Musk<span class="chip-desc">CEO, SpaceX and Neuralink</span></a> <a class="chip" href="index.html?q=%22Randall%20Lane%22">Randall Lane<span class="chip-desc">Editor, Forbes</span></a> <a class="chip" href="index.html?q=%22Sam%20Altman%22">Sam Altman<span class="chip-desc">CEO, OpenAI</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;When technologies are hitting like Jesus-level miracles—enabling people who have never spoken to speak, or the blind to see—that’s when you know innovation is truly profound.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;When technologies are hitting like Jesus-level miracles—enabling people who have never spoken to speak, or the blind to see—that’s when you know innovation is truly profound.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR: Elon Musk predicts that AI will surpass human intelligence in every metric within two years and advocates for moving massive AI data centers into space to harness solar energy, while warning that OpenAI’s transition to a for-profit model sets a &quot;dangerous precedent&quot; for...</div>
+                    <div class="sum-preview" id="preview-0">Elon Musk predicts that AI will surpass human intelligence in every metric within two years and advocates for moving massive AI data centers into space to harness solar energy, while warning that OpenAI’s transition to a for-profit model sets a &quot;dangerous precedent&quot; for...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR:</strong> Elon Musk predicts that AI will surpass human intelligence in every metric within two years and advocates for moving massive AI data centers into space to harness solar energy, while warning that OpenAI’s transition to a for-profit model sets a "dangerous precedent" for looting charitable organizations.</p>
 <h3>The OpenAI Lawsuit and Ethical Precedents</h3>
 <ul>
@@ -874,7 +906,7 @@ Elon Musk, thank you for joining us. You're very human, that's what the AI will 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Christel Heydemann is transforming Orange from a process-heavy incumbent into a high-velocity, AI-driven organization by balancing the zero-risk requirement of critical infrastructure with a &quot;winning mindset&quot; that embraces fast failure and cross-border scale.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR  Christel Heydemann is transforming Orange from a process-heavy incumbent into a high-velocity, AI-driven organization by balancing the zero-risk requirement of critical infrastructure with a &quot;winning mindset&quot; that embraces fast failure and cross-border scale.    Strategic...</div>
+                    <div class="sum-preview" id="preview-1">Strategic...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Christel Heydemann is transforming Orange from a process-heavy incumbent into a high-velocity, AI-driven organization by balancing the zero-risk requirement of critical infrastructure with a "winning mindset" that embraces fast failure and cross-border scale.</p>
 <h3>AI Integration and the Need for Speed</h3>
@@ -1045,7 +1077,7 @@ Well, it's clear that Orange is not just about being everywhere, it's about lead
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>At Google I/O 2026, Google announced a massive shift from assistive AI to autonomous agents, driven by Google Antigravity—a unified agentic development platform designed to build, deploy, and orchestrate AI agents seamlessly across Cloud, Android, and the Web.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR   At Google I/O 2026, Google announced a massive shift from assistive AI to autonomous agents, driven by Google Antigravity—a unified agentic development platform designed to build, deploy, and orchestrate AI agents seamlessly across Cloud, Android, and the Web.  Managed...</div>
+                    <div class="sum-preview" id="preview-2">Managed...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>At Google I/O 2026, Google announced a massive shift from assistive AI to autonomous agents, driven by Google Antigravity—a unified agentic development platform designed to build, deploy, and orchestrate AI agents seamlessly across Cloud, Android, and the Web.</p>
 <h3>Google Antigravity &amp; Managed Agents</h3>
@@ -1727,7 +1759,7 @@ You can visit io.google for the livestream sessions and all the on-demand conten
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Michael Shvo, founder and CEO of SHVO, shares how he rose from a penniless immigrant to managing an $8 billion super-prime real estate portfolio.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  Michael Shvo, founder and CEO of SHVO, shares how he rose from a penniless immigrant to managing an $8 billion super-prime real estate portfolio. His success is built on inventing the &quot;real estate team&quot; brokerage model, pioneering fashion-branded residences, and executing...</div>
+                    <div class="sum-preview" id="preview-3">His success is built on inventing the &quot;real estate team&quot; brokerage model, pioneering fashion-branded residences, and executing...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Michael Shvo, founder and CEO of SHVO, shares how he rose from a penniless immigrant to managing an $8 billion super-prime real estate portfolio. His success is built on inventing the "real estate team" brokerage model, pioneering fashion-branded residences, and executing high-conviction, contrarian acquisitions during market downturns.</p>
 <h3>From Harlem to Real Estate Pioneer</h3>
@@ -1927,9 +1959,9 @@ Thank you. Thanks, Amir.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.6M)</span></span><span class="dot">&middot;</span><span>29:39</span><span class="dot">&middot;</span><span>452 views</span><span class="dot">&middot;</span><span>2026-05-19</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Antony%20Blinken%22">Antony Blinken<span class="chip-desc">Former Secretary of State</span></a> <a class="chip" href="index.html?q=%22Andy%20Kim%22">Andy Kim<span class="chip-desc">US Senator (D-NJ)</span></a> <a class="chip" href="index.html?q=%22Linda%20Thomas-Greenfield%22">Linda Thomas-Greenfield<span class="chip-desc">Former Ambassador</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>To successfully counter China's rising global influence and navigate a rapidly shifting world order, the United States must rebuild its domestic and international credibility by prioritizing diplomatic reliability and forming flexible, issue-specific...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>To successfully counter China's rising global influence and navigate a rapidly shifting world order, the United States must rebuild its domestic and international credibility by prioritizing diplomatic reliability and forming flexible,…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR   To successfully counter China's rising global influence and navigate a rapidly shifting world order, the United States must rebuild its domestic and international credibility by prioritizing diplomatic reliability and forming flexible, issue-specific multilateral...</div>
+                    <div class="sum-preview" id="preview-4">issue-specific multilateral...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>To successfully counter China's rising global influence and navigate a rapidly shifting world order, the United States must rebuild its domestic and international credibility by prioritizing diplomatic reliability and forming flexible, issue-specific multilateral alliances rather than relying on unilateral actions.</p>
 <h3>Strategic Competition and the Global Convergence with China</h3>
@@ -2176,7 +2208,7 @@ It's a perfect place to end. I'm very grateful that they are all thinking about 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google has officially entered its &quot;agentic Gemini era,&quot; powered by the new Gemini 3.5 Flash and Omni models, alongside massive infrastructure investments.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Google has officially entered its &quot;agentic Gemini era,&quot; powered by the new Gemini 3.5 Flash and Omni models, alongside massive infrastructure investments. Key breakthroughs include Gemini Spark—a 24/7 background AI assistant—and Antigravity 2.0, an agent-first developer...</div>
+                    <div class="sum-preview" id="preview-5">Key breakthroughs include Gemini Spark—a 24/7 background AI assistant—and Antigravity 2.0, an agent-first developer...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Google has officially entered its "agentic Gemini era," powered by the new Gemini 3.5 Flash and Omni models, alongside massive infrastructure investments. Key breakthroughs include Gemini Spark—a 24/7 background AI assistant—and Antigravity 2.0, an agent-first developer platform capable of autonomously building a functioning operating system from scratch in 12 hours.</p>
 <h3>The Gemini 3.5 Model Family &amp; Global Infrastructure</h3>
@@ -3275,7 +3307,7 @@ When we look back at this time, I think we will realize that we were standing in
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google DeepMind has introduced Gemini Omni, a native multimodal model that acts as &quot;Nano Banana for video&quot; by seamlessly combining text, image, audio, and video reference inputs to enable highly controllable 10-second video generation and precise editing.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR   Google DeepMind has introduced Gemini Omni, a native multimodal model that acts as &quot;Nano Banana for video&quot; by seamlessly combining text, image, audio, and video reference inputs to enable highly controllable 10-second video generation and precise editing.  Fully...</div>
+                    <div class="sum-preview" id="preview-6">Fully...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Google DeepMind has introduced Gemini Omni, a native multimodal model that acts as "Nano Banana for video" by seamlessly combining text, image, audio, and video reference inputs to enable highly controllable 10-second video generation and precise editing.</p>
 <h3>Architecture &amp; Multimodal Capabilities</h3>
@@ -3553,7 +3585,7 @@ Well, thank all of you for taking the time to sit down, for building a cool mode
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>To counter rising geopolitical competition, the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR   To counter rising geopolitical competition, the U.S. defense industrial base must shift from bespoke, low-volume production to software-driven autonomy, simplified manufacturing processes, and a &quot;commercial-first&quot; approach that aligns private capital with national...</div>
+                    <div class="sum-preview" id="preview-7">defense industrial base must shift from bespoke, low-volume production to software-driven autonomy, simplified manufacturing processes, and a &quot;commercial-first&quot; approach that aligns private capital with national...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>To counter rising geopolitical competition, the U.S. defense industrial base must shift from bespoke, low-volume production to software-driven autonomy, simplified manufacturing processes, and a "commercial-first" approach that aligns private capital with national security priorities.</p>
 <h3>Bending the Cost Curve via Software and Autonomy</h3>
@@ -3668,7 +3700,7 @@ This isn't a one-company, one-person is going to solve this problem. We need a p
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Venture capitalist Marc Andreessen highlights how political hurdles, regulatory dysfunction, and rising taxes are driving talent and safety tech out of major U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR  Venture capitalist Marc Andreessen highlights how political hurdles, regulatory dysfunction, and rising taxes are driving talent and safety tech out of major U.S. cities, while a parallel technological boom in AI and micro-nuclear energy promises to democratize...</div>
+                    <div class="sum-preview" id="preview-8">cities, while a parallel technological boom in AI and micro-nuclear energy promises to democratize...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Venture capitalist Marc Andreessen highlights how political hurdles, regulatory dysfunction, and rising taxes are driving talent and safety tech out of major U.S. cities, while a parallel technological boom in AI and micro-nuclear energy promises to democratize world-class expertise at an unprecedented, rapid scale.</p>
 <h3>Urban Safety, Surveillance Backlash, and Crime Statistics</h3>
@@ -4450,7 +4482,7 @@ But Theo's very important to me, he, he's an awesome person, great friend, and, 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>At Microsoft’s inaugural Azure Infrastructure Summit, CTO and Deputy CISO Mark Russinovich outlined a paradigm shift in cloud operations, urging enterprises to adopt &quot;durable&quot; security controls, migrate toward serverless container architectures like ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR  At Microsoft’s inaugural Azure Infrastructure Summit, CTO and Deputy CISO Mark Russinovich outlined a paradigm shift in cloud operations, urging enterprises to adopt &quot;durable&quot; security controls, migrate toward serverless container architectures like Project Radius, and...</div>
+                    <div class="sum-preview" id="preview-9">Project Radius, and...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>At Microsoft’s inaugural Azure Infrastructure Summit, CTO and Deputy CISO Mark Russinovich outlined a paradigm shift in cloud operations, urging enterprises to adopt "durable" security controls, migrate toward serverless container architectures like Project Radius, and prepare for AI-accelerated threats by eliminating static keys and hardening automated patching.</p>
 <h3>Security Governance &amp; "Durable" Controls (SFI)</h3>
@@ -4971,9 +5003,9 @@ Yep, thanks for having me. Cheers. Cheers.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.6M)</span></span><span class="dot">&middot;</span><span>107:40</span><span class="dot">&middot;</span><span>3.1K views</span><span class="dot">&middot;</span><span>2026-05-19</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22JD%20Vance%22">JD Vance<span class="chip-desc">Vice President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance held a White House press briefing to detail the Trump administration's &quot;locked and loaded&quot; yet diplomatic negotiations with Iran, defend the controversial $1.8 billion Department of Justice &quot;lawfare&quot; compensation fund, and rep...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance held a White House press briefing to detail the Trump administration's &quot;locked and loaded&quot; yet diplomatic negotiations with Iran, defend the controversial $1.8 billion Department of Justice &quot;lawfare&quot; compensation fund, and…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR  Vice President JD Vance held a White House press briefing to detail the Trump administration's &quot;locked and loaded&quot; yet diplomatic negotiations with Iran, defend the controversial $1.8 billion Department of Justice &quot;lawfare&quot; compensation fund, and report on the...</div>
+                    <div class="sum-preview" id="preview-10">report on the...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance held a White House press briefing to detail the Trump administration's "locked and loaded" yet diplomatic negotiations with Iran, defend the controversial $1.8 billion Department of Justice "lawfare" compensation fund, and report on the multi-billion-dollar savings achieved by the Anti-Fraud Task Force.</p>
 <h3>Iran Diplomacy and Defense Strategy</h3>
@@ -5388,7 +5420,7 @@ So, we believe in making America great again. You can't do that unless you prote
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Serval is rebuilding enterprise service management for the AI era by using code-generation to automate workflows and database management.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR  Serval is rebuilding enterprise service management for the AI era by using code-generation to automate workflows and database management. By utilizing a dual-agent architecture that balances AI autonomy with enterprise security, Serval aims to eliminate repetitive IT...</div>
+                    <div class="sum-preview" id="preview-11">By utilizing a dual-agent architecture that balances AI autonomy with enterprise security, Serval aims to eliminate repetitive IT...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Serval is rebuilding enterprise service management for the AI era by using code-generation to automate workflows and database management. By utilizing a dual-agent architecture that balances AI autonomy with enterprise security, Serval aims to eliminate repetitive IT tasks and unlock meaningful work for employees.</p>
 <h3>Redefining Enterprise Service Management</h3>
@@ -5706,7 +5738,7 @@ Awesome. That feels like a great place to end it. Jake, thank you so much for jo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>OpenAI Cofounder and CEO Sam Altman and Stripe CEO Patrick Collison discuss the parabolic rise of AI agents, OpenAI's transition into a high-volume global utility provider, and how the democratization of frontier models is fundamentally shifting the ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR   OpenAI Cofounder and CEO Sam Altman and Stripe CEO Patrick Collison discuss the parabolic rise of AI agents, OpenAI's transition into a high-volume global utility provider, and how the democratization of frontier models is fundamentally shifting the landscape for...</div>
+                    <div class="sum-preview" id="preview-12">landscape for...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>OpenAI Cofounder and CEO Sam Altman and Stripe CEO Patrick Collison discuss the parabolic rise of AI agents, OpenAI's transition into a high-volume global utility provider, and how the democratization of frontier models is fundamentally shifting the landscape for startups, enterprise operations, and scientific discovery.</p>
 <h3>The Parabolic Rise of AI Agents and Interface Evolution</h3>
@@ -6050,7 +6082,7 @@ Sam Altman, thank you very much. Thank you very much.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Stripe’s macroeconomic data reveals that despite market volatility and fears of job displacement, the global economy is structurally replatforming around AI through a massive surge in hyper-lean, high-revenue solopreneurship and the rapid emergence of autonomous, machine-to-machine commerce.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR  Stripe’s macroeconomic data reveals that despite market volatility and fears of job displacement, the global economy is structurally replatforming around AI through a massive surge in hyper-lean, high-revenue solopreneurship and the rapid emergence of autonomous,...</div>
+                    <div class="sum-preview" id="preview-13"></div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Stripe’s macroeconomic data reveals that despite market volatility and fears of job displacement, the global economy is structurally replatforming around AI through a massive surge in hyper-lean, high-revenue solopreneurship and the rapid emergence of autonomous, machine-to-machine commerce.</p>
 <h3>Macroeconomic Trends and Debunking Common Myths</h3>
@@ -6317,9 +6349,9 @@ Thank you so much for being here. I hope you are getting a ton out of Sessions. 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/kUa_ydk-cYKrVa3F2Xbrs54qzmIXl6ZCuSgrJR6lIMWj-VqZLtycN7M4DvxyeewPY3ldF3vL=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Stripe</b><span class="subs">(105.0K)</span></span><span class="dot">&middot;</span><span>87:07</span><span class="dot">&middot;</span><span>13 views</span><span class="dot">&middot;</span><span>2026-05-19</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Sam%20Altman%22">Sam Altman<span class="chip-desc">CEO, OpenAI</span></a> <a class="chip" href="index.html?q=%22Nat%20Friedman%22">Nat Friedman<span class="chip-desc">Investor and Former CEO, GitHub</span></a> <a class="chip" href="index.html?q=%22Daniel%20Gross%22">Daniel Gross<span class="chip-desc">Investor and Entrepreneur</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>At Stripe Sessions 2026, Stripe declared the arrival of the &quot;agentic era&quot; and unveiled its economic infrastructure for AI, featuring autonomous agent-to-agent payments via the Tempo blockchain, token-theft fraud defense, and the Platform Growth Studi...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>At Stripe Sessions 2026, Stripe declared the arrival of the &quot;agentic era&quot; and unveiled its economic infrastructure for AI, featuring autonomous agent-to-agent payments via the Tempo blockchain, token-theft fraud defense, and the Platform Growth…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR  At Stripe Sessions 2026, Stripe declared the arrival of the &quot;agentic era&quot; and unveiled its economic infrastructure for AI, featuring autonomous agent-to-agent payments via the Tempo blockchain, token-theft fraud defense, and the Platform Growth Studio to help businesses...</div>
+                    <div class="sum-preview" id="preview-14">Studio to help businesses...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>At Stripe Sessions 2026, Stripe declared the arrival of the "agentic era" and unveiled its economic infrastructure for AI, featuring autonomous agent-to-agent payments via the Tempo blockchain, token-theft fraud defense, and the Platform Growth Studio to help businesses thrive in an economy re-platforming around AI.</p>
 <h3>The Agentic Commerce Suite &amp; Developer Infrastructure</h3>
@@ -6886,7 +6918,7 @@ So, I hope you leave today with a bunch of specific ideas for how to seize this 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Anthropic co-founders Dario and Daniela Amodei emphasize that while AI represents an &quot;epochal change&quot; comparable to the Industrial Revolution, its development must be steered by human ethics and the &quot;speed of trust&quot; rather than pure commercial speed.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Anthropic co-founders Dario and Daniela Amodei emphasize that while AI represents an &quot;epochal change&quot; comparable to the Industrial Revolution, its development must be steered by human ethics and the &quot;speed of trust&quot; rather than pure commercial speed. The company operates...</div>
+                    <div class="sum-preview" id="preview-15">The company operates...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Anthropic co-founders Dario and Daniela Amodei emphasize that while AI represents an "epochal change" comparable to the Industrial Revolution, its development must be steered by human ethics and the "speed of trust" rather than pure commercial speed. The company operates as a Public Benefit Corporation, prioritizing safety and public good—including refusing lucrative military contracts that violate democratic values—to ensure AI empowers rather than replaces humanity.</p>
 <h3>Mission-Driven Architecture and Ethics</h3>
@@ -7310,7 +7342,7 @@ You can subscribe to The Oprah Podcast on YouTube and follow us on Spotify, Appl
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Instead of enrolling at Stanford, 17-year-old Aadit Palicha co-founded Zepto (initially KiranaKart), pivoting from a third-party doorstep delivery model to a self-owned &quot;dark store&quot; infrastructure that now processes millions of 10-minute deliveries daily and generates billions in top-line revenue.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR  Instead of enrolling at Stanford, 17-year-old Aadit Palicha co-founded Zepto (initially KiranaKart), pivoting from a third-party doorstep delivery model to a self-owned &quot;dark store&quot; infrastructure that now processes millions of 10-minute deliveries daily and generates...</div>
+                    <div class="sum-preview" id="preview-16"></div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>Instead of enrolling at Stanford, 17-year-old Aadit Palicha co-founded Zepto (initially KiranaKart), pivoting from a third-party doorstep delivery model to a self-owned "dark store" infrastructure that now processes millions of 10-minute deliveries daily and generates billions in top-line revenue.</p>
 <h3>1. The Scrappy Origins of KiranaKart &amp; Dropping Out of Stanford</h3>

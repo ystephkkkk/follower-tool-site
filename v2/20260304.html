@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and leading tech executives signed the &quot;Ratepayer Protection Pledge,&quot; a historic agreement requiring AI companies to build and fund their own power infrastructure to ensure massive data center energy demands do not increase utility costs for American households.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR President Trump and leading tech executives signed the &quot;Ratepayer Protection Pledge,&quot; a historic agreement requiring AI companies to build and fund their own power infrastructure to ensure massive data center energy demands do not increase utility costs for American...</div>
+                    <div class="sum-preview" id="preview-0"></div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>President Trump and leading tech executives signed the "Ratepayer Protection Pledge," a historic agreement requiring AI companies to build and fund their own power infrastructure to ensure massive data center energy demands do not increase utility costs for American households.</p>
 <h3>The Ratepayer Protection Pledge: Five Core Commitments</h3>
@@ -1035,7 +1067,7 @@ And let me say to the press, thank you so much for being here; it was fantastic.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Private credit is undergoing a multi-decade structural expansion driven by bank retrenchment and massive infrastructure/AI funding needs, where success will increasingly depend on &quot;scaled&quot; players capable of managing a return to historical default norms through sophisticated risk workouts.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Private credit is undergoing a multi-decade structural expansion driven by bank retrenchment and massive infrastructure/AI funding needs, where success will increasingly depend on &quot;scaled&quot; players capable of managing a return to historical default norms through...</div>
+                    <div class="sum-preview" id="preview-1"></div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Private credit is undergoing a multi-decade structural expansion driven by bank retrenchment and massive infrastructure/AI funding needs, where success will increasingly depend on "scaled" players capable of managing a return to historical default norms through sophisticated risk workouts.</p>
 <h3>The Structural Evolution of Capital Markets</h3>
@@ -1189,7 +1221,7 @@ Scott, I'm afraid we are going to have to end it there. Thank you so much for jo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>KKR Co-CEO Scott Nuttall anticipates a &quot;K-shaped&quot; divergence in the private equity industry, where firms practicing disciplined &quot;linear deployment&quot; will thrive while those who over-leveraged during the bull market face consolidation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR KKR Co-CEO Scott Nuttall anticipates a &quot;K-shaped&quot; divergence in the private equity industry, where firms practicing disciplined &quot;linear deployment&quot; will thrive while those who over-leveraged during the bull market face consolidation. Despite global volatility, KKR remains...</div>
+                    <div class="sum-preview" id="preview-2">Despite global volatility, KKR remains...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>KKR Co-CEO Scott Nuttall anticipates a "K-shaped" divergence in the private equity industry, where firms practicing disciplined "linear deployment" will thrive while those who over-leveraged during the bull market face consolidation. Despite global volatility, KKR remains aggressive with $118 billion in "dry powder," viewing market corrections as high-value entry points for long-term returns.</p>
 <h3>The "K-Shaped" Industry Divergence</h3>
@@ -1443,7 +1475,7 @@ Right, Scott, we're going to have to leave it there. Thank you so much for closi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>6G is architected as the foundational wireless technology for the age of &quot;AI Everywhere,&quot; transitioning the industry from a smartphone-centric ecosystem to an agent-centric one with a projected commercial launch in 2029.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  6G is architected as the foundational wireless technology for the age of &quot;AI Everywhere,&quot; transitioning the industry from a smartphone-centric ecosystem to an agent-centric one with a projected commercial launch in 2029. Cristiano Amon, President and CEO of Qualcomm,...</div>
+                    <div class="sum-preview" id="preview-3">Cristiano Amon, President and CEO of Qualcomm,...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>6G is architected as the foundational wireless technology for the age of "AI Everywhere," transitioning the industry from a smartphone-centric ecosystem to an agent-centric one with a projected commercial launch in 2029.</p>
 <h3>The Shift to an Agent-Centric Ecosystem</h3>
@@ -1620,7 +1652,7 @@ Every generation of wireless requires massive collaboration, and 6G requires som
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and leading tech executives signed the &quot;Ratepayer Protection Pledge,&quot; an agreement where major AI companies commit to fully funding their own energy infrastructure to ensure massive data center power demands do not increase electricity costs for American households.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR President Trump and leading tech executives signed the &quot;Ratepayer Protection Pledge,&quot; an agreement where major AI companies commit to fully funding their own energy infrastructure to ensure massive data center power demands do not increase electricity costs for American...</div>
+                    <div class="sum-preview" id="preview-4"></div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>President Trump and leading tech executives signed the "Ratepayer Protection Pledge," an agreement where major AI companies commit to fully funding their own energy infrastructure to ensure massive data center power demands do not increase electricity costs for American households.</p>
 <h3>The Ratepayer Protection Pledge: 5 Core Commitments</h3>
@@ -2092,7 +2124,7 @@ Okay, you got it done. That's a good one. That's a good one in the bank. Thank y
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Artificial Intelligence has shifted the telecommunications industry from a focus on simple connectivity to a high-stakes &quot;compute and data factory&quot; model, forcing traditionally slow-moving telcos to adopt Silicon Valley-style innovation to monetize upcoming 6G and edge-computing architectures.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Artificial Intelligence has shifted the telecommunications industry from a focus on simple connectivity to a high-stakes &quot;compute and data factory&quot; model, forcing traditionally slow-moving telcos to adopt Silicon Valley-style innovation to monetize upcoming 6G and...</div>
+                    <div class="sum-preview" id="preview-5"></div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Artificial Intelligence has shifted the telecommunications industry from a focus on simple connectivity to a high-stakes "compute and data factory" model, forcing traditionally slow-moving telcos to adopt Silicon Valley-style innovation to monetize upcoming 6G and edge-computing architectures.</p>
 <h3>The Convergence of AI, 6G, and Quantum</h3>
@@ -2252,7 +2284,7 @@ Sarbjeet, it's great to have you on. As always, phenomenal work. Thanks for comi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Temasek is rebalancing its \$340 billion portfolio toward a 50/50 split between liquid and illiquid assets to maintain agility amid frequent macro shocks, prioritizing AI adoption and global equities while navigating high interest rates and geopolitical volatility.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Temasek is rebalancing its \$340 billion portfolio toward a 50/50 split between liquid and illiquid assets to maintain agility amid frequent macro shocks, prioritizing AI adoption and global equities while navigating high interest rates and geopolitical volatility.  Shift...</div>
+                    <div class="sum-preview" id="preview-6">Shift...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Temasek is rebalancing its \$340 billion portfolio toward a 50/50 split between liquid and illiquid assets to maintain agility amid frequent macro shocks, prioritizing AI adoption and global equities while navigating high interest rates and geopolitical volatility.</p>
 <h3>Portfolio Transformation and Global Diversification</h3>
@@ -2441,7 +2473,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vinod Khosla predicts that by 2040, AI and robotics will usher in an era of extreme abundance where the necessity for human labor is eliminated, requiring a radical restructuring of global tax policies and a shift from economic efficiency to social equity.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Vinod Khosla predicts that by 2040, AI and robotics will usher in an era of extreme abundance where the necessity for human labor is eliminated, requiring a radical restructuring of global tax policies and a shift from economic efficiency to social equity.  The...</div>
+                    <div class="sum-preview" id="preview-7">The...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Vinod Khosla predicts that by 2040, AI and robotics will usher in an era of extreme abundance where the necessity for human labor is eliminated, requiring a radical restructuring of global tax policies and a shift from economic efficiency to social equity.</p>
 <h3>The 2040 Vision: From Survival to Abundance</h3>

@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/XsTga3Nsfc1E6ZgC6HfHfzTG_3zhuZleOnsKxSK2aILMjwkkIm-0vdALFaU-yt0Lw07iLtbSifk=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Al Jazeera English</b><span class="subs">(17.8M)</span></span><span class="dot">&middot;</span><span>52:27</span><span class="dot">&middot;</span><span>57.5K views</span><span class="dot">&middot;</span><span>2026-03-30</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Marco%20Rubio%22">Marco Rubio<span class="chip-desc">US Senator</span></a> <a class="chip" href="index.html?q=%22Anna%20Burns-Francis%22">Anna Burns-Francis<span class="chip-desc">Host, Al Jazeera</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The Iranian regime can never have nuclear weapons...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The Iranian regime can never have nuclear…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR: Secretary of State Marco Rubio asserts that the U.S. military operation against Iran will conclude within &quot;weeks, not months,&quot; focusing on the total neutralization of Iran's nuclear ambitions and missile infrastructure while signaling a potential &quot;re-examination&quot; of NATO...</div>
+                    <div class="sum-preview" id="preview-0">Secretary of State Marco Rubio asserts that the U.S. military operation against Iran will conclude within &quot;weeks, not months,&quot; focusing on the total neutralization of Iran's nuclear ambitions and missile infrastructure while signaling a potential &quot;re-examination&quot; of NATO...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR:</strong> Secretary of State Marco Rubio asserts that the U.S. military operation against Iran will conclude within "weeks, not months," focusing on the total neutralization of Iran's nuclear ambitions and missile infrastructure while signaling a potential "re-examination" of NATO due to lack of allied support.</p>
 <h3>Military Objectives and Timeline</h3>
 <ul>
@@ -1065,7 +1097,7 @@ Gentlemen thank you both for your time and your insight. Former US diplomat Dona
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Fed Chair Jerome Powell reaffirmed the FOMC’s commitment to a 2% inflation target despite new pressures from tariffs and energy shocks, while emphasizing that the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Fed Chair Jerome Powell reaffirmed the FOMC’s commitment to a 2% inflation target despite new pressures from tariffs and energy shocks, while emphasizing that the U.S. financial system is significantly more resilient than it was prior to the 2008 crisis.  Value of...</div>
+                    <div class="sum-preview" id="preview-1">financial system is significantly more resilient than it was prior to the 2008 crisis.  Value of...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Fed Chair Jerome Powell reaffirmed the FOMC’s commitment to a 2% inflation target despite new pressures from tariffs and energy shocks, while emphasizing that the U.S. financial system is significantly more resilient than it was prior to the 2008 crisis.</p>
 <h3>FOMC Governance and Policy Dissent</h3>
@@ -1478,7 +1510,7 @@ Now come up on stage.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The U.S. and Israel have achieved significant tactical successes in degrading Iran’s military and nuclear capabilities, but the strategic outcome remains highly uncertain as President Trump maintains vague war aims to preserve negotiation leverage. While Iran’s proxies are...</div>
+                    <div class="sum-preview" id="preview-2">and Israel have achieved significant tactical successes in degrading Iran’s military and nuclear capabilities, but the strategic outcome remains highly uncertain as President Trump maintains vague war aims to preserve negotiation leverage. While Iran’s proxies are...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The U.S. and Israel have achieved significant tactical successes in degrading Iran’s military and nuclear capabilities, but the strategic outcome remains highly uncertain as President Trump maintains vague war aims to preserve negotiation leverage. While Iran’s proxies are currently suppressed and Gulf allies seek a definitive end to the threat, the conflict risks ending in a "messy middle" where the regime survives and regional stability remains elusive.</p>
 <h3>Current Military Status and Tactical Gains</h3>
@@ -1892,7 +1924,7 @@ The Strait of Hormuz may or may not be open. But it'll be messy and the victory 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Amidst conflicting claims of a decisive military victory and stalled back-channel negotiations, President Donald Trump faces a high-stakes decision between executing a risky ground invasion of Kharg Island or declaring victory to execute a rapid exit before US midterm elections.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  Amidst conflicting claims of a decisive military victory and stalled back-channel negotiations, President Donald Trump faces a high-stakes decision between executing a risky ground invasion of Kharg Island or declaring victory to execute a rapid exit before US midterm...</div>
+                    <div class="sum-preview" id="preview-3"></div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Amidst conflicting claims of a decisive military victory and stalled back-channel negotiations, President Donald Trump faces a high-stakes decision between executing a risky ground invasion of Kharg Island or declaring victory to execute a rapid exit before US midterm elections.</p>
 <p>***</p>
@@ -2705,7 +2737,7 @@ And with me to decipher the impossible job of trying to read what's on Donald Tr
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Fed Chair Jerome Powell reaffirmed the Federal Reserve's unwavering commitment to a 2% inflation target while highlighting the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Fed Chair Jerome Powell reaffirmed the Federal Reserve's unwavering commitment to a 2% inflation target while highlighting the U.S. economy's remarkable resilience and productivity. He characterized the Fed’s role in financial stability as &quot;levee building&quot; rather than...</div>
+                    <div class="sum-preview" id="preview-4">economy's remarkable resilience and productivity. He characterized the Fed’s role in financial stability as &quot;levee building&quot; rather than...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Fed Chair Jerome Powell reaffirmed the Federal Reserve's unwavering commitment to a 2% inflation target while highlighting the U.S. economy's remarkable resilience and productivity. He characterized the Fed’s role in financial stability as "levee building" rather than "hurricane prevention," emphasizing the importance of institutional independence and bipartisan stewardship.</p>
 <h3>Monetary Policy and the Path to 2% Inflation</h3>
@@ -3112,7 +3144,7 @@ You'll need to make do with one photograph of the entire class with our esteemed
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Marc Andreessen argues that the narrative of AI-driven labor displacement is fundamentally incorrect, asserting instead that current tech layoffs are a correction for massive corporate overstaffing.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Marc Andreessen argues that the narrative of AI-driven labor displacement is fundamentally incorrect, asserting instead that current tech layoffs are a correction for massive corporate overstaffing. He reinforces that Silicon Valley has reached its highest level of...</div>
+                    <div class="sum-preview" id="preview-5">He reinforces that Silicon Valley has reached its highest level of...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Marc Andreessen argues that the narrative of AI-driven labor displacement is fundamentally incorrect, asserting instead that current tech layoffs are a correction for massive corporate overstaffing. He reinforces that Silicon Valley has reached its highest level of centralization in history due to the AI boom, while maintaining that a16z has no current need to go public.</p>
 <h3>The Venture Capital Mindset: Omission vs. Commission</h3>
@@ -3717,7 +3749,7 @@ Yeah. I think entrepreneur. I—I and you know, Ben and I are lucky in that we�
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Elon Musk is the avatar of &quot;Muskism,&quot; a world-view that replaces democratic structures with &quot;sovereignty as a service.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Elon Musk is the avatar of &quot;Muskism,&quot; a world-view that replaces democratic structures with &quot;sovereignty as a service.&quot; While he promises independence through technology, historian Quinn Slobodian argues he is actually creating a &quot;walled garden&quot; of systemic global...</div>
+                    <div class="sum-preview" id="preview-6">&quot; While he promises independence through technology, historian Quinn Slobodian argues he is actually creating a &quot;walled garden&quot; of systemic global...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Elon Musk is the avatar of "Muskism," a world-view that replaces democratic structures with "sovereignty as a service." While he promises independence through technology, historian Quinn Slobodian argues he is actually creating a "walled garden" of systemic global dependence where the state is treated as a mere codebase and humanity as a "bootloader" for superintelligence.</p>
 <h3>The Ideology of Muskism: From Fordism to the Techno-King</h3>
@@ -4003,7 +4035,7 @@ Ich hoffe, dass einzelne Widerstandsräume gegen die Abhängigkeit von Musk erst
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Error generating summary: Server disconnected without sending a response.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">Error generating summary: Server disconnected without sending a response.</div>
+                    <div class="sum-preview" id="preview-7"></div>
                     <div class="sum-full" id="full-7"><p>Error generating summary: Server disconnected without sending a response.</p></div>
                     <button class="linklike" id="sum-btn-7" onclick="toggleSummary(7)" type="button" aria-expanded="false" aria-controls="full-7">
                         Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -4108,7 +4140,7 @@ You have to apply AI on that and that's energy intelligence. And of course there
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vertiv provides the critical power and cooling infrastructure necessary to support high-density AI workloads, transitioning from bespoke data center construction to a &quot;converged infrastructure&quot; model that uses digital twins and pre-fabricated blocks to accelerate deployment.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Vertiv provides the critical power and cooling infrastructure necessary to support high-density AI workloads, transitioning from bespoke data center construction to a &quot;converged infrastructure&quot; model that uses digital twins and pre-fabricated blocks to accelerate...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Vertiv provides the critical power and cooling infrastructure necessary to support high-density AI workloads, transitioning from bespoke data center construction to a "converged infrastructure" model that uses digital twins and pre-fabricated blocks to accelerate deployment.</p>
 <h3>The Foundational Role of Infrastructure</h3>
@@ -4250,7 +4282,7 @@ Thank you. And for those of you tuning in, make sure to go check out more sessio
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Okta CEO Todd McKinnon is pivoting the company to become the primary identity and security layer for AI agents, betting that the &quot;Agentic Enterprise&quot; will expand the software market far beyond the current scope of human-centric SaaS.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Okta CEO Todd McKinnon is pivoting the company to become the primary identity and security layer for AI agents, betting that the &quot;Agentic Enterprise&quot; will expand the software market far beyond the current scope of human-centric SaaS.  Healthy Paranoia: McKinnon...</div>
+                    <div class="sum-preview" id="preview-9">Healthy Paranoia: McKinnon...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Okta CEO Todd McKinnon is pivoting the company to become the primary identity and security layer for AI agents, betting that the "Agentic Enterprise" will expand the software market far beyond the current scope of human-centric SaaS.</p>
 <h3>The "Sasspocalypse" and Market Expansion</h3>
@@ -4688,7 +4720,7 @@ Or you can hit me up directly on Threads or BlueSky. If you like Decoder, please
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump announced a &quot;regime change&quot; in Iran following the destruction of their Navy and Air Force, while simultaneously unveiling designs for a privately funded White House ballroom and demanding the Senate terminate the filibuster to pass the &quot;Save America Act.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR President Trump announced a &quot;regime change&quot; in Iran following the destruction of their Navy and Air Force, while simultaneously unveiling designs for a privately funded White House ballroom and demanding the Senate terminate the filibuster to pass the &quot;Save America Act.&quot; ...</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>President Trump announced a "regime change" in Iran following the destruction of their Navy and Air Force, while simultaneously unveiling designs for a privately funded White House ballroom and demanding the Senate terminate the filibuster to pass the "Save America Act."</p>
 <h3>Diplomatic Breakthrough and Military Action in Iran</h3>
@@ -4884,7 +4916,7 @@ Look at how I did with the Hispanic population and now I'm doing even better wit
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Netflix co-founder Reed Hastings reflects on his transition from a 25-year &quot;marriage&quot; with Netflix to his new &quot;rebound&quot; venture, Powder Mountain, while offering insights into his radical leadership philosophy, the future of AI in education, and the strategic evolution of the streaming industry.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Netflix co-founder Reed Hastings reflects on his transition from a 25-year &quot;marriage&quot; with Netflix to his new &quot;rebound&quot; venture, Powder Mountain, while offering insights into his radical leadership philosophy, the future of AI in education, and the strategic evolution of...</div>
+                    <div class="sum-preview" id="preview-11"></div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Netflix co-founder Reed Hastings reflects on his transition from a 25-year "marriage" with Netflix to his new "rebound" venture, Powder Mountain, while offering insights into his radical leadership philosophy, the future of AI in education, and the strategic evolution of the streaming industry.</p>
 <h3>Powder Mountain: The "Rebound Business"</h3>
@@ -5296,7 +5328,7 @@ As far as I can tell, the combination of Powder and AI slash education, you know
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Demis Hassabis is driven by a quasi-spiritual compulsion to advance science through Artificial General Intelligence (AGI), transitioning from a &quot;singleton&quot; vision of safe, collaborative development to a high-stakes competitive arms race against OpenAI.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Demis Hassabis is driven by a quasi-spiritual compulsion to advance science through Artificial General Intelligence (AGI), transitioning from a &quot;singleton&quot; vision of safe, collaborative development to a high-stakes competitive arms race against OpenAI.  Demis Hassabis’s...</div>
+                    <div class="sum-preview" id="preview-12">Demis Hassabis’s...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Demis Hassabis is driven by a quasi-spiritual compulsion to advance science through Artificial General Intelligence (AGI), transitioning from a "singleton" vision of safe, collaborative development to a high-stakes competitive arms race against OpenAI.</p>
 <h3>The Architect of the "Infinity Machine"</h3>
@@ -5723,7 +5755,7 @@ Sebastian, stick around, we're going to move the second hour of our conversation
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Federal Reserve is &quot;trapped&quot; by massive sovereign debt and cannot raise rates effectively to combat a 1970s-style commodity shock, creating a generational buying opportunity in hard assets and mining equities that remain undervalued despite record-high metal prices.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR The Federal Reserve is &quot;trapped&quot; by massive sovereign debt and cannot raise rates effectively to combat a 1970s-style commodity shock, creating a generational buying opportunity in hard assets and mining equities that remain undervalued despite record-high metal prices. ...</div>
+                    <div class="sum-preview" id="preview-13"></div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>The Federal Reserve is "trapped" by massive sovereign debt and cannot raise rates effectively to combat a 1970s-style commodity shock, creating a generational buying opportunity in hard assets and mining equities that remain undervalued despite record-high metal prices.</p>
 <h3>The Fed’s "Debt Trap" and Persistent Inflation</h3>
@@ -6084,9 +6116,9 @@ All right, and for our viewers, the global financial system is moving faster tha
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/IZt6rJxlvGmTE1lxo9UNtYXzr_AaJ75YtTsVruXB8FKAPbg6SMJiaxZ3i5PKmB4LLWBGNKOUqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>World Economic Forum</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>25:29</span><span class="dot">&middot;</span><span>509 views</span><span class="dot">&middot;</span><span>2026-03-30</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Paul%20Hoffman%22">Paul Hoffman<span class="chip-desc">CEO, Liberty Science Center</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;People who do out-of-the-box stuff, it's not by accident...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;People who do out-of-the-box stuff, it's not by…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR: In an era of AI-generated content, the primary competitive advantage for leaders is the ability to filter ideas, challenge foundational assumptions, and translate complex concepts into irresistible, human-centric narratives.    The &quot;Jargon Wall&quot;: Innovation is often...</div>
+                    <div class="sum-preview" id="preview-14">In an era of AI-generated content, the primary competitive advantage for leaders is the ability to filter ideas, challenge foundational assumptions, and translate complex concepts into irresistible, human-centric narratives.    The &quot;Jargon Wall&quot;: Innovation is often...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR:</strong> In an era of AI-generated content, the primary competitive advantage for leaders is the ability to filter ideas, challenge foundational assumptions, and translate complex concepts into irresistible, human-centric narratives.</p>
 <h3>Radical Clarity: Breaking Down Professional Barriers</h3>
 <ul>

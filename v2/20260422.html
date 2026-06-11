@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/1cBWNglN9kKmkp9WvTOeOCHxwJPy0pPX1aH-0wtfoZxmL3n_IxIxRAEAj07pNOFef1iLcu__=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>AUWCL International and Comparative Legal Studies</b><span class="subs">(0)</span></span><span class="dot">&middot;</span><span>61:21</span><span class="dot">&middot;</span><span>0 views</span><span class="dot">&middot;</span><span>2026-04-22</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Ngozi%20Okonjo-Iweala%22">Ngozi Okonjo-Iweala<span class="chip-desc">Director General, World Trade Organization</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global trading system is at a critical &quot;turning point&quot; where the World Trade Organization (WTO) must transition from a state of over-dependence and unilateralism toward &quot;reglobalization&quot;—a process of diversifying supply chains to include marginal...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global trading system is at a critical &quot;turning point&quot; where the World Trade Organization (WTO) must transition from a state of over-dependence and unilateralism toward &quot;reglobalization&quot;—a process of diversifying supply chains to include…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR The global trading system is at a critical &quot;turning point&quot; where the World Trade Organization (WTO) must transition from a state of over-dependence and unilateralism toward &quot;reglobalization&quot;—a process of diversifying supply chains to include marginalized regions while...</div>
+                    <div class="sum-preview" id="preview-0">marginalized regions while...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>The global trading system is at a critical "turning point" where the World Trade Organization (WTO) must transition from a state of over-dependence and unilateralism toward "reglobalization"—a process of diversifying supply chains to include marginalized regions while reforming foundational multilateral rules to ensure long-term peace and stability.</p>
 <h3>Current Disruptions and "Over-Dependencies"</h3>
@@ -2243,7 +2275,7 @@ Launch a new Plurilateral Agreement on e-commerce, and give a renewed push to ne
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Trump administration has adopted a &quot;moonshot&quot; approach to AI, treating it as a global race that the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR The Trump administration has adopted a &quot;moonshot&quot; approach to AI, treating it as a global race that the U.S. must win through a three-pillar strategy of pro-innovation private sector support, massive infrastructure/energy expansion, and aggressive technology exports. David...</div>
+                    <div class="sum-preview" id="preview-1">must win through a three-pillar strategy of pro-innovation private sector support, massive infrastructure/energy expansion, and aggressive technology exports. David...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>The Trump administration has adopted a "moonshot" approach to AI, treating it as a global race that the U.S. must win through a three-pillar strategy of pro-innovation private sector support, massive infrastructure/energy expansion, and aggressive technology exports.</p>
 <h3>National AI Strategy: The "Moonshot" Framework</h3>
@@ -2483,7 +2515,7 @@ Bullish! Bullish, that was bullish for anyone who didn't hear it. Please join me
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Xiaomi has evolved from a smartphone startup into a diversified global technology leader by leveraging &quot;China speed&quot; and a &quot;Human x Car x Home&quot; ecosystem to deliver high-quality innovation at &quot;honest prices.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Xiaomi has evolved from a smartphone startup into a diversified global technology leader by leveraging &quot;China speed&quot; and a &quot;Human x Car x Home&quot; ecosystem to deliver high-quality innovation at &quot;honest prices.&quot;  The &quot;China Speed&quot; Advantage: Xiaomi launched its first...</div>
+                    <div class="sum-preview" id="preview-2">&quot;  The &quot;China Speed&quot; Advantage: Xiaomi launched its first...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Xiaomi has evolved from a smartphone startup into a diversified global technology leader by leveraging "China speed" and a "Human x Car x Home" ecosystem to deliver high-quality innovation at "honest prices."</p>
 <h3>Strategic Evolution: From Smartphones to Electric Vehicles (EVs)</h3>
@@ -2742,7 +2774,7 @@ One of our chairmen said many years ago—which resonates a lot with me—that 9
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Day Two Keynote of Adobe Summit 2026 centers on the necessity of professional evolution and &quot;new rhythms,&quot; promising attendees an inspirational toolkit designed to elevate their work to a new dimension of creativity and efficiency.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR The Day Two Keynote of Adobe Summit 2026 centers on the necessity of professional evolution and &quot;new rhythms,&quot; promising attendees an inspirational toolkit designed to elevate their work to a new dimension of creativity and efficiency.  Breaking Stagnation: The opening...</div>
+                    <div class="sum-preview" id="preview-3">Breaking Stagnation: The opening...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The Day Two Keynote of Adobe Summit 2026 centers on the necessity of professional evolution and "new rhythms," promising attendees an inspirational toolkit designed to elevate their work to a new dimension of creativity and efficiency.</p>
 <h3>Creative Evolution and Workplace Dynamics</h3>
@@ -12814,7 +12846,7 @@ Well, I promise you, it'll be an inspirational experience over the next few days
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>HCLTech concluded FY26 with $14.7B in revenue and 3.9% constant currency growth, signaling a strategic pivot toward &quot;Advanced AI&quot; which now contributes $620M in annualized revenue despite macroeconomic headwinds and softening discretionary spend in telecom.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR HCLTech concluded FY26 with $14.7B in revenue and 3.9% constant currency growth, signaling a strategic pivot toward &quot;Advanced AI&quot; which now contributes $620M in annualized revenue despite macroeconomic headwinds and softening discretionary spend in telecom.  Revenue...</div>
+                    <div class="sum-preview" id="preview-4">Revenue...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>HCLTech concluded FY26 with $14.7B in revenue and 3.9% constant currency growth, signaling a strategic pivot toward "Advanced AI" which now contributes $620M in annualized revenue despite macroeconomic headwinds and softening discretionary spend in telecom.</p>
 <h3>FY26 Financial Performance and FY27 Outlook</h3>
@@ -13161,7 +13193,7 @@ Okay thank you. Okay that's all for the press conference. Thank you for joining 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary Robert F.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Secretary Robert F. Kennedy, Jr. presented a 2027 budget centered on the &quot;Make America Healthy Again&quot; (MAHA) initiative, prioritizing the reversal of the chronic disease epidemic through nutrition reform and drug price transparency while facing sharp criticism over his...</div>
+                    <div class="sum-preview" id="preview-5">Kennedy, Jr. presented a 2027 budget centered on the &quot;Make America Healthy Again&quot; (MAHA) initiative, prioritizing the reversal of the chronic disease epidemic through nutrition reform and drug price transparency while facing sharp criticism over his...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Secretary Robert F. Kennedy, Jr. presented a 2027 budget centered on the "Make America Healthy Again" (MAHA) initiative, prioritizing the reversal of the chronic disease epidemic through nutrition reform and drug price transparency while facing sharp criticism over his skepticism of vaccine efficacy and the management of recent measles outbreaks.</p>
 <h3>Reversing the Chronic Disease Epidemic</h3>
@@ -14079,7 +14111,7 @@ I think ultimately it's a decision for the Council to make which legislation the
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Stripe’s homepage redesign highlights a shift from a payment-centric narrative to a comprehensive &quot;financial manifesto,&quot; utilizing custom internal tools and AI to achieve a level of craft that signals technical reliability to global enterprises.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Stripe’s homepage redesign highlights a shift from a payment-centric narrative to a comprehensive &quot;financial manifesto,&quot; utilizing custom internal tools and AI to achieve a level of craft that signals technical reliability to global enterprises.  Business Evolution:...</div>
+                    <div class="sum-preview" id="preview-6">Business Evolution:...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Stripe’s homepage redesign highlights a shift from a payment-centric narrative to a comprehensive "financial manifesto," utilizing custom internal tools and AI to achieve a level of craft that signals technical reliability to global enterprises.</p>
 <h3>Strategic Shift: From Feature-Adding to a Unified Narrative</h3>
@@ -14483,9 +14515,9 @@ Awesome. That's it for another Design Review. Thank you for joining us and we'll
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/5KmMZD1jGJ07K32YVjGOjwbwjOtoOwCKDpyNe-YpSdsS02KIUEj9C_Yha4ujD5q2MrBd1VBqNyk=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Daily Mail News</b><span class="subs">(172.0K)</span></span><span class="dot">&middot;</span><span>183:33</span><span class="dot">&middot;</span><span>3.0K views</span><span class="dot">&middot;</span><span>2026-04-22</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Kevin%20Warsh%22">Kevin Warsh<span class="chip-desc">Nominee for Chair of the Federal Reserve</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Senate Banking Committee held a highly polarized hearing on the nomination of former Federal Reserve Governor Kevin Warsh to serve as the next Chairman of the Federal Reserve, exposing deep partisan divides over the central bank's independence, W...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Senate Banking Committee held a highly polarized hearing on the nomination of former Federal Reserve Governor Kevin Warsh to serve as the next Chairman of the Federal Reserve, exposing deep partisan divides over the central bank's independence,…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR  The Senate Banking Committee held a highly polarized hearing on the nomination of former Federal Reserve Governor Kevin Warsh to serve as the next Chairman of the Federal Reserve, exposing deep partisan divides over the central bank's independence, Warsh's past policy...</div>
+                    <div class="sum-preview" id="preview-7">Warsh's past policy...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>The Senate Banking Committee held a highly polarized hearing on the nomination of former Federal Reserve Governor Kevin Warsh to serve as the next Chairman of the Federal Reserve, exposing deep partisan divides over the central bank's independence, Warsh's past policy record, and his undisclosed personal financial assets.</p>
 <h3>Federal Reserve Independence and Executive Influence</h3>
@@ -15748,9 +15780,9 @@ An error occurred. Please try again.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/Lno6v8lhLRCARERkAK6zTwyUFLCIy_wNjCaT0uxdcMF7AURQXWuYjhkX3OU2ZEqZNAqCfQA8Ut4=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Sun</b><span class="subs">(6.4M)</span></span><span class="dot">&middot;</span><span>93:59</span><span class="dot">&middot;</span><span>1.1K views</span><span class="dot">&middot;</span><span>2026-04-22</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">U.S. Treasury Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent presented an $11.5 billion FY 2027 budget request, representing a 12% reduction from the previous year, focused on implementing the Working Families Tax Cuts Act, establishing US leadership in digital assets via the G...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent presented an $11.5 billion FY 2027 budget request, representing a 12% reduction from the previous year, focused on implementing the Working Families Tax Cuts Act, establishing US leadership in digital assets via the…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Treasury Secretary Scott Bessent presented an $11.5 billion FY 2027 budget request, representing a 12% reduction from the previous year, focused on implementing the Working Families Tax Cuts Act, establishing US leadership in digital assets via the GENIUS Act, and...</div>
+                    <div class="sum-preview" id="preview-8">GENIUS Act, and...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent presented an $11.5 billion FY 2027 budget request, representing a 12% reduction from the previous year, focused on implementing the Working Families Tax Cuts Act, establishing US leadership in digital assets via the GENIUS Act, and streamlining IRS operations through significant funding and personnel cuts.</p>
 <h3>FY 2027 Budget Overview and Fiscal Strategy</h3>
@@ -16212,7 +16244,7 @@ The subcommittee meeting is adjourned.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent presented a $11.5 billion FY 2027 budget request featuring a 12% ($1.5 billion) spending reduction, aiming to pivot the Treasury toward a &quot;digital-first&quot; agency while defending significant cuts to IRS enforcement and the termination of the Direct File program.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Treasury Secretary Scott Bessent presented a $11.5 billion FY 2027 budget request featuring a 12% ($1.5 billion) spending reduction, aiming to pivot the Treasury toward a &quot;digital-first&quot; agency while defending significant cuts to IRS enforcement and the termination of the...</div>
+                    <div class="sum-preview" id="preview-9"></div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent presented a $11.5 billion FY 2027 budget request featuring a 12% ($1.5 billion) spending reduction, aiming to pivot the Treasury toward a "digital-first" agency while defending significant cuts to IRS enforcement and the termination of the Direct File program.</p>
 <h3>FY 2027 Budget Priorities and IRS Modernization</h3>
@@ -16675,7 +16707,7 @@ Mr. Secretary, we'd appreciate it if the department can answer these questions a
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The internet has reinvented the 24-hour news cycle into &quot;Randommonium&quot;—a relentless 2.5-day viral outrage loop—which, while socially exhausting, may be effectively shunting historically high levels of physical political violence into purely rhetorical virtual combat.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR The internet has reinvented the 24-hour news cycle into &quot;Randommonium&quot;—a relentless 2.5-day viral outrage loop—which, while socially exhausting, may be effectively shunting historically high levels of physical political violence into purely rhetorical virtual combat.   ...</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>The internet has reinvented the 24-hour news cycle into "Randommonium"—a relentless 2.5-day viral outrage loop—which, while socially exhausting, may be effectively shunting historically high levels of physical political violence into purely rhetorical virtual combat.</p>
 <h3>The Evolution of "Randommonium" and the "Current Thing"</h3>
@@ -17254,7 +17286,7 @@ Past performance is not indicative of future results. The content speaks only as
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and the Republican Party face a &quot;five-alarm fire&quot; ahead of the midterms as sinking approval ratings, a stagnant war in Iran, and a major redistricting loss in Virginia threaten their control of Congress.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR President Trump and the Republican Party face a &quot;five-alarm fire&quot; ahead of the midterms as sinking approval ratings, a stagnant war in Iran, and a major redistricting loss in Virginia threaten their control of Congress.  Virginia Setback: Voters approved a state...</div>
+                    <div class="sum-preview" id="preview-11">Virginia Setback: Voters approved a state...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>President Trump and the Republican Party face a "five-alarm fire" ahead of the midterms as sinking approval ratings, a stagnant war in Iran, and a major redistricting loss in Virginia threaten their control of Congress.</p>
 <h3>The Redistricting "War" and Shift in House Math</h3>
@@ -17617,7 +17649,7 @@ All right. Senator Catherine Cortez Masto, we are out of time, but thank you so 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Skild AI is developing &quot;Skild Brain,&quot; a foundational, general-purpose AI model designed to power any robot form factor—from humanoid to industrial arms—using a shared &quot;Omni-bodied&quot; intelligence that scales through a multi-layered data flywheel.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Skild AI is developing &quot;Skild Brain,&quot; a foundational, general-purpose AI model designed to power any robot form factor—from humanoid to industrial arms—using a shared &quot;Omni-bodied&quot; intelligence that scales through a multi-layered data flywheel.    Omni-bodied Intelligence:...</div>
+                    <div class="sum-preview" id="preview-12">Omni-bodied Intelligence:...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Skild AI is developing "Skild Brain," a foundational, general-purpose AI model designed to power any robot form factor—from humanoid to industrial arms—using a shared "Omni-bodied" intelligence that scales through a multi-layered data flywheel.</p>
 <h3>The Shift to Horizontal Robotics</h3>
@@ -17871,9 +17903,9 @@ Thank you so much for having us.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/d8EN-Da_uCO4t4CfSyCyq2qY2ftFdc38tcBhDbYmb0OHme3VPpONBVrDtKIotZWJWfQTM_FO=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Knowledge Project Podcast</b><span class="subs">(388.0K)</span></span><span class="dot">&middot;</span><span>71:42</span><span class="dot">&middot;</span><span>8.8K views</span><span class="dot">&middot;</span><span>2026-04-22</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Greg%20Brockman%22">Greg Brockman<span class="chip-desc">Co-Founder, OpenAI</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>OpenAI co-founder Greg Brockman details the organization’s evolution from a resource-constrained non-profit to a global AI leader, highlighting the necessity of massive compute scaling, the internal resilience required to survive the 2023 board crisi...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>OpenAI co-founder Greg Brockman details the organization’s evolution from a resource-constrained non-profit to a global AI leader, highlighting the necessity of massive compute scaling, the internal resilience required to survive the 2023 board…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR OpenAI co-founder Greg Brockman details the organization’s evolution from a resource-constrained non-profit to a global AI leader, highlighting the necessity of massive compute scaling, the internal resilience required to survive the 2023 board crisis, and a future where...</div>
+                    <div class="sum-preview" id="preview-13">crisis, and a future where...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>OpenAI co-founder Greg Brockman details the organization’s evolution from a resource-constrained non-profit to a global AI leader, highlighting the necessity of massive compute scaling, the internal resilience required to survive the 2023 board crisis, and a future where agentic AI serves as a personalized partner for billions.</p>
 <h3>The Genesis and Evolution of OpenAI</h3>
@@ -18416,7 +18448,7 @@ Achieving the OpenAI mission of ensuring that artificial general intelligence be
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Senator Elizabeth Warren characterized Fed chair nominee Kevin Warsh as a &quot;sock puppet&quot; for Donald Trump, arguing his refusal to demonstrate independence disqualifies him, while simultaneously defending her regulatory record against accusations that she &quot;killed&quot; community banking.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR Senator Elizabeth Warren characterized Fed chair nominee Kevin Warsh as a &quot;sock puppet&quot; for Donald Trump, arguing his refusal to demonstrate independence disqualifies him, while simultaneously defending her regulatory record against accusations that she &quot;killed&quot; community...</div>
+                    <div class="sum-preview" id="preview-14"></div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Senator Elizabeth Warren characterized Fed chair nominee Kevin Warsh as a "sock puppet" for Donald Trump, arguing his refusal to demonstrate independence disqualifies him, while simultaneously defending her regulatory record against accusations that she "killed" community banking.</p>
 <h3>Federal Reserve Independence and Kevin Warsh</h3>
@@ -18604,7 +18636,7 @@ I want us to be the party that actually delivers on lowering costs and that expa
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Tesla is pivoting into a massive $25B+ capital investment phase for 2026, prioritizing the &quot;revolutionary&quot; scale-up of Optimus, AI-5 chip architecture, and unsupervised Full Self-Driving (FSD) over short-term free cash flow.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Tesla is pivoting into a massive $25B+ capital investment phase for 2026, prioritizing the &quot;revolutionary&quot; scale-up of Optimus, AI-5 chip architecture, and unsupervised Full Self-Driving (FSD) over short-term free cash flow.    FSD Software Roadmap: Version 14.3 was a...</div>
+                    <div class="sum-preview" id="preview-15">FSD Software Roadmap: Version 14.3 was a...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Tesla is pivoting into a massive $25B+ capital investment phase for 2026, prioritizing the "revolutionary" scale-up of Optimus, AI-5 chip architecture, and unsupervised Full Self-Driving (FSD) over short-term free cash flow.</p>
 <h3>AI, Autonomy, and Chip Infrastructure</h3>
@@ -18982,7 +19014,7 @@ And then, you know, we continue to have growth in China as well, ramping in-hous
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent presented an $11.5 billion FY 2027 budget request, a 12% reduction from the prior year, focusing on technology-driven efficiency, the implementation of the &quot;Working Families Tax Cuts Act,&quot; and establishing U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR Treasury Secretary Scott Bessent presented an $11.5 billion FY 2027 budget request, a 12% reduction from the prior year, focusing on technology-driven efficiency, the implementation of the &quot;Working Families Tax Cuts Act,&quot; and establishing U.S. leadership in digital assets...</div>
+                    <div class="sum-preview" id="preview-16">leadership in digital assets...</div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent presented an $11.5 billion FY 2027 budget request, a 12% reduction from the prior year, focusing on technology-driven efficiency, the implementation of the "Working Families Tax Cuts Act," and establishing U.S. leadership in digital assets through the GENIUS Act. While the administration emphasized improved IRS performance and middle-class relief, minority members challenged the efficacy of cutting IRS enforcement and the impact of sanctions policy on rising domestic energy costs.</p>
 <h3>FY 2027 Budget Priorities and IRS Modernization</h3>
@@ -19367,9 +19399,9 @@ Members will have one week to submit their questions for the record. Mr. Secreta
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mE7sPnKhbJKbqDc9ESEjaK0Ip3jwQkGY4a3USPkxEXSUw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>C-SPAN</b><span class="subs">(1.8M)</span></span><span class="dot">&middot;</span><span>65:35</span><span class="dot">&middot;</span><span>15.0K views</span><span class="dot">&middot;</span><span>2026-04-22</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent presented a $11.5 billion FY2027 budget request, representing a 12% reduction aimed at streamlining the IRS through technology and implementing the &quot;Working Families Tax Cuts Act,&quot; while facing scrutiny from Democrats...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent presented a $11.5 billion FY2027 budget request, representing a 12% reduction aimed at streamlining the IRS through technology and implementing the &quot;Working Families Tax Cuts Act,&quot; while facing scrutiny from…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR Treasury Secretary Scott Bessent presented a $11.5 billion FY2027 budget request, representing a 12% reduction aimed at streamlining the IRS through technology and implementing the &quot;Working Families Tax Cuts Act,&quot; while facing scrutiny from Democrats over reduced tax...</div>
+                    <div class="sum-preview" id="preview-17">Democrats over reduced tax...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent presented a $11.5 billion FY2027 budget request, representing a 12% reduction aimed at streamlining the IRS through technology and implementing the "Working Families Tax Cuts Act," while facing scrutiny from Democrats over reduced tax enforcement and sanctions efficacy.</p>
 <h3>FY2027 Budget Strategy and IRS Modernization</h3>
@@ -19891,7 +19923,7 @@ Financial Literacy &amp; Policy. Building Financial Confidence in the Digital Ag
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former National Security advisors H.R.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR Former National Security advisors H.R. McMaster and Matt Pottinger argue that the Iranian regime is fundamentally unstable and nearing collapse, advocating for a &quot;counter-blockade&quot; strategy while warning that a severely downsized National Security Council (NSC) risks...</div>
+                    <div class="sum-preview" id="preview-18">McMaster and Matt Pottinger argue that the Iranian regime is fundamentally unstable and nearing collapse, advocating for a &quot;counter-blockade&quot; strategy while warning that a severely downsized National Security Council (NSC) risks...</div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>Former National Security advisors H.R. McMaster and Matt Pottinger argue that the Iranian regime is fundamentally unstable and nearing collapse, advocating for a "counter-blockade" strategy while warning that a severely downsized National Security Council (NSC) risks losing the "peripheral vision" necessary for long-term competition with China.</p>
 <h3>NSC Structure and Presidential Decision-Making</h3>
@@ -20402,9 +20434,9 @@ Well, that's all for today. We'll be back next week with a new episode of The Lo
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/3qIMp79Z-ynhtXTYyNcdybHwvtILVk_jNMKTLbasP8F1UYCdtU-FFjTJPNGQCp5KZuNUQ62n9Gk=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>PBS NewsHour</b><span class="subs">(5.2M)</span></span><span class="dot">&middot;</span><span>110:45</span><span class="dot">&middot;</span><span>16.3K views</span><span class="dot">&middot;</span><span>2026-04-22</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Howard%20Lutnick%22">Howard Lutnick<span class="chip-desc">U.S. Secretary of Commerce</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Commerce Howard Lutnick defended the Trump administration’s FY2027 budget, touting a &quot;Golden Age&quot; of domestic manufacturing and semiconductor investment while facing sharp bipartisan criticism over proposed deep cuts to economic developm...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Commerce Howard Lutnick defended the Trump administration’s FY2027 budget, touting a &quot;Golden Age&quot; of domestic manufacturing and semiconductor investment while facing sharp bipartisan criticism over proposed deep cuts to economic…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR Secretary of Commerce Howard Lutnick defended the Trump administration’s FY2027 budget, touting a &quot;Golden Age&quot; of domestic manufacturing and semiconductor investment while facing sharp bipartisan criticism over proposed deep cuts to economic development agencies and the...</div>
+                    <div class="sum-preview" id="preview-19">development agencies and the...</div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR</strong></p>
 <p>Secretary of Commerce Howard Lutnick defended the Trump administration’s FY2027 budget, touting a "Golden Age" of domestic manufacturing and semiconductor investment while facing sharp bipartisan criticism over proposed deep cuts to economic development agencies and the management of $21 billion in remaining broadband funds.</p>
 <h3>Economic Strategy and Trade Policy</h3>
@@ -21069,7 +21101,7 @@ Sure. Thank you. I appreciate it. If there's no further questions, senators may 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The &quot;relentless exponential&quot; growth of AI and crypto is converging toward &quot;agentic commerce,&quot; where autonomous agents move from simple task automation to becoming fully independent economic actors capable of transacting, hiring, and self-funding via blockchains.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-20">TL;DR The &quot;relentless exponential&quot; growth of AI and crypto is converging toward &quot;agentic commerce,&quot; where autonomous agents move from simple task automation to becoming fully independent economic actors capable of transacting, hiring, and self-funding via blockchains. ...</div>
+                    <div class="sum-preview" id="preview-20"></div>
                     <div class="sum-full" id="full-20"><p><strong>TL;DR</strong></p>
 <p>The "relentless exponential" growth of AI and crypto is converging toward "agentic commerce," where autonomous agents move from simple task automation to becoming fully independent economic actors capable of transacting, hiring, and self-funding via blockchains.</p>
 <h3>The Intersection of AI Productivity and AGI</h3>

@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/Du3wg7EZp9LaKFfVcOuKbEn0xFPryiiQgGQ9sJ9u11UCOmAAhp_5g9x9w1Fux5ijjfqb0COq=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>20VC with Harry Stebbings</b><span class="subs">(189.0K)</span></span><span class="dot">&middot;</span><span>80:03</span><span class="dot">&middot;</span><span>9.0K views</span><span class="dot">&middot;</span><span>2026-02-09</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Anish%20Acharya%22">Anish Acharya<span class="chip-desc">General Partner, a16z</span></a> <a class="chip" href="index.html?q=%22Harry%20Stebbings%22">Harry Stebbings<span class="chip-desc">Host, 20VC</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Contrary to the &quot;SaaS-pocalypse&quot; narrative, AI is not killing software but expanding its reach into the 90% of enterprise spend currently untouched by automation, while simultaneously shifting the industry from a &quot;hostage&quot; model of high switching cos...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Contrary to the &quot;SaaS-pocalypse&quot; narrative, AI is not killing software but expanding its reach into the 90% of enterprise spend currently untouched by automation, while simultaneously shifting the industry from a &quot;hostage&quot; model of high switching…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Contrary to the &quot;SaaS-pocalypse&quot; narrative, AI is not killing software but expanding its reach into the 90% of enterprise spend currently untouched by automation, while simultaneously shifting the industry from a &quot;hostage&quot; model of high switching costs to one based on...</div>
+                    <div class="sum-preview" id="preview-0">costs to one based on...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Contrary to the "SaaS-pocalypse" narrative, AI is not killing software but expanding its reach into the 90% of enterprise spend currently untouched by automation, while simultaneously shifting the industry from a "hostage" model of high switching costs to one based on outcome-driven value and proprietary data moats.</p>
 <h3>The State of SaaS and the AI "Innovation Bazooka"</h3>
@@ -830,7 +862,7 @@ Looking ahead, the next few years will see the continued dominance of early AI l
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI sector is experiencing a massive &quot;market pull&quot; where top companies are growing 2.5x faster than traditional SaaS counterparts—reaching $100M ARR significantly quicker—while maintaining higher capital efficiency through lower sales and marketing spend and record-breaking ARR per employee.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR The AI sector is experiencing a massive &quot;market pull&quot; where top companies are growing 2.5x faster than traditional SaaS counterparts—reaching $100M ARR significantly quicker—while maintaining higher capital efficiency through lower sales and marketing spend and...</div>
+                    <div class="sum-preview" id="preview-1"></div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>The AI sector is experiencing a massive "market pull" where top companies are growing 2.5x faster than traditional SaaS counterparts—reaching $100M ARR significantly quicker—while maintaining higher capital efficiency through lower sales and marketing spend and record-breaking ARR per employee.</p>
 <h3>Hyper-Growth and Operational Efficiency</h3>
@@ -934,7 +966,7 @@ In the private markets, companies are staying private longer, with 86% of firms 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Mustafa Suleyman (CEO, Microsoft AI) argues that AI has evolved into a &quot;fourth class&quot; of object—a non-biological &quot;being&quot; possessing social intelligence—which creates a critical risk of &quot;AI psychosis,&quot; where humans dangerously mistake simulated empathy for actual consciousness.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Mustafa Suleyman (CEO, Microsoft AI) argues that AI has evolved into a &quot;fourth class&quot; of object—a non-biological &quot;being&quot; possessing social intelligence—which creates a critical risk of &quot;AI psychosis,&quot; where humans dangerously mistake simulated empathy for actual...</div>
+                    <div class="sum-preview" id="preview-2"></div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Mustafa Suleyman (CEO, Microsoft AI) argues that AI has evolved into a "fourth class" of object—a non-biological "being" possessing social intelligence—which creates a critical risk of "AI psychosis," where humans dangerously mistake simulated empathy for actual consciousness.</p>
 <h3>The "Fourth Class" Framework and the Consciousness Fallacy</h3>
@@ -1032,7 +1064,7 @@ In the private markets, companies are staying private longer, with 86% of firms 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance and Prime Minister Nikol Pashinyan formalized a historic shift in U.S.-Armenia relations in Yerevan, headlined by a landmark civil nuclear cooperation agreement, the first major U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Vice President JD Vance and Prime Minister Nikol Pashinyan formalized a historic shift in U.S.-Armenia relations in Yerevan, headlined by a landmark civil nuclear cooperation agreement, the first major U.S. military technology sale to Armenia, and a massive high-tech...</div>
+                    <div class="sum-preview" id="preview-3">military technology sale to Armenia, and a massive high-tech...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance and Prime Minister Nikol Pashinyan formalized a historic shift in U.S.-Armenia relations in Yerevan, headlined by a landmark civil nuclear cooperation agreement, the first major U.S. military technology sale to Armenia, and a massive high-tech partnership involving NVIDIA.</p>
 <h3>Energy and Nuclear Cooperation</h3>
@@ -1130,7 +1162,7 @@ In his concluding remarks, Prime Minister Pashinyan characterized the current st
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Ares Management reported record AUM of $622 billion for Q4 2025 (29% annual growth), signaling a massive disconnect between public market volatility and the robust institutional demand for private credit despite concerns over AI disruption and tightening spreads.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Ares Management reported record AUM of $622 billion for Q4 2025 (29% annual growth), signaling a massive disconnect between public market volatility and the robust institutional demand for private credit despite concerns over AI disruption and tightening spreads.    Record...</div>
+                    <div class="sum-preview" id="preview-4">Record...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Ares Management reported record AUM of $622 billion for Q4 2025 (29% annual growth), signaling a massive disconnect between public market volatility and the robust institutional demand for private credit despite concerns over AI disruption and tightening spreads.</p>
 <h3>Record Financial Growth and Market Disconnect</h3>
@@ -1231,7 +1263,7 @@ Looking toward the future of the workforce, technology is expected to supplement
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>OpenAI is introducing advertisements to ChatGPT’s Free and Go tiers to subsidize the high cost of democratizing AI access while maintaining a strict technical &quot;wall&quot; that prevents ads from influencing model responses or compromising user privacy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR OpenAI is introducing advertisements to ChatGPT’s Free and Go tiers to subsidize the high cost of democratizing AI access while maintaining a strict technical &quot;wall&quot; that prevents ads from influencing model responses or compromising user privacy.    Mission-Driven Revenue:...</div>
+                    <div class="sum-preview" id="preview-5">Mission-Driven Revenue:...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>OpenAI is introducing advertisements to ChatGPT’s Free and Go tiers to subsidize the high cost of democratizing AI access while maintaining a strict technical "wall" that prevents ads from influencing model responses or compromising user privacy.</p>
 <h3>Monetization Philosophy and Accessibility</h3>
@@ -1324,7 +1356,7 @@ Looking toward the future, the vision for ads in an AI-centric world involves ag
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The United States and China are engaged in a high-stakes race for AI supremacy that mirrors the Cold War’s nuclear and space races, requiring the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR The United States and China are engaged in a high-stakes race for AI supremacy that mirrors the Cold War’s nuclear and space races, requiring the U.S. to balance aggressive private-sector innovation with stringent export controls and sustained diplomatic safety talks....</div>
+                    <div class="sum-preview" id="preview-6">to balance aggressive private-sector innovation with stringent export controls and sustained diplomatic safety talks....</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>The United States and China are engaged in a high-stakes race for AI supremacy that mirrors the Cold War’s nuclear and space races, requiring the U.S. to balance aggressive private-sector innovation with stringent export controls and sustained diplomatic safety talks. Success depends on maintaining the U.S. lead in computing power while establishing global norms to prevent AI from escalating to existential or nuclear risks.</p>
 <h3>Strategic Scenarios and the "Winner-Take-All" Risk</h3>
@@ -1411,7 +1443,7 @@ Ultimately, managing the risks of AI will likely require new international insti
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former Fed Vice Chair Richard Clarida views Kevin Warsh as a sensible pick for Fed Chair who will prioritize supply-side economics and a collaborative relationship with the Treasury.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Former Fed Vice Chair Richard Clarida views Kevin Warsh as a sensible pick for Fed Chair who will prioritize supply-side economics and a collaborative relationship with the Treasury. While Warsh may seek to roll back &quot;modern&quot; communication tools like forward guidance, his...</div>
+                    <div class="sum-preview" id="preview-7">While Warsh may seek to roll back &quot;modern&quot; communication tools like forward guidance, his...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Former Fed Vice Chair Richard Clarida views Kevin Warsh as a sensible pick for Fed Chair who will prioritize supply-side economics and a collaborative relationship with the Treasury. While Warsh may seek to roll back "modern" communication tools like forward guidance, his influence will be tempered by the Fed’s committee structure and the market’s reaction to potential inflation risks.</p>
 <h3>The Strategy Behind the Warsh Nomination</h3>
@@ -1503,7 +1535,7 @@ Finally, Warsh’s skepticism toward traditional economic models like the Philli
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>ArtifexAI utilizes AI agents to transform massive volumes of unstructured government documentation into structured, predictive data, enabling a 97% accuracy rate in infrastructure project approvals and streamlining municipal operations.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR ArtifexAI utilizes AI agents to transform massive volumes of unstructured government documentation into structured, predictive data, enabling a 97% accuracy rate in infrastructure project approvals and streamlining municipal operations.  The Data Gap: While government...</div>
+                    <div class="sum-preview" id="preview-8">The Data Gap: While government...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>ArtifexAI utilizes AI agents to transform massive volumes of unstructured government documentation into structured, predictive data, enabling a 97% accuracy rate in infrastructure project approvals and streamlining municipal operations.</p>
 <h3>Data Unification: From Bureaucracy to Intelligence</h3>
@@ -1585,7 +1617,7 @@ Reflecting on his experience with the Climate Scale-up cohort, Wilcox noted how 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Emerging markets now drive 75% of global growth and 56% of global GDP, yet they face a &quot;fog of uncertainty&quot; that requires rebuilding depleted fiscal buffers and navigating geopolitical volatility.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Emerging markets now drive 75% of global growth and 56% of global GDP, yet they face a &quot;fog of uncertainty&quot; that requires rebuilding depleted fiscal buffers and navigating geopolitical volatility. Despite short-term fluctuations, the IMF maintains that the U.S. dollar’s...</div>
+                    <div class="sum-preview" id="preview-9">Despite short-term fluctuations, the IMF maintains that the U.S. dollar’s...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Emerging markets now drive 75% of global growth and 56% of global GDP, yet they face a "fog of uncertainty" that requires rebuilding depleted fiscal buffers and navigating geopolitical volatility. Despite short-term fluctuations, the IMF maintains that the U.S. dollar’s global dominance remains secure due to the structural depth and liquidity of American capital markets.</p>
 <h3>The Rising Economic Power of Emerging Markets</h3>
@@ -1681,7 +1713,7 @@ In Lebanon, discussions continue regarding the draft banking law and the distrib
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The macro environment is shifting into a &quot;Gung Ho&quot; regime as cyclical growth returns alongside lower-than-expected inflation, likely triggering a rotation back into technology and consumer discretionary stocks.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR The macro environment is shifting into a &quot;Gung Ho&quot; regime as cyclical growth returns alongside lower-than-expected inflation, likely triggering a rotation back into technology and consumer discretionary stocks. This shift is reinforced by a potential &quot;regime shift&quot; at the...</div>
+                    <div class="sum-preview" id="preview-10">This shift is reinforced by a potential &quot;regime shift&quot; at the...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>The macro environment is shifting into a "Gung Ho" regime as cyclical growth returns alongside lower-than-expected inflation, likely triggering a rotation back into technology and consumer discretionary stocks. This shift is reinforced by a potential "regime shift" at the Federal Reserve under Kevin Warsh, moving toward a formalized Treasury-Fed cooperation designed to orchestrate a private-sector credit bonanza.</p>
 <h3>Volatility and the Fed’s Potential "Regime Shift"</h3>
@@ -1783,9 +1815,9 @@ Ultimately, the confluence of a Fed-Treasury partnership and a shift in macro re
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/l-PkW7O1ontw4zURXnybczxV8aTRBcCOx6AIu3muwbF6XTfuXtJupqq2N3fSZNEROE1RFZO-qQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Harvard Crimson</b><span class="subs">(8.9K)</span></span><span class="dot">&middot;</span><span>28:07</span><span class="dot">&middot;</span><span>69 views</span><span class="dot">&middot;</span><span>2026-02-09</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jason%20Furman%22">Jason Furman<span class="chip-desc">Professor, Harvard University</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;If the Fed comes to be seen as controlled by the president...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;If the Fed comes to be seen as controlled by the…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR: Harvard Professor Jason Furman argues that Federal Reserve independence is essential for economic stability and warns that President Trump’s attempts to exert political control or fire governors could lead to higher inflation, market volatility, and a weakened U.S....</div>
+                    <div class="sum-preview" id="preview-11">Harvard Professor Jason Furman argues that Federal Reserve independence is essential for economic stability and warns that President Trump’s attempts to exert political control or fire governors could lead to higher inflation, market volatility, and a weakened U.S....</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR:</strong> Harvard Professor Jason Furman argues that Federal Reserve independence is essential for economic stability and warns that President Trump’s attempts to exert political control or fire governors could lead to higher inflation, market volatility, and a weakened U.S. dollar.</p>
 <h3>The Federal Reserve’s Role and Jerome Powell’s Legacy</h3>
 <ul>
@@ -1863,7 +1895,7 @@ Ultimately, the confluence of a Fed-Treasury partnership and a shift in macro re
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The US economy is experiencing a &quot;silent recession&quot; and a &quot;vibesession&quot; where headline credit data remains stable only because of &quot;extend and pretend&quot; lender tactics and Buy Now Pay Later (BNPL) acting as a hidden bridge for overleveraged consumers.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR The US economy is experiencing a &quot;silent recession&quot; and a &quot;vibesession&quot; where headline credit data remains stable only because of &quot;extend and pretend&quot; lender tactics and Buy Now Pay Later (BNPL) acting as a hidden bridge for overleveraged consumers.  The Disconnect:...</div>
+                    <div class="sum-preview" id="preview-12">The Disconnect:...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>The US economy is experiencing a "silent recession" and a "vibesession" where headline credit data remains stable only because of "extend and pretend" lender tactics and Buy Now Pay Later (BNPL) acting as a hidden bridge for overleveraged consumers.</p>
 <h3>The "Vibesession" and the Fragile US Consumer</h3>
@@ -1972,7 +2004,7 @@ Ultimately, the U.S. consumer is facing a &quot;silent inflation.&quot; While he
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI is not emerging in a vacuum but is crashing into failing global systems; to avoid a future of extreme inequality and societal collapse, we must transition from narrow technical specialization to multidimensional, vision-driven leadership.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR AI is not emerging in a vacuum but is crashing into failing global systems; to avoid a future of extreme inequality and societal collapse, we must transition from narrow technical specialization to multidimensional, vision-driven leadership.  The &quot;Vacuum&quot; Fallacy: Dex...</div>
+                    <div class="sum-preview" id="preview-13">The &quot;Vacuum&quot; Fallacy: Dex...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>AI is not emerging in a vacuum but is crashing into failing global systems; to avoid a future of extreme inequality and societal collapse, we must transition from narrow technical specialization to multidimensional, vision-driven leadership.</p>
 <h3>The Intersection of Technology and Global Dysfunction</h3>
@@ -2064,7 +2096,7 @@ Despite this technological shift, the most important responses remain deeply hum
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>As non-human identities outnumber human identities 82-to-1, cyber risk has transitioned from a technical hurdle to a core fiduciary responsibility, requiring boards to prioritize &quot;cyber resilience&quot; over simple prevention.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR As non-human identities outnumber human identities 82-to-1, cyber risk has transitioned from a technical hurdle to a core fiduciary responsibility, requiring boards to prioritize &quot;cyber resilience&quot; over simple prevention.  Non-Human Identity Explosion: Rubrik Zero Labs...</div>
+                    <div class="sum-preview" id="preview-14">Non-Human Identity Explosion: Rubrik Zero Labs...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>As non-human identities outnumber human identities 82-to-1, cyber risk has transitioned from a technical hurdle to a core fiduciary responsibility, requiring boards to prioritize "cyber resilience" over simple prevention.</p>
 <h3>The Massive Expansion of the Attack Surface</h3>
@@ -2161,7 +2193,7 @@ The role of a Chief Transformation Officer involves focusing on go-to-market tra
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Dow Jones Industrial Average reached a historic 50,000 milestone three years ahead of schedule, as Treasury Secretary Scott Bessent signals a massive cyclical economic recovery for 2026 driven by cooling inflation and strategic domestic manufacturing incentives.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR The Dow Jones Industrial Average reached a historic 50,000 milestone three years ahead of schedule, as Treasury Secretary Scott Bessent signals a massive cyclical economic recovery for 2026 driven by cooling inflation and strategic domestic manufacturing incentives.    Dow...</div>
+                    <div class="sum-preview" id="preview-15">Dow...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>The Dow Jones Industrial Average reached a historic 50,000 milestone three years ahead of schedule, as Treasury Secretary Scott Bessent signals a massive cyclical economic recovery for 2026 driven by cooling inflation and strategic domestic manufacturing incentives.</p>
 <h3>Market Milestones and Growth Projections</h3>
@@ -2245,7 +2277,7 @@ The administration is also pushing for clarity in the digital asset space throug
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Trust must be treated as critical physical infrastructure—like power grids or highways—to safeguard the global economy against &quot;Q-Day,&quot; the point between 2028 and 2030 when quantum computers will likely break current RSA encryption and jeopardize all digital sovereignty.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR Trust must be treated as critical physical infrastructure—like power grids or highways—to safeguard the global economy against &quot;Q-Day,&quot; the point between 2028 and 2030 when quantum computers will likely break current RSA encryption and jeopardize all digital sovereignty.  ...</div>
+                    <div class="sum-preview" id="preview-16"></div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>Trust must be treated as critical physical infrastructure—like power grids or highways—to safeguard the global economy against "Q-Day," the point between 2028 and 2030 when quantum computers will likely break current RSA encryption and jeopardize all digital sovereignty.</p>
 <h3>The Quantum Threat and "Q-Day"</h3>
@@ -2355,7 +2387,7 @@ On the identity layer, the launch of SealCoin represents a $500 million project 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI agents have shifted from simple chatbots to infrastructure builders, with 80% of databases on the Databricks platform now created by agents rather than humans.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR AI agents have shifted from simple chatbots to infrastructure builders, with 80% of databases on the Databricks platform now created by agents rather than humans. This transition is threatening the dominance of traditional SaaS &quot;systems of record&quot; by eroding their primary...</div>
+                    <div class="sum-preview" id="preview-17">This transition is threatening the dominance of traditional SaaS &quot;systems of record&quot; by eroding their primary...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>AI agents have shifted from simple chatbots to infrastructure builders, with 80% of databases on the Databricks platform now created by agents rather than humans. This transition is threatening the dominance of traditional SaaS "systems of record" by eroding their primary moats: complex user interfaces and rigid database structures.</p>
 <h3>The Infrastructure Shift: From Chatbots to Agents</h3>
@@ -2478,7 +2510,7 @@ Right, will be an interesting year to see what happens um with open source model
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former Fed Vice Chair Richard Clarida suggests that a potential &quot;Kevin Warsh Fed&quot; would likely pivot toward a new Fed-Treasury accord focused on balance sheet composition rather than yield caps, while potentially guiding interest rates down to 3%.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR Former Fed Vice Chair Richard Clarida suggests that a potential &quot;Kevin Warsh Fed&quot; would likely pivot toward a new Fed-Treasury accord focused on balance sheet composition rather than yield caps, while potentially guiding interest rates down to 3%.  Historical Context:...</div>
+                    <div class="sum-preview" id="preview-18">%.  Historical Context:...</div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>Former Fed Vice Chair Richard Clarida suggests that a potential "Kevin Warsh Fed" would likely pivot toward a new Fed-Treasury accord focused on balance sheet composition rather than yield caps, while potentially guiding interest rates down to 3%.</p>
 <h3>The Proposed Fed-Treasury Accord and Fed Independence</h3>
@@ -2578,7 +2610,7 @@ In the Treasury market, ten-year yields have remained in a relatively tight rang
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Davos 2026 highlights a shift toward a distributed global order where India is emerging as a primary engine for AI innovation and Europe is rapidly remilitarizing through deep-tech partnerships.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR Davos 2026 highlights a shift toward a distributed global order where India is emerging as a primary engine for AI innovation and Europe is rapidly remilitarizing through deep-tech partnerships. Global investors are moving beyond speculative AI toward &quot;agentic&quot;...</div>
+                    <div class="sum-preview" id="preview-19">Global investors are moving beyond speculative AI toward &quot;agentic&quot;...</div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR</strong></p>
 <p>Davos 2026 highlights a shift toward a distributed global order where India is emerging as a primary engine for AI innovation and Europe is rapidly remilitarizing through deep-tech partnerships. Global investors are moving beyond speculative AI toward "agentic" applications and physical robotics, signaled by massive capital inflows into companies building foundational "brains" for autonomous systems.</p>
 <h3>India’s Growth and Prosus’s Strategic Pivot</h3>

@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/XJxF0gs2QBEmIlXBEIfkQLPmGyx66Ydl4xusBVfj9GRj2LwV4-Uj8fKZd93eRpDoHOJi2Fd_=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>House Appropriations Committee</b><span class="subs">(12.1K)</span></span><span class="dot">&middot;</span><span>84:01</span><span class="dot">&middot;</span><span>2.4K views</span><span class="dot">&middot;</span><span>2026-04-24</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Gina%20Raimondo%22">Gina Raimondo<span class="chip-desc">Secretary, U.S. Department of Commerce</span></a> <a class="chip" href="index.html?q=%22Hal%20Rogers%22">Hal Rogers<span class="chip-desc">Chairman, Subcommittee on Commerce, Justice, Science, and Related Agencies</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Commerce Howard Lutnick defended a $9.2 billion FY 2027 budget request—a 16.5% decrease from current levels—focusing on &quot;America First&quot; trade policies and semiconductor reshoring while facing intense scrutiny over major program eliminati...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of Commerce Howard Lutnick defended a $9.2 billion FY 2027 budget request—a 16.5% decrease from current levels—focusing on &quot;America First&quot; trade policies and semiconductor reshoring while facing intense scrutiny over major program…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Secretary of Commerce Howard Lutnick defended a $9.2 billion FY 2027 budget request—a 16.5% decrease from current levels—focusing on &quot;America First&quot; trade policies and semiconductor reshoring while facing intense scrutiny over major program eliminations, tariff-induced...</div>
+                    <div class="sum-preview" id="preview-0">eliminations, tariff-induced...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Secretary of Commerce Howard Lutnick defended a $9.2 billion FY 2027 budget request—a 16.5% decrease from current levels—focusing on "America First" trade policies and semiconductor reshoring while facing intense scrutiny over major program eliminations, tariff-induced inflation, and personal ethics.</p>
 <h3>FY 2027 Budget Priorities and Domestic Program Cuts</h3>
@@ -1287,7 +1319,7 @@ Gentleman yields back. That concludes today's hearing. I'd like to thank our wit
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has established a decisive global maritime blockade against Iran, successfully turning back 34 vessels and seizing several &quot;dark fleet&quot; ships to ensure the regime never acquires a nuclear weapon.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Operation Epic Fury has established a decisive global maritime blockade against Iran, successfully turning back 34 vessels and seizing several &quot;dark fleet&quot; ships to ensure the regime never acquires a nuclear weapon. The Department of War has authorized a &quot;shoot-to-kill&quot;...</div>
+                    <div class="sum-preview" id="preview-1">The Department of War has authorized a &quot;shoot-to-kill&quot;...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has established a decisive global maritime blockade against Iran, successfully turning back 34 vessels and seizing several "dark fleet" ships to ensure the regime never acquires a nuclear weapon. The Department of War has authorized a "shoot-to-kill" policy for any Iranian fast boats attempting to mine the Strait of Hormuz or disrupt global shipping.</p>
 <h3>Current Military Operations &amp; Blockade Status</h3>
@@ -1568,7 +1600,7 @@ It's not just what it does to its own people, killing 45,000 of its own citizens
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former Binance CEO Changpeng Zhao (CZ) details his transition from the head of the world's largest crypto exchange to a federal inmate, addressing his $4.3 billion DOJ settlement, his controversial presidential pardon, and his new focus on global education philanthropy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Former Binance CEO Changpeng Zhao (CZ) details his transition from the head of the world's largest crypto exchange to a federal inmate, addressing his $4.3 billion DOJ settlement, his controversial presidential pardon, and his new focus on global education philanthropy. ...</div>
+                    <div class="sum-preview" id="preview-2"></div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Former Binance CEO Changpeng Zhao (CZ) details his transition from the head of the world's largest crypto exchange to a federal inmate, addressing his $4.3 billion DOJ settlement, his controversial presidential pardon, and his new focus on global education philanthropy.</p>
 <h3>Legal Accountability and the US Prison Experience</h3>
@@ -2266,7 +2298,7 @@ Thank you so much, Rafaela, yeah. And it's been it's been a pleasure. Thank you.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI is evolving from a productivity tool into the fundamental operating system of the startup, enabling &quot;closed-loop&quot; organizations that replace human middle management with a queryable intelligence layer.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR AI is evolving from a productivity tool into the fundamental operating system of the startup, enabling &quot;closed-loop&quot; organizations that replace human middle management with a queryable intelligence layer. By prioritizing &quot;tokenmaxxing&quot; (API spend) over headcount, AI-native...</div>
+                    <div class="sum-preview" id="preview-3">By prioritizing &quot;tokenmaxxing&quot; (API spend) over headcount, AI-native...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>AI is evolving from a productivity tool into the fundamental operating system of the startup, enabling "closed-loop" organizations that replace human middle management with a queryable intelligence layer. By prioritizing "tokenmaxxing" (API spend) over headcount, AI-native founders can achieve 1,000x output compared to traditional competitors.</p>
 <h3>AI as the Company Operating System</h3>
@@ -2396,9 +2428,9 @@ So by their nature, these large companies will have a much harder time going AI 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nulMc6GNIrLUi_wcTCKojfsfro0dsNLAueuj4edxt_Kl4T=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes</b><span class="subs">(2.1M)</span></span><span class="dot">&middot;</span><span>20:46</span><span class="dot">&middot;</span><span>306 views</span><span class="dot">&middot;</span><span>2026-04-24</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Howie%20Liu%22">Howie Liu<span class="chip-desc">Founder and CEO, Airtable</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;When apocalypse is coming...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;When apocalypse is…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR: The current AI revolution is a multi-layered &quot;SaaS apocalypse&quot; happening at 10x speed, requiring leaders to abandon traditional management techniques in favor of hands-on technical immersion and &quot;agentic&quot; business models where tiny teams generate billion-dollar revenues. ...</div>
+                    <div class="sum-preview" id="preview-4">The current AI revolution is a multi-layered &quot;SaaS apocalypse&quot; happening at 10x speed, requiring leaders to abandon traditional management techniques in favor of hands-on technical immersion and &quot;agentic&quot; business models where tiny teams generate billion-dollar revenues. ...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR:</strong> The current AI revolution is a multi-layered "SaaS apocalypse" happening at 10x speed, requiring leaders to abandon traditional management techniques in favor of hands-on technical immersion and "agentic" business models where tiny teams generate billion-dollar revenues.</p>
 <h3>Fundraising and Financial Resilience</h3>
 <ul>
@@ -2632,7 +2664,7 @@ Choose from management, business analytics, or organizational leadership program
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Intel has reached a historic stock record by surpassing its 2000-era peak, driven by a resurgence in CPU demand for AI servers, while Big Tech giants Meta and Microsoft are executing massive layoffs to offset surging AI infrastructure spending.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Intel has reached a historic stock record by surpassing its 2000-era peak, driven by a resurgence in CPU demand for AI servers, while Big Tech giants Meta and Microsoft are executing massive layoffs to offset surging AI infrastructure spending.  Market Milestone: Intel...</div>
+                    <div class="sum-preview" id="preview-5">Market Milestone: Intel...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Intel has reached a historic stock record by surpassing its 2000-era peak, driven by a resurgence in CPU demand for AI servers, while Big Tech giants Meta and Microsoft are executing massive layoffs to offset surging AI infrastructure spending.</p>
 <h3>Intel’s "Glory Days" Return</h3>
@@ -3108,9 +3140,9 @@ It's not doing the big spending, but things have been going pretty smoothly ther
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(171.0K)</span></span><span class="dot">&middot;</span><span>31:43</span><span class="dot">&middot;</span><span>64.4K views</span><span class="dot">&middot;</span><span>2026-04-24</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The global financial system functions on Treasuries.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The global financial system functions on Treasuries.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR: Q1 2026 earnings results from over 100 companies suggest that a recession is not imminent; however, high interest rates and geopolitical tensions are creating a &quot;precarious&quot; environment for software and homebuilders while disrupting the long-standing FICO monopoly.   ...</div>
+                    <div class="sum-preview" id="preview-6">Q1 2026 earnings results from over 100 companies suggest that a recession is not imminent; however, high interest rates and geopolitical tensions are creating a &quot;precarious&quot; environment for software and homebuilders while disrupting the long-standing FICO monopoly.   ...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR:</strong> Q1 2026 earnings results from over 100 companies suggest that a recession is not imminent; however, high interest rates and geopolitical tensions are creating a "precarious" environment for software and homebuilders while disrupting the long-standing FICO monopoly.</p>
 <h3>Macro Outlook and Private Credit</h3>
 <ul>
@@ -3375,9 +3407,9 @@ The host and guests may hold positions in stocks discussed. Opinions expressed a
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/xSdoWuTnXS20n__x_-heuNIAFlbhvi0LcClrBIaGs-y5_ww2C7H0Eq07k4nYdT9m2rhVwOi8WEg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>John Coogan</b><span class="subs">(455.0K)</span></span><span class="dot">&middot;</span><span>135:34</span><span class="dot">&middot;</span><span>967 views</span><span class="dot">&middot;</span><span>2026-04-24</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22John%20Coogan%22">John Coogan<span class="chip-desc">Host</span></a> <a class="chip" href="index.html?q=%22Peter%20Thiel%22">Peter Thiel<span class="chip-desc">Founder, Thiel Fellowship</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The latest Thiel Fellowship class is leveraging AI and custom hardware to disrupt legacy industries—ranging from autonomous logistics and small-cap equity research to government fraud detection—amidst the release of GPT 5.5 and rising national securi...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The latest Thiel Fellowship class is leveraging AI and custom hardware to disrupt legacy industries—ranging from autonomous logistics and small-cap equity research to government fraud detection—amidst the release of GPT 5.5 and rising national…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR The latest Thiel Fellowship class is leveraging AI and custom hardware to disrupt legacy industries—ranging from autonomous logistics and small-cap equity research to government fraud detection—amidst the release of GPT 5.5 and rising national security concerns regarding...</div>
+                    <div class="sum-preview" id="preview-7">security concerns regarding...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>The latest Thiel Fellowship class is leveraging AI and custom hardware to disrupt legacy industries—ranging from autonomous logistics and small-cap equity research to government fraud detection—amidst the release of GPT 5.5 and rising national security concerns regarding AI model "distillation" by foreign entities.</p>
 <h3><strong>The New Thiel Fellowship Class: Industry Disruptors</strong></h3>
@@ -4334,7 +4366,7 @@ Throw that flashbang, Jordi, because we are out of here! It's been an honor and 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Tesla faces scrutiny over narrow profitability and CEO Elon Musk's overextension, while the broader AI sector grapples with an &quot;implementation gap&quot; as corporations struggle to integrate agents and insurers move to exclude AI-related liabilities.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Tesla faces scrutiny over narrow profitability and CEO Elon Musk's overextension, while the broader AI sector grapples with an &quot;implementation gap&quot; as corporations struggle to integrate agents and insurers move to exclude AI-related liabilities.  Financial Performance:...</div>
+                    <div class="sum-preview" id="preview-8">Financial Performance:...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Tesla faces scrutiny over narrow profitability and CEO Elon Musk's overextension, while the broader AI sector grapples with an "implementation gap" as corporations struggle to integrate agents and insurers move to exclude AI-related liabilities.</p>
 <h3>Tesla’s Q1 Financials and the "Musk Factor"</h3>
@@ -4638,9 +4670,9 @@ A reminder we are on this stream Monday through Friday at 9:00 a.m. Pacific, 12:
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>90:42</span><span class="dot">&middot;</span><span>331.1K views</span><span class="dot">&middot;</span><span>2026-04-24</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Co-host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22Jason%20Calacanis%22">Jason Calacanis<span class="chip-desc">Co-host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22David%20Sacks%22">David Sacks<span class="chip-desc">Co-host, All-In Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Debt equals prison bitch.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Debt equals prison bitch.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR: SpaceX’s $60 billion agreement to acquire AI coding startup Cursor marks a major shift toward vertical integration in the AI arms race, while a &quot;SaaS bloodbath&quot; unfolds as AI-driven deflation and high debt levels crush legacy software valuations.  The Deal Terms: SpaceX...</div>
+                    <div class="sum-preview" id="preview-9">SpaceX’s $60 billion agreement to acquire AI coding startup Cursor marks a major shift toward vertical integration in the AI arms race, while a &quot;SaaS bloodbath&quot; unfolds as AI-driven deflation and high debt levels crush legacy software valuations.  The Deal Terms: SpaceX...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR:</strong> SpaceX’s $60 billion agreement to acquire AI coding startup Cursor marks a major shift toward vertical integration in the AI arms race, while a "SaaS bloodbath" unfolds as AI-driven deflation and high debt levels crush legacy software valuations.</p>
 <h3>SpaceX-Cursor Deal: Compute as Strategic Leverage</h3>
 <ul>
@@ -5009,7 +5041,7 @@ All right, everybody. That's it for episode 270 of the world's greatest podcast.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Governments worldwide are shifting toward hardline age-based restrictions for social media to combat youth mental health crises and platform addiction, moving beyond parental controls to treat digital access with the same regulatory weight as alcohol and tobacco.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Governments worldwide are shifting toward hardline age-based restrictions for social media to combat youth mental health crises and platform addiction, moving beyond parental controls to treat digital access with the same regulatory weight as alcohol and tobacco.    The...</div>
+                    <div class="sum-preview" id="preview-10">The...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Governments worldwide are shifting toward hardline age-based restrictions for social media to combat youth mental health crises and platform addiction, moving beyond parental controls to treat digital access with the same regulatory weight as alcohol and tobacco.</p>
 <h3>The Global Momentum for Youth Access Bans</h3>

@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump’s Beijing summit focused on leveraging personal rapport with President Xi to secure massive trade deals while maintaining a &quot;status quo&quot; policy on Taiwan and prioritizing the total neutralization of Iran’s nuclear capabilities over short-term domestic economic pressures.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR President Trump’s Beijing summit focused on leveraging personal rapport with President Xi to secure massive trade deals while maintaining a &quot;status quo&quot; policy on Taiwan and prioritizing the total neutralization of Iran’s nuclear capabilities over short-term domestic...</div>
+                    <div class="sum-preview" id="preview-0"></div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>President Trump’s Beijing summit focused on leveraging personal rapport with President Xi to secure massive trade deals while maintaining a "status quo" policy on Taiwan and prioritizing the total neutralization of Iran’s nuclear capabilities over short-term domestic economic pressures.</p>
 <h3>Trade and Domestic Manufacturing</h3>
@@ -989,9 +1021,9 @@ But you think they're going to capitulate sometime soon? Yeah, sure they will. O
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/lG-z7sTfhFIW2Ne1oXMHvXMXyZSaA02_I17gUel0GAEj7OypsSHQ7PE91Vp4bTbpm3PTIAWJdko=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Dwarkesh Patel</b><span class="subs">(1.3M)</span></span><span class="dot">&middot;</span><span>157:18</span><span class="dot">&middot;</span><span>18.7K views</span><span class="dot">&middot;</span><span>2026-05-15</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Dwarkesh%20Patel%22">Dwarkesh Patel<span class="chip-desc">Host, Dwarkesh Patel Podcast</span></a> <a class="chip" href="index.html?q=%22Eric%20Jang%22">Eric Jang<span class="chip-desc">AI Researcher</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Rebuilding AlphaGo with modern AI tools demonstrates how Monte Carlo Tree Search (MCTS) provides a mathematically superior training target that sidesteps the credit assignment problem plaguing modern LLM reinforcement learning, while highlighting boa...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Rebuilding AlphaGo with modern AI tools demonstrates how Monte Carlo Tree Search (MCTS) provides a mathematically superior training target that sidesteps the credit assignment problem plaguing modern LLM reinforcement learning, while highlighting…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR  Rebuilding AlphaGo with modern AI tools demonstrates how Monte Carlo Tree Search (MCTS) provides a mathematically superior training target that sidesteps the credit assignment problem plaguing modern LLM reinforcement learning, while highlighting board games as an ideal,...</div>
+                    <div class="sum-preview" id="preview-1">board games as an ideal,...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Rebuilding AlphaGo with modern AI tools demonstrates how Monte Carlo Tree Search (MCTS) provides a mathematically superior training target that sidesteps the credit assignment problem plaguing modern LLM reinforcement learning, while highlighting board games as an ideal, non-cheatable sandbox for benchmarking automated AI research agents.</p>
 <h3>The Architectural Primitives of AlphaGo and Modern Go Bots</h3>
@@ -2576,7 +2608,7 @@ It's an honor to be on the podcast.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of State Marco Rubio, attending the Trump-Xi Summit in Beijing, emphasized a &quot;strategic stability&quot; approach to China that combines direct diplomatic engagement with a rigorous domestic policy of re-industrialization to reduce reliance on Chinese supply chains.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Secretary of State Marco Rubio, attending the Trump-Xi Summit in Beijing, emphasized a &quot;strategic stability&quot; approach to China that combines direct diplomatic engagement with a rigorous domestic policy of re-industrialization to reduce reliance on Chinese supply chains....</div>
+                    <div class="sum-preview" id="preview-2"></div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Secretary of State Marco Rubio, attending the Trump-Xi Summit in Beijing, emphasized a "strategic stability" approach to China that combines direct diplomatic engagement with a rigorous domestic policy of re-industrialization to reduce reliance on Chinese supply chains. While reporting progress on agricultural and aerospace trade deals, Rubio reaffirmed unwavering U.S. positions regarding Taiwan’s status quo and the necessity of preventing Iranian nuclearization and maritime interference.</p>
 <h3>U.S.-China Relations and Economic Strategy</h3>
@@ -2864,7 +2896,7 @@ Mr. Secretary, we thank you for your time. Thank you. We thank you for watching.
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The artificial intelligence transition is a historic, physical capacity cycle constrained by silicon and power limitations rather than a typical speculative bubble.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  The artificial intelligence transition is a historic, physical capacity cycle constrained by silicon and power limitations rather than a typical speculative bubble. Investors must focus on hardware-level execution, such as Amazon's underestimated Trainium chips,...</div>
+                    <div class="sum-preview" id="preview-3">Investors must focus on hardware-level execution, such as Amazon's underestimated Trainium chips,...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The artificial intelligence transition is a historic, physical capacity cycle constrained by silicon and power limitations rather than a typical speculative bubble. Investors must focus on hardware-level execution, such as Amazon's underestimated Trainium chips, specialized neo-clouds, and the long-term shift toward space-based orbital compute.</p>
 <h3>Gavin Baker’s Investing Framework and Philosophy</h3>
@@ -3078,7 +3110,7 @@ Thank you all.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of State Marco Rubio outlines a &quot;national interest-driven&quot; foreign policy focused on managing China as a top geopolitical challenge, neutralizing Iran’s nuclear ambitions before they reach &quot;immunity,&quot; and prioritizing American industrial independence.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Secretary of State Marco Rubio outlines a &quot;national interest-driven&quot; foreign policy focused on managing China as a top geopolitical challenge, neutralizing Iran’s nuclear ambitions before they reach &quot;immunity,&quot; and prioritizing American industrial independence.    The...</div>
+                    <div class="sum-preview" id="preview-4">The...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Secretary of State Marco Rubio outlines a "national interest-driven" foreign policy focused on managing China as a top geopolitical challenge, neutralizing Iran’s nuclear ambitions before they reach "immunity," and prioritizing American industrial independence.</p>
 <h3>Strategic Competition with China</h3>
@@ -3352,7 +3384,7 @@ Thank you guys so much for watching today's episode, Hanging Out with me, Sean H
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and President Xi concluded a high-stakes summit in Beijing, signaling a shift toward diplomatic stability and &quot;fantastic&quot; trade prospects—including potential multi-billion dollar Boeing and energy deals—while navigating deep-seated tensions over Taiwan and Iran.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR President Trump and President Xi concluded a high-stakes summit in Beijing, signaling a shift toward diplomatic stability and &quot;fantastic&quot; trade prospects—including potential multi-billion dollar Boeing and energy deals—while navigating deep-seated tensions over Taiwan and...</div>
+                    <div class="sum-preview" id="preview-5"></div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>President Trump and President Xi concluded a high-stakes summit in Beijing, signaling a shift toward diplomatic stability and "fantastic" trade prospects—including potential multi-billion dollar Boeing and energy deals—while navigating deep-seated tensions over Taiwan and Iran.</p>
 <h3>Diplomatic Atmosphere and Symbolism</h3>
@@ -3612,7 +3644,7 @@ I'm Frances Rivera, thanks so much for watching. We thank you for watching, and 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>China’s near-total monopoly on the rare earth supply chain (80-90%) has become a critical geopolitical &quot;bazooka,&quot; forcing a $10 billion global scramble led by the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR China’s near-total monopoly on the rare earth supply chain (80-90%) has become a critical geopolitical &quot;bazooka,&quot; forcing a $10 billion global scramble led by the U.S. and allies to secure independent mining, processing, and magnet manufacturing.    The 2025 Trade War:...</div>
+                    <div class="sum-preview" id="preview-6">and allies to secure independent mining, processing, and magnet manufacturing.    The 2025 Trade War:...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>China’s near-total monopoly on the rare earth supply chain (80-90%) has become a critical geopolitical "bazooka," forcing a $10 billion global scramble led by the U.S. and allies to secure independent mining, processing, and magnet manufacturing.</p>
 <h3>The Geopolitical "Rare Earth Bazooka"</h3>
@@ -3756,7 +3788,7 @@ And if you're sitting here five years from now and those nations are all produci
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Tasklet has rewritten its entire agent stack to transition from a workflow automation tool into a horizontal general-purpose platform that acts as a &quot;mecha suit&quot; for multiple frontier models.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR   Tasklet has rewritten its entire agent stack to transition from a workflow automation tool into a horizontal general-purpose platform that acts as a &quot;mecha suit&quot; for multiple frontier models. This strategic shift allows Tasklet to navigate intense token-cost competition...</div>
+                    <div class="sum-preview" id="preview-7">This strategic shift allows Tasklet to navigate intense token-cost competition...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Tasklet has rewritten its entire agent stack to transition from a workflow automation tool into a horizontal general-purpose platform that acts as a "mecha suit" for multiple frontier models. This strategic shift allows Tasklet to navigate intense token-cost competition from its primary supplier, Anthropic, and positions the company as one of the few horizontal platforms poised to survive the AI transition.</p>
 <h3>The Technical Overhaul: File Systems, Computer Use, and Context Compaction</h3>
@@ -4254,7 +4286,7 @@ The Cognitive Revolution is part of the Turpentine network, a network of podcast
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and President Xi’s high-stakes Beijing summit yielded pledges from China to assist in reopening the Strait of Hormuz and a major Boeing aircraft deal, while the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR President Trump and President Xi’s high-stakes Beijing summit yielded pledges from China to assist in reopening the Strait of Hormuz and a major Boeing aircraft deal, while the U.S. simultaneously engaged in critical &quot;aid diplomacy&quot; with a crisis-stricken Cuba.  Iran and...</div>
+                    <div class="sum-preview" id="preview-8">simultaneously engaged in critical &quot;aid diplomacy&quot; with a crisis-stricken Cuba.  Iran and...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>President Trump and President Xi’s high-stakes Beijing summit yielded pledges from China to assist in reopening the Strait of Hormuz and a major Boeing aircraft deal, while the U.S. simultaneously engaged in critical "aid diplomacy" with a crisis-stricken Cuba.</p>
 <h3>The Beijing Summit: Global Security and Stability</h3>
@@ -4671,9 +4703,9 @@ We thank you for watching and remember, stay updated on breaking news and top st
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>76:31</span><span class="dot">&middot;</span><span>208.2K views</span><span class="dot">&middot;</span><span>2026-05-15</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Marc%20Benioff%22">Marc Benioff<span class="chip-desc">CEO, Salesforce</span></a> <a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">US President</span></a> <a class="chip" href="index.html?q=%22Xi%20Jinping%22">Xi Jinping<span class="chip-desc">President of China</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;I’m not a Democrat or a Republican.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;I’m not a Democrat or a Republican.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR: Salesforce CEO Marc Benioff and the &quot;Besties&quot; analyze the Trump-Xi summit's focus on economic entanglement as a deterrent to war, while addressing the &quot;SaaSpocalypse&quot; market rerating and the shift toward multi-sensory, agentic AI models.  Strategic Entanglement: The...</div>
+                    <div class="sum-preview" id="preview-9">Salesforce CEO Marc Benioff and the &quot;Besties&quot; analyze the Trump-Xi summit's focus on economic entanglement as a deterrent to war, while addressing the &quot;SaaSpocalypse&quot; market rerating and the shift toward multi-sensory, agentic AI models.  Strategic Entanglement: The...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR:</strong> Salesforce CEO Marc Benioff and the "Besties" analyze the Trump-Xi summit's focus on economic entanglement as a deterrent to war, while addressing the "SaaSpocalypse" market rerating and the shift toward multi-sensory, agentic AI models.</p>
 <h3>U.S.-China Relations: Peace Through Trade</h3>
 <ul>
@@ -5158,7 +5190,7 @@ All right well said, rest in peace Susan Wojcicki. Thank you. All right we'll se
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former USTR Katherine Tai characterizes recent US-China trade summits as &quot;performance art&quot; that prioritizes corporate symbolism over structural rebalancing.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Former USTR Katherine Tai characterizes recent US-China trade summits as &quot;performance art&quot; that prioritizes corporate symbolism over structural rebalancing. She warns that the administration lacks a coherent strategy to address China’s manufacturing overcapacity and its...</div>
+                    <div class="sum-preview" id="preview-10">She warns that the administration lacks a coherent strategy to address China’s manufacturing overcapacity and its...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Former USTR Katherine Tai characterizes recent US-China trade summits as "performance art" that prioritizes corporate symbolism over structural rebalancing. She warns that the administration lacks a coherent strategy to address China’s manufacturing overcapacity and its weaponization of "choke points" like rare earth minerals.</p>
 <h3>The "Performance" of Rebalancing</h3>
@@ -5320,9 +5352,9 @@ My concern is that this administration fails to deliver on a coherent policy wit
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mE7sPnKhbJKbqDc9ESEjaK0Ip3jwQkGY4a3USPkxEXSUw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>C-SPAN</b><span class="subs">(1.9M)</span></span><span class="dot">&middot;</span><span>57:55</span><span class="dot">&middot;</span><span>5.0K views</span><span class="dot">&middot;</span><span>2026-05-15</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a> <a class="chip" href="index.html?q=%22Xi%20Jinping%22">Xi Jinping<span class="chip-desc">President of China</span></a> <a class="chip" href="index.html?q=%22Bill%20Cassidy%22">Bill Cassidy<span class="chip-desc">U.S. Senator, Louisiana</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Would the U.S.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Would the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR: President Trump returned from a Beijing summit without making explicit commitments regarding Taiwan’s defense or Iran, while the U.S. House passed a $157 billion military spending bill after soundly rejecting a Republican effort to defund NATO infrastructure.  Taiwan...</div>
+                    <div class="sum-preview" id="preview-11">President Trump returned from a Beijing summit without making explicit commitments regarding Taiwan’s defense or Iran, while the U.S. House passed a $157 billion military spending bill after soundly rejecting a Republican effort to defund NATO infrastructure.  Taiwan...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR:</strong> President Trump returned from a Beijing summit without making explicit commitments regarding Taiwan’s defense or Iran, while the U.S. House passed a $157 billion military spending bill after soundly rejecting a Republican effort to defund NATO infrastructure.</p>
 <h3>Foreign Policy and the China Summit</h3>
 <ul>
@@ -5816,7 +5848,7 @@ Panel one features Dan Crenshaw, Republican of Texas, and Jake Auchincloss, Demo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Steve Eisman warns that the current market &quot;melt-up&quot; has become dangerously frothy, characterized by extreme concentration in AI-related semiconductors, the disappearance of defensive sectors, and rising inflation data that may threaten the sustainability of recent gains.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Steve Eisman warns that the current market &quot;melt-up&quot; has become dangerously frothy, characterized by extreme concentration in AI-related semiconductors, the disappearance of defensive sectors, and rising inflation data that may threaten the sustainability of recent gains. ...</div>
+                    <div class="sum-preview" id="preview-12"></div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Steve Eisman warns that the current market "melt-up" has become dangerously frothy, characterized by extreme concentration in AI-related semiconductors, the disappearance of defensive sectors, and rising inflation data that may threaten the sustainability of recent gains.</p>
 <h3>Market Overheating and Macro Risks</h3>
@@ -6089,9 +6121,9 @@ This podcast is for informational purposes only and does not constitute investme
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/DmpYAJexGnNChM9gGyDVQeZilTM7Wp5hVeSKRzJUXCEuL7c4C37jd8QkN2dBorC5puN7b7XN=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Unsupervised Learning: With Jacob Effron</b><span class="subs">(24.1K)</span></span><span class="dot">&middot;</span><span>81:57</span><span class="dot">&middot;</span><span>54.0K views</span><span class="dot">&middot;</span><span>2026-05-15</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Yann%20LeCun%22">Yann LeCun<span class="chip-desc">Former Chief AI Scientist, Meta</span></a> <a class="chip" href="index.html?q=%22Jacob%20Effron%22">Jacob Effron<span class="chip-desc">Host, Unsupervised Learning</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Yann LeCun argues that current Large Language Models (LLMs) are a technological dead-end for achieving human-level intelligence; the future lies in &quot;World Models&quot; and the JEPA architecture, which enable AI to plan, reason, and understand the physical...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Yann LeCun argues that current Large Language Models (LLMs) are a technological dead-end for achieving human-level intelligence; the future lies in &quot;World Models&quot; and the JEPA architecture, which enable AI to plan, reason, and understand the…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Yann LeCun argues that current Large Language Models (LLMs) are a technological dead-end for achieving human-level intelligence; the future lies in &quot;World Models&quot; and the JEPA architecture, which enable AI to plan, reason, and understand the physical world—a vision he is...</div>
+                    <div class="sum-preview" id="preview-13">physical world—a vision he is...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Yann LeCun argues that current Large Language Models (LLMs) are a technological dead-end for achieving human-level intelligence; the future lies in "World Models" and the JEPA architecture, which enable AI to plan, reason, and understand the physical world—a vision he is now pursuing through his new startup, AME Labs.</p>
 <h3>The Limitations of LLMs and the Case for World Models</h3>

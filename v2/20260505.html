@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Ken Griffin views the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Ken Griffin views the U.S. economy as uniquely resilient due to energy independence and a technology-driven productivity boom, though he warns that persistent inflation and declining urban safety standards necessitate a strategic shift toward business-friendly hubs like...</div>
+                    <div class="sum-preview" id="preview-0">economy as uniquely resilient due to energy independence and a technology-driven productivity boom, though he warns that persistent inflation and declining urban safety standards necessitate a strategic shift toward business-friendly hubs like...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Ken Griffin views the U.S. economy as uniquely resilient due to energy independence and a technology-driven productivity boom, though he warns that persistent inflation and declining urban safety standards necessitate a strategic shift toward business-friendly hubs like Miami.</p>
 <h3>Geopolitics and the Energy Shield</h3>
@@ -908,7 +940,7 @@ So thank you for your candid thoughts as always. I'm glad you were in the mood t
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The United States has launched &quot;Project Freedom,&quot; a temporary defensive operation to secure the Strait of Hormuz and restore the free flow of global commerce amidst a fragile ceasefire with Iran.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR The United States has launched &quot;Project Freedom,&quot; a temporary defensive operation to secure the Strait of Hormuz and restore the free flow of global commerce amidst a fragile ceasefire with Iran. While maintaining an ironclad blockade on Iranian ports, the U.S. is...</div>
+                    <div class="sum-preview" id="preview-1">While maintaining an ironclad blockade on Iranian ports, the U.S. is...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>The United States has launched "Project Freedom," a temporary defensive operation to secure the Strait of Hormuz and restore the free flow of global commerce amidst a fragile ceasefire with Iran. While maintaining an ironclad blockade on Iranian ports, the U.S. is providing a "security dome" for international shipping, having already successfully escorted the first commercial vessels through the waterway.</p>
 <h3>Mission Objectives and Scope: Project Freedom</h3>
@@ -1120,7 +1152,7 @@ So we're grateful for their input, their insight, the existential nature of the 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Airbnb CEO Brian Chesky outlines a critical leadership shift from hands-off corporate delegation (&quot;CEO mode&quot;) back to a deeply detailed, design-driven, and hands-on approach (&quot;founder mode&quot;).</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR  Airbnb CEO Brian Chesky outlines a critical leadership shift from hands-off corporate delegation (&quot;CEO mode&quot;) back to a deeply detailed, design-driven, and hands-on approach (&quot;founder mode&quot;). By rebuilding Airbnb around small, elite teams, flat hierarchies, and a...</div>
+                    <div class="sum-preview" id="preview-2">&quot;). By rebuilding Airbnb around small, elite teams, flat hierarchies, and a...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Airbnb CEO Brian Chesky outlines a critical leadership shift from hands-off corporate delegation ("CEO mode") back to a deeply detailed, design-driven, and hands-on approach ("founder mode"). By rebuilding Airbnb around small, elite teams, flat hierarchies, and a relentless focus on the end-user experience, Chesky is positioning the company to lead an upcoming "consumer AI renaissance" where the atomic unit of the product shifts from the home to the individual.</p>
 <h3>The Industrial Design Philosophy of Business</h3>
@@ -1670,7 +1702,7 @@ Ridgeline is redefining asset management technology as a true partner, not just 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bill Gurley argues that AI is an &quot;infinite game&quot; where the greatest risk is professional inaction; success in this era requires &quot;high agency&quot; curiosity to use AI as a productivity &quot;jet pack&quot; rather than a tool to bypass learning.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Bill Gurley argues that AI is an &quot;infinite game&quot; where the greatest risk is professional inaction; success in this era requires &quot;high agency&quot; curiosity to use AI as a productivity &quot;jet pack&quot; rather than a tool to bypass learning.    The Cost of Inaction: Citing Daniel...</div>
+                    <div class="sum-preview" id="preview-3">The Cost of Inaction: Citing Daniel...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Bill Gurley argues that AI is an "infinite game" where the greatest risk is professional inaction; success in this era requires "high agency" curiosity to use AI as a productivity "jet pack" rather than a tool to bypass learning.</p>
 <h3>Career Regret and the Power of Fascination</h3>
@@ -1933,9 +1965,9 @@ There you go. That's pretty good. Bill, I really enjoyed that conversation so mu
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_kIOv8XSayB3mVzdmGH6r6nOuncclc_QxWr7TYTXM4dFrs=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>PowerfulJRE</b><span class="subs">(20.9M)</span></span><span class="dot">&middot;</span><span>165:55</span><span class="dot">&middot;</span><span>92.9K views</span><span class="dot">&middot;</span><span>2026-05-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Founder, Social Capital</span></a> <a class="chip" href="index.html?q=%22Joe%20Rogan%22">Joe Rogan<span class="chip-desc">Host, Joe Rogan Experience</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>In this wide-ranging discussion, venture capitalist Chamath Palihapitiya and host Joe Rogan explore how artificial intelligence is being deployed to rebuild brittle government software and eliminate systemic waste, while warning that the rapid rise o...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>In this wide-ranging discussion, venture capitalist Chamath Palihapitiya and host Joe Rogan explore how artificial intelligence is being deployed to rebuild brittle government software and eliminate systemic waste, while warning that the rapid rise…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR  In this wide-ranging discussion, venture capitalist Chamath Palihapitiya and host Joe Rogan explore how artificial intelligence is being deployed to rebuild brittle government software and eliminate systemic waste, while warning that the rapid rise of superintelligence...</div>
+                    <div class="sum-preview" id="preview-4">of superintelligence...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>In this wide-ranging discussion, venture capitalist Chamath Palihapitiya and host Joe Rogan explore how artificial intelligence is being deployed to rebuild brittle government software and eliminate systemic waste, while warning that the rapid rise of superintelligence will force a geopolitical realignment and challenge humanity's obsession with status and attention.</p>
 <p>***</p>
@@ -2890,7 +2922,7 @@ Listen, man, this was a lot of fun. It's always great to talk to you. Thank you 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI revolution has transitioned from simple generative tools to &quot;Agentic AI&quot; capable of reasoning and planning, a shift that requires 1,000x more computational power and presents a multi-trillion-dollar opportunity for U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR The AI revolution has transitioned from simple generative tools to &quot;Agentic AI&quot; capable of reasoning and planning, a shift that requires 1,000x more computational power and presents a multi-trillion-dollar opportunity for U.S. re-industrialization and power grid...</div>
+                    <div class="sum-preview" id="preview-5">re-industrialization and power grid...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>The AI revolution has transitioned from simple generative tools to "Agentic AI" capable of reasoning and planning, a shift that requires 1,000x more computational power and presents a multi-trillion-dollar opportunity for U.S. re-industrialization and power grid modernization.</p>
 <h3>The Evolution of AI: From Generation to Agency</h3>
@@ -3276,7 +3308,7 @@ Thank you everybody. Thank you Jensen. Really appreciate. We hope you enjoyed th
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Department of Defense has launched &quot;Project Freedom,&quot; a defensive maritime operation led by U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR The Department of Defense has launched &quot;Project Freedom,&quot; a defensive maritime operation led by U.S. Central Command (CENTCOM) to secure the Strait of Hormuz, break Iran’s illegal blockade, and restore the free flow of global commerce. While a ceasefire remains in place,...</div>
+                    <div class="sum-preview" id="preview-6">Central Command (CENTCOM) to secure the Strait of Hormuz, break Iran’s illegal blockade, and restore the free flow of global commerce. While a ceasefire remains in place,...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>The Department of Defense has launched "Project Freedom," a defensive maritime operation led by U.S. Central Command (CENTCOM) to secure the Strait of Hormuz, break Iran’s illegal blockade, and restore the free flow of global commerce. While a ceasefire remains in place, the U.S. has established a "red, white, and blue dome" of protection over the waterway and warned Iran that any aggression will be met with overwhelming firepower.</p>
 <h3>Project Freedom: Scope and Objectives</h3>
@@ -3476,7 +3508,7 @@ So we're grateful for their input, their insights, the existential nature of the
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of State Marco Rubio announced &quot;Project Freedom,&quot; a U.S.-led military corridor designed to rescue 23,000 civilians stranded by Iran’s illegal blockade of the Strait of Hormuz.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR  Secretary of State Marco Rubio announced &quot;Project Freedom,&quot; a U.S.-led military corridor designed to rescue 23,000 civilians stranded by Iran’s illegal blockade of the Strait of Hormuz. Rubio warned that Iran faces total economic collapse, secondary sanctions on its...</div>
+                    <div class="sum-preview" id="preview-7">Rubio warned that Iran faces total economic collapse, secondary sanctions on its...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Secretary of State Marco Rubio announced "Project Freedom," a U.S.-led military corridor designed to rescue 23,000 civilians stranded by Iran’s illegal blockade of the Strait of Hormuz. Rubio warned that Iran faces total economic collapse, secondary sanctions on its global partners, and decisive military deterrence if it does not abandon its nuclear weapons program and cease regional aggression.</p>
 <p>***</p>
@@ -3954,7 +3986,7 @@ But—but I want to be clear on the point of the War Powers Act: it's unconstitu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance’s address in Iowa frames the upcoming elections as a choice between &quot;common sense&quot; populist representation and a Democrat party he claims prioritizes illegal immigrants and foreign interests over American workers.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Vice President JD Vance’s address in Iowa frames the upcoming elections as a choice between &quot;common sense&quot; populist representation and a Democrat party he claims prioritizes illegal immigrants and foreign interests over American workers. The briefing highlights aggressive...</div>
+                    <div class="sum-preview" id="preview-8">The briefing highlights aggressive...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance’s address in Iowa frames the upcoming elections as a choice between "common sense" populist representation and a Democrat party he claims prioritizes illegal immigrants and foreign interests over American workers. The briefing highlights aggressive anti-fraud initiatives, protectionist trade policies for Iowa farmers, and the re-election of Congressman Zach Nunn as the primary vehicle for this agenda.</p>
 <h3>Economic Protectionism and Manufacturing</h3>
@@ -4238,7 +4270,7 @@ He encouraged Iowans to re-elect Representative Zach Nunn to continue fighting f
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Palantir delivered record-breaking Q1 2026 results featuring 85% year-over-year revenue growth and 104% growth in its US business, driven by the massive scale of its Artificial Intelligence Platform (AIP) and a strategic focus on &quot;no-slop&quot; operational AI.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Palantir delivered record-breaking Q1 2026 results featuring 85% year-over-year revenue growth and 104% growth in its US business, driven by the massive scale of its Artificial Intelligence Platform (AIP) and a strategic focus on &quot;no-slop&quot; operational AI.    Revenue...</div>
+                    <div class="sum-preview" id="preview-9">Revenue...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Palantir delivered record-breaking Q1 2026 results featuring 85% year-over-year revenue growth and 104% growth in its US business, driven by the massive scale of its Artificial Intelligence Platform (AIP) and a strategic focus on "no-slop" operational AI.</p>
 <h3>Financial Performance &amp; Guidance</h3>
@@ -4602,7 +4634,7 @@ Thank you, that concludes Q&amp;A for today's call.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Propy is leveraging blockchain and AI to transform real estate transactions into secure, &quot;on-chain&quot; settlements, reducing closing times from weeks to hours.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Propy is leveraging blockchain and AI to transform real estate transactions into secure, &quot;on-chain&quot; settlements, reducing closing times from weeks to hours. Through a $100 million rollup strategy, the company is acquiring and modernizing traditional title companies to...</div>
+                    <div class="sum-preview" id="preview-10">Through a $100 million rollup strategy, the company is acquiring and modernizing traditional title companies to...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Propy is leveraging blockchain and AI to transform real estate transactions into secure, "on-chain" settlements, reducing closing times from weeks to hours. Through a $100 million rollup strategy, the company is acquiring and modernizing traditional title companies to create a high-efficiency, liquid marketplace for global property ownership.</p>
 <h3>The Blockchain and AI Integration</h3>
@@ -4843,7 +4875,7 @@ Fascinating. Natalia Karayaneva, thank you so much. Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Chamath Palihapitiya argues that the next phase of AI value creation lies in building a &quot;control plane&quot; that translates English-language business secrets and symbolic logic into deterministic code, moving beyond simple pattern matching to solve complex, long-horizon enterprise tasks.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Chamath Palihapitiya argues that the next phase of AI value creation lies in building a &quot;control plane&quot; that translates English-language business secrets and symbolic logic into deterministic code, moving beyond simple pattern matching to solve complex, long-horizon...</div>
+                    <div class="sum-preview" id="preview-11"></div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Chamath Palihapitiya argues that the next phase of AI value creation lies in building a "control plane" that translates English-language business secrets and symbolic logic into deterministic code, moving beyond simple pattern matching to solve complex, long-horizon enterprise tasks.</p>
 <h3>The 8090 Thesis: Bridging the Symbolic and Embedded Spaces</h3>
@@ -5151,7 +5183,7 @@ But then here's a secret: they don't give a fuck about you. They are living thei
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Wall Street legend Tony James outlines the strategic decisions that drove historic growth at DLJ, Costco, and Blackstone, emphasizing how rigorous investment committee debate, aggressive retail distribution, and disciplined succession planning build enduring financial franchises.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR  Wall Street legend Tony James outlines the strategic decisions that drove historic growth at DLJ, Costco, and Blackstone, emphasizing how rigorous investment committee debate, aggressive retail distribution, and disciplined succession planning build enduring financial...</div>
+                    <div class="sum-preview" id="preview-12"></div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Wall Street legend Tony James outlines the strategic decisions that drove historic growth at DLJ, Costco, and Blackstone, emphasizing how rigorous investment committee debate, aggressive retail distribution, and disciplined succession planning build enduring financial franchises.</p>
 <h3>The Rise of DLJ and the LBO Revolution</h3>
@@ -5848,9 +5880,9 @@ Okay, thank you.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/GlGSJqNBRmSUQc5dn92nXxaWqQr7Ghf65ktun4yU7mEPy-AKdy6BcvvfGstxznLAKktDR7GKvqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The White House</b><span class="subs">(3.1M)</span></span><span class="dot">&middot;</span><span>52:27</span><span class="dot">&middot;</span><span>27.0K views</span><span class="dot">&middot;</span><span>2026-05-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22JD%20Vance%22">JD Vance<span class="chip-desc">Vice President</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance and Congressman Zach Nunn met with manufacturing leaders in Des Moines to promote &quot;America First&quot; economic policies, highlighting the fight against Chinese intellectual property theft, the expansion of agricultural export mark...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance and Congressman Zach Nunn met with manufacturing leaders in Des Moines to promote &quot;America First&quot; economic policies, highlighting the fight against Chinese intellectual property theft, the expansion of agricultural export…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Vice President JD Vance and Congressman Zach Nunn met with manufacturing leaders in Des Moines to promote &quot;America First&quot; economic policies, highlighting the fight against Chinese intellectual property theft, the expansion of agricultural export markets, and a new federal...</div>
+                    <div class="sum-preview" id="preview-13">markets, and a new federal...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance and Congressman Zach Nunn met with manufacturing leaders in Des Moines to promote "America First" economic policies, highlighting the fight against Chinese intellectual property theft, the expansion of agricultural export markets, and a new federal crackdown on government fraud.</p>
 <h3>Manufacturing and Trade Accountability</h3>
@@ -6162,9 +6194,9 @@ That's how we honor this sacrifice. That's how we make this country great again 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nBMfLZaneTNSGnTxLWc3pi7vGyPO0fonXD4veCK0nQrg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Iowa's News Now</b><span class="subs">(54.7K)</span></span><span class="dot">&middot;</span><span>105:35</span><span class="dot">&middot;</span><span>9.2K views</span><span class="dot">&middot;</span><span>2026-05-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22JD%20Vance%22">JD Vance<span class="chip-desc">Vice President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance and Republican leaders gathered at Ex-Guard Industries in Des Moines, Iowa, to champion American manufacturing, outline aggressive federal anti-fraud measures, and campaign for Congressman Zach Nunn by contrasting &quot;common-sens...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance and Republican leaders gathered at Ex-Guard Industries in Des Moines, Iowa, to champion American manufacturing, outline aggressive federal anti-fraud measures, and campaign for Congressman Zach Nunn by contrasting…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR   Vice President JD Vance and Republican leaders gathered at Ex-Guard Industries in Des Moines, Iowa, to champion American manufacturing, outline aggressive federal anti-fraud measures, and campaign for Congressman Zach Nunn by contrasting &quot;common-sense&quot; economic policies...</div>
+                    <div class="sum-preview" id="preview-14">&quot;common-sense&quot; economic policies...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance and Republican leaders gathered at Ex-Guard Industries in Des Moines, Iowa, to champion American manufacturing, outline aggressive federal anti-fraud measures, and campaign for Congressman Zach Nunn by contrasting "common-sense" economic policies with the opposition's platform.</p>
 <h3>Promoting American Manufacturing, Biofuels, and Supply Chain Security</h3>
@@ -6711,7 +6743,7 @@ And part of what we have to do, my friends, is every single day, we have to send
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance framed the upcoming 2026 elections as a fundamental choice between a government that prioritizes American citizens and workers through &quot;common sense&quot; economic protectionism and anti-fraud measures, or one that favors special interests and illegal immigrants.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Vice President JD Vance framed the upcoming 2026 elections as a fundamental choice between a government that prioritizes American citizens and workers through &quot;common sense&quot; economic protectionism and anti-fraud measures, or one that favors special interests and illegal...</div>
+                    <div class="sum-preview" id="preview-15"></div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance framed the upcoming 2026 elections as a fundamental choice between a government that prioritizes American citizens and workers through "common sense" economic protectionism and anti-fraud measures, or one that favors special interests and illegal immigrants. Rallying for Representative Zach Nunn, Vance highlighted the administration's focus on Iowa agriculture, domestic manufacturing, and fiscal accountability.</p>
 <h3>Economic Protectionism and Manufacturing</h3>
@@ -6962,9 +6994,9 @@ That's how we honor this sacrifice, that's how we make this country great again,
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/AqzY5ePezRAQ2136-TbM_88d43JfIovkzztge92WKQ4K_ISfJMFA9yuX0Nw87DLWms4W9r2c3Q=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>LiveNOW from FOX</b><span class="subs">(5.6M)</span></span><span class="dot">&middot;</span><span>36:15</span><span class="dot">&middot;</span><span>10.7K views</span><span class="dot">&middot;</span><span>2026-05-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22JD%20Vance%22">JD Vance<span class="chip-desc">Vice President</span></a> <a class="chip" href="index.html?q=%22Zach%20Nunn%22">Zach Nunn<span class="chip-desc">US Representative, Iowa</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance advocated for the re-election of Congressman Zach Nunn, framing the 2026 election as a fundamental choice between a government that prioritizes American workers through manufacturing protection and anti-fraud measures versus a...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance advocated for the re-election of Congressman Zach Nunn, framing the 2026 election as a fundamental choice between a government that prioritizes American workers through manufacturing protection and anti-fraud measures versus…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR Vice President JD Vance advocated for the re-election of Congressman Zach Nunn, framing the 2026 election as a fundamental choice between a government that prioritizes American workers through manufacturing protection and anti-fraud measures versus a Democrat party he...</div>
+                    <div class="sum-preview" id="preview-16">a Democrat party he...</div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance advocated for the re-election of Congressman Zach Nunn, framing the 2026 election as a fundamental choice between a government that prioritizes American workers through manufacturing protection and anti-fraud measures versus a Democrat party he characterizes as prioritizing illegal immigration and corporate corruption.</p>
 <h3>Economic Growth and Manufacturing Protection</h3>

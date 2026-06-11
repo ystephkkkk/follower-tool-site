@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Dr.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Dr. Fei-Fei Li, CEO &amp; Co-Founder of World Labs, positions spatial intelligence as the next frontier of AI, essential for machines to understand and interact with the 3D physical world, and introduces &quot;Marble,&quot; World Labs' state-of-the-art generative 3D world model with...</div>
+                    <div class="sum-preview" id="preview-0">Fei-Fei Li, CEO &amp; Co-Founder of World Labs, positions spatial intelligence as the next frontier of AI, essential for machines to understand and interact with the 3D physical world, and introduces &quot;Marble,&quot; World Labs' state-of-the-art generative 3D world model with...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Dr. Fei-Fei Li, CEO &amp; Co-Founder of World Labs, positions spatial intelligence as the next frontier of AI, essential for machines to understand and interact with the 3D physical world, and introduces "Marble," World Labs' state-of-the-art generative 3D world model with diverse applications.</p>
 <h3>Spatial Intelligence: The Next Frontier of AI</h3>
@@ -865,7 +897,7 @@ I’m waiting for my swag. Just kidding. I still think like a grad student, alwa
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Alphabet achieved a tremendous Q4 2025, exceeding $400 billion in annual revenue for the first time, with AI investments driving significant acceleration across Search, Cloud, and YouTube, alongside a projected $175-185 billion in capital expenditures for 2026 to meet surging AI demand.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">Alphabet achieved a tremendous Q4 2025, exceeding $400 billion in annual revenue for the first time, with AI investments driving significant acceleration across Search, Cloud, and YouTube, alongside a projected $175-185 billion in capital expenditures for 2026 to meet surging AI...</div>
+                    <div class="sum-preview" id="preview-1"></div>
                     <div class="sum-full" id="full-1"><h3>TL;DR</h3>
 <p>Alphabet achieved a tremendous Q4 2025, exceeding $400 billion in annual revenue for the first time, with AI investments driving significant acceleration across Search, Cloud, and YouTube, alongside a projected $175-185 billion in capital expenditures for 2026 to meet surging AI demand.</p>
 <h3>Q4 2025 Financial &amp; AI Impact</h3>
@@ -1111,9 +1143,9 @@ That concludes the question-and-answer session. Jim Friedland offered closing re
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/d6-Qg0SBaVFUWQYFcY1A92OgyamR1lZdMCmUZKeE-3Z7b8nNlCFufCfQfFg5B-Q-EkyJxR04=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Norges Bank Investment Management</b><span class="subs">(102.0K)</span></span><span class="dot">&middot;</span><span>63:20</span><span class="dot">&middot;</span><span>6.9K views</span><span class="dot">&middot;</span><span>2026-02-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Andrea%20Orcel%22">Andrea Orcel<span class="chip-desc">CEO, UniCredit</span></a> <a class="chip" href="index.html?q=%22Nicolai%20Tangen%22">Nicolai Tangen<span class="chip-desc">CEO, Norges Bank Investment Management</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Scale and transformation.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Scale and transformation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR: Andrea Orcel, CEO of UniCredit, emphasizes that European banks must rapidly achieve scale and undergo deep digital transformation, driven by a client-centric approach, significant AI adoption, and a culture of empowerment and grit, to thrive in a volatile environment and...</div>
+                    <div class="sum-preview" id="preview-2">Andrea Orcel, CEO of UniCredit, emphasizes that European banks must rapidly achieve scale and undergo deep digital transformation, driven by a client-centric approach, significant AI adoption, and a culture of empowerment and grit, to thrive in a volatile environment and...</div>
                     <div class="sum-full" id="full-2"><h3>Executive Briefing: The Future of European Banking &amp; UniCredit's Transformation</h3>
 <p><strong>TL;DR:</strong> Andrea Orcel, CEO of UniCredit, emphasizes that European banks must rapidly achieve scale and undergo deep digital transformation, driven by a client-centric approach, significant AI adoption, and a culture of empowerment and grit, to thrive in a volatile environment and deliver outstanding shareholder returns.</p>
 <h3>1. Challenges and Evolution of European Banking</h3>
@@ -1531,9 +1563,9 @@ Thank you very much.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/_NwkFeixjYh7VlH267bkjnJz9WciTzOuvWYhpjD_CdOICvWKPOS6nNsYAcgCX47WAGkNq_VPKA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Cisco</b><span class="subs">(419.0K)</span></span><span class="dot">&middot;</span><span>52:05</span><span class="dot">&middot;</span><span>2026-02-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Chuck%20Robbins%22">Chuck Robbins<span class="chip-desc">Chair &amp; CEO, Cisco</span></a> <a class="chip" href="index.html?q=%22Jensen%20Huang%22">Jensen Huang<span class="chip-desc">Founder, President &amp; CEO, NVIDIA</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI fundamentally reinvents computing by shifting from explicit to implicit programming, driving the need for enterprises to adopt an &quot;AI factory&quot; mindset, strategically experimenting with the technology, and transforming into &quot;technology-first&quot; compa...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI fundamentally reinvents computing by shifting from explicit to implicit programming, driving the need for enterprises to adopt an &quot;AI factory&quot; mindset, strategically experimenting with the technology, and transforming into &quot;technology-first&quot;…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR AI fundamentally reinvents computing by shifting from explicit to implicit programming, driving the need for enterprises to adopt an &quot;AI factory&quot; mindset, strategically experimenting with the technology, and transforming into &quot;technology-first&quot; companies to leverage AI's...</div>
+                    <div class="sum-preview" id="preview-3">&quot; companies to leverage AI's...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>AI fundamentally reinvents computing by shifting from explicit to implicit programming, driving the need for enterprises to adopt an "AI factory" mindset, strategically experimenting with the technology, and transforming into "technology-first" companies to leverage AI's exponential capabilities and avoid being left behind.</p>
 <h3>AI as a Fundamental Computing Transformation</h3>
@@ -1786,7 +1818,7 @@ Two weeks on the road. Jensen flew here, spent his last evening with us before h
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AWS CEO Matt Garman emphasizes that successful AI adoption hinges on clear success metrics, robust security frameworks, and scalable infrastructure, detailing AWS's &quot;AI-first cloud&quot; vision, custom silicon, and sovereign cloud solutions designed to enable rapid and secure enterprise deployment.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR AWS CEO Matt Garman emphasizes that successful AI adoption hinges on clear success metrics, robust security frameworks, and scalable infrastructure, detailing AWS's &quot;AI-first cloud&quot; vision, custom silicon, and sovereign cloud solutions designed to enable rapid and secure...</div>
+                    <div class="sum-preview" id="preview-4"></div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>AWS CEO Matt Garman emphasizes that successful AI adoption hinges on clear success metrics, robust security frameworks, and scalable infrastructure, detailing AWS's "AI-first cloud" vision, custom silicon, and sovereign cloud solutions designed to enable rapid and secure enterprise deployment.</p>
 <h3>Defining Success and Overcoming Adoption Barriers</h3>
@@ -1963,9 +1995,9 @@ Can you provide the CIO and the CSO audience some advice on what they need to do
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/_NwkFeixjYh7VlH267bkjnJz9WciTzOuvWYhpjD_CdOICvWKPOS6nNsYAcgCX47WAGkNq_VPKA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Cisco</b><span class="subs">(417.0K)</span></span><span class="dot">&middot;</span><span>24:11</span><span class="dot">&middot;</span><span>2026-02-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Sam%20Altman%22">Sam Altman<span class="chip-desc">CEO &amp; Co-Founder, OpenAI</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Codex has been my biggest update on AI in a while.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Codex has been my biggest update on AI in a while.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Sam Altman, CEO of OpenAI, emphasizes AI's rapid creation of economic value, particularly with Codex, predicting a subjective &quot;10x improvement&quot; in model capability this year. He highlights the need for enterprises to quickly adopt &quot;AI coworkers&quot; and addresses critical...</div>
+                    <div class="sum-preview" id="preview-5">Sam Altman, CEO of OpenAI, emphasizes AI's rapid creation of economic value, particularly with Codex, predicting a subjective &quot;10x improvement&quot; in model capability this year. He highlights the need for enterprises to quickly adopt &quot;AI coworkers&quot; and addresses critical...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong> Sam Altman, CEO of OpenAI, emphasizes AI's rapid creation of economic value, particularly with Codex, predicting a subjective "10x improvement" in model capability this year. He highlights the need for enterprises to quickly adopt "AI coworkers" and addresses critical infrastructure, new security paradigms, and evolving business models for AI's pervasive future.</p>
 <h3>AI's Transformative Potential &amp; Immediate Impact</h3>
 <ul>
@@ -2152,9 +2184,9 @@ Any question that I didn't ask that I should have asked? That was a lot. I know.
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/IZt6rJxlvGmTE1lxo9UNtYXzr_AaJ75YtTsVruXB8FKAPbg6SMJiaxZ3i5PKmB4LLWBGNKOUqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>World Economic Forum</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>36:20</span><span class="dot">&middot;</span><span>794 views</span><span class="dot">&middot;</span><span>2026-02-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Kian%20Katanforoosh%22">Kian Katanforoosh<span class="chip-desc">CEO, Workera</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;In our data, in fact, we show that 89% of people who take an adaptive assessment on worker after self-rating themselves are off by 20% or more on their final score.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;In our data, in fact, we show that 89% of people who take an adaptive assessment on worker after self-rating themselves are off by 20% or more on their final score.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Leaders consistently overestimate their own and their teams' skills, creating significant gaps and hindering AI adoption, while skills rapidly become obsolete; Workera CEO Kian Katanforoosh advocates for AI-powered skill measurement to foster self-awareness, enable fair...</div>
+                    <div class="sum-preview" id="preview-6">Leaders consistently overestimate their own and their teams' skills, creating significant gaps and hindering AI adoption, while skills rapidly become obsolete; Workera CEO Kian Katanforoosh advocates for AI-powered skill measurement to foster self-awareness, enable fair...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong> Leaders consistently overestimate their own and their teams' skills, creating significant gaps and hindering AI adoption, while skills rapidly become obsolete; Workera CEO Kian Katanforoosh advocates for AI-powered skill measurement to foster self-awareness, enable fair talent decisions, and cultivate adaptable, growth-oriented leadership.</p>
 <h3>The Challenge: Misjudged Skills &amp; Rapid Change</h3>
 <ul>
@@ -2452,9 +2484,9 @@ That was Keon Katana Fouché. Thanks so much to him and thanks so much to you fo
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nRr7mD2IErBF5THzE6wtYf21G2MFpYgwwLfnz0zf2cmVA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>ANI News</b><span class="subs">(9.2M)</span></span><span class="dot">&middot;</span><span>45:55</span><span class="dot">&middot;</span><span>2026-02-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Larry%20Fink%22">Larry Fink<span class="chip-desc">CEO, BlackRock</span></a> <a class="chip" href="index.html?q=%22Mukesh%20Ambani%22">Mukesh Ambani<span class="chip-desc">Chairman, Reliance</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>BlackRock CEO Larry Fink and Reliance Chairman Mukesh Ambani affirmed that India is entering a multi-decade &quot;era of India&quot; driven by sustained economic growth, stable leadership, and rapid technological adoption, emphasizing the critical need for dom...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>BlackRock CEO Larry Fink and Reliance Chairman Mukesh Ambani affirmed that India is entering a multi-decade &quot;era of India&quot; driven by sustained economic growth, stable leadership, and rapid technological adoption, emphasizing the critical need for…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR BlackRock CEO Larry Fink and Reliance Chairman Mukesh Ambani affirmed that India is entering a multi-decade &quot;era of India&quot; driven by sustained economic growth, stable leadership, and rapid technological adoption, emphasizing the critical need for domestic capital market...</div>
+                    <div class="sum-preview" id="preview-7">domestic capital market...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>BlackRock CEO Larry Fink and Reliance Chairman Mukesh Ambani affirmed that India is entering a multi-decade "era of India" driven by sustained economic growth, stable leadership, and rapid technological adoption, emphasizing the critical need for domestic capital market investment to unlock its full potential.</p>
 <h3>India's Economic Ascendance: The "Era of India"</h3>
@@ -2647,7 +2679,7 @@ You spent a lot of your time fishing, Larry, I believe. I believe this deal got 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>America is grappling with a severe chronic disease crisis, largely stemming from an environment and food system that systematically promotes unhealth, rather than individual failures, requiring urgent systemic changes in food policy, chemical regulation, and healthcare incentives for prevention.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR America is grappling with a severe chronic disease crisis, largely stemming from an environment and food system that systematically promotes unhealth, rather than individual failures, requiring urgent systemic changes in food policy, chemical regulation, and healthcare...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>America is grappling with a severe chronic disease crisis, largely stemming from an environment and food system that systematically promotes unhealth, rather than individual failures, requiring urgent systemic changes in food policy, chemical regulation, and healthcare incentives for prevention. Justin Mares, CEO of Truemed, proposes re-engineering healthcare by allowing tax-free HSA/FSA spending on preventative lifestyle interventions like gym memberships and healthy food.</p>
 <h3>America's Chronic Health Crisis: Systemic Roots</h3>
@@ -2946,9 +2978,9 @@ Thanks for having me. Lucky to be involved.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.3M)</span></span><span class="dot">&middot;</span><span>132:42</span><span class="dot">&middot;</span><span>28.8K views</span><span class="dot">&middot;</span><span>2026-02-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Lars%20Moravy%22">Lars Moravy<span class="chip-desc">VP of Vehicle Engineering, Tesla</span></a> <a class="chip" href="index.html?q=%22Mauricio%20Pe%C3%B1a%22">Mauricio Peña<span class="chip-desc">Chief Safety Officer, Waymo</span></a> <a class="chip" href="index.html?q=%22Jeff%20Farrah%22">Jeff Farrah<span class="chip-desc">CEO, Autonomous Vehicle Industry Association</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Senate hearing underscored a bipartisan consensus for a federal framework for autonomous vehicles (AVs) to enhance safety, promote American innovation, and secure jobs, while addressing critical concerns around federal oversight, data privacy, li...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Senate hearing underscored a bipartisan consensus for a federal framework for autonomous vehicles (AVs) to enhance safety, promote American innovation, and secure jobs, while addressing critical concerns around federal oversight, data privacy,…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR The Senate hearing underscored a bipartisan consensus for a federal framework for autonomous vehicles (AVs) to enhance safety, promote American innovation, and secure jobs, while addressing critical concerns around federal oversight, data privacy, liability, and ensuring...</div>
+                    <div class="sum-preview" id="preview-9">liability, and ensuring...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>The Senate hearing underscored a bipartisan consensus for a federal framework for autonomous vehicles (AVs) to enhance safety, promote American innovation, and secure jobs, while addressing critical concerns around federal oversight, data privacy, liability, and ensuring equitable access and workforce protection.</p>
 <h3>The Urgent Need for a Federal AV Framework</h3>
@@ -3528,9 +3560,9 @@ Thank you, Senator.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.3M)</span></span><span class="dot">&middot;</span><span>202:12</span><span class="dot">&middot;</span><span>32.6K views</span><span class="dot">&middot;</span><span>2026-02-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent testified before the House Financial Services Committee, highlighting the Trump administration's focus on economic growth, tailored regulation, and financial security to restore stability, while facing intense scrutin...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent testified before the House Financial Services Committee, highlighting the Trump administration's focus on economic growth, tailored regulation, and financial security to restore stability, while facing intense…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Treasury Secretary Scott Bessent testified before the House Financial Services Committee, highlighting the Trump administration's focus on economic growth, tailored regulation, and financial security to restore stability, while facing intense scrutiny from Democratic...</div>
+                    <div class="sum-preview" id="preview-10">scrutiny from Democratic...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent testified before the House Financial Services Committee, highlighting the Trump administration's focus on economic growth, tailored regulation, and financial security to restore stability, while facing intense scrutiny from Democratic members over alleged deregulation, rising inflation, and potential conflicts of interest related to the President's business dealings.</p>
 <h3>Economic Growth &amp; Regulatory Modernization: The Administration's Vision</h3>
@@ -4361,9 +4393,9 @@ The gentleman's time is expired. I appreciate the gentleman from California. I w
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/GlGSJqNBRmSUQc5dn92nXxaWqQr7Ghf65ktun4yU7mEPy-AKdy6BcvvfGstxznLAKktDR7GKvqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The White House</b><span class="subs">(2.9M)</span></span><span class="dot">&middot;</span><span>41:37</span><span class="dot">&middot;</span><span>51.7K views</span><span class="dot">&middot;</span><span>2026-02-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22JD%20Vance%22">JD Vance<span class="chip-desc">Vice President</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;as much as data centers and technology and all these incredible things that we're all working on matter, fundamentally, you still have an economy that runs on real things.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;as much as data centers and technology and all these incredible things that we're all working on matter, fundamentally, you still have an economy that runs on real things.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR The Trump administration is convening global partners to address critical mineral supply chain vulnerabilities, proposing a preferential trade zone with enforced price floors to stabilize markets, encourage investment, and diversify supply away from current geopolitical...</div>
+                    <div class="sum-preview" id="preview-11">The Trump administration is convening global partners to address critical mineral supply chain vulnerabilities, proposing a preferential trade zone with enforced price floors to stabilize markets, encourage investment, and diversify supply away from current geopolitical...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong> The Trump administration is convening global partners to address critical mineral supply chain vulnerabilities, proposing a preferential trade zone with enforced price floors to stabilize markets, encourage investment, and diversify supply away from current geopolitical concentrations.</p>
 <h3>Current State of Critical Mineral Supply Chains</h3>
 <ul>

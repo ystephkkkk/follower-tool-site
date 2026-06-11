@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Coding is effectively &quot;solved&quot; for standard distributions, shifting the developer's role from writing syntax to managing autonomous agent loops.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Coding is effectively &quot;solved&quot; for standard distributions, shifting the developer's role from writing syntax to managing autonomous agent loops. Boris Cherny predicts a democratization of software development on par with the invention of the printing press, where domain...</div>
+                    <div class="sum-preview" id="preview-0">Boris Cherny predicts a democratization of software development on par with the invention of the printing press, where domain...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Coding is effectively "solved" for standard distributions, shifting the developer's role from writing syntax to managing autonomous agent loops. Boris Cherny predicts a democratization of software development on par with the invention of the printing press, where domain expertise replaces technical skill as the primary barrier to entry.</p>
 <h3>The Evolution of Claude Code</h3>
@@ -934,7 +966,7 @@ And then I think, I think loop and batch and things like this around like massiv
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Haidt argues that happiness is not a product of material prosperity or internal mindset alone, but emerges from the quality of relationships &quot;between&quot; ourselves and our world.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR: Social psychologist Jonathan Haidt warns that social media and AI are dismantling the foundations of human happiness—relational connection, meaningful work, and shared truth—requiring urgent regulatory accountability and a collective return to &quot;effortful&quot; living to...</div>
+                    <div class="sum-preview" id="preview-1">Social psychologist Jonathan Haidt warns that social media and AI are dismantling the foundations of human happiness—relational connection, meaningful work, and shared truth—requiring urgent regulatory accountability and a collective return to &quot;effortful&quot; living to...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR:</strong> Social psychologist Jonathan Haidt warns that social media and AI are dismantling the foundations of human happiness—relational connection, meaningful work, and shared truth—requiring urgent regulatory accountability and a collective return to "effortful" living to prevent the destruction of human capital.</p>
 <h3>The Foundations of Happiness vs. AI</h3>
 <p>Haidt argues that happiness is not a product of material prosperity or internal mindset alone, but emerges from the quality of relationships "between" ourselves and our world.</p>
@@ -1150,7 +1182,7 @@ That is all the time we have today, John. Thank you so much, this was amazing. &
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The U.S. State Department is shifting its public diplomacy focus from &quot;disinformation curation&quot; to a robust defense of global digital freedom, aiming to ensure the global AI stack possesses a &quot;Western soul&quot; rooted in free expression, user consent, and the rule of law.   ...</div>
+                    <div class="sum-preview" id="preview-2">State Department is shifting its public diplomacy focus from &quot;disinformation curation&quot; to a robust defense of global digital freedom, aiming to ensure the global AI stack possesses a &quot;Western soul&quot; rooted in free expression, user consent, and the rule of law.   ...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The U.S. State Department is shifting its public diplomacy focus from "disinformation curation" to a robust defense of global digital freedom, aiming to ensure the global AI stack possesses a "Western soul" rooted in free expression, user consent, and the rule of law.</p>
 <h3>Reforming Public Diplomacy and Digital Freedom</h3>
@@ -1403,7 +1435,7 @@ Absolutely. Well, as we always say, we invest and support the Second Amendment s
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Michael Paulus, the serial entrepreneur who bootstrapped Assurance IQ to a $2.35B exit, is now scaling PCM Encore, a multi-family office that applies sophisticated &quot;endowment-style&quot; investment strategies and aggressive tax optimization to high-net-worth individual portfolios.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Michael Paulus, the serial entrepreneur who bootstrapped Assurance IQ to a $2.35B exit, is now scaling PCM Encore, a multi-family office that applies sophisticated &quot;endowment-style&quot; investment strategies and aggressive tax optimization to high-net-worth individual...</div>
+                    <div class="sum-preview" id="preview-3"></div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Michael Paulus, the serial entrepreneur who bootstrapped Assurance IQ to a $2.35B exit, is now scaling PCM Encore, a multi-family office that applies sophisticated "endowment-style" investment strategies and aggressive tax optimization to high-net-worth individual portfolios.</p>
 <h3>The Bootstrap Advantage: Building Assurance IQ</h3>
@@ -1755,7 +1787,7 @@ Awesome. Well, thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>True investment outperformance requires &quot;second-level thinking&quot; that departs from consensus, as market cycles are driven by emotional excesses rather than predictable mechanical laws.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR  True investment outperformance requires &quot;second-level thinking&quot; that departs from consensus, as market cycles are driven by emotional excesses rather than predictable mechanical laws. While artificial intelligence can optimize pattern recognition, exceptional human...</div>
+                    <div class="sum-preview" id="preview-4">While artificial intelligence can optimize pattern recognition, exceptional human...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>True investment outperformance requires "second-level thinking" that departs from consensus, as market cycles are driven by emotional excesses rather than predictable mechanical laws. While artificial intelligence can optimize pattern recognition, exceptional human insight remains essential for navigating unpredictable market shifts, pricing distressed assets, and managing downside risk.</p>
 <h3>The Philosophy of Preparation and the Mechanics of Cycles</h3>
@@ -2463,7 +2495,7 @@ Well, I have learned from speaking with you, and I've enjoyed it. Your questions
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite recent geopolitical volatility, market leadership has rapidly reverted to AI, semiconductors, and power-related industrials, suggesting a potential 1999-style &quot;melt-up&quot; rather than a fundamental regime change.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Despite recent geopolitical volatility, market leadership has rapidly reverted to AI, semiconductors, and power-related industrials, suggesting a potential 1999-style &quot;melt-up&quot; rather than a fundamental regime change.    Headlines vs. Price Action: Much like the spring of...</div>
+                    <div class="sum-preview" id="preview-5">Headlines vs. Price Action: Much like the spring of...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Despite recent geopolitical volatility, market leadership has rapidly reverted to AI, semiconductors, and power-related industrials, suggesting a potential 1999-style "melt-up" rather than a fundamental regime change.</p>
 <h3>Market Sentiment and Price Action</h3>
@@ -2728,7 +2760,7 @@ And the final message from Chris is that given the price action, he's expecting 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump hosted the 2026 National Small Business Week Award winners to celebrate the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR President Trump hosted the 2026 National Small Business Week Award winners to celebrate the U.S. small business sector’s contribution to the economy and to highlight his administration's &quot;Great Big Beautiful Bill,&quot; which focuses on aggressive deregulation, significant tax...</div>
+                    <div class="sum-preview" id="preview-6">small business sector’s contribution to the economy and to highlight his administration's &quot;Great Big Beautiful Bill,&quot; which focuses on aggressive deregulation, significant tax...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>President Trump hosted the 2026 National Small Business Week Award winners to celebrate the U.S. small business sector’s contribution to the economy and to highlight his administration's "Great Big Beautiful Bill," which focuses on aggressive deregulation, significant tax cuts, and record-breaking capital investment.</p>
 <h3>Economic Policy and the "Great Big Beautiful Bill"</h3>
@@ -4054,9 +4086,9 @@ And then, so whenever I hear that one, I say, &quot;Let’s take the cognitive t
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_lWoHJNSE1UPPiFdCG4_aQZ1apKXrKI7nZ_sFlKwhNwRl0=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Stanford Graduate School of Business</b><span class="subs">(2.7M)</span></span><span class="dot">&middot;</span><span>45:42</span><span class="dot">&middot;</span><span>10.2K views</span><span class="dot">&middot;</span><span>2026-05-04</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Ken%20Griffin%22">Ken Griffin<span class="chip-desc">Founder and CEO, Citadel</span></a> <a class="chip" href="index.html?q=%22Amit%20Seru%22">Amit Seru<span class="chip-desc">Professor of Finance, Stanford GSB</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The biggest difference between Citadel and [large global banks]...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The biggest difference between Citadel and [large global…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR: Leadership in a volatile, AI-driven era requires a relentless commitment to meritocracy, the agility to abandon &quot;sunk costs&quot; immediately, and a focus on lifelong learning to stay ahead of rapid technological shifts that are eroding traditional competitive moats.  The...</div>
+                    <div class="sum-preview" id="preview-7">Leadership in a volatile, AI-driven era requires a relentless commitment to meritocracy, the agility to abandon &quot;sunk costs&quot; immediately, and a focus on lifelong learning to stay ahead of rapid technological shifts that are eroding traditional competitive moats.  The...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR:</strong> Leadership in a volatile, AI-driven era requires a relentless commitment to meritocracy, the agility to abandon "sunk costs" immediately, and a focus on lifelong learning to stay ahead of rapid technological shifts that are eroding traditional competitive moats.</p>
 <h3>Leadership and Decision-Making Under Uncertainty</h3>
 <ul>

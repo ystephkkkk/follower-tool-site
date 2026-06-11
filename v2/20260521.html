@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google DeepMind CEO Demis Hassabis predicts that Artificial General Intelligence (AGI) will arrive between 2029 and 2031, ushering in a transformative &quot;singularity&quot; era marked by self-improving code, agentic systems, and a massive 100x acceleration of scientific and medical discovery.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Google DeepMind CEO Demis Hassabis predicts that Artificial General Intelligence (AGI) will arrive between 2029 and 2031, ushering in a transformative &quot;singularity&quot; era marked by self-improving code, agentic systems, and a massive 100x acceleration of scientific and...</div>
+                    <div class="sum-preview" id="preview-0"></div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Google DeepMind CEO Demis Hassabis predicts that Artificial General Intelligence (AGI) will arrive between 2029 and 2031, ushering in a transformative "singularity" era marked by self-improving code, agentic systems, and a massive 100x acceleration of scientific and medical discovery.</p>
 <h3>The Path and Timeline to AGI</h3>
@@ -1026,7 +1058,7 @@ Thanks, Mike. Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>As elite AI firms like Anthropic and OpenAI command staggering private valuations and push compute grants directly to startups, legacy SaaS companies face a structural squeeze, compounded by a looming public and political backlash over AI-driven white-collar layoffs.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR   As elite AI firms like Anthropic and OpenAI command staggering private valuations and push compute grants directly to startups, legacy SaaS companies face a structural squeeze, compounded by a looming public and political backlash over AI-driven white-collar layoffs.   ...</div>
+                    <div class="sum-preview" id="preview-1"></div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>As elite AI firms like Anthropic and OpenAI command staggering private valuations and push compute grants directly to startups, legacy SaaS companies face a structural squeeze, compounded by a looming public and political backlash over AI-driven white-collar layoffs.</p>
 <h3>The AI Giants: Valuation Wars and Token Ecosystems</h3>
@@ -1739,7 +1771,7 @@ Good luck.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>At Google I/O 2026, Google CEO Sundar Pichai highlighted the industry's shift toward agentic workflows and the critical need for cost-efficient &quot;workhorse&quot; models like Gemini 3.5 Flash.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">At Google I/O 2026, Google CEO Sundar Pichai highlighted the industry's shift toward agentic workflows and the critical need for cost-efficient &quot;workhorse&quot; models like Gemini 3.5 Flash. He emphasized that managing the rapid evolution of AI requires balancing open-source...</div>
+                    <div class="sum-preview" id="preview-2">He emphasized that managing the rapid evolution of AI requires balancing open-source...</div>
                     <div class="sum-full" id="full-2"><h3>TL;DR</h3>
 <p>At Google I/O 2026, Google CEO Sundar Pichai highlighted the industry's shift toward agentic workflows and the critical need for cost-efficient "workhorse" models like Gemini 3.5 Flash. He emphasized that managing the rapid evolution of AI requires balancing open-source collaboration with responsible safety protocols while navigating systemic global compute bottlenecks.</p>
 <h3>The Rise of AI Agents and User Trust</h3>
@@ -2008,9 +2040,9 @@ Thank you so much. Appreciate it. Thank you.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/WZ_63J_-745xyW_DGxGi3VUyTZAe0Jvhw2ZCg7fdz-tv9esTbNPZTFR9X79QzA0ArIrMjYJCDA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Google for Developers</b><span class="subs">(2.6M)</span></span><span class="dot">&middot;</span><span>40:28</span><span class="dot">&middot;</span><span>3.4K views</span><span class="dot">&middot;</span><span>2026-05-21</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Hartmut%20Neven%22">Hartmut Neven<span class="chip-desc">VP of Engineering, Google</span></a> <a class="chip" href="index.html?q=%22James%20Manyika%22">James Manyika<span class="chip-desc">SVP of Research, Technology, and Society, Google</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google’s Quantum AI division is rapidly accelerating its timeline toward commercial viability, demonstrating breakthroughs in below-threshold error correction and quantum machine learning that lower the hardware threshold for practical applications a...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google’s Quantum AI division is rapidly accelerating its timeline toward commercial viability, demonstrating breakthroughs in below-threshold error correction and quantum machine learning that lower the hardware threshold for practical applications…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  Google’s Quantum AI division is rapidly accelerating its timeline toward commercial viability, demonstrating breakthroughs in below-threshold error correction and quantum machine learning that lower the hardware threshold for practical applications and mandate a...</div>
+                    <div class="sum-preview" id="preview-3">and mandate a...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Google’s Quantum AI division is rapidly accelerating its timeline toward commercial viability, demonstrating breakthroughs in below-threshold error correction and quantum machine learning that lower the hardware threshold for practical applications and mandate a transition to post-quantum encryption by 2029.</p>
 <h3>The Foundations and Hardware of Google Quantum AI</h3>
@@ -2310,9 +2342,9 @@ Thank you.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_l4sRGv4U1fm6diEUtlSUE26p1EQoHIlbm5wXRAiJfPrRo=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Peter H. Diamandis</b><span class="subs">(499.0K)</span></span><span class="dot">&middot;</span><span>143:23</span><span class="dot">&middot;</span><span>4.0K views</span><span class="dot">&middot;</span><span>2026-05-21</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Peter%20H.%20Diamandis%22">Peter H. Diamandis<span class="chip-desc">Host</span></a> <a class="chip" href="index.html?q=%22Andrew%20Feldman%22">Andrew Feldman<span class="chip-desc">Co-founder and CEO, Cerebras Systems</span></a> <a class="chip" href="index.html?q=%22Andrej%20Karpathy%22">Andrej Karpathy<span class="chip-desc">AI Researcher</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google I/O showcased the tech giant’s massive transition into an AI-native operating system powered by an expected $180B–$190B annual CapEx, while Cerebras Systems CEO Andrew Feldman celebrated a historic $95 billion IPO, highlighting a massive marke...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google I/O showcased the tech giant’s massive transition into an AI-native operating system powered by an expected $180B–$190B annual CapEx, while Cerebras Systems CEO Andrew Feldman celebrated a historic $95 billion IPO, highlighting a massive…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR  Google I/O showcased the tech giant’s massive transition into an AI-native operating system powered by an expected $180B–$190B annual CapEx, while Cerebras Systems CEO Andrew Feldman celebrated a historic $95 billion IPO, highlighting a massive market shift toward custom,...</div>
+                    <div class="sum-preview" id="preview-4">market shift toward custom,...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Google I/O showcased the tech giant’s massive transition into an AI-native operating system powered by an expected $180B–$190B annual CapEx, while Cerebras Systems CEO Andrew Feldman celebrated a historic $95 billion IPO, highlighting a massive market shift toward custom, wafer-scale high-throughput inference chips.</p>
 <h3>Google I/O: Astronomical Scale, High Throughput, and Ambient Search</h3>
@@ -3271,7 +3303,7 @@ If you'd like to get access to the Metatrends newsletter every week, go to diama
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Instead of using AI as a mere productivity &quot;copilot&quot; within traditional corporate hierarchies, founders should design their companies as a series of autonomous, recursive AI loops that self-improve overnight by operating on fully recorded, legible organizational knowledge.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR  Instead of using AI as a mere productivity &quot;copilot&quot; within traditional corporate hierarchies, founders should design their companies as a series of autonomous, recursive AI loops that self-improve overnight by operating on fully recorded, legible organizational...</div>
+                    <div class="sum-preview" id="preview-5"></div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Instead of using AI as a mere productivity "copilot" within traditional corporate hierarchies, founders should design their companies as a series of autonomous, recursive AI loops that self-improve overnight by operating on fully recorded, legible organizational knowledge.</p>
 <h3>Beyond Copilots: Reimagining the Company Structure</h3>
@@ -3444,7 +3476,7 @@ So, the humans live, I think, around the edge. And I'm over time, and Harj is go
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Notion co-founder and CEO Ivan Zhao and Sequoia's Brian Halligan discuss &quot;jazz mode&quot;—a decentralized, adaptive approach to organizational design that enables companies to run like improvisational bands rather than rigid marching bands.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR   Notion co-founder and CEO Ivan Zhao and Sequoia's Brian Halligan discuss &quot;jazz mode&quot;—a decentralized, adaptive approach to organizational design that enables companies to run like improvisational bands rather than rigid marching bands. By leveraging a barbell-shaped...</div>
+                    <div class="sum-preview" id="preview-6">By leveraging a barbell-shaped...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Notion co-founder and CEO Ivan Zhao and Sequoia's Brian Halligan discuss "jazz mode"—a decentralized, adaptive approach to organizational design that enables companies to run like improvisational bands rather than rigid marching bands. By leveraging a barbell-shaped engineering team, prioritizing "taste" and agency over experience, and executing radical "re-foundings," Notion demonstrates how legacy SaaS companies can successfully transition into fast-moving, AI-native enterprises.</p>
 <h3>"Jazz Mode" and Rethinking the Org Chart</h3>
@@ -4077,7 +4109,7 @@ Anyway, I think there's this new playbook. I'm interested in it, and I'm going t
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>As Kevin Warsh prepares to succeed Jerome Powell as Federal Reserve Chair, global bond yields signal severe macro tightening while stock markets reach all-time highs on AI hype.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR  As Kevin Warsh prepares to succeed Jerome Powell as Federal Reserve Chair, global bond yields signal severe macro tightening while stock markets reach all-time highs on AI hype. Meanwhile, the crypto sector is adjusting to major structural shifts, highlighted by...</div>
+                    <div class="sum-preview" id="preview-7">Meanwhile, the crypto sector is adjusting to major structural shifts, highlighted by...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>As Kevin Warsh prepares to succeed Jerome Powell as Federal Reserve Chair, global bond yields signal severe macro tightening while stock markets reach all-time highs on AI hype. Meanwhile, the crypto sector is adjusting to major structural shifts, highlighted by Coinbase’s strategic alignment with Hyperliquid to boost global USDC distribution and anticipation of the U.S. Clarity Act.</p>
 <h3>The Divergence: Stock Market Hype vs. Bond Market Reality</h3>
@@ -4384,9 +4416,9 @@ So, we could have an end to the Hormuz crisis tomorrow, and, one, it will take q
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/b9KilSZuVF95DybkR3GCi1nVMJ7YTtm1a4NDRwEoVJCcpBLRDNcSHuj8oDOOwQCszs56R9g2E8A=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Rowan Cheung</b><span class="subs">(172.0K)</span></span><span class="dot">&middot;</span><span>20:17</span><span class="dot">&middot;</span><span>9.3K views</span><span class="dot">&middot;</span><span>2026-05-21</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Sundar%20Pichai%22">Sundar Pichai<span class="chip-desc">CEO, Alphabet and Google</span></a> <a class="chip" href="index.html?q=%22Rowan%20Cheung%22">Rowan Cheung<span class="chip-desc">Founder, The Rundown AI</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google CEO Sundar Pichai highlights a rapid shift toward proactive, personalized AI agents that will make today’s technology look primitive within three years, emphasizing that Google’s strategy remains deeply &quot;creator-first&quot; and focused on enhancing...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google CEO Sundar Pichai highlights a rapid shift toward proactive, personalized AI agents that will make today’s technology look primitive within three years, emphasizing that Google’s strategy remains deeply &quot;creator-first&quot; and focused on…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">Google CEO Sundar Pichai highlights a rapid shift toward proactive, personalized AI agents that will make today’s technology look primitive within three years, emphasizing that Google’s strategy remains deeply &quot;creator-first&quot; and focused on enhancing human productivity rather...</div>
+                    <div class="sum-preview" id="preview-8">enhancing human productivity rather...</div>
                     <div class="sum-full" id="full-8"><h3>TL;DR</h3>
 <p>Google CEO Sundar Pichai highlights a rapid shift toward proactive, personalized AI agents that will make today’s technology look primitive within three years, emphasizing that Google’s strategy remains deeply "creator-first" and focused on enhancing human productivity rather than replacing human connection.</p>
 <p>***</p>

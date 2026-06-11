@@ -138,7 +138,7 @@
         var chips = (v.people || []).map(function (p) {
             return '<span class="chip chip-sm">' + highlightText(p, terms) + '</span>';
         }).join(' ');
-        var title = v.title.length > 90 ? v.title.slice(0, 87) + '…' : v.title;
+        var title = v.title.length > 160 ? v.title.slice(0, 157) + '…' : v.title;
         var tldr = '';
         if (v.tldr) {
             var t = v.tldr.length > 180 ? v.tldr.slice(0, 177) + '…' : v.tldr;
@@ -147,6 +147,12 @@
         var excerpt = '';
         if (r.matchedIn.indexOf('summary') !== -1 && v.summary) {
             var ex = extractExcerpt(v.summary, terms);
+            // suppress the excerpt when it just repeats the TL;DR shown above
+            if (ex && v.tldr) {
+                var exN = ex.replace(/[^A-Za-z0-9]+/g, '').toLowerCase();
+                var tlN = v.tldr.replace(/[^A-Za-z0-9]+/g, '').toLowerCase();
+                if (tlN && (exN.indexOf(tlN.slice(0, 60)) !== -1 || tlN.indexOf(exN.slice(0, 60)) !== -1)) ex = '';
+            }
             if (ex) excerpt = '<span class="p-excerpt"><span class="excerpt-label">From summary&ensp;</span>' + highlightText(ex, terms) + '</span>';
         }
         return '<a class="preview" href="' + escapeHtml(link) + '">' +
@@ -169,8 +175,13 @@
         if (!best) return '';
         if (best.length > 240) {
             var idx = best.toLowerCase().indexOf(terms[0]);
-            if (idx > 80) best = '…' + best.substring(idx - 60);
-            if (best.length > 240) best = best.substring(0, 237) + '…';
+            if (idx > 80) {
+                var cut = best.substring(idx - 60);
+                var sp = cut.indexOf(' ');
+                if (sp > 0 && sp < 20) cut = cut.slice(sp + 1); // snap to a word boundary
+                best = '…' + cut;
+            }
+            if (best.length > 240) best = best.substring(0, 237).replace(/\s+\S*$/, '') + '…';
         }
         return best;
     }
@@ -190,7 +201,8 @@
             last = m.index + m[0].length;
             if (re.lastIndex === m.index) re.lastIndex++;
         }
-        return out + escapeHtml(raw.slice(last));
+        // merge marks separated only by whitespace ("Jensen" + "Huang" -> one box)
+        return (out + escapeHtml(raw.slice(last))).replace(/<\/mark>(\s+)<mark>/g, '$1');
     }
 
     function escapeHtml(s) {

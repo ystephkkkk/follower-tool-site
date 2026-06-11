@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI industry is transitioning from a speculative research phase into a massive industrial deployment era, characterized by a shift toward specialized vertical models, &quot;agentic&quot; computing that controls hardware directly, and the construction of multi-gigawatt power infrastructures.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR The AI industry is transitioning from a speculative research phase into a massive industrial deployment era, characterized by a shift toward specialized vertical models, &quot;agentic&quot; computing that controls hardware directly, and the construction of multi-gigawatt power...</div>
+                    <div class="sum-preview" id="preview-0"></div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>The AI industry is transitioning from a speculative research phase into a massive industrial deployment era, characterized by a shift toward specialized vertical models, "agentic" computing that controls hardware directly, and the construction of multi-gigawatt power infrastructures.</p>
 <h3>Infrastructure, Financing, and the Hardware Lifecycle</h3>
@@ -1362,7 +1394,7 @@ Thanks, Jason. Appreciate it. I'm going all in.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Matt Mahan, Mayor of San Jose and candidate for Governor of California, argues that the state suffers from a structural &quot;accountability crisis&quot; where spending has increased 75% ($150 billion) in six years with no improvement in outcomes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Matt Mahan, Mayor of San Jose and candidate for Governor of California, argues that the state suffers from a structural &quot;accountability crisis&quot; where spending has increased 75% ($150 billion) in six years with no improvement in outcomes. He proposes a pragmatic,...</div>
+                    <div class="sum-preview" id="preview-1">He proposes a pragmatic,...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Matt Mahan, Mayor of San Jose and candidate for Governor of California, argues that the state suffers from a structural "accountability crisis" where spending has increased 75% ($150 billion) in six years with no improvement in outcomes. He proposes a pragmatic, data-driven "back to basics" approach to solve the housing, homelessness, and energy crises by taking on special interests and prioritizing measurable results over bureaucratic process.</p>
 <h3>The Accountability Crisis and Government Bloat</h3>
@@ -1933,7 +1965,7 @@ They want their government to work. They want their life to get better when they
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>NVIDIA is leading a fundamental shift in computing from retrieval-based &quot;warehouses&quot; to generative &quot;AI factories,&quot; driven by &quot;extreme co-design&quot; across the entire hardware-software stack.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR NVIDIA is leading a fundamental shift in computing from retrieval-based &quot;warehouses&quot; to generative &quot;AI factories,&quot; driven by &quot;extreme co-design&quot; across the entire hardware-software stack. Jensen Huang predicts that intelligence will become a commoditized, scalable utility...</div>
+                    <div class="sum-preview" id="preview-2">Jensen Huang predicts that intelligence will become a commoditized, scalable utility...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>NVIDIA is leading a fundamental shift in computing from retrieval-based "warehouses" to generative "AI factories," driven by "extreme co-design" across the entire hardware-software stack. Jensen Huang predicts that intelligence will become a commoditized, scalable utility governed by four scaling laws (Pre-training, Post-training, Test-time, and Agentic) that will eventually accelerate global GDP.</p>
 <h3>The AI Revolution: From Warehouses to Factories</h3>
@@ -2734,9 +2766,9 @@ And now, let me leave you with some words from Alan Kay: &quot;The best way to p
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(164.0K)</span></span><span class="dot">&middot;</span><span>56:54</span><span class="dot">&middot;</span><span>26.6K views</span><span class="dot">&middot;</span><span>2026-03-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Real Eisman Playbook</span></a> <a class="chip" href="index.html?q=%22Michael%20Ha%22">Michael Ha<span class="chip-desc">Healthcare Analyst</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Structurally, Optum Health might be...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Structurally, Optum Health might…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR: The once-stable health insurance sector is undergoing a structural crisis as government regulatory changes to &quot;risk adjustment&quot; models and Medicaid redeterminations erode profit margins for giants like UnitedHealth and Molina, revealing that massive vertical integration...</div>
+                    <div class="sum-preview" id="preview-3">The once-stable health insurance sector is undergoing a structural crisis as government regulatory changes to &quot;risk adjustment&quot; models and Medicaid redeterminations erode profit margins for giants like UnitedHealth and Molina, revealing that massive vertical integration...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR:</strong> The once-stable health insurance sector is undergoing a structural crisis as government regulatory changes to "risk adjustment" models and Medicaid redeterminations erode profit margins for giants like UnitedHealth and Molina, revealing that massive vertical integration has failed to create operational efficiency.</p>
 <h3>The Decline of the "Gold Standard": UnitedHealth Group (UNH)</h3>
 <ul>
@@ -3123,9 +3155,9 @@ This podcast is for informational purposes only and does not constitute investme
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.3M)</span></span><span class="dot">&middot;</span><span>29:46</span><span class="dot">&middot;</span><span>5.4K views</span><span class="dot">&middot;</span><span>2026-03-23</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Chris%20Wright%22">Chris Wright<span class="chip-desc">U.S. Energy Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Energy is life and the world needs massively more of it.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Energy is life and the world needs massively more of it.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR: U.S. Energy Secretary Chris Wright detailed a shift toward &quot;energy pragmatism,&quot; prioritizing the aggressive expansion of natural gas and nuclear power to support the AI boom while managing the global oil supply shock caused by the ongoing war in Iran.  Strategic Resolve:...</div>
+                    <div class="sum-preview" id="preview-4">U.S. Energy Secretary Chris Wright detailed a shift toward &quot;energy pragmatism,&quot; prioritizing the aggressive expansion of natural gas and nuclear power to support the AI boom while managing the global oil supply shock caused by the ongoing war in Iran.  Strategic Resolve:...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR:</strong> U.S. Energy Secretary Chris Wright detailed a shift toward "energy pragmatism," prioritizing the aggressive expansion of natural gas and nuclear power to support the AI boom while managing the global oil supply shock caused by the ongoing war in Iran.</p>
 <h3>Geopolitics and the Iran Conflict</h3>
 <ul>
@@ -3339,7 +3371,7 @@ How soon can you bring nuclear power plants? But nuclear's just been slow and ha
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Northwood is addressing the &quot;ground segment bottleneck&quot; in the space economy by vertically integrating the infrastructure that connects satellites to Earth, reducing deployment timelines from three years to three months to enable faster, more scalable space missions.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Northwood is addressing the &quot;ground segment bottleneck&quot; in the space economy by vertically integrating the infrastructure that connects satellites to Earth, reducing deployment timelines from three years to three months to enable faster, more scalable space missions.  The...</div>
+                    <div class="sum-preview" id="preview-5">The...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Northwood is addressing the "ground segment bottleneck" in the space economy by vertically integrating the infrastructure that connects satellites to Earth, reducing deployment timelines from three years to three months to enable faster, more scalable space missions.</p>
 <h3>Solving the Ground Segment Bottleneck</h3>

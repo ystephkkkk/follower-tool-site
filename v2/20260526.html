@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Artificial intelligence acts as a powerful multiplier of human capability, meaning low-quality outputs (&quot;workslop&quot;) are symptoms of weak management rather than technology failures.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR  Artificial intelligence acts as a powerful multiplier of human capability, meaning low-quality outputs (&quot;workslop&quot;) are symptoms of weak management rather than technology failures. To capture the real productivity gains of AI, leaders must shift their focus from pure...</div>
+                    <div class="sum-preview" id="preview-0">To capture the real productivity gains of AI, leaders must shift their focus from pure...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Artificial intelligence acts as a powerful multiplier of human capability, meaning low-quality outputs ("workslop") are symptoms of weak management rather than technology failures. To capture the real productivity gains of AI, leaders must shift their focus from pure technological acquisition to active human transformation, upskilling teams in essential psychological and leadership capabilities.</p>
 <h3>Redefining "Workslop" as a Leadership Symptom</h3>
@@ -965,7 +997,7 @@ For more video podcasts, go to the World Economic Forum's YouTube page, and for 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The modern global security landscape requires the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR  The modern global security landscape requires the U.S. military to balance flexible tactical responses with nuclear deterrence, reform its rigid defense acquisition model to support fast-moving defense tech startups (&quot;neo-primes&quot;), and counter structural and ideological...</div>
+                    <div class="sum-preview" id="preview-1">military to balance flexible tactical responses with nuclear deterrence, reform its rigid defense acquisition model to support fast-moving defense tech startups (&quot;neo-primes&quot;), and counter structural and ideological...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>The modern global security landscape requires the U.S. military to balance flexible tactical responses with nuclear deterrence, reform its rigid defense acquisition model to support fast-moving defense tech startups ("neo-primes"), and counter structural and ideological threats from highly motivated but fundamentally illegitimate autocracies.</p>
 <h3>The Paradox of Autocracies and the Challenge of Martyrdom Cultures</h3>
@@ -1255,7 +1287,7 @@ Ridgeline is redefining asset management technology as a true partner, not just 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Cursor partnered with Fireworks to train Composer 2, an agentic coding model that achieves frontier-class performance and extreme cost efficiency.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR   Cursor partnered with Fireworks to train Composer 2, an agentic coding model that achieves frontier-class performance and extreme cost efficiency. By using a top-down approach—combining mid-training with globally distributed, asynchronous reinforcement learning (RL) on a...</div>
+                    <div class="sum-preview" id="preview-2">By using a top-down approach—combining mid-training with globally distributed, asynchronous reinforcement learning (RL) on a...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Cursor partnered with Fireworks to train Composer 2, an agentic coding model that achieves frontier-class performance and extreme cost efficiency. By using a top-down approach—combining mid-training with globally distributed, asynchronous reinforcement learning (RL) on a specialized Mixture of Experts (MoE) base—they successfully dedicated all of the model's finite weight capacity to software engineering tasks.</p>
 <h3>The Strategic Shift: Transitioning from Application to Foundation Model</h3>
@@ -1502,7 +1534,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Following Google I/O, Google and Alphabet CEO Sundar Pichai details how he restructured the company to build a unified AI infrastructure, while addressing critical challenges surrounding the impact of AI agents on the open web, energy grids, and the future of Search.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  Following Google I/O, Google and Alphabet CEO Sundar Pichai details how he restructured the company to build a unified AI infrastructure, while addressing critical challenges surrounding the impact of AI agents on the open web, energy grids, and the future of Search.  A...</div>
+                    <div class="sum-preview" id="preview-3">A...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Following Google I/O, Google and Alphabet CEO Sundar Pichai details how he restructured the company to build a unified AI infrastructure, while addressing critical challenges surrounding the impact of AI agents on the open web, energy grids, and the future of Search.</p>
 <h3>Corporate Restructuring and Decision Velocity</h3>
@@ -1804,9 +1836,9 @@ If you like Decoder, please share it with your friends and subscribe wherever yo
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_kNp6TLIXgAzMs5iuHtPR5aTLvikKX4KtZFejuG9ZPtlFQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Oaktree Capital</b><span class="subs">(76.5K)</span></span><span class="dot">&middot;</span><span>36:07</span><span class="dot">&middot;</span><span>18.9K views</span><span class="dot">&middot;</span><span>2026-05-26</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Howard%20Marks%22">Howard Marks<span class="chip-desc">Co-Chairman, Oaktree Capital</span></a> <a class="chip" href="index.html?q=%22Jordi%20Hays%22">Jordi Hays<span class="chip-desc">Host, TBPN</span></a> <a class="chip" href="index.html?q=%22John%20Coogan%22">John Coogan<span class="chip-desc">Host, TBPN</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Howard Marks, Co-Chairman of Oaktree Capital, argues that while rapid AI advancement and geopolitical dependencies present unprecedented structural risks to society, successful investing still hinges on mastering market cycles through strict risk dis...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Howard Marks, Co-Chairman of Oaktree Capital, argues that while rapid AI advancement and geopolitical dependencies present unprecedented structural risks to society, successful investing still hinges on mastering market cycles through strict risk…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Howard Marks, Co-Chairman of Oaktree Capital, argues that while rapid AI advancement and geopolitical dependencies present unprecedented structural risks to society, successful investing still hinges on mastering market cycles through strict risk discipline, emotional...</div>
+                    <div class="sum-preview" id="preview-4">discipline, emotional...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Howard Marks, Co-Chairman of Oaktree Capital, argues that while rapid AI advancement and geopolitical dependencies present unprecedented structural risks to society, successful investing still hinges on mastering market cycles through strict risk discipline, emotional control, and contrarian execution.</p>
 <h3>The Psychology of Market Cycles and Contrarianism</h3>
@@ -2129,9 +2161,9 @@ Bye.</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_kL2ChhO6_vR8RPg9Z9FbgMJGsguPZLiSz-BOKVebouwRY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Palantir</b><span class="subs">(152.0K)</span></span><span class="dot">&middot;</span><span>41:45</span><span class="dot">&middot;</span><span>6.2K views</span><span class="dot">&middot;</span><span>2026-05-26</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Eric%20Brock%22">Eric Brock<span class="chip-desc">CEO, Ondas</span></a> <a class="chip" href="index.html?q=%22Ryan%20Hartman%22">Ryan Hartman<span class="chip-desc">CEO, World View</span></a> <a class="chip" href="index.html?q=%22Matt%20Shepherd%22">Matt Shepherd<span class="chip-desc">Forward Deployed Engineer, Palantir</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>By integrating World View’s stratospheric balloon technology into Ondas’s multi-domain autonomous portfolio, and leveraging Palantir's Foundry, Warp Speed, and Agentic AI, this partnership is streamlining defense-tech supply chains and enabling auton...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>By integrating World View’s stratospheric balloon technology into Ondas’s multi-domain autonomous portfolio, and leveraging Palantir's Foundry, Warp Speed, and Agentic AI, this partnership is streamlining defense-tech supply chains and enabling…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR By integrating World View’s stratospheric balloon technology into Ondas’s multi-domain autonomous portfolio, and leveraging Palantir's Foundry, Warp Speed, and Agentic AI, this partnership is streamlining defense-tech supply chains and enabling autonomous,...</div>
+                    <div class="sum-preview" id="preview-5">autonomous,...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>By integrating World View’s stratospheric balloon technology into Ondas’s multi-domain autonomous portfolio, and leveraging Palantir's Foundry, Warp Speed, and Agentic AI, this partnership is streamlining defense-tech supply chains and enabling autonomous, machine-to-machine mission orchestration to deliver rapid "speed to decision" for warfighters.</p>
 <h3>The Multi-Domain Portfolio and the Stratospheric Frontier</h3>
@@ -2432,7 +2464,7 @@ Thanks, Matt.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>To counter global threats like China, the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR  To counter global threats like China, the U.S. must pivot from handcrafted, low-volume &quot;exquisite&quot; weaponry to high-volume, mass-producible autonomous systems. This transformation requires utilizing commercial manufacturing lines, adopting open software standards,...</div>
+                    <div class="sum-preview" id="preview-6">must pivot from handcrafted, low-volume &quot;exquisite&quot; weaponry to high-volume, mass-producible autonomous systems. This transformation requires utilizing commercial manufacturing lines, adopting open software standards,...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>To counter global threats like China, the U.S. must pivot from handcrafted, low-volume "exquisite" weaponry to high-volume, mass-producible autonomous systems. This transformation requires utilizing commercial manufacturing lines, adopting open software standards, deploying onboard drone autonomy, and developing reusable kinetic interceptors.</p>
 <h3>1. Redefining Geopolitical Threats: China vs. Ukraine</h3>

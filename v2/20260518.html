@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Effective leadership in legacy organizations requires reconciling a deep respect for institutional history with an aggressive, risk-tolerant push toward simplification and future-readiness.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Effective leadership in legacy organizations requires reconciling a deep respect for institutional history with an aggressive, risk-tolerant push toward simplification and future-readiness.  The &quot;Legacy Cancer&quot;: Ajay Banga highlights the danger of the &quot;we tried that 28...</div>
+                    <div class="sum-preview" id="preview-0">The &quot;Legacy Cancer&quot;: Ajay Banga highlights the danger of the &quot;we tried that 28...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Effective leadership in legacy organizations requires reconciling a deep respect for institutional history with an aggressive, risk-tolerant push toward simplification and future-readiness.</p>
 <h3>The Challenge of Institutional Inertia</h3>
@@ -938,7 +970,7 @@ So you have to learn how to take risks, take them, play with them, embrace them,
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Following a high-stakes summit in Beijing, U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Following a high-stakes summit in Beijing, U.S. Ambassador David Perdue reported significant trade wins in agriculture and aerospace, though Taiwan remains a contentious &quot;bargaining chip.&quot; Simultaneously, Ryanair CEO Michael O’Leary warned of looming European airline...</div>
+                    <div class="sum-preview" id="preview-1">Ambassador David Perdue reported significant trade wins in agriculture and aerospace, though Taiwan remains a contentious &quot;bargaining chip.&quot; Simultaneously, Ryanair CEO Michael O’Leary warned of looming European airline...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Following a high-stakes summit in Beijing, U.S. Ambassador David Perdue reported significant trade wins in agriculture and aerospace, though Taiwan remains a contentious "bargaining chip." Simultaneously, Ryanair CEO Michael O’Leary warned of looming European airline bankruptcies if current jet fuel spikes and Middle East supply disruptions persist through the summer.</p>
 <h3><strong>U.S.-China Trade &amp; Taiwan Diplomacy</strong></h3>
@@ -1330,7 +1362,7 @@ Tune in weekday mornings on CNBC at 6 Eastern, to get the smartest takes and ana
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Dell Technologies is driving the transition from screen-based AI to physical &quot;intelligence as infrastructure,&quot; expanding its AI Factory portfolio with Nvidia to deliver powerful, secure, and hybrid agentic architectures directly to where enterprise data lives.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR  Dell Technologies is driving the transition from screen-based AI to physical &quot;intelligence as infrastructure,&quot; expanding its AI Factory portfolio with Nvidia to deliver powerful, secure, and hybrid agentic architectures directly to where enterprise data lives.  The Shift...</div>
+                    <div class="sum-preview" id="preview-2">The Shift...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Dell Technologies is driving the transition from screen-based AI to physical "intelligence as infrastructure," expanding its AI Factory portfolio with Nvidia to deliver powerful, secure, and hybrid agentic architectures directly to where enterprise data lives.</p>
 <h3>The Rise of Hybrid and Agentic AI</h3>
@@ -1828,7 +1860,7 @@ Over the next few days, and in tomorrow's keynote with Jeff and Arthur, and in o
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Pete Hegseth joined Kentucky congressional candidate and retired Navy SEAL Ed Gallrein on the campaign trail, rallying voters to support a military-focused &quot;America First&quot; agenda while sharply criticizing incumbent Representative Thomas Massie as an obstructionist who fails to back Donald Trump.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Pete Hegseth joined Kentucky congressional candidate and retired Navy SEAL Ed Gallrein on the campaign trail, rallying voters to support a military-focused &quot;America First&quot; agenda while sharply criticizing incumbent Representative Thomas Massie as an obstructionist who...</div>
+                    <div class="sum-preview" id="preview-3"></div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Pete Hegseth joined Kentucky congressional candidate and retired Navy SEAL Ed Gallrein on the campaign trail, rallying voters to support a military-focused "America First" agenda while sharply criticizing incumbent Representative Thomas Massie as an obstructionist who fails to back Donald Trump.</p>
 <h3>Ed Gallrein’s Transition from Combat to Congress</h3>
@@ -2049,7 +2081,7 @@ This one, ladies and gentlemen, is a no-brainer. Ed, thank you for stepping up. 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>JD Vance emphasizes a &quot;workers-first&quot; economic agenda focused on revitalizing American manufacturing, slashing government fraud, and prioritizing the safety and financial security of U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR JD Vance emphasizes a &quot;workers-first&quot; economic agenda focused on revitalizing American manufacturing, slashing government fraud, and prioritizing the safety and financial security of U.S. citizens over illegal immigrants.  Commitment to American Workers: Vance praises the...</div>
+                    <div class="sum-preview" id="preview-4">citizens over illegal immigrants.  Commitment to American Workers: Vance praises the...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>JD Vance emphasizes a "workers-first" economic agenda focused on revitalizing American manufacturing, slashing government fraud, and prioritizing the safety and financial security of U.S. citizens over illegal immigrants.</p>
 <h3>Manufacturing and Economic Recovery</h3>
@@ -2239,7 +2271,7 @@ So what I'm going to tell you is because you come up and every day you work hard
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Public safety is undergoing a paradigm shift toward a data-driven &quot;ecosystem&quot; where autonomous drones, AI-powered sensor networks, and officer wellness analytics are replacing traditional, reactive policing models to solve staffing shortages and improve de-escalation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Public safety is undergoing a paradigm shift toward a data-driven &quot;ecosystem&quot; where autonomous drones, AI-powered sensor networks, and officer wellness analytics are replacing traditional, reactive policing models to solve staffing shortages and improve de-escalation. The...</div>
+                    <div class="sum-preview" id="preview-5">The...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Public safety is undergoing a paradigm shift toward a data-driven "ecosystem" where autonomous drones, AI-powered sensor networks, and officer wellness analytics are replacing traditional, reactive policing models to solve staffing shortages and improve de-escalation.</p>
 <h3>The Shift to Autonomous First Response</h3>
@@ -2373,7 +2405,7 @@ And so it's going to be very nuanced in that way. And so every leader is looking
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance visited Milbank manufacturing in Kansas City to promote the administration’s &quot;America First&quot; economic agenda, highlighting a resurgence in domestic manufacturing and his ongoing leadership of a federal task force dedicated to rooting out government waste and fraud.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Vice President JD Vance visited Milbank manufacturing in Kansas City to promote the administration’s &quot;America First&quot; economic agenda, highlighting a resurgence in domestic manufacturing and his ongoing leadership of a federal task force dedicated to rooting out government...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance visited Milbank manufacturing in Kansas City to promote the administration’s "America First" economic agenda, highlighting a resurgence in domestic manufacturing and his ongoing leadership of a federal task force dedicated to rooting out government waste and fraud.</p>
 <h3>Economic Growth and Manufacturing Resurgence</h3>
@@ -2634,7 +2666,7 @@ Because you want to build great things at this beautiful factory, we're going to
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI industry is shifting from generative content to &quot;Agentic AI&quot;—digital workers capable of performing complex tasks on-premise.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR The AI industry is shifting from generative content to &quot;Agentic AI&quot;—digital workers capable of performing complex tasks on-premise. This transition is driving massive enterprise demand for integrated &quot;AI Factories&quot; that currently exceeds global supply capacity.  From...</div>
+                    <div class="sum-preview" id="preview-7">This transition is driving massive enterprise demand for integrated &quot;AI Factories&quot; that currently exceeds global supply capacity.  From...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>The AI industry is shifting from generative content to "Agentic AI"—digital workers capable of performing complex tasks on-premise. This transition is driving massive enterprise demand for integrated "AI Factories" that currently exceeds global supply capacity.</p>
 <h3>The Shift to Agentic AI and Enterprise Production</h3>
@@ -2845,7 +2877,7 @@ On that note, Michael Dell, Chairman and CEO of Dell Technologies, Jensen Huang,
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI hardware market is shifting from a GPU-centric model focused on training to a heterogeneous landscape where &quot;Agentic Inference&quot;—autonomous tasks performed without human oversight—prioritizes massive memory capacity and low cost over raw processing speed.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR The AI hardware market is shifting from a GPU-centric model focused on training to a heterogeneous landscape where &quot;Agentic Inference&quot;—autonomous tasks performed without human oversight—prioritizes massive memory capacity and low cost over raw processing speed.    The GPU...</div>
+                    <div class="sum-preview" id="preview-8">The GPU...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The AI hardware market is shifting from a GPU-centric model focused on training to a heterogeneous landscape where "Agentic Inference"—autonomous tasks performed without human oversight—prioritizes massive memory capacity and low cost over raw processing speed.</p>
 <h3>The State of AI Hardware: GPUs vs. Wafer-Scale</h3>
@@ -3007,7 +3039,7 @@ What he means is that the future of computing speed-ups will be a function of sy
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance and Missouri Republican leaders gathered at Milbank Manufacturing to champion a &quot;manufacturing-first&quot; economic agenda, emphasizing the &quot;Working Families Tax Cuts,&quot; aggressive anti-fraud initiatives, and a pivot away from global trade dependence toward domestic production.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Vice President JD Vance and Missouri Republican leaders gathered at Milbank Manufacturing to champion a &quot;manufacturing-first&quot; economic agenda, emphasizing the &quot;Working Families Tax Cuts,&quot; aggressive anti-fraud initiatives, and a pivot away from global trade dependence...</div>
+                    <div class="sum-preview" id="preview-9"></div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance and Missouri Republican leaders gathered at Milbank Manufacturing to champion a "manufacturing-first" economic agenda, emphasizing the "Working Families Tax Cuts," aggressive anti-fraud initiatives, and a pivot away from global trade dependence toward domestic production.</p>
 <h3>The Resurgence of American Manufacturing</h3>
@@ -3454,7 +3486,7 @@ Because you want to build great things at this beautiful factory, we're going to
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The energy sector is currently defined by a &quot;conundrum&quot; where massive geopolitical supply shocks (specifically the Iranian threat to the Strait of Hormuz) haven’t translated into sustained stock rallies due to market belief in a quick resolution and a confusing forward curve.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR The energy sector is currently defined by a &quot;conundrum&quot; where massive geopolitical supply shocks (specifically the Iranian threat to the Strait of Hormuz) haven’t translated into sustained stock rallies due to market belief in a quick resolution and a confusing forward...</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>The energy sector is currently defined by a "conundrum" where massive geopolitical supply shocks (specifically the Iranian threat to the Strait of Hormuz) haven’t translated into sustained stock rallies due to market belief in a quick resolution and a confusing forward curve. However, rising electricity demand for AI and data centers is creating a structural long-term growth story for natural gas and copper.</p>
 <h3>The Oil Paradox and Geopolitical Risk</h3>

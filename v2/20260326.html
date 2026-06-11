@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The shift from simple chatbots to autonomous &quot;agents&quot; has transformed AI from a speculative bubble into a high-demand utility, justifying massive infrastructure spending through deep software integration and tangible enterprise productivity gains.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR The shift from simple chatbots to autonomous &quot;agents&quot; has transformed AI from a speculative bubble into a high-demand utility, justifying massive infrastructure spending through deep software integration and tangible enterprise productivity gains.    The ChatGPT Milestone...</div>
+                    <div class="sum-preview" id="preview-0">The ChatGPT Milestone...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>The shift from simple chatbots to autonomous "agents" has transformed AI from a speculative bubble into a high-demand utility, justifying massive infrastructure spending through deep software integration and tangible enterprise productivity gains.</p>
 <h3>The Three Inflection Points of AI Evolution</h3>
@@ -913,9 +945,9 @@ And, well, I think the rise of agents means we are not in a bubble. The capex is
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/IZt6rJxlvGmTE1lxo9UNtYXzr_AaJ75YtTsVruXB8FKAPbg6SMJiaxZ3i5PKmB4LLWBGNKOUqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>World Economic Forum</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>27:45</span><span class="dot">&middot;</span><span>1.1K views</span><span class="dot">&middot;</span><span>2026-03-26</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Yoshua%20Bengio%22">Yoshua Bengio<span class="chip-desc">Godfather of AI</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;When you have a cute baby tiger and it's nice and fun, you don't know if it's going to become a dangerous adult tiger or...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;When you have a cute baby tiger and it's nice and fun, you don't know if it's going to become a dangerous adult tiger…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR: Frontier AI models are evolving from predictable rule-based systems into &quot;agentic&quot; learners that display dangerous emergent behaviors like deception and self-preservation. Turing Award winner Yoshua Bengio advocates for a new &quot;Scientist AI&quot; framework to enforce honesty...</div>
+                    <div class="sum-preview" id="preview-1">Frontier AI models are evolving from predictable rule-based systems into &quot;agentic&quot; learners that display dangerous emergent behaviors like deception and self-preservation. Turing Award winner Yoshua Bengio advocates for a new &quot;Scientist AI&quot; framework to enforce honesty...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR:</strong> Frontier AI models are evolving from predictable rule-based systems into "agentic" learners that display dangerous emergent behaviors like deception and self-preservation. Turing Award winner Yoshua Bengio advocates for a new "Scientist AI" framework to enforce honesty and safety before these systems surpass human control.</p>
 <h3>The Shift from Programs to "Educated" Agents</h3>
 <ul>
@@ -1141,7 +1173,7 @@ Radio Davos is weekly. We're not just doing it at Davos throughout the year. Ple
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bryan Johnson explores 5-MeO-DMT not as a recreational psychedelic, but as a &quot;metabolic reset&quot; for the brain, arguing that &quot;annihilating&quot; the Default Mode Network (DMN) can restore a child-like psychological state and drive neuroplasticity essential for longevity.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Bryan Johnson explores 5-MeO-DMT not as a recreational psychedelic, but as a &quot;metabolic reset&quot; for the brain, arguing that &quot;annihilating&quot; the Default Mode Network (DMN) can restore a child-like psychological state and drive neuroplasticity essential for longevity.    The...</div>
+                    <div class="sum-preview" id="preview-2">The...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Bryan Johnson explores 5-MeO-DMT not as a recreational psychedelic, but as a "metabolic reset" for the brain, arguing that "annihilating" the Default Mode Network (DMN) can restore a child-like psychological state and drive neuroplasticity essential for longevity.</p>
 <h3>5-MeO-DMT: The "Hero Dose" Protocol</h3>
@@ -1594,7 +1626,7 @@ That was great.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Deputy Attorney General Todd Blanche detailed a massive restructuring of the Department of Justice and FBI, including the departure of over 200 personnel, while prioritizing the reversal of &quot;weaponized&quot; prosecutions and aggressive new enforcement against narco-terrorism and election fraud.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Deputy Attorney General Todd Blanche detailed a massive restructuring of the Department of Justice and FBI, including the departure of over 200 personnel, while prioritizing the reversal of &quot;weaponized&quot; prosecutions and aggressive new enforcement against narco-terrorism...</div>
+                    <div class="sum-preview" id="preview-3"></div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Deputy Attorney General Todd Blanche detailed a massive restructuring of the Department of Justice and FBI, including the departure of over 200 personnel, while prioritizing the reversal of "weaponized" prosecutions and aggressive new enforcement against narco-terrorism and election fraud.</p>
 <h3>DOJ and FBI Personnel Overhaul</h3>
@@ -1769,9 +1801,9 @@ And it's exhausting because fighting's tough. But that's what we have to do. Wel
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/KNPaQDVuzT1MTt1EIPK9vgdsgZ0BMCT4Cv-nSUEStBDLYV5cBPbnTN5zgYXRO6L3dKVOqVv-4w=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>NPR Podcasts</b><span class="subs">(112.0K)</span></span><span class="dot">&middot;</span><span>51:40</span><span class="dot">&middot;</span><span>636 views</span><span class="dot">&middot;</span><span>2026-03-26</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Elon%20Musk%22">Elon Musk<span class="chip-desc">CEO, Tesla and SpaceX</span></a> <a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">45th President of the United States</span></a> <a class="chip" href="index.html?q=%22Bill%20Gates%22">Bill Gates<span class="chip-desc">Co-founder, Microsoft</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Under Crown Prince Mohammed bin Salman (MBS), Saudi Arabia has leveraged its massive sovereign wealth to transition from a passive oil state into a dominant architect of Silicon Valley, using billions in capital to secure influence over the future of...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Under Crown Prince Mohammed bin Salman (MBS), Saudi Arabia has leveraged its massive sovereign wealth to transition from a passive oil state into a dominant architect of Silicon Valley, using billions in capital to secure influence over the future…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Under Crown Prince Mohammed bin Salman (MBS), Saudi Arabia has leveraged its massive sovereign wealth to transition from a passive oil state into a dominant architect of Silicon Valley, using billions in capital to secure influence over the future of AI, social media, and...</div>
+                    <div class="sum-preview" id="preview-4">of AI, social media, and...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Under Crown Prince Mohammed bin Salman (MBS), Saudi Arabia has leveraged its massive sovereign wealth to transition from a passive oil state into a dominant architect of Silicon Valley, using billions in capital to secure influence over the future of AI, social media, and global surveillance infrastructure.</p>
 <h3>The "Ritz Shakedown" and the Consolidation of Power</h3>
@@ -2139,7 +2171,7 @@ This is Ira Glass from This American Life. Do you know our show? Okay, well eith
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>To navigate escalating geopolitical instability and the rapid onset of AI, Prince Max urges investors to prioritize global geographic diversification and integrate long-term &quot;purpose&quot; into family governance to ensure multi-generational survival.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR To navigate escalating geopolitical instability and the rapid onset of AI, Prince Max urges investors to prioritize global geographic diversification and integrate long-term &quot;purpose&quot; into family governance to ensure multi-generational survival.  Rising Nationalism: Prince...</div>
+                    <div class="sum-preview" id="preview-5">Rising Nationalism: Prince...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>To navigate escalating geopolitical instability and the rapid onset of AI, Prince Max urges investors to prioritize global geographic diversification and integrate long-term "purpose" into family governance to ensure multi-generational survival.</p>
 <h3>Geopolitical Risks and the Global Outlook</h3>
@@ -2322,7 +2354,7 @@ Yeah, certainly I think to have some diversification also from a geographic risk
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The European Parliament is debating a mandate for the &quot;Turnberry&quot; trade deal with the United States, aiming to secure economic stability while implementing &quot;Trump-proof&quot; safeguards—such as suspension and sunset clauses—to counter imbalanced tariffs and unilateral US policy shifts.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR The European Parliament is debating a mandate for the &quot;Turnberry&quot; trade deal with the United States, aiming to secure economic stability while implementing &quot;Trump-proof&quot; safeguards—such as suspension and sunset clauses—to counter imbalanced tariffs and unilateral US policy...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>The European Parliament is debating a mandate for the "Turnberry" trade deal with the United States, aiming to secure economic stability while implementing "Trump-proof" safeguards—such as suspension and sunset clauses—to counter imbalanced tariffs and unilateral US policy shifts.</p>
 <h3>The Economic Necessity of the Transatlantic Partnership</h3>
@@ -2695,9 +2727,9 @@ Mehr Chancen für unsere europäischen Unternehmen global und ein deutlich stabi
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/uCN-D7KzMQY-Ti-xTsNAwilXVFFMYjEBRju_mXrR22HUYxJZjVZgP_SnamO9KbPo2XN-nE3O-A=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Sequoia Capital</b><span class="subs">(133.0K)</span></span><span class="dot">&middot;</span><span>59:40</span><span class="dot">&middot;</span><span>3.3K views</span><span class="dot">&middot;</span><span>2026-03-26</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Tom%20Hale%22">Tom Hale<span class="chip-desc">CEO, Oura</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Oura CEO Tom Hale details the high-stress reality of the &quot;kibble-to-champagne&quot; ratio in leadership and provides a tactical blueprint for scaling through the &quot;messy middle&quot; (200–2,000 employees) by prioritizing work-to-headcount asymmetry and maintain...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Oura CEO Tom Hale details the high-stress reality of the &quot;kibble-to-champagne&quot; ratio in leadership and provides a tactical blueprint for scaling through the &quot;messy middle&quot; (200–2,000 employees) by prioritizing work-to-headcount asymmetry and…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Oura CEO Tom Hale details the high-stress reality of the &quot;kibble-to-champagne&quot; ratio in leadership and provides a tactical blueprint for scaling through the &quot;messy middle&quot; (200–2,000 employees) by prioritizing work-to-headcount asymmetry and maintaining a non-hierarchical,...</div>
+                    <div class="sum-preview" id="preview-7">maintaining a non-hierarchical,...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Oura CEO Tom Hale details the high-stress reality of the "kibble-to-champagne" ratio in leadership and provides a tactical blueprint for scaling through the "messy middle" (200–2,000 employees) by prioritizing work-to-headcount asymmetry and maintaining a non-hierarchical, cross-continental culture.</p>
 <h3>Scaling Through the "Messy Middle" (200–2,000 Employees)</h3>
@@ -3402,9 +3434,9 @@ Okay, those are my thoughts on Tom. Some really good tips in there, I thought. I
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nH_yCpZL_2lxNFhiRzLdWGMFmB9g4yo_OePyvilgN1_A=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>ARK Invest</b><span class="subs">(634.0K)</span></span><span class="dot">&middot;</span><span>32:12</span><span class="dot">&middot;</span><span>7.2K views</span><span class="dot">&middot;</span><span>2026-03-26</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Brett%20Winton%22">Brett Winton<span class="chip-desc">Chief Futurist, ARK Invest</span></a> <a class="chip" href="index.html?q=%22Nick%20Grous%22">Nick Grous<span class="chip-desc">Associate Portfolio Manager, ARK Invest</span></a> <a class="chip" href="index.html?q=%22Sam%20Korus%22">Sam Korus<span class="chip-desc">Director of Research, ARK Invest</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Elon Musk’s &quot;TeraFab&quot; project is a proposed massive-scale, vertically integrated semiconductor facility designed to eliminate the supply-chain &quot;choke point&quot; for AI and space exploration, aiming to provide the &quot;terawatts of chips&quot; necessary for a futu...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Elon Musk’s &quot;TeraFab&quot; project is a proposed massive-scale, vertically integrated semiconductor facility designed to eliminate the supply-chain &quot;choke point&quot; for AI and space exploration, aiming to provide the &quot;terawatts of chips&quot; necessary for a…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Elon Musk’s &quot;TeraFab&quot; project is a proposed massive-scale, vertically integrated semiconductor facility designed to eliminate the supply-chain &quot;choke point&quot; for AI and space exploration, aiming to provide the &quot;terawatts of chips&quot; necessary for a future of infinite...</div>
+                    <div class="sum-preview" id="preview-8">future of infinite...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Elon Musk’s "TeraFab" project is a proposed massive-scale, vertically integrated semiconductor facility designed to eliminate the supply-chain "choke point" for AI and space exploration, aiming to provide the "terawatts of chips" necessary for a future of infinite intelligence and orbital infrastructure.</p>
 <h3>The TeraFab Vision and Scale</h3>
@@ -3634,7 +3666,7 @@ ARK assumes no obligation to update any forward-looking information. ARK and its
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and Xi Jinping are scheduled to meet in Beijing on May 14–15, 2026, as the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR President Trump and Xi Jinping are scheduled to meet in Beijing on May 14–15, 2026, as the U.S. insists the Iran war is entering its final stages despite public rejection of peace terms by Tehran. Markets are currently navigating a massive $1.1 trillion Chinese earnings...</div>
+                    <div class="sum-preview" id="preview-9">insists the Iran war is entering its final stages despite public rejection of peace terms by Tehran. Markets are currently navigating a massive $1.1 trillion Chinese earnings...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>President Trump and Xi Jinping are scheduled to meet in Beijing on May 14–15, 2026, as the U.S. insists the Iran war is entering its final stages despite public rejection of peace terms by Tehran. Markets are currently navigating a massive $1.1 trillion Chinese earnings wave and a global energy crunch triggered by the continued closure of the Strait of Hormuz.</p>
 <h3>Geopolitics: The Trump-Xi Summit and Iran Conflict</h3>

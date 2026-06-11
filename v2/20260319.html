@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The ECB maintained its key interest rates while signaling that the war in the Middle East has introduced significant uncertainty, leading to upward revisions for near-term inflation and downward revisions for economic growth.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR The ECB maintained its key interest rates while signaling that the war in the Middle East has introduced significant uncertainty, leading to upward revisions for near-term inflation and downward revisions for economic growth. The Governing Council remains &quot;data-dependent&quot;...</div>
+                    <div class="sum-preview" id="preview-0">The Governing Council remains &quot;data-dependent&quot;...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>The ECB maintained its key interest rates while signaling that the war in the Middle East has introduced significant uncertainty, leading to upward revisions for near-term inflation and downward revisions for economic growth. The Governing Council remains "data-dependent" and "meeting-by-meeting," refusing to pre-commit to a specific rate path while monitoring energy-driven second-round effects.</p>
 <h3>Monetary Policy and Interest Rate Decision</h3>
@@ -962,9 +994,9 @@ So the numbers that you will see are without monetary policy. Whereas the baseli
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nCM9rt0MaGu172PIGDGAblpGgDJU1mj0cDZJszLRNnrzc=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>World Trade Organization</b><span class="subs">(42.1K)</span></span><span class="dot">&middot;</span><span>43:42</span><span class="dot">&middot;</span><span>131 views</span><span class="dot">&middot;</span><span>2026-03-19</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Ngozi%20Okonjo-Iweala%22">Ngozi Okonjo-Iweala<span class="chip-desc">Director-General, WTO</span></a> <a class="chip" href="index.html?q=%22Robert%20Staiger%22">Robert Staiger<span class="chip-desc">Chief Economist, WTO</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The lesson for us to take...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The lesson for us to…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR: Global trade growth is projected to slow significantly from a surprisingly strong 4.6% in 2025 to a modest 1.9% in 2026, as the temporary boosts from AI investment and &quot;front-loading&quot; of imports dissipate amid rising geopolitical risks in the Middle East.  The 2026...</div>
+                    <div class="sum-preview" id="preview-1">Global trade growth is projected to slow significantly from a surprisingly strong 4.6% in 2025 to a modest 1.9% in 2026, as the temporary boosts from AI investment and &quot;front-loading&quot; of imports dissipate amid rising geopolitical risks in the Middle East.  The 2026...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR:</strong> Global trade growth is projected to slow significantly from a surprisingly strong 4.6% in 2025 to a modest 1.9% in 2026, as the temporary boosts from AI investment and "front-loading" of imports dissipate amid rising geopolitical risks in the Middle East.</p>
 <h3>2026 Trade Projections and Economic Outlook</h3>
 <ul>
@@ -1237,9 +1269,9 @@ Thank you. Any other questions in the room? No, I don't see any other hands onli
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.3M)</span></span><span class="dot">&middot;</span><span>29:40</span><span class="dot">&middot;</span><span>4.5K views</span><span class="dot">&middot;</span><span>2026-03-19</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Cl%C3%A9ment%20Delangue%22">Clément Delangue<span class="chip-desc">CEO, Hugging Face</span></a> <a class="chip" href="index.html?q=%22Jensen%20Huang%22">Jensen Huang<span class="chip-desc">CEO, NVIDIA</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Nvidia recognized that they need everyone to be able to build AI, not just a few players.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Nvidia recognized that they need everyone to be able to build AI, not just a few players.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR: Nvidia is strategically pivoting from hardware-centric &quot;lock-in&quot; to an open-source platform model with NemoClaw to secure long-term dominance in the AI inference era and counter the growing global influence of Chinese open-source models.    The Shift to Inference: While...</div>
+                    <div class="sum-preview" id="preview-2">Nvidia is strategically pivoting from hardware-centric &quot;lock-in&quot; to an open-source platform model with NemoClaw to secure long-term dominance in the AI inference era and counter the growing global influence of Chinese open-source models.    The Shift to Inference: While...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong>: Nvidia is strategically pivoting from hardware-centric "lock-in" to an open-source platform model with NemoClaw to secure long-term dominance in the AI inference era and counter the growing global influence of Chinese open-source models.</p>
 <h3>Nvidia’s "Platform Moat" Strategy</h3>
 <ul>
@@ -1443,7 +1475,7 @@ We will see, you know, if Nvidia continues to stay the American open-source king
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI revolution is transitioning from simple generative chat to &quot;agentic&quot; systems that perform actual work, requiring a shift from standalone GPUs to massive, disaggregated &quot;AI Factories.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR The AI revolution is transitioning from simple generative chat to &quot;agentic&quot; systems that perform actual work, requiring a shift from standalone GPUs to massive, disaggregated &quot;AI Factories.&quot; This evolution is expected to drive a 10,000x increase in compute demand while...</div>
+                    <div class="sum-preview" id="preview-3">&quot; This evolution is expected to drive a 10,000x increase in compute demand while...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The AI revolution is transitioning from simple generative chat to "agentic" systems that perform actual work, requiring a shift from standalone GPUs to massive, disaggregated "AI Factories." This evolution is expected to drive a 10,000x increase in compute demand while fundamentally transforming $50 trillion in physical industries like robotics, biology, and manufacturing.</p>
 <h3>The Shift to AI Factories and Disaggregated Computing</h3>
@@ -1537,7 +1569,7 @@ We will see, you know, if Nvidia continues to stay the American open-source king
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Nineteen days into Operation Epic Fury, U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Nineteen days into Operation Epic Fury, U.S. forces have neutralized Iran’s air defenses and surface fleet while reducing incoming ballistic missile and drone attacks by 90%. Leadership remains committed to a &quot;total destruction&quot; strategy of Iran’s defense industrial base...</div>
+                    <div class="sum-preview" id="preview-4">forces have neutralized Iran’s air defenses and surface fleet while reducing incoming ballistic missile and drone attacks by 90%. Leadership remains committed to a &quot;total destruction&quot; strategy of Iran’s defense industrial base...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Nineteen days into Operation Epic Fury, U.S. forces have neutralized Iran’s air defenses and surface fleet while reducing incoming ballistic missile and drone attacks by 90%. Leadership remains committed to a "total destruction" strategy of Iran’s defense industrial base to permanently eliminate its nuclear and regional strike capabilities.</p>
 <h3>Strategic Objectives and Conflict Status</h3>
@@ -1788,7 +1820,7 @@ Israel clearly sent a warning, and POTUS has made it clear, very clear. Iran kno
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Federal Reserve is maintaining current interest rates as it navigates a &quot;difficult balance&quot; between persistent inflation—driven by tariffs and energy shocks—and emerging downside risks in the labor market.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR The Federal Reserve is maintaining current interest rates as it navigates a &quot;difficult balance&quot; between persistent inflation—driven by tariffs and energy shocks—and emerging downside risks in the labor market. While median projections still suggest rate cuts later this...</div>
+                    <div class="sum-preview" id="preview-5">While median projections still suggest rate cuts later this...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>The Federal Reserve is maintaining current interest rates as it navigates a "difficult balance" between persistent inflation—driven by tariffs and energy shocks—and emerging downside risks in the labor market. While median projections still suggest rate cuts later this year, Chair Jerome Powell emphasized that policy is not on a preset course and remains strictly data-dependent.</p>
 <h3>Monetary Policy and Interest Rate Projections</h3>
@@ -2115,7 +2147,7 @@ And I think it we just don't know that that answer ex ante going in. We'll just 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and Prime Minister Sanae Takaichi reaffirmed the U.S.-Japan alliance during a bilateral meeting centered on the &quot;obliteration&quot; of Iranian military capabilities, a $40 billion joint nuclear reactor project, and strategic cooperation on energy and critical minerals.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR President Trump and Prime Minister Sanae Takaichi reaffirmed the U.S.-Japan alliance during a bilateral meeting centered on the &quot;obliteration&quot; of Iranian military capabilities, a $40 billion joint nuclear reactor project, and strategic cooperation on energy and critical...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>President Trump and Prime Minister Sanae Takaichi reaffirmed the U.S.-Japan alliance during a bilateral meeting centered on the "obliteration" of Iranian military capabilities, a $40 billion joint nuclear reactor project, and strategic cooperation on energy and critical minerals.</p>
 <h3>Military Operations and Regional Security</h3>
@@ -2367,7 +2399,7 @@ It's much closer than any other source. It just... it seems a little cold compar
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Deepfake technology has evolved from a complex academic pursuit into a low-cost, highly accessible tool for sophisticated fraud and misinformation, shifting the burden of verification from the individual to a nascent infrastructure of digital watermarking and global regulation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Deepfake technology has evolved from a complex academic pursuit into a low-cost, highly accessible tool for sophisticated fraud and misinformation, shifting the burden of verification from the individual to a nascent infrastructure of digital watermarking and global...</div>
+                    <div class="sum-preview" id="preview-7"></div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Deepfake technology has evolved from a complex academic pursuit into a low-cost, highly accessible tool for sophisticated fraud and misinformation, shifting the burden of verification from the individual to a nascent infrastructure of digital watermarking and global regulation.</p>
 <h3>The Democratization of Synthetic Media</h3>
@@ -2633,7 +2665,7 @@ In the meantime, they are warping our sense of reality and identity, and as imag
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent reports that the Iranian regime is in a state of internal collapse and leadership &quot;decapitation&quot; following three weeks of U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Treasury Secretary Scott Bessent reports that the Iranian regime is in a state of internal collapse and leadership &quot;decapitation&quot; following three weeks of U.S. military strikes. To stabilize surging global energy prices, the Treasury is executing a &quot;physical intervention&quot;...</div>
+                    <div class="sum-preview" id="preview-8">military strikes. To stabilize surging global energy prices, the Treasury is executing a &quot;physical intervention&quot;...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent reports that the Iranian regime is in a state of internal collapse and leadership "decapitation" following three weeks of U.S. military strikes. To stabilize surging global energy prices, the Treasury is executing a "physical intervention" by unsanctioning millions of barrels of Russian and Iranian "oil on water" to flood the market and offset supply disruptions.</p>
 <h3>Iran Conflict and Regime Status</h3>
@@ -2826,7 +2858,7 @@ I want to get your take on the impact of this war on Iran. Of course, you are in
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>NBIM is navigating a shift from global cooperation to intense competition by integrating advanced scenario analysis and AI-driven monitoring to manage tail risks across its 20 trillion kroner portfolio.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">NBIM is navigating a shift from global cooperation to intense competition by integrating advanced scenario analysis and AI-driven monitoring to manage tail risks across its 20 trillion kroner portfolio. The fund emphasizes that geopolitical, concentration, and sustainability...</div>
+                    <div class="sum-preview" id="preview-9">The fund emphasizes that geopolitical, concentration, and sustainability...</div>
                     <div class="sum-full" id="full-9"><h3>TL;DR</h3>
 <p>NBIM is navigating a shift from global cooperation to intense competition by integrating advanced scenario analysis and AI-driven monitoring to manage tail risks across its 20 trillion kroner portfolio. The fund emphasizes that geopolitical, concentration, and sustainability risks are now primary financial drivers, necessitating a move from "predicting" the future to "preparing" for multiple volatile outcomes.</p>
 <h3>Geopolitical Shifts and Scenario Modeling</h3>
@@ -3419,7 +3451,7 @@ Don’t be shy, please ask questions to the presenters, and if you have any idea
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance and EPA Administrator Lee Zeldin addressed Michigan workers to highlight the administration's &quot;American Renaissance,&quot; emphasizing aggressive deregulation, a $1,400 increase in average take-home pay over 14 months, and a &quot;fairness-first&quot; trade policy with allies like Canada.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Vice President JD Vance and EPA Administrator Lee Zeldin addressed Michigan workers to highlight the administration's &quot;American Renaissance,&quot; emphasizing aggressive deregulation, a $1,400 increase in average take-home pay over 14 months, and a &quot;fairness-first&quot; trade policy...</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance and EPA Administrator Lee Zeldin addressed Michigan workers to highlight the administration's "American Renaissance," emphasizing aggressive deregulation, a $1,400 increase in average take-home pay over 14 months, and a "fairness-first" trade policy with allies like Canada.</p>
 <h3>Economic Growth &amp; Manufacturing Recovery</h3>
@@ -3703,7 +3735,7 @@ That is what we're trying to do in the Trump administration. Fourteen months in,
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Indigenous peoples represent only 6% of the global population but steward 60% of the world's landmass; their ancient knowledge of adaptation and relational governance offers a critical blueprint for transitioning global economies from extractive models to sustainable &quot;living systems.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Indigenous peoples represent only 6% of the global population but steward 60% of the world's landmass; their ancient knowledge of adaptation and relational governance offers a critical blueprint for transitioning global economies from extractive models to sustainable...</div>
+                    <div class="sum-preview" id="preview-11"></div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Indigenous peoples represent only 6% of the global population but steward 60% of the world's landmass; their ancient knowledge of adaptation and relational governance offers a critical blueprint for transitioning global economies from extractive models to sustainable "living systems."</p>
 <h3>The Scale and Resilience of Indigenous Stewardship</h3>

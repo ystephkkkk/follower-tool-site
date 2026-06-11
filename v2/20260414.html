@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The historical rules of building and defending a software company have been upended by AI.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR: AI has fundamentally altered the &quot;laws of physics&quot; for tech competition by making capital a viable substitute for time and eroding traditional software moats, necessitating a massive rebuild of physical infrastructure and a shift toward cryptographic trust systems. The...</div>
+                    <div class="sum-preview" id="preview-0">AI has fundamentally altered the &quot;laws of physics&quot; for tech competition by making capital a viable substitute for time and eroding traditional software moats, necessitating a massive rebuild of physical infrastructure and a shift toward cryptographic trust systems. The...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR:</strong> AI has fundamentally altered the "laws of physics" for tech competition by making capital a viable substitute for time and eroding traditional software moats, necessitating a massive rebuild of physical infrastructure and a shift toward cryptographic trust systems.</p>
 <h3>The New "Laws of Physics" for Software</h3>
 <p>The historical rules of building and defending a software company have been upended by AI.</p>
@@ -953,7 +985,7 @@ Well, on that note, Ben Horowitz at Andreessen Horowitz, thank you very much. Re
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vice President JD Vance outlined the administration’s aggressive crackdown on federal fraud, the strategic link between immigration and housing affordability, and the ongoing &quot;grand bargain&quot; negotiations with Iran, while defending the legacy of the late Charlie Kirk.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Vice President JD Vance outlined the administration’s aggressive crackdown on federal fraud, the strategic link between immigration and housing affordability, and the ongoing &quot;grand bargain&quot; negotiations with Iran, while defending the legacy of the late Charlie Kirk. ...</div>
+                    <div class="sum-preview" id="preview-1"></div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Vice President JD Vance outlined the administration’s aggressive crackdown on federal fraud, the strategic link between immigration and housing affordability, and the ongoing "grand bargain" negotiations with Iran, while defending the legacy of the late Charlie Kirk.</p>
 <h3>Federal Fraud Crackdown and Government Accountability</h3>
@@ -1428,9 +1460,9 @@ Yeah. Well, and there's I will say, by the way, just so you know, the DOJ just b
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/YY2f8pLntAhTaMQ_xFLn5SXh4ckFxlz1xe3hDHBovdeHsNZFrTfsinnPhP23jlw4K1Yej238ekw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Prof G Pod – Scott Galloway</b><span class="subs">(740.0K)</span></span><span class="dot">&middot;</span><span>43:06</span><span class="dot">&middot;</span><span>18.3K views</span><span class="dot">&middot;</span><span>2026-04-14</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Galloway%22">Scott Galloway<span class="chip-desc">Host, The Prof G Pod</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The fragile Middle East ceasefire has collapsed into a U.S.-led blockade of the Strait of Hormuz, placing China in a precarious position: Beijing is facing 50% tariff threats from the Trump administration over alleged military aid to Iran while simul...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The fragile Middle East ceasefire has collapsed into a U.S.-led blockade of the Strait of Hormuz, placing China in a precarious position: Beijing is facing 50% tariff threats from the Trump administration over alleged military aid to Iran while…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The fragile Middle East ceasefire has collapsed into a U.S.-led blockade of the Strait of Hormuz, placing China in a precarious position: Beijing is facing 50% tariff threats from the Trump administration over alleged military aid to Iran while simultaneously grappling...</div>
+                    <div class="sum-preview" id="preview-2">simultaneously grappling...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The fragile Middle East ceasefire has collapsed into a U.S.-led blockade of the Strait of Hormuz, placing China in a precarious position: Beijing is facing 50% tariff threats from the Trump administration over alleged military aid to Iran while simultaneously grappling with massive energy supply chain disruptions.</p>
 <h3>The Strait of Hormuz Blockade and Global Escalation</h3>
@@ -1749,7 +1781,7 @@ All right. Before we go, just a reminder. China Decode is now available on Subst
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Markets are nearing record highs as traders focus on resilient bank earnings and a potential de-escalation in the Middle East, with Iran considering a pause in maritime shipments to keep peace talks on the table.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Markets are nearing record highs as traders focus on resilient bank earnings and a potential de-escalation in the Middle East, with Iran considering a pause in maritime shipments to keep peace talks on the table.  Mixed Earnings Results: Major financial institutions...</div>
+                    <div class="sum-preview" id="preview-3">Mixed Earnings Results: Major financial institutions...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Markets are nearing record highs as traders focus on resilient bank earnings and a potential de-escalation in the Middle East, with Iran considering a pause in maritime shipments to keep peace talks on the table.</p>
 <h3>Banking &amp; Financial Markets</h3>
@@ -2613,7 +2645,7 @@ Coming up on tomorrow's show—show—Morgan Stanley CEO Ted Pick off the back o
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI industry is entering a &quot;geopolitical and governance war&quot; phase, characterized by the Musk vs.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR The AI industry is entering a &quot;geopolitical and governance war&quot; phase, characterized by the Musk vs. Altman $100B lawsuit, massive capital redirection toward Anthropic, and the rapid migration of AI intelligence into physical robotics and biological drug discovery.  The...</div>
+                    <div class="sum-preview" id="preview-4">Altman $100B lawsuit, massive capital redirection toward Anthropic, and the rapid migration of AI intelligence into physical robotics and biological drug discovery.  The...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>The AI industry is entering a "geopolitical and governance war" phase, characterized by the Musk vs. Altman $100B lawsuit, massive capital redirection toward Anthropic, and the rapid migration of AI intelligence into physical robotics and biological drug discovery.</p>
 <h3>Corporate Governance and Titan Rivalries</h3>
@@ -3415,7 +3447,7 @@ I put this into a two-minute read every week. If you'd like to get access to the
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The fundamental shift in marketing is that the &quot;visitor&quot; walking through the internet's front door has changed from a human seeking blue links to an AI agent synthesizing the web.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR The fundamental shift in marketing is that the &quot;visitor&quot; walking through the internet's front door has changed from a human seeking blue links to an AI agent synthesizing the web. To survive this transition, brands must pivot from traditional SEO to &quot;Agent-Led Growth,&quot;...</div>
+                    <div class="sum-preview" id="preview-5">To survive this transition, brands must pivot from traditional SEO to &quot;Agent-Led Growth,&quot;...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>The fundamental shift in marketing is that the "visitor" walking through the internet's front door has changed from a human seeking blue links to an AI agent synthesizing the web. To survive this transition, brands must pivot from traditional SEO to "Agent-Led Growth," providing original insights that influence how superintelligent models recommend products.</p>
 <h3>The Shift from SEO to Agent-Led Growth (ALG)</h3>
@@ -3629,9 +3661,9 @@ James, thank you for this conversation. I really loved peeling back the onion on
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/4BC0ntll3pg401CRl9pi_cXxVLayYpl6VGNjhIQfHp9GpTqlj3qwGDtgG_YABpXTiOec9GABBQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Invest Like The Best</b><span class="subs">(47.8K)</span></span><span class="dot">&middot;</span><span>84:22</span><span class="dot">&middot;</span><span>5.4K views</span><span class="dot">&middot;</span><span>2026-04-14</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Patrick%20O%27Shaughnessy%22">Patrick O'Shaughnessy<span class="chip-desc">Host, Invest Like The Best</span></a> <a class="chip" href="index.html?q=%22Scott%20Nolan%22">Scott Nolan<span class="chip-desc">Founder and CEO, General Matter</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Energy use in production is the ultimate proxy for human prosperity...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Energy use in production is the ultimate proxy for human…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR: Scott Nolan explores the strategic shift from investing in digital &quot;bits&quot; to building physical &quot;atoms,&quot; highlighting how his new venture, General Matter, aims to solve the critical bottleneck in American nuclear energy by restoring domestic uranium enrichment.    The...</div>
+                    <div class="sum-preview" id="preview-6">Scott Nolan explores the strategic shift from investing in digital &quot;bits&quot; to building physical &quot;atoms,&quot; highlighting how his new venture, General Matter, aims to solve the critical bottleneck in American nuclear energy by restoring domestic uranium enrichment.    The...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR:</strong> Scott Nolan explores the strategic shift from investing in digital "bits" to building physical "atoms," highlighting how his new venture, General Matter, aims to solve the critical bottleneck in American nuclear energy by restoring domestic uranium enrichment.</p>
 <h3>Contrarian Investing: Avoiding Trends and Stagnant Industries</h3>
 <ul>
@@ -4202,7 +4234,7 @@ The best AI and software companies from OpenAI to Cursor to Perplexity use WorkO
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AMD is pursuing a &quot;democratization&quot; strategy for the AI era by building an open ecosystem and modular hardware that spans from massive cloud clusters to local PCs, prioritizing security through confidential computing and energy efficiency to prevent a societal divide between &quot;AI haves and have-nots.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR AMD is pursuing a &quot;democratization&quot; strategy for the AI era by building an open ecosystem and modular hardware that spans from massive cloud clusters to local PCs, prioritizing security through confidential computing and energy efficiency to prevent a societal divide...</div>
+                    <div class="sum-preview" id="preview-7"></div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>AMD is pursuing a "democratization" strategy for the AI era by building an open ecosystem and modular hardware that spans from massive cloud clusters to local PCs, prioritizing security through confidential computing and energy efficiency to prevent a societal divide between "AI haves and have-nots."</p>
 <h3>Evolution Toward Distributed and Agentic AI</h3>
@@ -4498,7 +4530,7 @@ Thank you very much, Graham.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Cellcraft is a biomanufacturing platform leveraging &quot;physical AI&quot; and real-time analytics to make cultivated meat production scalable and cost-effective, positioning itself as a critical B2B infrastructure layer for the evolving global food industry.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Cellcraft is a biomanufacturing platform leveraging &quot;physical AI&quot; and real-time analytics to make cultivated meat production scalable and cost-effective, positioning itself as a critical B2B infrastructure layer for the evolving global food industry.  The Efficiency Gap:...</div>
+                    <div class="sum-preview" id="preview-8">The Efficiency Gap:...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Cellcraft is a biomanufacturing platform leveraging "physical AI" and real-time analytics to make cultivated meat production scalable and cost-effective, positioning itself as a critical B2B infrastructure layer for the evolving global food industry.</p>
 <h3>The Technology: Scaling "Physical AI"</h3>
@@ -4770,7 +4802,7 @@ Well thank you so much Clarisse for joining me, this was great to hear about all
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Quantum computing is transitioning from demonstrative experiments to integrated supercomputing systems.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR: NVIDIA has launched Ising, the world’s first family of open AI models specifically designed to solve the &quot;error correction&quot; bottleneck in quantum computing. By integrating AI-driven decoders and calibration tools into a hybrid classical-quantum stack, NVIDIA aims to...</div>
+                    <div class="sum-preview" id="preview-9">NVIDIA has launched Ising, the world’s first family of open AI models specifically designed to solve the &quot;error correction&quot; bottleneck in quantum computing. By integrating AI-driven decoders and calibration tools into a hybrid classical-quantum stack, NVIDIA aims to...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR:</strong> NVIDIA has launched <strong>Ising</strong>, the world’s first family of open AI models specifically designed to solve the "error correction" bottleneck in quantum computing. By integrating AI-driven decoders and calibration tools into a hybrid classical-quantum stack, NVIDIA aims to transition quantum hardware from experimental research to practical applications in drug discovery and material science.</p>
 <h3>The Quantum Inflection Point and the Noise Challenge</h3>
 <p>Quantum computing is transitioning from demonstrative experiments to integrated supercomputing systems. However, the fragility of quantum information remains the primary obstacle to commercial viability.</p>
@@ -4977,7 +5009,7 @@ You can start to develop for hybrid quantum classical systems. And yeah, it's re
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite media speculation, John Spencer asserts that the Trump administration has been &quot;beyond consistent&quot; regarding its four core goals:</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR: The United States and Israel have achieved unprecedented military success in &quot;Operation Epic Fury,&quot; systematically dismantling Iran’s leadership and military infrastructure through a historic decapitation strike and high-precision warfare. While the closing of the Strait...</div>
+                    <div class="sum-preview" id="preview-10">The United States and Israel have achieved unprecedented military success in &quot;Operation Epic Fury,&quot; systematically dismantling Iran’s leadership and military infrastructure through a historic decapitation strike and high-precision warfare. While the closing of the Strait...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR:</strong> The United States and Israel have achieved unprecedented military success in "Operation Epic Fury," systematically dismantling Iran’s leadership and military infrastructure through a historic decapitation strike and high-precision warfare. While the closing of the Strait of Hormuz remains a primary Iranian economic weapon, the war has demonstrated a level of U.S. military dominance that is forcing a strategic re-evaluation by global powers like China and Russia.</p>
 <h3>Current Military Status and "Operation Epic Fury"</h3>
 <ul>
@@ -5467,7 +5499,7 @@ This podcast is for informational purposes only and does not constitute investme
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Euro area economy has shifted below the ECB’s baseline and is currently tracking between its &quot;baseline&quot; and &quot;adverse&quot; scenarios due to significant energy shocks.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR The Euro area economy has shifted below the ECB’s baseline and is currently tracking between its &quot;baseline&quot; and &quot;adverse&quot; scenarios due to significant energy shocks. ECB President Christine Lagarde emphasizes a &quot;data-dependent&quot; and &quot;agile&quot; monetary policy aimed at...</div>
+                    <div class="sum-preview" id="preview-11">ECB President Christine Lagarde emphasizes a &quot;data-dependent&quot; and &quot;agile&quot; monetary policy aimed at...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>The Euro area economy has shifted below the ECB’s baseline and is currently tracking between its "baseline" and "adverse" scenarios due to significant energy shocks. ECB President Christine Lagarde emphasizes a "data-dependent" and "agile" monetary policy aimed at maintaining a 2% inflation target amidst high uncertainty.</p>
 <h3>Economic Outlook and Growth Scenarios</h3>
@@ -5663,7 +5695,7 @@ These are serious matters that we have to be attentive to and to keep under cont
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Reporters Ronan Farrow and Andrew Marantz reveal a pattern of material deception, the systematic dismantling of safety guardrails, and the circumvention of corporate governance at OpenAI under Sam Altman, raising urgent questions about the legal and ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Reporters Ronan Farrow and Andrew Marantz reveal a pattern of material deception, the systematic dismantling of safety guardrails, and the circumvention of corporate governance at OpenAI under Sam Altman, raising urgent questions about the legal and national security...</div>
+                    <div class="sum-preview" id="preview-12">national security...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Reporters Ronan Farrow and Andrew Marantz reveal a pattern of material deception, the systematic dismantling of safety guardrails, and the circumvention of corporate governance at OpenAI under Sam Altman, raising urgent questions about the legal and national security implications of his "supra-governmental" power.</p>
 <h3>Corporate Governance and the WilmerHale Review</h3>
@@ -5754,9 +5786,9 @@ These are serious matters that we have to be attentive to and to keep under cont
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/bCcVVrrV0EhGFJKsSvmeZHA9Y-YzSL9Keqrrr0HWYUPQy3-mVUVNHMbjwt7IoVkpsHt4E6BZ3pM=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Reuters</b><span class="subs">(4.2M)</span></span><span class="dot">&middot;</span><span>43:17</span><span class="dot">&middot;</span><span>4.0K views</span><span class="dot">&middot;</span><span>2026-04-14</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">U.S. Treasury Secretary</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent and Bjorn Lomborg called for the IMF and World Bank to abandon &quot;climate fixation&quot; and &quot;luxury beliefs&quot; to refocus on their core missions: driving global economic growth, ensuring financial stability, and alleviating p...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent and Bjorn Lomborg called for the IMF and World Bank to abandon &quot;climate fixation&quot; and &quot;luxury beliefs&quot; to refocus on their core missions: driving global economic growth, ensuring financial stability, and alleviating…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Treasury Secretary Scott Bessent and Bjorn Lomborg called for the IMF and World Bank to abandon &quot;climate fixation&quot; and &quot;luxury beliefs&quot; to refocus on their core missions: driving global economic growth, ensuring financial stability, and alleviating poverty through reliable...</div>
+                    <div class="sum-preview" id="preview-13">poverty through reliable...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent and Bjorn Lomborg called for the IMF and World Bank to abandon "climate fixation" and "luxury beliefs" to refocus on their core missions: driving global economic growth, ensuring financial stability, and alleviating poverty through reliable energy and infrastructure.</p>
 <h3>Refocusing Multilateral Institutions on Core Missions</h3>
@@ -6007,7 +6039,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent and Bjorn Lomborg argue that the IMF and World Bank must abandon &quot;elite-driven&quot; climate fixations and return to their core missions of fostering economic growth, financial stability, and poverty reduction through energy abundance and cost-benefit analysis.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR Treasury Secretary Scott Bessent and Bjorn Lomborg argue that the IMF and World Bank must abandon &quot;elite-driven&quot; climate fixations and return to their core missions of fostering economic growth, financial stability, and poverty reduction through energy abundance and...</div>
+                    <div class="sum-preview" id="preview-14"></div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent and Bjorn Lomborg argue that the IMF and World Bank must abandon "elite-driven" climate fixations and return to their core missions of fostering economic growth, financial stability, and poverty reduction through energy abundance and cost-benefit analysis.</p>
 <h3>Refocusing Multilateral Institutions</h3>
@@ -6275,7 +6307,7 @@ Global income inequality has actually dropped. Literacy rates and school enrollm
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent outlines a &quot;maximum pressure&quot; campaign against Iran via &quot;Operation Economic Fury&quot; while projecting resilient U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Treasury Secretary Scott Bessent outlines a &quot;maximum pressure&quot; campaign against Iran via &quot;Operation Economic Fury&quot; while projecting resilient U.S. GDP growth of 3% to 3.5% and prioritizing strategic &quot;de-risking&quot; over &quot;decoupling&quot; in the U.S.-China trade relationship.   ...</div>
+                    <div class="sum-preview" id="preview-15">GDP growth of 3% to 3.5% and prioritizing strategic &quot;de-risking&quot; over &quot;decoupling&quot; in the U.S.-China trade relationship.   ...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent outlines a "maximum pressure" campaign against Iran via "Operation Economic Fury" while projecting resilient U.S. GDP growth of 3% to 3.5% and prioritizing strategic "de-risking" over "decoupling" in the U.S.-China trade relationship.</p>
 <h3>Operation Economic Fury and Global Sanctions</h3>
@@ -6542,7 +6574,7 @@ I I would agree with that and and on that optimistic note, I want to thank you M
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Lucid has appointed former Schindler head Silvio Napoli as CEO to transition the company from an engineering-focused startup into a sustainable global business, supported by a fresh $750 million capital injection from Saudi Arabia’s PIF and Uber.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR Lucid has appointed former Schindler head Silvio Napoli as CEO to transition the company from an engineering-focused startup into a sustainable global business, supported by a fresh $750 million capital injection from Saudi Arabia’s PIF and Uber.    Shift from Product to...</div>
+                    <div class="sum-preview" id="preview-16">Shift from Product to...</div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>Lucid has appointed former Schindler head Silvio Napoli as CEO to transition the company from an engineering-focused startup into a sustainable global business, supported by a fresh $750 million capital injection from Saudi Arabia’s PIF and Uber.</p>
 <h3>Leadership Transition and Business Sustainability</h3>
@@ -6655,7 +6687,7 @@ Silvio, when you and I speak in one year's time, what are the metrics by which y
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>ElevenLabs is evolving from a text-to-speech tool into a foundational audio AI platform, utilizing transformer-based models to achieve human-like emotional inflection and real-time conversational &quot;agents.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR ElevenLabs is evolving from a text-to-speech tool into a foundational audio AI platform, utilizing transformer-based models to achieve human-like emotional inflection and real-time conversational &quot;agents.&quot; By treating speech as a contextual prediction problem rather than a...</div>
+                    <div class="sum-preview" id="preview-17">&quot; By treating speech as a contextual prediction problem rather than a...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>ElevenLabs is evolving from a text-to-speech tool into a foundational audio AI platform, utilizing transformer-based models to achieve human-like emotional inflection and real-time conversational "agents." By treating speech as a contextual prediction problem rather than a set of hard-coded rules, the company is bridging the gap between human expression and digital accessibility.</p>
 <h3>Technical Architecture and Innovation</h3>

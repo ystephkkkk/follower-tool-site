@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Broadcom is prioritizing massive organic growth over mergers and acquisitions, leveraging custom AI silicon partnerships with Google and OpenAI to drive record-breaking revenues.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR  Broadcom is prioritizing massive organic growth over mergers and acquisitions, leveraging custom AI silicon partnerships with Google and OpenAI to drive record-breaking revenues. CEO Hock Tan remains focused on &quot;out-engineering&quot; competitors and capturing insatiable...</div>
+                    <div class="sum-preview" id="preview-0">CEO Hock Tan remains focused on &quot;out-engineering&quot; competitors and capturing insatiable...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Broadcom is prioritizing massive organic growth over mergers and acquisitions, leveraging custom AI silicon partnerships with Google and OpenAI to drive record-breaking revenues. CEO Hock Tan remains focused on "out-engineering" competitors and capturing insatiable enterprise demand for AI networking and compute infrastructure.</p>
 <h3>Custom Silicon &amp; High-Profile Partnerships</h3>
@@ -870,7 +902,7 @@ And demand, as I said, for AI and AI networking today is just massive. So it's o
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite a minor post-earnings stock dip caused by lofty market expectations, CrowdStrike delivered strong Q1 results and raised its full-year ARR guidance by over $50 million, fueled by a 250% quarter-over-quarter surge in its AI pipeline.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR  Despite a minor post-earnings stock dip caused by lofty market expectations, CrowdStrike delivered strong Q1 results and raised its full-year ARR guidance by over $50 million, fueled by a 250% quarter-over-quarter surge in its AI pipeline.  Key Financial Metrics:    ...</div>
+                    <div class="sum-preview" id="preview-1">Key Financial Metrics:    ...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Despite a minor post-earnings stock dip caused by lofty market expectations, CrowdStrike delivered strong Q1 results and raised its full-year ARR guidance by over $50 million, fueled by a 250% quarter-over-quarter surge in its AI pipeline.</p>
 <h3>Financial Performance and Raised Outlook</h3>
@@ -1020,9 +1052,9 @@ And, you know, we come at it just from a different approach of how we drive inno
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>31:15</span><span class="dot">&middot;</span><span>69.3K views</span><span class="dot">&middot;</span><span>2026-06-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Dan%20Loeb%22">Dan Loeb<span class="chip-desc">Founder, Third Point</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Dan Loeb, CEO and CIO of Third Point, outlines his evolution from an early internet activist investor to managing a $30 billion multi-strategy platform, emphasizing the return of disciplined short selling, the transition toward quality- and AI-driven...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Dan Loeb, CEO and CIO of Third Point, outlines his evolution from an early internet activist investor to managing a $30 billion multi-strategy platform, emphasizing the return of disciplined short selling, the transition toward quality- and…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR   Dan Loeb, CEO and CIO of Third Point, outlines his evolution from an early internet activist investor to managing a $30 billion multi-strategy platform, emphasizing the return of disciplined short selling, the transition toward quality- and AI-driven investing, and his...</div>
+                    <div class="sum-preview" id="preview-2">AI-driven investing, and his...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Dan Loeb, CEO and CIO of Third Point, outlines his evolution from an early internet activist investor to managing a $30 billion multi-strategy platform, emphasizing the return of disciplined short selling, the transition toward quality- and AI-driven investing, and his successful philanthropic campaign to secure the presidential pardon of Silk Road founder Ross Ulbricht.</p>
 <h3>The Evolution of Third Point's Investment Strategy</h3>
@@ -1286,7 +1318,7 @@ Thank you to our partners: NYSE, EY, Athena, Polymarket, S-AI, Ondo, Forge, Plau
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Following a $5 billion funding round at a $134 billion valuation, Databricks is experiencing unprecedented, agent-driven growth and is expanding into the cybersecurity market with its new product, Lakewatch.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">Following a $5 billion funding round at a $134 billion valuation, Databricks is experiencing unprecedented, agent-driven growth and is expanding into the cybersecurity market with its new product, Lakewatch. CEO Ali Ghodsi views 2026 as a highly unfavorable year for an IPO due...</div>
+                    <div class="sum-preview" id="preview-3">CEO Ali Ghodsi views 2026 as a highly unfavorable year for an IPO due...</div>
                     <div class="sum-full" id="full-3"><h3>TL;DR</h3>
 <p>Following a $5 billion funding round at a $134 billion valuation, Databricks is experiencing unprecedented, agent-driven growth and is expanding into the cybersecurity market with its new product, Lakewatch. CEO Ali Ghodsi views 2026 as a highly unfavorable year for an IPO due to macroeconomic instability, choosing instead to remain private and potentially raise more capital as agentic AI and open-source models reshape enterprise tech.</p>
 <h3>Capital Allocation and Business Acceleration</h3>
@@ -1511,7 +1543,7 @@ So I think there's just going to be a bigger supply in the private markets for c
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">The U.S. Department of Agriculture (USDA) has modernized its fragmented, $1 billion-per-year legacy IT infrastructure using Palantir to establish the &quot;One Farmer, One File&quot; ontology. This secure, AI-ready data foundation has streamlined acreage reporting and facilitated the...</div>
+                    <div class="sum-preview" id="preview-4">Department of Agriculture (USDA) has modernized its fragmented, $1 billion-per-year legacy IT infrastructure using Palantir to establish the &quot;One Farmer, One File&quot; ontology. This secure, AI-ready data foundation has streamlined acreage reporting and facilitated the...</div>
                     <div class="sum-full" id="full-4"><h3>TL;DR</h3>
 <p>The U.S. Department of Agriculture (USDA) has modernized its fragmented, $1 billion-per-year legacy IT infrastructure using Palantir to establish the "One Farmer, One File" ontology. This secure, AI-ready data foundation has streamlined acreage reporting and facilitated the fastest capital injection in USDA history, distributing $4.4 billion to farmers in just five days.</p>
 <h3>Overcoming Legacy System Fragmentation and Failed Modernization</h3>
@@ -1656,9 +1688,9 @@ We have a president, a cabinet, and a general rising political class that is rel
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/btm1_PK-7VRUr9GY2D0UV_2XfbUZPBjghyptjSO1crsfN86HyTYDWPmUbq7JxC3H0Lxe_s067nA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>NVIDIA</b><span class="subs">(2.2M)</span></span><span class="dot">&middot;</span><span>12:59</span><span class="dot">&middot;</span><span>8.2K views</span><span class="dot">&middot;</span><span>2026-06-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jensen%20Huang%22">Jensen Huang<span class="chip-desc">CEO, NVIDIA</span></a> <a class="chip" href="index.html?q=%22Michael%20Dell%22">Michael Dell<span class="chip-desc">CEO, Dell</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>NVIDIA CEO Jensen Huang and Dell Technologies CEO Michael Dell unveiled the next generation of the Dell AI Factory powered by NVIDIA, highlighting the transition to autonomous &quot;agentic&quot; AI systems that run across a unified architecture scaling from l...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>NVIDIA CEO Jensen Huang and Dell Technologies CEO Michael Dell unveiled the next generation of the Dell AI Factory powered by NVIDIA, highlighting the transition to autonomous &quot;agentic&quot; AI systems that run across a unified architecture scaling from…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR  NVIDIA CEO Jensen Huang and Dell Technologies CEO Michael Dell unveiled the next generation of the Dell AI Factory powered by NVIDIA, highlighting the transition to autonomous &quot;agentic&quot; AI systems that run across a unified architecture scaling from local desktop...</div>
+                    <div class="sum-preview" id="preview-5">local desktop...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>NVIDIA CEO Jensen Huang and Dell Technologies CEO Michael Dell unveiled the next generation of the Dell AI Factory powered by NVIDIA, highlighting the transition to autonomous "agentic" AI systems that run across a unified architecture scaling from local desktop workstations to massive enterprise racks.</p>
 <h3>The Rise of Agentic AI and Parabolic Compute Demand</h3>
@@ -1815,7 +1847,7 @@ Buy Dell!</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Donald Trump announced a massive $700 million federal revitalization of the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR  President Donald Trump announced a massive $700 million federal revitalization of the U.S. coal sector—including invoking the Defense Production Act to save 13 coal plants—while declaring that a major bilateral trade deal with India is &quot;around the corner&quot; despite...</div>
+                    <div class="sum-preview" id="preview-6">coal sector—including invoking the Defense Production Act to save 13 coal plants—while declaring that a major bilateral trade deal with India is &quot;around the corner&quot; despite...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>President Donald Trump announced a massive $700 million federal revitalization of the U.S. coal sector—including invoking the Defense Production Act to save 13 coal plants—while declaring that a major bilateral trade deal with India is "around the corner" despite historical tariff imbalances.</p>
 <h3>## Revitalizing Coal and Securing U.S. Energy Dominance</h3>
@@ -3108,7 +3140,7 @@ So now I'd like to ask Secretary Burgum to say a few words, followed by Secretar
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Legora (YC W24) scaled to over $100M ARR in just 18 months by bundling core legal workflows, leveraging aggressive sales tactics, and securing top-tier venture backing from Benchmark.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Legora (YC W24) scaled to over $100M ARR in just 18 months by bundling core legal workflows, leveraging aggressive sales tactics, and securing top-tier venture backing from Benchmark. The company is now transitioning from task-augmentation features to fully autonomous AI...</div>
+                    <div class="sum-preview" id="preview-7">The company is now transitioning from task-augmentation features to fully autonomous AI...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Legora (YC W24) scaled to over $100M ARR in just 18 months by bundling core legal workflows, leveraging aggressive sales tactics, and securing top-tier venture backing from Benchmark. The company is now transitioning from task-augmentation features to fully autonomous AI agents as it aims to build Europe’s next giant tech conglomerate.</p>
 <h3>The Jude Law Campaign &amp; Creative Brand Strategy</h3>
@@ -3351,7 +3383,7 @@ And so what we think a lot about is what are the inputs and outputs, what is the
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Coinbase CEO Brian Armstrong defends the crypto industry's push for clear regulatory frameworks under the Clarity Act, emphasizing that crypto's massive bipartisan grassroots base and highly funded PACs are successfully reshaping Washington's legislative and political landscape.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR  Coinbase CEO Brian Armstrong defends the crypto industry's push for clear regulatory frameworks under the Clarity Act, emphasizing that crypto's massive bipartisan grassroots base and highly funded PACs are successfully reshaping Washington's legislative and political...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Coinbase CEO Brian Armstrong defends the crypto industry's push for clear regulatory frameworks under the Clarity Act, emphasizing that crypto's massive bipartisan grassroots base and highly funded PACs are successfully reshaping Washington's legislative and political landscape.</p>
 <p>***</p>
@@ -3709,7 +3741,7 @@ What questions would you like us to ask him? Shoot us a text or leave us a voice
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>At Bloomberg Tech 2026, Meta’s Chief AI Officer Alexandr Wang discussed the company's aggressive transition toward frontier AI capabilities, highlighting the success of its &quot;Muse Spark&quot; model and its upcoming competitive &quot;entree&quot; model.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR At Bloomberg Tech 2026, Meta’s Chief AI Officer Alexandr Wang discussed the company's aggressive transition toward frontier AI capabilities, highlighting the success of its &quot;Muse Spark&quot; model and its upcoming competitive &quot;entree&quot; model. He addressed Meta's pivot away from...</div>
+                    <div class="sum-preview" id="preview-9">He addressed Meta's pivot away from...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>At Bloomberg Tech 2026, Meta’s Chief AI Officer Alexandr Wang discussed the company's aggressive transition toward frontier AI capabilities, highlighting the success of its "Muse Spark" model and its upcoming competitive "entree" model. He addressed Meta's pivot away from blanket open-sourcing due to bio-risk triggers and outlined a future where highly personal, multimodal AI agents redefine human-technology interaction.</p>
 <h3>Meta's Scaling Strategy and the Transition to Frontier Models</h3>
@@ -3922,7 +3954,7 @@ Well, I think it's always a balance. You know, regulation is notoriously difficu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Meta is internally planning a consumer-focused AI agent named &quot;Hatch&quot; targeting a $200-a-month premium tier, while Sam Altman-backed fusion energy startup Helion has raised $465 million at a $15.5 billion valuation to accelerate its power plant manufacturing.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR  Meta is internally planning a consumer-focused AI agent named &quot;Hatch&quot; targeting a $200-a-month premium tier, while Sam Altman-backed fusion energy startup Helion has raised $465 million at a $15.5 billion valuation to accelerate its power plant manufacturing. ** ...</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Meta is internally planning a consumer-focused AI agent named "Hatch" targeting a $200-a-month premium tier, while Sam Altman-backed fusion energy startup Helion has raised $465 million at a $15.5 billion valuation to accelerate its power plant manufacturing.</p>
 <p>***</p>
@@ -4283,7 +4315,7 @@ That does it for today's show. A reminder: we are on this stream Monday through 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The future of corporate competitiveness depends on a firm's ability to compound the returns of human capital alongside &quot;token capital&quot;—the proprietary, tacit knowledge of an enterprise encoded into digital workflows.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR   The future of corporate competitiveness depends on a firm's ability to compound the returns of human capital alongside &quot;token capital&quot;—the proprietary, tacit knowledge of an enterprise encoded into digital workflows. To capture this value safely, organizations must shift...</div>
+                    <div class="sum-preview" id="preview-11">To capture this value safely, organizations must shift...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>The future of corporate competitiveness depends on a firm's ability to compound the returns of human capital alongside "token capital"—the proprietary, tacit knowledge of an enterprise encoded into digital workflows. To capture this value safely, organizations must shift from basic chatbot interfaces to highly auditable agentic development environments while ensuring AI infrastructure is optimized for economic and token efficiency.</p>
 <h3>The Dual Engine of the Firm: Human and Token Capital</h3>
@@ -4608,7 +4640,7 @@ Possible is produced by Pallet Media. It's hosted by Aria Finger and me, Reid Ho
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>SpaceX’s transition into AI has dramatically spiked its capital intensity—with its CapEx-to-revenue ratio surging from 42% to 215%—while broader market trends face headwinds from underpriced AI token models, rising private credit redemptions, and an artificially frozen housing market.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR   SpaceX’s transition into AI has dramatically spiked its capital intensity—with its CapEx-to-revenue ratio surging from 42% to 215%—while broader market trends face headwinds from underpriced AI token models, rising private credit redemptions, and an artificially frozen...</div>
+                    <div class="sum-preview" id="preview-12"></div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>SpaceX’s transition into AI has dramatically spiked its capital intensity—with its CapEx-to-revenue ratio surging from 42% to 215%—while broader market trends face headwinds from underpriced AI token models, rising private credit redemptions, and an artificially frozen housing market.</p>
 <p>***</p>
@@ -4825,7 +4857,7 @@ This podcast is for informational purposes only and does not constitute investme
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Haun Ventures has launched a new $1 billion fund targeting the &quot;new economy&quot; and the future of finance, focusing heavily on building 24/7 global financial infrastructure and cryptographic rails designed specifically for autonomous AI agents.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR  Haun Ventures has launched a new $1 billion fund targeting the &quot;new economy&quot; and the future of finance, focusing heavily on building 24/7 global financial infrastructure and cryptographic rails designed specifically for autonomous AI agents. Katie Haun, Founder &amp; CEO of...</div>
+                    <div class="sum-preview" id="preview-13">Katie Haun, Founder &amp; CEO of...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Haun Ventures has launched a new $1 billion fund targeting the "new economy" and the future of finance, focusing heavily on building 24/7 global financial infrastructure and cryptographic rails designed specifically for autonomous AI agents.</p>
 <h3>The Three Structural Shifts of the "New Economy"</h3>

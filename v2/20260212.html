@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR The U.S. economy is undergoing a &quot;reprivatization&quot; as January job data shows robust private-sector growth and a contraction in government payrolls, though significant headwinds remain in the form of high housing costs and &quot;egregious&quot; credit card interest rates. Treasury...</div>
+                    <div class="sum-preview" id="preview-0">economy is undergoing a &quot;reprivatization&quot; as January job data shows robust private-sector growth and a contraction in government payrolls, though significant headwinds remain in the form of high housing costs and &quot;egregious&quot; credit card interest rates. Treasury...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>The U.S. economy is undergoing a "reprivatization" as January job data shows robust private-sector growth and a contraction in government payrolls, though significant headwinds remain in the form of high housing costs and "egregious" credit card interest rates.</p>
 <h3>The "Reprivatization" of the Workforce</h3>
@@ -782,7 +814,7 @@ In the immediate future, market watchers are looking to the Consumer Price Index
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>While AI-driven &quot;scare trades&quot; have recently pressured financial stocks, industry leaders view AI as a significant productivity tailwind rather than a disruptive threat, as traditional banks aggressively outspend fintech rivals to integrate automation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR While AI-driven &quot;scare trades&quot; have recently pressured financial stocks, industry leaders view AI as a significant productivity tailwind rather than a disruptive threat, as traditional banks aggressively outspend fintech rivals to integrate automation.  Market Volatility:...</div>
+                    <div class="sum-preview" id="preview-1">Market Volatility:...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>While AI-driven "scare trades" have recently pressured financial stocks, industry leaders view AI as a significant productivity tailwind rather than a disruptive threat, as traditional banks aggressively outspend fintech rivals to integrate automation.</p>
 <h3>AI Disruption and the "Scare Trade"</h3>
@@ -861,7 +893,7 @@ Looking ahead, the financial services landscape will continue to shift toward mo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Anthropic CEO Dario Amodei outlines a future of radical abundance—including the eradication of major diseases and massive GDP growth—tempered by the &quot;bloodbath&quot; of rapid white-collar job displacement and the urgent need for &quot;Constitutional AI&quot; to prevent rogue autonomy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Anthropic CEO Dario Amodei outlines a future of radical abundance—including the eradication of major diseases and massive GDP growth—tempered by the &quot;bloodbath&quot; of rapid white-collar job displacement and the urgent need for &quot;Constitutional AI&quot; to prevent rogue autonomy. ...</div>
+                    <div class="sum-preview" id="preview-2"></div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Anthropic CEO Dario Amodei outlines a future of radical abundance—including the eradication of major diseases and massive GDP growth—tempered by the "bloodbath" of rapid white-collar job displacement and the urgent need for "Constitutional AI" to prevent rogue autonomy.</p>
 <h3>The Promise: A "Country of Geniuses" and Biological Breakthroughs</h3>
@@ -983,7 +1015,7 @@ The poem itself is famously ambiguous and can be interpreted as ironic, literal,
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bayer CEO Bill Anderson is dismantling corporate bureaucracy by flattening 11 layers of management into six, replacing annual budgeting with 90-day agile cycles, and shifting the role of leadership from &quot;command and control&quot; to a &quot;span of coaching.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Bayer CEO Bill Anderson is dismantling corporate bureaucracy by flattening 11 layers of management into six, replacing annual budgeting with 90-day agile cycles, and shifting the role of leadership from &quot;command and control&quot; to a &quot;span of coaching.&quot;  Structural...</div>
+                    <div class="sum-preview" id="preview-3">&quot;  Structural...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Bayer CEO Bill Anderson is dismantling corporate bureaucracy by flattening 11 layers of management into six, replacing annual budgeting with 90-day agile cycles, and shifting the role of leadership from "command and control" to a "span of coaching."</p>
 <h3>Radical Organizational Flattening</h3>
@@ -1177,9 +1209,9 @@ Finally, while professional managers are necessary as a company scales toward a 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/kUa_ydk-cYKrVa3F2Xbrs54qzmIXl6ZCuSgrJR6lIMWj-VqZLtycN7M4DvxyeewPY3ldF3vL=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Stripe</b><span class="subs">(87.4K)</span></span><span class="dot">&middot;</span><span>90:25</span><span class="dot">&middot;</span><span>16.3K views</span><span class="dot">&middot;</span><span>2026-02-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Ben%20Thompson%22">Ben Thompson<span class="chip-desc">Founder, Stratechery</span></a> <a class="chip" href="index.html?q=%22John%20Collison%22">John Collison<span class="chip-desc">Co-founder, Stripe</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The internet economy is transitioning from seat-based SaaS and social networks to AI-mediated &quot;agentic commerce,&quot; where the primary risks are a looming 2029 hardware bottleneck and a failure by Western regulators to recognize that algorithmic control...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The internet economy is transitioning from seat-based SaaS and social networks to AI-mediated &quot;agentic commerce,&quot; where the primary risks are a looming 2029 hardware bottleneck and a failure by Western regulators to recognize that algorithmic…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR The internet economy is transitioning from seat-based SaaS and social networks to AI-mediated &quot;agentic commerce,&quot; where the primary risks are a looming 2029 hardware bottleneck and a failure by Western regulators to recognize that algorithmic control, not data privacy, is...</div>
+                    <div class="sum-preview" id="preview-4">control, not data privacy, is...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>The internet economy is transitioning from seat-based SaaS and social networks to AI-mediated "agentic commerce," where the primary risks are a looming 2029 hardware bottleneck and a failure by Western regulators to recognize that algorithmic control, not data privacy, is the true center of geopolitical power.</p>
 <h3>AI Advertising and the Shift to Agentic Commerce</h3>
@@ -1280,9 +1312,9 @@ And I text him stuff and his job is to maintain my &quot;Getting Things Done&quo
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/YcZBvQdSLEcRd-xEK9RShortDQCUNSVmzFUYywxm32-C_F02g1n-EATrz6Hh1mBvEoqhXdEq=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Tetragrammaton with Rick Rubin</b><span class="subs">(146.0K)</span></span><span class="dot">&middot;</span><span>105:54</span><span class="dot">&middot;</span><span>1.9K views</span><span class="dot">&middot;</span><span>2026-02-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Bill%20Gurley%22">Bill Gurley<span class="chip-desc">General Partner, Benchmark</span></a> <a class="chip" href="index.html?q=%22Rick%20Rubin%22">Rick Rubin<span class="chip-desc">Host, Tetragrammaton</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The biggest error that a venture capitalist can make is to miss an opportunity that's really big, because you can only lose one time.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The biggest error that a venture capitalist can make is to miss an opportunity that's really big, because you can only lose one time.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR: Renowned venture capitalist Bill Gurley discusses the mechanics of high-stakes investing, the importance of &quot;fascination&quot; over &quot;passion&quot; in career mastery, and his shift from active investing at Benchmark toward influencing public policy and &quot;disinhibiting&quot; others through...</div>
+                    <div class="sum-preview" id="preview-5">Renowned venture capitalist Bill Gurley discusses the mechanics of high-stakes investing, the importance of &quot;fascination&quot; over &quot;passion&quot; in career mastery, and his shift from active investing at Benchmark toward influencing public policy and &quot;disinhibiting&quot; others through...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR:</strong> Renowned venture capitalist Bill Gurley discusses the mechanics of high-stakes investing, the importance of "fascination" over "passion" in career mastery, and his shift from active investing at Benchmark toward influencing public policy and "disinhibiting" others through his book, *Running Down a Dream*.</p>
 <h3>The Venture Capital Mindset and the "Google Error"</h3>
 <ul>
@@ -1422,7 +1454,7 @@ Outside of work, I find joy in reading, music, and the pageantry of college foot
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former White House trade adviser Peter Navarro asserts that chronic trade deficits are &quot;toxic&quot; to the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Former White House trade adviser Peter Navarro asserts that chronic trade deficits are &quot;toxic&quot; to the U.S. economy and national security, advocating for a &quot;bespoke,&quot; country-specific tariff strategy to reach a zero-trade deficit goal and repatriate manufacturing. ...</div>
+                    <div class="sum-preview" id="preview-6">economy and national security, advocating for a &quot;bespoke,&quot; country-specific tariff strategy to reach a zero-trade deficit goal and repatriate manufacturing. ...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Former White House trade adviser Peter Navarro asserts that chronic trade deficits are "toxic" to the U.S. economy and national security, advocating for a "bespoke," country-specific tariff strategy to reach a zero-trade deficit goal and repatriate manufacturing.</p>
 <h3>The Structural Shift in U.S. Trade Policy</h3>
@@ -1509,9 +1541,9 @@ Finally, the administration’s tariff policies are currently under review by th
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.3M)</span></span><span class="dot">&middot;</span><span>14:26</span><span class="dot">&middot;</span><span>4.0K views</span><span class="dot">&middot;</span><span>2026-02-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Raj%20Subramaniam%22">Raj Subramaniam<span class="chip-desc">CEO, FedEx</span></a> <a class="chip" href="index.html?q=%22Morgan%20Brennan%22">Morgan Brennan<span class="chip-desc">Anchor, CNBC</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;We were sitting on the intelligence of the world's supply chain...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;We were sitting on the intelligence of the world's supply…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR: FedEx is executing a fundamental &quot;One FedEx&quot; transformation to transition from a physical logistics provider to a data-driven supply chain orchestrator, projecting a 13–14% operating income CAGR through 2027 despite modest revenue growth.  Growth Projections: CEO Raj...</div>
+                    <div class="sum-preview" id="preview-7">FedEx is executing a fundamental &quot;One FedEx&quot; transformation to transition from a physical logistics provider to a data-driven supply chain orchestrator, projecting a 13–14% operating income CAGR through 2027 despite modest revenue growth.  Growth Projections: CEO Raj...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR:</strong> FedEx is executing a fundamental "One FedEx" transformation to transition from a physical logistics provider to a data-driven supply chain orchestrator, projecting a 13–14% operating income CAGR through 2027 despite modest revenue growth.</p>
 <h3>Strategic Financial Outlook</h3>
 <ul>
@@ -1588,7 +1620,7 @@ Finally, FedEx remains on track to spin off its freight business in June. This m
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Former Trump economic adviser Steve Moore expresses strong optimism for 3–5% U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Former Trump economic adviser Steve Moore expresses strong optimism for 3–5% U.S. GDP growth driven by deregulation and tax cuts, though he maintains a &quot;Reagan-style&quot; preference for free trade and a strong dollar that occasionally diverges from President Trump’s...</div>
+                    <div class="sum-preview" id="preview-8">GDP growth driven by deregulation and tax cuts, though he maintains a &quot;Reagan-style&quot; preference for free trade and a strong dollar that occasionally diverges from President Trump’s...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Former Trump economic adviser Steve Moore expresses strong optimism for 3–5% U.S. GDP growth driven by deregulation and tax cuts, though he maintains a "Reagan-style" preference for free trade and a strong dollar that occasionally diverges from President Trump’s protectionist leanings.</p>
 <h3>Economic Indicators and 2026 Outlook</h3>
@@ -1676,7 +1708,7 @@ Regarding monetary policy, the nomination of Kevin Warsh to the Federal Reserve 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Mainstream Western media and government-funded think tanks act as the &quot;ideological tip of the spear&quot; for U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Mainstream Western media and government-funded think tanks act as the &quot;ideological tip of the spear&quot; for U.S. regime change operations by systematically manufacturing consent through disinformation, economic warfare, and the cultivation of local opposition forces.  The...</div>
+                    <div class="sum-preview" id="preview-9">regime change operations by systematically manufacturing consent through disinformation, economic warfare, and the cultivation of local opposition forces.  The...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Mainstream Western media and government-funded think tanks act as the "ideological tip of the spear" for U.S. regime change operations by systematically manufacturing consent through disinformation, economic warfare, and the cultivation of local opposition forces.</p>
 <h3>The Mechanics of Media Disinformation</h3>
@@ -1763,9 +1795,9 @@ To counter this environment of misinformation, MacLeod suggests that individuals
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_ndI2xm7Vhj_ZGTdd1hmWfv40vS_Pj1K9S31-NSBatSCLZb=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Financial Times</b><span class="subs">(1.4M)</span></span><span class="dot">&middot;</span><span>21:17</span><span class="dot">&middot;</span><span>24.7K views</span><span class="dot">&middot;</span><span>2026-02-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Mustafa%20Suleyman%22">Mustafa Suleyman<span class="chip-desc">CEO, Microsoft AI</span></a> <a class="chip" href="index.html?q=%22Roula%20Khalaf%22">Roula Khalaf<span class="chip-desc">Editor, Financial Times</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;In the next 3 years or so, there will be a further 1,000x increase in training compute...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;In the next 3 years or so, there will be a further 1,000x increase in training…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR: Mustafa Suleyman defends Microsoft’s massive AI capital expenditure as a necessary investment toward &quot;humanist superintelligence,&quot; predicting that most white-collar professional tasks will be fully automated by AI within the next 12 to 18 months.  CapEx Justification:...</div>
+                    <div class="sum-preview" id="preview-10">Mustafa Suleyman defends Microsoft’s massive AI capital expenditure as a necessary investment toward &quot;humanist superintelligence,&quot; predicting that most white-collar professional tasks will be fully automated by AI within the next 12 to 18 months.  CapEx Justification:...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR:</strong> Mustafa Suleyman defends Microsoft’s massive AI capital expenditure as a necessary investment toward "humanist superintelligence," predicting that most white-collar professional tasks will be fully automated by AI within the next 12 to 18 months.</p>
 <h3>Strategic Direction and Market Investment</h3>
 <ul>
@@ -1826,7 +1858,7 @@ To counter this environment of misinformation, MacLeod suggests that individuals
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>OpenClaw creator Peter Steinberger describes the project’s rapid evolution into the fastest-growing repository in GitHub history, marking a &quot;phase shift&quot; from language-based AI to agentic systems that autonomously execute complex tasks and modify their own source code.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR OpenClaw creator Peter Steinberger describes the project’s rapid evolution into the fastest-growing repository in GitHub history, marking a &quot;phase shift&quot; from language-based AI to agentic systems that autonomously execute complex tasks and modify their own source code. ...</div>
+                    <div class="sum-preview" id="preview-11"></div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>OpenClaw creator Peter Steinberger describes the project’s rapid evolution into the fastest-growing repository in GitHub history, marking a "phase shift" from language-based AI to agentic systems that autonomously execute complex tasks and modify their own source code.</p>
 <h3>The Genesis and Capabilities of OpenClaw</h3>
@@ -1991,7 +2023,7 @@ The real value of these tools is seen in how they empower people. Small business
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Google’s AI strategy focuses on dominating the &quot;Pareto Frontier&quot; by co-designing specialized hardware (TPUs) with unified multimodal models, utilizing advanced distillation to push frontier-level capabilities into low-latency, cost-effective models like Gemini Flash.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Google’s AI strategy focuses on dominating the &quot;Pareto Frontier&quot; by co-designing specialized hardware (TPUs) with unified multimodal models, utilizing advanced distillation to push frontier-level capabilities into low-latency, cost-effective models like Gemini Flash.  The...</div>
+                    <div class="sum-preview" id="preview-12">The...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Google’s AI strategy focuses on dominating the "Pareto Frontier" by co-designing specialized hardware (TPUs) with unified multimodal models, utilizing advanced distillation to push frontier-level capabilities into low-latency, cost-effective models like Gemini Flash.</p>
 <h3>Model Strategy and the Pareto Frontier</h3>
@@ -2123,7 +2155,7 @@ The future of these systems lies in personalization and reduced latency. A perso
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Scaling successful organizations requires a strategic blend of aggressive AI adoption, a commitment to &quot;unlearning&quot; micro-management through delegation, and maintaining a mission-driven focus that prioritizes community impact over mere efficiency.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR Scaling successful organizations requires a strategic blend of aggressive AI adoption, a commitment to &quot;unlearning&quot; micro-management through delegation, and maintaining a mission-driven focus that prioritizes community impact over mere efficiency.  AI as a Non-Negotiable:...</div>
+                    <div class="sum-preview" id="preview-13">AI as a Non-Negotiable:...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>Scaling successful organizations requires a strategic blend of aggressive AI adoption, a commitment to "unlearning" micro-management through delegation, and maintaining a mission-driven focus that prioritizes community impact over mere efficiency.</p>
 <h3>Future-Proofing Leadership and Talent</h3>
@@ -2226,7 +2258,7 @@ Ultimately, the ability to build successful, scalable systems depends on the peo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and EPA Administrator Lee Zeldin announced the repeal of the 2009 EPA &quot;endangerment finding,&quot; characterizing it as the largest deregulatory act in U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR President Trump and EPA Administrator Lee Zeldin announced the repeal of the 2009 EPA &quot;endangerment finding,&quot; characterizing it as the largest deregulatory act in U.S. history intended to end electric vehicle mandates and reduce the average cost of new vehicles by...</div>
+                    <div class="sum-preview" id="preview-14">history intended to end electric vehicle mandates and reduce the average cost of new vehicles by...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>President Trump and EPA Administrator Lee Zeldin announced the repeal of the 2009 EPA "endangerment finding," characterizing it as the largest deregulatory act in U.S. history intended to end electric vehicle mandates and reduce the average cost of new vehicles by approximately $3,000.</p>
 <h3>Major Rollback of EPA Regulations</h3>
@@ -2322,9 +2354,9 @@ On the international stage, relations with China remain stable, with a president
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_k-MPNMYBAFL617q2BeNmtjNoF4hTM60ApkzoaYVSN2T9A=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Geospatial World</b><span class="subs">(79.6K)</span></span><span class="dot">&middot;</span><span>10:03</span><span class="dot">&middot;</span><span>52 views</span><span class="dot">&middot;</span><span>2026-02-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Erik%20Jorgensen%22">Erik Jorgensen<span class="chip-desc">Chairman &amp; CEO, Vexcel Imaging</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vexcel Imaging is moving geospatial analytics beyond traditional machine learning toward a &quot;queryable world&quot; using a proprietary foundation model and inference engine that allows users to search global imagery using complex, semantic natural language...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Vexcel Imaging is moving geospatial analytics beyond traditional machine learning toward a &quot;queryable world&quot; using a proprietary foundation model and inference engine that allows users to search global imagery using complex, semantic natural…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Vexcel Imaging is moving geospatial analytics beyond traditional machine learning toward a &quot;queryable world&quot; using a proprietary foundation model and inference engine that allows users to search global imagery using complex, semantic natural language without the need for...</div>
+                    <div class="sum-preview" id="preview-15">language without the need for...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Vexcel Imaging is moving geospatial analytics beyond traditional machine learning toward a "queryable world" using a proprietary foundation model and inference engine that allows users to search global imagery using complex, semantic natural language without the need for pre-trained feature extraction.</p>
 <h3>From Traditional ML to Real-World AI</h3>
@@ -2405,7 +2437,7 @@ The applications extend to national security and site monitoring as well. The sy
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Rivian CFO Claire McDonough explains how the company leverages vertical integration and a historic $14B IPO to manage the extreme capital intensity of the EV industry, with a strategic focus on achieving long-term profitability through the 2026 launch of the mass-market R2 platform.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR Rivian CFO Claire McDonough explains how the company leverages vertical integration and a historic $14B IPO to manage the extreme capital intensity of the EV industry, with a strategic focus on achieving long-term profitability through the 2026 launch of the mass-market R2...</div>
+                    <div class="sum-preview" id="preview-16"></div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>Rivian CFO Claire McDonough explains how the company leverages vertical integration and a historic $14B IPO to manage the extreme capital intensity of the EV industry, with a strategic focus on achieving long-term profitability through the 2026 launch of the mass-market R2 platform.</p>
 <h3>Vertical Integration and the "Innovation Stack"</h3>
@@ -2514,7 +2546,7 @@ Today, Rivian’s financial operations are powered by a robust software stack, i
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent reports a &quot;reprivatizing&quot; U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR Treasury Secretary Scott Bessent reports a &quot;reprivatizing&quot; U.S. economy driven by private-sector job growth and shrinking federal payrolls, while asserting that &quot;brute force&quot; and maximum financial pressure remain the only effective strategies for neutralizing the Iranian...</div>
+                    <div class="sum-preview" id="preview-17">economy driven by private-sector job growth and shrinking federal payrolls, while asserting that &quot;brute force&quot; and maximum financial pressure remain the only effective strategies for neutralizing the Iranian...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>Treasury Secretary Scott Bessent reports a "reprivatizing" U.S. economy driven by private-sector job growth and shrinking federal payrolls, while asserting that "brute force" and maximum financial pressure remain the only effective strategies for neutralizing the Iranian regime.</p>
 <h3>January Jobs Report &amp; Economic Acceleration</h3>
@@ -2610,7 +2642,7 @@ Addressing reports of a personal confrontation with Bill Pulte at a recent dinne
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>SEC Chair Paul Atkins signaled a fundamental shift in agency philosophy from &quot;regulation by enforcement&quot; to a growth-oriented framework focused on clear rule-making for digital assets, reducing the cost of public disclosures, and revitalizing the American IPO market.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR SEC Chair Paul Atkins signaled a fundamental shift in agency philosophy from &quot;regulation by enforcement&quot; to a growth-oriented framework focused on clear rule-making for digital assets, reducing the cost of public disclosures, and revitalizing the American IPO market.   ...</div>
+                    <div class="sum-preview" id="preview-18"></div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>SEC Chair Paul Atkins signaled a fundamental shift in agency philosophy from "regulation by enforcement" to a growth-oriented framework focused on clear rule-making for digital assets, reducing the cost of public disclosures, and revitalizing the American IPO market.</p>
 <h3>Digital Asset Regulatory Reform</h3>
@@ -2734,7 +2766,7 @@ Finally, the SEC remains committed to policing insider trading and ensuring a le
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR The U.S. economy is currently defined by a &quot;bifurcated&quot; consumer and a concentrated labor market, while a bipartisan House vote to overturn Canadian tariffs signals growing Congressional pushback against executive trade powers. Amidst this, leaders in fast food and...</div>
+                    <div class="sum-preview" id="preview-19">economy is currently defined by a &quot;bifurcated&quot; consumer and a concentrated labor market, while a bipartisan House vote to overturn Canadian tariffs signals growing Congressional pushback against executive trade powers. Amidst this, leaders in fast food and...</div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR</strong></p>
 <p>The U.S. economy is currently defined by a "bifurcated" consumer and a concentrated labor market, while a bipartisan House vote to overturn Canadian tariffs signals growing Congressional pushback against executive trade powers. Amidst this, leaders in fast food and technology are pivoting toward AI and "trustworthiness" as the primary drivers of future global competitiveness.</p>
 <h3>Economic Indicators and Consumer Bifurcation</h3>
@@ -2832,9 +2864,9 @@ Finally, New York State Assemblyman Alex Boris is pushing for national AI regula
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/IZt6rJxlvGmTE1lxo9UNtYXzr_AaJ75YtTsVruXB8FKAPbg6SMJiaxZ3i5PKmB4LLWBGNKOUqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>World Economic Forum</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>50:44</span><span class="dot">&middot;</span><span>1.7K views</span><span class="dot">&middot;</span><span>2026-02-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Demis%20Hassabis%22">Demis Hassabis<span class="chip-desc">CEO, Google DeepMind</span></a> <a class="chip" href="index.html?q=%22Dario%20Amodei%22">Dario Amodei<span class="chip-desc">CEO, Anthropic</span></a> <a class="chip" href="index.html?q=%22Zanny%20Minton%20Beddoes%22">Zanny Minton Beddoes<span class="chip-desc">Editor-in-Chief, The Economist</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;How did you manage to get through this technological adolescence without destroying yourselves? ...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;How did you manage to get through this technological adolescence without destroying yourselves? ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-20">TL;DR: Artificial General Intelligence (AGI) is projected to reach human-level cognitive performance as early as 2026–2027, driven by AI systems &quot;closing the loop&quot; to automate their own coding and research. This rapid acceleration creates an urgent need for global safety...</div>
+                    <div class="sum-preview" id="preview-20">Artificial General Intelligence (AGI) is projected to reach human-level cognitive performance as early as 2026–2027, driven by AI systems &quot;closing the loop&quot; to automate their own coding and research. This rapid acceleration creates an urgent need for global safety...</div>
                     <div class="sum-full" id="full-20"><p><strong>TL;DR:</strong> Artificial General Intelligence (AGI) is projected to reach human-level cognitive performance as early as 2026–2027, driven by AI systems "closing the loop" to automate their own coding and research. This rapid acceleration creates an urgent need for global safety standards and economic policy to manage unprecedented labor displacement and geopolitical risks.</p>
 <h3>Accelerating Timelines and the "Closed Loop"</h3>
 <ul>
@@ -2934,7 +2966,7 @@ An upcoming interview with Yoshua Bengio, a godfather of AI, will explore how he
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and EPA Administrator Lee Zeldin have formally rescinded the 2009 EPA &quot;Endangerment Finding,&quot; dismantling the legal foundation for federal climate regulations to prioritize domestic energy production and economic deregulation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-21">TL;DR President Trump and EPA Administrator Lee Zeldin have formally rescinded the 2009 EPA &quot;Endangerment Finding,&quot; dismantling the legal foundation for federal climate regulations to prioritize domestic energy production and economic deregulation.  Legal Shift: The...</div>
+                    <div class="sum-preview" id="preview-21">Legal Shift: The...</div>
                     <div class="sum-full" id="full-21"><p><strong>TL;DR</strong></p>
 <p>President Trump and EPA Administrator Lee Zeldin have formally rescinded the 2009 EPA "Endangerment Finding," dismantling the legal foundation for federal climate regulations to prioritize domestic energy production and economic deregulation.</p>
 <h3>Rescission of the Endangerment Finding</h3>
@@ -2998,7 +3030,7 @@ An upcoming interview with Yoshua Bengio, a godfather of AI, will explore how he
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Kevin Warsh is expected to transition from a historical &quot;inflation hawk&quot; to a pragmatic, productivity-focused Fed Chair who prioritizes market signals and private-sector data over traditional economic models while seeking closer &quot;soft coordination&quot; with the Treasury on balance sheet management.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-22">TL;DR Kevin Warsh is expected to transition from a historical &quot;inflation hawk&quot; to a pragmatic, productivity-focused Fed Chair who prioritizes market signals and private-sector data over traditional economic models while seeking closer &quot;soft coordination&quot; with the Treasury on...</div>
+                    <div class="sum-preview" id="preview-22"></div>
                     <div class="sum-full" id="full-22"><p><strong>TL;DR</strong></p>
 <p>Kevin Warsh is expected to transition from a historical "inflation hawk" to a pragmatic, productivity-focused Fed Chair who prioritizes market signals and private-sector data over traditional economic models while seeking closer "soft coordination" with the Treasury on balance sheet management.</p>
 <h3>Shift in Monetary Policy Philosophy</h3>
@@ -3096,9 +3128,9 @@ Ultimately, Warsh will attempt to move away from backward-looking data dependenc
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/4-w44catDebzaDSUWgereql0G5_z5o7VpJXuIYL_eZ3H1vXy0lTmrole9V500jTUXCnQPZ5CuKQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Television</b><span class="subs">(3.0M)</span></span><span class="dot">&middot;</span><span>95:15</span><span class="dot">&middot;</span><span>18.1K views</span><span class="dot">&middot;</span><span>2026-02-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Hiring averaged out to be just 15,000 job gains a month last year.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Hiring averaged out to be just 15,000 job gains a month last year.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-23">TL;DR: Stronger-than-expected US January jobs data has pushed Fed rate-cut expectations back to July, while a growing &quot;AI scare trade&quot; is causing significant sell-offs in real estate and service-oriented sectors.  January Payroll Surge: US payrolls jumped by 130,000 in January,...</div>
+                    <div class="sum-preview" id="preview-23">Stronger-than-expected US January jobs data has pushed Fed rate-cut expectations back to July, while a growing &quot;AI scare trade&quot; is causing significant sell-offs in real estate and service-oriented sectors.  January Payroll Surge: US payrolls jumped by 130,000 in January,...</div>
                     <div class="sum-full" id="full-23"><p><strong>TL;DR:</strong> Stronger-than-expected US January jobs data has pushed Fed rate-cut expectations back to July, while a growing "AI scare trade" is causing significant sell-offs in real estate and service-oriented sectors.</p>
 <h3>US Labor Market Recovery and Fed Outlook</h3>
 <ul>
@@ -3203,7 +3235,7 @@ Yes, yes, those are all great points. And I think you have to look at this even 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>W5 Solutions delivered record-breaking Q4 2025 results, achieving 27% annual organic growth and a significant pivot to profitability for its Power segment.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-24">TL;DR W5 Solutions delivered record-breaking Q4 2025 results, achieving 27% annual organic growth and a significant pivot to profitability for its Power segment. The company is on track to meet its 2027 targets of 1 billion SEK in revenue and 10% EBIT margins, supported by a...</div>
+                    <div class="sum-preview" id="preview-24">The company is on track to meet its 2027 targets of 1 billion SEK in revenue and 10% EBIT margins, supported by a...</div>
                     <div class="sum-full" id="full-24"><p><strong>TL;DR</strong></p>
 <p>W5 Solutions delivered record-breaking Q4 2025 results, achieving 27% annual organic growth and a significant pivot to profitability for its Power segment. The company is on track to meet its 2027 targets of 1 billion SEK in revenue and 10% EBIT margins, supported by a strong 1.5 book-to-bill ratio.</p>
 <h3>Financial Performance and 2027 Targets</h3>
@@ -3290,9 +3322,9 @@ Addressing financial management, the company continues to monitor indirect costs
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>100:08</span><span class="dot">&middot;</span><span>3.7K views</span><span class="dot">&middot;</span><span>2026-02-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Paul%20Atkins%22">Paul Atkins<span class="chip-desc">Chair, Securities and Exchange Commission</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Chairman Paul Atkins is pivoting the SEC toward a pro-growth, &quot;common sense&quot; regulatory framework that prioritizes legislative clarity for digital assets and IPO reform, while facing sharp Democratic criticism over a significant decline in enforcemen...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Chairman Paul Atkins is pivoting the SEC toward a pro-growth, &quot;common sense&quot; regulatory framework that prioritizes legislative clarity for digital assets and IPO reform, while facing sharp Democratic criticism over a significant decline in…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-25">TL;DR Chairman Paul Atkins is pivoting the SEC toward a pro-growth, &quot;common sense&quot; regulatory framework that prioritizes legislative clarity for digital assets and IPO reform, while facing sharp Democratic criticism over a significant decline in enforcement penalties and the...</div>
+                    <div class="sum-preview" id="preview-25">enforcement penalties and the...</div>
                     <div class="sum-full" id="full-25"><p><strong>TL;DR</strong></p>
 <p>Chairman Paul Atkins is pivoting the SEC toward a pro-growth, "common sense" regulatory framework that prioritizes legislative clarity for digital assets and IPO reform, while facing sharp Democratic criticism over a significant decline in enforcement penalties and the dismissal of cases against high-profile firms.</p>
 <h3>Digital Asset Regulation &amp; "Project Crypto"</h3>
@@ -3547,7 +3579,7 @@ Finally, maintaining market integrity requires a strong stance against insider t
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>1.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-26">TL;DR: Magda Wierzycka warns of an &quot;exponential&quot; AI evolution that threatens human empathy and cognition while concentrating global power in the hands of just eight men. Despite global volatility, she is pivoting her focus back to South Africa’s &quot;coalition-driven&quot; recovery and...</div>
+                    <div class="sum-preview" id="preview-26">Magda Wierzycka warns of an &quot;exponential&quot; AI evolution that threatens human empathy and cognition while concentrating global power in the hands of just eight men. Despite global volatility, she is pivoting her focus back to South Africa’s &quot;coalition-driven&quot; recovery and...</div>
                     <div class="sum-full" id="full-26"><p><strong>TL;DR:</strong> Magda Wierzycka warns of an "exponential" AI evolution that threatens human empathy and cognition while concentrating global power in the hands of just eight men. Despite global volatility, she is pivoting her focus back to South Africa’s "coalition-driven" recovery and aggressively seeking private allocations in Anthropic and SpaceX.</p>
 <h3>The AI Revolution: Cognitive Risks and Power Concentration</h3>
 <ul>
@@ -3630,7 +3662,7 @@ Looking toward 2026, weight loss drugs remain a significant investment theme, pa
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI race has shifted from an OpenAI monopoly to a fierce, multi-polar competition where technical leads shrink in months, forcing software companies to transition from static SaaS tools into &quot;agentic platforms&quot; that prioritize internal data integration over simple chat interfaces.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-27">TL;DR The AI race has shifted from an OpenAI monopoly to a fierce, multi-polar competition where technical leads shrink in months, forcing software companies to transition from static SaaS tools into &quot;agentic platforms&quot; that prioritize internal data integration over simple chat...</div>
+                    <div class="sum-preview" id="preview-27"></div>
                     <div class="sum-full" id="full-27"><p><strong>TL;DR</strong></p>
 <p>The AI race has shifted from an OpenAI monopoly to a fierce, multi-polar competition where technical leads shrink in months, forcing software companies to transition from static SaaS tools into "agentic platforms" that prioritize internal data integration over simple chat interfaces.</p>
 <h3>The State of the AI Race: Shrinking Leads and High Stakes</h3>
@@ -3708,7 +3740,7 @@ The emergence of powerful open-source models, such as those from DeepSeek or the
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI is the critical solution to global population decline, serving as the primary engine to drive the productivity gains necessary to sustain and grow global GDP.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-28">TL;DR AI is the critical solution to global population decline, serving as the primary engine to drive the productivity gains necessary to sustain and grow global GDP. By targeting a 5% productivity increase, organizations and nations can move beyond experimentation to reinvest...</div>
+                    <div class="sum-preview" id="preview-28">By targeting a 5% productivity increase, organizations and nations can move beyond experimentation to reinvest...</div>
                     <div class="sum-full" id="full-28"><p><strong>TL;DR</strong></p>
 <p>AI is the critical solution to global population decline, serving as the primary engine to drive the productivity gains necessary to sustain and grow global GDP. By targeting a 5% productivity increase, organizations and nations can move beyond experimentation to reinvest in economic growth and human capital.</p>
 <h3>The Macroeconomic Mandate for AI</h3>
@@ -3809,7 +3841,7 @@ The ultimate goal for global leaders should be to determine how AI can add 5% to
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The world is transitioning from the &quot;Cloud Capital&quot; era of renting third-party software to a &quot;Sovereign AI&quot; era where controlling local infrastructure and inference costs is essential for national and corporate independence.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-29">TL;DR The world is transitioning from the &quot;Cloud Capital&quot; era of renting third-party software to a &quot;Sovereign AI&quot; era where controlling local infrastructure and inference costs is essential for national and corporate independence.  The Value Shift: History shows that value...</div>
+                    <div class="sum-preview" id="preview-29">The Value Shift: History shows that value...</div>
                     <div class="sum-full" id="full-29"><p><strong>TL;DR</strong></p>
 <p>The world is transitioning from the "Cloud Capital" era of renting third-party software to a "Sovereign AI" era where controlling local infrastructure and inference costs is essential for national and corporate independence.</p>
 <h3>Lessons from the "Old Internet"</h3>

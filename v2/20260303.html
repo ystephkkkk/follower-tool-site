@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_lRvu0tqvKCabP6OVwYB-i82uW31tJyHlrreXfp4Oz-7P0=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Live</b><span class="subs">(183.0K)</span></span><span class="dot">&middot;</span><span>25:20</span><span class="dot">&middot;</span><span>2.0K views</span><span class="dot">&middot;</span><span>2026-03-03</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Marc%20Rowan%22">Marc Rowan<span class="chip-desc">CEO, Apollo Global Management</span></a> <a class="chip" href="index.html?q=%22John%20Micklethwait%22">John Micklethwait<span class="chip-desc">Bloomberg</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;We're essentially spending every dollar since the creation of fire and we're doing it all at once...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;We're essentially spending every dollar since the creation of fire and we're doing it all at…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR: Apollo is pivoting from its &quot;buccaneering&quot; roots toward investment-grade private credit to fund a &quot;global industrial renaissance,&quot; arguing that moving credit risk from bank balance sheets to private investors has made the global financial system more resilient.  The 70/30...</div>
+                    <div class="sum-preview" id="preview-0">Apollo is pivoting from its &quot;buccaneering&quot; roots toward investment-grade private credit to fund a &quot;global industrial renaissance,&quot; arguing that moving credit risk from bank balance sheets to private investors has made the global financial system more resilient.  The 70/30...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR:</strong> Apollo is pivoting from its "buccaneering" roots toward investment-grade private credit to fund a "global industrial renaissance," arguing that moving credit risk from bank balance sheets to private investors has made the global financial system more resilient.</p>
 <h3>Macroeconomic Outlook and Geopolitical Risks</h3>
 <ul>
@@ -954,7 +986,7 @@ Other than that, I'm very sorry and didn't see what Jeff was doing. Me, I didn't
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Ares CEO Michael Arougheti argues that the private markets are entering a &quot;winner-take-most&quot; era where scale drives performance, dismisses &quot;irresponsible&quot; predictions of high default rates, and views persistent inflation as a net positive for private credit returns.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Ares CEO Michael Arougheti argues that the private markets are entering a &quot;winner-take-most&quot; era where scale drives performance, dismisses &quot;irresponsible&quot; predictions of high default rates, and views persistent inflation as a net positive for private credit returns.   ...</div>
+                    <div class="sum-preview" id="preview-1"></div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Ares CEO Michael Arougheti argues that the private markets are entering a "winner-take-most" era where scale drives performance, dismisses "irresponsible" predictions of high default rates, and views persistent inflation as a net positive for private credit returns.</p>
 <h3>Long-Term Resilience and Macro Volatility</h3>
@@ -1193,7 +1225,7 @@ Perfect way to put it. Mark, thank you so much for joining me this morning. Ever
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The private market is undergoing a structural shift toward the individual wealth channel—a market twice the size of the institutional sector—driven by demand for infrastructure, AI-related digital assets, and high-yield private credit.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The private market is undergoing a structural shift toward the individual wealth channel—a market twice the size of the institutional sector—driven by demand for infrastructure, AI-related digital assets, and high-yield private credit. While direct lending faces some...</div>
+                    <div class="sum-preview" id="preview-2">While direct lending faces some...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The private market is undergoing a structural shift toward the individual wealth channel—a market twice the size of the institutional sector—driven by demand for infrastructure, AI-related digital assets, and high-yield private credit. While direct lending faces some "stress test" volatility, leaders at Invesco and Brookfield see a massive runway for growth as individual allocations move from near-zero toward a target of 15%.</p>
 <h3>State of the Credit Cycle and Direct Lending</h3>
@@ -1450,7 +1482,7 @@ And we're certainly seeing it in the last couple of months and weeks here. I thi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Danny Moses warns that the current expansion of private credit into retail products mirrors the pre-2008 subprime mortgage crisis, cautioning that while the risk isn't yet systemic, a liquidity crunch could eventually necessitate a federal bailout.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Danny Moses warns that the current expansion of private credit into retail products mirrors the pre-2008 subprime mortgage crisis, cautioning that while the risk isn't yet systemic, a liquidity crunch could eventually necessitate a federal bailout.  Private Credit Warning:...</div>
+                    <div class="sum-preview" id="preview-3">Private Credit Warning:...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Danny Moses warns that the current expansion of private credit into retail products mirrors the pre-2008 subprime mortgage crisis, cautioning that while the risk isn't yet systemic, a liquidity crunch could eventually necessitate a federal bailout.</p>
 <h3>The Resurgence of GFC-Era Credit Patterns</h3>
@@ -1697,7 +1729,7 @@ Danny Moses, founder of Moses Ventures, financial contributor and host of a new 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump and German Chancellor Friedrich Merz aligned on the necessity of regime change in Iran following major U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR President Trump and German Chancellor Friedrich Merz aligned on the necessity of regime change in Iran following major U.S. military strikes, while Trump announced plans to potentially cut off all trade with Spain over NATO spending and base access disputes.  Military...</div>
+                    <div class="sum-preview" id="preview-4">military strikes, while Trump announced plans to potentially cut off all trade with Spain over NATO spending and base access disputes.  Military...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>President Trump and German Chancellor Friedrich Merz aligned on the necessity of regime change in Iran following major U.S. military strikes, while Trump announced plans to potentially cut off all trade with Spain over NATO spending and base access disputes.</p>
 <h3>Iran Operations and "The Day After" Strategy</h3>
@@ -2051,9 +2083,9 @@ Thank you very much. Thank you everybody. Thank you. Thank you, guys. Thank you,
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_lRvu0tqvKCabP6OVwYB-i82uW31tJyHlrreXfp4Oz-7P0=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Live</b><span class="subs">(183.0K)</span></span><span class="dot">&middot;</span><span>18:27</span><span class="dot">&middot;</span><span>4.7K views</span><span class="dot">&middot;</span><span>2026-03-03</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Dawn%20Fitzpatrick%22">Dawn Fitzpatrick<span class="chip-desc">CEO &amp; CIO, Soros Fund Management</span></a> <a class="chip" href="index.html?q=%22Lisa%20Abramowicz%22">Lisa Abramowicz<span class="chip-desc">Bloomberg</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite immediate geopolitical shocks and tightening financial conditions, the Federal Reserve is expected to &quot;look through&quot; temporary energy spikes to cut rates twice as inflation moderates; however, private markets face a painful 18–24 month &quot;culli...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite immediate geopolitical shocks and tightening financial conditions, the Federal Reserve is expected to &quot;look through&quot; temporary energy spikes to cut rates twice as inflation moderates; however, private markets face a painful 18–24 month…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Despite immediate geopolitical shocks and tightening financial conditions, the Federal Reserve is expected to &quot;look through&quot; temporary energy spikes to cut rates twice as inflation moderates; however, private markets face a painful 18–24 month &quot;culling&quot; driven by liquidity...</div>
+                    <div class="sum-preview" id="preview-5">&quot;culling&quot; driven by liquidity...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Despite immediate geopolitical shocks and tightening financial conditions, the Federal Reserve is expected to "look through" temporary energy spikes to cut rates twice as inflation moderates; however, private markets face a painful 18–24 month "culling" driven by liquidity mismatches and a structural rerating of the software sector.</p>
 <h3>Monetary Policy and Economic Resilience</h3>
@@ -2220,7 +2252,7 @@ Unfortunately, we're out of time. I could talk to you all day. That's Dawn Fitzp
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Supreme Court ruled 6-3 that the International Emergency Economic Powers Act (IEEPA) does not grant the President authority to impose tariffs, as the power to &quot;regulate importation&quot; does not encompass the power to tax.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR The Supreme Court ruled 6-3 that the International Emergency Economic Powers Act (IEEPA) does not grant the President authority to impose tariffs, as the power to &quot;regulate importation&quot; does not encompass the power to tax. While this invalidates recent sweeping tariffs,...</div>
+                    <div class="sum-preview" id="preview-6">While this invalidates recent sweeping tariffs,...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>The Supreme Court ruled 6-3 that the International Emergency Economic Powers Act (IEEPA) does not grant the President authority to impose tariffs, as the power to "regulate importation" does not encompass the power to tax. While this invalidates recent sweeping tariffs, the administration may pivot to alternative statutes, such as Section 301, to continue its protectionist trade agenda.</p>
 <h3>The Supreme Court Ruling: IEEPA vs. Taxing Power</h3>
@@ -2497,7 +2529,7 @@ If you're enjoying the show, please tell a friend and leave us a rating or revie
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Minneapolis Fed President Neel Kashkari maintains a cautious outlook, signaling potentially only one interest rate cut in 2024 as geopolitical shocks and a resilient economy suggest the &quot;neutral&quot; interest rate may be higher than previously estimated.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Minneapolis Fed President Neel Kashkari maintains a cautious outlook, signaling potentially only one interest rate cut in 2024 as geopolitical shocks and a resilient economy suggest the &quot;neutral&quot; interest rate may be higher than previously estimated.  Rate Cut Outlook:...</div>
+                    <div class="sum-preview" id="preview-7">Rate Cut Outlook:...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Minneapolis Fed President Neel Kashkari maintains a cautious outlook, signaling potentially only one interest rate cut in 2024 as geopolitical shocks and a resilient economy suggest the "neutral" interest rate may be higher than previously estimated.</p>
 <h3>Monetary Policy and the "Neutral" Rate</h3>
@@ -2792,7 +2824,7 @@ So I'm going to give you an &quot;I don't know&quot; answer. We gotta get inflat
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Wells Fargo is leveraging generative and agentic AI to transition from a period of regulatory remediation to a &quot;growth&quot; era, achieving significant productivity gains—including a 25% increase in new account openings—while prioritizing workforce &quot;employability&quot; through internal upskilling.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Wells Fargo is leveraging generative and agentic AI to transition from a period of regulatory remediation to a &quot;growth&quot; era, achieving significant productivity gains—including a 25% increase in new account openings—while prioritizing workforce &quot;employability&quot; through...</div>
+                    <div class="sum-preview" id="preview-8"></div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Wells Fargo is leveraging generative and agentic AI to transition from a period of regulatory remediation to a "growth" era, achieving significant productivity gains—including a 25% increase in new account openings—while prioritizing workforce "employability" through internal upskilling.</p>
 <h3>Strategic AI Implementation &amp; Operational Impact</h3>
@@ -3027,7 +3059,7 @@ Thank you very much. Up next we have my colleague Romaine Bostick. He's going to
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The integration of generative AI and advanced robotics is transforming traditional, rigid assembly lines into flexible, data-driven &quot;gigantic robots&quot; capable of localized, customized production and overcoming global labor shortages.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR The integration of generative AI and advanced robotics is transforming traditional, rigid assembly lines into flexible, data-driven &quot;gigantic robots&quot; capable of localized, customized production and overcoming global labor shortages.  Technological Advancement: Modern...</div>
+                    <div class="sum-preview" id="preview-9">Technological Advancement: Modern...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>The integration of generative AI and advanced robotics is transforming traditional, rigid assembly lines into flexible, data-driven "gigantic robots" capable of localized, customized production and overcoming global labor shortages.</p>
 <h3>The Shift from Rigid Automation to Versatile Intelligence</h3>

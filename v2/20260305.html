@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/4-w44catDebzaDSUWgereql0G5_z5o7VpJXuIYL_eZ3H1vXy0lTmrole9V500jTUXCnQPZ5CuKQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Television</b><span class="subs">(3.0M)</span></span><span class="dot">&middot;</span><span>23:37</span><span class="dot">&middot;</span><span>1.4K views</span><span class="dot">&middot;</span><span>2026-03-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Neel%20Kashkari%22">Neel Kashkari<span class="chip-desc">President, Federal Reserve Bank of Minneapolis</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Federal Reserve Bank of Minneapolis President Neel Kashkari indicates that while inflation is generally trending toward the 2% target, new geopolitical uncertainties and tariff-related price pressures have complicated the path for interest rate cuts,...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Federal Reserve Bank of Minneapolis President Neel Kashkari indicates that while inflation is generally trending toward the 2% target, new geopolitical uncertainties and tariff-related price pressures have complicated the path for interest rate…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Federal Reserve Bank of Minneapolis President Neel Kashkari indicates that while inflation is generally trending toward the 2% target, new geopolitical uncertainties and tariff-related price pressures have complicated the path for interest rate cuts, leaving him with a...</div>
+                    <div class="sum-preview" id="preview-0">cuts, leaving him with a...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Federal Reserve Bank of Minneapolis President Neel Kashkari indicates that while inflation is generally trending toward the 2% target, new geopolitical uncertainties and tariff-related price pressures have complicated the path for interest rate cuts, leaving him with a projection of only one rate reduction for the remainder of the year.</p>
 <h3>Inflation Outlook and Geopolitical Shocks</h3>
@@ -934,7 +966,7 @@ So all these people can rush out at lunch and trade, no move in March? I'll let 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The 2026 Americas Counter-Cartel Conference marks a fundamental strategic shift in U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR The 2026 Americas Counter-Cartel Conference marks a fundamental strategic shift in U.S. policy, reclassifying drug cartels as &quot;narco-terrorists&quot; and treating the Western Hemisphere as a primary theater of U.S. Homeland Defense under a revived Monroe Doctrine. The...</div>
+                    <div class="sum-preview" id="preview-1">policy, reclassifying drug cartels as &quot;narco-terrorists&quot; and treating the Western Hemisphere as a primary theater of U.S. Homeland Defense under a revived Monroe Doctrine. The...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>The 2026 Americas Counter-Cartel Conference marks a fundamental strategic shift in U.S. policy, reclassifying drug cartels as "narco-terrorists" and treating the Western Hemisphere as a primary theater of U.S. Homeland Defense under a revived Monroe Doctrine. The administration is pivoting from a law enforcement approach to a military-led strategy of "lethal force" and "peace through strength" to dismantle criminal networks.</p>
 <h3>Strategic Shift: From Criminal Justice to Military Force</h3>
@@ -1373,7 +1405,7 @@ Thank you, Secretary Hegseth, General Donovan. Thank you. I would first like to 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has achieved total air dominance and rendered the Iranian Navy combat ineffective within six days, utilizing &quot;maximum authorities&quot; to systematically dismantle Iran’s ballistic missile industrial base and neutralize its power projection.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR  Operation Epic Fury has achieved total air dominance and rendered the Iranian Navy combat ineffective within six days, utilizing &quot;maximum authorities&quot; to systematically dismantle Iran’s ballistic missile industrial base and neutralize its power projection.    Naval...</div>
+                    <div class="sum-preview" id="preview-2">Naval...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has achieved total air dominance and rendered the Iranian Navy combat ineffective within six days, utilizing "maximum authorities" to systematically dismantle Iran’s ballistic missile industrial base and neutralize its power projection.</p>
 <h3>Current Combat Status and Key Metrics</h3>
@@ -1611,7 +1643,7 @@ Couple more? Mr. Secretary, how is this operation going to ensure Iran never get
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Trump administration is shifting to a &quot;War Department&quot; footing in the Western Hemisphere, utilizing lethal military force to eradicate cartels—classified as the &quot;ISIS of the West&quot;—and re-establishing the Monroe Doctrine to secure &quot;Greater North America.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR The Trump administration is shifting to a &quot;War Department&quot; footing in the Western Hemisphere, utilizing lethal military force to eradicate cartels—classified as the &quot;ISIS of the West&quot;—and re-establishing the Monroe Doctrine to secure &quot;Greater North America.&quot;  From Law...</div>
+                    <div class="sum-preview" id="preview-3">&quot;  From Law...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The Trump administration is shifting to a "War Department" footing in the Western Hemisphere, utilizing lethal military force to eradicate cartels—classified as the "ISIS of the West"—and re-establishing the Monroe Doctrine to secure "Greater North America."</p>
 <h3>Military Paradigm Shift: Cartels as Terrorist Entities</h3>
@@ -1883,7 +1915,7 @@ Without the force of arms, without our militaries, we cannot keep our country sa
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Americas Counter-Cartel Conference marks a formal pivot from a law-enforcement-led drug strategy to a military-led offensive, establishing the &quot;Donroe Doctrine&quot; which treats drug cartels as foreign terrorist organizations and frames the Western Hemisphere as the primary security perimeter for U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR The Americas Counter-Cartel Conference marks a formal pivot from a law-enforcement-led drug strategy to a military-led offensive, establishing the &quot;Donroe Doctrine&quot; which treats drug cartels as foreign terrorist organizations and frames the Western Hemisphere as the...</div>
+                    <div class="sum-preview" id="preview-4"></div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>The Americas Counter-Cartel Conference marks a formal pivot from a law-enforcement-led drug strategy to a military-led offensive, establishing the "Donroe Doctrine" which treats drug cartels as foreign terrorist organizations and frames the Western Hemisphere as the primary security perimeter for U.S. homeland defense.</p>
 <h3>The "Donroe Doctrine" and Hemispheric Defense</h3>
@@ -2459,7 +2491,7 @@ As a reminder, heads of delegation and no more than two advisors of their choosi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump has fired Homeland Security Secretary Kristi Noem following a series of public controversies and &quot;bruising&quot; Congressional testimony, naming Oklahoma Senator Markwayne Mullin as her successor.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR President Trump has fired Homeland Security Secretary Kristi Noem following a series of public controversies and &quot;bruising&quot; Congressional testimony, naming Oklahoma Senator Markwayne Mullin as her successor. This marks the first major cabinet firing of Trump’s second term...</div>
+                    <div class="sum-preview" id="preview-5">This marks the first major cabinet firing of Trump’s second term...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>President Trump has fired Homeland Security Secretary Kristi Noem following a series of public controversies and "bruising" Congressional testimony, naming Oklahoma Senator Markwayne Mullin as her successor. This marks the first major cabinet firing of Trump’s second term and comes as the Department of Homeland Security (DHS) faces a partial funding shutdown and elevated threats from the conflict with Iran.</p>
 <h3>Key Factors Leading to Noem’s Removal</h3>
@@ -3075,7 +3107,7 @@ Straight ahead: Britney Spears arrested. How her team says they're now stepping 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Operation Epic Fury has entered its sixth day, successfully neutralizing Iran’s naval combat effectiveness and reducing ballistic missile attacks by 90%.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Operation Epic Fury has entered its sixth day, successfully neutralizing Iran’s naval combat effectiveness and reducing ballistic missile attacks by 90%. The mission is now shifting toward the systematic destruction of Iran’s industrial base to prevent rearmament,...</div>
+                    <div class="sum-preview" id="preview-6">%. The mission is now shifting toward the systematic destruction of Iran’s industrial base to prevent rearmament,...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Operation Epic Fury has entered its sixth day, successfully neutralizing Iran’s naval combat effectiveness and reducing ballistic missile attacks by 90%. The mission is now shifting toward the systematic destruction of Iran’s industrial base to prevent rearmament, supported by "maxed out" military authorities and a surge of incoming combat power.</p>
 <h3>Current Operational Impact and Metrics</h3>
@@ -3314,7 +3346,7 @@ Mr. Secretary, how's this operation going to ensure Iran never gets a nuclear we
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Under Secretary Elbridge Colby defended the 2026 National Defense Strategy’s &quot;America First&quot; shift toward Indo-Pacific deterrence and burden-sharing, while facing bipartisan condemnation for failing to consult Congress on troop withdrawals in Europe ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Under Secretary Elbridge Colby defended the 2026 National Defense Strategy’s &quot;America First&quot; shift toward Indo-Pacific deterrence and burden-sharing, while facing bipartisan condemnation for failing to consult Congress on troop withdrawals in Europe and the sudden...</div>
+                    <div class="sum-preview" id="preview-7">and the sudden...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Under Secretary Elbridge Colby defended the 2026 National Defense Strategy’s "America First" shift toward Indo-Pacific deterrence and burden-sharing, while facing bipartisan condemnation for failing to consult Congress on troop withdrawals in Europe and the sudden escalation of war with Iran (Operation Epic Fury).</p>
 <h3>2026 National Defense Strategy: Core Pillars</h3>
@@ -3764,7 +3796,7 @@ I thank the Secretary for being here and I know that he has heard some concerns 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump hosted the 2025 MLS Cup Champions, Inter Miami CF, at the White House to celebrate their historic season and the impact of Lionel Messi on American soccer.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR President Trump hosted the 2025 MLS Cup Champions, Inter Miami CF, at the White House to celebrate their historic season and the impact of Lionel Messi on American soccer. During the event, the President also provided significant updates on military operations in Iran,...</div>
+                    <div class="sum-preview" id="preview-8">During the event, the President also provided significant updates on military operations in Iran,...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>President Trump hosted the 2025 MLS Cup Champions, Inter Miami CF, at the White House to celebrate their historic season and the impact of Lionel Messi on American soccer. During the event, the President also provided significant updates on military operations in Iran, energy security measures in the Gulf, and diplomatic progress in Venezuela and Cuba.</p>
 <h3>National Security and Middle East Operations</h3>
@@ -4030,9 +4062,9 @@ Thank you very much. And I want to just invite the team to the Oval Office, a ve
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mQDv3YYtwrEY-oFDf_zzH-iLoSFxmjDh2GhAG5CFyMNfY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes Breaking News</b><span class="subs">(5.5M)</span></span><span class="dot">&middot;</span><span>112:48</span><span class="dot">&middot;</span><span>1.9K views</span><span class="dot">&middot;</span><span>2026-03-05</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Pete%20Hegseth%22">Pete Hegseth<span class="chip-desc">Secretary of War</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of War Pete Hegseth and SOUTHCOM leadership established a new &quot;Donroe Doctrine&quot; paradigm, shifting the regional response to cartels from a law enforcement/NGO model to a military-led offensive aimed at restoring national sovereignty and dis...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of War Pete Hegseth and SOUTHCOM leadership established a new &quot;Donroe Doctrine&quot; paradigm, shifting the regional response to cartels from a law enforcement/NGO model to a military-led offensive aimed at restoring national sovereignty and…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Secretary of War Pete Hegseth and SOUTHCOM leadership established a new &quot;Donroe Doctrine&quot; paradigm, shifting the regional response to cartels from a law enforcement/NGO model to a military-led offensive aimed at restoring national sovereignty and dismantling narcoterroist...</div>
+                    <div class="sum-preview" id="preview-9">dismantling narcoterroist...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Secretary of War Pete Hegseth and SOUTHCOM leadership established a new "Donroe Doctrine" paradigm, shifting the regional response to cartels from a law enforcement/NGO model to a military-led offensive aimed at restoring national sovereignty and dismantling narcoterroist networks through shared hemispheric burden-sharing.</p>
 <h3>The "Greater North America" Strategic Shift</h3>
@@ -4673,7 +4705,7 @@ As a reminder, heads of delegation and no more than two staff per head of delega
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Equileap’s eighth annual study of 3,500 global companies reveals that female leadership has reached a three-year plateau, with U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Equileap’s eighth annual study of 3,500 global companies reveals that female leadership has reached a three-year plateau, with U.S. corporations significantly regressing in transparency and representation compared to peers in Europe and Asia where government mandates are...</div>
+                    <div class="sum-preview" id="preview-10">corporations significantly regressing in transparency and representation compared to peers in Europe and Asia where government mandates are...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Equileap’s eighth annual study of 3,500 global companies reveals that female leadership has reached a three-year plateau, with U.S. corporations significantly regressing in transparency and representation compared to peers in Europe and Asia where government mandates are driving progress.</p>
 <h3>Global Stagnation in Leadership and Pay</h3>
@@ -4873,7 +4905,7 @@ Diana van Maasdijk, thank you so much for joining us. This is such important res
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Under &quot;Operation Epic Fury,&quot; U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR  Under &quot;Operation Epic Fury,&quot; U.S. forces are systematically dismantling Iran’s ballistic missile industrial base and air defenses, highlighted by the recent destruction of a large Iranian drone carrier and the integration of a historic regional defense network.   ...</div>
+                    <div class="sum-preview" id="preview-11">forces are systematically dismantling Iran’s ballistic missile industrial base and air defenses, highlighted by the recent destruction of a large Iranian drone carrier and the integration of a historic regional defense network.   ...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Under "Operation Epic Fury," U.S. forces are systematically dismantling Iran’s ballistic missile industrial base and air defenses, highlighted by the recent destruction of a large Iranian drone carrier and the integration of a historic regional defense network.</p>
 <h3>Military Objectives and Tactical Progress</h3>

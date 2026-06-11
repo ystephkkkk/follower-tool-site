@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Manus AI transitioned from a viral product demo to $100M in ARR within eight months by shifting the AI paradigm from &quot;answer machines&quot; to &quot;autonomous agents&quot; that execute tasks in a cloud-based virtual sandbox.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Manus AI transitioned from a viral product demo to $100M in ARR within eight months by shifting the AI paradigm from &quot;answer machines&quot; to &quot;autonomous agents&quot; that execute tasks in a cloud-based virtual sandbox.    The &quot;Mens et Manus&quot; Concept: Tao Zhang explains the...</div>
+                    <div class="sum-preview" id="preview-0">The &quot;Mens et Manus&quot; Concept: Tao Zhang explains the...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Manus AI transitioned from a viral product demo to $100M in ARR within eight months by shifting the AI paradigm from "answer machines" to "autonomous agents" that execute tasks in a cloud-based virtual sandbox.</p>
 <h3>The Product Philosophy: "Mind and Hand"</h3>
@@ -1003,7 +1035,7 @@ Yeah, that's a beautiful thought. Maybe it'll let us get a little closer to what
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The autonomous driving industry is witnessing a strategic split between Waymo’s sensor-heavy, map-dependent &quot;full stack&quot; approach and Wayve’s &quot;mapless&quot; end-to-end AI model.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR The autonomous driving industry is witnessing a strategic split between Waymo’s sensor-heavy, map-dependent &quot;full stack&quot; approach and Wayve’s &quot;mapless&quot; end-to-end AI model. While Waymo leads in current deployment, Wayve and specialized firms like Einride and Vay are...</div>
+                    <div class="sum-preview" id="preview-1">While Waymo leads in current deployment, Wayve and specialized firms like Einride and Vay are...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>The autonomous driving industry is witnessing a strategic split between Waymo’s sensor-heavy, map-dependent "full stack" approach and Wayve’s "mapless" end-to-end AI model. While Waymo leads in current deployment, Wayve and specialized firms like Einride and Vay are betting on lower hardware costs, global licensing models, and remote human-in-the-loop systems to scale faster.</p>
 <h3>The Technical Divide: Waymo vs. Wayve</h3>
@@ -1220,7 +1252,7 @@ Now don't miss the next episode of Bloomberg Tech Europe, it's going to air on J
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Nebius is positioning itself as a vertically integrated &quot;AI-native hyperscaler,&quot; controlling the entire stack from land and power to agentic software to provide cost-effective, high-performance infrastructure for the next generation of AI developers.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Nebius is positioning itself as a vertically integrated &quot;AI-native hyperscaler,&quot; controlling the entire stack from land and power to agentic software to provide cost-effective, high-performance infrastructure for the next generation of AI developers.    The Five-Layer...</div>
+                    <div class="sum-preview" id="preview-2">The Five-Layer...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Nebius is positioning itself as a vertically integrated "AI-native hyperscaler," controlling the entire stack from land and power to agentic software to provide cost-effective, high-performance infrastructure for the next generation of AI developers.</p>
 <h3>Full-Stack Vertical Integration</h3>
@@ -1510,7 +1542,7 @@ Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>1.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">1. TL;DR   Candidates at the Manufacturers Association of Maine and Maine Forest Products Council forum clashed over the state's business climate, focusing on high energy costs, regulatory overreach, and educational decline. While Republican and independent candidates advocated...</div>
+                    <div class="sum-preview" id="preview-3">TL;DR   Candidates at the Manufacturers Association of Maine and Maine Forest Products Council forum clashed over the state's business climate, focusing on high energy costs, regulatory overreach, and educational decline. While Republican and independent candidates advocated...</div>
                     <div class="sum-full" id="full-3"><p>1. <strong>TL;DR</strong></p>
 <p>Candidates at the Manufacturers Association of Maine and Maine Forest Products Council forum clashed over the state's business climate, focusing on high energy costs, regulatory overreach, and educational decline. While Republican and independent candidates advocated for aggressive tax cuts and stripping back bureaucratic regulations, Democratic candidates emphasized targeted government support, housing investments, and public education funding to revitalize Maine's economy.</p>
 <h3>Economic Recovery and Regulatory Reform</h3>
@@ -2299,7 +2331,7 @@ So, yes, and I have met with both of the individuals that are working at the J i
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The emergence of &quot;Techno-fascism&quot; and the &quot;Dark Enlightenment&quot; ideology, led by figures like Peter Thiel and Palantir Technologies, represents a global shift toward governance by &quot;CEO monarchs&quot; and AI-driven military deterrence, with active expansion efforts now reaching Chile and Argentina.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR The emergence of &quot;Techno-fascism&quot; and the &quot;Dark Enlightenment&quot; ideology, led by figures like Peter Thiel and Palantir Technologies, represents a global shift toward governance by &quot;CEO monarchs&quot; and AI-driven military deterrence, with active expansion efforts now reaching...</div>
+                    <div class="sum-preview" id="preview-4"></div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>The emergence of "Techno-fascism" and the "Dark Enlightenment" ideology, led by figures like Peter Thiel and Palantir Technologies, represents a global shift toward governance by "CEO monarchs" and AI-driven military deterrence, with active expansion efforts now reaching Chile and Argentina.</p>
 <h3>The Ideology of the "Dark Enlightenment"</h3>
@@ -2472,7 +2504,7 @@ Estaremos conversando con el diputado independiente pro PPD Jaime Araya. Ya volv
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Anthropic was founded on the principle of &quot;radical responsibility,&quot; prioritizing AI safety and integrity through a Public Benefit Corporation structure while positioning AI as a collaborative tool that enhances, rather than replaces, human judgment and social connection.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Anthropic was founded on the principle of &quot;radical responsibility,&quot; prioritizing AI safety and integrity through a Public Benefit Corporation structure while positioning AI as a collaborative tool that enhances, rather than replaces, human judgment and social connection. ...</div>
+                    <div class="sum-preview" id="preview-5"></div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Anthropic was founded on the principle of "radical responsibility," prioritizing AI safety and integrity through a Public Benefit Corporation structure while positioning AI as a collaborative tool that enhances, rather than replaces, human judgment and social connection.</p>
 <h3>Founding Philosophy and Cultural Integrity</h3>
@@ -2868,9 +2900,9 @@ And I think that is I think in general like when you're in a moment of &quot;Is 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/lG-z7sTfhFIW2Ne1oXMHvXMXyZSaA02_I17gUel0GAEj7OypsSHQ7PE91Vp4bTbpm3PTIAWJdko=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Dwarkesh Patel</b><span class="subs">(1.3M)</span></span><span class="dot">&middot;</span><span>133:50</span><span class="dot">&middot;</span><span>9.3K views</span><span class="dot">&middot;</span><span>2026-05-08</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22David%20Reich%22">David Reich<span class="chip-desc">Professor of Genetics, Harvard University</span></a> <a class="chip" href="index.html?q=%22Dwarkesh%20Patel%22">Dwarkesh Patel<span class="chip-desc">Host, Dwarkesh Patel Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The genetic data, the biological readout, is saying our genome is reacting much more strongly to these events that happened 5,000 years ago...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The genetic data, the biological readout, is saying our genome is reacting much more strongly to these events that happened 5,000 years…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR: Overturning the scientific consensus that human evolution halted after the agricultural revolution, Harvard geneticist David Reich and collaborator Ali Akbari demonstrate that natural selection dramatically accelerated during the Bronze Age, driving massive shifts in...</div>
+                    <div class="sum-preview" id="preview-6">Overturning the scientific consensus that human evolution halted after the agricultural revolution, Harvard geneticist David Reich and collaborator Ali Akbari demonstrate that natural selection dramatically accelerated during the Bronze Age, driving massive shifts in...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR:</strong> Overturning the scientific consensus that human evolution halted after the agricultural revolution, Harvard geneticist David Reich and collaborator Ali Akbari demonstrate that natural selection dramatically accelerated during the Bronze Age, driving massive shifts in immunity, metabolism, and a full standard deviation increase in genetic predictors of cognitive performance.</p>
 <h3>The Bronze Age as an Evolutionary Inflection Point</h3>
 <ul>
@@ -3857,7 +3889,7 @@ Thank you. Thank you, Dwarkesh.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Host Jimmy Failla and guests criticize Democratic leaders and the media for perceived hypocrisy regarding gas prices and Fed independence, arguing that progressive tax-and-spend policies are driving a wealth exodus from cities like New York and Los Angeles to Florida.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Host Jimmy Failla and guests criticize Democratic leaders and the media for perceived hypocrisy regarding gas prices and Fed independence, arguing that progressive tax-and-spend policies are driving a wealth exodus from cities like New York and Los Angeles to Florida. ...</div>
+                    <div class="sum-preview" id="preview-7"></div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Host Jimmy Failla and guests criticize Democratic leaders and the media for perceived hypocrisy regarding gas prices and Fed independence, arguing that progressive tax-and-spend policies are driving a wealth exodus from cities like New York and Los Angeles to Florida.</p>
 <h3>Energy Policy and Media Narrative Shifts</h3>
@@ -4587,9 +4619,9 @@ You're going to want to go out to the suburbs. Because if somebody’s wining an
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ocwfG8NiepGH2xjbTp84uXqnoL67c-G_gcyd4yrahK9zoHo_yn9GEyVKbRvTeLZ-9YGvfIeL=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Banco de España</b><span class="subs">(24.6K)</span></span><span class="dot">&middot;</span><span>36:17</span><span class="dot">&middot;</span><span>186 views</span><span class="dot">&middot;</span><span>2026-05-08</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Christine%20Lagarde%22">Christine Lagarde<span class="chip-desc">President, European Central Bank</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>ECB President Christine Lagarde argues that Europe should not rush to promote euro-denominated stablecoins as a direct competitor to the US dollar; instead, the focus must be on building public infrastructure that places central bank money at the hea...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>ECB President Christine Lagarde argues that Europe should not rush to promote euro-denominated stablecoins as a direct competitor to the US dollar; instead, the focus must be on building public infrastructure that places central bank money at the…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR ECB President Christine Lagarde argues that Europe should not rush to promote euro-denominated stablecoins as a direct competitor to the US dollar; instead, the focus must be on building public infrastructure that places central bank money at the heart of digital...</div>
+                    <div class="sum-preview" id="preview-8">heart of digital...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>ECB President Christine Lagarde argues that Europe should not rush to promote euro-denominated stablecoins as a direct competitor to the US dollar; instead, the focus must be on building public infrastructure that places central bank money at the heart of digital settlement to preserve monetary sovereignty and financial stability.</p>
 <h3>The Global Context and Functional Duality</h3>
@@ -4807,7 +4839,7 @@ I started with Seneca. No wind is favorable to one who has no idea about the por
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The emergence of &quot;Elon Web Services&quot; (EWS) via a massive data center deal with Anthropic has fundamentally shifted the AI landscape, fueling a debate over whether Anthropic is destined to become the world’s most powerful monopoly while the industry fights off &quot;FDA-style&quot; federal regulation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR The emergence of &quot;Elon Web Services&quot; (EWS) via a massive data center deal with Anthropic has fundamentally shifted the AI landscape, fueling a debate over whether Anthropic is destined to become the world’s most powerful monopoly while the industry fights off &quot;FDA-style&quot;...</div>
+                    <div class="sum-preview" id="preview-9"></div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>The emergence of "Elon Web Services" (EWS) via a massive data center deal with Anthropic has fundamentally shifted the AI landscape, fueling a debate over whether Anthropic is destined to become the world’s most powerful monopoly while the industry fights off "FDA-style" federal regulation.</p>
 <h3>The SpaceX-Anthropic Deal: The Birth of "EWS"</h3>
@@ -5486,7 +5518,7 @@ But you did some great inspiring coverage of micro-looting. So get your micro-lo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The ongoing Elon Musk v.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR  The ongoing Elon Musk v. OpenAI trial has exposed chaotic executive communications and dramatic corporate infighting through highly revealing discovery documents, while tech giants Apple and Google grapple with AI-driven product pivots and rebranding struggles.  Damning...</div>
+                    <div class="sum-preview" id="preview-10">OpenAI trial has exposed chaotic executive communications and dramatic corporate infighting through highly revealing discovery documents, while tech giants Apple and Google grapple with AI-driven product pivots and rebranding struggles.  Damning...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>The ongoing Elon Musk v. OpenAI trial has exposed chaotic executive communications and dramatic corporate infighting through highly revealing discovery documents, while tech giants Apple and Google grapple with AI-driven product pivots and rebranding struggles.</p>
 <h3>Drama and Discovery in the Musk v. OpenAI Trial</h3>
@@ -5999,7 +6031,7 @@ The Vergecast is a production of The Verge and the Vox Media Podcast Network. To
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump highlighted the rapid, cost-effective renovation of the Lincoln Memorial Reflecting Pool while maintaining a &quot;zero-tolerance&quot; policy regarding Iran’s nuclear ambitions following recent naval skirmishes.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR President Trump highlighted the rapid, cost-effective renovation of the Lincoln Memorial Reflecting Pool while maintaining a &quot;zero-tolerance&quot; policy regarding Iran’s nuclear ambitions following recent naval skirmishes.    Reflecting Pool Renovation: Trump emphasized a new,...</div>
+                    <div class="sum-preview" id="preview-11">Reflecting Pool Renovation: Trump emphasized a new,...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>President Trump highlighted the rapid, cost-effective renovation of the Lincoln Memorial Reflecting Pool while maintaining a "zero-tolerance" policy regarding Iran’s nuclear ambitions following recent naval skirmishes.</p>
 <h3>National Mall Infrastructure &amp; Revitalization</h3>
@@ -6346,7 +6378,7 @@ Thank you. Thank you. Thank you. Thank you. Thank you press, thank you press. Th
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>While geopolitical instability in the Middle East and structural stagnation in Europe present significant short-term risks, long-term economic optimism remains high due to the transformative productivity potential of AI and the continued compounding power of global equity markets.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR While geopolitical instability in the Middle East and structural stagnation in Europe present significant short-term risks, long-term economic optimism remains high due to the transformative productivity potential of AI and the continued compounding power of global equity...</div>
+                    <div class="sum-preview" id="preview-12"></div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>While geopolitical instability in the Middle East and structural stagnation in Europe present significant short-term risks, long-term economic optimism remains high due to the transformative productivity potential of AI and the continued compounding power of global equity markets.</p>
 <h3>Geopolitics and Market Volatility</h3>
@@ -6556,7 +6588,7 @@ The world's going to grow, you're going to participate in a very powerful way, a
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Middle East is on the brink of total war as Israel eliminates top Hezbollah and Hamas leadership, prompting Iran to mobilize hypersonic missiles and reject diplomatic deals with the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-13">TL;DR The Middle East is on the brink of total war as Israel eliminates top Hezbollah and Hamas leadership, prompting Iran to mobilize hypersonic missiles and reject diplomatic deals with the U.S. until blockades are lifted. Simultaneously, Russia’s &quot;Victory Day&quot; ceasefire has...</div>
+                    <div class="sum-preview" id="preview-13">until blockades are lifted. Simultaneously, Russia’s &quot;Victory Day&quot; ceasefire has...</div>
                     <div class="sum-full" id="full-13"><p><strong>TL;DR</strong></p>
 <p>The Middle East is on the brink of total war as Israel eliminates top Hezbollah and Hamas leadership, prompting Iran to mobilize hypersonic missiles and reject diplomatic deals with the U.S. until blockades are lifted. Simultaneously, Russia’s "Victory Day" ceasefire has collapsed, with Ukraine deploying new long-range cruise missiles against Russian industrial targets.</p>
 <h3>Iran-US Tensions and Diplomatic Deadlock</h3>
@@ -6745,7 +6777,7 @@ FP-5 फ्लेमिंगो यूक्रेन की खुद की �
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>This briefing covers the passing of media visionary Ted Turner, a mixed earnings week for legacy media giants Disney, Paramount, and Warner Bros.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-14">TL;DR This briefing covers the passing of media visionary Ted Turner, a mixed earnings week for legacy media giants Disney, Paramount, and Warner Bros. Discovery, and the escalating &quot;petty&quot; legal and corporate drama between Elon Musk and OpenAI.  A Captain of Industry: Scott...</div>
+                    <div class="sum-preview" id="preview-14">Discovery, and the escalating &quot;petty&quot; legal and corporate drama between Elon Musk and OpenAI.  A Captain of Industry: Scott...</div>
                     <div class="sum-full" id="full-14"><p><strong>TL;DR</strong></p>
 <p>This briefing covers the passing of media visionary Ted Turner, a mixed earnings week for legacy media giants Disney, Paramount, and Warner Bros. Discovery, and the escalating "petty" legal and corporate drama between Elon Musk and OpenAI.</p>
 <h3>The Legacy of Ted Turner and the Evolution of News</h3>
@@ -7127,7 +7159,7 @@ We literally discussed it. We're having a tour in the fall. You were on the call
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Lyft and travel platforms are navigating a shift toward autonomous vehicle integration and exclusive inventory to combat market saturation, while legacy giants like Intel and Texas Roadhouse leverage strategic alliances and &quot;value-first&quot; branding to ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-15">TL;DR Lyft and travel platforms are navigating a shift toward autonomous vehicle integration and exclusive inventory to combat market saturation, while legacy giants like Intel and Texas Roadhouse leverage strategic alliances and &quot;value-first&quot; branding to drive massive stock...</div>
+                    <div class="sum-preview" id="preview-15">drive massive stock...</div>
                     <div class="sum-full" id="full-15"><p><strong>TL;DR</strong></p>
 <p>Lyft and travel platforms are navigating a shift toward autonomous vehicle integration and exclusive inventory to combat market saturation, while legacy giants like Intel and Texas Roadhouse leverage strategic alliances and "value-first" branding to drive massive stock recoveries and consumer loyalty.</p>
 <h3>Mobility and Travel: The Shift to Autonomous and Exclusive Supply</h3>
@@ -7338,7 +7370,7 @@ They just have to really get that business and they have to get it in and they c
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Marc Lore is leveraging vertical integration and &quot;physical AI&quot; at Wonder to disrupt the trillion-dollar food industry, utilizing a math-driven scaling framework (VCP) to transition from software-only models to capital-intensive physical infrastructure that creates a defensible market moat.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-16">TL;DR Marc Lore is leveraging vertical integration and &quot;physical AI&quot; at Wonder to disrupt the trillion-dollar food industry, utilizing a math-driven scaling framework (VCP) to transition from software-only models to capital-intensive physical infrastructure that creates a...</div>
+                    <div class="sum-preview" id="preview-16"></div>
                     <div class="sum-full" id="full-16"><p><strong>TL;DR</strong></p>
 <p>Marc Lore is leveraging vertical integration and "physical AI" at Wonder to disrupt the trillion-dollar food industry, utilizing a math-driven scaling framework (VCP) to transition from software-only models to capital-intensive physical infrastructure that creates a defensible market moat.</p>
 <h3>The Wonder Thesis: "Cloud Kitchens" for the Physical World</h3>
@@ -7566,7 +7598,7 @@ Thank you. It was great to be here. Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary Marco Rubio emphasized a &quot;U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-17">TL;DR Secretary Marco Rubio emphasized a &quot;U.S. interest first&quot; foreign policy, issuing a stern warning to Iran against seizing international waterways while leveraging the Catholic Church’s global influence to facilitate humanitarian aid in Cuba and Africa.  Meeting with Pope...</div>
+                    <div class="sum-preview" id="preview-17">interest first&quot; foreign policy, issuing a stern warning to Iran against seizing international waterways while leveraging the Catholic Church’s global influence to facilitate humanitarian aid in Cuba and Africa.  Meeting with Pope...</div>
                     <div class="sum-full" id="full-17"><p><strong>TL;DR</strong></p>
 <p>Secretary Marco Rubio emphasized a "U.S. interest first" foreign policy, issuing a stern warning to Iran against seizing international waterways while leveraging the Catholic Church’s global influence to facilitate humanitarian aid in Cuba and Africa.</p>
 <h3>Vatican Relations and Humanitarian Strategy</h3>
@@ -7881,7 +7913,7 @@ Huh? Not surprised today, I learned about it in 2017 when PBS did a Finding Your
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump delivered a Mother’s Day address honoring &quot;Angel Moms&quot; and &quot;Gold Star Moms&quot; while highlighting his administration’s claims of achieving zero illegal border crossings, drastic reductions in drug prices, and new financial incentives for American families.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-18">TL;DR President Trump delivered a Mother’s Day address honoring &quot;Angel Moms&quot; and &quot;Gold Star Moms&quot; while highlighting his administration’s claims of achieving zero illegal border crossings, drastic reductions in drug prices, and new financial incentives for American families. ...</div>
+                    <div class="sum-preview" id="preview-18"></div>
                     <div class="sum-full" id="full-18"><p><strong>TL;DR</strong></p>
 <p>President Trump delivered a Mother’s Day address honoring "Angel Moms" and "Gold Star Moms" while highlighting his administration’s claims of achieving zero illegal border crossings, drastic reductions in drug prices, and new financial incentives for American families.</p>
 <h3>Border Security and "Angel Moms"</h3>
@@ -8077,7 +8109,7 @@ Thank you everybody, appreciate the music. We need music. Let's go, get some mus
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump utilized a Rose Garden Mother’s Day event to honor &quot;Angel Moms&quot; and &quot;Gold Star Moms,&quot; while detailing administration achievements in border security, drug interdiction, and new economic incentives for American families.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-19">TL;DR President Trump utilized a Rose Garden Mother’s Day event to honor &quot;Angel Moms&quot; and &quot;Gold Star Moms,&quot; while detailing administration achievements in border security, drug interdiction, and new economic incentives for American families.    Border Enforcement Claims: The...</div>
+                    <div class="sum-preview" id="preview-19">Border Enforcement Claims: The...</div>
                     <div class="sum-full" id="full-19"><p><strong>TL;DR</strong></p>
 <p>President Trump utilized a Rose Garden Mother’s Day event to honor "Angel Moms" and "Gold Star Moms," while detailing administration achievements in border security, drug interdiction, and new economic incentives for American families.</p>
 <h3>Border Security and Recognition of "Angel Moms"</h3>
@@ -8266,7 +8298,7 @@ You’re watching C-SPAN, democracy unfiltered. America celebrates 250 years and
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump hosted a Rose Garden event to honor Mother’s Day, specifically recognizing &quot;Angel Moms&quot; and Gold Star families while highlighting administration successes in border security, drug price reduction, and family-focused economic incentives.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-20">TL;DR President Trump hosted a Rose Garden event to honor Mother’s Day, specifically recognizing &quot;Angel Moms&quot; and Gold Star families while highlighting administration successes in border security, drug price reduction, and family-focused economic incentives. The President...</div>
+                    <div class="sum-preview" id="preview-20">The President...</div>
                     <div class="sum-full" id="full-20"><p><strong>TL;DR</strong></p>
 <p>President Trump hosted a Rose Garden event to honor Mother’s Day, specifically recognizing "Angel Moms" and Gold Star families while highlighting administration successes in border security, drug price reduction, and family-focused economic incentives.</p>
 <h3>Border Security and "Angel Moms"</h3>
@@ -8420,7 +8452,7 @@ I just want to wish you all a very happy Mother's Day. We're going to have a gre
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Todd Graves built Raising Cane’s into a multi-billion-dollar empire by defying industry norms, maintaining a strict focus on a limited menu, and prioritizing long-term cultural integrity over short-term private equity gains.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-21">TL;DR Todd Graves built Raising Cane’s into a multi-billion-dollar empire by defying industry norms, maintaining a strict focus on a limited menu, and prioritizing long-term cultural integrity over short-term private equity gains. His journey from working as an Alaskan fisherman...</div>
+                    <div class="sum-preview" id="preview-21">His journey from working as an Alaskan fisherman...</div>
                     <div class="sum-full" id="full-21"><p><strong>TL;DR</strong></p>
 <p>Todd Graves built Raising Cane’s into a multi-billion-dollar empire by defying industry norms, maintaining a strict focus on a limited menu, and prioritizing long-term cultural integrity over short-term private equity gains. His journey from working as an Alaskan fisherman to fund his first location highlights a "never quit" mentality that remains the brand’s core driver.</p>
 <h3>The Founding Philosophy: Simplicity as a Competitive Edge</h3>
@@ -8790,7 +8822,7 @@ Thanks again to Todd Graves for joining us. Todd's tenacity is inspiring. His st
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of State Marco Rubio’s visit to Rome focused on aligning with the Vatican and the Italian government on global security threats, specifically Iran’s maritime aggression and the need for humanitarian corridors in Cuba and Sudan.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-22">TL;DR Secretary of State Marco Rubio’s visit to Rome focused on aligning with the Vatican and the Italian government on global security threats, specifically Iran’s maritime aggression and the need for humanitarian corridors in Cuba and Sudan. Rubio reaffirmed that while the...</div>
+                    <div class="sum-preview" id="preview-22">Rubio reaffirmed that while the...</div>
                     <div class="sum-full" id="full-22"><p><strong>TL;DR</strong></p>
 <p>Secretary of State Marco Rubio’s visit to Rome focused on aligning with the Vatican and the Italian government on global security threats, specifically Iran’s maritime aggression and the need for humanitarian corridors in Cuba and Sudan. Rubio reaffirmed that while the U.S. remains committed to NATO, future troop deployments will be contingent on members' willingness to grant the U.S. logistical power projection during global contingencies.</p>
 <h3>Diplomatic Engagement with the Vatican</h3>
@@ -9048,9 +9080,9 @@ How about the 2028 buzz? Any comment on that sir?</div>
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(173.0K)</span></span><span class="dot">&middot;</span><span>27:41</span><span class="dot">&middot;</span><span>60.5K views</span><span class="dot">&middot;</span><span>2026-05-08</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Weekly Wrap</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The overall story, in my view, continues to be a K-shaped market, reflecting the underlying K-shaped economy...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The overall story, in my view, continues to be a K-shaped market, reflecting the underlying K-shaped…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-23">TL;DR (1-2 sentences): Despite geopolitical tensions in Iran and elevated valuations, the S&amp;P 500 continues to hit new highs because all 11 sectors are beating revenue estimates and profit margins have reached an all-time high of 20%. The market is currently &quot;K-shaped,&quot; driven...</div>
+                    <div class="sum-preview" id="preview-23">(1-2 sentences): Despite geopolitical tensions in Iran and elevated valuations, the S&amp;P 500 continues to hit new highs because all 11 sectors are beating revenue estimates and profit margins have reached an all-time high of 20%. The market is currently &quot;K-shaped,&quot; driven...</div>
                     <div class="sum-full" id="full-23"><p><strong>TL;DR</strong> (1-2 sentences): Despite geopolitical tensions in Iran and elevated valuations, the S&amp;P 500 continues to hit new highs because all 11 sectors are beating revenue estimates and profit margins have reached an all-time high of 20%. The market is currently "K-shaped," driven upward by dominant tech, industrial power, and financial sectors while the lower-end consumer and software-specific stocks struggle.</p>
 <h3>Macroeconomic Health &amp; The "K-Shaped" Reality</h3>
 <ul>
@@ -9321,7 +9353,7 @@ And that's the wrap. This podcast is for informational purposes only and does no
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The contemporary far-right is a fractured coalition of &quot;Traditionalists&quot; seeking to restore a structured past and &quot;Futurists&quot; pursuing a borderless, tech-driven hierarchy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-24">TL;DR The contemporary far-right is a fractured coalition of &quot;Traditionalists&quot; seeking to restore a structured past and &quot;Futurists&quot; pursuing a borderless, tech-driven hierarchy. Understanding these movements requires moving beyond the &quot;fascism&quot; label to analyze their specific...</div>
+                    <div class="sum-preview" id="preview-24">Understanding these movements requires moving beyond the &quot;fascism&quot; label to analyze their specific...</div>
                     <div class="sum-full" id="full-24"><p><strong>TL;DR</strong></p>
 <p>The contemporary far-right is a fractured coalition of "Traditionalists" seeking to restore a structured past and "Futurists" pursuing a borderless, tech-driven hierarchy. Understanding these movements requires moving beyond the "fascism" label to analyze their specific anti-liberal philosophies and the novel strategies they use to challenge mainstream democracy.</p>
 <h3>Ethnography and the "Deep Hanging Out" Method</h3>
@@ -9797,7 +9829,7 @@ The true test of a revolution or radical social change is: how do ordinary peopl
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI agents have transitioned software development from a manual &quot;writing&quot; task to a high-leverage &quot;director&quot; role, enabling founders to achieve a 400x increase in output by &quot;tokenmaxxing&quot; and utilizing agentic workflows.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-25">TL;DR AI agents have transitioned software development from a manual &quot;writing&quot; task to a high-leverage &quot;director&quot; role, enabling founders to achieve a 400x increase in output by &quot;tokenmaxxing&quot; and utilizing agentic workflows.  The Comeback: After a 13-year hiatus from active...</div>
+                    <div class="sum-preview" id="preview-25">The Comeback: After a 13-year hiatus from active...</div>
                     <div class="sum-full" id="full-25"><p><strong>TL;DR</strong></p>
 <p>AI agents have transitioned software development from a manual "writing" task to a high-leverage "director" role, enabling founders to achieve a 400x increase in output by "tokenmaxxing" and utilizing agentic workflows.</p>
 <h3>The Return of the Builder: Garry Tan’s 400x Productivity Leap</h3>
@@ -10120,9 +10152,9 @@ That's beautiful. That's a beautiful thought to end on. Thanks Garry for showing
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dGnkztdrLtXRlzkdqReeL-NES2761xxmNVcJhGKqFpR0vQBoP9XaxnXF95FDpwrjyFr2iJvV8Es=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Sky News</b><span class="subs">(9.2M)</span></span><span class="dot">&middot;</span><span>23:08</span><span class="dot">&middot;</span><span>7.4K views</span><span class="dot">&middot;</span><span>2026-05-08</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Marco%20Rubio%22">Marco Rubio<span class="chip-desc">Secretary of State, United States</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The red line is clear.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The red line is clear.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-26">TL;DR: Secretary of State Marco Rubio declared that Iran’s pursuit of nuclear weapons and attempts to control international waterways are &quot;unacceptable,&quot; while affirming that the U.S. will maintain a policy of immediate military retaliation against any threats to American...</div>
+                    <div class="sum-preview" id="preview-26">Secretary of State Marco Rubio declared that Iran’s pursuit of nuclear weapons and attempts to control international waterways are &quot;unacceptable,&quot; while affirming that the U.S. will maintain a policy of immediate military retaliation against any threats to American...</div>
                     <div class="sum-full" id="full-26"><p><strong>TL;DR:</strong> Secretary of State Marco Rubio declared that Iran’s pursuit of nuclear weapons and attempts to control international waterways are "unacceptable," while affirming that the U.S. will maintain a policy of immediate military retaliation against any threats to American personnel or assets.</p>
 <h3>Iran and Global Maritime Security</h3>
 <ul>
@@ -10388,7 +10420,7 @@ How about the 2028 buzz? Any comment on that, sir?</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The ongoing conflict with Iran and sustained high energy prices present significant political risks for incumbents ahead of the midterms, while the domestic debate shifts toward &quot;Gilded Age&quot; inequality and the role of state intervention in the economy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-27">TL;DR The ongoing conflict with Iran and sustained high energy prices present significant political risks for incumbents ahead of the midterms, while the domestic debate shifts toward &quot;Gilded Age&quot; inequality and the role of state intervention in the economy.  Market Resilience:...</div>
+                    <div class="sum-preview" id="preview-27">Market Resilience:...</div>
                     <div class="sum-full" id="full-27"><p><strong>TL;DR</strong></p>
 <p>The ongoing conflict with Iran and sustained high energy prices present significant political risks for incumbents ahead of the midterms, while the domestic debate shifts toward "Gilded Age" inequality and the role of state intervention in the economy.</p>
 <h3>Iran Conflict and Economic Stability</h3>
@@ -10510,7 +10542,7 @@ That's why I got elected. So Mick, I agree with you. I don't think we should hea
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Chicago Fed President Austan Goolsbee warns that while the labor market remains stable, persistent and rising inflation—particularly in services—is a major concern that may require the Federal Reserve to maintain a restrictive stance and re-evaluate forward guidance.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-28">TL;DR Chicago Fed President Austan Goolsbee warns that while the labor market remains stable, persistent and rising inflation—particularly in services—is a major concern that may require the Federal Reserve to maintain a restrictive stance and re-evaluate forward guidance. ...</div>
+                    <div class="sum-preview" id="preview-28"></div>
                     <div class="sum-full" id="full-28"><p><strong>TL;DR</strong></p>
 <p>Chicago Fed President Austan Goolsbee warns that while the labor market remains stable, persistent and rising inflation—particularly in services—is a major concern that may require the Federal Reserve to maintain a restrictive stance and re-evaluate forward guidance.</p>
 <h3>Labor Market: "Stable Without Being Good"</h3>
@@ -10630,7 +10662,7 @@ And the more you see this kind of crowding out—like AI data center investment 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>As military tensions escalate between the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-29">TL;DR As military tensions escalate between the U.S. and Iran in the Strait of Hormuz, columnist Tom Friedman warns that the shift from the &quot;Age of Information&quot; to the &quot;Age of Intelligence&quot; necessitates an urgent U.S.-China AI arms control agreement to prevent &quot;weapons of mass...</div>
+                    <div class="sum-preview" id="preview-29">and Iran in the Strait of Hormuz, columnist Tom Friedman warns that the shift from the &quot;Age of Information&quot; to the &quot;Age of Intelligence&quot; necessitates an urgent U.S.-China AI arms control agreement to prevent &quot;weapons of mass...</div>
                     <div class="sum-full" id="full-29"><p><strong>TL;DR</strong></p>
 <p>As military tensions escalate between the U.S. and Iran in the Strait of Hormuz, columnist Tom Friedman warns that the shift from the "Age of Information" to the "Age of Intelligence" necessitates an urgent U.S.-China AI arms control agreement to prevent "weapons of mass disruption" from enabling catastrophic global cyberattacks.</p>
 <h3>Geopolitical Volatility and the "Nacho" Trade</h3>
@@ -10883,7 +10915,7 @@ Squawk Box is hosted by Joe Kernen, Becky Quick and Andrew Ross Sorkin. They wil
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The AI boom is driving a massive surge in infrastructure demand—highlighted by CoreWeave’s $100 billion backlog—which validates continued growth for Nvidia, even as corporations aggressively leverage AI tools to justify significant layoffs and &quot;fatten&quot; profit margins.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-30">TL;DR The AI boom is driving a massive surge in infrastructure demand—highlighted by CoreWeave’s $100 billion backlog—which validates continued growth for Nvidia, even as corporations aggressively leverage AI tools to justify significant layoffs and &quot;fatten&quot; profit margins. The...</div>
+                    <div class="sum-preview" id="preview-30">The...</div>
                     <div class="sum-full" id="full-30"><p><strong>TL;DR</strong></p>
 <p>The AI boom is driving a massive surge in infrastructure demand—highlighted by CoreWeave’s $100 billion backlog—which validates continued growth for Nvidia, even as corporations aggressively leverage AI tools to justify significant layoffs and "fatten" profit margins.</p>
 <h3>The AI Paradox: Labor Market and "Agentic" Layoffs</h3>
@@ -11163,7 +11195,7 @@ They were really good listens. I'm biased because I created it. Julie Hyman has 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The $1.8 trillion private credit market is facing an unprecedented &quot;crisis of confidence&quot; as rapid expansion into the software sector is threatened by AI disruption, leading to record redemption requests from retail investors and growing concerns over opaque valuations.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-31">TL;DR The $1.8 trillion private credit market is facing an unprecedented &quot;crisis of confidence&quot; as rapid expansion into the software sector is threatened by AI disruption, leading to record redemption requests from retail investors and growing concerns over opaque valuations.   ...</div>
+                    <div class="sum-preview" id="preview-31"></div>
                     <div class="sum-full" id="full-31"><p><strong>TL;DR</strong></p>
 <p>The $1.8 trillion private credit market is facing an unprecedented "crisis of confidence" as rapid expansion into the software sector is threatened by AI disruption, leading to record redemption requests from retail investors and growing concerns over opaque valuations.</p>
 <h3>Market Expansion and Regulatory Shift</h3>
@@ -11296,7 +11328,7 @@ And so they can afford to lose that; they may not like to lose that, but they ca
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Andreessen Horowitz (a16z) is positioning its record $15B fundraise as a strategic bet on American technological dominance, arguing that venture capital must actively support national interests and the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-32">TL;DR Andreessen Horowitz (a16z) is positioning its record $15B fundraise as a strategic bet on American technological dominance, arguing that venture capital must actively support national interests and the U.S. government to ensure the next century of global progress.    The...</div>
+                    <div class="sum-preview" id="preview-32">government to ensure the next century of global progress.    The...</div>
                     <div class="sum-full" id="full-32"><p><strong>TL;DR</strong></p>
 <p>Andreessen Horowitz (a16z) is positioning its record $15B fundraise as a strategic bet on American technological dominance, arguing that venture capital must actively support national interests and the U.S. government to ensure the next century of global progress.</p>
 <h3>The Strategic Necessity of American Technology</h3>

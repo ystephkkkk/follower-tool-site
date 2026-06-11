@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>NVIDIA’s ascent to the world’s most valuable company is the result of CEO Jensen Huang’s decades-long gamble on the CUDA platform, which transformed specialized gaming chips into the essential &quot;firepower&quot; for the modern AI revolution.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR NVIDIA’s ascent to the world’s most valuable company is the result of CEO Jensen Huang’s decades-long gamble on the CUDA platform, which transformed specialized gaming chips into the essential &quot;firepower&quot; for the modern AI revolution. The company’s trajectory can be...</div>
+                    <div class="sum-preview" id="preview-0">The company’s trajectory can be...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>NVIDIA’s ascent to the world’s most valuable company is the result of CEO Jensen Huang’s decades-long gamble on the CUDA platform, which transformed specialized gaming chips into the essential "firepower" for the modern AI revolution.</p>
 <h3>The Evolution of NVIDIA: From Gaming to AI</h3>
@@ -1131,9 +1163,9 @@ My guest today has been Steven Wit. His book is The Thinking Machine. Stephen, t
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/hkiO7UAtALrbqOcewo4CIrbd0j8XDeWttKkdtihfX1emeV4iUMwjIe1KKn4zd6wT2OOwANDnIA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>a16z</b><span class="subs">(264.0K)</span></span><span class="dot">&middot;</span><span>54:03</span><span class="dot">&middot;</span><span>5.6K views</span><span class="dot">&middot;</span><span>2026-04-13</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Katherine%20Boyle%22">Katherine Boyle<span class="chip-desc">General Partner, a16z</span></a> <a class="chip" href="index.html?q=%22Sarah%20Wang%22">Sarah Wang<span class="chip-desc">General Partner, a16z</span></a> <a class="chip" href="index.html?q=%22Jesse%20Genet%22">Jesse Genet<span class="chip-desc">Startup Founder</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;I was resigned to not challenging myself to build technical or hard things for the next five years.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;I was resigned to not challenging myself to build technical or hard things for the next five years.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR: Startup founder Jesse Genet utilizes a fleet of 11 autonomous AI agents to manage homeschooling for four children and household administration, demonstrating how agentic workflows can eliminate parental &quot;drudgery&quot; and allow parents to remain technically productive while...</div>
+                    <div class="sum-preview" id="preview-1">Startup founder Jesse Genet utilizes a fleet of 11 autonomous AI agents to manage homeschooling for four children and household administration, demonstrating how agentic workflows can eliminate parental &quot;drudgery&quot; and allow parents to remain technically productive while...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR:</strong> Startup founder Jesse Genet utilizes a fleet of 11 autonomous AI agents to manage homeschooling for four children and household administration, demonstrating how agentic workflows can eliminate parental "drudgery" and allow parents to remain technically productive while staying present at home.</p>
 <h3>The Technical Evolution of a "Homeschool Mom"</h3>
 <ul>
@@ -1453,7 +1485,7 @@ It's just all these things are kind of going to get easier and easier. And so, w
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Sarah Personette, CEO of Puck and former executive at Facebook and Twitter, argues that the future of profitable journalism lies in a talent-led model where reporters act as &quot;original influencers&quot; with equity stakes and direct-to-consumer distribution via newsletters.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR Sarah Personette, CEO of Puck and former executive at Facebook and Twitter, argues that the future of profitable journalism lies in a talent-led model where reporters act as &quot;original influencers&quot; with equity stakes and direct-to-consumer distribution via newsletters.   ...</div>
+                    <div class="sum-preview" id="preview-2"></div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Sarah Personette, CEO of Puck and former executive at Facebook and Twitter, argues that the future of profitable journalism lies in a talent-led model where reporters act as "original influencers" with equity stakes and direct-to-consumer distribution via newsletters.</p>
 <h3>The Puck Business Model: Journalists as "Original Influencers"</h3>
@@ -1919,9 +1951,9 @@ If you like Decoder, please share with friends and subscribe wherever you get yo
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(168.0K)</span></span><span class="dot">&middot;</span><span>56:59</span><span class="dot">&middot;</span><span>65.1K views</span><span class="dot">&middot;</span><span>2026-04-13</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Real Eisman Playbook</span></a> <a class="chip" href="index.html?q=%22Rob%20Oliver%22">Rob Oliver<span class="chip-desc">Software Analyst, Baird</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The problem with 'vibe coding' is you and I could maybe create something, but if there's any problems, we'd have real difficulty trying to figure out how to fix it.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The problem with 'vibe coding' is you and I could maybe create something, but if there's any problems, we'd have real difficulty trying to figure out how to fix it.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR: The software sector is facing a massive valuation reset as generative AI threatens to dismantle traditional moats by lowering the cost of code creation and disrupting seat-based revenue models. While valuations have been cut in half, institutional investors remain...</div>
+                    <div class="sum-preview" id="preview-3">The software sector is facing a massive valuation reset as generative AI threatens to dismantle traditional moats by lowering the cost of code creation and disrupting seat-based revenue models. While valuations have been cut in half, institutional investors remain...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR:</strong> The software sector is facing a massive valuation reset as generative AI threatens to dismantle traditional moats by lowering the cost of code creation and disrupting seat-based revenue models. While valuations have been cut in half, institutional investors remain sidelined, waiting for evidence that incumbents can innovate faster than they are disintermediated.</p>
 <h3>The "Bear Case" for Software</h3>
 <ul>
@@ -2315,7 +2347,7 @@ This podcast is for informational purposes only and does not constitute investme
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Sebastian Mallaby’s *The Infinity Machine* chronicles the rise of Demis Hassabis and DeepMind, illustrating how the pursuit of superintelligence evolved from a niche scientific obsession into a high-stakes commercial and geopolitical arms race.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR  Sebastian Mallaby’s The Infinity Machine chronicles the rise of Demis Hassabis and DeepMind, illustrating how the pursuit of superintelligence evolved from a niche scientific obsession into a high-stakes commercial and geopolitical arms race.  Child Prodigy Roots: Demis...</div>
+                    <div class="sum-preview" id="preview-4">Child Prodigy Roots: Demis...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Sebastian Mallaby’s *The Infinity Machine* chronicles the rise of Demis Hassabis and DeepMind, illustrating how the pursuit of superintelligence evolved from a niche scientific obsession into a high-stakes commercial and geopolitical arms race.</p>
 <h3>The Genesis of a Genius: Demis Hassabis</h3>
@@ -2826,7 +2858,7 @@ RUBENSTEIN: OK. Thank you very much for your conversation. Congratulations. (App
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump has initiated a &quot;complete blockade&quot; of the Strait of Hormuz effective April 13 at 10:00 AM ET, aiming to force Iran to permanently abandon its nuclear weapons ambitions after weekend negotiations ended without a deal.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR President Trump has initiated a &quot;complete blockade&quot; of the Strait of Hormuz effective April 13 at 10:00 AM ET, aiming to force Iran to permanently abandon its nuclear weapons ambitions after weekend negotiations ended without a deal. Trump asserts the Iranian military is...</div>
+                    <div class="sum-preview" id="preview-5">Trump asserts the Iranian military is...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>President Trump has initiated a "complete blockade" of the Strait of Hormuz effective April 13 at 10:00 AM ET, aiming to force Iran to permanently abandon its nuclear weapons ambitions after weekend negotiations ended without a deal. Trump asserts the Iranian military is largely decimated and warns that failure to comply will result in the total destruction of Iran's domestic infrastructure.</p>
 <h3>Naval Blockade and "All In, All Out" Strategy</h3>
@@ -2989,9 +3021,9 @@ Maria: Don't miss more of my interview coming up in the next hour ahead of my ex
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.4M)</span></span><span class="dot">&middot;</span><span>19:59</span><span class="dot">&middot;</span><span>328 views</span><span class="dot">&middot;</span><span>2026-04-13</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Christian%20Magoon%22">Christian Magoon<span class="chip-desc">CEO, Amplify ETFs</span></a> <a class="chip" href="index.html?q=%22Jamie%20Harrison%22">Jamie Harrison<span class="chip-desc">Head of ETF Capital Markets, MFS</span></a> <a class="chip" href="index.html?q=%22Dominic%20Chu%22">Dominic Chu<span class="chip-desc">Host, CNBC</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite prolonged conflict in the Middle East and shifting interest rate expectations, the ETF market remains resilient due to robust market structure; however, investors are increasingly shifting toward energy, hedged equity, and active management t...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite prolonged conflict in the Middle East and shifting interest rate expectations, the ETF market remains resilient due to robust market structure; however, investors are increasingly shifting toward energy, hedged equity, and active management…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR Despite prolonged conflict in the Middle East and shifting interest rate expectations, the ETF market remains resilient due to robust market structure; however, investors are increasingly shifting toward energy, hedged equity, and active management to navigate potential...</div>
+                    <div class="sum-preview" id="preview-6">to navigate potential...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Despite prolonged conflict in the Middle East and shifting interest rate expectations, the ETF market remains resilient due to robust market structure; however, investors are increasingly shifting toward energy, hedged equity, and active management to navigate potential "midterm election year" volatility.</p>
 <h3>Market Resilience and Geopolitical Shifts</h3>
@@ -3193,7 +3225,7 @@ All right, well, Christian and Jamie, thank you both very much for joining us he
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Despite heightened geopolitical conflict in the Middle East, the ETF market remains remarkably resilient due to robust structural arbitrage mechanisms and a strategic investor pivot toward energy, natural resources, and hedged equity products.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Despite heightened geopolitical conflict in the Middle East, the ETF market remains remarkably resilient due to robust structural arbitrage mechanisms and a strategic investor pivot toward energy, natural resources, and hedged equity products.  Counter-Intuitive Stability:...</div>
+                    <div class="sum-preview" id="preview-7">Counter-Intuitive Stability:...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Despite heightened geopolitical conflict in the Middle East, the ETF market remains remarkably resilient due to robust structural arbitrage mechanisms and a strategic investor pivot toward energy, natural resources, and hedged equity products.</p>
 <h3>Market Resilience and Shifting Investor Sentiment</h3>
@@ -3347,7 +3379,7 @@ Active managers are coming into the marketplace every day. 86% of products were 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Global energy markets are in turmoil as oil surges above $100 a barrel following President Trump’s order for a naval blockade of the Strait of Hormuz, while Hungary enters a new era after opposition leader Péter Magyar’s landslide victory over Viktor Orbán.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Global energy markets are in turmoil as oil surges above $100 a barrel following President Trump’s order for a naval blockade of the Strait of Hormuz, while Hungary enters a new era after opposition leader Péter Magyar’s landslide victory over Viktor Orbán.  The U.S....</div>
+                    <div class="sum-preview" id="preview-8">The U.S....</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Global energy markets are in turmoil as oil surges above $100 a barrel following President Trump’s order for a naval blockade of the Strait of Hormuz, while Hungary enters a new era after opposition leader Péter Magyar’s landslide victory over Viktor Orbán.</p>
 <h3>Escalation in the Strait of Hormuz</h3>
@@ -4176,7 +4208,7 @@ There's now two blockades on. Yes, in the Gulf. Barrels are not leaving. I don't
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Economist Nouriel Roubini argues that the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Economist Nouriel Roubini argues that the U.S. must choose decisive military escalation to force an Iranian regime surrender, as a &quot;half-baked&quot; blockade will spike oil prices without removing the strategic threat. Despite these severe geopolitical risks, Roubini maintains...</div>
+                    <div class="sum-preview" id="preview-9">must choose decisive military escalation to force an Iranian regime surrender, as a &quot;half-baked&quot; blockade will spike oil prices without removing the strategic threat. Despite these severe geopolitical risks, Roubini maintains...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Economist Nouriel Roubini argues that the U.S. must choose decisive military escalation to force an Iranian regime surrender, as a "half-baked" blockade will spike oil prices without removing the strategic threat. Despite these severe geopolitical risks, Roubini maintains a long-term "Dr. Boom" outlook, predicting a massive technology-driven secular boom that will drive U.S. potential growth toward 4% by the end of the decade.</p>
 <h3>The Iran Conflict: The Case for Decisive Escalation</h3>
@@ -4480,7 +4512,7 @@ Thank you so much, Dr. Roubini. That's all we have time for. Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>To win the global AI race against China, the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR To win the global AI race against China, the U.S. must prioritize strategic alliances and create a robust domestic &quot;transition system&quot; to manage massive labor displacement, as industrial policy alone cannot achieve total self-sufficiency.  Innovation over Regulation: U.S....</div>
+                    <div class="sum-preview" id="preview-10">must prioritize strategic alliances and create a robust domestic &quot;transition system&quot; to manage massive labor displacement, as industrial policy alone cannot achieve total self-sufficiency.  Innovation over Regulation: U.S....</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>To win the global AI race against China, the U.S. must prioritize strategic alliances and create a robust domestic "transition system" to manage massive labor displacement, as industrial policy alone cannot achieve total self-sufficiency.</p>
 <h3>AI Leadership and the Labor "Transition Crisis"</h3>
@@ -4787,7 +4819,7 @@ All you need to do is find the Bloomberg channel on Apple Podcasts and follow th
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump’s threatened blockade of the Strait of Hormuz is viewed by markets as a &quot;demented&quot; strategy that risks transforming a regional conflict into a global economic crisis, potentially spiking oil prices to $150/bbl and causing severe demand destruction across Asia.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR President Trump’s threatened blockade of the Strait of Hormuz is viewed by markets as a &quot;demented&quot; strategy that risks transforming a regional conflict into a global economic crisis, potentially spiking oil prices to $150/bbl and causing severe demand destruction across...</div>
+                    <div class="sum-preview" id="preview-11"></div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>President Trump’s threatened blockade of the Strait of Hormuz is viewed by markets as a "demented" strategy that risks transforming a regional conflict into a global economic crisis, potentially spiking oil prices to $150/bbl and causing severe demand destruction across Asia.</p>
 <h3>The Blockade: Logistics and Strategic Risks</h3>
@@ -4958,7 +4990,7 @@ I think the pressure is going to be on him to throttle things back. So it wouldn
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Congress enters a high-velocity legislative window ahead of the 2026 midterms, prioritizing a two-part reconciliation strategy to fund the Department of Homeland Security and a massive $80–$200 billion defense supplemental targeting Iranian threats.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Congress enters a high-velocity legislative window ahead of the 2026 midterms, prioritizing a two-part reconciliation strategy to fund the Department of Homeland Security and a massive $80–$200 billion defense supplemental targeting Iranian threats.    The &quot;Time Go&quot;...</div>
+                    <div class="sum-preview" id="preview-12">The &quot;Time Go&quot;...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Congress enters a high-velocity legislative window ahead of the 2026 midterms, prioritizing a two-part reconciliation strategy to fund the Department of Homeland Security and a massive $80–$200 billion defense supplemental targeting Iranian threats.</p>
 <h3>2026 Legislative Timeline and Midterm Pressures</h3>

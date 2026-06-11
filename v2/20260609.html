@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bitcoin’s ultimate utility lies in its dual nature as a highly secure store of value and a transactional foundation, where complex financial engineering and leverage should be avoided in favor of simpler, mathematically verifiable layer-1 tools and a disciplined &quot;HODL&quot; investment strategy.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR   Bitcoin’s ultimate utility lies in its dual nature as a highly secure store of value and a transactional foundation, where complex financial engineering and leverage should be avoided in favor of simpler, mathematically verifiable layer-1 tools and a disciplined &quot;HODL&quot;...</div>
+                    <div class="sum-preview" id="preview-0"></div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Bitcoin’s ultimate utility lies in its dual nature as a highly secure store of value and a transactional foundation, where complex financial engineering and leverage should be avoided in favor of simpler, mathematically verifiable layer-1 tools and a disciplined "HODL" investment strategy.</p>
 <h3>Bitcoin as Collateral and the Evolution of Financialization</h3>
@@ -956,7 +988,7 @@ Or you could, like, time-lock the Bitcoin to prevent the temptation to sell. You
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Venture capital returns are highly compressed in larger funds, making smaller, highly focused vehicles under $750 million far more likely to deliver top-decile performance.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">Venture capital returns are highly compressed in larger funds, making smaller, highly focused vehicles under $750 million far more likely to deliver top-decile performance. In the technology landscape, foundation models face massive pricing pressure and an impending token price...</div>
+                    <div class="sum-preview" id="preview-1">In the technology landscape, foundation models face massive pricing pressure and an impending token price...</div>
                     <div class="sum-full" id="full-1"><h3>TL;DR</h3>
 <p>Venture capital returns are highly compressed in larger funds, making smaller, highly focused vehicles under $750 million far more likely to deliver top-decile performance. In the technology landscape, foundation models face massive pricing pressure and an impending token price war, shifting the most lucrative investment opportunities to the underlying infrastructure and "machinery" of AI.</p>
 <h3>The Math and Misaligned Incentives of Venture Capital</h3>
@@ -1217,7 +1249,7 @@ Okay, let's thank Bill. Amazing job. Thank you, Bill. Thanks.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>IBM CEO Arvind Krishna projects that the company is on track to achieve quantum advantage by 2026, driven by exponential hardware and algorithmic breakthroughs.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">IBM CEO Arvind Krishna projects that the company is on track to achieve quantum advantage by 2026, driven by exponential hardware and algorithmic breakthroughs. Concurrently, IBM is leveraging AI to radically lower operating costs and reshape its workforce, while investing...</div>
+                    <div class="sum-preview" id="preview-2">Concurrently, IBM is leveraging AI to radically lower operating costs and reshape its workforce, while investing...</div>
                     <div class="sum-full" id="full-2"><h3>TL;DR</h3>
 <p>IBM CEO Arvind Krishna projects that the company is on track to achieve quantum advantage by 2026, driven by exponential hardware and algorithmic breakthroughs. Concurrently, IBM is leveraging AI to radically lower operating costs and reshape its workforce, while investing heavily in cybersecurity to safeguard critical tech infrastructure.</p>
 <h3>Quantum Advantage and Practical Applications</h3>
@@ -1395,7 +1427,7 @@ We go to the markets all the time. We are always in the debt markets and so far 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>NVIDIA is driving an AI-native paradigm shift in healthcare by integrating agentic AI, biology reasoning models, and physical AI platforms.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR  NVIDIA is driving an AI-native paradigm shift in healthcare by integrating agentic AI, biology reasoning models, and physical AI platforms. By open-sourcing massive domain-specific datasets and foundation models (such as GR00T-H and Proteina-Complexa), NVIDIA and its...</div>
+                    <div class="sum-preview" id="preview-3">By open-sourcing massive domain-specific datasets and foundation models (such as GR00T-H and Proteina-Complexa), NVIDIA and its...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>NVIDIA is driving an AI-native paradigm shift in healthcare by integrating agentic AI, biology reasoning models, and physical AI platforms. By open-sourcing massive domain-specific datasets and foundation models (such as GR00T-H and Proteina-Complexa), NVIDIA and its global partners are automating dry and wet labs, accelerating drug discovery, and scaling global access to clinical care.</p>
 <h3>Agentic AI &amp; Digital Health: Scaling Clinical Operations</h3>
@@ -1692,7 +1724,7 @@ We're going to change the patient experience in very, very material ways. And so
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>OpenAI CFO Sarah Friar and UC CIO Jagdeep Singh Bachher discuss how artificial intelligence is transforming finance from a discipline of resource scarcity to one of abundance by automating routine tasks, emphasizing that adaptability, curiosity, and ...</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR  OpenAI CFO Sarah Friar and UC CIO Jagdeep Singh Bachher discuss how artificial intelligence is transforming finance from a discipline of resource scarcity to one of abundance by automating routine tasks, emphasizing that adaptability, curiosity, and trust remain the...</div>
+                    <div class="sum-preview" id="preview-4">trust remain the...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>OpenAI CFO Sarah Friar and UC CIO Jagdeep Singh Bachher discuss how artificial intelligence is transforming finance from a discipline of resource scarcity to one of abundance by automating routine tasks, emphasizing that adaptability, curiosity, and trust remain the ultimate drivers of career and fundraising success.</p>
 <h3>The Evolution of a Nonlinear Career Path</h3>
@@ -2010,9 +2042,9 @@ We're going to be dropping in links to register for upcoming events. We hope to 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/lG-z7sTfhFIW2Ne1oXMHvXMXyZSaA02_I17gUel0GAEj7OypsSHQ7PE91Vp4bTbpm3PTIAWJdko=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Dwarkesh Patel</b><span class="subs">(1.3M)</span></span><span class="dot">&middot;</span><span>62:07</span><span class="dot">&middot;</span><span>126.8K views</span><span class="dot">&middot;</span><span>2026-06-09</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Sarah%20Paine%22">Sarah Paine<span class="chip-desc">Military Historian</span></a> <a class="chip" href="index.html?q=%22Dwarkesh%20Patel%22">Dwarkesh Patel<span class="chip-desc">Host, Dwarkesh Patel Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Global geopolitics is defined by a fundamental divide between continental powers (like Russia and China) that seek security through territorial conquest and exclusive spheres of influence, and maritime powers (like the US and UK) that leverage geogra...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Global geopolitics is defined by a fundamental divide between continental powers (like Russia and China) that seek security through territorial conquest and exclusive spheres of influence, and maritime powers (like the US and UK) that leverage…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR  Global geopolitics is defined by a fundamental divide between continental powers (like Russia and China) that seek security through territorial conquest and exclusive spheres of influence, and maritime powers (like the US and UK) that leverage geographic moats and...</div>
+                    <div class="sum-preview" id="preview-5">geographic moats and...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Global geopolitics is defined by a fundamental divide between continental powers (like Russia and China) that seek security through territorial conquest and exclusive spheres of influence, and maritime powers (like the US and UK) that leverage geographic moats and international alliances to pursue wealth through open trade.</p>
 <p>***</p>
@@ -2472,7 +2504,7 @@ Anyway, thank you for your attention, and I appreciate you all coming.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Long-term success in investing and entrepreneurship requires combining a deep study of historical industry &quot;bedrock&quot; with obsessive learning on the bleeding edge of technological disruptions.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR  Long-term success in investing and entrepreneurship requires combining a deep study of historical industry &quot;bedrock&quot; with obsessive learning on the bleeding edge of technological disruptions. Navigating these highly complex, non-linear environments demands a strong...</div>
+                    <div class="sum-preview" id="preview-6">Navigating these highly complex, non-linear environments demands a strong...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>Long-term success in investing and entrepreneurship requires combining a deep study of historical industry "bedrock" with obsessive learning on the bleeding edge of technological disruptions. Navigating these highly complex, non-linear environments demands a strong foundation in systems thinking, robust storytelling, and an awareness of regulatory capture.</p>
 <h3>## Systems Thinking and the Financial Bedrock of Investing</h3>
@@ -2982,7 +3014,7 @@ The Knowledge Project Podcast. Uncovering the timeless principles that drive suc
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The artificial intelligence boom represents a massive, unprecedented &quot;L-curve&quot; adoption cycle that is currently under 1% penetrated in the enterprise.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR  The artificial intelligence boom represents a massive, unprecedented &quot;L-curve&quot; adoption cycle that is currently under 1% penetrated in the enterprise. To capitalize on this shift, Whale Rock Capital Management leverages its proprietary S-curve framework to back dominant...</div>
+                    <div class="sum-preview" id="preview-7">To capitalize on this shift, Whale Rock Capital Management leverages its proprietary S-curve framework to back dominant...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>The artificial intelligence boom represents a massive, unprecedented "L-curve" adoption cycle that is currently under 1% penetrated in the enterprise. To capitalize on this shift, Whale Rock Capital Management leverages its proprietary S-curve framework to back dominant foundational models like Anthropic and capture exponential, de-commoditized earnings power across the entire physical hardware supply chain.</p>
 <h3>The AI "L-Curve" and Anthropic as a High-Conviction Bet</h3>

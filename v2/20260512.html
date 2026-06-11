@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Organizational culture is a force multiplier defined by &quot;what happens when the leader is not in the room,&quot; requiring a high Decency Quotient (DQ), radical simplicity in mission, and transparent, focused measurement to drive global transformation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Organizational culture is a force multiplier defined by &quot;what happens when the leader is not in the room,&quot; requiring a high Decency Quotient (DQ), radical simplicity in mission, and transparent, focused measurement to drive global transformation. Culture is often dismissed...</div>
+                    <div class="sum-preview" id="preview-0">Culture is often dismissed...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Organizational culture is a force multiplier defined by "what happens when the leader is not in the room," requiring a high Decency Quotient (DQ), radical simplicity in mission, and transparent, focused measurement to drive global transformation.</p>
 <h3>Redefining Culture as the "Organizational Glue"</h3>
@@ -862,7 +894,7 @@ It's about creating the conditions where the people who work for you can feel yo
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Codex now features &quot;computer use&quot; capabilities that allow it to interact with local desktop applications via an independent cursor, enabling the agent to complete complex tasks in the background without interrupting the user's workflow.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Codex now features &quot;computer use&quot; capabilities that allow it to interact with local desktop applications via an independent cursor, enabling the agent to complete complex tasks in the background without interrupting the user's workflow.  Non-Invasive Execution: Unlike...</div>
+                    <div class="sum-preview" id="preview-1">Non-Invasive Execution: Unlike...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Codex now features "computer use" capabilities that allow it to interact with local desktop applications via an independent cursor, enabling the agent to complete complex tasks in the background without interrupting the user's workflow.</p>
 <h3>Background Multitasking and User Experience</h3>
@@ -1015,9 +1047,9 @@ We genuinely can't wait to see what you think. Computer use is available for Mac
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nJ7_VRWlh6GWG7wpbqat7OvmyMI9D_i_H5KbaikvXM5mc=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Milken Institute</b><span class="subs">(95.8K)</span></span><span class="dot">&middot;</span><span>33:39</span><span class="dot">&middot;</span><span>13.5K views</span><span class="dot">&middot;</span><span>2026-05-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Larry%20Fink%22">Larry Fink<span class="chip-desc">CEO, BlackRock</span></a> <a class="chip" href="index.html?q=%22Bruce%20Flatt%22">Bruce Flatt<span class="chip-desc">CEO, Brookfield Corp</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;The United States is short power, we're short compute, we're short chips, and there's going to be shortages in all three...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The United States is short power, we're short compute, we're short chips, and there's going to be shortages in all…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR: The global economy is undergoing a $10 trillion &quot;rewiring&quot; driven by AI infrastructure and energy needs, shifting investment toward massive private platforms that can match long-term liabilities with large-scale, compounding assets.  Rewiring the World: Bruce Flatt...</div>
+                    <div class="sum-preview" id="preview-2">The global economy is undergoing a $10 trillion &quot;rewiring&quot; driven by AI infrastructure and energy needs, shifting investment toward massive private platforms that can match long-term liabilities with large-scale, compounding assets.  Rewiring the World: Bruce Flatt...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR:</strong> The global economy is undergoing a $10 trillion "rewiring" driven by AI infrastructure and energy needs, shifting investment toward massive private platforms that can match long-term liabilities with large-scale, compounding assets.</p>
 <h3>The $10 Trillion AI Infrastructure Build-Out</h3>
 <ul>
@@ -1238,7 +1270,7 @@ And so we've seen so many of our banks go out of business with this idea of inte
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>True risk management is rooted in contingency planning rather than prediction, requiring leaders to distinguish between being &quot;wrong&quot; and being &quot;reckless&quot; while maintaining a long-term &quot;partnership&quot; culture that prioritizes the institution over the individual.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR True risk management is rooted in contingency planning rather than prediction, requiring leaders to distinguish between being &quot;wrong&quot; and being &quot;reckless&quot; while maintaining a long-term &quot;partnership&quot; culture that prioritizes the institution over the individual.  Prediction...</div>
+                    <div class="sum-preview" id="preview-3">Prediction...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>True risk management is rooted in contingency planning rather than prediction, requiring leaders to distinguish between being "wrong" and being "reckless" while maintaining a long-term "partnership" culture that prioritizes the institution over the individual.</p>
 <h3>The Discipline of Risk Management</h3>
@@ -1753,9 +1785,9 @@ No, I mean it's back to kind of where we started the conversation. I— I don't 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>95:27</span><span class="dot">&middot;</span><span>3.5K views</span><span class="dot">&middot;</span><span>2026-05-12</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Charles%20Koch%22">Charles Koch<span class="chip-desc">Chairman of the Board, Koch Industries</span></a> <a class="chip" href="index.html?q=%22Chase%20Koch%22">Chase Koch<span class="chip-desc">President, Koch Disruptive Technologies</span></a> <a class="chip" href="index.html?q=%22David%20Friedberg%22">David Friedberg<span class="chip-desc">Co-host, All-In Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Koch Industries scaled 9,000x over six decades into a $150 billion private powerhouse by remaining &quot;capability-bounded&quot; rather than industry-bound, reinvesting 90% of its profits, and practicing a decentralized management philosophy focused on bottom...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Koch Industries scaled 9,000x over six decades into a $150 billion private powerhouse by remaining &quot;capability-bounded&quot; rather than industry-bound, reinvesting 90% of its profits, and practicing a decentralized management philosophy focused on…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR  Koch Industries scaled 9,000x over six decades into a $150 billion private powerhouse by remaining &quot;capability-bounded&quot; rather than industry-bound, reinvesting 90% of its profits, and practicing a decentralized management philosophy focused on bottom-up empowerment,...</div>
+                    <div class="sum-preview" id="preview-4">bottom-up empowerment,...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Koch Industries scaled 9,000x over six decades into a $150 billion private powerhouse by remaining "capability-bounded" rather than industry-bound, reinvesting 90% of its profits, and practicing a decentralized management philosophy focused on bottom-up empowerment, value-first hiring, and constructive learning from failure.</p>
 <h3>The "Capability-Bounded" Growth Strategy</h3>
@@ -2525,7 +2557,7 @@ Charles Koch, Chase Koch. Thank you. Thank you. Thank you.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The crypto industry is entering a &quot;noisiest bear market&quot; phase characterized by a massive surge in M&amp;A, institutional adoption from TradFi giants, and the release of a 300-page bipartisan draft of the Clarity Act that could finally define the boundary between securities and commodities.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR The crypto industry is entering a &quot;noisiest bear market&quot; phase characterized by a massive surge in M&amp;A, institutional adoption from TradFi giants, and the release of a 300-page bipartisan draft of the Clarity Act that could finally define the boundary between securities...</div>
+                    <div class="sum-preview" id="preview-5"></div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>The crypto industry is entering a "noisiest bear market" phase characterized by a massive surge in M&amp;A, institutional adoption from TradFi giants, and the release of a 300-page bipartisan draft of the Clarity Act that could finally define the boundary between securities and commodities.</p>
 <h3>Legislative Progress: The Clarity Act and Developer Protections</h3>
@@ -2841,7 +2873,7 @@ That the AI Capex boom guarantees more money printing and that hype is still his
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Port of Los Angeles handled 891,000 TEUs in April 2026—its second-best April on record—amid a landscape defined by extreme geopolitical volatility, shifting tariff authorities, and a 50% surge in diesel prices driven by the ongoing conflict in the Middle East.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR The Port of Los Angeles handled 891,000 TEUs in April 2026—its second-best April on record—amid a landscape defined by extreme geopolitical volatility, shifting tariff authorities, and a 50% surge in diesel prices driven by the ongoing conflict in the Middle East. ...</div>
+                    <div class="sum-preview" id="preview-6"></div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>The Port of Los Angeles handled 891,000 TEUs in April 2026—its second-best April on record—amid a landscape defined by extreme geopolitical volatility, shifting tariff authorities, and a 50% surge in diesel prices driven by the ongoing conflict in the Middle East.</p>
 <h3>April 2026 Cargo Performance &amp; Economic Outlook</h3>
@@ -3306,7 +3338,7 @@ Please visit lafleetweek.com and make your plans now. Thanks for joining us agai
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>At Red Hat Summit 2026, Red Hat launched its &quot;metal-to-agents&quot; open-source AI platform to help enterprises bridge the gap between rising IT complexity and flat budgets.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR  At Red Hat Summit 2026, Red Hat launched its &quot;metal-to-agents&quot; open-source AI platform to help enterprises bridge the gap between rising IT complexity and flat budgets. By unifying virtual machines, containers, and AI workloads, Red Hat enables organizations to escape...</div>
+                    <div class="sum-preview" id="preview-7">By unifying virtual machines, containers, and AI workloads, Red Hat enables organizations to escape...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>At Red Hat Summit 2026, Red Hat launched its "metal-to-agents" open-source AI platform to help enterprises bridge the gap between rising IT complexity and flat budgets. By unifying virtual machines, containers, and AI workloads, Red Hat enables organizations to escape virtualization price crises, control token economics, and maintain digital sovereignty.</p>
 <h3>1. Navigating the Virtualization Cost Crisis and Hybrid Infrastructure Consolidation</h3>
@@ -4000,7 +4032,7 @@ And on others, you're focused on the reality of AI work, ensuring that your orga
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The financial services industry has entered the &quot;agentic era,&quot; shifting from generative AI assistants to autonomous agents that can build software, modernize legacy systems, and conduct micro-transactions.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR The financial services industry has entered the &quot;agentic era,&quot; shifting from generative AI assistants to autonomous agents that can build software, modernize legacy systems, and conduct micro-transactions. AWS is positioning itself as the foundational infrastructure for...</div>
+                    <div class="sum-preview" id="preview-8">AWS is positioning itself as the foundational infrastructure for...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The financial services industry has entered the "agentic era," shifting from generative AI assistants to autonomous agents that can build software, modernize legacy systems, and conduct micro-transactions. AWS is positioning itself as the foundational infrastructure for this transition, prioritizing model choice and specialized tools like AgentCore Payments to bridge the gap between human reasoning and autonomous execution.</p>
 <h3>I. Accelerating the Software Development Lifecycle (SDLC)</h3>
@@ -4421,7 +4453,7 @@ Agents that can reason, plan, and act can now transact. And at AWS we are not bu
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Secretary of War Pete Hegseth and Joint Chiefs Chairman Gen.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR  Secretary of War Pete Hegseth and Joint Chiefs Chairman Gen. Dan Caine testified on the Department of War's $1.5 trillion FY27 budget request, defending the administration's military campaign in Iran and its transition to a &quot;business model&quot; for defense acquisitions....</div>
+                    <div class="sum-preview" id="preview-9">Dan Caine testified on the Department of War's $1.5 trillion FY27 budget request, defending the administration's military campaign in Iran and its transition to a &quot;business model&quot; for defense acquisitions....</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Secretary of War Pete Hegseth and Joint Chiefs Chairman Gen. Dan Caine testified on the Department of War's $1.5 trillion FY27 budget request, defending the administration's military campaign in Iran and its transition to a "business model" for defense acquisitions. However, they faced intense bipartisan questioning over a $350 billion reliance on one-time reconciliation funding, rising domestic energy costs from the Strait of Hormuz blockade, and months-long delays in releasing congressional security assistance to Ukraine and Baltic allies.</p>
 <h3>The FY27 Budget Structure: Base vs. Reconciliation</h3>
@@ -5132,7 +5164,7 @@ The subcommittee stands in recess subject to the call of the chair, and I would 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Department of War's $1.5 trillion FY27 budget request faces intense congressional scrutiny over a controversial &quot;divest-to-invest&quot; aviation procurement strategy, the rising $29 billion cost of the war with Iran, and a new capital expenditure paradigm aimed at rapidly expanding the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR  The Department of War's $1.5 trillion FY27 budget request faces intense congressional scrutiny over a controversial &quot;divest-to-invest&quot; aviation procurement strategy, the rising $29 billion cost of the war with Iran, and a new capital expenditure paradigm aimed at rapidly...</div>
+                    <div class="sum-preview" id="preview-10"></div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>The Department of War's $1.5 trillion FY27 budget request faces intense congressional scrutiny over a controversial "divest-to-invest" aviation procurement strategy, the rising $29 billion cost of the war with Iran, and a new capital expenditure paradigm aimed at rapidly expanding the U.S. defense industrial base to counter China.</p>
 <h3>Aviation Procurement and the Shift Away from "Divest-to-Invest"</h3>
@@ -5665,7 +5697,7 @@ But I wanted to thank the secretary and General Caine for answering questions be
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Investing in women’s sports is a high-yield economic opportunity and a critical talent pipeline for future executives, as 85% of women in leadership positions credit sports for their professional success.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR Investing in women’s sports is a high-yield economic opportunity and a critical talent pipeline for future executives, as 85% of women in leadership positions credit sports for their professional success.  Rapid Market Growth: Revenue from women’s sports is projected to...</div>
+                    <div class="sum-preview" id="preview-11">Rapid Market Growth: Revenue from women’s sports is projected to...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>Investing in women’s sports is a high-yield economic opportunity and a critical talent pipeline for future executives, as 85% of women in leadership positions credit sports for their professional success.</p>
 <h3>The Economic Case for Women’s Sports</h3>

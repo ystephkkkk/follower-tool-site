@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -702,7 +734,7 @@
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Anthropic has achieved an unprecedented $30B revenue run rate while sparking intense debate over its decision to withhold its &quot;Mythos&quot; model due to cyber-security risks, amid accusations of anti-competitive behavior toward open-source projects like OpenClaw.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Anthropic has achieved an unprecedented $30B revenue run rate while sparking intense debate over its decision to withhold its &quot;Mythos&quot; model due to cyber-security risks, amid accusations of anti-competitive behavior toward open-source projects like OpenClaw.  Mythos Model...</div>
+                    <div class="sum-preview" id="preview-0">Mythos Model...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Anthropic has achieved an unprecedented $30B revenue run rate while sparking intense debate over its decision to withhold its "Mythos" model due to cyber-security risks, amid accusations of anti-competitive behavior toward open-source projects like OpenClaw.</p>
 <h3>AI Security and the "Mythos" Disclosure</h3>
@@ -1273,7 +1305,7 @@ We should all just get a room and just have one big huge orgy because they're al
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Rep.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR  Rep. Glenn Ivey (D-MD) announced plans to prioritize the George Floyd Justice in Policing Act and issue a primary subpoena for Elon Musk should Democrats regain the House majority. His agenda emphasizes holding ICE accountable for racial profiling, modernizing voter...</div>
+                    <div class="sum-preview" id="preview-1">Glenn Ivey (D-MD) announced plans to prioritize the George Floyd Justice in Policing Act and issue a primary subpoena for Elon Musk should Democrats regain the House majority. His agenda emphasizes holding ICE accountable for racial profiling, modernizing voter...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Rep. Glenn Ivey (D-MD) announced plans to prioritize the George Floyd Justice in Policing Act and issue a primary subpoena for Elon Musk should Democrats regain the House majority. His agenda emphasizes holding ICE accountable for racial profiling, modernizing voter outreach for younger generations, and investigating the perceived "sale" of presidential pardons.</p>
 <h3>Police Reform and the George Floyd Justice in Policing Act</h3>
@@ -1434,7 +1466,7 @@ Let's send him back, get him back in the criminal justice system, and move forwa
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Ashe Magalhaes argues that AI is shifting the builder’s role from technical architect to &quot;creative conductor,&quot; where agentic workflows enable individuals to build at unprecedented speeds while prioritizing human connection and presence.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR  Ashe Magalhaes argues that AI is shifting the builder’s role from technical architect to &quot;creative conductor,&quot; where agentic workflows enable individuals to build at unprecedented speeds while prioritizing human connection and presence.    The Transition to Agents: Ashe...</div>
+                    <div class="sum-preview" id="preview-2">The Transition to Agents: Ashe...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>Ashe Magalhaes argues that AI is shifting the builder’s role from technical architect to "creative conductor," where agentic workflows enable individuals to build at unprecedented speeds while prioritizing human connection and presence.</p>
 <h3>From Frontier Tech to Relational Intelligence</h3>
@@ -1704,9 +1736,9 @@ And can't wait to see the device too that you're working on. Thank you so much. 
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_l3_1jQNpiVw6DJNaBBohIfipBAGw2kihVhTKG622wVQQI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>BBC World Service</b><span class="subs">(2.0M)</span></span><span class="dot">&middot;</span><span>22:02</span><span class="dot">&middot;</span><span>14.0K views</span><span class="dot">&middot;</span><span>2026-04-10</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">US President</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Following a US Supreme Court ruling that declared President Trump’s “Liberation Day” tariffs illegal, the administration has pivoted to a temporary 10% global tariff while attempting to navigate a massive $150 billion refund process; meanwhile, the p...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Following a US Supreme Court ruling that declared President Trump’s “Liberation Day” tariffs illegal, the administration has pivoted to a temporary 10% global tariff while attempting to navigate a massive $150 billion refund process; meanwhile, the…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR Following a US Supreme Court ruling that declared President Trump’s “Liberation Day” tariffs illegal, the administration has pivoted to a temporary 10% global tariff while attempting to navigate a massive $150 billion refund process; meanwhile, the policy has successfully...</div>
+                    <div class="sum-preview" id="preview-3">policy has successfully...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>Following a US Supreme Court ruling that declared President Trump’s “Liberation Day” tariffs illegal, the administration has pivoted to a temporary 10% global tariff while attempting to navigate a massive $150 billion refund process; meanwhile, the policy has successfully rerouted global supply chains but failed to significantly restore domestic US manufacturing.</p>
 <h3>Current Legal and Regulatory Status</h3>
@@ -1946,7 +1978,7 @@ You've been watching Asia Specific from the BBC World Service with me Mariko Oi 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Prediction markets like Kalshi and Polymarket have transitioned from niche gambling sites to multi-billion-dollar financial platforms, gaining legitimacy through mainstream partnerships and political support while facing intense legal scrutiny over state tax revenues and ethical concerns.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR Prediction markets like Kalshi and Polymarket have transitioned from niche gambling sites to multi-billion-dollar financial platforms, gaining legitimacy through mainstream partnerships and political support while facing intense legal scrutiny over state tax revenues and...</div>
+                    <div class="sum-preview" id="preview-4"></div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>Prediction markets like Kalshi and Polymarket have transitioned from niche gambling sites to multi-billion-dollar financial platforms, gaining legitimacy through mainstream partnerships and political support while facing intense legal scrutiny over state tax revenues and ethical concerns.</p>
 <h3>Rapid Growth and Institutional Mainstreaming</h3>
@@ -2111,7 +2143,7 @@ We're also waiting to see how a lot of these court cases shake out. If the court
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Arm is executing a massive strategic pivot from licensing smartphone chip designs to becoming a primary producer of high-end AI silicon, targeting a data center market opportunity projected to exceed $100 billion.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR Arm is executing a massive strategic pivot from licensing smartphone chip designs to becoming a primary producer of high-end AI silicon, targeting a data center market opportunity projected to exceed $100 billion. By launching its own &quot;AGI CPU&quot; and selling directly to...</div>
+                    <div class="sum-preview" id="preview-5">By launching its own &quot;AGI CPU&quot; and selling directly to...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>Arm is executing a massive strategic pivot from licensing smartphone chip designs to becoming a primary producer of high-end AI silicon, targeting a data center market opportunity projected to exceed $100 billion. By launching its own "AGI CPU" and selling directly to hyperscalers like Meta and OpenAI, Arm is transitioning from a neutral "Switzerland" of the industry to a direct competitor with traditional giants like Intel and AMD.</p>
 <h3>Strategic Shift: From Licensing to Silicon Production</h3>
@@ -2314,7 +2346,7 @@ Arm CEO Rene Haas. And on the next episode of Bloomberg Tech Europe, we're going
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The global economy is facing a severe supply shock driven by conflict in the Middle East, necessitating a downgrade in growth projections due to energy disruptions, infrastructure damage, and rising inflation.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR The global economy is facing a severe supply shock driven by conflict in the Middle East, necessitating a downgrade in growth projections due to energy disruptions, infrastructure damage, and rising inflation. Managing Director Kristalina Georgieva urges a policy mix of...</div>
+                    <div class="sum-preview" id="preview-6">Managing Director Kristalina Georgieva urges a policy mix of...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>The global economy is facing a severe supply shock driven by conflict in the Middle East, necessitating a downgrade in growth projections due to energy disruptions, infrastructure damage, and rising inflation. Managing Director Kristalina Georgieva urges a policy mix of targeted fiscal support and vigilant monetary policy to prevent an inflationary spiral while rebuilding depleted fiscal buffers.</p>
 <h3>The Nature and Impact of the Supply Shock</h3>
@@ -2478,7 +2510,7 @@ And come they will. And as you deal with the long tail of the current shock, do 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Q1 2026 was defined by geopolitical volatility in Iran, a significant correction in software stocks driven by AI-related pricing fears, and a liquidity crunch in private credit marked by record-high redemption requests reaching as high as 41%.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR Q1 2026 was defined by geopolitical volatility in Iran, a significant correction in software stocks driven by AI-related pricing fears, and a liquidity crunch in private credit marked by record-high redemption requests reaching as high as 41%.    Iran Ceasefire: A two-week...</div>
+                    <div class="sum-preview" id="preview-7">%.    Iran Ceasefire: A two-week...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR</strong></p>
 <p>Q1 2026 was defined by geopolitical volatility in Iran, a significant correction in software stocks driven by AI-related pricing fears, and a liquidity crunch in private credit marked by record-high redemption requests reaching as high as 41%.</p>
 <h3>Geopolitical Impact &amp; Macroeconomic Outlook</h3>
@@ -2681,7 +2713,7 @@ And that's the wrap. This podcast is for informational purposes only and does no
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Sam Altman is characterized as a &quot;Michael Jordan of listening&quot; whose skill in reflecting what others want to hear has driven OpenAI’s success but created a deep &quot;trust crisis&quot; regarding his transparency and long-term commitment to safety.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR Sam Altman is characterized as a &quot;Michael Jordan of listening&quot; whose skill in reflecting what others want to hear has driven OpenAI’s success but created a deep &quot;trust crisis&quot; regarding his transparency and long-term commitment to safety. As OpenAI shifts from a...</div>
+                    <div class="sum-preview" id="preview-8">As OpenAI shifts from a...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>Sam Altman is characterized as a "Michael Jordan of listening" whose skill in reflecting what others want to hear has driven OpenAI’s success but created a deep "trust crisis" regarding his transparency and long-term commitment to safety. As OpenAI shifts from a safety-first nonprofit to a profit-driven geopolitical powerhouse, concerns persist that Altman’s pattern of deception makes him an unreliable steward for a technology with existential stakes.</p>
 <h3>The "Oppenheimer" Paradox and Shifting Mission</h3>
@@ -3070,7 +3102,7 @@ They don't contain a single smoking gun. What they contain is a pattern of behav
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Investigative reporters Ronan Farrow and Andrew Marantz detail a &quot;forensic and even&quot; portrait of OpenAI CEO Sam Altman, revealing a long-standing pattern of alleged manipulation, strategic deception, and a lack of institutional transparency that persists despite his public commitment to AI safety.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR Investigative reporters Ronan Farrow and Andrew Marantz detail a &quot;forensic and even&quot; portrait of OpenAI CEO Sam Altman, revealing a long-standing pattern of alleged manipulation, strategic deception, and a lack of institutional transparency that persists despite his public...</div>
+                    <div class="sum-preview" id="preview-9"></div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR</strong></p>
 <p>Investigative reporters Ronan Farrow and Andrew Marantz detail a "forensic and even" portrait of OpenAI CEO Sam Altman, revealing a long-standing pattern of alleged manipulation, strategic deception, and a lack of institutional transparency that persists despite his public commitment to AI safety.</p>
 <h3>The "Altman Pattern" of Deception</h3>
@@ -3364,7 +3396,7 @@ I think, you know, we're the only podcasters who actually believe in the Moon. T
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Global markets are cautiously pricing in a positive outcome for high-stakes peace talks between the U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR Global markets are cautiously pricing in a positive outcome for high-stakes peace talks between the U.S. and Iran in Islamabad this weekend, even as the Strait of Hormuz remains closed and critical Saudi energy infrastructure faces significant damage.    High-Stakes Peace...</div>
+                    <div class="sum-preview" id="preview-10">and Iran in Islamabad this weekend, even as the Strait of Hormuz remains closed and critical Saudi energy infrastructure faces significant damage.    High-Stakes Peace...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR</strong></p>
 <p>Global markets are cautiously pricing in a positive outcome for high-stakes peace talks between the U.S. and Iran in Islamabad this weekend, even as the Strait of Hormuz remains closed and critical Saudi energy infrastructure faces significant damage.</p>
 <h3>Geopolitical Negotiations: The Islamabad Summit</h3>
@@ -3886,7 +3918,7 @@ Getting tougher. Before we get to that weekend, coming up, back to the tech stor
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The upcoming earnings reports from Taiwan Semiconductor, ASML, and Goldman Sachs will serve as a critical litmus test for the sustainability of the AI boom and the health of capital markets amidst heightened geopolitical volatility following recent Iranian military activity.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR The upcoming earnings reports from Taiwan Semiconductor, ASML, and Goldman Sachs will serve as a critical litmus test for the sustainability of the AI boom and the health of capital markets amidst heightened geopolitical volatility following recent Iranian military...</div>
+                    <div class="sum-preview" id="preview-11"></div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR</strong></p>
 <p>The upcoming earnings reports from Taiwan Semiconductor, ASML, and Goldman Sachs will serve as a critical litmus test for the sustainability of the AI boom and the health of capital markets amidst heightened geopolitical volatility following recent Iranian military activity.</p>
 <h3>Geopolitical Volatility &amp; Forward Guidance</h3>
@@ -4126,7 +4158,7 @@ And that wraps it up for this edition of Earnings Cheat Sheet. If you want even 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Top U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR Top U.S. financial regulators held an urgent, undisclosed meeting with Wall Street CEOs to address systemic cyber risks posed by Anthropic’s advanced &quot;Mythos&quot; AI model, amid a broader market shift where hardware infrastructure providers are surging while software...</div>
+                    <div class="sum-preview" id="preview-12">financial regulators held an urgent, undisclosed meeting with Wall Street CEOs to address systemic cyber risks posed by Anthropic’s advanced &quot;Mythos&quot; AI model, amid a broader market shift where hardware infrastructure providers are surging while software...</div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>Top U.S. financial regulators held an urgent, undisclosed meeting with Wall Street CEOs to address systemic cyber risks posed by Anthropic’s advanced "Mythos" AI model, amid a broader market shift where hardware infrastructure providers are surging while software valuations face significant pressure.</p>
 <h3>Wall Street Summit on AI Cyber Risk</h3>

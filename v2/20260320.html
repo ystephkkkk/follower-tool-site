@@ -8,6 +8,7 @@
     <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
     <style>
         :root {
+            color-scheme: dark;
             --bg: #0c0f14;
             --bg-1: #12161d;
             --bg-2: #1b212b;
@@ -28,6 +29,7 @@
         @media (prefers-color-scheme: light) {
             :root:not([data-theme="dark"]) {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -49,6 +51,7 @@
 
         :root[data-theme="light"] {
 
+            color-scheme: light;
             --bg: #faf9f7;
             --bg-1: #ffffff;
             --bg-2: #f0eeea;
@@ -68,6 +71,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
 
         @media (prefers-reduced-motion: no-preference) {
             html { scroll-behavior: smooth; }
@@ -148,6 +154,7 @@
             flex: 1;
             max-width: 460px;
             margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
             position: relative;
             display: flex;
         }
@@ -165,6 +172,7 @@
 
         .topbar-search input {
             width: 100%;
+            min-width: 0;
             padding: 0.42rem 0.8rem 0.42rem 2.1rem;
             background: var(--bg-1);
             border: 1px solid var(--border);
@@ -280,8 +288,12 @@
             text-transform: uppercase;
             color: var(--text-2);
             margin: 2rem 0 0.9rem;
-            padding-bottom: 0.4rem;
+            padding: 0.4rem 0;
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
         }
 
         .month-group:first-child .month-label { margin-top: 0; }
@@ -337,7 +349,15 @@
         .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
         .preview:hover + .preview { border-top-color: transparent; }
 
-        .p-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .preview:hover .p-title { color: var(--accent); }
 
         .p-meta {
@@ -408,6 +428,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 0.3rem;
+            min-width: 0;
             background: var(--chip-bg);
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -416,11 +437,22 @@
             font-weight: 600;
             color: var(--text-2);
             text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
             transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .chip:hover { border-color: var(--accent); color: var(--accent); }
-        .chip-desc { font-weight: 400; color: var(--text-3); font-size: 0.7rem; }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
 
         /* ------- daily page ------- */
@@ -700,9 +732,9 @@
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/md6sasZiZefY3eGda9Zv87BOcjZwT4KEOjReSU-A2PLWPWKDsmOyPwRK29-Jt9Qjv-EtFhByliY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Masters of Scale</b><span class="subs">(153.0K)</span></span><span class="dot">&middot;</span><span>29:35</span><span class="dot">&middot;</span><span>284 views</span><span class="dot">&middot;</span><span>2026-03-20</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Amy%20Webb%22">Amy Webb<span class="chip-desc">Futurist and CEO, Future Today Strategy Group</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Futurist Amy Webb argues that tracking isolated &quot;trends&quot; is no longer sufficient in a fast-moving world; leaders must instead focus on &quot;convergences&quot;—the collision of multiple technologies and socio-political forces—to navigate an era of &quot;creative de...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Futurist Amy Webb argues that tracking isolated &quot;trends&quot; is no longer sufficient in a fast-moving world; leaders must instead focus on &quot;convergences&quot;—the collision of multiple technologies and socio-political forces—to navigate an era of &quot;creative…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-0">TL;DR Futurist Amy Webb argues that tracking isolated &quot;trends&quot; is no longer sufficient in a fast-moving world; leaders must instead focus on &quot;convergences&quot;—the collision of multiple technologies and socio-political forces—to navigate an era of &quot;creative destruction&quot; and avoid...</div>
+                    <div class="sum-preview" id="preview-0">destruction&quot; and avoid...</div>
                     <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
 <p>Futurist Amy Webb argues that tracking isolated "trends" is no longer sufficient in a fast-moving world; leaders must instead focus on "convergences"—the collision of multiple technologies and socio-political forces—to navigate an era of "creative destruction" and avoid the trap of short-term corporate thinking.</p>
 <h3>The Shift from Static Trends to "Convergences"</h3>
@@ -915,7 +947,7 @@ I hope you do too. Amy’s new convergence outlook from the Future Today Strateg
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>Andrej Karpathy (formerly of OpenAI and Tesla) describes a fundamental shift in software engineering from manual coding to the orchestration of autonomous agents.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-1">TL;DR Andrej Karpathy (formerly of OpenAI and Tesla) describes a fundamental shift in software engineering from manual coding to the orchestration of autonomous agents. He argues that the next phase of AI involves &quot;AutoResearch&quot;—removing the human bottleneck to allow agents to...</div>
+                    <div class="sum-preview" id="preview-1">He argues that the next phase of AI involves &quot;AutoResearch&quot;—removing the human bottleneck to allow agents to...</div>
                     <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
 <p>Andrej Karpathy (formerly of OpenAI and Tesla) describes a fundamental shift in software engineering from manual coding to the orchestration of autonomous agents. He argues that the next phase of AI involves "AutoResearch"—removing the human bottleneck to allow agents to recursively self-improve, conduct experiments, and manage complex systems through natural language and APIs.</p>
 <h3>The New Engineering Paradigm: From Coding to Orchestration</h3>
@@ -1431,7 +1463,7 @@ The things that agents can't do is your job now. The things that agents can do, 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The destruction of Middle Eastern oil infrastructure marks a terminal collapse of the post-war &quot;Petrodollar&quot; era, signaling a global shift away from U.S.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-2">TL;DR The destruction of Middle Eastern oil infrastructure marks a terminal collapse of the post-war &quot;Petrodollar&quot; era, signaling a global shift away from U.S. hegemony toward a multipolar world dominated by &quot;civilization states&quot; like India, China, and Russia.  The &quot;Abrahamic...</div>
+                    <div class="sum-preview" id="preview-2">hegemony toward a multipolar world dominated by &quot;civilization states&quot; like India, China, and Russia.  The &quot;Abrahamic...</div>
                     <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
 <p>The destruction of Middle Eastern oil infrastructure marks a terminal collapse of the post-war "Petrodollar" era, signaling a global shift away from U.S. hegemony toward a multipolar world dominated by "civilization states" like India, China, and Russia.</p>
 <h3>The Collapse of the Global Energy Order</h3>
@@ -2626,7 +2658,7 @@ I will also do some IPL and election coverage. We have five state elections comi
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The &quot;Age of Agents&quot; marks a fundamental shift from generative AI experimentation to autonomous systems that reason, plan, and execute complex workflows.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-3">TL;DR The &quot;Age of Agents&quot; marks a fundamental shift from generative AI experimentation to autonomous systems that reason, plan, and execute complex workflows. Success in this era requires transitioning from pilots to production-grade deployments by prioritizing a secure data...</div>
+                    <div class="sum-preview" id="preview-3">Success in this era requires transitioning from pilots to production-grade deployments by prioritizing a secure data...</div>
                     <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
 <p>The "Age of Agents" marks a fundamental shift from generative AI experimentation to autonomous systems that reason, plan, and execute complex workflows. Success in this era requires transitioning from pilots to production-grade deployments by prioritizing a secure data foundation, operational excellence, and "security as an accelerator."</p>
 <h3>The Shift to Agentic AI (2022–2026)</h3>
@@ -3144,7 +3176,7 @@ So use today well. Go deep. Engage fully. And leave with clarity. And most impor
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>NVIDIA is transitioning from providing individual chips to delivering full-scale &quot;AI Factories&quot; powered by the Vera-Rubin platform, which offers a 35x performance increase over Blackwell to radically lower the cost of &quot;token economics.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-4">TL;DR   NVIDIA is transitioning from providing individual chips to delivering full-scale &quot;AI Factories&quot; powered by the Vera-Rubin platform, which offers a 35x performance increase over Blackwell to radically lower the cost of &quot;token economics.&quot; This shift enables a new &quot;agentic&quot;...</div>
+                    <div class="sum-preview" id="preview-4">&quot; This shift enables a new &quot;agentic&quot;...</div>
                     <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
 <p>NVIDIA is transitioning from providing individual chips to delivering full-scale "AI Factories" powered by the Vera-Rubin platform, which offers a 35x performance increase over Blackwell to radically lower the cost of "token economics." This shift enables a new "agentic" era where autonomous AI agents drive business revenue, transforming technology infrastructure from a capital expense into a direct revenue generator.</p>
 <h3>The Vera-Rubin Platform and the 12-Month Cadence</h3>
@@ -3332,7 +3364,7 @@ Well Charlie, thanks for spending some time with us. We at theCUBE are pumped up
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The United States is balancing an &quot;open for business&quot; economic posture with an increasingly rigorous national security screening framework for both inbound and outbound investments.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-5">TL;DR The United States is balancing an &quot;open for business&quot; economic posture with an increasingly rigorous national security screening framework for both inbound and outbound investments. While maintaining the US as the premier destination for global capital, the Treasury...</div>
+                    <div class="sum-preview" id="preview-5">While maintaining the US as the premier destination for global capital, the Treasury...</div>
                     <div class="sum-full" id="full-5"><p><strong>TL;DR</strong></p>
 <p>The United States is balancing an "open for business" economic posture with an increasingly rigorous national security screening framework for both inbound and outbound investments. While maintaining the US as the premier destination for global capital, the Treasury Department is expanding its oversight into nascent technologies—specifically AI, quantum, and semiconductors—through modernized CFIUS processes and the upcoming implementation of the COINS Act.</p>
 <h3>The America First Investment Policy and CFIUS at 50</h3>
@@ -3603,7 +3635,7 @@ Well, Chris, thank you very much. Unfortunately, we're out of time but I'd like 
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>America must reclaim its industrial and technological edge by empowering &quot;heretical&quot; innovators and leveraging AI as a &quot;slingshot&quot; for human agency to ensure national security and economic prosperity.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-6">TL;DR America must reclaim its industrial and technological edge by empowering &quot;heretical&quot; innovators and leveraging AI as a &quot;slingshot&quot; for human agency to ensure national security and economic prosperity.  The &quot;Shot Clock&quot; on Deterrence: Sankar argues that the U.S. is...</div>
+                    <div class="sum-preview" id="preview-6">The &quot;Shot Clock&quot; on Deterrence: Sankar argues that the U.S. is...</div>
                     <div class="sum-full" id="full-6"><p><strong>TL;DR</strong></p>
 <p>America must reclaim its industrial and technological edge by empowering "heretical" innovators and leveraging AI as a "slingshot" for human agency to ensure national security and economic prosperity.</p>
 <h3>The Case for Defense Reformation and Industrial Mobilization</h3>
@@ -4060,9 +4092,9 @@ I'm in that phase now where I'm fighting for the prosperity that the next genera
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Y Combinator</b><span class="subs">(2.2M)</span></span><span class="dot">&middot;</span><span>13:08</span><span class="dot">&middot;</span><span>9.9K views</span><span class="dot">&middot;</span><span>2026-03-20</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Jared%20Friedman%22">Jared Friedman<span class="chip-desc">Partner, Y Combinator</span></a> <a class="chip" href="index.html?q=%22Gaurab%20Chakrabarti%22">Gaurab Chakrabarti<span class="chip-desc">Co-founder, Solugen</span></a> <a class="chip" href="index.html?q=%22Sean%20Hunt%22">Sean Hunt<span class="chip-desc">Co-founder, Solugen</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Capital constraint forces very creative thinking...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Capital constraint forces very creative…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-7">TL;DR: Solugen is disrupting the $1 trillion chemical industry by replacing fossil-fuel-based manufacturing with a &quot;chemoenzymatic&quot; process that uses sugar feedstock and a breakthrough enzyme found in pancreatic cancer to produce chemicals more efficiently, safely, and...</div>
+                    <div class="sum-preview" id="preview-7">Solugen is disrupting the $1 trillion chemical industry by replacing fossil-fuel-based manufacturing with a &quot;chemoenzymatic&quot; process that uses sugar feedstock and a breakthrough enzyme found in pancreatic cancer to produce chemicals more efficiently, safely, and...</div>
                     <div class="sum-full" id="full-7"><p><strong>TL;DR:</strong> Solugen is disrupting the $1 trillion chemical industry by replacing fossil-fuel-based manufacturing with a "chemoenzymatic" process that uses sugar feedstock and a breakthrough enzyme found in pancreatic cancer to produce chemicals more efficiently, safely, and sustainably.</p>
 <h3>The Core Innovation: Chemoenzymatic Processing</h3>
 <ul>
@@ -4230,7 +4262,7 @@ Some of the problems that we're gonna solve, they don't exist yet. And so it's l
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The geopolitical landscape is destabilizing as oil prices surge toward $120/barrel amid tensions with Iran, while a shifting AI power dynamic sees Anthropic aggressively seizing enterprise market share from a distracted and over-extended OpenAI.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-8">TL;DR The geopolitical landscape is destabilizing as oil prices surge toward $120/barrel amid tensions with Iran, while a shifting AI power dynamic sees Anthropic aggressively seizing enterprise market share from a distracted and over-extended OpenAI.  Energy Markets: Oil prices...</div>
+                    <div class="sum-preview" id="preview-8">Energy Markets: Oil prices...</div>
                     <div class="sum-full" id="full-8"><p><strong>TL;DR</strong></p>
 <p>The geopolitical landscape is destabilizing as oil prices surge toward $120/barrel amid tensions with Iran, while a shifting AI power dynamic sees Anthropic aggressively seizing enterprise market share from a distracted and over-extended OpenAI.</p>
 <h3>Geopolitical Volatility and the "Coalition of One"</h3>
@@ -4643,9 +4675,9 @@ Anyway, we want to hear from you. Send us your questions about business, tech, o
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(164.0K)</span></span><span class="dot">&middot;</span><span>28:19</span><span class="dot">&middot;</span><span>57.2K views</span><span class="dot">&middot;</span><span>2026-03-20</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Weekly Wrap</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;In one part of the business, private equity buys companies, and in another part of the business, private equity lends money to itself to buy those companies.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;In one part of the business, private equity buys companies, and in another part of the business, private equity lends money to itself to buy those companies.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-9">TL;DR: A burgeoning credit cycle in the $1.8 trillion private credit market, driven by retail redemption pressures and heavy exposure to a vulnerable software sector, poses a significant risk to market stability alongside sustained triple-digit oil prices.  Iran War and Energy...</div>
+                    <div class="sum-preview" id="preview-9">A burgeoning credit cycle in the $1.8 trillion private credit market, driven by retail redemption pressures and heavy exposure to a vulnerable software sector, poses a significant risk to market stability alongside sustained triple-digit oil prices.  Iran War and Energy...</div>
                     <div class="sum-full" id="full-9"><p><strong>TL;DR:</strong> A burgeoning credit cycle in the $1.8 trillion private credit market, driven by retail redemption pressures and heavy exposure to a vulnerable software sector, poses a significant risk to market stability alongside sustained triple-digit oil prices.</p>
 <h3>Geopolitical Tensions and Macroeconomic Volatility</h3>
 <ul>
@@ -4865,9 +4897,9 @@ This podcast is for informational purposes only and does not constitute investme
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mHu9r4NLRq-Q26rGqSls-atB2Kcyo0Div1GeE3zK82mlc=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Chatham House</b><span class="subs">(89.4K)</span></span><span class="dot">&middot;</span><span>33:21</span><span class="dot">&middot;</span><span>288 views</span><span class="dot">&middot;</span><span>2026-03-20</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Sir%20Chris%20Bryant%20MP%22">Sir Chris Bryant MP<span class="chip-desc">Minister for Trade, Department for Business and Trade</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;Promote what we can, protect what we must.</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;Promote what we can, protect what we must.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-10">TL;DR: Sir Chris Bryant MP advocates for a proactive, &quot;free and fair&quot; trade strategy that rejects protectionist retreats while selectively protecting critical sectors like steel to ensure national security and economic resilience.  Rejecting Binary Choices: Bryant argues the UK...</div>
+                    <div class="sum-preview" id="preview-10">Sir Chris Bryant MP advocates for a proactive, &quot;free and fair&quot; trade strategy that rejects protectionist retreats while selectively protecting critical sectors like steel to ensure national security and economic resilience.  Rejecting Binary Choices: Bryant argues the UK...</div>
                     <div class="sum-full" id="full-10"><p><strong>TL;DR:</strong> Sir Chris Bryant MP advocates for a proactive, "free and fair" trade strategy that rejects protectionist retreats while selectively protecting critical sectors like steel to ensure national security and economic resilience.</p>
 <h3>Redefining the "Trade Tightrope" Philosophy</h3>
 <ul>
@@ -5128,9 +5160,9 @@ If we could achieve that growth in the UK we'd be flying. Yeah, I thought when y
                     <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/lG-z7sTfhFIW2Ne1oXMHvXMXyZSaA02_I17gUel0GAEj7OypsSHQ7PE91Vp4bTbpm3PTIAWJdko=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Dwarkesh Patel</b><span class="subs">(1.2M)</span></span><span class="dot">&middot;</span><span>83:44</span><span class="dot">&middot;</span><span>111.5K views</span><span class="dot">&middot;</span><span>2026-03-20</span></div>
                     <div class="people"><a class="chip" href="index.html?q=%22Terence%20Tao%22">Terence Tao<span class="chip-desc">Mathematician</span></a> <a class="chip" href="index.html?q=%22Dwarkesh%20Patel%22">Dwarkesh Patel<span class="chip-desc">Host, Dwarkesh Podcast</span></a></div>
                 </div>
-                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&gt; &quot;AI has basically driven the cost of idea generation down to almost zero...</span></div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;AI has basically driven the cost of idea generation down to almost…</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-11">TL;DR: While AI has reduced the cost of hypothesis generation to near zero, the bottleneck in scientific discovery has shifted to verification and &quot;depth.&quot; Currently, AI functions as a &quot;breadth&quot; tool—capable of exhaustively applying known techniques—while humans remain essential...</div>
+                    <div class="sum-preview" id="preview-11">While AI has reduced the cost of hypothesis generation to near zero, the bottleneck in scientific discovery has shifted to verification and &quot;depth.&quot; Currently, AI functions as a &quot;breadth&quot; tool—capable of exhaustively applying known techniques—while humans remain essential...</div>
                     <div class="sum-full" id="full-11"><p><strong>TL;DR:</strong> While AI has reduced the cost of hypothesis generation to near zero, the bottleneck in scientific discovery has shifted to verification and "depth." Currently, AI functions as a "breadth" tool—capable of exhaustively applying known techniques—while humans remain essential for the cumulative, adaptive reasoning required to solve "mile-high" frontier problems.</p>
 <h3>The Shift from Theory to Data-Driven Discovery</h3>
 <ul>
@@ -5582,7 +5614,7 @@ Yeah, thank you. Pleasure.</div>
                 </div>
                 <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Federal Reserve is maintaining a &quot;higher for longer&quot; interest rate stance due to geopolitical uncertainty and domestic fiscal stimulus, while experts suggest the AI revolution may be a gradual integration of &quot;normal technology&quot; rather than an immediate economic upheaval.</span></div>
                 <div class="vc-body">
-                    <div class="sum-preview" id="preview-12">TL;DR The Federal Reserve is maintaining a &quot;higher for longer&quot; interest rate stance due to geopolitical uncertainty and domestic fiscal stimulus, while experts suggest the AI revolution may be a gradual integration of &quot;normal technology&quot; rather than an immediate economic...</div>
+                    <div class="sum-preview" id="preview-12"></div>
                     <div class="sum-full" id="full-12"><p><strong>TL;DR</strong></p>
 <p>The Federal Reserve is maintaining a "higher for longer" interest rate stance due to geopolitical uncertainty and domestic fiscal stimulus, while experts suggest the AI revolution may be a gradual integration of "normal technology" rather than an immediate economic upheaval.</p>
 <h3>Federal Reserve Policy and Geopolitical Uncertainty</h3>
