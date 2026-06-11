@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Saturday, April 4, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 70ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 70ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 70ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260403.html">&larr; Apr 3</a><a href="20260405.html">Apr 5 &rarr;</a></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Saturday, April 4, 2026</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=eIbXT4LsP2A" target="_blank" rel="noopener">LIVE| One Year of Trump Tariffs: How Global Trade Changed | Vantage on Firstpost | N18G<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/xq1lZeHKTfCkr-6yw8OvRqOhZKM651oTJEJZiMD-5ObuT8eR29wktPwLZW6R2ZAFHOvba-W6=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Firstpost</b><span class="subs">(9.5M)</span></span><span class="dot">&middot;</span><span>35:57</span><span class="dot">&middot;</span><span>2.6K views</span><span class="dot">&middot;</span><span>2026-04-04</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President of the United States</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;For nations that treat us badly, we will calculate the combined rate of all their tariffs, non-monetary barriers, and other forms of…</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">One year after the implementation of sweeping US tariffs, global trade has been permanently rewired rather than dismantled, marked by a 30% drop in US imports from China, accelerated supply chain diversification among US allies, and an estimated $1,000 cost increase for...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong>: One year after the implementation of sweeping US tariffs, global trade has been permanently rewired rather than dismantled, marked by a 30% drop in US imports from China, accelerated supply chain diversification among US allies, and an estimated $1,000 cost increase for the average American household.</p>
+<h3>The Rewiring of US-China Trade and Supply Chains</h3>
+<ul>
+<li><strong>US-China Decoupling:</strong> The trade relationship between the world's two largest economies has fractured significantly. </li>
+<ul>
+<ul>
+<li>US imports from China have fallen by approximately 30%.</li>
+<li>China's share in US imports has dropped below 10%, a low not seen in decades.</li>
+</ul>
+</ul>
+<li><strong>Trade Re-routing:</strong> Global trade is not shutting down; rather, supply chains are being redesigned. Manufacturing and factory hubs are shifting rapidly to alternative nations, most notably Vietnam and Mexico.</li>
+<li><strong>Reciprocal Tariffs:</strong> The US is continuing its aggressive trade posture by calculating and implementing reciprocal tariffs designed to match the combined rate of other nations' tariffs, non-monetary barriers, and trade discrepancies.</li>
+</ul>
+<h3>Global Allies Adapt and Diversify</h3>
+<ul>
+<li><strong>Mitigating US Risk:</strong> Traditional US allies are actively reducing their economic reliance on the US market, viewing over-dependence as a strategic risk.</li>
+<ul>
+<ul>
+<li><strong>Canada and the UK:</strong> Both nations are looking beyond the US to establish new trade partnerships and explore alternative markets.</li>
+<li><strong>India:</strong> New Delhi has diversified its trade portfolio by signing deals with multiple international partners and the European Union, while simultaneously focusing on boosting domestic demand.</li>
+</ul>
+</ul>
+<li><strong>Political Fallout:</strong> The widespread imposition of tariffs has strained diplomatic relations, eroded trust among allies, decreased US global influence, and triggered a wider global pivot toward protectionism.</li>
+</ul>
+<h3>Domestic Financial Impact and Legal Setbacks</h3>
+<ul>
+<li><strong>Costs Passed to Consumers:</strong> Despite political claims that foreign nations pay the tariffs, the financial burden has largely fallen on domestic importers, who have passed these costs down the supply chain.</li>
+<ul>
+<ul>
+<li><strong>Household Expenses:</strong> The average US household paid approximately $1,000 more for the same goods over the past year due to tariff-induced price increases.</li>
+</ul>
+</ul>
+<li><strong>Supreme Court Defeat:</strong> In February, the US Supreme Court dealt a major blow to the administration’s strategy by striking down key tariffs as illegal.</li>
+<li><strong>Administrative Bypasses:</strong> To circumvent the Supreme Court ruling, the White House quickly established new temporary tariffs, initiating a global rate of 10% that was subsequently raised to 15%.</li>
+</ul>
+<h3>Sector Escalation: The Pharmaceutical Ultimatum</h3>
+<ul>
+<li><strong>Targeting Brand Name Drugs:</strong> The administration has expanded its tariff strategy into the healthcare sector, introducing a tariff of up to 100% on select imported branded pharmaceuticals. </li>
+<ul>
+<ul>
+<li><strong>Exclusions:</strong> This specific executive action targeted branded drugs and excluded generics and orphan drugs.</li>
+</ul>
+</ul>
+<li><strong>The "Make in America" Mandate:</strong> Pharmaceutical companies have been given a strict ultimatum: relocate manufacturing operations to the United States and lower domestic drug prices, or face the maximum 100% duty. Partial compliance results in a scaled, lower tariff rate.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"For nations that treat us badly, we will calculate the combined rate of all their tariffs, non-monetary barriers, and other forms of cheating..."
+— Donald Trump
+</blockquote>
+<blockquote>
+"Canada and United States have built a remarkable partnership in the economy, in security, and in rich cultural exchange. But Canada doesn't live because of the United States. Canada thrives because we are Canadian."
+— Canadian Representative
+</blockquote>
+<blockquote>
+"Much of this success has been accomplished by tariffs, my favorite word 'tariffs' ... Companies know that if they build in America, there are no tariffs and that's why they're coming home to the USA in record numbers."
+— Donald Trump
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">One year ago, Donald Trump declared a trade war on the world. He called it Liberation Day and imposed tariffs on more than 90 countries. A baseline tax of 10% and a much higher duty on others. He said America would win again, factories would return, prices would fall, and that the United States would call the shots.
+
+Starting tomorrow, the United States will implement reciprocal tariffs on other nations. It's been a long time since we even thought of that. We used to think about it a lot; we didn't think about it for many decades, and you see what's happened. For nations that treat us badly, we will calculate the combined rate of all their tariffs, non-monetary barriers, and other forms of cheating. And because we are being very kind—we're kind people, very kind.
+
+How the time flies, right? This was one year ago, and today, one year later, the world is still dealing with its consequences, but not in the way Trump promised. The global economy has not reset; it has been rewired quietly, deeply, permanently. 
+
+Let's start with a significant shift. The United States and China, they are pulling apart, and this matters because for years, their trade kept markets and prices stable. Now, that system is breaking. Reports say trade between the two countries has fallen sharply. 
+
+US imports from China are down by around 30%. Exports have also declined, and China's share in US imports has fallen below 10%. That is a level last seen decades ago. This is not a temporary dip. 
+
+Companies are moving factories, supply chains are being redesigned, and countries like Vietnam and Mexico are stepping in. So, the world is not de-globalising; it's re-routing. But the story does not end there. The rest of the world is also adapting. This means America's allies are also adjusting. 
+
+Look at countries like Canada and the UK. They are looking beyond the United States now. New trade deals are being signed and new markets are being explored because relying on one partner has become risky. And this shift is not limited to the West; it is happening across major economies. 
+
+Even New Delhi has taken a similar approach. One year on, it has diversified. It has signed trade deals with several countries as well as the European Union. At the same time, it has boosted domestic demand. 
+
+But this shift is not just economic; it's also political, and this is where the impact deepens. Like I said, tariffs have strained relationships. Allies are less willing to fall in line. Trust has taken a hit and protectionism is spreading. America's global influence is not what it used to be.
+
+Canada and United States have built a remarkable partnership in the economy, in security, and in rich cultural exchange. But Canada doesn't live because of the United States. Canada thrives because we are Canadian.
+
+And this brings me to the next big impact, the one in the United States itself. This is where Trump's promises are falling apart. Tariffs were supposed to protect American consumers. Instead, they've made things more expensive. Companies have passed tariff costs on to consumers. 
+
+Take a look at this report. It says US households paid $1,000 more for the same goods over the past year. $1,000 more! So clearly, consumers have borne the brunt of this tariff war.
+
+Consumer prices are increasing with the tariff. They have been; the tariffs have been pushing consumer prices up, but not one for one. Consumers aren't usually the, the ones who directly pay the tariffs. The people who directly pay the tariffs are the importers themselves. Most of the evidence suggests that they're paying—most of the tariff burden is falling on them, and they're passing some of that on to consumers, but not evenly.
+
+But Trump thinks otherwise. He feels the economy has done really well, all thanks to tariffs, of course. Take a look.
+
+Much of this success has been accomplished by tariffs, my favorite word &quot;tariffs&quot;, which for many decades have been used successfully by other countries against us, but not anymore. Companies know that if they build in America, there are no tariffs, and that's why they're coming home to the USA in record numbers. 
+
+They're building factories and plants at levels we haven't seen. AI, automobiles—we're doing what nobody thought was even possible, not even remotely possible. But that's classic Trump for you. But here's the reality check.
+
+One year on, the trade policy itself has taken a hit. In February, the US Supreme Court struck down key tariffs. It said that they were illegal. This was a major blow. It raised questions about the entire strategy and heralded the world into more uncertainty. 
+
+But did that stop Donald Trump? Not really. Instead of rolling back, the White House quickly pushed new temporary tariffs: a global rate of 10%, which was later raised to 15%.
+
+But other alternatives will now be used to replace the ones that the court incorrectly rejected. We have alternatives—great alternatives. It could be more money; we'll take in more money, and we'll be a lot stronger for it. We were taking in hundreds of billions of dollars, and we'll continue to do so.
+
+So clearly, this policy is not going away; it's just changing shape, and Donald Trump is not backing down. He has announced fresh tariffs, this time targeting pharmaceutical companies. The duty is up to 100%, and it is imposed on some imported branded drugs. 
+
+The message is clear: make in America or pay the price. Companies have been given a choice: move production to the United States and cut drug prices or face steep tariffs. If they do part of it, they pay a lower duty. If they do nothing, they face the full 100% rate.
+
+Right. So, so when you get a chance to look through that executive order and the fact sheet associated with it, you will see that that is really focused on a lot of the deals we've made with countries and companies. It doesn't cover generic, it doesn't cover, you know, orphan drugs...
+
+So what does all of this add up to? One year after Liberation Day, the world has not collapsed, but it has changed. Global trade is now more uncertain, more political, and in some ways more expensive. Supply chains are shifting, alliances are being tested, and costs are being passed on. 
+
+And yet, despite all the setbacks, despite the court ruling, Donald Trump is still pushing ahead, which means this story is not over. The real question now is, how far will this go? And how much more will the world have to pay?
+
+One year ago, Donald Trump declared a trade war on the world. He called it Liberation Day and imposed tariffs on more than 90 countries. A baseline tax of 10% and a much higher duty on others. He said America would win again, factories would return, prices would fall, and that the United States would call the shots.
+
+Starting tomorrow, the United States will implement reciprocal tariffs on other nations. It's been a long time since we even thought of that. We used to think about it a lot; we didn't think about it for many decades, and you see what's happened. For nations that treat us badly, we will calculate the combined rate of all their tariffs, non-monetary barriers, and other forms of cheating. And because we are being very kind—we're kind people, very kind.
+
+How the time flies, right? This was one year ago, and today, one year later, the world is still dealing with its consequences, but not in the way Trump promised. The global economy has not reset; it has been rewired quietly, deeply, permanently. 
+
+Let's start with a significant shift. The United States and China, they are pulling apart, and this matters because for years, their trade kept markets and prices stable. Now, that system is breaking. Reports say trade between the two countries has fallen sharply. 
+
+US imports from China are down by around 30%. Exports have also declined, and China's share in US imports has fallen below 10%. That is a level last seen decades ago. This is not a temporary dip. 
+
+Companies are moving factories, supply chains are being redesigned, and countries like Vietnam and Mexico are stepping in. So, the world is not de-globalising; it's re-routing. But the story does not end there. The rest of the world is also adapting. This means America's allies are also adjusting. 
+
+Look at countries like Canada and the UK. They are looking beyond the United States now. New trade deals are being signed and new markets are being explored because relying on one partner has become risky. And this shift is not limited to the West; it is happening across major economies. 
+
+Even New Delhi has taken a similar approach. One year on, it has diversified. It has signed trade deals with several countries as well as the European Union. At the same time, it has boosted domestic demand. 
+
+But this shift is not just economic; it's also political, and this is where the impact deepens. Like I said, tariffs have strained relationships. Allies are less willing to fall in line. Trust has taken a hit and protectionism is spreading. America's global influence is not what it used to be.
+
+Canada and United States have built a remarkable partnership in the economy, in security, and in rich cultural exchange. But Canada doesn't live because of the United States. Canada thrives because we are Canadian.
+
+And this brings me to the next big impact, the one in the United States itself. This is where Trump's promises are falling apart. Tariffs were supposed to protect American consumers. Instead, they've made things more expensive. Companies have passed tariff costs on to consumers. 
+
+Take a look at this report. It says US households paid $1,000 more for the same goods over the past year. $1,000 more! So clearly, consumers have borne the brunt of this tariff war.
+
+Consumer prices are increasing with the tariff. They have been; the tariffs have been pushing consumer prices up, but not one for one. Consumers aren't usually the, the ones who directly pay the tariffs. The people who directly pay the tariffs are the importers themselves. Most of the evidence suggests that they're paying—most of the tariff burden is falling on them, and they're passing some of that on to consumers, but not evenly.
+
+But Trump thinks otherwise. He feels the economy has done really well, all thanks to tariffs, of course. Take a look.
+
+Much of this success has been accomplished by tariffs, my favorite word &quot;tariffs&quot;, which for many decades have been used successfully by other countries against us, but not anymore. Companies know that if they build in America, there are no tariffs, and that's why they're coming home to the USA in record numbers. 
+
+They're building factories and plants at levels we haven't seen. AI, automobiles—we're doing what nobody thought was even possible, not even remotely possible. But that's classic Trump for you. But here's the reality check.
+
+One year on, the trade policy itself has taken a hit. In February, the US Supreme Court struck down key tariffs. It said that they were illegal. This was a major blow. It raised questions about the entire strategy and heralded the world into more uncertainty. 
+
+But did that stop Donald Trump? Not really. Instead of rolling back, the White House quickly pushed new temporary tariffs: a global rate of 10%, which was later raised to 15%.
+
+But other alternatives will now be used to replace the ones that the court incorrectly rejected. We have alternatives—great alternatives. It could be more money; we'll take in more money, and we'll be a lot stronger for it. We were taking in hundreds of billions of dollars, and we'll continue to do so.
+
+So clearly, this policy is not going away; it's just changing shape, and Donald Trump is not backing down. He has announced fresh tariffs, this time targeting pharmaceutical companies. The duty is up to 100%, and it is imposed on some imported branded drugs. 
+
+The message is clear: make in America or pay the price. Companies have been given a choice: move production to the United States and cut drug prices or face steep tariffs. If they do part of it, they pay a lower duty. If they do nothing, they face the full 100% rate.
+
+Right. So, so when you get a chance to look through that executive order and the fact sheet associated with it, you will see that that is really focused on a lot of the deals we've made with countries and companies. It doesn't cover generic, it doesn't cover, you know, orphan drugs...
+
+So what does all of this add up to? One year after Liberation Day, the world has not collapsed, but it has changed. Global trade is now more uncertain, more political, and in some ways more expensive. Supply chains are shifting, alliances are being tested, and costs are being passed on. 
+
+And yet, despite all the setbacks, despite the court ruling, Donald Trump is still pushing ahead, which means this story is not over. The real question now is, how far will this go? And how much more will the world have to pay?
+
+One year ago, Donald Trump declared a trade war on the world. He called it Liberation Day and imposed tariffs on more than 90 countries. A baseline tax of 10% and a much higher duty on others. He said America would win again, factories would return, prices would fall, and that the United States would call the shots.
+
+Starting tomorrow, the United States will implement reciprocal tariffs on other nations. It's been a long time since we even thought of that. We used to think about it a lot; we didn't think about it for many decades, and you see what's happened. For nations that treat us badly, we will calculate the combined rate of all their tariffs, non-monetary barriers, and other forms of cheating. And because we are being very kind—we're kind people, very kind.
+
+How the time flies, right? This was one year ago, and today, one year later, the world is still dealing with its consequences, but not in the way Trump promised. The global economy has not reset; it has been rewired quietly, deeply, permanently. 
+
+Let's start with a significant shift. The United States and China, they are pulling apart, and this matters because for years, their trade kept markets and prices stable. Now, that system is breaking. Reports say trade between the two countries has fallen sharply. 
+
+US imports from China are down by around 30%. Exports have also declined, and China's share in US imports has fallen below 10%. That is a level last seen decades ago. This is not a temporary dip. 
+
+Companies are moving factories, supply chains are being redesigned, and countries like Vietnam and Mexico are stepping in. So, the world is not de-globalising; it's re-routing. But the story does not end there. The rest of the world is also adapting. This means America's allies are also adjusting. 
+
+Look at countries like Canada and the UK. They are looking beyond the United States now. New trade deals are being signed and new markets are being explored because relying on one partner has become risky. And this shift is not limited to the West; it is happening across major economies. 
+
+Even New Delhi has taken a similar approach. One year on, it has diversified. It has signed trade deals with several countries as well as the European Union. At the same time, it has boosted domestic demand. 
+
+But this shift is not just economic; it's also political, and this is where the impact deepens. Like I said, tariffs have strained relationships. Allies are less willing to fall in line. Trust has taken a hit and protectionism is spreading. America's global influence is not what it used to be.
+
+Canada and United States have built a remarkable partnership in the economy, in security, and in rich cultural exchange. But Canada doesn't live because of the United States. Canada thrives because we are Canadian.
+
+And this brings me to the next big impact, the one in the United States itself. This is where Trump's promises are falling apart. Tariffs were supposed to protect American consumers. Instead, they've made things more expensive. Companies have passed tariff costs on to consumers. 
+
+Take a look at this report. It says US households paid $1,000 more for the same goods over the past year. $1,000 more! So clearly, consumers have borne the brunt of this tariff war.
+
+Consumer prices are increasing with the tariff. They have been; the tariffs have been pushing consumer prices up, but not one for one. Consumers aren't usually the, the ones who directly pay the tariffs. The people who directly pay the tariffs are the importers themselves. Most of the evidence suggests that they're paying—most of the tariff burden is falling on them, and they're passing some of that on to consumers, but not evenly.
+
+But Trump thinks otherwise. He feels the economy has done really well, all thanks to tariffs, of course. Take a look.
+
+Much of this success has been accomplished by tariffs, my favorite word &quot;tariffs&quot;, which for many decades have been used successfully by other countries against us, but not anymore. Companies know that if they build in America, there are no tariffs, and that's why they're coming home to the USA in record numbers. 
+
+They're building factories and plants at levels we haven't seen. AI, automobiles—we're doing what nobody thought was even possible, not even remotely possible. But that's classic Trump for you. But here's the reality check.
+
+One year on, the trade policy itself has taken a hit. In February, the US Supreme Court struck down key tariffs. It said that they were illegal. This was a major blow. It raised questions about the entire strategy and heralded the world into more uncertainty. 
+
+But did that stop Donald Trump? Not really. Instead of rolling back, the White House quickly pushed new temporary tariffs: a global rate of 10%, which was later raised to 15%.
+
+But other alternatives will now be used to replace the ones that the court incorrectly rejected. We have alternatives—great alternatives. It could be more money; we'll take in more money, and we'll be a lot stronger for it. We were taking in hundreds of billions of dollars, and we'll continue to do so.
+
+So clearly, this policy is not going away; it's just changing shape, and Donald Trump is not backing down. He has announced fresh tariffs, this time targeting pharmaceutical companies. The duty is up to 100%, and it is imposed on some imported branded drugs. 
+
+The message is clear: make in America or pay the price. Companies have been given a choice: move production to the United States and cut drug prices or face steep tariffs. If they do part of it, they pay a lower duty. If they do nothing, they face the full 100% rate.
+
+Right. So, so when you get a chance to look through that executive order and the fact sheet associated with it, you will see that that is really focused on a lot of the deals we've made with countries and companies. It doesn't cover generic, it doesn't cover, you know, orphan drugs...
+
+So what does all of this add up to? One year after Liberation Day, the world has not collapsed, but it has changed. Global trade is now more uncertain, more political, and in some ways more expensive. Supply chains are shifting, alliances are being tested, and costs are being passed on. 
+
+And yet, despite all the setbacks, despite the court ruling, Donald Trump is still pushing ahead, which means this story is not over. The real question now is, how far will this go? And how much more will the world have to pay?</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+</script>
+    
+</body>
+</html>
