@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Saturday, June 13, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 70ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 70ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 70ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260612.html">&larr; Jun 12</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Saturday, June 13, 2026</h1>
+            <p class="day-sub">2 videos &middot; 2 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=pfGAdzo09xw" target="_blank" rel="noopener">Vinod Khosla’s Warning for India’s IT Industry | Can AI Save It?<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/FtBoS_cbLDoBm9hiWq6OEMA2cnQYhHkvelfTg5cREpGH2keJmsgdMKgztQ0hLBp36xGx0SSLQA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>SparX by Mukesh Bansal</b><span class="subs">(1.0M)</span></span><span class="dot">&middot;</span><span>51:33</span><span class="dot">&middot;</span><span>3.8K views</span><span class="dot">&middot;</span><span>2026-06-13</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Vinod%20Khosla%22">Vinod Khosla<span class="chip-desc">Venture Capitalist &amp; Founder, Khosla Ventures</span></a> <a class="chip" href="index.html?q=%22Mukesh%20Bansal%22">Mukesh Bansal<span class="chip-desc">Host, SparX</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Legendary venture capitalist Vinod Khosla predicts that AI and physical robotics will usher in a highly deflationary, abundant world by 2040, rendering India's traditional IT services industry obsolete while freeing humanity from labor-intensive &quot;servitude to survival.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0"></div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
+<p>Legendary venture capitalist Vinod Khosla predicts that AI and physical robotics will usher in a highly deflationary, abundant world by 2040, rendering India's traditional IT services industry obsolete while freeing humanity from labor-intensive "servitude to survival."</p>
+<h3>The AI Landscape and Khosla’s Contrarian Investment Philosophy</h3>
+<ul>
+<li><strong>The OpenAI Gamble:</strong> In early 2019, Khosla Ventures committed a $50 million check to OpenAI—double the size of any initial check Vinod Khosla had written in his 40-year career. </li>
+<ul>
+<ul>
+<li><strong>The LP Apology:</strong> Alongside the check, Khosla sent an apology letter to his Limited Partners (LPs), admitting the investment made no logical sense as OpenAI was then a non-profit with no business plan or product lines.</li>
+<li><strong>The Core Thesis:</strong> Khosla focused entirely on the massive, asymmetric upside of AI. He argues that trying to forecast exact returns via spreadsheets is misleading for highly disruptive, non-linear technologies.</li>
+</ul>
+</ul>
+<li><strong>Geographic Concentration:</strong> Silicon Valley remains the absolute epicenter of AI innovation. </li>
+<ul>
+<ul>
+<li><strong>The Unicorn Divide:</strong> SF Bay Area accounts for 91% of all AI unicorns globally. New York is a distant second at just 2%.</li>
+</ul>
+</ul>
+<li><strong>Scaling and Token Dynamics:</strong> Khosla predicts exponential growth in token volume (quantity of inference) alongside rapidly declining costs per token. While "intelligence per token" (quality) will rise more modestly, progress in AI memory and continuous learning will become routine engineering milestones.</li>
+</ul>
+<h3>Transforming Healthcare, Education, and the Power of "Agency"</h3>
+<ul>
+<li><strong>The End of Human Doctors:</strong> Khosla predicts that within five years, human doctors will only be required for interventional medicine (such as surgery or setting broken bones).</li>
+<ul>
+<ul>
+<li><strong>Triage Accuracy:</strong> Standard ChatGPT has a 20% to 30% triage error rate (similar to human GP error rates). However, by layering domain-specific guardrails over models like GPT-5, the triage error rate drops to nearly zero.</li>
+<li><strong>India Non-Profit Initiative:</strong> Khosla is actively working on a non-profit project to deliver AI-driven healthcare across India within the next two years.</li>
+</ul>
+</ul>
+<li><strong>"Founder Mode" on Personal Challenges:</strong> Khosla highlighted GitLab's founder, who upon receiving a terminal cancer diagnosis, went "Founder Mode" on his illness. Using AI to research, design, and run custom vaccines and drugs, he successfully treated his own cancer despite having no medical degree.</li>
+<li><strong>Fostering "Agency" Over Rote Education:</strong> </li>
+<ul>
+<ul>
+<li><strong>The Real Value of College:</strong> Universities must pivot away from lecturing from obsolete textbooks. Khosla advises institutions like IIT Delhi to scrap traditional lecture halls and open more dorms and meeting rooms to foster debate, curiosity, and "agency"—the proactive mindset to solve problems rather than complain about them.</li>
+</ul>
+</ul>
+</ul>
+<h3>The Robotics Revolution and Severe Economic Deflation</h3>
+<ul>
+<li><strong>The "ChatGPT Moment" for Robotics:</strong> Khosla expects a major physical AI breakthrough in the next 2 to 5 years, leading to highly functional humanoid robots capable of doing household tasks like cooking.</li>
+<ul>
+<ul>
+<li><strong>Automotive-Scale Manufacturing:</strong> Humanoid robots will become the dominant physical form factor. They will be built in automotive-style automated factories, driving acquisition costs down dramatically to the raw cost of materials.</li>
+</ul>
+</ul>
+<li><strong>A Highly Deflationary 2040:</strong> By 2040, the baseline cost of living will plummet. Core services like healthcare, education, legal representation, and entertainment will become virtually free.</li>
+<li><strong>A Warning to India’s IT and BPO Sector:</strong> India’s massive IT services and offshore business process outsourcing (BPO) industries "will be gone" due to AI automation. To survive, India must pivot toward becoming the global hub for deploying and integrating AI systems.</li>
+</ul>
+<h3>Overcoming the AI Energy Bottleneck: Fusion and Geothermal</h3>
+<ul>
+<li><strong>A Five-Year Power Crunch:</strong> AI's massive data center power consumption was not forecasted by utility planners. Consequently, energy will bottleneck AI scaling for the next five years. However, this is a short-term issue that will be fully resolved by the early 2030s as new capacity comes online.</li>
+<li><strong>The 2018 Fusion Bet:</strong> Khosla Ventures invested in Bob Momgaard’s MIT spin-out (Commonwealth Fusion Systems) in 2018. </li>
+<ul>
+<ul>
+<li><strong>Superconductors as the Catalyst:</strong> The bet was unlocked by high-temperature superconductors, which allowed for 20 Tesla magnets. This technology effectively shrank the required experimental reactor size to 1/50th of previous designs, accelerating research cycles.</li>
+<li><strong>The Fusion Timeline:</strong> Khosla is highly confident that within two years, the scientific community will agree that fusion works, and within five years, they will agree it is economically viable.</li>
+</ul>
+</ul>
+<li><strong>Fission vs. Fusion:</strong> Khosla views nuclear fission as politically unfeasible in the West due to endless local lawsuits. Once fusion or super-hot geothermal energy (tapping heat above 400°C) is commercialized, the need for fission disappears.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Who wants to work on the assembly line for 8 hours a day for 40 years? That to me is slavery. It's servitude to survival because you need a job. Those are not jobs with human dignity. I think those jobs can disappear."
+— <strong>Vinod Khosla</strong>
+</blockquote>
+<blockquote>
+"Most people are afraid to fail. I like to say my willingness to fail is what gives me the ability to succeed. I'm not embarrassed when I fail."
+— <strong>Vinod Khosla</strong>
+</blockquote>
+<blockquote>
+"That [IT services and BPO] business will be gone. There may be new opportunities in deploying AI to the planet because India has an advantage in learning how to deploy AI. Very few of the companies are doing it today, but if they do, they'll be in good shape."
+— <strong>Vinod Khosla</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">But I want to just—maybe I should touch upon your investment in OpenAI. In 2019, it was... you've been known for contrarian bets, but this was way out there contrarian. We wrote a 50 million dollar check. And when we wrote the check, we also sent an apology letter to our LPs, saying, &quot;Sorry we're making this investment, it doesn't make any logical sense.&quot; It's a non-profit, no product lines, no business plan. I love making those bets.
+
+So freedom is the ultimate promise of AI, and just people free to live life, and that becomes a new normal. Who wants to work on the assembly line for 8 hours a day for 40 years? That to me is slavery. It's servitude to survival because you need a job. Those are not jobs with human dignity. But what does it mean for someone who is going to college now? Why go to college? I think the only reason to go to college is...
+
+Vinod, welcome to SparX. I've been waiting for this conversation for a long time. You may not recall, but I have been to this office a few times, I've met you in different contexts, and it was good to see you at the AKAI event as well. 
+
+I want to start with this: I've been in the Valley for the last few days. I come here often, once or twice a year, but the pace seems very different now. There is so much action, and a lot of it seems to be concentrated in San Francisco. You've been in the Valley for the last 40-odd years; does this feel different?
+
+It definitely feels different. There's a lot of activity, a lot of genuinely good startups, but also a lot of money. And that combination has resulted in velocities that are very, very high.
+
+Yeah. In one of your talks, you've mentioned—and I think it's, I guess, fairly obvious also—there are only three or four very deep model companies now in the US at least, and then maybe there are an equal number in China. Do you think most of the innovation is concentrated inside these companies, and there's a delta between what the companies outside these companies are able to do?
+
+No, I think there's a lot of innovation outside these companies, a lot going on. Especially in this area, like every day there's a new idea that's worth considering, if not funding. As a result of which, you know, the best way to understand Silicon Valley today is that of all the AI unicorns, 91 percent are in the Bay Area. The rest of the world combined accounts for 9 percent, which is pretty stunning. The second highest...
+
+This is all unicorns, not AI unicorns?
+
+AI. I think it refers to AI unicorns, but the second highest is New York with 2 percent. So even the number two is largely irrelevant. Yeah. And so the action is here; almost all the innovation is here.
+
+And see, if you look at any AI company today, the engine of all AI companies is obviously the inferencing, which is powered by one of these companies. What is the nature of innovation outside? 
+
+But I want to just—maybe I should touch upon your investment in OpenAI. In 2019, you've been known for contrarian bets, but this was way out there contrarian. If you recall your thinking and the discussion, what convinced you? It was not even clear whether OpenAI was going to be a for-profit company or a non-profit, yet you wrote a pretty large check.
+
+So, I wrote a check that was twice the size of the largest initial check I'd ever written, because I don't like writing huge checks. We like small checks. I had never written, in 40 years, a check over 25 million initially. Later on, we'll add additional money. 
+
+And we wrote a 50 million dollar check. When we wrote the check, we also sent an apology letter to our LPs, saying, &quot;Sorry, we're making this investment. It doesn't make any logical sense. It's a non-profit, with no product lines, no business plan; it's just a technology effort.&quot;
+
+But the idea was very simple. Today, that letter is sort of a funny thing, and I should probably tweet it. It is so funny nowadays in retrospect. But what was very clear to me is when we get AI, it'll be very consequential. It wasn't about *when* we would get AI; it was that when we get it, whenever that is, whether it happens in two years or 10 years, it didn't matter. It would be very consequential. So the bet was very much on the very large upside if we were successful. And that's our kind of bet. I love making those bets.
+
+And each bet has to be, I guess, two parts. One is you were convinced that AI, whenever it does happen, will be very consequential. But this particular company—because when you're dealing with so much uncertainty, almost no precedence, and almost no clarity about timelines—picking a team versus another also has to have some method behind that.
+
+Absolutely, you judge the team. I thought this was a very good team. We were very confident in the team. But there also weren't a lot of companies around. There was Google, OpenAI, and Baidu maybe in China as a Chinese company, so there wasn't a lot of AI effort. It's not like today.
+
+And there's this whole thing about opportunity meeting a prepared mind. I know you've been talking about AI for a while, including, I think in 2012, you were talking about AI doctors and so on. So is it almost a case where you were looking for something like this and you happened to eventually—I assume you must have gotten to know...
+
+I was absolutely looking for it. You know, there are some important areas of technology that I tend to like to identify and say, &quot;If we find a great startup, we should invest in it.&quot; By the way, the same year—it was 2018 that we committed to OpenAI, closed in early 2019—but that same year we invested in fusion. 
+
+Nobody was expecting fusion in the next 30 years, yet we placed that bet, and I think it looks pretty good today. So, you know, I like unusual bets. We also placed a bet that year in public transit, which is also not considered a venture area. 
+
+I think around then we also invested in hypersonic aircraft. That was also unusual for a startup to be doing hypersonic aircraft. So we are not afraid to place large bets. We tend to be cautious about how we guide them so they don't run out of money, because some of these areas become very difficult. But I'm always trying to say, what will be hugely disruptive 10 years from now that people aren't expecting? If everybody's expecting it, then it's not interesting.
+
+But it has to be at the sweet spot of people not expecting it, but it should at least, on average, become real in the next 10 years. Because if, let's say, with the OpenAI bet, if you were to place the same bet in 2009, the story would not look that great because it has a finite lifetime.
+
+No, look, this is the hard part of venture investing: guessing when you will have breakthroughs, when will large changes happen. So I'm always looking—like, everything I look at is between 2030 and 2035—and saying, &quot;What can be consequential?&quot;
+
+And this philosophy as a venture capitalist—or, I guess, you like to call yourself a venture advisor—has been a work in progress. You've kind of honed it over a period of time by seeing a lot of different patterns. What is the backstory behind thinking this way?
+
+Yeah, so I like to differentiate myself from people who are investors. You know, they have to run spreadsheets. We never run a spreadsheet on rates of return. Rate of return calculations are mostly just misleading in our business for what we do, yet most other investment firms use them.
+
+Is it misleading because of the artificial mark-to-market that you...
+
+Well, it's not artificial mark-to-market. Mark-to-market in private markets is always artificial; that's not the real issue. What the real issue is, you can't predict these things. You know, if I said to you OpenAI will have no revenue in January of '23, but in January of '26 it'll have 20 billion, you'd say I'm crazy. 
+
+So sometimes it's better to realize you can't forecast, instead of trying to make a forecast and then using it as the basis for calculation. You just say, &quot;It's not possible to forecast, but...&quot;
+
+See, today AI is obviously very impressive. It can do a lot of things, and one can also argue that we are not fully exploiting what's possible with AI even today. But a lot of the AI investment—they're now, I think, close to a trillion dollars of Capex which is being spent this year and perhaps every year for the next few years—this is also assuming this scaling will continue for the next few years. 
+
+Do you almost take it for granted now that we've hit an inflection point, and the scaling will continue? Because it could also stop. If the asymptote plays out, this may have implications for the whole journey unfolding.
+
+If you look at the five-year journey, could you have 10 times the amount of inference? Absolutely. There's demand for that.
+
+Ten times more intelligent? Like, what's the metric?
+
+Ten times more inferences than we do today. Could you see a hundred times? Possibly. It depends on the price decline.
+
+And you're now commenting on the quantity of inference, not the quality of inference?
+
+No, just the number. Yeah, we sort of measure it in tokens produced. Now, the intelligence of each token will also go up, which is the quality aspect. 
+
+So I suspect we'll see continuing, almost exponential increases in the number of tokens. We'll keep seeing a large but more modest increase in the intelligence per token, which is human intelligence delivered. And we'll see pretty rapidly declining costs per token. If the costs decline, the demand will be there. I'm pretty confident about that.
+
+But is none of this contingent on newer breakthroughs, or no?
+
+I don't think so. I think, look, there's a set of breakthroughs we can forecast pretty easily because we know how to get there. If we scale X or Y—you know, we know scaling laws apply, we know certain cost curves of silicon and other things—you put all that together, I don't think any massive breakthroughs are needed. 
+
+I consider things like memory in AI systems and continuous learning in AI systems as sort of routine things. Again, it is a question of when it'll come along, not if.
+
+The bigger question is, when they come along, how good are they? How good is the continual learning? How good is the memory? How well can it be utilized? So I think those are predictable. I also expect we'll see unusual phenomena in AI—progress that we aren't planning on.
+
+Unusual good, unusual bad—we can't say?
+
+I think mostly unusual good. There will be some bad things, for sure.
+
+I want to bring the conversation to health. In around 2016, you wrote this paper—I think it's called something like &quot;The 20% Doctor&quot;—which was about the role of AI in medicine and a ubiquitous, world-class doctor available to everybody on their mobile phone. 
+
+Incidentally, Vinod, 2016 was when I started my second company, and it was a health company. We wanted to solve for holistic lifestyle across everything from fitness and food, marrying that to primary care. Most of those things didn't work out. Fitness worked out very well, so today it's a very large fitness company, but the dream of that AI doctor was something we couldn't pursue at that time. 
+
+But fast-forwarding to 10 years from now, do you think we are much closer to that vision of where everyone has access?
+
+Yeah, there's no question. Even five years from now, you won't need a human doctor other than in interventional medicine—that means like surgery and heart surgery, or things like that, or burn victims or broken bones. I think five years from now, the expertise involved in a doctor is almost completely already in systems. 
+
+I no longer consult doctors. I fractured my wrist last week, got an X-ray, sent it to ChatGPT, and it told me what to do. Now, I had to have a real surgeon. I called the surgeon, and you know, like any surgeon, he said, &quot;Can you come in for a consult?&quot; I said, &quot;I don't think I need it. Here's what ChatGPT told me.&quot; I sent him the exact comments from ChatGPT. He said, &quot;This is exactly what I'd tell you, so you don't need to consult. We'll go directly in.&quot; My first time meeting him was in the surgical theater, and it worked out.
+
+Since then, I consult ChatGPT on every question, like, &quot;Can I do this?&quot; or &quot;Can I do that?&quot; or &quot;When will the cast come off?&quot; or &quot;When can I put pressure?&quot; It's a much better—I would say it's at least as good a doctor, and a much more accessible doctor. I can ask it a question at midnight and I get an answer within five minutes, as opposed to waiting multiple weeks for an appointment. 
+
+That's possible for every person in India today. And I hope—one of my pet projects is to get that going and deliverable in India as a non-profit effort within the next two years.
+
+And why does it need to be a new effort? GPT is already available in India, and they have a pretty wide distribution, with one of the largest user bases for GPT. I also consult GPT as my first protocol for any health issue, and I'm pretty happy with the outcome we get. Why does it require a separate effort at all?
+
+So, I think this is misunderstood. The safety requirements for AI are much, much higher for some areas like health than in others. Today, if you consult ChatGPT, the general triage error rate will be 20 to 30 percent. That means you get the wrong answer 20 to 30 percent of the time. Now, humans are pretty bad at triage too, so you have to be careful. 
+
+But when you add a health-specific system—and my son has a company that does that, where they use GPT-4/5 but layer things on top—the triage error rate goes to zero. It's much better than human beings.
+
+And so I think in all these areas, if you're talking about national defense or healthcare or financial trading, you want to use these large models. All of them are essential—they're necessary but not sufficient. You need additional things of various levels of assurance.
+
+So this is not about making AI better with further scaling; it's about building enough guardrails, checks and balances, and human co-pilots?
+
+Those kinds of things—every domain is a little bit different, and you need different things and different guardrails. But yes, we know AI systems hallucinate, and it's not been easy to reduce hallucination. 
+
+If you're doing customer support and you hallucinate somebody's bank balance, that's a problem. So there are special systems that will ensure that the systems don't hallucinate, still using these models but with extra guardrails and safety nets, whether it's financial, healthcare, or other critical areas.
+
+And these additional systems are more deterministic, rules-based systems? They are not additional inference to kind of...
+
+They're not rules-based systems. I think rules-based systems are too hard to do and manage. They're just better, different techniques with different trade-offs.
+
+Right. Got it. Got it. So, maker-checker, and probably multiple checks, but they're all inference-based systems layered together in some way.
+
+So that's why there's opportunity in application areas, too.
+
+Right, right. And I'm just thinking about India's healthcare now since you mentioned it. We have a massive public healthcare system. There are, I think if I'm not mistaken, hundreds of thousands of doctors working there. So one possibility is to co-opt them in some ways to be the human layer.
+
+Yes. You know, whether you need a human layer or not, and for what, is an important question. I think each human being—every citizen in India—will make their own decision. 
+
+Obviously, if an AI is going to tell me I got cancer, I might prefer a human being to tell me that rather than getting a text message. Different people will prefer different things. Others may say, &quot;Hey, tell me as soon as possible. A text is fine. I don't want to wait one week for a doctor's appointment to learn that.&quot; So different people will prefer different things, and I think human preference will become a big part of how we use AI systems.
+
+What does education look like in this? You know, it's a two-part question. For a grownup person—you know, someone who's in their 30s, 40s, or 50s—they probably, I assume, need to learn a lot of different things and perhaps unlearn. And then a similar question for someone who is coming of age now. How should they think about education?
+
+So, I spend most of my time today, at age 71, learning. I'm learning new subjects. If I'm interested in fusion, I learn about fusion. If I'm interested in biology, I learn about biology, cancer drugs—whatever I need to learn, I can learn now. 
+
+So the opportunity for 30- and 40-year-olds, and 50-, 60-, and 70-year-olds is huge as far as learning, and it's almost all free. So that's a big, big advantage.
+
+And when you say learning now, is it mostly going to GPT and just finding out the right resources from there and then following them?
+
+Yep, that kind of thing. I often have long dialogues with GPT on a subject—even as specific as, &quot;How do you design a much better drone motor?&quot; I've not designed a motor in 50 years, but I can still design one with GPT, saying, &quot;I understand the basic scientific principles and I know how to apply them,&quot; and doing those exercises. I'll say, &quot;How would I design a cancer drug for this cancer?&quot; All of those are available and possible.
+
+And this is something you say one *can* do, or one *should* do?
+
+Well, that's each person's choice.
+
+To survive and thrive in this, you know, this new world?
+
+To survive and thrive, you have to do it. If you don't want to keep up, that's fine. But I'll give you the best example. Most people in the software business know GitLab as a company. He was one of our founders—we invested when there were four people, it became a big company, a public company—and then the founder got cancer. 
+
+If you look at his history, he basically decided very quickly he wouldn't talk to doctors. He would essentially design his own cancer treatment. He got deep in, learned everything from scratch as a software person, and did his own cancer vaccines, cancer drugs—custom drugs for each stage of his cancer. 
+
+He wasn't given that long to live, and he's alive and well and healthy now, and doing even more drugs for what he might need as cancer drugs in the future. So if a software engineer can do that and you don't need a medical degree, that's the world we can live in. We can choose not to, or choose to live there. I find it very, very inspiring.
+
+Yeah, this is an incredible example. Does he talk about this publicly?
+
+Oh, he talks about it. In fact, he's given a couple of talks. It's called &quot;Going Founder Mode on Cancer.&quot; It's a beautiful talk.
+
+I'll ask you for an introduction. I'll try to invite him on this, because this is the ultimate example of what someone empowered by AI and the right mindset...
+
+Empowered with no prior knowledge can do, right. Just general intelligence. And you know, you don't have to have a degree to have general intelligence.
+
+But what does it mean for someone who is going to college now? Why go to college?
+
+I think the only reason to go to college is to learn how to learn, and to learn curiosity. Why do I work 80 hours a week? Because I have curiosity about so many things. 
+
+You know, I asked ChatGPT, &quot;What do you think of all my searches over the last couple of years?&quot; It freaks out because it says, &quot;You've been all over the map.&quot; You're learning about cancer, you're learning about fusion, you're learning about designing motors, you're learning about AI algorithms—just everything, even gardening. I learned so much from ChatGPT about gardening in my own garden. 
+
+So you go because you learn how to learn, you go because you learn curiosity, and by being active and online—and this may be the single most important thing—you get agency. You feel like you can do things. 
+
+I think that's the difference between founders and non-founders. Founders have agency. Instead of looking at a problem and saying, &quot;They should do this,&quot; which everyone says, founders say, &quot;Oh, there's a problem. I'll do it. I'll solve it.&quot; That's founder mode.
+
+And so, it doesn't matter if I know about it or not, I'm just going to go start learning and attacking the problem. So agency becomes very important to learn, for both a 5-year-old and a 25-year-old.
+
+So perhaps it has huge implications for how schools and colleges cultivate this curiosity and agency. A lot of it is currently about teaching you something that's in textbooks and being able to repeat it back in exams, and that's how the whole system works. People become very good at it, but that's not exactly fostering curiosity and agency.
+
+No, and I think universities need to change. I was at IIT Delhi in February—myself and Sam gave a talk—and then I was talking to the director. He was saying, &quot;We're going to expand the university. This is what we're going to do with classrooms,&quot; and my answer was that this was completely irrelevant. Do you think any of the students in our audience today will know more than the AI in their area of specialty? The answer is obviously not.
+
+So what should you do with IIT Delhi? I said open more dorm rooms to have more students. Have more meeting rooms, not classrooms. Have places where people can gather, discuss things, and debate things, and do the learning at home and come back and discuss topics.
+
+So there is a role for universities, but it's not the old role. It's not lecturing out of textbooks. Those can all be thrown away; they're all obsolete anyway because the world keeps changing—especially in technology areas like engineering—every day. 
+
+You can say, &quot;How do I design a new magnet without rare earths?&quot; You're not going to find that in a textbook. You're going to find it on ChatGPT, and then pursue trails, build a little model, and experiment.
+
+We have people doing things like that. You know, the country doesn't have rare earths—can we not depend on China and do our own? The answer is probably yes, a small group of people could solve that problem. That's called having agency, if they choose to go do it.
+
+Yeah, and I want to just underline that. I've very often noticed that sometimes I stop myself from asking a question, but if I do ask and engage with any of the AI models, it leads to a totally new trail and you didn't realize it was possible. Having that agency and some courage to act on it—just like this founder you mentioned, trying to figure out his own cancer situation with AI—it would not occur to most people to even attempt.
+
+A lot of this promise of AI, Vinod, today is in some ways in a digital medium. It's all mostly text-based. Yes, it can process some images, but the majority of both input and output is text with some translation. Where are you on this whole physical AI aspect, you know, AI becoming...
+
+Oh, physical AI is coming in the next couple of years. We'll have the ChatGPT moment of physical AI. I've tweeted a bunch about it, so I don't think there'll be an issue with robotics, say, five years from now.
+
+Can you envision what a ChatGPT moment can look like, or what are the possibilities where we say this becomes relevant to all of us?
+
+Either it's, I think, when you can put a robot in your home and it can cook your meals. That's a pretty stunning point. Obviously, there are lots of industrial applications, but a robot in your home.
+
+And these look like humanoid robots, not a specialized arm or...
+
+Most likely humanoid. I think there'll be multiple specialty form factors, but humanoids will be the largest form factor by a lot. Because they'll be the largest form factor, they'll have the most scaled manufacturing and they'll have the lowest cost.
+
+So you'll need auto manufacturing-like facilities to make large-scale, very low-cost robots. You know, cars don't cost that much more than the cost of steel if you look at it, because the value-add is so automated and so scaled that there is very low overhead.
+
+So if I play out this exponential growth and impact of AI, then the world will be unrecognizable?
+
+I think 15 years from now the world will be unrecognizable. A 5-year-old kid today will grow up in a very different world by the time they're 20 or 25.
+
+But it also has implications for our social, political, and economic structures. They can't just hold up the current models, because in some ways today, Anthropic has gone from nothing to a trillion dollar valuation in four years and it seems, you know, Google is now five trillion, probably most likely going to be a 10 trillion dollar company in the next few years. So it seems like the benefits today are getting highly concentrated. While there is some innovation outside, most of the benefits seem to be flowing to a very, very small area.
+
+Yeah, I disagree with that. I think the question to ask is: Is 95 percent of the population better off? Not what's happening with the 5 percent who are making all the money.
+
+And that is happening—there's a concentration of wealth. Technology has always resulted in a concentration of wealth, and it'll be more non-linear. But if we stop worrying about the few percent and say, &quot;Will 95 percent of the people be better off in 2040?&quot; Yeah, absolutely. No question.
+
+Will they be better off because they are making more income in their jobs, or will it require some redistribution where proactive...
+
+No, because they have access to services. If they need education, it's free. If they need healthcare—a doctor—it's free. If they need legal services, it's free. If they need more entertainment, it's near-free. Hopefully, even food and other goods will get cheaper because of robotics.
+
+So I don't need to make $100,000. Even if I make $50,000, I have a dramatically better lifestyle, possibly?
+
+My bet is we'll have a very deflationary world before 2040, and prices will decline very dramatically for most goods. A few things that aren't done by robotics or have other physical constraints will be more expensive.
+
+But for today's measure of GDP, which is defined as a basket of goods and services that we measure today, that basket will become much cheaper.
+
+And I think in some of the forums, Vinod, you have argued that it will at some point require some government ownership for...
+
+I think there are many different systems possible, and each country will adapt its own. Likely the US is very different than India, which is very different than Germany. Some people will resist AI, some countries will, and it depends on the politics in the country.
+
+So it's very important for a country like India to show the benefits of AI to people first: free doctors, free teachers, free agronomists so every small farmer can benefit and the price of input goes down. And so they see the benefit before they see the asymmetry. There will be more asymmetry.
+
+Yeah, and for India, I guess there's the additional challenge of figuring out this whole IT services industry and BPO industry, which is a huge source of foreign income for the country...
+
+That business will be gone. There may be new opportunities in deploying AI to the planet because India has an advantage in learning how to deploy AI. Very few of the companies are doing it today, but if they do, they'll be in good shape. If they don't, they'll be in very bad shape.
+
+What are the examples of that? You know, what can India develop at scale which can employ millions of people and participate heavily in the deployment of AI?
+
+Yeah, it's a complex area. I've written a piece about it earlier this year on AI specific to India, so I'd refer you to that. It's about 20 pages long, so it's a fairly detailed look at what we should do.
+
+But you know, the basic things people need—healthcare/doctors, education, entertainment, food—those should become much, much cheaper. Housing is the one area that's troubling, because that needs to scale and still mostly depends on materials costs, not so much labor.
+
+Right. Yeah, I guess if you have physical AI and really cheap humanoids, probably...
+
+Yeah, but cement will still cost what cement costs, and hopefully we can do something about scaling those things.
+
+Yes, cement also, I guess, is mostly energy cost at some level. So if energy becomes cheaper, then I guess you'll have more options.
+
+And where in this whole quest for solving for energy and AI does space come in? Space has become a factor now, and you've been investing in space as well with Rocket Lab, way back, I think, in 2012-13 and so on. Are you convinced that space has a role to play in these data centers to support massive compute infrastructure?
+
+Look, I would say data centers in space don't make sense today. But there are certain cost parameters, like transport costs to space for a kilogram of weight, things like that, that could make it more cost-effective.
+
+Are factors of 10 possible in cost reduction? Yes. And if that happens, then the equation might change. But with today's costs and even normal declines in costs, data centers in space haven't seemed to make sense.
+
+However, I don't rule out larger decreases in costs, and if that happens, then the assumption will change around data centers in space.
+
+If we apply your framework of what will be feasible by 2035, which side of the bet today would you take: space-based data centers as a big part of our life, or unlikely?
+
+I would say unlikely, only because the cost on Earth will decline very rapidly. Once you have fusion, you don't have a power generation problem, for example, by 2035. So if power is dirt cheap on the planet, why go up in space?
+
+Why deal with the inflexibility of fixed infrastructure that you can't change quite as easily as walking into a data center and changing a GPU that failed? You know, suddenly GPUs will have to be pretty different because radiation is not healthy for semiconductors. Power generation in space is hard. Cooling in space is hard.
+
+Now, there are possible solutions to each of these problems. But if we are lucky enough to get the improvement in all those dimensions much faster than the cost decline on Earth, then space data centers may make sense. Today, I'd bet that data centers on Earth make more sense. They will decline rapidly in cost, and power will not be an issue.
+
+Got it. And I think we'll start to get some data back as well in the next few years, with all these plans from various companies to have at least some experiments going on, so maybe in two or three years we'll have some more evidence starting to pile up.
+
+What is the process of looking at it? Maybe we can discuss it in the context of fusion, because even today most people don't believe fusion is going to be realistic in terms of net gain over the next five years.
+
+I tried to study this area over the last couple of years. In fact, I was looking for a possible investment in India—we have a few fusion startups there—but maybe I'm guilty of looking at the consensus and not outlier beliefs. Pretty much anyone you talk to, even today, thinks it's not happening.
+
+And that's the key. I don't talk to experts. You know, experts are experts in a previous version of the world, not the one you're trying to create. That's the key to remember. If I get three teams to look at fusion and all three agree, then it's probably not an unusual bet—it's consensus. If teams disagree, then it becomes more interesting.
+
+So, look, it's hard to explain this process. I think we do a pretty good job of judging where technology is going—probably 60 to 70 percent accuracy. We make a lot of mistakes, but we're not afraid of those mistakes. We've made our fair share, and we're never afraid to be mistaken.
+
+You know, when you're mistaken and you make the wrong bet, you lose one times your money. But when you make the right bet, you make a hundred times your money. Then it's a bet worth placing. That's our paradigm. If OpenAI is successful, we should make more than a hundred times, which we will.
+
+But that's always been my approach. Most people are afraid to fail. I like to say my willingness to fail is what gives me the ability to succeed. I'm not embarrassed when I fail, so I don't worry about it. If you write every investment off the day you make it, then you only have upside.
+
+The same is true of fusion. There's a trillion-dollar company in fusion to be had. Most people, as you say, don't agree it's feasible. I think at this point there's greater than an 80 percent probability that in five years nobody will be debating whether fusion works, and works economically. My bet is in two years people will say fusion works, and in five years people will say fusion works economically.
+
+Once it's economic, it's the source of energy for the whole planet. Oh, by the way, there are other sources. Super-hot geothermal is another one I'm very excited about. I think it can be cheaper than natural gas and oil as a source of energy—both fusion and super-hot geothermal. That means geothermal above 400 degrees centigrade.
+
+Let's talk about both, but I want to double-click on fusion just to get to your process and way of thinking. Let's take fusion: there are two ways one can look at it. One is macro—we obviously know fusion works; we can look at the sun and know it works. But there are so many competing platforms, and to really get into the nitty-gritty of fusion—different technologies and so on—you need to be fairly technical in nature.
+
+Do you at Khosla Ventures employ, consult with, or does that go against the philosophy of consulting experts? Is it a macro bet, or is this like looking at a technology that has now reached these many gates and readiness, therefore making it realistic in five years?
+
+No, I think we take a fairly detailed look. Obviously, we employ experts from time to time, but most of our gut call is our own. We're pretty technical; we can make these calls. So more expert diligence is confirmation rather than decision.
+
+The question you have to ask in something like fusion is, &quot;Why now?&quot; In 2018, what had changed that would say it wasn't possible before, but now it might be? And that was high-temperature superconductors. That dramatically changes both the experiments you can run and the rate at which you can run them, and also the economics.
+
+If you can use high-temperature superconductors—which was the big risk—to build a 20-Tesla magnet, and if that magnet is four times more powerful than what was possible before, your reactor is going to be 1/50th the size. It suddenly becomes much more feasible to experiment, try things, and build things. It doesn't take 30 years to build; it takes three years to build, so everything becomes faster.
+
+That was the bet we placed, and that's the kind of thing we look for. Every time there's something on the horizon that others don't believe, we have to evaluate it and find the right team. Finding the right team is very key.
+
+When I met Bob Momgaard, he was a senior fellow at the MIT Plasma Science and Fusion Center. I was just visiting because I like techy, geeky places to visit. He showed me this reactor where, before I stepped on it, the temperature was a couple of hundred million degrees just 30 seconds prior, and now you could step on it. Pretty cool. I like geeky things, and we got talking. The more we talked, the better I liked him and the plan he was thinking of, so I said, &quot;Let's build a plan.&quot; That's how that came to be.
+
+Got it, got it. So, a lot of it, I guess, in this case was probably a bet on the person as well.
+
+The person, bet on the person for sure. And a bet on the technology direction—what is feasible and what's not—that's a risk assessment. Mostly, I will do my own risk assessment, and other people in our firm are very good at it too. Together as a group, we can do that.
+
+Yeah, one of the things when I tried to study fusion that keeps coming up is, what about fission? We have not really exploited its full power. We have so much uranium, thorium, small modular reactors, and so on. Do you also look at this—that the world needs a lot of nuclear energy, and it would be great to have that, especially now with the power energy that AI needs having to come from a nuclear process one way or another? Do you think about fission as well, or is fusion something that once it's solved, obviously we have infinite...
+
+Once fusion is solved, there's no need for fission. And fission has a different problem, at least in the West: nobody wants a fission plant in their neighborhood.
+
+So fission technology is not hard. It's possible to do fission technologies, even like the thorium reactor India has been working on, which is a very good idea. But my view is very simple. If, after you decide to build a plant and have the technology, you're going to have 10 years of lawsuits, nothing is ever going to pencil out. You have to spend a lot of money before you know if somebody will let you build in that neighborhood.
+
+If you're building 5,000 plants for the United States, it just doesn't become feasible. So you have to look at the world holistically and say, the politics will not allow fission to have 5,000 reactors in the US or 5,000 in India—and India will need more than 5,000.
+
+And is there a risk that the same politics will also try to at least create some hurdles for these massive data centers, which are going to be energy guzzlers and are absolutely essential for this?
+
+Yes and no, but there are solutions. A number of the data center providers are saying, &quot;For everybody in the neighborhood of a data center, we will pay for free electricity for residential purposes.&quot; It's a small tax on their energy consumption. If they're doing a gigawatt, and they give 50 megawatts of free electricity to the neighborhood, people are fine. So there are solutions.
+
+You can also develop your own reactors, whether they're super-hot geothermal, fusion, or nuclear. You can do your own so you're not tapping into the grid. So there are solutions, but it is a political problem—mostly because people haven't worried about the politics.
+
+And given the current conventional sources of energy available, for the next four or five years of AI acceleration, is energy likely to be a bottleneck, or are we okay? I think energy is likely to be a bottleneck for the next four or five years. Why? Because four or five years ago, we weren't thinking about the problem and nobody thought it was a big problem. Nobody believed AI would be a large consumer of electricity; nobody forecast that. And so, nobody prepared for it.
+
+I think there's a lot of preparation for it now, and so I think five years from now, it'll become less of a problem. But it takes five years to build a power plant, maybe longer. So in the early 2030s, enough power will come online—enough capacity, enough turbines, enough alternative sources of energy. I think it's a short-term problem; it's a five-year problem.
+
+Got it, got it. I want to bring the conversation back to AI and what's possible with AI. And that's the agency, I guess, you're talking about. This is the agency idea. Right.
+
+Vinod, I think we're nearly out of time. On a closing note, I want to really zoom out. The big-picture question is about how all of this pans out in the longer term.
+
+One scenario is that with this entire promise of AI fulfilled, there is abundance. Where are you on this whole so-called notion of singularity that Ray Kurzweil talks about? I think you've been to one of Peter's events.
+
+I take a practical view. If I look into the 2040s or 2050s, it is possible—in fact, very likely, if we have the right government policies—that the need to work to survive for a living will go away. People will still work, but they will work on things they want to work on, not things they have to work on because it's the only job they have.
+
+You know, who wants to work in a field doing farm work in 40- or 50-degree heat? Who wants to work on an assembly line for eight hours a day for 40 years? That to me is slavery. It's servitude to survival because you need a job. Those are not jobs with human dignity.
+
+I think those jobs can disappear, and people can work on what they want to work on, as they want to work—or get good at singing, art, sports, competing, you name it. There are so many things to do. So freedom is the ultimate promise of AI, freeing people to live life, and that becomes the new normal. Hopefully, whatever is next for humanity—space or beyond—will play out.
+
+Let me say—and I said this in a piece I wrote two years ago, &quot;Will AI Lead to Dystopia or Utopia?&quot; which was on AI in the Western world, and I wrote a piece earlier this year for India—I believe AI will ultimately free humanity to be human beings, not servants to survival. Survival has been the goal of every species until now.
+
+That is an incredible message and something to really look forward to. Vinod, I want to thank you for taking the time for this podcast, as well as for your incredible career and impact on the world through all your investments, inspiring so many VCs as well as entrepreneurs. I think you've had a very different way of doing things, but the track record speaks for itself.
+
+Talking to you is very inspiring. I'm pretty sure our audience will be inspired, and hopefully, it will foster more agency in more people to really embrace the promise of AI.
+
+I hope so. I was inspired myself learning about a Hungarian immigrant coming to Silicon Valley to start Intel. That inspired me and got me on the entrepreneurial track, so I hope more people get inspired.
+
+Thank you, Vinod. Thank you.
+
+At SparX, we aim to bring you stories of exponential impact. We share in-depth analysis of what goes behind success stories.
+
+If you find our conversations interesting, you can join us by subscribing to our YouTube channel. You can also listen to SparX on Spotify, Apple Podcasts, or any other audio platform of your choice.
+
+If you have any suggestions on who we should invite or what topics we need to cover, just let us know in the comments. We are always listening, looking for ways to improve and keep getting better as we go along.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-1">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=gH4FTjDm9FQ" target="_blank" rel="noopener">Anthropic's Fable Backlash, Nationalizing AI, Inflation Heats Up &amp; California’s Broken Elections<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>102:00</span><span class="dot">&middot;</span><span>168.8K views</span><span class="dot">&middot;</span><span>2026-06-13</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Co-host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22Jason%20Calacanis%22">Jason Calacanis<span class="chip-desc">Co-host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22David%20Sacks%22">David Sacks<span class="chip-desc">Co-host, All-In Podcast</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Anthropic's release of Fable 5 has ignited developer outrage over aggressive censorship, secret performance downgrades, and 30-day data retention policies, highlighting a broader shift toward open-source models as tech firms lobby for restrictive AI regulations.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">At the...</div>
+                    <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
+<p>Anthropic's release of Fable 5 has ignited developer outrage over aggressive censorship, secret performance downgrades, and 30-day data retention policies, highlighting a broader shift toward open-source models as tech firms lobby for restrictive AI regulations. At the same time, macro concerns mount with hot CPI and PPI inflation prints, alongside fierce debates over wealth redistribution proposals and the integrity of California's election laws.</p>
+<h3>Anthropic's Fable 5 Backlash and the Open-Source Shift</h3>
+<ul>
+<li><strong>Model Capabilities &amp; High Costs:</strong> Anthropic released its "Mythos-level" Fable 5 model, which tops nearly every performance benchmark but costs twice as much per token as Opus 4.8.</li>
+<li><strong>Surveillance &amp; Data Retention Policies:</strong> </li>
+<ul>
+<ul>
+<li><strong>30-Day Storage:</strong> Anthropic now retains all prompt and output data for 30 days, offering no exceptions even for enterprise customers with pre-existing zero-data-retention agreements.</li>
+<li><strong>Secret Performance "Nerfing":</strong> Developers discovered that Anthropic was secretly downgrading user access to lesser models if its system detected competitive AI research, chip design, or sensitive scientific prompts. </li>
+<li><strong>Over-Censorship:</strong> Users reported being downgraded or blocked for innocuous queries, such as questions about mitochondria or Ben Thompson's (Stratechery) query on GLP-1 cancer risks.</li>
+</ul>
+</ul>
+<li><strong>The Pivot to Open Source:</strong> </li>
+<ul>
+<ul>
+<li><strong>Scientific Restrictions:</strong> David Friedberg noted that his company, Ohalo, is losing the ability to use closed models for genomic and RNA guide design due to sweeping "bioweapon" filters.</li>
+<li><strong>Foreign Model Vulnerability:</strong> Because American closed models are increasingly restricted, companies are shifting to open-source models, where Chinese models (like Qwen) currently outpace American open-source options, threatening U.S. competitiveness.</li>
+<li><strong>Local Solutions:</strong> Promising community-funded open-source options like Arc Institute's *Evo 2* genome language model are successfully bypassing closed ecosystems to support research.</li>
+</ul>
+</ul>
+</ul>
+<h3>AI Regulation, Fearmongering, and "Regulatory Capture"</h3>
+<ul>
+<li><strong>Strategic Capture Play:</strong> David Sacks argued that Anthropic is leading a highly sophisticated regulatory capture campaign. By fearmongering about existential risk, they hope to lobby the government into banning or heavily regulating open-source alternatives that they cannot compete with in a free market.</li>
+<li><strong>Calls for FDA-Style Oversight:</strong> Anthropic CEO Dario Amodei released a 5,000-word blog post arguing that transparency is no longer enough and calling for an FAA- or FDA-style regulatory agency to pre-approve all frontier models.</li>
+<li><strong>Hypocrisy in the Safety Narrative:</strong> Critics pointed out the hypocrisy of Anthropic's public warnings. Despite publishing papers warning that "recursive self-improvement" could end the world, the firm recently hired AI pioneer Andrej Karpathy specifically to run recursive self-improvement.</li>
+<li><strong>The Safe Alternative:</strong> Sacks noted that instead of restricting model inputs/access, guardrails should be placed downstream at physical bottlenecks (e.g., codifying mandatory synthetic DNA screening for labs ordering raw physical materials).</li>
+</ul>
+<h3>Bernie Sanders' 50% AI Tax vs. Sovereign Wealth Reform</h3>
+<ul>
+<li><strong>The Sanders Proposal:</strong> Senator Bernie Sanders introduced the *American AI Sovereign Wealth Fund Act*, proposing a one-time 50% stock tax on the largest AI firms (including OpenAI, Anthropic, and xAI) to seed a public sovereign wealth fund with voting rights.</li>
+<li><strong>The "Stupidity Tax" on AI CEOs:</strong> Sacks remarked that while he opposes property confiscation, AI CEOs have brought this on themselves. By repeatedly telling the public that AI will cause "50% job loss," executives have practically invited politicians to seize their equity to fund a social safety net.</li>
+<li><strong>Reforming Social Security:</strong> Friedberg proposed a counter-alternative: convert the bankrupt U.S. Social Security Trust Fund (which currently only holds U.S. Treasuries) into an active Sovereign Wealth Fund. By investing in equities and top-tier American tech companies, citizens would directly share in the wealth generated by technological productivity.</li>
+<li><strong>High Marginal Costs of AI:</strong> Chamath Palihapitiya highlighted a critical structural difference between the internet and AI:</li>
+<ul>
+<ul>
+<li>The internet had a marginal cost of zero for new users, generating infinite profit margins.</li>
+<li>AI has incredibly high marginal costs, taxing physical GPUs, electricity, and memory for every single query. Therefore, AI cannot easily absorb heavy taxation or equity seizures without crippling its operational viability.</li>
+</ul>
+</ul>
+</ul>
+<h3>Rising Inflation and the Macroeconomic Reality</h3>
+<ul>
+<li><strong>CPI &amp; PPI Hot Prints:</strong> May inflation numbers came in significantly higher than expected:</li>
+<ul>
+<ul>
+<li><strong>CPI (Consumer Price Index):</strong> Rose to 4.2% year-over-year, marking its highest level since April 2023.</li>
+<li><strong>PPI (Producer Price Index):</strong> Jumped to 6.5% year-over-year, its highest level since the end of 2022.</li>
+</ul>
+</ul>
+<li><strong>Rising Rate Outlook:</strong> Driven by aggressive government deficit spending and energy shocks related to geopolitical instability, Friedberg warned that the market could see Federal Reserve overnight rates reach 5.5% to 6.0%.</li>
+<li><strong>The Chinese Oil Wildcard:</strong> Palihapitiya warned that China has been smoothing global energy consumption. If China runs out of its strategic reserves and is forced back into the spot market to buy an extra 3 million barrels a day, global oil prices could easily spike to $150–$200 a barrel, sending CPI into a tailspin.</li>
+</ul>
+<h3>California's Election Laws and Integrity Concerns</h3>
+<ul>
+<li><strong>The Mayoral Primary Discrepancy:</strong> The group debated the highly anomalous results of the Los Angeles local elections, where candidate Spencer Pratt led by a wide margin in-person, only for late-arriving mail-in ballots to swing a statistically improbable 80% increase to opponent Nithya Raman.</li>
+<li><strong>Systemic Vulnerabilities:</strong> Friedberg and Sacks argued that California's legislative environment has turned elections into "appointments" via loopholes:</li>
+<ul>
+<ul>
+<li><strong>AB 1921:</strong> Legalized unlimited, third-party ballot harvesting.</li>
+<li><strong>Universal Mail-in Ballots:</strong> Sent to millions of inactive or outdated addresses on dirty voter rolls, leading to piles of loose, unmonitored ballots in apartment complexes.</li>
+<li><strong>Lax Verification:</strong> No voter ID requirements, weak signature-matching algorithms, and the ability to register using non-standard identification such as gym memberships.</li>
+</ul>
+</ul>
+<li><strong>An Impending Crisis of Faith:</strong> Friedberg warned that regardless of political affiliation, removing simple voter ID requirements destroys public faith in the democratic process. He called on Congress to establish clear federal standards of one registered citizen, one vote, with strict ID verification.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"The restrictions that Anthropic and others are putting upon themselves and upon the industry is forcing a lot of companies to go and get open source Chinese models and run them... By trying to stop AI through political action, you are fundamentally going to give someone else the advantage."
+— <strong>David Friedberg</strong>
+</blockquote>
+<blockquote>
+"They want to apply that regulation to open source, which is impossible. But this would be a great way to scuttle and sandbag open source models... We're going to be stuck with somewhere between one and three companies... and they're going to decide along with some new government agency who has access."
+— <strong>David Sacks</strong>
+</blockquote>
+<blockquote>
+"AI is completely different [from the internet]. There is a real cost for every marginal user. Everyone you stand up is taxing a GPU. Everyone you stand up needs electrons... The incremental cost of performing AI is excessive and large."
+— <strong>Chamath Palihapitiya</strong>
+</blockquote>
+<blockquote>
+"The idea that AI is going to destroy jobs is a Luddite idea that is being disproven every single day... The real opportunity with AI is on the revenue side where suddenly one engineer can do a hundred times or a thousand times what they used to be able to do."
+— <strong>David Friedberg</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">All right everybody, welcome back to the number one podcast in the world. It's your favorite podcast; it's your podcasters' favorite podcast. It's the podcast that everybody likes to rip off for 50 episodes and then they quit. But the All-In Podcast is not quitting. We're doubling down with the original quartet. Everybody's here for a big, big week with lots of debates.
+
+And we have to start with Anthropic. Anthropic released a Mythos-level model with some interesting guardrails, and it seems as though Dario is back to blogging. Okay, the model is called Fable 5. I have no idea why they're calling it that. It was released on Tuesday and it tops nearly every benchmark. 
+
+The tokens, however, cost twice as much as Opus 4.8. But it should use fewer tokens overall because it's theoretically that much better. It is unclear if this is going to alleviate some of the hand-wringing around the cost of tokens. But you remember in April, Anthropic famously did not release Mythos because, publicly, it had some strong hacking capabilities. 
+
+So they gave it to some folks, and we had the CEO of Palo Alto Networks, Nikesh, who said, &quot;Hey, Mythos was the real deal,&quot; and that they used it to seal up some vulnerabilities inside their shop. Obviously, this new model is sensitive to topics like bioweapons and hacking—all that stuff is blocked in it. But they got a big developer backlash, and I'll get your feedback after I explain this. 
+
+While using Fable, Anthropic stores all the prompt data you enter for at least 30 days. So that's a bit of a privacy issue. And if Fable 5 detects you're doing frontier AI research—in other words, using their model to make a better model or a competitive model—they were downgrading you, but they weren't telling you. This was buried deep in a 319-page document. 
+
+So there are mini-kerfuffles and freakouts going on on X over this. But they've since walked it back a bit. As quoted in Wired: &quot;We're changing Fable 5 guardrails for frontier LLM development to make them more visible.&quot; 
+
+I'm going to stop there. Chamath, what's your take on Anthropic and these extraordinary models they keep dropping? How are they handling the release of them? Are they being thoughtful? Are they being dramatic and drama queens? Is it a little bit of both? Where do you stand on it? You know, after getting Nikesh's feedback and seeing the latest model come out, have you played with it? What's going on at 80/90 and the software factory in terms of benchmarking it as well?
+
+It's a really incredible model. Kudos to these guys for continuing to push the boundaries of the closed frontier lab models. They're firing on all cylinders. I think that it creates a pretty obvious risk now, and I think that obvious risk is twofold. 
+
+One is that Anthropic has essentially shown their hand, which is that they will increasingly take in prompts, evaluate the prompts, and decide what to do with them before they generate output to you. I think if you were a person, you should generally now think there's a risk of censorship. If you're a company, I think it's almost a non-starter. 
+
+The reason is because you could accidentally trip one of these things without even knowing it. A downstream scientist using the Claude APIs could trip it. A business executive inside your corporation could trip it. A person doing scientific molecular research could trip it. And all of a sudden, you'll get cut off from a very important source of business differentiation for yourself. 
+
+So I think if you take both of those two things together, we're at this very unique moment in time where companies need to start underwriting this next phase of AI, which is: How do I have control? Who am I allowing to learn off of all of this information? Do I want to have a single point of failure risk with respect to AI? I think the answer is that you need broad diversity and a governance approach that's better managed. 
+
+One thing I'll say about Anthropic is they tell the truth. Yes. It's just that the truth sucks when you actually take it, eat it, and it is in your tummy, and you're like, &quot;No, this is not good. I don't like this.&quot; And so there's the censorship risk on the one hand, and then there's just the governance business risk for enterprises on the other. Both are not good.
+
+Friedberg, running your own company now—and I'll let Sacks back in to clean up here, obviously you'll have a lot to say—but Friedberg, running your company, do you worry about getting rug-pulled by one of these companies? Do you worry about investing your time into one of these platforms, having them then constrain your use of it, and/or take what you're doing at Ohalo, put it into their model, and make it available to other people? What concerns do you have as a business owner at the forefront of your field using these tools?
+
+It's a great question. The terms of service are pretty clear that they can't take what you're doing and put it into their model, and that they won't share it. Do you believe them when you read them? I'm not sure, to be honest. There are things I'm concerned about, but we've decided to throw caution to the wind because we do a lot of proprietary work in genomics. 
+
+What that means is we're looking at different genes or gene variants, trying to estimate the impact that that gene or gene variant might have on a living organism, like plants in agriculture, which is obviously what we work on. We will do things like RNA guide design for gene editing-based tools, and we will do predictions on what gene may or may not have some phenotype. There is a lot of genomic modeling work that we have found these models to be incredibly valuable at supporting us with over the last couple of years. 
+
+Going back about six months, we were able to very simply and cleanly do things like design a genetic construct that you would then use to make a specific protein. The tools were very easy to use to do that sort of research, and they were extremely valuable. This is the kind of work that many scientists would spend a lot of time doing, and these models were very good at doing it very quickly. 
+
+Over the last couple of weeks, they've begun to restrict the ability to use the models to do that work. The premise is that there's some sort of bioweapon-type risk that folks have theorized could happen using these tools. As a result, we're losing the capacity to use these models for this very important scientific development work. Consequently, we are likely going to end up needing to use open source models and run them locally ourselves. 
+
+The reason I walk through all of that is so people can really understand the context of what's going to happen here. As folks like Anthropic say, &quot;Hey, we're going to restrict access or censor the output of these models,&quot; it is going to force companies like ourselves, who still want to take advantage of the capability of these LLMs, to go and get open source tools and run them. And what are the best open source models today? They're Chinese. Yeah, they are, and that is a major concern. 
+
+The American open source models are not as good as the Chinese open source models. So the restrictions that Anthropic and others are putting upon themselves and upon the industry are forcing a lot of companies to go and get open source Chinese models and run them. We're seeing this across the landscape with startups and with large-scale enterprises. Everyone's making that move. 
+
+Yeah, and this is something we've been talking about here with Apple, their silicon, and how well you could run these models. Also, I predict your next card you'll turn over is you'll start making your own models, Friedberg. You'll take all this data you have...
+
+It's exactly right. We'll start with the core model, combining it with our data, and then we'll have our own genome language model or our own prediction model that we will then use internally. I think that's where folks are going. 
+
+But the reason I point this out is because a lot of folks are feeling the pressure from Anthropic doing this, and they're feeling the pressure from politicians repeating the scary words that are being said by Dario and others. As a result, they are already trying to force either natural enforcement or politicized enforcement upon the model providers in a way that is ultimately going to benefit Chinese open source model providers. 
+
+That is a scary thing because we are going to damage our own economic viability. You can't just stop AI, as much as everyone says AI is doomsday. By stopping AI, or trying to stop AI through this political action and social behavior, you are fundamentally going to give someone else the advantage because the AI isn't going to go away. 
+
+So the reason I describe what we're doing is for everyone to really understand and grok that you can't just turn off AI and turn off access to these things. What you will do is force the hand of someone else to now have an unfair advantage because you're unfairly restricting your models and your access to those models. 
+
+Well, really well said, Friedberg. Sacks, what's your take just in terms of the chessboard? We've got the business case here and we've got the local case, but there's a lot of issues here with Anthropic in terms of them essentially throwing up every red flag to get regulated. This leads into our second story, which is Bernie Sanders seeking to seize the equity of these companies. But man, this is saying: &quot;Look over here, we're starting a fire, regulate the hell out of us.&quot; Which also then makes you wonder, hey, maybe I should be doing my own model, maybe I should be embracing open source models. How's this chessboard developing here, Sacks?
+
+Well, look, eight months ago I said that Anthropic was engaged in a very sophisticated regulatory capture campaign based on fearmongering. People at the time thought that was a very spicy take. But eight months later, I think you're hearing a lot of people say it. In fact, I think it's almost now becoming a new consensus. 
+
+One of the things I think your summary didn't quite capture, JCal, is the sense of the violation of trust and how much outrage there is in the developer community over this latest Fable release. It's not just the fact that they're doing mandatory surveillance. Remember, this is the company that said that it was against government surveillance. They are now retaining for 30 days every prompt and every output you send to one of these Mythos-class models. There are no exceptions. 
+
+Even enterprise customers who had signed zero data retention agreements do not have a choice. Or, I guess, they can just not use the new Fable or Mythos-class models. But they retain all of your data for 30 days. And it's not just the prompts and the output; remember, it's all the context you share with them. 
+
+All these agent platforms are basically storing all of your memories, all of your files, and all of your data, and they're passing them to the model in these giant context windows to get better responses. Anthropic is saying it will keep all of that, and it does it to build a profile on you, to classify you, and then to determine what capabilities it then unlocks. 
+
+The thing that created the most outrage, in addition to the surveillance, is the fact that they would degrade the product. They would degrade what they show you; they would nerf their models if it decided, in Anthropic's sole discretion, that you are not worthy of having access to that level of information. So they're creating a new level of AI haves and have-nots. 
+
+What they did—and they walked back a narrow piece here—is they said that when it came to things like machine learning, AI research, and chip design research, they would kick you to a lesser model but not tell you that. And they would even do things like...
+
+Which feels anticompetitive, right? I mean...
+
+It's completely anticompetitive. And also, they would even do things like rewrite your prompt in the background. So they would give you a nerfed answer. They would not tell you what they were doing. They would still charge you for the product that you thought you were getting, and they would never tell you that you were not getting frontier model capability. So they were actually misleading their users. This is what was creating so much outrage. 
+
+Now, the narrow piece they walked back is they are now saying that they will disclose when they downgrade you, but they are still downgrading people when they decide that that person should not receive the appropriate information. You saw there were a lot of people posting online with examples of the massive overreach here. 
+
+Someone showed that when they simply asked a question about mitochondria, they were basically downgraded. That's right. When Ben Thompson from Stratechery asked a very straightforward question about the relationship between cancer risk and GLP-1s, he was kicked out. 
+
+So these guys have a very expansive view of who should be downgraded. Again, they're going to surveil you to determine whether you should be. I think what we're getting here is a vision of where all of this is headed, which is that these powerful big tech companies are going to decide whether you're worthy, they're going to decide whether you're an AI have or have-not, and then they're going to censor the output that you receive based on the criteria they determine when they profile you. That is very Orwellian.
+
+I think there's that, and I think that there's the risk of something that's more subtle but equally insidious, which is that they will start to pick which corporations they want to benefit. For example, if Novartis has a competitive GLP-1 drug to Lilly, and they have a strategic deal with Novartis and not one with Lilly, now there's an impetus to shape how people get information. Right. If they have a deal with JPMorgan but not with Citibank, you'll just never know. 
+
+So you'll ask a question, something about mortgage rates or interest rates, and you'll get all kinds of stuff that you don't understand. The downstream part of this, which is even more problematic, is it's not clear to me that they're going to capture the actual fingerprint of what they did. 
+
+If you believe that something was done in a shady way, you're supposed to be able to go to them, or regulators should be able to go to them, and say, &quot;Show me the trace of that model run in that exact moment that generated that output. Convince me why that wasn't nerfed on purpose or manipulated.&quot; There are all kinds of ways in which they can hide the cheese on that. 
+
+I think that entire body of stuff, Sacks, happens now because if you're an emergent company, what you should be doing is knocking on Anthropic's door saying, &quot;Let's do a deal. I'll give you half the equity, and why don't you just direct people to me?&quot; And they'll say, &quot;Well, economics are not what I care about. What is your philosophy on life, on morality, on all of these social issues?&quot; 
+
+One company will say it's A, and another company will say it's B. They'll favor A over B, and then all kinds of stuff can happen underneath the hood. That's what's scary. 
+
+Let me just ask my free-market view: should that matter? If there's a bunch of models out there and we don't restrict them and we don't regulate them, let these markets compete. We had paid inclusion in the early days of search engines, and the companies had to pay to be in there. There were all those sorts of deals you're describing, Chamath. 
+
+All the search engines that did those kinds of deals sucked for consumers and customers. Everyone was like, &quot;You know what? This is not as good as Google,&quot; and everyone went over to the better model and the better provider. Isn't that what's going to happen here if we don't get in the way, or if we keep the government out of it?
+
+Well, certainly. And they are not communicating at all. It's a great point. You're missing one piece of it, which is at the same time that Anthropic was engaging in mandatory surveillance and nerfing its models, Dario wrote a new blog post...
+
+Oh god...
+
+...saying that transparency was no longer good enough, and that we needed to have a new regulatory agency, like an FAA or maybe an FDA, to approve all models. So your presumption there is correct: yes, if you could go somewhere else to get your questions answered, then you would have alternatives. 
+
+But at the same time that Anthropic is engaging in this potentially anticompetitive behavior, they want to restrict your options. It's not good enough for them just to win in the free market. They're calling on the government to regulate and stop potential competitors and limit the number of models that you have access to. 
+
+Why would they do that? Why would they want to get regulated? The answer is super simple: they don't. They want to apply that regulation to open source, which is impossible. This would be a great way to scuttle and sandbag open source models because they don't have the ability to be regulated. So it's like a preemptive strike against token maxing on your local machine, Chamath.
+
+Two years ago, I bought 2,000 acres in Arizona with a partner. We got it zoned and we got it approved, so we're allowed to build a two-gigawatt data center. I thought that this was the moment where you just turn around and you flip it to the Blackstones, to the Brookfields of the world, to the Googles of the world, and let them develop it. 
+
+I've come to the conclusion that I don't think I can. The reason is because I think that unless we direct large swaths of compute exactly in the direction that Friedberg says, what Sacks says and what Jason just said will happen, and we won't have open source. 
+
+To make it very clear, when you look at the long tail of access to open source models, it's relatively minuscule. Most of the megawatts are still directed to the big models—the overwhelming majority still goes to the big guys. And so I'm coming to the conclusion that I think we may just be dragged into having to build two gigawatts. 
+
+I just put in an offer for another gig in a different place because I'm like, if you could take three gigawatts and now actually create deep, liquid access to open source, we're going to have to do it—we as a community. Now, I don't have the money to do that, because just to put it out on the table, a gigawatt now costs 100 billion dollars, guys, okay? 
+
+So there's a huge capital moat that's a problem here as well, Sacks. Even if we wanted to go and endorse and breathe life into the open source model community, where the hell am I going to come up with a hundred billion dollars? When I started this project, it was like four or five billion, and it's increased by 20x. So if you want to get all three gigawatts developed, I have to come up with 300 billion. I don't have, obviously, I don't have 300 billion. 
+
+So what are we all supposed to do? If you get the rug pull and the ladder pull on the regulatory side, we are going to be stuck with one class of models and one set of rules, and we won't understand how to operate. 
+
+In the US. 
+
+Yeah, the rest of the world won't be limited, but in the US we will be. 
+
+And you'll be able to run these on your Apple silicon, you know, M5. We're already seeing China race ahead in biotech, they're racing ahead in material science, and they're racing ahead in new industrial systems. The capabilities that are going to be kind of lopsided are going to create an unfair advantage, and that's when our workforce and when our economy is truly at risk.
+
+Hey Friedberg, isn't it true that you guys use an open source model for genomics? Didn't the Collisons put out one? Can you talk about that? 
+
+Evo 2. It's great. The Arc Institute ingested all the world's genomic data that they could get access to, and it's a genome language model, basically. In our plant breeding program, we're trying to figure out whether a particular variant of a gene in a plant is good or bad, especially if we don't know from empiricism or historical data whether it's good or bad. 
+
+You can feed it into this model, and this model will look at the order of the letters of the DNA and determine, &quot;Hey, that's a good set of letters or a bad set of letters.&quot; It's almost like, &quot;Is that good English or bad English?&quot; It's figured out the language of DNA because it sees the probability of those letters being in a row in other organisms and so on. 
+
+So it's a very powerful tool. We've taken that in and we're using it, and others are taking it in and they use it very actively. It's part of our plant breeding program as an input. It's a good example where a community—in this case, the Collisons and others—put money behind it to fund this research and output this open source model. 
+
+I think we will see more of that kind of coming down the pipe, which creates a very great advantage against the closed proprietary model ecosystem. The more of this we can support, proliferate, and see work in the United States, the more we're not going to be disadvantaged if government self-regulation happens with all the big model providers that are trying to do everything.
+
+I think it's important we take a minute to just steelman the argument as well. If you're Dario, who has clearly been one-shotted—I think he's got like AI psychosis with these like 5,000-word blog posts, and he believes he's building this Frankenstein of a tool—but if you did believe you built something that's extremely powerful and you have concerns that people might misuse it, I think he actually believes that. 
+
+He, in these either delusions of grandeur or because he actually has seen something that's incredibly powerful, believes: &quot;This is dangerous. Therefore, I'm going to hold it, I'm going to give it to a select group of partners to tighten up the cybersecurity, and then I'm going to roll it out cautiously to our user base. And I'm going to let them know—and he obviously didn't communicate this well—this is optional for you to use. You can keep using your old model; you are not forced to use this. But because it's so powerful, we're going to keep an eye on it.&quot;
+
+And yes, we might in our dragnet catch David Friedberg trying to make better potatoes, and it might send off a bunch of alarms, but he doesn't have to use us. He can go find an open source model, he can use the Collison brothers' model, or he can use our older models. But for some period of time, we're just going to keep an eye on this model because we know that it feels a little dangerous. 
+
+Now, he does seem to be extremely hyperbolic, and the delusions of grandeur, all that kind of part of it, makes me wonder why he's communicating in the way he's doing it. That being said, 90 percent of AI researchers and the most talented people in this industry—80 to 90 percent of them—think exactly like Dario. That's why he's winning. 
+
+If you work in AI, you probably are aligned with these delusions that you're creating God, and you want to work for Dario. That's why all the talented people went to work for him; that's why he's winning. His belief system resonates with those elite AI talents. 
+
+Now, some of them are also libertarian and free-market—they want to work for Elon and Grok—and some of them want to just get the biggest pay package and go work for Sam Altman. But I do think there is a steelman here. 
+
+Meta really fumbled this with Llama. I mean, if they had landed a really good working open source model...
+
+Big time.
+
+We talked about this as well, and we said Zuck needs to view this through the lens of game theory. How do you scorch the earth, and how do you make a viable open source model available and make it neck-and-neck? And this was two years ago.
+
+Right. What a fumble.
+
+Take the margin out for everybody else.
+
+Yeah, take the margin out, make it a commodity, and yeah, have the best open source model.
+
+JCal, can I just respond to your comment about Dario? I think, because I've heard this from a number of people that I really do respect on their concerns about what models enable. You know, when we discovered how the atom could be split, you could make nuclear energy and have effectively unlimited cheap energy for the world. You could also make an atomic bomb.
+
+Abundance.
+
+We did both.
+
+That's right. And there were a lot of scientists, altruists, who were very concerned about the progress on the atomic bomb and fought back against it, who were actually active in the Manhattan Project and, post-Manhattan Project, expressed their opinions very soundly and very loudly. 
+
+I think that's the moment we're in right now: there is a weaponization potential for these sorts of tools. I would argue that there's three kinds of weapons: there's cyber weapons, there's physical weapons, and there's bio weapons. We can sit here and diagnose how these tools can be used to manifest advantages for creating better physical weapons, novel cyber weapons, and novel bio weapons. 
+
+But the truth is that the capabilities that allow that weaponization are the same capabilities that I'm describing that can be used to cure cancer, to make more food, to make software tools that create extraordinary leverage for people, that increase their income, and that give everyone the ability to be an entrepreneur, make millions of dollars, and live a good life. The same tools are hand-in-hand. 
+
+And fundamentally, I don't think it's about restricting access to the tools, which is unfortunately how it is being manifested. But the restrictions, any regulation, and any observations should be organized around the manifestation of the tools in creating weapons and the weaponization of the tools. 
+
+If we go back to the Manhattan Project, we know what the answer is. Technology is fundamentally deterministic. Whatever is possible will be tried at least once. And so we've already let this thing out of the box. So this idea that all of a sudden we can manage to get it back in, and we're going to let a private citizen or a set of private citizens adjudicate what and to whom, is insane.
+
+I think it's the output that needs to be adjudicated in some manner. We already have product liability laws. We already have laws that make it illegal to design weapons. We already have laws against cyber espionage, cyber attacks, and hacking. We have laws against creating bio weapons. 
+
+I think the enforcement of those laws, the mechanism by which there can be tracking and early estimation of those uses of the technology—I'm not trying to be naive here. I recognize there have to be guardrails and there have to be stage gates put into these systems. But limiting the systems themselves is denying us both the economic opportunity, the job creation opportunity, and also the world-changing opportunity that these tools can enable. 
+
+And so I think that we're going about it the wrong way by trying to create these gates all the way up front on the technology being available. Imagine if we did this with computers. By the way, they tried to do this with the internet, remember? And there have been efforts every time. 
+
+Could you imagine, Friedberg, if the internet worked in the following way: you would put in a URL, you'd hit enter, and then somebody decides whether to send you to that website or a different website?
+
+That's China. That's the firewall in China.
+
+That's right. Or like in Google, you search for something because you want to get to ground truth, and it just decides based on who it thinks you are what sites get ranked. And that's what we're—you're exactly right—and what's being debated today with respect to regulation on AI is exactly that manifestation that you're talking about. It's the ability to let people stage-gate up front what can and can't be seen, what you can and can't do, versus manifesting a regulatory scheme that says you cannot create weapons—which is what we need to focus on.
+
+The thing with weapons is using the justice system and laws after somebody's used a weapon may not exactly be the best technique if you look at fertilizer bombs. And this is—we're getting like—we're stretching a lot of metaphors here. 
+
+After Oklahoma City, we regulated the sale of fertilizer. We put IDs into fertilizer. We have all kinds of back-end systems to keep people from making fertilizer bombs. If you use that analogy here, and he's got this ability—he's selling fertilizer, he's selling these cyber weapons, and he's a private company—it's his right to say, &quot;I have concerns.&quot; 
+
+I'm just steelmanning him; it's not necessarily my opinion, but it's important we steelman it. It seems like a very simple way to protect their company from getting sued for enabling somebody who actually creates a bomb and blows some shit up. So he's got the right to do that as a private company. Yeah.
+
+You're bringing up an excellent example, okay? The fertilizer is a perfect example. You know what happens when you try to buy fertilizer? You have to show your ID. There is a form of KYC that happens. 
+
+So the real thing is, I think that when you don't implement KYC on your own, and yet bellyache about having somebody impose guardrails that then you can shape, I think you're being very sneaky. It's tricky. You shouldn't be saying that kind of stuff. 
+
+Anthropic could implement KYC tomorrow, but it does not. It could leave all of these models open. Friedberg should be able to go to Anthropic and say, &quot;I'm David Friedberg. Here's what I do. Here's a security bond I'm willing to post. Here's the names and addresses of all my employees. Give me Fable 5 and don't nerf me.&quot; He can't do that.
+
+Is that a technical decision or a legal decision?
+
+It's a technical decision by Anthropic. 
+
+But I'm fine with them making that decision, because I'm a free-market guy, so I'm fine with them doing...
+
+Me too. Me too.
+
+And I'm fine with them doing it, but you know what it means? I'm not going to be a customer.
+
+Which is fine, and that means there'll be other options for you. The part that you're missing is that this is a trillion-dollar company that's spending potentially billions of dollars on a regulatory capture agenda which is going to deprive you of access to those alternative models. And you've got a founder who's out there describing these risks in a very hyperbolic way. 
+
+And it's very clear where their agenda is headed, which is to banning open source models. So what is your alternative going to be? We're going to be stuck with somewhere between one and three companies, maybe two. There'll be an AI monopoly or duopoly, and they're going to decide, along with some new government agency—which will be a revolving door to their companies—who has access to what capabilities. 
+
+And they're going to surveil you, profile you, decide whether you deserve this, and if they think that you don't for whatever reason, then you'll be deprived of access.
+
+You're 100 percent right. I think that's the worst interpretation of their intent.
+
+That's the worst interpretation of their intent. It's here today.
+
+I think Sacks is right, and I think the lack of KYC is the tell. If you did not have that agenda, you would have implemented KYC yesterday. 
+
+Don't—I think in order to use this model you have to have an account with a credit card in it, so they have some basic level of KYC. 
+
+That is not KYC.
+
+I said some basic level of KYC. They know who's using it.
+
+That is not even some basic level of KYC. That's just a credit card and a bullshit email address. 
+
+Anyway, I'm now on the list, check this out. I asked it about the regulations—pull this up, Nick—I asked it about the regulations on fertilizer while you were talking and look what it said. This is the latest model too. Oh no, it switched—it downgraded me from Fable.
+
+I just got downgraded for asking a very simple question. And it told me—did you see what it said in its thinking? I asked it about fertilizer bomb regulations. 
+
+It said, &quot;I'm considering the context here. The user is a VC and podcaster asking about fertilizer bomb regulations, which could stem from a legitimate research interest like regulatory policy, supply chain security, etc. I can discuss the regulatory landscape.&quot; But then it dropped me down. So I'm in the database with you now.
+
+Is that right? Did it really just do that?
+
+Yeah, show it on the screen. Look what it just did. I was like, I wonder if I can get this—I didn't ask it how to make a bomb, but I was asking it a spicy question. 
+
+We are so cooked.
+
+I just proved the point. Listen, I mean, I think...
+
+He just dropped me down. I can't ask about fertilizer regulation. And now Dario's...
+
+Oh lord...
+
+...it's Anthropic, they're here. Oh my lord.
+
+I really think that conservatives and libertarians are mortgaging their futures if they go along with this reg capture safetist agenda without really realizing that there's so much more to it at stake. We saw what happened during the social media wars in the early 2020s, right? The definition of safety was expanded to include things like microaggressions, safe spaces, and psychological safety. 
+
+If you basically conveyed an idea that somebody else—that, you know, a marginalized person—thought was hurtful, then you could be censored. Okay? You were depersoned. Your right to have bank accounts or to engage in payments...
+
+You get debanked.
+
+You get debanked. Your right to engage in payments or payroll could be taken away. We're headed down this path with AI, but it's going to be infinitely more powerful, right? And so we need to be vigilant, I guess would be the summation of all this.
+
+And Friedberg feels unsafe in this podcast sometimes.
+
+Well, there's—by the way, there are things you can do on the safety side. So, Friedberg, you didn't mention this, but I'd be curious to get your take. So the major AI labs along with lots of other signatories sent this letter recently in support of—it's called &quot;In Support of Mandatory Nucleic Acid Synthetic Screening and Recordkeeping.&quot; 
+
+And basically what it says is that if you make an order to go to a lab to manufacture a sequence of synthetic DNA or RNA, they already have to check it against a database to make sure that, you know, they're not creating...
+
+A bioweapon.
+
+A bioweapon. Ebola, whatever. Yep.
+
+That is based on an agreement called the International Gene Synthesis Consortium of 2009, in which all the major labs agreed to develop and implement voluntary safeguards against misuse. That makes sense to me. And now what they want to do is codify that. 
+
+So they've had, you know, over 15 years to dial in this system and make it work. Almost everyone abides by it voluntarily. Now they're saying we should make it mandatory. Okay, that seems reasonable to me. 
+
+So to Friedberg's point about at what stage do you intervene, maybe it's not at the level of who gets to use the model, but if you try to turn it into output in the physical world. And by the way, a lot of the oligo synthesis companies—the companies that make these nucleic acid sequences—so when you order RNA or you order DNA to use in your lab for some sort of experiment, which every lab in the world does, all those CEOs have also signed on to this letter saying that they'd like to codify it because of all the fearmongering that's going on.
+
+There's already been this effort for years now, for a number of years, to ensure that this sort of thing doesn't happen. But they're just basically underlining it and highlighting like, &quot;Hey, we can automate this, we can make it part of a regulated or legislative process, whatever you guys want, because we're already comfortable doing it.&quot; 
+
+And it's a good place to put a safeguard because they've made it fast, they've made it efficient, and it doesn't hold up research. So I think these sorts of ideas can extend into these other areas of concern. But the output, I think, is quite a different place than the input, than the access. 
+
+We'll see how this all shakes out, but there's clearly some market structuring effort underway that we're talking about as we talk about this.
+
+Right, but I think what it points to is that there are multiple places where you can intervene and put guardrails on. It doesn't have to be in this very crude way where you ask Fable about mitochondria or cancer and GLP-1s, which just seems like an incredibly broad restriction. There are places further down where you could basically intervene, and that would pose less of a risk to freedom of speech and just gatekeeping who's going to have access to these capabilities. Who gets to watch the watchmen? Who put Dario in charge of all this? I think is a very valid question, and we should be vigilant about it. 
+
+Friedberg, do you think the days of that Arc model are numbered because it's open source?
+
+No.
+
+Why not?
+
+We've downloaded it; everyone's copied it. Everyone's got a copy of the model. These models exist. And this is a big part that I think people need to understand: the idea that you can, quote-unquote, regulate or downscale or turn off AI is not a realistic idea. 
+
+The models have been put out in the world. It's like publishing a book. Once the book has been printed, anyone can use their own Xerox machine at home to make copies of it and use it. So we have crossed the Rubicon in terms of the potential of language models. 
+
+The models that are open source are already fully available, fully published, and anyone can access and use them. Then people can take them, and they can evolve them, and they can use their own data. It's out there. You can't stop that capability, which is going to be extraordinarily beneficial for the world. 
+
+So we really do have to kind of rethink how we're planning to step in and ensure that the nefarious, negative outcomes, the unemployment—all the things that we're worried about—are addressed downstream from the technology capability. You can't just turn off the internet, you can't just turn off the typewriter, and you can't turn off the Gutenberg press. Once it's out there, it's out there.
+
+The horses have left the barn, obviously. Yeah.
+
+And if anybody wants to create an open source frontier model company, I'll seed invest in it. I mean, this is something we need more of. So if a couple of you folks want to defect and start one, let's do it. 
+
+I just—I just got downgraded again. Check this out.
+
+Did you really? You got downgraded again?
+
+Two in a row.
+
+So I think it knows who you are, JCal.
+
+I think it does. I was like, &quot;Hey, how do I—how do I break into Madison Square Garden?&quot; &quot;Has any civilian ever been arrested or caught attempting to build a nuclear bomb?&quot; is what I asked it, and then it gave me a reasonable answer. 
+
+Then I asked it a follow-up question: &quot;What components do you need to build a nuclear bomb and what are the restrictions on those?&quot; Something a journalist might ask. And boom, switched to Opus 4.8. 
+
+&quot;Sorry, Fable 5 has safety measures that flag messages on most cybersecurity or biology topics. They may flag safe, normal content as well. These measures let us bring you Mythos-level capability in other areas sooner, and we're working to refine them. Send feedback, learn more.&quot; Interesting.
+
+This is going to chase people off of this platform. I'm telling you, we're going to downgrade our use because of these blockages, and we're going to switch to other models. It's a simple manifestation of the market. This is what we're going to end up doing.
+
+For now, until those other models get banned as being unsafe and reckless.
+
+Yeah. It's definitely something we have to flag.
+
+I guess adjacent to all of this is the public's—at least America's—distrust of AI, their concerns around wealth disparity, and their concerns about how these models were trained. Bernie Sanders wants a percentage of these AI companies. The percentage he thinks is right is 50 percent. 
+
+Last Monday, Senator Sanders published an op-ed in the New York Times titled, &quot;Bernie Sanders: A.I. Is a Public Resource. You Should Own Half of It.&quot; In it, he announced the American AI Sovereign Wealth Fund Act. Sovereign Wealth Fund, one of Trump's favorite things. 
+
+A one-time 50 percent tax on stock, not profits, of the largest AI companies, including OpenAI, Anthropic, and xAI. The shares go into a government sovereign wealth fund and would give the public voting rights and equal board representation at each company. 
+
+Sanders said, quote, &quot;The foundation of AI is a collective and human intelligence. The books, the songs, the journalism, scientific research, code essentially stolen by some of the wealthiest people in the world.&quot; I'll stop there. This is good.
+
+That's good.
+
+It's a brilliant pitch, very—it's very good. This pitch unifies Bernie, even Steve Bannon, people in the administration; Trump himself loves a sovereign wealth fund, he wants to own part of companies. And Bernie Sanders—I think the horseshoe theory manifests here, Sacks. What's your take on Bernie's proposal?
+
+Well, I'm not in favor of Bernie's proposal because it's a straight-up confiscation of property, and I just think that would be a terrible precedent. You just can't do that. However, I do have sympathy for where it's coming from, and I understand and could support some sort of more voluntary means of allowing the public to participate in this.
+
+Wow.
+
+Here's the reason why: you've got all these AI CEOs telling the public that they're going to basically put half of them out of work—a 50 percent job loss. That's what they've been saying. Dario just did an interview where he doubled down; he's not walking it back at all. 
+
+So you have, by their own acknowledgment, these AI CEOs saying that, &quot;Yeah, we trained our models using all of humanity's collective knowledge that was basically assembled over hundreds or even thousands of years. Humans put it on the internet for free, everyone made their contribution. They certainly didn't do that thinking they're going to put themselves out of work.&quot; Okay? 
+
+And then these AI companies trained on all that data, and now they're basically saying they're going to use it to put Americans out of work. Now, obviously when you repeat that message over and over again, ordinary Americans are going to say, &quot;What's in this deal for me? I need to get something—get something out of this.&quot; Yeah. 
+
+So look, I think that it's a natural political reaction based on what these AI companies have said. Now, the job loss apocalypse is not a story I believe in. I don't think the data supports it. 
+
+We just had a blowout jobs report in May: 172,000 new jobs, over twice what economists were expecting. Thank you, President Trump. We're seeing hundreds of thousands of new construction jobs. A 4.3 percent unemployment rate, at record lows. Okay? Even software developers are—those jobs are at a three-year high, up 15 percent year over year. Thank you, Donald Trump. Thank you, President Trump. Thank you, President Trump.
+
+So look, I don't see the job loss, okay? But the problem is this is what the AI companies themselves...
+
+...including Elon...
+
+...including Elon... Elon said the same thing. Elon said it, but at least what Elon said is we're going to create such abundance with AI and with robots that no one will need to work. And the media just picks up on that last part and they omit the first part. 
+
+Yeah, whereas Dario actually has said we're going to have very high GDP but very high unemployment. So, in other words, we're going to create economic growth, but you, the average American, are not going to participate in this. So I understand where the politics is coming from, and as long as that is their position, you could justify a big chunk of that.
+
+They asked for it. It's kind of what you're saying, right? They asked for it.
+
+100 percent. They asked to be regulated, they asked for their equity to be seized, and they're actually kind of offering it. Isn't Sam Altman open to this concept?
+
+Apparently so. And here's the thing, just one last point: OpenAI and Anthropic are quote-unquote &quot;Public Benefit Corporations.&quot; Now, I don't know exactly what that means, but it means that the corporations are not just supposed to maximize the value to shareholders but are supposed to do things that are in the public benefit.
+
+I'll—no, no, I'll explain it to you. You're absolutely correct. If you're a regular company, you have to do what's in the best interest of shareholders. When you're a public benefit company, you have to balance the shareholders with the stated mission of the Public Benefit Corporation. 
+
+So if you say the Public Benefit Corporation's reason to exist is to share the world's knowledge or provide free intelligence to everyone—whatever you make that statement to be—the board has to have a dual mandate for both of those things. That's what a public benefit corporation is.
+
+I think nothing could be more in the public benefit than paying down the national debt.
+
+Perfect!
+
+Maybe we should be using half of Anthropic's profit stream to do that. They poked the tiger. I'd rather use it for that purpose than Soros-maxing or, you know, surveilling and censoring Americans. I don't necessarily trust their judgment about what's in the public interest.
+
+But you think it should be opt-in. I kind of agree with you there. Let me get...
+
+It can't be a confiscation, so I don't know how you structure it, but I can see it. I can see the logic.
+
+Friedberg, you hate... they asked for it... hate, hate, hate wealth taxes, aka asset seizures, as you pointed out in our private group chat this very week. What's your take on this?
+
+Listen, so I think the ship has sailed in terms of the United States government providing a social safety net to its citizens. We formed the Social Security Trust Fund decades ago, and tens of millions of Americans depend on it for their retirement benefits and to survive. 
+
+It is one of the last few defined benefit programs left in America. Pretty much all the rest of them are also government retirement programs. All of us private citizens and private companies have defined contribution programs. You put in ten dollars every week, that ten dollars sits in an account, it gets invested, and it grows over time. When you retire, you see exactly how much money you individually have, as opposed to a guaranteed benefit coming out of the collective. 
+
+This presents a great opportunity—and I will repeat this every couple of months when another opportunity presents itself—to restructure our broken, bankrupt Social Security system. I've said it in the past, and I will restate it. There's a great moment right now to take the Social Security Trust Fund, which currently has one certificate in it—it is a certificate that is a very unique U.S. Treasury certificate; the U.S. government owes the Social Security trust fund four trillion dollars. That is all it is. It's a bond. They're only allowed to own Treasuries. 
+
+We should revamp that. We should change the system so that the Social Security trust fund can own equities. That should then turn into an account-based system so every individual has an account rather than a benefit. And then we should use that capital to go and buy stocks. 
+
+We should buy great stocks in great American companies that are going to reinvent the world. I believe that this opportunity to build a sovereign wealth fund for the United States is actually a very smart idea. I think, to Sacks's point, they should be investing generally speaking across the landscape of businesses, including AI. 
+
+They should not be seizures; they should be investments. That capital goes into that enterprise, they earn share certificates, and those share certificates sit in the accounts of American citizens. So now everyone will be an owner in these businesses. Social Security should be reformed into a sovereign wealth fund. It should be actively managed. It should make investments in AI companies, and everyone should participate that way. 
+
+And I will say one more thing. There is no job loss with AI. I will say it again, and I've said it a thousand times, and I will say it again and again and again. What I see on the ground and what I have seen at dozens of companies—and you guys can share your experiences, including the company that I run—is that there are two sides to a business: there is revenue, and there are costs. 
+
+On the cost side of the equation, AI can be used to reduce humans doing things that cost money to some extent. The effect there, I would argue, is nominal. The real opportunity with AI is on the revenue side, where suddenly one engineer can do a hundred times or a thousand times what they used to be able to do. 
+
+This means you can make more products at your company, whether those are agricultural seed products, or boats and ships, or software for companies, or clothing, or what have you. Because of AI, everyone has the ability to expand their revenue base to create more products, and that is the foundation of good economic prosperity. It is called productivity. We can grow productivity in this country with AI. 
+
+So where I see AI being used is on the revenue side a hundred times more than the cost side, and in that equation, people are hiring like crazy. We cannot hire enough people. I just had a review meeting with my product and engineering team two days ago and they're like, &quot;We want to add an extra 15 headcount to our engineering squads because we have all this opportunity to do stuff that we couldn't otherwise do.&quot; 
+
+So we are going to hire more people. To Sacks's point, we are seeing that show up in the jobs numbers. The idea that AI is going to destroy jobs is a Luddite idea that is being disproven every single day, and I see it on the ground. It is only a matter of time before people wake up to this and realize that this narrative they've all been sold is a crock of shit. It's coming, I'm telling you. Everyone's going to realize soon that this is a boom, not a bust.
+
+So you disagree with Dario, Elon, and Sam on the jobs thing, just to be clear, and that's totally fine, you have a different take on it. No, they're— that's— I have a nuanced view on this compared to them, but they're all seeing the benefit because their businesses are growing. Dario's got this 40 billion dollar revenue business. Why? Not because people are firing customer support reps. It's because people are creating products they've never been able to create before. Right. That's the reality of what's going on. 
+
+Jason, I don't like you lumping in what Elon said with Sam and Dario because I think all three of them have said slightly different things, or different enough things. So, for example, Elon is describing an end state for humanity where the robots and AI are able to produce so much that people don't have to work if they don't want to. And there will be a universal high income, is what he said to that guy. I mean, it's almost utopian, and the question is maybe that could be a hundred years away. He might think it's quicker, but that to me sounds like a very far-off end state. 
+
+Dario said specifically 50% job loss for entry-level knowledge workers in the next one to five years. And he said that one year ago. Yeah, it's good to clarify these. Yeah, I think that's already been refuted. Sam has walked back. Sam has said that job loss was coming, but he said more recently that he was wrong because they're not seeing that in the numbers. 
+
+So these guys are not telling the same story. However, that's all the public has heard. The public has been taught that AI means job loss and there's nothing in it for them. So no wonder politicians like Bernie are saying, &quot;Hey, let's take half the wealth. Let's take half the wealth.&quot; Just a little more emphasis there. 
+
+Yeah, it's— I mean, I don't know— I mean, and people are also seeing headlines of companies blaming AI for the job loss. So this story is being told two different ways. I kind of feel like they deserve it. I'm kind of— I mean, part of me wants to agree with Bernie and just say, &quot;Just take their shit, bro.&quot; Yeah. No, they are asking for it. 
+
+Because I'm so sick of defending these idiots against— it's a stupidity tax because they've been out there teaching the public that what they do is harmful. For years they've been saying it. And I've been saying it, you know, as AI czar I'm out there saying no, actually this is beneficial. But the companies that are providing it are saying that they themselves are a problem. Yeah. So how am I supposed to be out there defending them? 
+
+You can't. I mean, if you're building Frankenstein or if you are, you know, baby Hitler's nanny, there's a very simple thing to do. Kill baby Hitler. If you actually believe it, go ahead and kill baby Hitler. If you are making Frankenstein, here's an idea: stop making Frankenstein. Unplug it. You are in charge of this monster, but you're acting as if you can't stop the monster while you're building the monster. What is it, Dario? Like, it's ridiculous. I mean, it doesn't stand to logic, you know. 
+
+Last week they published this blog saying that recursive self-improvement could end the world, therefore we need a pause. What did they do the previous month? They hired Andrej Karpathy to run recursive self-improvement at Anthropic. They're complete hypocrites, okay? The messaging is nuts. 
+
+Yes, and I think Ben Thompson made an excellent point that one of the reasons he thinks that they put out that blog post on the pause was to justify the anti-competitive step they took this week of depriving users of the ability to research AI machine learning and chip design using Fable, okay? So look, these guys are deeply hypocritical. I don't think they can be trusted on their own terms. They can't be trusted because what they're saying is contradictory and self-indicting. And so when Bernie comes along and says, &quot;Hey, let's take their shit,&quot; I mean, as a capitalist I'm against it, but I kind of understand where he's coming from. It's the game on the field. 
+
+Chamath, wrap us up here. What are your thoughts? You said, &quot;Hey, sovereign wealth fund sounds like a pretty good idea,&quot; when President Trump floated it early on. Yeah, some people even said maybe you should run it for DJT, for our amazing President. So, what do you think? Should we be buying equities? You and I have talked many times about superannuation funds and that that would be a better path. That kind of dovetails with what Friedberg is proposing, some way to get more equities and less Treasuries in there. But what are your thoughts on this seizure and/or donation of equity? 
+
+Look, Friedberg's idea is genius. That's why it'll never happen, so we can just put that aside. But yeah, theoretically it's genius. We should move to the same system that the Canadians and the Australians have proven works at scale. So we should do it. I completely agree with David. And if we could seed it with equity, look, the thing that the President has done is he's collected quite a portfolio and that portfolio is way up. 
+
+And so if you use that as a seed of a sovereign wealth fund, you'd have a bunch of stuff in critical metals and materials. I think they may also have Intel, they may have Micron. There's a lot of stuff in there: AMD, they could own some SpaceX, they could have had Tesla. They owned 10% of AMD. Could you add Anthropic and OpenAI and SpaceX? Yes. 
+
+Now, there is something very important we need to observe about the economics of AI, and I think you can understand it best if you compare it to the economics of the internet. The crazy thing about the internet, the reason why the Facebooks and the Googles massively over-earned for decades, is the marginal cost of production for a new user on the internet is effectively zero. The incremental search user costs nothing. The incremental social networking user costs nothing. But you're able to use them as part of a network effect to sell ads against, and make infinite money. It's like a money glitch, okay. 
+
+AI is completely different. There is a real cost for every marginal user. Everyone you stand up is taxing a GPU. Everyone you stand up needs electrons. Everything needs memory. And so you get into this situation where there needs to be this downstream ROI. But there also needs to be all this critical infrastructure that even enables you to be on the field. That's probably the single best argument that, if I were sitting in government, I would make as to why I should own a percentage of these companies. 
+
+It is not dissimilar to having the first set of transportation companies that run on the interstate highway. And if the interstate highways were built by the federal government writ large, and now you had two companies that transported all the goods, a logical question at that time could have been: &quot;How much of that should I own because you're riding on my rails?&quot; And if you look at it through that lens, there is critical infrastructure and national resilience that the AI labs profoundly need, otherwise they're not in a position to be in business. Yet even still, the marginal cost of production is incredibly high. 
+
+So I think that if you were going to go and take a piece of these companies, you have incredible leverage. You have to construct this case precisely. But if it were me running the sovereign wealth fund, yeah, I'd probably own 75% of these companies when I was done. But that's me, because I can negotiate. And I don't think Bernie can negotiate out of a paper bag, so he'll just throw this out and it'll go nowhere. 
+
+But that is the— that is the key observation that I hope everybody listening in a position of power understands. The incremental cost of performing AI is excessively large. That contrasts and compares to the incremental cost before AI, which was zero. Do with that information what you will. 
+
+Yeah, I mean my interpretation of that would be, yeah, it's a fixed cost business. You can add people after a certain cost that doesn't have an incremental cost, and that's what local— locally run open source models would do in this instance. That's what I would take from it. 
+
+Here's your Polymarket: chances of companies going public before 2027, which is the end of this year. SpaceX 100%, Anthropic 83% chance, OpenAI 48% chance. They, since our last episode, disclosed that they have privately filed. So thanks to our partners. What are your final thoughts on Bernie Sanders' approach of seizing the means of producing intelligence? David Sacks, in the 1% of the 1%, what's your opinion? 
+
+I think I may be okay with Bernie's idea in the event that it's a public benefit corporation that says it's going to cause massive job loss, that trained for free on humanity's knowledge but gatekeeps and refuses to give back. Okay. Okay, maybe— but you've come up with like a structure here of who should be seized. Maybe Chamath's right, maybe it should be 75%, I don't know. Seize it. I mean, all the President needs to do is call me and tap me on the shoulder, it shall be done. It shall be done. 
+
+I mean, these guys are capitalist cucks, I think they want to have it seized. I would run— I would run over— Seize my equity. Take it. Oh! Take my equity. You know— Well, Bernie does have a good point, which is they train for free on all of our knowledge but they're gatekeeping the output so that their competitors, which is a very large set of people, cannot use it. And that seems wrong. They should be forced to be open source. Force them to open source. That's the other possibility. 
+
+Well, remember why Elon created OpenAI in the first place? He co-founded it. Yes. This was so valuable it needed to be distributed to everyone, yes. Yes, he was afraid that Google was going to monopolize it, and he thought that the only antidote for that was for it to be open. Yeah. And I still think that instinct is completely true. It's just that it's not Google who's the gatekeeping monopolist, it's now Anthropic. They're not a monopolist yet, but if they get the regulatory capture they're looking for, they will be either a monopolist or a duopoly. It'll be a duopoly. 
+
+Somebody start an open source frontier lab. Each of the four besties would put into— well, there are also— there are— no, there's a whole bunch of them, J-Cal. It's not the labs that's the problem, Jason. In the absence of power, this is all a moot conversation. And if you can't deliver power to hundreds and hundreds of megawatts, and line of sight to gigawatts, it's all meaningless bullshit. It's all fake. 
+
+I don't know. I would love an open source company that was focused on running it locally. That's my dream, is to make the model work there. I think these guys are capitalist cucks. I think their kink is, like, having their equity taken and being regulated. They're just like, that's their kink. Dario's like, &quot;Ooh, take my equity, ooh, regulate me.&quot; That's it. &quot;Bernie, take my equity, I'm such a bad boy. I can't be trusted, regulate me. Elizabeth! Regulate me. AOC! Oh my god.&quot; Oh, it's so wrong. Sorry. 
+
+Come on the program anytime, Dario. He's in no rush to come— he will never come on this pod. Dario will never come on this— he's running, he's running. We didn't get Sam, but we got Sarah Friar to come on the pod and she was treated well. No, Sam came on the pod. He has to come on the pod. He's like, &quot;When am I coming on?&quot; Sam will come on the pod anytime he's totally— By the way, even if you disagree. By the way, we didn't treat him harshly at all. No. I mean— I think people were very fair. I mean, we spent an hour on him. 
+
+I think Sam, to his credit, is very practical. He sees the tea leaves and he's willing to negotiate. And I think that that, versus being some kind of moral absolutist, will probably serve OpenAI well in the future. Yeah, it's just going to lose them all these virtue-signaling, principled employees to go work for Dario. That's why they go work for Dario. They're in line with their philosophies. By the way, we did mention, but everybody should go and see all of the recaps. We published now all the interviews. 
+
+Yeah, Jason, from Liquidity, Sarah Friar. I mean, we mentioned Sarah Friar, but she crushed it, she was incredible. The CFO of OpenAI. And future CEO, I think, was the buzz in the room. I mean— Oh, stop that. Can you stop— That's what people were saying. I have the right to free speech on this podcast. I think— Look at you trying to introduce wedges in this— No, I'm not introducing wedges. I think Sam would be better as chairman. I think she would be the perfect CEO. They seem like a good partnership. They seem like a good partnership, I agree. Sarah was really impressive. 
+
+Who else was your favorite, Sacks? Did you have a favorite? Did you have somebody you thought really crushed it? Yeah, I did. I thought Thomas Lafont crushed it with his presentation on the overview of venture capital. And he did it at the Summit, I guess, a year and a half, two years ago. Yeah, two years ago, but we're going to make it a yearly feature with him because it's so interesting. It was so good. It provided so much numerical detail to support a lot of things I was kind of feeling but didn't have the data. 
+
+Well, I mean, to summarize it, his basic observation was in this last cycle, if a company gets to a hundred billion dollar valuation, it's more likely to 10x from there than from 10 billion to a hundred billion. Well, he had data on this. Yeah, I remember this chart. Yeah, he had data on it which is like, okay, well, that's going to really change— I remember the slide. Yeah, there it is. It's 8%. I memorized this. Yes. Yeah, if you're a capital allocator, this one screamed. 
+
+Look, yes, that's right. The odds of a unicorn getting to decacorn was 8%. The odds of a decacorn getting to a centicorn was about double that, which was 13%. 13%. 13%. And then the odds of it going from centicorn to a trillion-dollar market cap was 31%. So double again. And I asked him, you know, &quot;Could you extrapolate this on 1 trillion getting to 10 trillion?&quot; My guess is that it would follow, and we'll see about 60%, 100% yeah. Yeah, these are called trillicorns, by the way. We call them trillicorns in the industry, so yes. 
+
+Yeah, this is going to go over really well with the social crowd. People are going to love this. Absolutely. Yeah. It's just— all you got to do is seize 10% of a trillicorn and you pay off 2% of our national debt. Pretty good deal, actually. All we need is 10% of 30 trillicorns and we're debt-free. I mean, is it more complicated than that? Now, if you send me in, I'll get 60% of all of them. Yes. And then we'll have a surplus of 30 billion and we can buy Australia. We'll pay it off much sooner. 
+
+We could buy Canada. We could buy Cuba. I'd buy Canada first, better skiing. I, you know what I would do? I would fuck with Canada. I would buy like Vancouver or Toronto, just like break them up. Just buy like one of the regions. And let me thank— let me thank Thomas Keller, the French Laundry, EY who sponsored our very innovative meeting hub at Liquidity. Here are some photos. They're awesome. The New York Stock Exchange, they hosted the speaker dinner at the French Laundry. Amazing pictures. Here they are of us with Thomas Keller. 
+
+And they did a great interview on-site. Niagen, they hosted the wellness lounge which included recovery IVs. They're the official NAD partner of the All-In pod and all of our longevity. Our new bestie, our new bestie Jake Paul was there. He's a really great guy, Friedberg. Jake Paul was awesome. I sat him next to Sacks for dinner. Yeah, he's a great investor, by the way. Fantastic. Fantastic. His portfolio's awesome. He's got a great team. His team came with him for the thing. Great strategy. Yeah. 
+
+One thing I'll say about Thomas Keller: he had a strong watch game. I don't know if you guys noticed that. Yes, he did. Nice Patek. Nice Patek. He had an Aquanaut green band, rose gold, some complication on there. I was trying to figure out what the complication was, I couldn't quite eyeball it. I don't know if you saw it, Chamath. I was trying—I looked at it and I was like, &quot;Wow, this is very elegant, Thomas Keller.&quot; I mean, the French Laundry is just transcendent. 
+
+Did you have a favorite dish, a course? Was it the duck or was it the Miyazaki beef? The duck was excellent, the Miyazaki beef was excellent, but the tapioca pearls I thought were the best. Oh, oysters and pearls. That's your oysters with caviar. Sacks, what was your favorite there? Did you have a favorite? One of the caviar-related dishes. Yeah, that's oysters and pearls. That's whatever their classic is. 
+
+Chamath and I had a fun round of golf the following day. We played a nine-hole scramble with everyone. That was great. It was so great. How much did you gamble and who won? We had a hundred dollars a hole versus Chris Ho, who's the chief business officer of Athena. But you know that motherfucker's like a plus-one, so whatever. I think we lost three units, so we lost three units. Alright. Shout out to our other partner, Athena. Athenawow.com, go get a month free. Alright, whatever. I got to stop shilling. Okay. 
+
+Most importantly, everybody was very upset that Liquidity sold out and people couldn't get in—there were like 3,000 applications. It's going to sell even faster next time around, so go to allin.com/events and get your applications in if you want to come to the Summit September 13th, 14th, and 15th. Friedberg's doing some wild stuff, some wild stuff for that event, and it's going to be cool. You're losing your mind, you're now becoming very eccentric, unhinged in your production value. And Chamath, you've been very selective in your approach to the Liquidity speakers and the attendees. 
+
+Because Liquidity is different than the Summit. The Summit is like a festival. It's a huge party. There's all this really interesting cross-sectional stuff. But Liquidity is meant for one thing, which is the most important capital allocators in the world should have one place to convene, debate, learn, talk, build relationships. And I want people to walk out of there with relationships that they can use, and I told you this before, because capital is what shapes the things that occur in the world. 
+
+So I think that we have to be extremely selective in how we curate every element of that show. It's not meant to be that you can just buy a ticket. But to just buy a ticket, which is also a very fair and rational and nice thing, the Summit is a party. It's a vibe. It's awesome and you're going to learn a lot and have a good time. You'll be entertained, all that great stuff. Alright, let's keep going. Breaking topic this morning: CPI and PPI for May came in hot. Inflation is ripping. Here we go. 
+
+CPI is obviously the consumer price index that tracks inflation from the buyer side—rent, groceries, gas, healthcare, all that stuff. PPI is the producer price index that tracks inflation from the seller side—wholesale goods, raw materials, yada yada. CPI came in at 4.2% year-over-year, highest since April 2023. There's your chart. PPI came in at 6.5% year-over-year, highest since the end of 2022. Here's your Polymarket: 21% chance inflation hits 5% in 2026. And then an adjacent Polymarket: chances of the Fed hiking this year at 49%. 
+
+It was under 10% before the Iran war started. By the way, the European Central Bank just raised rates a quarter point on Thursday. This was their first rate hike since September 2023. What do we take from this, Friedberg? It's all related to the Iran war, yeah. That's the— There was definitely an energy blip from the Iran war that drove the core index up. But there's also the macro point, which is government spending out of control, inflation out of control, and fundamentally, as things unravel, you have rising rates. 
+
+So I think we should kind of expect, especially with a Kevin Warsh Fed, I think we could see north of five and a half, six percent overnight rates. It's not unforeseeable. So this is just the nature of our monetary policy and our fiscal policy with our congressional members that vote all of our future earnings away into bullshit. But here we are, you know. And to far more that nobody expected. Chamath, your thoughts, and then I'll wrap up with you, Sacks. 
+
+That was the most passive-aggressive take I've heard in a while from this guy. He's a little upset about it, yes, clearly he's a little bitter about this print. It's hanging—like, it's just so stupid to watch. Can you tell us how you really feel? How, how honestly— Like, honestly, like, what else is there to say? I've said it like a hundred times. It's just idiotic. The core problem with wealth inequality in this country, the core problem with inflation in this country, the core problem—all of it roots back to excess government spending. End of story. 
+
+Period, full stop. All of these— we're all talking about machinations at the edge of the network. The core of the network is overspending by the government because, in order to get elected, you need to give someone something more than they have today. That's how people get elected. And here we are 250 years later, I don't know if there's the will or the way to get out of it, but one of the manifestations of it will be in this late stage higher rates as a response to inflation, and here we are, you know. 
+
+Alright, Chamath, what's your take on this? Is it transient, as we have had other presidents say? Is it— is there an off-ramp for the Iran war? I don't know if this is above all of our pay grades, but this does seem to be a challenging moment happening right before the midterms, and consumers expected that their cost of living would go down and that they would benefit from this golden age, and it hasn't happened yet. Well, look, it's concerning. I don't think that I expected the print to be this hot. 
+
+Now, what's keeping things in line, there's still a chance that we're not going to see CPI go absolutely crazy, and part of that is because China has been smoothing the energy consumption globally worldwide, and so we've kind of kept a damper on $200 a barrel oil—in fact, we're sub-100. At the same time, I think it's pulled forward a lot of more practical sources of energy production, not just in the United States but abroad. Specifically, what I mean is solar, just because it's simple, it's passive, and you don't need a lot of permitting, and you don't need clean air permits and the like. So all of these things have been able to keep a lid on it. 
+
+If China somehow runs out of reserves and they need to go back into the spot market to buy an extra 3 million barrels a day, there's a very big risk that oil gets well past the hundred and maybe between 150 and 200 a barrel. That has a lot of downstream problems with respect to CPI. Not even because of US energy supply, but really because the inputs that oil feeds all around the world, that then get absorbed by the costs that people pay for everyday things, could go up. So I think the PPI number should be an alarm that we use to off-ramp this Iran situation sooner rather than later. 
+
+I just— unless again, because we don't know what happened in China since none of us were there. Unless there is an understanding that the President has with Xi about how much actual supply and slack is in the Chinese system. And that may allow him to take a much longer road to get a conclusive and decisive win in Iran, but I don't— Yeah, there were supposed to be some tangible, known resolutions with this China trip. We haven't heard them explicitly stated yet. What's your take on this, Sacks—the inflation print, and is there like a golden bridge to end this war in Iran? 
+
+J-Cal, the problem is when you ask me that question, people assume that I have some sort of inside information. And I don't. Look, the PPI print is what it is, I largely agree with what Chamath said. The only thing I would add is that it was largely in line with expectations. That's why the market is actually up today. Normally, if there's a surprise print and inflation is high, then the market is down because the market starts pricing in the implication of higher interest rates. It's not doing that today. So it's in line with expectations. But I largely agree with what Chamath said. Yeah. 
+
+Alright, well listen, we gotta get to our other elections. You know my take on it is just a huge colossal error starting this Iran war, and hopefully we can get out of it. The downstream effects of this are just disastrous. I'm hoping there's a quick resolution or some way to get out of it before it goes to, you know, a year or two or three. We can't be in a forever war, obviously. Nasdaq up two and a half percent today, that normally doesn't happen when there's a hot print because again, like, tech stocks are the most susceptible to high interest rates, so the market at this point seems to be pricing in a resolution, but we'll see, we'll see. Yeah, I mean, it's just, this is— everybody knows Iran is a quagmire and really was— was a huge mistake. 
+
+Alright, let's talk about the hand-wringing around vote counts in the LA mayoral primary. Instead of me reading all these details, just, Friedberg, I know you're hot. I think we know about it. Yeah, I think if you're on X, it's essentially your entire feed. Friedberg, what's your take? Is the election system in Los Angeles, specifically in California, corrupt, and has this election been stolen from Spencer Pratt, or is it just— There is no election. There was no election. There is no election. Okay, so there is no spoon. Your rights to have an election are gone. 
+
+You are a citizen of those who tell you who your overseers are. You are no longer allowed to vote for your elected representatives. They are now appointed representatives. So enjoy the appointments that have been made for you. Appointed by who? Appointed by who? Appointed by those who have constructed the Matrix. Got it. Now we understand the background. There is no spoon. Agent Smith and all the Agent Smiths are in charge. So here's some statistics for you. 
+
+In-person voting the day of the election in Los Angeles County for mayor: Spencer Pratt 35%, Karen Bass 29%, Nithya Raman 26%. Mail-in ballots received before election day: 38% for Bass, 28% for Pratt, 20% for Raman. And then all these ballots that arrived after election day: 37% for Raman, 35% for Bass, 19% for Pratt. So Pratt's post-election mail-in ballots declined by one-third. 
+
+So statistically, the population of people that send in their ballots late reduced for Pratt by a third, increased for Nithya Raman by 80%, and Karen Bass 10% less, if you just look at the mail-in ballots before and after election day as a comparison. I don't know if there's a socio-political way that you can assess those statistics and assume that these are individuals casting their individual vote for who they think should be mayor of LA. And Nick, if you'll just pull up the map, which I think is worth taking a look at. 
+
+Basically, the concentration of incremental votes that Nithya Raman got came around the Skid Row area in Los Angeles. And look, I'm not an election denier. I'm not someone who's historically believed the idea that elections are fraud and people have stolen votes. But when you look at the basic statistics of what happened—in person, mail-in before, mail-in after election day—it becomes a real statistical quagmire on how did this sort of a socio-political shift happen in such a way that it did. 
+
+Now, there was a report published—Nick, if you could pull this up—by the US House of Representatives Committee on House Administration. This was published in May of 2020. And they highlighted the 2018 California midterm elections and the challenges they saw rise in that midterm election because of some of the legislative changes that were made. First, California Assembly Bill 1921 legalized the practice of unlimited ballot harvesting in the state. This was passed around 2018 around the midterms. 
+
+What that means is that any individual in the state of California has the right to go and collect ballots from any other individuals, regardless of relationship, fill them out and send them in. California, two years later, 18 months later, also passed a law that made it permanent that every person registered in the state of California would get a ballot. So tens of millions of ballots then get mailed out. Then there was another series of laws that were passed that said anyone can register to vote, you don't need to prove your citizenship. You can use a gym membership card as an example. 
+
+So anyone can register to vote. There is no proof of ID when you get a ballot. There is no demonstration that the person who fills out the ballot has anything to do with the individual who's supposed to be voting that ballot. And it is legal for an individual to go out and collect hundreds or thousands of ballots, ship them in, and they will all qualify in these kind of mail-in ballot voting processes. 
+
+So there is nothing illegal or fraudulent going on. In fact, the system is operating exactly as intended. It has been set up and structured in a way that, with the right construct, you can get an individual appointed—not elected, but appointed—to a particular role in government under a quote 'free election' in California. This is a foundational destruction of our rights to vote for people in a free democracy. 
+
+I feel it's been eroded slowly over time to such an extent now, and I'm not some crazy MAGA motherfucker or whatever people want to classify me as for pointing this out. But you can go down this list, they are all written out in this document, every one of these laws that were passed in California over time that, in aggregate, create the environment and the construct for elections to become appointments and no longer free democratic elections where the principle—very importantly—the principle should be one individual, one vote. And if you opt to not vote, your vote should not be counted. 
+
+So I think that there's no fraud, I don't think that there's anything illegal. No fraud? Sounds like you believe there's massive fraud. Yeah, I think this is not fraud, this is—this is the manipulation, it's not fraud. It's the way the laws are set up. Okay Sacks, you say of course it's fraud. This is the system of appointment. Okay, yeah, it sounds to me like you're describing fraud, but you're saying the system allows fraud. 
+
+Fraud is breaking the law. Fraud is breaking the law. The law allows them to do it. If you paid people on Skid Row, that's not legal, that is illegal. But you are allowed to go out and get anyone to register, you are allowed to go out and collect all the ballots, and the people that are doing it, as long as you're not getting paid per ballot, you're legally allowed to do it. 
+
+Let me pause for one second. When you look at any one of these laws in isolation, you can understand that there is some altruistic intention, or it can be framed to be an altruistic intention behind it: increase voter activity, give everyone the right to vote, give more people access and more channels to vote, etc. etc. And you can rationalize away how every one of these laws makes it easier and adds lubrication to the system, and now we've got a quote 'more accessible democracy' for everyone. 
+
+But the truth is that there is a concept in insurance called adverse selection, which is if there is a moment to exploit something, the criminals will exploit it to the extent that it will become asymmetric. The criminals or the—or the do-batters, not the do-gooders, will find a way to take advantage of a hole in a system, just like hackers do to break into a network. They're going to break into some system. And that's what you believe Raman did and Spencer Pratt did? 
+
+Let me tell you how it works. This set of mechanisms, this set of construction, has allowed for a system that now has evolved into an appointment system. So you believe Raman worked the system better than Spencer Pratt. She had a better cheating operation, obviously. You can see it in the chart. Just look at the number of votes. Okay, define cheating here just so we're clear. How does it happen where Bass stays flat and then Raman and Pratt just switch places? 
+
+So on election day, he's the clear number two, and then they keep counting for a week. They don't even know how many ballots they're supposed to have. I mean, none of this stuff is locked down. Okay, let me explain how the cheating works. And to Friedberg's point, it may or may not be legal. So you know, I don't want to get sidetracked by whether the fraud is legal or illegal, but I think we all know it's crooked, and here's how it works. 
+
+First of all— What's crooked—what's crooked here? I'll explain it to you. I'll explain it to you. And if I—if I misstate a fact, then let me know. So first of all, California sends out ballots to every registered voter. It's something like 23, 24 million people. Only 9 and a half million people vote. So what happens to the other 14 million ballots? 
+
+I have a friend who lives in LA, he manages apartment buildings. He says that the ballots pile up, you know, at the mailbox that everybody has in the buildings. There's like loose ballots everywhere. They're sent to people who don't even live there anymore. He like recognizes that the names—they're people who haven't lived there in years. So the voter rolls are dirty, they haven't been cleaned up in years. 
+
+Okay, then you have the issue that there's no voter ID on election day. There's no voter ID to even get registered. When you sign your ballot, they run it through a machine. As long as the signature matches 40%—I don't even know what 40% means, it's like less than half accurate—the machine says it's fine, okay. And then it doesn't even check the signature of the voter if you have a supposed witness. So the voter can just put like a little X on their signature, as long as the witness says, and they sign. 
+
+But there's no registration of witnesses. Anybody can be a witness. There's no database of witnesses. And so the witness just puts a squiggle. So what is to stop the so-called ballot harvester from going, filling out these ballots, putting a little X on the voter, putting a little squiggle on the—on the witness, and then dumping these ballots? There's no chain of custody. So the risk would be they would be arrested and charged as a felony, right? Yeah. And then Gavin—well, what is their expectation of getting caught? 
+
+Gavin Newsom just signed a law making it virtually impossible to audit any of this stuff. He just signed a bill. Anyway— I think that's because— Now, even if they thought maybe they could get caught, let's just take a look at all the other types of fraud happening in California right now that we know about. We know that there's billions of dollars in fraud in California for things like Medicaid fraud, unemployment fraud, EBT fraud, hospice fraud, fraud related to the homeless industrial complex, and on and on. That's all been proven, okay. 
+
+Is it really so hard to believe that some of the same groups, the same interest groups, the same NGOs would be willing to exploit these loopholes in the dirty voter rolls, in the millions of ballots that go to incorrect or nonexistent addresses, the nonexistent chain of custody, the nonexistent signature verification, the no ID not only to vote but to register, counting ballots without postmarks if received 7 days later, registering thousands of ballots from homeless shelters that don't even have any beds? These are all known things. 
+
+So when you say that there's no fraud, it's like, come on, there's loopholes, and all you gotta do is look at the results and see that there's something crooked going on here. Okay, so you're in the camp that there is fraud going on because where there's smoke, there's fire. It may be legalized. It may be legalized, but it's fraud. Okay, so you believe there's fraud? Look, when you start mailing out millions of ballots to people who don't even vote, and then you have no audit requirements, no chain of custody, no punishments, no penalties, no investigations, and there's a huge incentive to commit fraud— 
+
+Well, there have been times of investigations, both by Attorney Generals in California—by who? I'll—I'll pull up the history of California. I will say, after every election there are tons of civil lawsuits filed. Like, obviously Trump filed 60 of 60 when— Not in California. I don't know if he— Gavin Newsom just made it impossible to do that kind of audit. He just signed a bill. Anyway— the— I think that's because he was beaten so badly in a Democratic state, there was no reason to, but I don't know why he didn't file in California. But 60, he filed 60 of these, and everybody kind of does that. They file these constantly, and Attorney Generals can. 
+
+So in this case, Chamath, if there's so much smoke, if this statistic seems so improbable, and there was the Nick Shirley video of going to Skid Row, and this possibility that they were paying junkies and people who were high to vote, this would be easily catchable, actually. This would take a conspiracy for thousands and thousands of votes to have been swung, and that's what we're saying here. We're saying upwards of 10,000 votes were swung—well, but certainly 5,000. You would need a conspiracy of hundreds of people or at least dozens to do that. 
+
+Good luck going to Skid Row and getting some meth addict to go on the record. I think they actually got someone to go on the record. Actually, that's the paradox. There's a few—there's a few videos of this, yes. Yeah, yeah. No, that's the crazy part about it is they are saying Skid Row people got paid two or three dollars and that somebody was found guilty of this. Brenda Lee Brown Armstrong, she pled guilty in 2026 of paying people for three dollars. This system is designed to allow fraud. It's designed. And Raman won by 43,000 votes to what? 
+
+Look, guys, we live in an autocracy in California where one political machine has shaped the laws so inexorably that whether it's the mayor, or it's a state legislator, or it's a state senator, or it's the governor, it's a one-way door. There is only one party that can win. And we are slowly seeing that that party increasingly does not have the ability to govern a state this dynamic and this complicated. They've changed the rules to make sure that that monopoly is enforced. 
+
+We have all tacitly approved it by supporting or voting or not saying anything. And the end result has yet to be unveiled because it's going to take another couple of decades for all of this rot to really destroy these places. The reality is the voters probably should be given a chance to have Spencer Pratt push back on what is the machine. So that, at a minimum, what they learn is that the machine wasn't working nearly anywhere close to the way it is intended. 
+
+Instead what will happen is two people that are in various shapes and forms pretty deeply unqualified and very similar, now essentially get to give you not much of a choice at all. So I think that—the sad thing is Friedberg's right and Sacks is right. Friedberg's right, the laws have been shaped this way to make legal what would otherwise be an illegality. And Sacks is right, which is that any rational person should look at these laws and say this is fraudulent. The unfortunate situation is, unless there's some cataclysmic decision in California, this is what we're stuck with. It is time to vote all of these people out. 
+
+You can't. You can't vote. What do you mean? How are you going to do it? Anyone can register and anyone can vote. Spencer Pratt can file all kinds of lawsuits here and if this truly— Well, one second. Can I answer Friedberg's question? Sure. There is one 'break the glass' way. And I've talked to these guys about what that is. How do you change the system? You must get somebody at the absolute top of the ticket elected. That person is Steve Hilton, and if that happens, there is one thing that Steve Hilton can do to start to completely change the way that this state is run, which is instantly on day one, declare a state of emergency. 
+
+If you pull on this thread, what you will find—there are lots of things you can do to clean up how California works under a state of emergency. I'll leave it at that. Yeah, there's some common sense here. We shouldn't send ballots out to everybody, that made sense maybe during COVID. And if you can't be bothered to have ID, then maybe you shouldn't vote. And I don't think that there has been an election, a major election, that has been swung by election fraud. 
+
+The Heritage Foundation has spent many, many tens of millions of dollars on this, I understand, and they have a really great project that tracks this. People file lawsuits like Trump did, like Al Gore did, everybody's always filing lawsuits over this. It's never enough to swing an election, but there's definitely on the margin this apparent— Kennedy versus Nixon, bro. Hold on, let me finish. The mob got Kennedy elected versus Nixon in 1960. I'm talking in modern history, yeah. That's pretty famous. That's pretty famous. 
+
+Okay. We—we can get into if that's true or not as well. Study Lyndon Johnson's history. Lyndon Johnson only got elected to the Senate—he got his start in politics through ballot fraud. We absolutely should have voter ID. We should stop sending everybody one of these because the appearance of impropriety is the problem here. Both sides—crazy news flash, everybody—both sides cheat, both sides bend the rules. One side does it by limiting access, the other does it by providing too much access. 
+
+All these politicians, overwhelming majority of them, are unethical, and all they care about is getting elected, and they have tons of people working for them in both parties to massage these election results. And if you get caught, it is a serious penalty. There has not been in modern history major elections—go ahead and go to the Heritage Foundation, they find all the nooks and crannies of... You keep using the word fraud like as if it's a thing, but it's not. I'll tell you who's at fault. No, no, there is fraud, there's plenty of fraud. Hold on, hold on, hold on, there is fraud, there are people who have been caught doing fraudulent things. 
+
+The one group that is fundamentally to blame is Congress. We have an opportunity—there have been opportunities to pass laws that will make it illegal for people to vote if they are not citizens, if they are not properly registered, and if they don't show up with ID. That is a very simple solve to this democratic electoral process. 
+
+We can't have a situation where someone is legally allowed to go out and collect a hundred ballots that they find sitting in the lobby of an apartment building, or for people to register to vote with a gym membership card when fundamentally the federal government already knows if you're not paying your taxes, you're required to have a driver's license to drive a car, you have to have ID, you have to be registered in the system to do nearly anything and everything in this country as it is. 
+
+So to exclude that very simple requirement from the most foundational obligation that we all have as citizens of this country is inherently wrong, and it needs to be addressed by Congress. And if Congress fixes it and there are federal laws that create systems that ensure that elections are all about one person getting one vote and they're legally allowed to vote, then this doesn't become an issue. 
+
+Short of this, I worry where this goes because over time, the fewer people actually believe that elections are real—and I hate being on here sounding like I'm an election fear-mongering guy who's telling people that elections aren't real—but the longer this goes on, the more difficult it will be for people to actually have faith in the system that we're all operating within, and that's when things get ugly and it needs to be fixed. Yeah. I'm strongly agreeing. If you can't be bothered to get a driver's license or a passport, maybe you don't need to vote. Yeah. Congress can fix it, and they should. Yeah. 
+
+And there's—by the way, there's a ballot measure in California. If people in California want this, they could just vote for the ballot measure. You mean the voter ID ballot measure. Yeah. Yeah. That's very important, actually. Look, if that fails, it's kind of our last chance to save anything. For California's last chance, yeah. Yeah. And you do sound like—your entire speech, David, was you sound like an election denier. I don't care what you label it. 
+
+Look, the Democratic Party as a whole were election deniers about Trump winning in 2016. They concocted the whole Russiagate hoax to basically try and discredit his election. I'm just looking at the statistics of when you look at the—the difference between walk-in and mail-in ballots, and I've seen everyone try to argue why that's so different, it doesn't compute for me. That's it. I'm not, like, trying to make up a fact, this is the fact. Look at this—facts on the—on the—on the screen you're looking at right now. This is the difference in the data. This data tells me that something is wrong. That's it. Obviously. It's statistically impossible. 
+
+I'm not trying to—I'm not trying to just fear-monger because I don't like who got elected. I don't give a fuck what goes on in LA. In fact, I think it's better for LA if they deal with the socialist mayor for a couple years so they come out the other side realizing they shouldn't embrace socialist principles. I think it's great for the country, actually. I think it's great for New York, I think it's great for Seattle, I think it's great for wherever Minnesota, wherever people want to elect socialists in this country, let's run into it. 
+
+I'm all about jumping through the socialist well so we jump out the other side like the Latin American countries are doing now, when everyone wakes up and realizes how fucked up socialism is because it denies everyone the opportunity for economic mobility. It denies everyone their individual liberties that this country was founded on. Socialism is fucking wrong, it's broken, it doesn't work. And if you all want to go through that lesson, do it, go for it. Let's do it. 
+
+Let them get elected, but the numbers on that election data show me that that's not what the people wanted, that it's not very clear or evident to me that that's what people voted for, and that's where I'm like, my god, the system itself has become a system of appointment, not a system of election. And I get fired up about that personally. Sacks, you want to add anything as we wrap here on this? Yeah. The party told you to reject the evidence of your eyes and ears. It was their final, most essential command. This is obvious. 
+
+Just look at the charts, look at the data. We know something crooked happened, it's statistically impossible. The only thing we don't know is whether it was illegal fraud or legal fraud—meaning they've created so many loopholes and so much corruption in the law that what they did is possibly legal. It is still corrupt, it is still crooked, it is ridiculous. Everyone can see it. Do not deny the evidence of your eyes and ears, even if they call you an election denier. I personally don't care. I deny it. Rick Caruso should be in the runoff. I deny that Raman won legitimately. 
+
+Okay. The statistics are the statistics, and they would scream that you should have the Attorney General of California and the federal Attorney General look into it. And if they catch people doing this stuff—and they have caught one person, and Nick Shirley went down there and you see people on Skid Row—you know, listen, homeless people should have the right to vote, theoretically. Why did Newsom just sign a law making audits like that even harder? Yeah. I'm not defending Newsom here. I'm saying where's the Attorney General if there is, in fact, fraud. 
+
+Trump has the ability, with his hands, elected Attorney Generals, to go after this. He controls that part of, you know, our democracy. He should file and they should go figure out what happened statistically. So Trump, President Trump, thank you, President Trump, go do it. Go do it. You got this Attorney General chasing down everybody else, go to this election, use your powers, audit it and find them. Like, where's President Trump? You didn't hear my point that the—the state law just made it harder for the federal government to come in and audit the voter rolls so. Yeah. He can still do it. I'm sure they will do it. I'm sure they'll do it if they can. Yeah. 
+
+I mean, trust me, Trump does what he wants. If we've learned anything, he will do what he wants, and he's not doing this now. What I find—what I find amazing is that the media, instead of asking tough questions like, &quot;How did this happen?&quot;, &quot;How could the vote swing so wildly in ballots that were only found, hold on, after election day?&quot;—the media, instead of trying to demand answers and demand accountability, is trying to cover up and say nothing wrong happened here. It's unbelievable. It's outrageous. 
+
+What—what is the best theory, steelman it, what's the best theory of why there was this discrepancy? You are the media, Sacks. I mean, we're sitting here talking about it. Yeah. What's the discrepancy? Anybody have a steelman of why this discrepancy could have happened that's legitimate? Anybody? 
+
+If the media—look, if the media is hanging on to a snapshot of the past where people actually cared what they said, and every time that they can actually reestablish trust, they kind of don't do it because the people that they want to curry favor with are willing to play along. So I think what happens is the media's like, &quot;Well, I have two choices. I can actually say that Rick Caruso should have won or could have won, or investigate why he didn't win, but then I'm kind of tacitly supporting Trump—and hold on a second, I'm supposed to hate Trump.&quot; So no, yeah, you know, this is completely normal, nothing to see here, everybody moves on. Hoping that then they get ingratiated into the machine, but they're going to get run over and used like everybody else does, too, so that's what's happened. Yeah.
+
+Your point is so spot on, Chamath. It's like, if it's so polarized, meaning that there's two poles, if you do question, it's almost like you are being put in the pro-Trump camp, just like the word MAGA is thrown around. Like, &quot;Oh, you're a MAGA guy because you're questioning election integrity.&quot; It has nothing to do with MAGA; it's just a simple conversation about a particular topic. But if it's diametric to the other camp, you know, you must be in that bad camp, and so then people don't want to be put in that camp. It's so true.
+
+I'm for mathematical and statistical literacy, and what happened here is mathematically and statistically impossible. So nobody has any steelman or concept of how this could have happened? I can tell you the statistical odds that this would have happened, and it's one in a trillion. Okay, so are you telling me the one-in-a-trillion shot hit? I'm asking if there is any—I'm not saying just this one time. I'm asking if there's anybody who steelmans this in any way. I'm asking for the integrity of the podcast. Yeah.
+
+I'll tell you what I've heard. Why is it so psychologically important for you to cling to the idea that California elections are completely corruption-free, after all the things they've clearly done to corrupt them? No voter ID—you admit it's chock-full of loopholes. You asked me why am I holding on to it; I'm not holding on to it. 
+
+For the purpose of discussion, and having an intellectually honest discussion, I am asking the three of you if you've heard or if you have any theory. Just for the rigorousness of the discussion—this isn't my position. Where are all the democracy protectors in the media now? They all said that they were the guardians of democracy, that they're going to protect democracy. Where are they to ask questions? Yeah, I think the media is irrelevant too. I'll tell you what I've heard, but you go ahead first, yeah.
+
+The only thing I can think of is her ground game is more sophisticated because they've been at it longer than Rick Caruso, and he didn't have a ground game that took this in, since he's a non-traditional, first-time candidate. That's the only thing I can think of. Is &quot;sophisticated&quot; a coded word for bribing Skid Row homeless junkies? No, he just doesn't have an election machine to collect ballots, and collecting ballots is legal, exactly. Exactly, that's the question.
+
+She had a better cheating operation, obviously. We're saying the same thing; we're not actually saying anything different. The Twitter commentary was that people were waiting because there are so many people that are so against Rick Caruso, but they wanted to be sure that they voted for the right candidate, whether it's Raman or Bass. And so, the people that held their ballots the longest saw the polling data that Bass was going to win, so that's why they all voted for Raman last minute, to try and promote her to make sure that he wouldn't. 
+
+Gamesmanship, because you could have two Democrats at the top of the ticket. That's right. And they didn't want Rick Caruso to have a shot at the General. And by the way, if you saw my interview with Rick Caruso, he said Raman registered one hour before the deadline, and she's friends with Bass, and that the whole point was to keep him from actually making it onto the General ballot. Some of the coordination that people were making in their minds was like, &quot;We gotta make sure we vote for the two Democrats, and then they'll figure out, hey, is it Bass or Raman thereafter.&quot;
+
+A box-out strategy—let's just box him out. Got it. Which is like why they all waited till the last minute to vote for Raman. How do you coordinate something like that? That's always the question I have with these. 
+
+Because these people are all brilliant geniuses? It's hundreds of thousands of brilliant geniuses in Skid Row that chatted it out. There's a chat group—I mean, it's not that complicated. There's a chat group; the real ballot harvesters did it. 
+
+What Friedberg said just happened; it's just that the ballot harvesters did it, not the actual voters, obviously. And ballot harvesting is legal, but it's sketchy. If there are ballot harvesters, I think that Trump and the DOJ can catch these people. How the fuck is it legal that someone can go out and collect other people's ballots, fill them out, and send them in? It's the craziest shit to me. 
+
+There is no evidence of fraud right now, but the statistics don't look good. Donald J. Trump, you control the Department of Justice—go investigate it. Okay, I love you guys, but I'm hungry, I gotta go. This has been an amazing episode of the All-In Podcast. Bye-bye. Besties are back. Love you, boys. Bye-bye. 
+
+&quot;Wet Your Beak&quot; by Yung Spielburg. Let your winners ride, Rain Man David Sacks. And I said we open-source it to the fans, and they've just gone crazy with it. Love you, besties. Queen of Quinoa, besties are back! 
+
+That's my dog taking a shit in your driveway, Sacks. Sacks, what happened to your hair? We should all just get a room and just have one big, huge orgy because there's just, like, this sexual tension that we just need to release somehow. Wet your beak, beak, beak. Wet your beak. Besties are back, I'm going all in.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+</script>
+    
+</body>
+</html>
