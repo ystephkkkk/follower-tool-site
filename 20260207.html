@@ -502,6 +502,17 @@
             scroll-margin-top: 4.5rem;
         }
 
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
         .vc-head { padding: 1.25rem 1.5rem 1rem; }
 
         .vc-title {
@@ -1147,6 +1158,26 @@ I'm here for it. Thank you so much for making the time to sit down and chat. It'
             btn.textContent = 'Hide transcript';
         }
     }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
 </script>
     
 </body>
