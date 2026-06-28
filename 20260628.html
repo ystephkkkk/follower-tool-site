@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Sunday, June 28, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260627.html">&larr; Jun 27</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Sunday, June 28, 2026</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=MduXTRc1Y_g" target="_blank" rel="noopener">AI Will Replace Some Jobs, But Create New Ones Too, Says Amazon CEO Andy Jassy | Exclusive<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/Lx0d55mPtYcBtRL9EkvtT2HOAZLLpk2-FrRmyajJuf4NVwWH5Qm5pw0GcPGCqGAfwOKWZBgJ9A=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC-TV18</b><span class="subs">(5.0M)</span></span><span class="dot">&middot;</span><span>19:51</span><span class="dot">&middot;</span><span>319 views</span><span class="dot">&middot;</span><span>2026-06-28</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Andy%20Jassy%22">Andy Jassy<span class="chip-desc">CEO, Amazon</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Amazon is expanding its investment commitment in India by adding $13 billion to its 2030 target (bringing the total future commitment to $48 billion), primarily to fund AWS cloud and AI infrastructure.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">CEO Andy Jassy highlighted the rapid, global-first expansion of...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
+<p>Amazon is expanding its investment commitment in India by adding $13 billion to its 2030 target (bringing the total future commitment to $48 billion), primarily to fund AWS cloud and AI infrastructure. CEO Andy Jassy highlighted the rapid, global-first expansion of India's "Amazon Now" quick commerce playbook and maintained that massive AI capital expenditures will yield substantial, long-term free cash flow despite short-term headwinds.</p>
+<h3>Escalating India Investments &amp; AWS AI Infrastructure</h3>
+<ul>
+<li><strong>Expanded Capital Commitment:</strong> Amazon has invested approximately $40 billion in India since 2010. It is now raising its 2030 future investment target by $13 billion—bringing the total additional commitment to $48 billion by 2030.</li>
+<li><strong>AWS &amp; AI Allocation:</strong> This incremental $13 billion will be directed almost entirely toward AWS, cloud services, and artificial intelligence capabilities to capture India's rapid AI growth.</li>
+<li><strong>Local Capacity Building:</strong> AWS is deploying significant amounts of GPUs and custom AI accelerators in India to serve local startups, developers, enterprises, and government entities.</li>
+</ul>
+<h3>AI Monetization, CapEx Cycles, and Custom Silicon</h3>
+<ul>
+<li><strong>Unprecedented Growth Run Rate:</strong> During the first three years of the current generative AI wave, AWS has reached a $15 billion annual run rate. This is 260 times larger than AWS's run rate ($57 million) during its first three years of operation 20 years ago.</li>
+<li><strong>Supply Constraints:</strong> AWS grew 28% year-over-year on a $150 billion annual revenue run rate, but demand is so high that Amazon is still "dropping demand on the floor" due to supply constraints.</li>
+<li><strong>The Cash Cycle Dynamics:</strong> Massive upfront capital expenditures for data centers, hardware, and networking gear will temporarily impact free cash flow. Jassy expects revenue growth to outpace CapEx growth in a few years, resulting in strong return on invested capital (ROIC) and free cash flow.</li>
+<li><strong>Reducing Inference Costs:</strong> To make enterprise AI economically viable, Amazon is aggressively lowering inference costs. </li>
+<ul>
+<ul>
+<li><strong>Trainium Silicon:</strong> Amazon's custom chips provide roughly 30% more price performance than comparable market solutions.</li>
+<li><strong>Amazon Bedrock:</strong> This inference service is designed to host frontier models cost-effectively and at high performance.</li>
+</ul>
+</ul>
+</ul>
+<h3>The India Quick Commerce Playbook &amp; Global Replication</h3>
+<ul>
+<li><strong>Hyper-Local Delivery Expansion:</strong> Amazon is expanding its "Amazon Now" quick commerce service to over 300 cities in India. </li>
+<li><strong>Customer Behavior Shift:</strong> Prime members who try quick commerce buy products three times more frequently than Prime members who do not.</li>
+<li><strong>The Global Playbook:</strong> The quick commerce model, pioneered and incubated by Amazon’s team in India, is currently being trialed and expanded in the United States and Europe.</li>
+<li><strong>Back-End Optimization:</strong> Quick commerce is powered by hyper-local micro-fulfillment centers. In a live test during his visit, Jassy received an order in under four minutes.</li>
+<li><strong>Employee Social Initiatives:</strong> Amazon is scaling local social programs alongside this rapid expansion, including:</li>
+<ul>
+<ul>
+<li><strong>Sambhav:</strong> Academic scholarships and health insurance for employees' children.</li>
+<li><strong>Ashray:</strong> Mobile, air-conditioned relief shelters where delivery drivers can rest, charge phones, and access restrooms.</li>
+</ul>
+</ul>
+</ul>
+<h3>Geopolitical Sovereignty, Trade, and the Future of Labor</h3>
+<ul>
+<li><strong>Aggressive Export Targets:</strong> Amazon is utilizing its network of 1.7 million Indian third-party selling partners to target $80 billion in exports by 2030, having already surpassed $20 billion.</li>
+<li><strong>Data Sovereignty Architecture:</strong> To ease government concerns over data privacy, AWS ensures physical infrastructure is bound by local laws. Customers can fully encrypt data in transit and at rest, retaining exclusive ownership of encryption keys.</li>
+<li><strong>Labor Market Dislocation vs. Job Creation:</strong> Jassy acknowledged that AI will automate certain repetitive tasks in coding and customer service, but argues it will create entirely new categories of employment. </li>
+<ul>
+<ul>
+<li><strong>Subject Matter Experts:</strong> Amazon is heavily hiring legal, financial, and medical experts to train frontier AI models—roles that did not exist a few years ago.</li>
+</ul>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"AI is the most transformative technology of our lifetime... It’s going to change every single customer experience that we know, and it’s going to enable all sorts of new ones that we only imagined before."
+</blockquote>
+<p>— <strong>Andy Jassy</strong></p>
+<blockquote>
+"If I look at the first three years of this wave of AI in AWS, it's over 15 billion dollars annual run rate. That's 260 times larger than what we had at the beginning of AWS."
+</blockquote>
+<p>— <strong>Andy Jassy</strong></p>
+<blockquote>
+"So many of the inventions that have been born here in India, that our team here in India have experimented with and found success with, are being taken to other parts of the world. And I do think that quick commerce... started here in India."
+</blockquote>
+<p>— <strong>Andy Jassy</strong></p>
+<blockquote>
+"With every big technology transformation, it shifts what people work on and it creates new jobs, and I think the same thing will happen here [with AI]."
+</blockquote>
+<p>— <strong>Andy Jassy</strong></p></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Hello and welcome to the Global Dialogue. I'm Shireen Bhan. Amazon has made a big bet on India, starting with 40 billion dollars, which was the committed investment that Amazon has already made. They upped that with another 35 billion. 
+
+To talk to us about all things India, AI, e-commerce, and quick commerce, joining us now is Andy Jassy, the CEO of Amazon. Andy, great to have you here in India, your first visit as CEO of Amazon to India.
+
+It's great to be here. Thank you for having me. I've been to the country many times, and it's exciting to be here.
+
+Well, let's talk about India, Andy. As I pointed out, it's about 75 billion dollars that Amazon—40 already done, 35 committed to India. Are you topping that number now?
+
+We are. So as you said, we've invested about 40 billion dollars since 2010 in India, and we had announced another 35 billion by 2030. We're upping that by another 13 billion, making it an additional 48 billion total by the year 2030.
+
+Okay, so that additional incremental amount that you're going to be spending here in India, what is that going to be directed to? Is it largely going to be on the e-commerce and the quick commerce side, or is it going to be driven by AWS?
+
+I'd say this additional 13 billion will be largely AWS, cloud, and AI. Just the pace at which AI is growing, and the pace at which AI is growing here in India, is really remarkable.
+
+You know, let's double down on AI, Andy, because I think that's the question that everybody is grappling with. The stock markets tell you one thing. On a day, we of course saw a tech rout overnight, and then we saw a recovery. 
+
+With the 200 billion dollar CAPEX projection, the question is when are we going to start to see these returns as far as the investment is concerned? You've said that you're not doing this on the back of a hunch, that you believe these numbers are real, and that you expect this build-out to actually give you the kinds of returns that you see. Walk me through the transformative journey that you expect AI to bring about.
+
+Well, I think AI is the most transformative technology of our lifetime, which is saying a lot because we've lived through the internet, mobile, and the cloud. It's going to change every single customer experience that we know, and it's going to enable all sorts of new ones that we only imagined before. 
+
+I think you can just look at the rate of growth. When we started AWS—and I was part of the team that started AWS 20 years ago—for the first three years of the AWS business, we felt like we were growing really fast, and the business was a 57 million dollar annual run rate business. If I look at the first three years of this wave of AI in AWS, it's over 15 billion dollars annual run rate. That's 260 times larger than what we had at the beginning of AWS, so it's growing unbelievably quickly. 
+
+If you look at the last quarter, we grew 28% year over year in AWS on a very large 150 billion dollar annual revenue run rate. That's very unusual. The way that the cash cycle works in a business like AWS is that you have to lay out the cash for the data centers, the hardware, the chips, and the networking gear in advance of when you can monetize it. 
+
+This means that in the early years, when you're investing a lot of capital expense, you will have headwinds on the free cash flow side until your revenue growth starts to outpace your capital expense growth. But once your revenue growth starts to outpace the CAPEX growth, which will happen in a couple of years, you'll really like the return on invested capital and the free cash flow. That's what I think will happen here. 
+
+We've had an example of that in the first phase of AWS, where you really like the operating income, the free cash flow, and the ROIC. It's following the same pattern in AI. Because we have this really unusual opportunity where everything's going to be reinvented with AI, if we're able to successfully get customers capacity with the right services at the right service levels, our business 5 to 10 years down the road will be much larger on the revenue side, the operating income side, and the free cash flow side.
+
+You know, on free cash flow, when do you expect to be able to get back to the baseline free cash flow number?
+
+Well, I think that we will end up generating much larger free cash flow for Amazon and for our shareholders in the next 5 to 10 years. I don't know exactly which year, but typically what happens is you invest a lot of this capital up front, and then you really like the free cash flow returns a couple of years down the road. I expect the same thing to happen here.
+
+So how does India figure in the AI strategy, in the AI plan as far as Amazon is concerned?
+
+Well, India is an area of very high growth for AWS and for the company as a whole. On the AWS side, we have hundreds of thousands of customers here in India who use AWS. The rate of growth there, both on the AI side and non-AI, which we call core, is very substantial. 
+
+We have a fair number of GPUs and AI accelerators here for startups, individual developers, researchers, enterprises, and government entities to use. So I think it will be a very big part of our growth. That's a lot of what the incremental 13 billion dollars we're investing in India is about. 
+
+We're also continuing to grow so fast on the marketplace side here. Look at just the growth in quick commerce as an example. We have the broadest selection of products, and they get to people the fastest. 
+
+We can deliver thousands of items to customers in minutes, tens of thousands of items to people in a few hours, over a million items same day, and over 4 million next day. It's very unusual. What we find with how fast our quick commerce is growing, where it's doubling every quarter, is that Prime customers who try quick commerce are buying three times more frequently than Prime members that don't. We're just thrilled with the growth here, and we have a lot in front of us in India.
+
+You know, let's talk a little bit about quick commerce. You have called out India as being the sort of incubation hub as far as the quick commerce business is concerned in your earnings call as well, Andy. But how did you not read the kind of disruption that quick commerce was going to bring about? We've had Indian startups leading the way there. You are late to the quick commerce party in that sense. Do you now play offense to catch up?
+
+Well, remember we've been experimenting with lots of different delivery models in India and outside of India for many years, including a form of quick commerce several years ago. At our scale and with the number of customers we serve, we have to find delivery models that really work for customers and fit an economic equation for the company. It took us a little bit of time to find the equation we like. 
+
+But with quick commerce, which we started about a year ago, the rapid pace of adoption is really pretty amazing. If you layer on top of what we have in quick commerce the broadest selection that is out there at the shortest delivery times that are available, and you layer on top of that Prime, it becomes a very unusual subscription and membership program. 
+
+With Prime, customers get free and fast delivery on the broadest selection of items, they get Amazon Pay with cashback benefits, and they get all the content in Prime Video and Prime Music. You layer on top of that the broad selection, the fast delivery, the quick commerce growth, Prime, and then the announcement we just made today, which is we're now extending our Amazon Now quick commerce offering to over 300 cities here in India. It's a very powerful equation for customers, and that's why it's growing so fast.
+
+You know, let's talk about the economics of it. There was a question mark on whether quick commerce is actually going to deliver the returns as far as the investments are concerned. What's the experience been at Amazon Now, and how do you see that panning out?
+
+Yeah, I think we've, as I mentioned, done a lot of experimenting before on different fast delivery models—everything from different quick commerce models to continuing to experiment with drones. We have found an equation that both resonates with customers and is economic for us, so much so that we're expanding it very rapidly.
+
+So would it be fair to say that you're going to replicate the India quick commerce playbook in all your international markets?
+
+It's really interesting you mentioned it earlier because so many of the inventions that have been born here in India, that our team here in India has experimented with and found success with, are being taken to other parts of the world. I do think that with quick commerce, we're already now meaningfully experimenting with and expanding it in the US and in Europe, but it started here in India. I do expect that quick commerce will be in virtually every marketplace in which we operate, and we'll continue to find inventions in India that we're able to take to other parts of the world.
+
+How does this change things at the back end as far as Amazon is concerned globally? This massive shift that you're seeing on account of quick commerce moving to hyper-local delivery—what does this shift, this transformation, really mean at the back end for Amazon?
+
+Well, of course, the most important thing is it's amazing for customers to get this really broad selection in minutes. On the back end, we have these micro-fulfillment centers. They're much smaller units, and they are organized differently. 
+
+I was at one this morning and I had a chance to watch it in motion. I made an order that was delivered to me in a little less than four minutes. It was really...
+
+Did it surprise you?
+
+It's incredible. It's just a magical customer experience. I think also we're doing some things that are really different. We're not only delivering quickly for customers, but we're doing it in a way that's great for our Indian employees. 
+
+If you look at our Sambhav efforts, look at what we do in terms of having academic scholarships for our employees' kids to be able to get education, and providing health insurance. Look at what we've done with Ashray, where we've got these mobile units for both our own Amazon Now employees and other employees at other companies. On a hot day, they can come in—it's air-conditioned, they can charge their phones, and they can use a restroom. We're trying to grow in a really responsible way for the country, and I think we're having a lot of success so far.
+
+Well, speaking of the country, you're also going to be meeting with Prime Minister Modi. Part of Amazon's plan in India is to open up the Indian market to the rest of the world, and you've got that pretty aggressive target of 80 billion in terms of exports. Does that hold?
+
+Yeah, I think one of the amazing parts about our marketplace here in India is that we have over 1.7 million third-party selling partners with whom we bring this experience to consumers. One of the things that we wanted to do, and that we committed to the government here and the country, was that we wanted to help Indian sellers be able to reach consumers in other countries. We took this ambitious goal of 80 billion dollars in exports. We're already over 20 billion, and we're well on our way. I think we'll get there.
+
+You know, data sovereignty and sovereignty in general is a big concern, and it's been exacerbated by the geopolitical shifts and tensions that we are currently seeing. I would imagine that this is going to be a point of conversation with Indian officials as well. Is that a possible risk, as we see more and more governments and countries looking at sovereignty as a factor?
+
+I think sovereignty in countries has been an issue since the beginning of our offering AWS outside of the US, which goes all the way back to the year 2008. What we have always shared with customers and governments is that the physical infrastructure we put in country is secure, and it is ruled by local law. The data that customers have is their data. It doesn't move unless they choose to move it, and our employees don't have access to it. 
+
+For our customers who have extra concerns about data sovereignty, we give them multiple ways to encrypt the data. They can encrypt it in motion, and they can encrypt it at rest. They get to keep the keys, so that even in the very odd event that a government wants to try and get access or seek subpoena access to data, if it's encrypted and they don't hold the keys, they have no ability to do so. That's really been true for a long period of time, and it remains true today. 
+
+For most companies and governments, not having to lay out all the capital for your own infrastructure, data centers, hardware, and networking gear is highly beneficial. To not have to rebuild all the software services with all the features associated with them, and instead be able to use them as you consume them, is a very compelling proposition to provide value for your customers.
+
+You know, one of the other concerns that I would imagine governments around the world are dealing with today is what AI does to jobs, and that would be a specific concern here in India as well. I know Jeff Bezos believes that we're going to be entering this dream-loop cycle, but at this point in time, we are seeing companies across the board announcing job cuts. How significant is the dislocation and the pain going to be in the short term, and what do you believe you're likely to see in the medium to long term? What does it mean for countries like India?
+
+I think it's interesting that at the same time we've seen a number of companies have role reductions, those same companies are still hiring a lot of people. I think what's happening is that AI is the most transformative technology in our lifetime, and while it will change every customer experience we know, it will also change every job we all do. The way that humans do their jobs will be very different every year for the coming 5 to 10 years. 
+
+I think it will mean that you'll have fewer humans doing some of the jobs we've had humans doing for a while, and you'll have other humans doing other jobs—some of which are altogether new jobs, and some of which we haven't even figured out yet. The amount of coding that's being done today by agentic coding, and the amount of customer service that's being done by agentic customer service, is all growing at a very rapid rate. 
+
+But then again, I look at how many subject matter experts are being hired to train these models. People who are experts in law, finance, or medicine—those jobs didn't exist before. With every big technology transformation, it shifts what people work on and it creates new jobs. I think the same thing will happen here.
+
+Let me end by asking you about monetization, and that perhaps at this point in time is being considered as one of the key risks. We've gone from using as many tokens as possible to now focusing on token efficiency, and token maxing seems to be a thing of the past. Enterprise adoption and enterprise monetization have emerged as big risks at this point in time. How do you see that, Andy?
+
+Well, as fast as we are adding an incredible amount of capacity in our data centers, that capacity is being monetized. There is a lot of pent-up hunger for doing AI. As I mentioned, in AWS, we grew 28% year over year on a 150 billion dollar revenue run rate, and we're still dropping demand on the floor. We still don't have enough supply for all the demand, so there is a very high demand for it right now. 
+
+In the medium to long term, what always happens will happen here too, which is that you have to build amazing customer experiences that people want and that warrant the incremental investment. I have a very strong belief—it's one of our missions in Amazon—that the cost of inference in AI needs to come down significantly. 
+
+It's a big part of why we're investing in our own custom silicon, Trainium, which is about 30% more price performant than other comparable AI solutions and chip solutions. It's also why we're investing so significantly in our inference service Bedrock, which not only has the leading array of frontier AI models but also does inference really cost-effectively and in a high-performance way. 
+
+The only way that you'll see AI rolled out as expansively as I believe, and a lot of people believe, is if the cost of inference continues to come down, and companies find that they have the right return on invested capital equation for that. I strongly believe that's going to be the case for AI.
+
+My final question: You met with a bunch of startups this morning as well here in India. A lot of companies are investing in Indian startups. Amazon of course has also been picking up minority stakes through your Amazon venture capital fund. Are you doubling down on that? Are you looking at more M&amp;A here in India?
+
+We have for a long time been wildly impressed by the entrepreneurial spirit here in India, and just the way the population has grown up being mobile-first and digital-first. There are very strong technology universities here and a very strong technical ecosystem; a number of companies have fueled that. 
+
+As such, you see a number of very impressive startups, and we have been lucky enough to invest in a number of them. I think we'll continue to look hard at where we can add value to those startups, and we'll see over time.
+
+Well, Andy, it's been an absolute pleasure. Thank you very much for joining us here in India. We hope to see you back sooner, but thanks very much for joining us here on the Global Dialogue.
+
+I'll be here. Thanks for having me. I appreciate it.
+
+Well, with that, it is time for us to wrap up this edition of the Global Dialogue. That was our conversation with Andy Jassy. We're going to take a break. There's a lot more coming up right after this. Stay tuned. You're watching CNBC-TV18.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
