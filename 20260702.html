@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Thursday, July 2, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260701.html">&larr; Jul 1</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Thursday, July 2, 2026</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=Ns4d4xEz7Xw" target="_blank" rel="noopener">AI won't save advertising, says Digitas' Amy Lanzi | Decoder<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/hjxoHrkUhOEYF_an0f3u2ld8piPB4VL_lITOhpWAqcK4ZAadyxocmcdL1AxFK7CuEz3b5eNSmh0=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Decoder with Nilay Patel</b><span class="subs">(17.7K)</span></span><span class="dot">&middot;</span><span>53:58</span><span class="dot">&middot;</span><span>1.7K views</span><span class="dot">&middot;</span><span>2026-07-02</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Amy%20Lanzi%22">Amy Lanzi<span class="chip-desc">CEO, Digitas North America</span></a> <a class="chip" href="index.html?q=%22Nilay%20Patel%22">Nilay Patel<span class="chip-desc">Host, Decoder</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>At the Cannes Lions festival, Digitas North America CEO Amy Lanzi argued that while AI will streamline agency workflows, optimize search, and handle repetitive design tasks, human-driven storytelling and robust data-identity systems remain essential ...</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">to counter big tech's...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
+<p>At the Cannes Lions festival, Digitas North America CEO Amy Lanzi argued that while AI will streamline agency workflows, optimize search, and handle repetitive design tasks, human-driven storytelling and robust data-identity systems remain essential to counter big tech's push toward automated advertising.</p>
+<h3>The AI Hype vs. Practical Reality</h3>
+<ul>
+<li><strong>The Programmatic Comparison:</strong> Lanzi compares the current AI hype cycle to the early days of programmatic advertising. The original promise of total automation without human involvement proved false, and AI will similarly require human nuance to navigate brand complexities.</li>
+<li><strong>The Pitch Problem:</strong> Digitas’ parent company, Publicis, released a satirical video at Cannes called *The Wrong Promises* to mock the absurd, unsustainable guarantees agencies are making in pitches regarding free AI platforms and commercial deals.</li>
+<li><strong>Digitas AI Strategy:</strong> Launched two years ago, Digitas AI is a bottom-up tool designed to make employees "better unicorns" rather than replace them. </li>
+<ul>
+<ul>
+<li><strong>Workflow Optimization:</strong> It automates administrative tasks, freeing up junior talent to brainstorm and run multiple rounds of creative concepts.</li>
+<li><strong>Everyday Creative vs. Storytelling:</strong> Lanzi notes that "everyday creative" tasks—such as dynamic product display pages (PDPs) on Amazon or Walmart—should be automated using AI. However, high-level storytelling and brand building still require human complexity.</li>
+</ul>
+</ul>
+</ul>
+<h3>The Death of the Traditional CMO and Agency Restructuring</h3>
+<ul>
+<li><strong>CMO Transition to CGO:</strong> The traditional chief marketing officer role—historically defined by executing a single major campaign and lasting less than two years—is dying. It is being replaced by the Chief Growth Officer (CGO), who is directly responsible for building capabilities, data integration, and driving business growth.</li>
+<li><strong>Digitas Org Restructuring:</strong> To align with this shift, Digitas has restructured its leadership around three new data- and systems-focused roles:</li>
+<ul>
+<ul>
+<li><strong>Chief Intelligence Officer:</strong> Upgraded from the traditional data and analytics division to manage an intelligent AI platform used across the agency.</li>
+<li><strong>Chief Systems Officer:</strong> Replaced the traditional COO role to focus directly on designing integrated marketing systems that mesh with client technology choices.</li>
+<li><strong>Chief Transformation Officer:</strong> Tasked with helping CMO clients transition into CGOs by bridging the gap between organizational people problems and technical systems.</li>
+</ul>
+</ul>
+</ul>
+<h3>Platform Overreach and "Creative is the New Targeting"</h3>
+<ul>
+<li><strong>The "Creative is the New Targeting" Threat:</strong> Major tech platforms (like Meta with its Andromeda system) advocate for automated systems that generate creative variations, target users, and deliver business results without agency intervention. Lanzi strongly rejects this philosophy.</li>
+<ul>
+<ul>
+<li><strong>Emotional Connection:</strong> She argues that "creative" and "targeting" are fundamentally incompatible concepts, as true creative must be emotional, magical, and unexpected to win hearts and minds.</li>
+</ul>
+</ul>
+<li><strong>The Need for Multi-Platform Diversification:</strong> To combat the risk of commoditization, agencies must deploy client dollars across a wider ecosystem (including Pinterest, Amazon, Meta, and Walmart Connect) rather than relying on a single platform.</li>
+<li><strong>Leveraging Data Identity Spines:</strong> Publicis’ strategic acquisitions, including the pending acquisition of data platform LiveRamp, are designed to construct an independent data identity spine. This allows agencies to prove what actually drives commerce, giving them leverage in negotiations with major tech platforms.</li>
+</ul>
+<h3>The Creator Economy and the Resurgence of Brand Websites</h3>
+<ul>
+<li><strong>Influential Acquisition:</strong> Publicis acquired the platform *Influential* in 2024 to scale "creator as a channel." By connecting Influential’s data to Publicis' internal identity system, the agency can match consumer data with the creators they follow to ensure authentic alignment.</li>
+<li><strong>Creators as Enterprises:</strong> Highly scaled creators (such as MrBeast or Emma Chamberlain) are transitioning from digital content to physical products (such as consumer packaged goods). These creators are now acting as enterprise businesses and issuing briefs to traditional agencies for media investment and retail distribution consulting.</li>
+<li><strong>The Influencer Cliff:</strong> Creators risk alienating their audiences when transitioning to direct product sales if the product is a "me-too" generic item rather than a unique lifestyle match. </li>
+<li><strong>The Return of the Website:</strong> Digitas is seeing a surprise surge in briefs to rebuild brand websites. </li>
+<ul>
+<ul>
+<li><strong>Knowledge Sites:</strong> Websites are being redesigned to act as "knowledge sites" built for both machines and humans, structuring clean data to feed search engine LLMs.</li>
+<li><strong>Owned Relationships:</strong> Brands are rebuilding websites to maintain direct relationships with consumers and avoid total dependence on Amazon and retail media networks.</li>
+</ul>
+</ul>
+</ul>
+<h3>The Shift to GEO (Generative Engine Optimization)</h3>
+<ul>
+<li><strong>From SEO to GEO:</strong> Digitas’ search practice has expanded significantly to address Generative Engine Optimization (GEO). The focus has shifted from standard keyword search to auditing and influencing how brands are referenced within non-deterministic LLM responses.</li>
+<li><strong>LLM Data Sources:</strong> Because LLMs are increasingly trained on long-form YouTube content and Reddit discussions, brands must manage their reputation and presence across these community-driven spaces.</li>
+<li><strong>The Danger of Hyper-Customization:</strong> Addressing Instagram head Adam Mosseri's vision of fully AI-customized user interfaces, Lanzi warns that such isolation destroys the "shared fabric of truth" and community. She predicts this hyper-customization will drive consumers away from digital platforms and toward IRL (in real life) communities.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"The AI story is the new programmatic story, with the promise of everything just being absolutely automated, and that absolutely did not happen." — <strong>Amy Lanzi</strong>
+</blockquote>
+<blockquote>
+"Creative is emotional and lovely and magical. How can it be emotional and magical if it's targeting you?" — <strong>Amy Lanzi</strong>
+</blockquote>
+<blockquote>
+"If you are a CMO and you're not thinking about your data layer, you're not thinking about your full stack... you are not going to be doing well in the future." — <strong>Amy Lanzi</strong>
+</blockquote>
+<blockquote>
+"Websites were built to contain a bunch of random information... The future of websites are knowledge sites [built] for machine and humans." — <strong>Amy Lanzi</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Do you think AI creative is going to get good enough? 
+
+I do not. I think the minds and complexity of humans make great stories that you are attracted to. I'm not using the word creative; I'm using &quot;story.&quot; I think AI enables you to be able to get to those concepts faster. 
+
+The conventional wisdom was that CMOs only ever had two years on the job, maybe less. Like, you were dead the moment you showed up. You got to execute one big campaign, you found the bathroom, and then you were out. Yes. Yes. I hope you heard everyone in this room laugh. I did. 
+
+What did you say? &quot;Creative is the new targeting.&quot; I've never heard this phrase. I don't like it. Yeah, I figured you wouldn't. 
+
+It's terrible, right? It's terrible for a business. &quot;Creative is targeting&quot;—only because it sounds horrible. Creative is emotional and lovely and magical. How can it be emotional and magical if it's targeting you?
+
+Hello and welcome to Decoder. I'm Nilay Patel, editor-in-chief of The Verge, and Decoder is my show about big ideas and other problems. We've got a special Decoder today. I had the chance to talk with Amy Lanzi, the CEO of Digitas North America, in front of a live audience at the Uber Villa at the Cannes Lions advertising festival in the South of France. 
+
+I know, it's a hard gig, but I do it for you. Amy's been on Decoder three times now, and she's one of my very favorite people to chat with. She is clear-eyed about what the advertising industry really is and does for brands, and what all that money sloshing around the ad-supported internet really accomplishes. 
+
+In fact, you'll hear her say directly that she thinks the traditional chief marketing officer role is done for, and that her job is driving business results using data and analytics. That might sound straightforward, but it was a shocking statement at Cannes, which is where the entire advertising industry gathers every year, drinks rosé, and convinces itself of outrageous nonsense. 
+
+This year, the big trends everyone was talking about were creators and, of course, AI. Amy and Digitas' parent company, Publicis, weren't holding back when it came to calling out the AI nonsense for what it is. Meta and the rest of the big platforms were all at Cannes talking about generating more and more ads with AI, something that threatens almost every other company in the industry. 
+
+We also talked about the creator economy and how all of the creators at Cannes were openly calling themselves marketers, essentially turning themselves into small ad agencies of their own. Amy is as sharp as they come, and I really enjoy talking to her about how the money really works. Okay, Amy Lanzi, CEO of Digitas North America, live at Cannes. Here we go.
+
+Hello, everybody. I'm Nilay Patel, the editor-in-chief of The Verge and the host of Decoder. 
+
+Hi, I'm Amy Lanzi, CEO of Digitas, part of Publicis Groupe. 
+
+I'm very excited to be here with Amy. Amy, we have to stop meeting like this. We only talk during Decoder podcasts. 
+
+I know, we do. We have to do this more. We both live in New York. We should get together more, like, IRL.
+
+Yeah, we only travel long ways to talk to each other in front of live audiences, which is wonderful. Thank you all for being here. Thanks to Uber for having us. 
+
+I have a lot to talk to you about. It seems like every year we hang out and the entire advertising industry is in a new form of chaos. And that chaos doesn't get really resolved; we just kind of move on to the next form of chaos. This year, it's AI. I don't think that's a surprise to anyone in this room. Everywhere here at Cannes, the conversation is about AI. 
+
+Let's just get started. Publicis put out what you would call a fake ad, a documentary ad. It's called &quot;The Wrong Promises,&quot; and it is basically just a series of vignettes of promises people are making in pitches, including &quot;You don't have to pay us until you win a Lion,&quot; which is incredible, and it says &quot;This is real&quot; at the bottom. Yes. 
+
+Tell me about what you are hearing in these rooms that are leading to these crazy AI promises getting made.
+
+Thank you for bringing up our fun video. It was really designed to stimulate conversations like this. In the business right now, it's kind of crazy. I've been in this business for a long time, and we are seeing all kinds of partners offer wild things in the pitch process, different than it's been before. 
+
+Whether it's all the things that were, of course, hyped in that video, but also just insane commercial deals that are just generally bad for people and the business. They're coming in all different types, whether it's about free AI, free platforms, free whatever. That is creating a dynamic that is not good for all of us in this industry because we all need to work together. It is a people business, and all of those things really, long term, create a people problem.
+
+Not to get all Toy Story 5 here, but the conversation that you and I are constantly having is about the pressure of the tech platforms on the media ecosystem. Whether that's publishers, whether that's agencies, whether that's creators—at some point, we'll come to that. But the idea that the platforms have enough scale to promise you business results and then deliver them, whether or not that happens, certainly they can make those promises. That is leading to, I think, some of these outcomes, some of these promises about what AI might be able to do. Is there any reality to that, or is that just a reaction to the pressure the platforms are exerting?
+
+Whenever this conversation comes up about the promise of AI, I always go back to the promise of programmatic. How many of you remember when programmatic was the thing? No more people, it was all going to magically—
+
+No one in this room admitted that they remember programmatic advertising.
+
+Right, exactly. Right. So, that was a time when it was all just going to magically happen, and it magically still needs people. It still has the nuance of brands and the marketplace, and all of the things that we do to define our partnerships of what are going to be game changers. 
+
+I go back to that because I feel like the AI story is the new programmatic story, with the promise of everything just being absolutely automated. And that absolutely did not happen. When programmatic was rising, there were all those promises at that time as well. Now we are living that, but what is different here is it's coming from either agency partners or tech and platform partners. So, it creates a different kind of chaos to where you started.
+
+Publicis, Digitas, you also have huge investments here. You were early, right? You bought Influential in 2024 to do analysis of how the creator ecosystem was doing. You have Digitas AI, and it's two years now that you're into it. Yes. How do you think about those products and those platforms in an ecosystem that is full of these promises?
+
+For me, and I'll talk about Digitas AI in particular, we started to make our people better unicorns, as we talked about the last time we met. It was really to say, okay, everyone look at what's on your desk, what's in your day, and think about what you absolutely could build an agent to do. That way, we free up our time to do this. 
+
+That's where we started. Then, what was fascinating was the magical things that were able to be built by the young talent in the industry that is solving a working problem, but eventually a business problem. That still holds because every day, you know, I always say as a Gen Xer, &quot;Hackers wanted.&quot; If you have a hacking mentality and you're curious, you can actually do better things than I did when I was a hacker at that age. 
+
+So, it enables us to use our agents and use our data to get to better ideas and better workflows that are more of a surprise and delight to clients than what you might have brought in the first round. You can do many rounds before you actually get to the final product, and that's how you get to the unique outcome.
+
+You can tell that Amy is a Decoder pro because she has led directly to the Decoder questions. I'm very curious if AI, at least in the enterprise, is a top-down or bottom-up change agent. But you just restructured Digitas, right? You put in a bunch of new roles. You have a new Chief Intelligence Officer, a new Chief Systems Officer, and my favorite, a Chief Transformation Officer. He turns into a robot. What are these roles for, and how are you changing the structure of Digitas?
+
+I hope he hears this, because that's going to make him laugh, anyway.
+
+It's very exciting. The toy line is going to be great. What are these roles for, and how are you changing the structure of Digitas?
+
+You've always inspired me with how you structure yourself and how you make decisions. The first time we talked about it, I had been in this role for just a little bit of time, and we had set our culture, which is that we're fearless, inventive, and generous. That still holds on how we make decisions. 
+
+Org structure-wise, we needed to figure out exactly what you just said: how do we do things in the underpinning of the agency that will enable all of our different practices to be able to scale faster leveraging intelligence and, of course, AI? Intelligence is code for AI in this story. That's why we have our Chief Intelligence Officer, which was a pivot from data and analytics into liberating that into an intelligent platform that all of our agents are built on and that all of our employees use. 
+
+The second is systems thinking. We took the traditional COO role and turned that into a Chief Systems Officer role, or really redefined both of those roles, because all of our client conversations are really about marketing systems. You need to have someone who can come in, understand that, and meet them where they are. We then think about the marketing flows that will marry to the system that works within some of their tech choices, etcetera, as two examples. 
+
+The third, Chief Transformation Officer—and this is a big conversation here—is around clients wanting to transform, particularly CMOs transforming into CGOs.
+
+What is a CGO?
+
+Chief Growth Officer.
+
+Okay. Did you not know that, or was that a—
+
+I just, you know, I'm a journalist. My job is not to innovate. So, unfortunately, I just ask the questions.
+
+That's why we're good friends.
+
+I make up a lot of things.
+
+I was just coming from the Forbes CMO Council thing, and there was a whole conversation on the rise of the CGO. What that means is CMOs formerly were really responsible for making marketing magic: campaigns and media investment. Now they are responsible for building capabilities, and they need a partner to help transform their solution. So, it's a people problem as well as a tech problem. That's why we have that discrete Chief Transformation Officer role.
+
+So, you are a data person; you've always been a data person. I'm really curious about that. The idea that the marketing function is now so directly tied to business results. I see it on the tech platforms all the time. You and I have talked about this before. Mark Zuckerberg will just look every single one of you in the eyes and say, &quot;I'm going to kill you.&quot; And he does it without remorse, right? 
+
+His vision is that you will just pay Meta and it will make creative for you, it will find the audience for you, and they will deliver you business results. Almost everything in the middle, from money in to money out, gets automated away by Meta's intelligence stack. The idea of the Chief Growth Officer feels of a piece with that, right? The marketing function is now a business function; it needs a data layer, it needs all these things. Where do you see the creative fitting into it? Where do you see the classic form of brand building?
+
+It's a fundamental part of that capability that needs to live—like the marketing capability now as a system. Brand building and the fundamentals matter more than anything. What you stand for and how you show up, what you're the answer for, especially with LLMs, is really important, and it has to be authentic for the brands to grow. That still holds. 
+
+You just can't stop there. It needs to be attached to a system, and ideally, you have some sort of data intelligence layer so you're learning more and more about the consumer. You can then redefine your marketing stories to reshape how you're showing up if it's not working, if it's not selling more candy, if it's not selling more cars. How do we change faster? 
+
+A CMO was responsible for building these campaigns and then moving on, and that role is a dying role, and it should be. It should be that marketing drives commercial value; marketing drives shareholder value.
+
+Wait, you heard it here first: CMO is a dying role.
+
+The previous version of the CMO, sure. Because if they're not—just like we are in a chaotic world, we are in an area of convergence. If you are a CMO and you're not thinking about your data layer, you're not thinking about your full stack so you can get closer to the consumer and get to better creative and better use of creators, you are not going to be doing well in the future. I think whether it's CMO 2.0 or you're moving into that CGO role, that's really the future of that type of function in an organization.
+
+I feel like the audience here at Cannes knows this, but for the Decoder audience in their car listening to this, the conventional wisdom was that CMOs only ever had two years on the job, maybe less. Like you were dead the moment you showed up. You got to execute one big campaign, you found the bathroom, and then you were out. Yes. Yes. I hope you heard everyone in this room laugh. I did. That was a laugh—like the most knowing laugh in the world. This seems like a much longer-term role. If you show up as the new CMO and your job is to transform the entire business from the bottom up over and over again, it's a lot of instability. Do you think these are longer-term roles?
+
+If you do this right and you create a system, a marketing system, you will win—you will be able to live beyond the two-year path because you're creating a growth engine. If you only want to do two tentpole marketing campaigns, that's probably not going to go well after two years.
+
+I basically have two themes that I want to talk about. One is data and scale, and one is creators. This kind of sits right in the middle of them, and I just keep thinking about this phrase that I've heard Meta use the most, but the other platforms use it a lot too, and it's &quot;Creative is the new targeting.&quot; 
+
+I hear that, and I don't make ads. We make two podcasts a week. We don't do scale at that level. But I hear &quot;Creative is the new targeting&quot; and I think that is a demand for output like no one has ever heard before, right? We're going to find your customer for you; you just feed the machine with as much as you can. It seems obvious to me that your two choices in that world of &quot;creative is the new targeting&quot;—I think Meta's Advantage+ system is the biggest example of this—is either you're going to feed it with AI creative, you're going to let them do it, or you're going to have your own AI creative system, or you're going to let a million creators and influencers do it for you. How do you plug a growth engine into a world where that's what the platforms are all saying?
+
+The more you are closer to your consumers and all the places they're spending time—from a data, identity, and systematic standpoint—the more you can see how they are reacting. 
+
+What did you say? &quot;Creative is the new targeting.&quot; I've never heard this phrase. I don't like it. Yeah, I figured you wouldn't. It's terrible, right? It's terrible for a business. &quot;Creative is targeting&quot; only because it sounds horrible. Creative is emotional and lovely and magical. How can it be emotional and magical if it's targeting you? Those are two words that don't go together. 
+
+To me, the brands that I think are doing it well are deciding not to do that, or to do it in a way that feels so contextually relevant because they know so much about Gen Z on Meta. They've decided that they need to do this to be able to drive velocity for a certain type of brand, and that feels fit for that brand. But we are not in a world where we need more content. No. Does anyone want more content? We are not in a world where we need more content, yeah. So, that idea, &quot;Creative is the new targeting,&quot; assumes that we have endless amounts of content and impressions as a concept. I think those are two worlds that still need to be decoupled. When they are put together, it needs to be in a way that you are constantly learning how that did and if you gained more attention from a certain type of growth audience you're trying to get to.
+
+Can I push you on this? Not to support Meta's ideas here, but I'm going to do it. Let me just make the argument because you and I have talked about it before. The way, in particular, Mark Zuckerberg talks about it is, at some point, they know more about the viewer of Instagram than anybody, or they want to know more about the viewer of Instagram than anybody, and they will just deliver the right creative to that person at the right moment. 
+
+This is the same argument as programmatic, only now they have acres of GPUs with which to do it. The argument there is, yes, the army of unpaid teenagers will make the fun stuff that you watch, and the advertising will just show up magically on the platform and find the right person at the right time. Again, I read that as &quot;you should just let Meta make the creative for you.&quot; You just give them a picture of the shampoo bottle and they will put it in the right place, on the right background. 
+
+For me, it would be pictures of trucks jumping over things and exploding. Yeah, and a shampoo will appear at the end, and I'd go, &quot;That's the shampoo for me.&quot; It would work. If any of you need an idea to target me specifically, that would work. No agency is ever going to make something that niche. But you, for example, Publicis just bought LiveRamp to take all that data out and fill in the situation. I mean, it's out there, but the deal is not done. 
+
+The presumably the goal of buying LiveRamp, which is a giant data platform, is to lever up against Meta and say, &quot;Actually, we know as much about these customers as you do.&quot; Right? We can distill information across all the platforms, and we will actually do a better job for our clients of placing the creative in the right place at the right time. This sort of implies that Meta will participate. Why would they do that?
+
+Because people are complicated. Yep. Today, look at how often on this beach there are different players. Everyone doesn't stay in this position forever. And people are complicated. I would offer that I think if I started seeing your wonderful ad 50 times, I would say, &quot;I don't want to see this anymore, and I actually don't like that shampoo.&quot; 
+
+That's what happens when it's just left to go on its own without someone thinking about suppressing messaging, without understanding consumers better, because you actually win hearts and minds when you're doing something that's not as expected because people are complicated. 
+
+So, I think there is a moment in time where we say to our clients, &quot;You need to work with all of them because all of us spend time in all these different places for different reasons.&quot; Why you choose to spend time on Pinterest versus Meta versus Amazon versus Walmart Connect—all of them play different roles in terms of how the platforms work for you in your life. Why would you put all of your dollars in one place? For me, those players are shifting in and out depending on what we think that growth audience is doing and how they're thinking about intersecting with that category.
+
+Are they good at participating in an ecosystem in that way? This is something that strikes me every time.
+
+Some of them are and some of them are not, yeah. The more they start to see headwinds, the more they are leaned into participating in a way that, ideally, we want to do. We want data collaboration with these partners because it's better for our clients. We can say we knew more about this growth audience on platform—I'm not going to say X, because I'm not going to say X. On platform Y, we know more about them and—
+
+No one knows anything about X.
+
+Right. This is actually how we're going to grow your brand. That's a good joint story for a platform and an agency partner to come in to talk about because we've been able to actually share data and look at that in a way that's beneficial for the consumer in the end.
+
+I see a lot of—I mean, there's only two business models, right? Bundling and unbundling. In the agency world, there's a lot of bundling going on right now, right? Obviously, Publicis is huge; Omnicom, Interpublic Group. CAA is out here; they've invented creators this year, I don't know if anyone heard. They're very proud of themselves. But you know, they have a $250 million fund to take stakes indirectly in creator businesses. There's a lot of scale, a lot of bundling going on. What do you think is driving that?
+
+It's the desired state of a system. Yep. So for me, hence why we have a Chief Systems Officer, there are capabilities that we've built. The last time we met, or two times ago, I talked about building the commerce capability and the acquisition of Profitero that I led. That was really to get to a unique set of data so we could build a better commerce capability so we could advise our clients on how they should be investing in some of these retail media partner spaces at the time. 
+
+How do you win the digital shelf was really the business problem to solve when we made that acquisition. That holds true for the acquisition of Influential. How do we create creator as a channel? How do we harness the creator in a way that's also easier for clients? 
+
+If you don't bring those things into a bundled offer, it's actually really hard for clients because there's seven different versions of Profitero calling on them, there's seven different Influential partners or those types of partners that are calling on them. Then you're now looking at a distracted set of technology or decentralized, and it's again not tied into a single, ideally, data identity spine. So the more you have them connected, the more you can actually say, &quot;Did this really work? Did it really drive someone to buy more things?&quot; Yeah. That's the reason why the capabilities are now being—so think about them as capabilities versus assets in this conversation.
+
+Talk more about Influential. That was a big acquisition, it feels like the creator play for you. I know you were instrumental in that acquisition. It feels like the creator economy has taken on a new shape this year, right? We are just hearing more and more about the biggest creators in the world on the biggest platforms. Influential was much more of a scale play, right? It had an idea that you could go and do a lot of analysis of what was happening on these platforms at massive scale. How's that working out?
+
+It's working out very well because we have taken their technology and connected it to our identity. Now, I can see you, I can see who you follow, and then I can understand how to get closer to you or have the right creator choice or the right creative decisions that can enable me to get you to feel an emotional connection to my brand. 
+
+Creator as a channel is also super efficient. You can also have creators talk in a way that is a little more authentic to the audiences that a brand maybe can't go out with that message. But it's very complicated. Before we had Influential, it was very hard; every different brand partner had a different creator solution. We still are interoperable; we work with other ones that are out there, like CreatorIQ, but it is easier for us if it's connected into our system because then we can see if it actually worked faster.
+
+What's the step after the creator interaction, right? You open one of these platforms, you scroll some videos, you see some creator telling you to buy some product. Is it then to go search? Is it then to go open a retail app directly?
+
+You mean for the consumer or—I mean, it depends. One of the hottest topics we're getting right now is TikTok Shops, which is an interesting topic we can have another day. That's because creators are saying, &quot;Don't you want to buy this thing?&quot; and it's a one-click opportunity to go get it. 
+
+For us, when some brands that are more used to selling through traditional retail channels, it's a pretty big lift to build that out. It still is. But the desired state is, &quot;I want to buy your kit of parts, whatever you're talking to me about in your creator video, and I want to be able to buy it and do it then.&quot; So, that's a move we're starting to see. 
+
+We also just see, &quot;Follow me and learn more about me as a creator.&quot; It's actually a cheat for CRM. Because if I now know if I'm a brand and you're one of my power influencers and I want to really have an owned relationship with you, this is a way for us to get closer to you as a brand.
+
+The reason I asked that question is I've run around the past two or three years asking every web host, web company, &quot;Why should anyone make a website now?&quot; Like, if I was a new creator and I was starting The Verge over again in 2026, I would not make a giant, fancy desktop website. I would probably be a TikToker. My dancing is pretty good, it's not great, but I would probably start there. 
+
+The answer from all the web companies I've gotten is, &quot;Oh, because you want to do retail and you want to escape fees on platforms,&quot; right? You want a different fee structure. And the best answer I ever got was from the CEO of Squarespace, who said, &quot;A lot of people start websites with us just for the appearance of legitimacy.&quot; Yes, right? Having the .com, or I guess the .ai now, gives you an appearance of legitimacy that a customer will go and transact against, versus just dropping a TikTok shop where who knows what sort of Temu product you're going to get. 
+
+I look at that and I say, &quot;Okay, you're going to go to the web,&quot; right? That's a move everybody wants you to do. And the web is fundamentally under threat by agentic search, by AI overviews, everything everyone knows about. Do you see that changing in your funnels?
+
+Interestingly, we are seeing more and more briefs for revising websites.
+
+To do like GEO?
+
+Yes and no. It's actually pretty interesting. This is something that, you know, the market talks to you, clients come in, they look for new things. Who would have thought if you asked me at the end of last year, &quot;Are you going to do a lot of website work?&quot; I would have said no. 
+
+But we've seen a lot of it because of two reasons. One, the future of websites are knowledge sites. Websites were built to contain a bunch of random information that didn't really enable you to show up well on a single response to an LLM prompt. So, part of it is that, but also it's like if you are going to be a real brand, and to your legitimacy point, you really need to have your own assets. You want to own that. Eventually, you don't always want to have to funnel everything through package goods through a retail partner. You want to be able to have your own relationship. That doesn't mean everyone's going to buy from that site, but the idea that that is a site that does its job of feeding the LLMs but also builds your brand and gives information. Old websites pretty much weren't really built in a way that makes sense for modern consumers.
+
+Who are you giving information to? Is it consumers, is it AI agents, is it just Google?
+
+No. I mean, yes. If you have to build, we build for machine and humans.
+
+Every time I go to Google I/O, I sit down with Sundar Pichai and I ask him—every single demo of search for years now has ended in a transaction. I don't know if you have noticed this. Every Apple demo ends with trip planning; every Google demo ends with trip planning that ends in buying shoes. 
+
+You realize, okay, the audience is partially Verge readers who just love tech, partially it's other developers, and then a huge part of it is industry analysts and their investors. They want to see the revenue return on every single feature that Google announces. So, they all end in transactions. Over time, those transactions have taken place closer and closer to Google's core platform. 
+
+This year they announced, what, intelligent shopping carts that are just going to track prices and execute a purchase for you? You're talking about rebuilding websites. There's a world in which the website is just the back-end database for a very complicated Google system that is doing all of the things that you're talking about. Is there a hedge against that, or is that train just on the tracks?
+
+I think it's a little bit of a hedge against that. I would say that for many of our package goods friends, one of their biggest threats is Amazon, which is the Google in this story. Because if you are so dependent on a partner like Amazon—and we like our partnership with Amazon—but they also are a place where, because of the size of their marketplace, if you've built a brand that is a known brand, some of these marketplace brands can immediately win because of how you've invested and built the category. 
+
+So, you need to have your own assets to be able to think about, &quot;What is your next story? What is your next move?&quot; so that you don't get commoditized. I think that applies to both Amazon and Google to a degree.
+
+Do you think they're competitors in the space in that way? I don't do a lot of shopping on Google, so I don't know if I would compare them to—
+
+Have you ever planned a hiking trip on Google? They're great at it.
+
+I actually, no. I use this thing called Mindtrip. It's my favorite. I learned about it in the New York Times. You go to Mindtrip, and it will magically plan your trip. It's pretty good. It can do most things, and then it breaks in certain areas. Yeah.
+
+But this idea that you're going to have a bunch of agents just planning the trips for you, buying all of the gear that you might want, or tracking prices for you, which is another big promise that everyone has, and then the brands might pay for preferred results in all of those spaces. That does seem like a more direct competitor to Amazon than not, right?
+
+Absolutely, it does. I just think there's the planning part and the transaction part. Those are two different things. On planning, you're competing. Amazon's trying to add a transaction into that planning component. 
+
+When you think about all the things they are doing with their own creators and even just their move on full-funnel and content, that's really to make Amazon your total destination. But I think the agent-to-agent buying space is still—the concept of trust is still very important here in what you're willing to do and not to do. I think as a consumer, that is still TBD.
+
+Hi, everyone. This segment of Decoder Sessions features Helen Havlak, the publisher of The Verge, and Kristi Argylan, Uber's global head of advertising. You're going to enjoy this conversation.
+
+Kristi, just to start, when did Uber launch advertising and how is it going?
+
+It's been a really interesting journey for Uber. Most people came to know Uber as the alternative to a ride-hailing service, but the other side of the platform is Uber Eats. 
+
+The Uber Eats side was where we first got into advertising with simple sponsored listings so that any restaurant on our platform could actually run ads. We started to realize we have this platform that is full of people going places and getting things, and there's no better way to show brand relevancy than to insert your brand into decision-making in the moment that it's happening and to help facilitate and provide offers, information, and services at the moment people are making decisions.
+
+What makes Uber advertising unique as a product?
+
+Well, one of the things that we keep seeing in our research with consumers is that there is this enormous trend to use digital as quickly as possible to make decisions so that they can get back into the physical world. We see that over and over again on the Uber platform. 
+
+People are looking to quickly find a ride to get to a bar where they can meet friends and watch their favorite football team together. So, this pivot from the digital world enhancing what people really want to do in the physical world is a role that Uber plays that's incredibly powerful.
+
+Transcribed for you. Okay. Here's my wonkiest tech question for you. Google is very, very proud—
+
+This is hard. Oh lord. Okay, I'm ready.
+
+It's fine, it's fine, because this is again, is AI top-down or bottom-up? I sort of understand how it's bottom-up, right? We're going to empower all of our smartest people to do agentic things in our workplaces. 
+
+Then there's top-down, which is Google is very proud of its universal cart standard, right? Where agents are going to be able to access carts across domains and compare prices and do all that stuff. That's a corporate decision. That's a strategy decision, and they're pretty proud that everyone's on board. Their argument to me is, &quot;Well, we just needed something. So, this is the something.&quot; 
+
+I hear the tech industry say, &quot;We just needed something&quot; and I think, &quot;Well, of course, but it's the something that you control.&quot; Right, and everyone might need something, but no one is thinking through that, at the end of this, one player will control it. When your clients and partners think about, &quot;Okay, we're going to adopt these standards for agentic workflows, for how commerce will be done in the future,&quot; is there any pause to say, &quot;Okay, Google's going to control the standards again?&quot;
+
+Yes and no. I don't think the clients I speak with today are as worried about Google as a commerce partner as they are about the transformation of their more traditional partners, like an Amazon or other retailers that have transformed from being a retail partner to being media partners.
+
+When that transformation is occurring over there, the media partners want to—Amazon wants to—
+
+It's changed this dynamic of what a retailer does and what a supplier manufactured brand does. That dynamic has changed, and that makes the negotiation between them require both of each other to grow. So, when they've transformed into media partners, this changes that equation significantly. 
+
+This is the whole retail media conversation. Is that still—are they a media partner, or are they our retail partner? Yeah. That's much more still of the conversation.
+
+Has AI changed the dynamic of that at all?
+
+Yes, because the more AI-oriented products they have, it puts more focus on more media investments with them because of these magical products. It's not necessarily solving a core shopping problem.
+
+Let me flip to the other side of this, because so far we've talked about tech and data and scale, and I think that is the promise of AI, right? We're going to automate everything, it is going to be magic, we're going to do programmatic again. All they need is data, and they need your money. 
+
+The other side of this, and I'm just walking around Cannes, is creators everywhere. Right? Something vastly more human, vastly more bespoke. My theory—and I was just wrong on this, so I'll cop to it—I thought creator rates would fall drastically this year as there was more AI content, as the platforms got more and more punishing about what would work on their algorithms, and as they started doing their own content. Instead, I look around and everyone here at Cannes is just so proud about how the cost per minute of video is skyrocketing again. Yeah, what's going on?
+
+Again, I think it's all about supply and demand. When you get to certain—once creators start moving into a more famous space, then they're suddenly worth more. 
+
+The last time we talked about this, we talked about the difference between a creator, an influencer, and a celebrity. I still think that holds true. Unilever went out probably this time last year saying that they were going to spend 50 percent of their dollars with creators versus creative agencies. 
+
+To me, what is an interesting conversation is: what is creative now? If you're putting it all in the hands of a creator, what does it mean to be a brand that delivers creative, and how do you make those things work together? Yeah, because we can't have another thing that also prices us out of the market. There, you get to a point where you're seeding so much control to the voice of the creator that that's probably not going to build your brand over time.
+
+The creators see themselves as marketers, at least the very best ones here. I mean, they're here at Cannes; they are all small media businesses of their own. Some of them are very large media businesses of their own. And they are very open that what they do is marketing for brands. 
+
+That comes right up against agencies; it comes right up against your creatives. All the creators I know want more control, right? They want the brief from the brand, they want business results, and they say, &quot;Leave me alone to do it, I'm just going to do it however I want to do it.&quot; What's that dynamic like as you start working with the bigger and bigger creators?
+
+We still hold true to brand fundamentals. Strategy matters. What the consumer insight is for that brand—that has to be something that's an exchange between a brand and a creator in order for the creator work to really build what's unique about that brand. It's still the idea of freedom in a framework that that creator is briefed on. 
+
+They control how they're going to do it, but there is some sort of tone and voice and things that, if a creator is actually going to buy into this, they need to buy into. That's still really the exchange. That's always been the exchange, especially, like, remember when UGC started and Tongal? Do you remember that whole thing? It was the same thing. 
+
+I was working on Johnson's Baby, and we were trying to figure out how to really create authentic first-time expectant mom stories. We had this great debate about how we're going to get the new creators, like &quot;mom bloggers&quot; was the language, to get them to tell these stories. We had this: &quot;this is what the brand stands for, here's some things, but you need to buy into this and believe in it.&quot; That exchange still exists. We just call them creators now, and then you can do it in a more scaled way through a system like Influential.
+
+I guess maybe my new prediction is we'll see a more barbell-shaped creator economy, where the biggest creators are making more and more money than ever and kind of the middle gets squeezed. Either you've got to get big and be able to command rates because you're a celebrity, or you end up towards those UGC rates, right, where you're just doing infomercials on TikTok, and that's the business. What's left of the middle?
+
+I don't know the answer to that. I do think there's so much demand for this space that the middle—there's a lot of demand for the middle, so you could use it as a way to eventually launch yourself into this, you know, upper echelon of creators. 
+
+Someone said to me—I heard this—that creators are daytime stars from soap operas, which I was like, this is pretty interesting.
+
+Because they're in your house?
+
+Because they're just so &quot;on.&quot; It's noise—it's not noise—but they keep you company, they keep you busy, and then all of a sudden one of those people becomes a movie star. Which, to me, is a little bit of that middle of what you just articulated, yeah. We know the creators—I've watched my daughter, you know, over our years, I've watched my daughter in all of her creators. Emma Chamberlain was a creator on YouTube that's now a star doing, you know, Estée Lauder ads or whatever she's doing. She's really a celebrity now, but she started as a tiny creator making adorable shows on YouTube.
+
+One of the things that you and I were briefly talking about before I came on was, at some point, the creators hit scale where their businesses need to be businesses, right? That's where you might need an agency to come in and actually operate your business. That scale is still pretty huge, right? Like, it might just be MrBeast has that scale and he needs to operate a full business. 
+
+But I see lots of creators—I think it's fascinating that the creative economy is the only one where people routinely transition from selling bits to selling atoms, right? Like, it's crazy to me that the Paul brothers are like, &quot;Bottled water is a good business to be in.&quot; Historically, not a great business to be in. Shipping water around the world is vastly more expensive than just making one more video. But there's no business in making one more video that scales; you have to make physical products and sell them to people, and that scales. Is that becoming a bigger and bigger line for you—to go find the biggest creators and make them products and scale that up?
+
+The last time we met, or two times ago, I had predicted that, at some point, there are going to be these creators that become enterprises. Let's say a MrBeast, that actually needs an agency, and it has happened. We are now starting to see briefs from these scaled, started-as-a-creator, that have now turned into enterprise businesses where they need an agency partner. They also need someone to help them figure out how to invest their media so they can grow.
+
+Like real brands.
+
+Is that just because MrBeast himself cannot flip over the bars at Walmart like he was doing at the MrBeast Burger?
+
+I think it's—you need, just like people need consultants. You need someone to help you—
+
+No one has ever looked me in the eye and said, &quot;People need consultants.&quot;
+
+I call myself a consultant. Look me in the eye. Yes. So, at some point—
+
+I thought your—Accenture just bought Whaler, which is like an all-time nonsense Decoder phrase, but okay.
+
+Yes. Yes. So for me, at some point, you as an enterprise owner, or as an owner of a company, you need help to figure out how you're going to get to your next growth path. 
+
+This is, I think, what's happening with some of these businesses, these creators that have turned into an enterprise that are wondering, like, &quot;What is next? Gee, it's expensive to ship water all over the world. What do I do? How do I do this? What types of partners do I go to? How do I figure out ways to grow my brand in unknown ecosystems?&quot; Because that's the quickest way to grow your brand, not just in your own channels.
+
+There's this term that I've been hearing called the &quot;influencer cliff.&quot; I want to give credit to a TikToker who came over there; she's Carmen Vicente. I'm only giving her credit because no one gives me credit for &quot;Google Zero,&quot; and I'm trying to just re-initiate karma into this world.
+
+I do.
+
+But it's her term. It's great. If you're listening to this, we'll put the video in the show notes. Her thesis is that creators can do the branded content because the audiences are there for the real content, and they will tolerate the ads in support of the work that they are there to see. 
+
+Then, when the creator transitions to selling their own product, this misaligns the audience from the creator. When the brand integrations get too overpowering, it misaligns everybody, and then the creators have to issue apologies, and they've fallen off the cliff. I see this all over the place. 
+
+I see this with tech creators; I see this with fashion creators. Once you start shilling the product directly, your relationship changes, something goes horribly wrong, and maybe you backtrack all the way. There's some class of creators that's able to do it, right, that makes the transition to selling a product directly. You've seen a lot of these now; you're seeing the briefs. What qualities let you take that next step?
+
+I think a unique product is really important, versus a &quot;me-too&quot; product that a creator has decided they wanted to sell. So, that's important. 
+
+I think, you know, you've seen some creators that, if they're in sports or they're an athlete and they're moving in a space, they feel like, &quot;This is something that made me a better athlete and is a unique part of the market.&quot; If someone's falling for that, then that makes sense that you would buy into that. 
+
+When it feels like someone woke up and wanted to just put their brand, their persona, on a certain brand, and it doesn't feel like it's been their talk track to you as your sort of friend, then it doesn't work.
+
+Do you see any particular products that are going to change categories?
+
+I think some of—you know, one of the things that I think has been really interesting that is not talked about, and it's a unique example, it's more of a celebrity example, is brands like Fabletics. Kate Hudson's brand. Super interesting. It's right in her lifestyle play and her desire to be healthy and all of that. 
+
+And that is—it was really her launching Fabletics, not her endorsing Fabletics. So, that's not really a good creator example. I have to think more about that one.
+
+I'm very curious because I think that's coming. At particular rates at the top end of the curve go up, the idea that you can just launch your own brand and collect those margins directly—I get it, it makes rational economic sense, but I'm wondering if the audiences are going to take that at scale.
+
+I think it's very—even if you just look at traditional brands that are trying to scale DTC-like brands, it is very hard to do because it's very hard to be found. 
+
+The distribution part is very expensive. There is a reason why Walmart is incredibly successful: because they've solved the route to the consumer. Yeah. And that is a very challenging and expensive thing, to try to build that out, even if the product is incredible.
+
+You mean distribution of the product out there in the channel. Yes. Of a product. Yes.
+
+Because I was going to ask you—we talked about the web. I feel like I have to ask you because I brought up &quot;Google Zero.&quot; Is that true in your world as well? It's definitely true on the publisher side that traffic from Google is going down. Is discovery traffic to all those websites going down as well?
+
+To publisher websites, yes. We are definitely seeing a change in partnerships from our publishers that are trying to understand how they can create custom content that is not as dependent on search. That is definitely something that is a big conversation that's happening here. I would say in this case, if you are a publisher and you really have an authentic, true voice, people will follow you. They'll come find you. Versus if you're trying to fight it out in search, that's going to be very difficult.
+
+All right, well, I'll be in the bar at the Carlton later if you want to find me. I have a lightning round for you. Okay.
+
+This hasn't been a lightning round?
+
+No, this was the depth. All right. I have talked to a lot of tech CEOs, AI CEOs, over the past year. There is a furious debate over whether AI has a marketing problem or not. 
+
+Sam Altman will say, &quot;We got to do better marketing, we got to buy a podcast for $200 million.&quot; Great haircuts on those guys. Like, I think about them every single day. I don't mean this as an insult; those are some of the best haircuts in the world. I'm working on it. I don't know if $200 million of podcast haircuts is going to fix it for OpenAI. 
+
+Sundar Pichai will tell you it's not a marketing problem. Satya Nadella will say, &quot;We have to earn social permission.&quot; Do you think AI has a marketing problem?
+
+I think AI is misunderstood. So, it's a marketing problem in the problem it's solving. Meaning, AI is—and I'll say that this is one of my favorite people to follow that talks about AI; my friends here are going to know I'm going to say this—is Shelly Palmer. 
+
+If you follow Shelly Palmer, he talks about—he issued something out about AI being electricity, and how electricity is really what fundamentally changed the Industrial Revolution. And how the companies that were fast—he referenced Ford in this—to really reshape how they work and were able to get to more efficient production as well as speed to market, will win. 
+
+I think that's the lost conversation on AI, which is, for me, if you are able to—all of us have too much to do on our computers, on our desktops. Think about it.
+
+So, if you can use AI to do those things and you don't call me because you're like, &quot;Hey, did you clean out your email box?&quot;—like, things like that are not necessarily game changers that are advancing all of us. They also... we have a lot of busy work because of all the work that's distributed everywhere. So, the more we can use AI to connect those things and get those things done, it enables us to do more things like this. 
+
+I think that once we use AI to transform the way we work and to be more efficient in how we're getting to the outcomes, it'll then make time in all of our lives to do the things that are going to be game changers. So, I think that it's a marketing problem and a misunderstood problem.
+
+Is that going to stop the kids from booing at college graduation ceremonies?
+
+I think so, because right now—
+
+Now, if I... my daughter's a third-year. She... they're worried about their jobs because all they hear—so to your point on a press problem or a PR problem versus a marketing problem—is that AI is going to be the thing that replaces all of them. 
+
+I would say we want new young talent because if I watch my 12-year-old, he's a million times... he's been doing Google Slides since he was eight. So he can make...
+
+...because of COVID. They all got right into Google Classroom, and they all learned how to co-work and use many different apps at once and produce presentations easily. 
+
+So, to me, anyone that's coming out of school, we want. We want bright, curious hackers. We're not not hiring them because we don't need them. We need people as the lifeblood of our business.
+
+Do you think AI creative is going to get good enough?
+
+I do not. I think the minds and complexity of humans make great stories that you are attracted to, and I'm not using the word creative; I'm using stories. I think AI enables you to be able to get to those concepts faster or to get to higher production more efficiently. 
+
+I actually went to an event at the Palais, a team that was speaking, and it was fantastic. It was a case for Virgin Cruises, and they were talking about building these beautiful long-form content stories. The creatives were talking about how they used AI to be able to get to the concepts faster, and curate from static art to digital art to really make these beautiful multimodal boards to bring this to life faster. But it wasn't the core of the idea. They had thought... they had used their brains to come up with the idea.
+
+You know, it's interesting, in our newsroom, we do a lot of first drafts with AI—of art, not writing. It lowers the stakes on saying things are good ideas or bad ideas, and just that has empowered people to have more ideas. 
+
+I see a lot of that. I would challenge you, though; I think at some point the bottom end of the creative, the UGC world, that stuff gets taken over.
+
+For me, everyday creative—I'll give you an example. Product display pages when you search on Walmart or Amazon, that page that gives you all this information. If that is not done with robots, you're not doing it right, because that is like looking at the back of packaging. 
+
+And if you really do it right, you can make it dynamic so it knows what you bought the last time, and it can be magical. But that's like everyday creative that we need in order to get to personalization. We should be using those tools to be able to do that, versus someone making those in an analog world, which is where we all started. So for some things, yes, but when I think about big creative and storytelling, it still needs humans.
+
+Yeah. I've asked you about GEO several times. I'm asking you in lightning round format. Is this just another wild goose chase? GEO? 
+
+Yeah.
+
+No, I think it's... well, I think for certain platforms, it's a recast of search. We're seeing this happening where you need to be able to be... instead of being found, you need to be known for. So that's the GEO response. 
+
+But I also think it's a better curation of information. It's harder work on marketers because you need to be figuring out how you are leveraging Reddit or all these other different places so that you are showing up in a positive way with the LLMs. But I do think if we've all been talking about the concept of personalization at scale, we should be delivering on that, and GEO allows us to do that.
+
+Have you had to change your SEO practice to account for that?
+
+We've had... talk about a practice that you thought was not going to be... you know, when you look at the capability you have and what you don't think is going to be a high-growth engine, our SEO team has exploded. 
+
+In addition to new websites, this is a big one. And that is really a conversation around influence. So it's how you're showing up and how you're also influencing LLMs when you actually get into that.
+
+Is that something you can measure? I worry that LLMs are inherently sort of non-deterministic; every result is different. Do you have a system for measuring those results?
+
+I think we do. We do have an audit format to see what your share of voice is within that, so you can sort of identify where you are in the moment. But it's a movable feast in comparison to share of voice for search. 
+
+It is something that we have an audit for, so we can start to see what the different levers are we need to be pulling. And by the way, the LLMs are also fed by different things. Recently, one of the new ones is long-form YouTube content. That kind of makes sense; that tracks. Why do you think we all make podcasts now? Everyone's just trying to get to three hours of YouTube content.
+
+I don't know if you can have a lightning round question that starts from a place of existential dread, but here we go. I feel like we're all living in Adam Mosseri's post about customizing the Instagram algorithm two weeks ago. This is maybe one of the most important posts in the history of media. I'm not kidding, and of course, he issued it as an Instagram carousel—one of the least consumable forms of media that you can possibly have. 
+
+It's also on Threads if your brain is broken and you use Threads; you can go look it up there. But it's very long, and it's about how offering the ability to customize the algorithm was previously impossible because no one could describe the series of matrix multiplication equations that led to your algorithm showing you a piece of content. Except LLMs can now, right? So it can tell you why you're seeing content in a very direct way, and then you can talk to the LLM and it can customize your algorithm for you. 
+
+And he said this is great and we think this will give people a sense of agency. And then he went on and he was like, &quot;Soon I will customize all of Instagram for you, and the app will be different for every single person. Some of the experiences will be interactive, some of the... literally the UI controls will be different. How we organize everything will be different, and you can see how this is the obvious future for us.&quot; 
+
+And then he went on again and he said, &quot;This might be bad. This might ruin the shared fabric of truth that we all rely on every single day.&quot; Which, for a Meta executive, is remarkably prescient. But he didn't say he was going to do anything about it. He was just like, &quot;Here's what I'm going to do to you.&quot; 
+
+I look at all of Cannes and I look at all of our talk about the creator economy, of measuring the data, and I say, &quot;Adam Mosseri is going to make Instagram different for every single person.&quot; That is his stated goal. He said it two weeks ago, and he knows that this might distort literally our shared sense of reality, the media experiences we all have. This is the lightning round question—it was a big build-up to a lightning round question. Is that good?
+
+It's terrible.
+
+Is there anything we can do about that?
+
+Not engage in it. I mean... 
+
+How do you not engage in Instagram? 
+
+If I told you about my... you know, my oldest stepson who is absolutely analog, that's why. I think we are seeing more and more consumers... the more you see that, the more you're like... think about it. If you sat down in front of your TV and it was like, &quot;We've made all these decisions about you, and you're only allowed to do this based on what feels like Black Mirror.&quot; If that happened to you, you would say, &quot;I'm not going to engage in this anymore. I'm going to go read a book.&quot; 
+
+And I think it's also counter to the value proposition of a social platform around community. It was designed to make this connected world, so that is the most disconnected world. People are lonely and isolated, so the more you're just in your doomscroll, it will be terrible. We need shared community. 
+
+I think one of the things that's really interesting and a bright spot about creators is that creators show up and they have a community. They listen to their communities. They're not influencing; they're talking to their communities in a way, and brands that do this right are really bringing community along. It's why we're seeing the rise of IRL. People want to get together and talk about things.
+
+Is it just going to be that sort of competitive pressure that keeps them honest, that keeps them from... like, I look at the creator economy and I'm like, Instagram is a load-bearing part of the creator economy. 
+
+Yes, right.
+
+Like disrupting that, maybe you break the whole thing. What keeps them honest? What keeps them from going down this path that they've very clearly said they want to go down? Is it just people switching away?
+
+I think people switching away. I think, you know, when brands stop putting media dollars there, all of those things together might... you might realize like, &quot;Wow, they're not buying what I'm selling, and this is not going to work for me.&quot; I mean, there are plenty of platforms that are no longer, if you think about it. 
+
+Yeah. Big Blue Facebook is there for my parents, even on its own platform. This one's really easy. What's next for Digitas? What should we be looking for this year?
+
+We are very much focused on marketing systems and how we are helping brands build out their growth engines so that it's not just about your media needs, your creative needs, or your CRM needs. It's how we can really make all of those different capabilities work together so that it's easier for our brands to grow. 
+
+Okay, great. Thank you all so much. We're out. 
+
+Thank you. 
+
+Thank you.
+
+I'd like to thank Amy Lanzi for taking the time to join Decoder, and thank you for listening. I hope you enjoyed it. Do let us know what you thought about this episode, or really anything else at all. Send us an email; we're at decoder@theverge.com. We really do read all the emails. 
+
+You can also hit me up directly on Threads or BlueSky. If you like Decoder, please share it with your friends and subscribe wherever you get your podcasts. Decoder is a production of The Verge and part of the Vox Media Podcast Network. We'll see you next time.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
