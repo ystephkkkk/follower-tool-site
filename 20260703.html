@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Friday, July 3, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260702.html">&larr; Jul 2</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Friday, July 3, 2026</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=xyyMC6x5NW0" target="_blank" rel="noopener">Exclusive interview: Treasury Secretary Scott Bessent on Trump accounts, Trump's crypto gains, more<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_niBFv49gSx4rr1afMZU_Pv7SeuPKO2SMHvv0Ar7OKxM4o=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CBS News</b><span class="subs">(7.0M)</span></span><span class="dot">&middot;</span><span>10:25</span><span class="dot">&middot;</span><span>21.6K views</span><span class="dot">&middot;</span><span>2026-07-03</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a> <a class="chip" href="index.html?q=%22Kelly%20O%27Grady%22">Kelly O'Grady<span class="chip-desc">Reporter, CBS News</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent announced a new Treasury feature allowing philanthropists to donate public stock directly to the &quot;Trump accounts&quot; wealth-building initiative for children.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Bessent also addressed persistent economic anxieties, asserting that recent inflation...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
+<p>Treasury Secretary Scott Bessent announced a new Treasury feature allowing philanthropists to donate public stock directly to the "Trump accounts" wealth-building initiative for children. Bessent also addressed persistent economic anxieties, asserting that recent inflation spikes are temporary and that real wage growth is poised to return.</p>
+<h3>The "Trump Accounts" Wealth-Building Initiative</h3>
+<ul>
+<li><strong>Stock Donation Launch:</strong> The Treasury has established a mechanism allowing philanthropists, foundations, and corporations to donate public stock directly to Trump accounts, increasing the pool of capital available for distribution to account holders.</li>
+<li><strong>Program Structure:</strong> </li>
+<ul>
+<ul>
+<li><strong>Seed Capital:</strong> Any child born during President Trump's term receives a $1,000 seed investment from the Treasury.</li>
+<li><strong>Targeted Contributions:</strong> Philanthropists can target donations to older children (up to age 18). High-profile donors (e.g., Susan and Michael Dell) are structuring donations by age and focusing on zip codes outside the top 20% of income levels.</li>
+<li><strong>Compounding Growth:</strong> Bessent projects that with state-level matching and long-term compounding, an initial $1,000 investment could grow to $5,000 by age 18 and potentially reach $300,000 to $500,000 if rolled into an IRA by retirement.</li>
+</ul>
+</ul>
+<li><strong>Addressing the Wealth Gap:</strong></li>
+<ul>
+<ul>
+<li><strong>Market Participation:</strong> Currently, 38% of American households hold no investments in U.S. equity markets. The program's long-term goal is to drive this percentage to zero.</li>
+<li><strong>Adoption Rate:</strong> Out of 70 million eligible children, more than 6 million accounts have already been opened.</li>
+</ul>
+</ul>
+<li><strong>Financial Literacy:</strong> The Treasury has launched 15 educational modules on `trumpaccounts.gov` to teach children and parents about market concepts, such as the power of compounding.</li>
+</ul>
+<h3>Inflation, Energy Costs, and Consumer Relief</h3>
+<ul>
+<li><strong>Geopolitical Impacts:</strong> Bessent attributes the recent rise in inflation to the conflict with Iran, describing it as a temporary headline spike rather than structural core inflation.</li>
+<li><strong>Gasoline Prices:</strong></li>
+<ul>
+<ul>
+<li><strong>Labor Day Target:</strong> Bessent expects gasoline prices—currently averaging around $3.50 per gallon in many states—to retreat toward $3.00 by Labor Day.</li>
+<li><strong>Retailer Pressure:</strong> The Treasury is actively "nudging" major gasoline retailers to pass lower wholesale oil costs down to consumers, warning that the administration is actively monitoring pricing behavior.</li>
+</ul>
+</ul>
+<li><strong>Global Oil Supply:</strong> Despite threats of disruption in the Strait of Hormuz, Bessent notes that U.S. Gulf production of 5 to 10 million barrels a day has successfully kept global oil prices in check.</li>
+</ul>
+<h3>Wage Growth and the Economic Outlook</h3>
+<ul>
+<li><strong>Real Wage Declines:</strong> While acknowledging that annual wage growth (3.5%) is currently lagging behind inflation (above 4%), Bessent expects this trend to reverse as energy and commodity prices continue to fall.</li>
+<li><strong>Dual View of the Economy:</strong></li>
+<ul>
+<ul>
+<li><strong>Market vs. Main Street:</strong> Bessent addresses the gap between strong stock market indicators and the daily strain families face from high grocery, rent, and borrowing costs. </li>
+<li><strong>Forward-Looking Markets:</strong> He explains that the stock market reflects future expectations that inflation will normalize and interest rates will decline.</li>
+</ul>
+</ul>
+</ul>
+<h3>Cryptocurrency and Administration Ethics</h3>
+<ul>
+<li><strong>Ethical Concerns:</strong> When questioned about financial disclosures showing cryptocurrency as a major source of President Trump’s personal income while the White House shapes crypto policy, Bessent dismissed concerns of a conflict of interest.</li>
+<li><strong>Innovation Mandate:</strong> Bessent characterized the administration as an "innovation presidency," stating that the development of digital assets, AI, and tech ecosystems ultimately benefits all Americans.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"38% of American households have no investment in our great equity markets. And we want everyone to share in the bounty that is US innovation, our capital markets... over time I would think that that 38% number would move towards zero."
+— <strong>Scott Bessent</strong>, Treasury Secretary
+</blockquote>
+<blockquote>
+"The stock market lives in the future, right? So what the stock market is telling us is presumably what I am saying today: that we'll get to the other side of this, rates will come down, and then we will be back to real wage gains."
+— <strong>Scott Bessent</strong>, Treasury Secretary
+</blockquote>
+<blockquote>
+"We're trying to give the gasoline retailers a little bit of a nudge. We're telling them we're watching them."
+— <strong>Scott Bessent</strong>, Treasury Secretary
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">So first of all, thank you so much for sitting down with us. Exciting weekend. Very exciting. And you made an announcement today about the Trump accounts, that people will be able to contribute public stock to the Trump accounts through the Treasury. So why was this so important? 
+
+Well, there are two components to the Trump accounts. There are any child born during President Trump's term is going to receive a $1,000 seed investment from Treasury. But we also have great philanthropists, foundations, corporations who want to donate directly, and that could be for any of the children from age 0.1 up to 18. So with this, they could actually donate—a shareholder, large shareholder in a company can donate his or her stock directly into the accounts, and it'll be distributed to all the account holders. 
+
+So more money, more money available. Well, more money, but the point is—and and we may have talked about it when I saw you at the launch—was it's not just the thousand dollars. It is for the older children, too. And many people are doing it, you know, for instance, Susan and Michael Dell are doing an age component, and then for zip codes that are not in the top 20% of income zip codes. 
+
+So I've heard you describe the Trump accounts as a way to build wealth for children who otherwise wouldn't have access to investing. So what's the benchmark for success here? Well, a couple of things. We've already got over 6 million accounts open. So and there are about 70 million eligible children. So we're off to a running start in getting that up. 
+
+And there are going to be two components here. 38% of American households have no investment in our great equity markets. And we want everyone to share in the bounty that is US, inner innovation, inner capital markets, the—in this economic engine, greatest in the history of the world. So over time, I would think that that 38% number would move towards zero. 
+
+And then the other thing, too, is financial literacy. So right now at Treasury, we've got 15 learning modules that you can go to trumpaccounts.gov and see them, because the important thing to remember, too, is many of these families will have had no exposure to the equity markets. So some of the modules are for the children, and they're age-related. And then many of them are for the parents. 
+
+And I think this is going to be a real-time financial literacy learning experience because you'll be able to see the account on your cell phone, and I think this is going to be one of the great real-time learning experiences in the history of the US. And so, picking up on that, you know, specifically, what are some of the things that you are trying to share to educate folks about the opportunity but also the risks? Because this, as you say, could be the first time that these parents and therefore these children are exposed to the idea of investing.
+
+Well, we want them to really understand the power of long-term compounding, that you own a share of a company. You know, many people have bank deposits. You know, they're used to getting interest, they're used to paying interest. So what we want them to understand is, what does a piece of the action feel like? 
+
+Hmm, it's a good way to phrase it. You know, the sort of what what you were getting at when you were talking about having investments, having asset ownership—that's part of the wealth gap, right? And you know, traditionally, though, it's not just about what assets you own in terms of the stock market. It's also home ownership and inheritance. And so, you know, some critics might say, &quot;Well, a thousand dollars, what is that going to do without broader systemic changes?&quot; 
+
+Well, that's wrong because again, you know, I think in some states, because many states are also going to contribute, that a thousand dollars would turn into five thousand when the child turns 18. They could then roll it into an IRA that could be between three and five hundred thousand dollars at retirement. So but that's just with the initial seed contribution, and I would expect that we are going to see, again, from these philanthropic families and institutions and companies, I would expect that we would see the lower income profile families actually, the accounts will be topped up more. 
+
+So I want to pick up on on that piece about lower income, because we're talking about a program that is designed to take advantage of long-term market gains. But many families are seeking more immediate relief, especially when it comes to prices. Last time that you and I spoke in January and had the privilege to talk to you about this, I remember you said to me that the results regarding prices, and I'm quoting, &quot;are starting to kick in right now.&quot; 
+
+Since then, we have had a war with Iran, and inflation is on the rise. As Fourth of July weekend, people are driving to their holiday celebrations, their cookouts, and they're seeing gas prices that are higher than a year ago. They are going down, though. So what do you say to those families that are looking for that more immediate relief? 
+
+Well, again, that isn't the purpose of the Trump accounts. What I say to those families is what I've been saying since the Iran conflict started. We're going to get to the other side of this. Inflation's going to come back down. It's largely dominated, as you said, by gasoline. You know, in many states, we're back to around 3.50. I think we can get back to three dollars, hopefully, maybe by Labor Day. 
+
+And gas oil prices are actually lower than they were on February 27th, when the conflict started on February 28th. So gasoline prices are a little stickier on the way down. We're trying to give the gasoline retailers a little bit of a nudge. We're telling them we're watching them. And we've had some good uptake from some of the bigger retailers in terms of what they want to do for consumers. 
+
+And look, we understand that previous administration, it was the worst inflation in 47, 49 years, and we're at a very high level. But we had had, before April, we had seen real wage growth for working Americans every month during President Trump's presidency, and I would expect, maybe even as soon as next month, we will go back to that. 
+
+Well, so that brings up the jobs report that we got today, and so it was stable growth and you look at, you know, sort of a three-month horizon. But I want to pick up on that wage growth point because annual wage growth is 3.5%, inflation's running above 4%, and as you said when we talked in January, that was one of the wins that you were celebrating, that there has been that real wage growth. There isn't now, so when is that going to come back? 
+
+But but again, this is a short-term spike. We're going to probably see it come down as soon as this month. You know, we've seen oil prices down, we've seen energy prices down, and what we haven't seen is the inflation move into core inflation, as opposed to like the noisier headline inflation. So I would expect that perhaps as soon as this month we're going to see real wage gains. 
+
+And is that though dependent on achieving a deal? Because, I mean, Secretary, I watch the oil markets. That's like, I watch them every morning, and at the hint of a deal, it comes down; at the hint of a conflict rising, it goes up. But that's not right anymore because even before we had the deal, we're getting 5, 10 million barrels a day out of the Gulf. 
+
+So again, oil prices keep going down. The Iranians try to say some crazy things—we're going to do this to the Strait, we're going to do that in the Strait. I think they're getting very frustrated, and we saw oil prices down again substantially today. Labor Day comes around, I'm going to I'm going to call you up, I'm going to say, &quot;Secretary, let's let's rehash this.&quot; Okay, great. 
+
+Something else that I wanted to ask you about: the President's financial disclosure showed that crypto had become a major source of his income while the administration is shaping crypto policy. Even if the White House says there's no conflict of interest, which is what we've heard, is there an appearance problem when so many folks are struggling? 
+
+Well, again, I don't think there's an appearance problem. The the President, this is an innovation presidency, so whether it's digital assets, whether it's AI, whether it's everything that is going on in the tech ecosystem, you know, all Americans are benefiting from that. 
+
+I have one more question for you. When you look at the economy through market returns, it's quite strong. But when many families look at it through groceries, gas, rent, borrowing costs, they feel strained. Which view do you think is more the real view of the economy? 
+
+Well, the stock market lives in the future, right? So what the stock market is telling us is presumably what I am saying today: that we'll get to the other side of this, rates will come down, and then we will be back up the to to real wage gains. So both can be true. And if someone can't wait until the future? 
+
+Well, again, that we're seeing prices come down, and we have seen, you know, we saw an elevated level of prices, and we we are doing everything we can to get them down. Very final question. Last time we talked, you and I went viral because you revealed that your dark secret is that you drink Dr. Pepper. Has Secretary Kennedy talked to you about that since? 
+
+He hasn't, but my children have. So I I am now, might as well a little thinner, so it's diet Dr. Pepper in the morning now. Diet Dr. Pepper. So, and that was not a paid ad. Not a paid ad. Secretary, really appreciate your time. Thank you for sharing about the Trump accounts and the broader economy. Good to see you. Good to see you. Thanks.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
