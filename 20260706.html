@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Monday, July 6, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260704.html">&larr; Jul 4</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Monday, July 6, 2026</h1>
+            <p class="day-sub">3 videos &middot; 3 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=EmvpSL6s0W0" target="_blank" rel="noopener">AI and Jobs Series: What one company stopped doing - an HR exec weighs in<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/IZt6rJxlvGmTE1lxo9UNtYXzr_AaJ75YtTsVruXB8FKAPbg6SMJiaxZ3i5PKmB4LLWBGNKOUqw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>World Economic Forum</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>27:57</span><span class="dot">&middot;</span><span>293 views</span><span class="dot">&middot;</span><span>2026-07-06</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Cassandra%20Pratt%22">Cassandra Pratt<span class="chip-desc">Chief Human Resources Officer, Progyny</span></a> <a class="chip" href="index.html?q=%22Barry%20O%27Reilly%22">Barry O'Reilly<span class="chip-desc">Author</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>As AI automates rote tasks, organizations must transition from static job descriptions to fluid, skill-based roles while intentionally reinvesting saved time into high-value human relationships and strategic &quot;unlearning.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">&quot; Cassandra Pratt, CHRO of Progyny, emphasizes that...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
+<p>As AI automates rote tasks, organizations must transition from static job descriptions to fluid, skill-based roles while intentionally reinvesting saved time into high-value human relationships and strategic "unlearning."</p>
+<h3>AI Implementation and the "Top of License" Philosophy</h3>
+<p>Cassandra Pratt, CHRO of Progyny, emphasizes that AI transformation is not about replacing workers, but about redistributing tasks to enhance professional fulfillment and efficiency.</p>
+<ul>
+<li><strong>Work to the Top of Your License:</strong> This guiding principle, used particularly with Progyny’s clinicians, encourages employees to spend more time on complex, high-level intellectual tasks while delegating administrative burdens—like note-taking or data entry—to AI agents.</li>
+<li><strong>Tiered Rollout Strategy:</strong> Progyny introduced AI through a structured roadmap:</li>
+<ul>
+<ul>
+<li><strong>Personal Productivity:</strong> Initial focus on individual efficiency gains.</li>
+<li><strong>Custom Agents:</strong> Transitioning toward building specialized agents and sharing prompts across teams.</li>
+<li><strong>Scheduled Training:</strong> Clearly outlining what will be learned in specific quarters (e.g., Q1 vs. Q2) to prevent employee overwhelm.</li>
+</ul>
+</ul>
+<li><strong>The 5% Efficiency Goal:</strong> The company anticipates gaining 5% of staff time back initially through AI, with expectations for that number to grow to 15–20% as implementation matures.</li>
+</ul>
+<h3>The "Unlearn" Framework and Meeting Culture</h3>
+<p>Drawing on Barry O’Reilly’s book *Unlearn*, Progyny utilizes a "Start, Stop, Continue" framework to sharpen execution and reduce burnout.</p>
+<ul>
+<li><strong>The "Stop" Priority:</strong> Leaders identified operational items and project reflexes that did not move the business forward.</li>
+<li><strong>Meeting Discipline:</strong> Progyny implemented a "No Agenda, No Meeting" policy.</li>
+<ul>
+<ul>
+<li><strong>Agenda Requirements:</strong> Must include context, goals (brainstorming vs. decision-making), and participant roles.</li>
+<li><strong>Empowerment:</strong> Employees are permitted to decline meetings that lack a well-formed agenda.</li>
+</ul>
+</ul>
+<li><strong>Collaborative Problem-Solving:</strong> Pratt noted a shift in workplace behavior: instead of "dropping a problem" on a colleague’s desk, employees now use AI for preliminary research to bring more well-formed positions to subject matter experts.</li>
+</ul>
+<h3>Fluid Job Design and the Rise of the Generalist</h3>
+<p>The traditional, static job description is becoming obsolete in an era where AI-driven workflows evolve rapidly.</p>
+<ul>
+<li><strong>Skill-Based Fluidity:</strong> Job design is shifting from fixed responsibilities to matching specific employee skills with immediate business needs.</li>
+<ul>
+<ul>
+<li><strong>Dialogue:</strong> Leadership must maintain open communication to reassure employees that shifting job descriptions signify positive growth rather than role elimination.</li>
+</ul>
+</ul>
+<li><strong>The Generalist Advantage:</strong> Pratt argues that while specialists remain valuable, "generalists will be the kings of the AI era" because they can connect dots across silos and package AI-generated insights for various audiences.</li>
+<li><strong>Skills Mismatch:</strong> Pratt expressed skepticism about "fixing" the skills mismatch entirely, noting that the rapid pace of AI means training must become an ongoing, experiential process rather than a one-time fix.</li>
+</ul>
+<h3>Building "Superfans" Through Human Connection</h3>
+<p>As AI takes over technical work, Progyny is reinvesting human time into building deeper relationships with internal and external stakeholders.</p>
+<ul>
+<li><strong>Superfans Strategy:</strong> Employees are encouraged to use time saved by AI to understand their "audience" (clients, investors, or colleagues) more deeply.</li>
+<li><strong>Spotlighting Humanity:</strong> Progyny hosts "Spirit Weeks" and "Critical Impact Awards" to showcase employee "crafts"—ranging from painting and yoga to technical skills like Canva—to foster genuine human bonds that machines cannot replicate.</li>
+<li><strong>Intentional Engagement:</strong> Pratt recommends a "walking around" strategy for leaders to maintain physical human connection in a hybrid world, prioritizing active listening over transactional project updates.</li>
+</ul>
+<h3>Strategic Well-being and Future-Proof Benefits</h3>
+<p>Progyny views comprehensive benefits not as "add-ons," but as critical components of a high-performance culture.</p>
+<ul>
+<li><strong>Niche Support:</strong> The company pioneered pregnancy loss leave in 2021 and offers specific support for parents with infants in the NICU.</li>
+<li><strong>Catastrophic Leave:</strong> A flexible leave type designed to support employees during major life traumas that exceed standard 30-day or 90-day policies.</li>
+<li><strong>Financial ROI:</strong> Pratt warns companies against cutting well-being benefits, noting that neglecting mental and physical health leads to higher medical claims and lost productivity that far exceed the cost of the benefits themselves.</li>
+</ul>
+<blockquote>
+"AI allows us to make work like play... you can really focus on the things that people do best, which is building relationships, being creative, stimulating your intellect." — <strong>Cassandra Pratt</strong>
+</blockquote>
+<blockquote>
+"AI shouldn't be making the decision. It should be helping you compile the trends and the data so that then the human can read through it and make the appropriate decision." — <strong>Cassandra Pratt</strong>
+</blockquote>
+<blockquote>
+"I think even in the AI world, you need generalists who can connect the dots across many different areas of the business and help people understand all the different decision-making points before they move forward." — <strong>Cassandra Pratt</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Welcome to Meet the Leader, the podcast where top leaders share how they're tackling the world's toughest challenges. In today's episode, as AI grows more powerful and takes on more rote work, what should humans stop doing? A top HR exec shares one company's story and what it can teach us all in an AI era. Subscribe to Meet the Leader on Apple, Spotify, and wherever you get your favorite podcasts. And don't forget to rate and review us. I'm Linda Lacina from the World Economic Forum and this is Meet the Leader.
+
+Parts of your job are going to change or go away. But instead of viewing that as a negative change, we could view it as a positive change. It allows us to open up space to review different, more technical items more closely.
+
+When it comes to AI, most companies these days have left the experimentation phase. It's not me saying that; that's our recent Chief People Officer Outlook, a survey of more than 130 HR leads sharing how they're responding to the biggest trends and the biggest shifts. According to our latest data, companies are past that conversation stage. They've moved on to broad transformation into strategic, targeted implementation.
+
+Cassandra Pratt knows something about this. She is the Chief Human Resource Officer at Progyny, a fertility benefits management company in its 10th year. We've all heard how AI will free us to do the work that only humans can truly do, and Progyny is taking that seriously, considering what its staff could and should stop doing. They are looking for ways technology will make an actual measurable difference so that the team can invest in the experience of working together to make collaboration stronger and more effective.
+
+She'll tell us all about this and what they've learned in the process, but she'll also share the blind spot that too many leaders might be overlooking as we embrace new ways of working. Stay to the end for my little special game of red light, green light. That's a game where she tells me which hot new work trend will actually go forward. We'll get into all of that, but we'll get started with our Chief People Officer Outlook and some of the big priorities it highlights: sharper AI implementation, upskilling, job design, organizational restructuring, and how that's showing up at Progyny. Here's Cassandra.
+
+Our five-year people goals, which are based on our five-year long-range plan that we announced at Investor Day, are employee experience, transformational leadership, and ensuring our employees have the skills needed to meet the business needs. I think AI transformation is probably the number one piece to that because there are so many components. It involves educating and upskilling your employees to help them—and when I say educating, I mean helping them understand it's not there to replace them. It's there to replace certain tasks or make certain tasks of their day-to-day work more efficient.
+
+Then you have to train them how to use the different tools. We are starting out by introducing it as personal productivity, which is quickly gaining momentum, and then you start to see people building agents, sharing prompts, and building off that and getting really excited about it. I think the AI transformation, while it's a little bit more work upfront to get people bought into it and make sure your organization is ready for the transformation, will ultimately lead to all those other areas being positively impacted.
+
+AI allows us to make work like play; that's what someone on my team said. You are able to take all those rote tasks that you were doing before and turn them into something that an agent can do, enhance your workflows, and then you can really focus on the things that people do best, which is building relationships, being creative, and stimulating your intellect. We happen to have quite a large group of clinicians at Progyny, and so one of the phrases we use is &quot;work to the top of your license.&quot; If you're a nurse, you're able to really stretch your mind and be able to help people with complicated issues as opposed to entering in the notes and some of the other day-to-day pieces that take a lot of time.
+
+Each of those areas complement each other. How important is it to sort of drive that home to people that all of these areas are important all at once? And by the way, you are supposed to do your day job, too. I think having a really clear change plan and outlining this is what we're doing is vital. This is how it ties in with any other initiative that we're working on. We understand there are a lot of demands on your time, so this role is going to be scheduled for, let's say, Q1, and then we're going to be doing training on something else in Q2, but you're going to have practical time to practice it. 
+
+Really letting employees know what the road map looks like—whether it's a quarter, half a year, or a full year—is important. If you don't show them all the pieces and you just tell them all these great ideas, it can be very overwhelming. I think making it clear and outlining how you're going to approach this and what the steps are, and also why it matters to them, is key because everybody is sitting there going, &quot;All right, what's in it for me?&quot;
+
+If you hadn't identified these goals and also hadn't sort of created a system where it's broken down for people to help them take them through that journey, what would happen if you guys weren't tackling this right now? I think you would really see the burnout from employees' workloads increase. I know for Progyny, we're still growing very rapidly, and the hiring market keeps going through lots of different changes and shifts, so you will see people taking on responsibilities of a couple of individuals or end up stepping into a not necessarily a new role, but a new handful of tasks that get tacked on to what they're already doing, and it becomes really overwhelming. 
+
+I think you also have to be cognizant of the current world economic issues and what's going on, because when people go home from work, that's what they hear. That's what they hear from their friends, their family, and on the news, and those are added stressors.
+
+How will Progyny be different in five years once you guys have these changes, and they're robust and mature? Well, we are celebrating our 10th year in market, and it is also my 10-year anniversary, so it's a great question. I think AI is going to be one of those things that really transforms businesses like the internet did. Early on in the internet growth, no one was quite sure what it would do. I think we're a little bit more ready for AI, at least in the aspect that we've gone through a big transformation in the past and are open to the fact that we don't know what we don't know.
+
+I could foresee people really automating much of those everyday rote tasks and being able to access information much more quickly. So, for instance, a PCA when they're talking to a member, they are able to pull up through our knowledge management system all of the information they need and quickly have it on hand to have a more thoughtful conversation in a shorter period of time with our members. That will allow our members to then go back to their day and feel more comfortable that it wasn't the half-an-hour or 45-minute call they thought it was going to be; they got the answers they need, they feel more prepared, and overall, it provides a much greater level of service across the board, internally and externally.
+
+One of the big shifts that is noted in the CPO survey is that we're moving from this sort of broad transformation to a real sharp execution—more of an implementation phase. Conveniently, at Progyny, you guys are encouraging people to ask themselves, &quot;What should I stop doing?&quot; which is one of my favorite questions. Can you tell me a little bit about this and how it came about? 
+
+Yes, we work with a number of different consultants, and one of the consultants we had brought in, Barry O'Reilly, wrote a book called &quot;Unlearn,&quot; which is just about this: how do you unlearn things and stop what you're doing? So, we did a whole exercise with our senior leadership team called &quot;Start, Stop, Continue,&quot; which many people are probably familiar with. We really looked at what we are doing today. It could be operational items; it could be maybe you're not spending enough time with your employees in a one-on-one talking about how they're doing and what is there for the future. You're just doing &quot;project reflex.&quot; We came up with a lot of different examples of what we didn't think was helping us move the business forward and was really taking up a lot of time, and we wrote them all down and started to commit to eliminating those over a period of time.
+
+We have changed some of our meeting culture, which I think is really important. We also—and this is true for me—used to have a culture of, &quot;All right, I don't know the answer, I'm going to go talk to this person,&quot; and I'm just going to come with my question and sit there and wait for them to work through it with me. Now, with the rise of AI, we can actually go to our GPT and do some research. This happened to me recently. I had a state-specific issue that was fairly complicated; I didn't know anything about it. I did a bit of research on a couple of different GPTs and then brought it to the subject matter expert within the company and said, &quot;Here's my question, here's what I found through AI. Can you review it and help me create a more well-formed position on it?&quot; It creates more collaboration, which I think everybody appreciates rather than someone coming and dropping a problem in your lap. You're really working together to solve something and educating yourself and others more quickly and at a much higher level, too.
+
+You said you guys were shifting a little bit with your meeting culture. Meetings are always a moving target. What kind of changes have you guys made to your meetings? There is no silver bullet, and we've had ebbs and flows. Sometimes it goes great, sometimes we revert back a little bit, but we are really making sure we have a well-formed agenda before a meeting. People are allowed to say, &quot;I can't join the meeting if there's no agenda,&quot; because they have other things they need to work on. 
+
+An agenda is not just a short bulleted list; it's more context. It explains who's going to be in the meeting, what we're trying to achieve—whether it's a brainstorming meeting or a decision-making meeting—and lists the key pieces. That way, walking into it, even if there isn't a pre-read, they've given it a little bit of thought, and you can follow that agenda to have a more timely conversation and not get off track. Let's be honest, it's very easy to have something come up in the course of conversation and end up directing the meeting into a different place than what you wanted to achieve.
+
+Changes like this have always been elusive, yet so important. Why are they even more important in an AI era? Because business is moving quickly. If you don't stay focused and if you don't spend the time to be very detailed, you're going to end up getting left behind or being on step two when everybody else is at step five. It's also very important to be very focused and specific because AI learns from us. If we are not clear and organized and well-outlined with what we're doing, you're going to build off of that, and it makes it more difficult for you to implement really useful AI solutions. It will end up being subpar if all of your prep is subpar.
+
+Is there something that you have stopped doing that you just swear by? My example of not just coming with my question and dropping it into somebody's lap is key; I really try to do some research before I present something. That's really critical. Also, it's very easy to have a day full of meetings where you're going from one office to another or sitting in your office doing Teams or Zoom calls. I have stopped doing that all day so that I could actually start walking around and saying hello to people more. Whether we're on three floors, I make the time, even if it's first thing in the morning, to go and say hello to other people. It really energizes me, too; it's nice to have that human connection before you dive into work for the day. Everybody needs a chance to walk around a little bit.
+
+One of the big themes from the report and the survey results is that companies will be looking to get more out of the teams that they have. I think that ladders right up to this &quot;super fans&quot; mindset you guys have. Can you tell me a little bit about that? Because &quot;super fans&quot; isn't just about customers; I think what I'm interested in is making internal employees super fans of the company, of their manager, and of their teams. What is that and why is it so important?
+
+It was born out of our AI transformation. As we started to realize, initially, we're going to have 5% of our time back, and that will continue to grow over the year—whether it's 10, 15, 20, or hopefully even more of that. What are people going to do with that extra time? If you're working very long hours, part of it should be cutting down your work hours. But if you're working regular work hours, what else can you do, and what can you do to help yourself stay stimulated? That's where we came up with &quot;super fans.&quot; We wanted to let people understand that the time they spend with their customers—and your customers can be employees, managers, internal or external stakeholders—really matters because that's what humans are good at. Humans are good at building relationships. The more time you spend with people, the more you ask questions, and the more you understand, you are going to create super fans, but you're also going to develop a much better understanding of your audience. For me, that's predominantly our employees, but it also could be our investors, our providers, all of our clients, prospects, and members. 
+
+What are some strategies or tactics that people have been putting into place that have been working to make this possible? It's newly launched for us, and this week is our Progyny Spirit Week. Spirit Week is about showing your appreciation for the company and for other employees. There's a kudos board, and we have a number of different values, like Critical Impact Awards, that we share, spotlighting different employees by having them show a craft that they're great at. Their craft could be working with Canva, it could be painting; the sky's the limit. Yoga, cooking, whatever it might be, we spotlight people as real humans and allow them to show what makes them shine. That gets internalized by them, the energy is also felt by others, and you're able to capitalize on that and build on it, conversation by conversation.
+
+Is there a question people can ask to make sure that they are tapping into people's talents, making the experience of the workday really powerful and great? I would say start with, &quot;How well do I know the person I'm talking to?&quot; If the answer is &quot;not that well,&quot; take some time to ask basic questions. It could be, &quot;Hey, what did you do last weekend?&quot; and then build off that. Really actively listen to them and ask about family, pets, or if they said they went for a hike, ask, &quot;Where did you go?&quot; 
+
+When we were talking about the importance of sharpening implementation, that also works with job design. Why is this focus so important, not just for productivity, but for thinking about how your role fits in with the overall climate and the company's goals? The ways of old job design, where you have a job description and a set of responsibilities and that's what you do every day, is really going by the wayside. Jobs are much more fluid. I think that will only increase in the future as AI starts to do different things and enable different workflows in ways that we haven't yet imagined.
+
+You're able to match the skills of a person to what is actually needed from a business. So it's not that your job description said XYZ; it's, &quot;Maybe you're doing X, but we realize you have skills in A, and this project really needs somebody that knows A.&quot; Let's pull them over. Helping employees become comfortable with that fluid structure is key, because oftentimes people are concerned when their job description starts to change. They wonder what it means for them and if their role is going to go away. Keeping an open dialogue and helping people really understand that the fluidity is a positive thing and will help them utilize their skills best is essential.
+
+Can you, for those who aren't familiar with Progyny, very briefly say what you guys do? Progyny is a fertility and family-building company. We've been in market for 10 years. We started out offering a self-insured fertility benefit to large employers and have expanded that now into a full suite of women's health products—menopause, preconception, pregnancy, postpartum—and now we're launching something called Progyny Select, which will open access for fully insured markets to the fertility benefit. 
+
+Progyny has also been a leader on some benefits to your employees. You guys offered pregnancy loss leave in 2021, long before California made it mandatory. You also have leave for people who have a baby in the NICU. Why are benefits like these so important for future-proofed teams? I think they are core; they are not an additive. When people understand that they have the support when they go through different traumatic events, they're able to take the time to regroup and come back and be the best version of themselves. We also have something called catastrophic leave, because we all know that leaves oftentimes are too short for what we're trying to achieve. We added this new type of leave to be able to extend and support our employees when you just don't have a hard stop after three months or one month. We really believe in caring for our employees and being able to help them when they need us most because they do the same for us when they come to work every day.
+
+Right. There's a shift that was noted in the survey that maybe there would be a little bit less focus on high competition for talent as some companies might be so distracted by the AI needs that they are not putting in new benefits. What would you say to companies who lean off benefits for well-being? I would say it may seem like an easier or less expensive decision for right now, but in the long run, it's going to end up costing you time. It'll probably cost you money because, outside of well-being, issues end up going to something more extreme and hit your medical insurance and your medical claims. Neglecting those elements is really detrimental to employees because it will hurt them in the long run and it will end up hurting your company, both from a productivity standpoint and from that bottom line financial, when you start seeing different types of medical and mental health claims rising on the back end. Those are far more expensive than the well-being benefits are.
+
+Do these benefits ladder up to this larger trend of making the most of the team that you have? I think it is true that work has changed. Employees believe that they need more from their employers than they did 20 years ago. It's not just &quot;go to work and then go home.&quot; These types of benefits help show employees that they are supported, that you're caring for them, that they can have the flexibility to take care of their life needs, and then come back to work. Work-life balance is not really something you hear about as much anymore; it's sort of work-life integration. 
+
+In a hybrid work environment, there's also the element of letting people have a certain amount of time in the day when projects and meetings have to happen, but then they go take care of the other things they need to with their own health or their family and then can always get back online. It goes to the fluidity of jobs as well and understanding what your employees need and supporting them, because they are your biggest asset.
+
+Cassandra and I also played a fun little rapid response game that I like to call &quot;Red Light, Green Light.&quot; Basically, I mentioned some fact that we have all heard about what's ahead for the future of work, and she held up a green card or a red card to let me know if she thought it would move forward. The first prompt I gave her: &quot;Four-year degrees will become obsolete.&quot; She raised a red and a green card. Here's why: I think it really depends. In something like finance, law, or medicine, a four-year degree as your start to have that technical training is really important. For many other roles, actual work experience and life experience is far more valuable than a four-year degree.
+
+Is the white-collar job over? Should we all just become plumbers? No, I don't think we should all become plumbers. Although many of us should become electricians, because with the rise of AI and data centers, electricians are going to be in high demand.
+
+Allay people's fears about all of these trends that we've been hearing about. Why is it that we shouldn't all just go to a super analog profession? I think that it's really true that AI is going to automate and do some of your tasks. Parts of your job are going to change or go away, but instead of viewing that as a negative change, we could view it as a positive change. It allows us to open up space to review different, more technical items more closely. We are still the decision-makers when it comes to AI. AI shouldn't be making the decision; it should be helping you compile the trends and the data so that the human can read through it and make the appropriate decision. You also have the opportunity to build real human relationships, and AI, as much as it may try, is not the same as a human. You need the human face-to-face time to really build those relationships with whomever your customers are.
+
+Is the specialist rather than the generalist going to be the king of the AI era? I will say no. Specialists are clearly hugely valuable, but even in the AI world, you need generalists who can connect the dots across many different areas of the business and help people understand all the different decision points before they move forward. Think about a generalist in HR. We have specialists that focus in compensation, benefits, or learning and development. While those people are hugely important, in the future you need the person who can connect those dots and say, &quot;Here are all the different things that are available,&quot; and then package it using AI for whatever audience I am talking to. If you have everybody in silos, even with AI, you're going to end up missing something.
+
+Your last question: Will we fix the skills mismatch? Let the record show you she put up a red card. She wants to be cautious about how quickly we're going to tackle this. Tell us why. Because skills are always going to change. We will start working on the skills deficit now, and then in the next five years, there's going to be more skills. If we go back to the electricians that are needed now, we know they're needed. I think we have to hire something like 180,000 in the next five years. There are all different types of trade programs going on, but this was a, &quot;Oh no, we should have done this before, now we have to do this now&quot; situation. There's always going to be something like that. While we can train our employees and they can upskill, there will always be something new. That's part of what makes work so interesting and exciting. I think with AI, that &quot;something new&quot; is going to come much more quickly, and so we have to be ready to figure out how to spin up training and experiential training for people in a faster, more effective way.
+
+That was Cassandra Pratt. Thanks so much to her and thanks so much to you for listening. If you know someone looking to stop doing something, send them this episode. If you want more insights just like this one, make sure that you click follow or subscribe on your podcast platform. This is part of a three-part series. You can dig in next week on navigating upskilling's messy middle. I mentioned our Chief People Officer Outlook; I will have a link in the show notes, and you can find a transcript of this episode as well as transcripts from my colleagues' podcast, &quot;Radio Davos,&quot; on weforum.org. This episode of Meet the Leader was produced and presented by me, with Jared Johansson and Taz Kellaher as editors, Eve Shaner as studio engineer in New York, and Gareth Nolan driving studio production. That's it for now. I'm Linda Lacina from the World Economic Forum. Have a great day.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-1">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=co2Omyo7Ryo" target="_blank" rel="noopener">Who Wins the Midterms &amp; What It Means for Markets with Dan Clifton | The Real Eisman Playbook Ep 67<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(183.0K)</span></span><span class="dot">&middot;</span><span>45:26</span><span class="dot">&middot;</span><span>8.3K views</span><span class="dot">&middot;</span><span>2026-07-06</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Real Eisman Playbook</span></a> <a class="chip" href="index.html?q=%22Dan%20Clifton%22">Dan Clifton<span class="chip-desc">Political Analyst, Strategas</span></a> <a class="chip" href="index.html?q=%22Kevin%20Warsh%22">Kevin Warsh<span class="chip-desc">Economist</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The 2026 midterm elections are trending toward a split government with Democrats favored to flip the House, while the Federal Reserve prepares for a &quot;regime change&quot; under Kevin Warsh focused on shrinking the $6 trillion balance sheet rather than immediate rate cuts.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1"></div>
+                    <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
+<p>The 2026 midterm elections are trending toward a split government with Democrats favored to flip the House, while the Federal Reserve prepares for a "regime change" under Kevin Warsh focused on shrinking the $6 trillion balance sheet rather than immediate rate cuts.</p>
+<h3>The 2026 Midterm Landscape</h3>
+<ul>
+<li><strong>Trump’s Approval Rating:</strong> Currently sits at 38%. Clifton notes that Trump’s approval on the economy went negative for the first time in April 2025 following tariff proposals, turning a former political asset into a liability.</li>
+<li><strong>The House of Representatives:</strong> Democrats only need a net gain of three seats to take control. Clifton predicts they will likely succeed, transitioning the midterms into a referendum on the incumbent.</li>
+<li><strong>The Senate Battle:</strong> Republicans currently hold a 53-47 majority. Democrats need a net gain of four seats for total control (or three if they hold the VP tie-breaker). </li>
+<ul>
+<ul>
+<li><strong>North Carolina:</strong> Likely to flip to Democrats due to a popular former Democratic governor running.</li>
+<li><strong>Maine:</strong> Market odds give Democrats a 60% chance to flip Susan Collins' seat, though her incumbency remains a formidable obstacle.</li>
+<li><strong>Ohio and Texas:</strong> Expected to be highly competitive and expensive races, though Republicans remain slight favorites to hold.</li>
+<li><strong>The "Powell Factor":</strong> Fed Chair Jerome Powell may delay his departure until after the midterms; if Democrats win the Senate, Trump would be forced to appoint a mainstream economist rather than a "MAGA" candidate for the role.</li>
+</ul>
+</ul>
+</ul>
+<h3>The "Warsh Fed" and Monetary Policy</h3>
+<ul>
+<li><strong>Balance Sheet Focus:</strong> Kevin Warsh is prioritizing shrinking the Fed’s $6 trillion balance sheet over interest rate adjustments. The goal is to reduce the money supply—which leads goods inflation by approximately 15 months—to eventually allow for lower rates.</li>
+<li><strong>Privatizing Reserves:</strong> The strategy involves "privatizing" the Fed balance sheet by easing bank regulations (e.g., liquidity coverage ratios), encouraging private banks to hold more Treasuries and absorb the liquidity currently provided by the Fed.</li>
+<li><strong>Market Resilience:</strong> Despite expectations shifting from rate cuts to a possible 25-basis-point hike, the market has remained resilient because the broader economy is stronger than anticipated.</li>
+</ul>
+<h3>Tariffs and Fiscal Stimulus</h3>
+<ul>
+<li><strong>Headwind to Tailwind:</strong> While tariffs were a market drag in early 2025, they have become a tailwind. The effective tariff rate dropped from 11% in October to 7% today.</li>
+<li><strong>Net Fiscal Impact:</strong> The U.S. has collected only $35 billion in net tariff revenue year-to-date while distributing $75 billion in corporate tax cuts and tariff refunds. </li>
+<li><strong>Currency Strategy:</strong> The next phase of "Trump 2.0" trade policy likely involves an aggressive push to lower the value of the U.S. dollar to boost the impact of domestic investment incentives.</li>
+</ul>
+<h3>The 2028 Presidential Outlook</h3>
+<ul>
+<li><strong>Democratic Frontrunners:</strong> Gavin Newsom is the current betting favorite, followed by Pete Buttigieg, who is viewed as a "fighter" by the base. Other contenders include Governors Josh Shapiro (PA), Gretchen Whitmer (MI), and Wes Moore (MD).</li>
+<li><strong>Republican Field:</strong> </li>
+<ul>
+<ul>
+<li><strong>J.D. Vance:</strong> Has a significant head start because Trump is not restricting his campaign activities.</li>
+<li><strong>Marco Rubio:</strong> Seen as a "superstar" who can articulate Trump’s foreign policy to the establishment, though his standing is tied to the success of the Iran conflict.</li>
+<li><strong>Ron DeSantis:</strong> Remains highly active on national issues and is positioning himself for a populist run centered on affordability.</li>
+</ul>
+</ul>
+</ul>
+<h3>Emerging Risks: AI Backlash and Regional War</h3>
+<ul>
+<li><strong>Data Centers as "The New Fracking":</strong> Clifton warns of a growing political backlash against AI data centers due to their massive consumption of land, water, and electricity.</li>
+<ul>
+<ul>
+<li><strong>The Local Trade-off:</strong> In Loudoun County, VA, data centers pay 40% of the education bill, saving average residents $2,500 a year in property taxes—a "public good" narrative the tech industry has yet to master.</li>
+</ul>
+</ul>
+<li><strong>The Iran Conflict:</strong> The war is proving unpopular with Trump’s base, who expected an "anti-war" presidency. </li>
+<ul>
+<ul>
+<li><strong>Oil Prices:</strong> The U.S. and China are both tapping reserves to keep gas below $5.00/gallon to prevent a political breaking point.</li>
+<li><strong>Defense Shift:</strong> The conflict is accelerating a shift in investor preference toward "Defense Tech" (drones/software) over traditional large-cap hardware providers.</li>
+</ul>
+</ul>
+</ul>
+<p>***</p>
+<blockquote>
+"Trump turned his greatest asset, his strength on the economy, into a liability [with the 2025 tariff proposals] and that’s driven down his overall approval rating." — <strong>Dan Clifton</strong>
+</blockquote>
+<blockquote>
+"What Warsh is literally arguing is that we're making a policy choice to have a large balance sheet and high interest rates... we need a lower balance sheet. When we get that, then we can actually start to get rates lower." — <strong>Dan Clifton</strong>
+</blockquote>
+<blockquote>
+"Data centers are the new fracking. It’s the same environmental money being used to oppose them, and the technology industry is behind the ball on the politics." — <strong>Dan Clifton</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">Hey, it's Steve Eisman. Welcome to another episode of the Real Eisman Playbook. So, we began this whole project in early April of last year, and our very, very first guest was Dan Clifton, and he came on just as President Trump had recently announced his tariffs. Dan is the political analyst at Strategas. It was an amazing interview. Could not have been more timely. We had Dan back on a Friday episode talking about the big, beautiful bill, and we've got him back today to talk about the midterm elections, policies, tariffs, the Fed, the next presidential election. It's going to be great, and I'll be back afterwards with some final thoughts. 
+
+Hi, this is Steve Eisman, and this is another episode of the Real Eisman Playbook. So, today I'm very pleased to say that we've got a recurring guest coming back, Dan Clifton, who was actually our very, very first guest. So, Dan is the, I guess for lack of a better term, you're the politics analyst at Strategas.
+
+Well, thank you for having me. It's great to be here. 
+
+So, you were our very first episode. It was, I think, it was April 6th of last year. Every word out of everybody's mouth was tariffs. 
+
+Yep. 
+
+And the market bottomed like 3 days after our podcast. 
+
+Yeah, yeah, yeah. 
+
+And nothing has happened in the world since. 
+
+Yeah, right. 
+
+Absolutely nothing. It's very boring. Thank you all, and we'll see you next week. So, let's start with something I don't know if it's not controversial, but not too emotional, because so much of what's going on is so emotional. 
+
+Yeah. 
+
+Talk to us about the midterm elections, which are coming up. There's the Senate, there's the House. Where do you see things right now? 
+
+Yeah, I think it all goes back to that first podcast. April 3rd was the actual date. Trump did his tariffs in the afternoon and we did your podcast in the morning the next day. 
+
+Was it the 4th? 
+
+Yeah, oh yeah. And stocks were way down. I mean, it was a disaster. 
+
+It was a disaster and that was a very important moment for shaping the midterm elections because that was the moment that Donald Trump's approval rating on the economy went negative for the very first time. 
+
+Okay. 
+
+Think about that, right? During Trump 1.0, Trump had double-digit unemployment during COVID. He had a 30% contraction in GDP and voters never blamed him for the economy during that time. 
+
+Okay. 
+
+That was his greatest strength. 
+
+The economy. 
+
+The economy. Then he campaigns in '24 and he says, &quot;I'm going to end Biden inflation.&quot; 
+
+Right. 
+
+Now he proposed tariffs. But what we began to see after April 2nd, 2025, was that Trump put out all those tariff proposals and his approval rating on the economy went negative right after that and has remained negative. So he turned his greatest asset, his strength on the economy, into a liability and that's driven down his overall approval rating. 
+
+Okay. So, that is the background of how we got here. 
+
+Where is his overall approval rating now? 
+
+38%. Okay. 38% is not a good approval rating. And let me tell you why. Midterm elections are referendums on the incumbent. 
+
+Right. 
+
+It's not about this congressman versus challenger. It's, has Donald Trump made my life better or worse? 
+
+So the midterms are not really local. 
+
+They're not local. 
+
+They're local to a degree. 
+
+Of course. 
+
+The Republicans are going to try and localize it. They're going to make every Democratic candidate the worst human being on the face of the planet. 
+
+Right. 
+
+Okay? The Democrats are going to try and nationalize the election and make it a referendum on Donald Trump. There's a very strong correlation between a president's approval rating and the number of seats they lose in the House over time. 
+
+Okay. So, lower your approval rating. But, let me just give the context. Midterm elections happen in a very systemic or systematic way. Basically, a president comes in, his party's in complete control, their voters are like, &quot;We are going to solve all the world's problems,&quot; and then they have to start governing. And governing is messy. It's ugly. 
+
+And the opposition voters, which in this case would be Democrats, are basically saying, &quot;This is so much worse than what we saw on election day. Trump is doing a million things worse.&quot; So, they get very energized. 
+
+Mhm. 
+
+And the party in power, their voters are like, &quot;Well, we thought you were going to end the Middle East wars, or we thought you were going to slow inflation down.&quot; And they start to become divided. And that's what happened. So, in 2009, it was very clear to us after Obama's great victory that he was going to suffer a very big midterm election loss. And you see a very similar trend happening right now with Trump. And the Democrats only need three seats in the House, and they're probably going to get those three seats in the House. 
+
+Okay. So, you think they'll get the three seats in the House. What about the Senate? 
+
+For market participants, what they really care about is the Senate. 
+
+Yes. I mean, if the House goes Democratic and the Senate stays Republican, people say, &quot;Eh.&quot; 
+
+Yep. 
+
+If the House goes Republican and the Senate goes Republican, that's another ballgame. 
+
+Yeah. So, I look at it and I say to myself, Democrats having complete control of the House and Senate gives them control of the budget. When they have control of the budget, then they have real negotiating leverage with the president. I'll give you an example. 2010, the Republicans won the House, but not the Senate. And we just gridlocked for 2 years till the 2012 election. 2014, the Republicans took over the House and the Senate, and they were getting the crude oil export ban removed from the Obama administration, which was a climate change presidency. 
+
+Right. 
+
+You could see the power of both chambers. And what the Democrats want to do is they want to win both chambers, and they're going to choose accomplishment over ambition. Get some modest changes on healthcare and renewable energy and point to those victories and say, &quot;Hey, give us complete control in 2028 and we'll be able to win.&quot; 
+
+Let me just stop you right there. Let me challenge you on that. 
+
+Yeah, please. 
+
+Because it seems to me that the Democratic Party has moved much more left. 
+
+Absolutely. 
+
+Than people thought. So, if you're saying to me that if the Democrats get both houses, they're going to have a moderate agenda, I challenge you on that. 
+
+Yep. So, let me say that there are really four political parties in Washington. Two in the Republican, two in the Democrat. 
+
+Okay, describe them. 
+
+Right? So, you have the old establishment party on the Republican side and the Democratic side. These are your traditional politicians. Rahm Emanuel was a good example on the Democratic side. Glenn Youngkin on the Republican side. But what you have now is these forces of populism building on the right and the left and pulling the parties further and further away. If you're in a House of Representatives with only a three or four seat majority, it's really hard to govern that way. And that's what we've had the last three cycles. I think Democrats will have a little bit more cushion this time around. 
+
+But what will happen is what can actually pass. And you have to use the budget to get what's going to pass. So, you got a lot of cuts coming to Medicaid from the one big beautiful bill that was scheduled for 2028. Democrats are going to use that budget to prevent those cuts from coming into place. 
+
+Okay. 
+
+They're going to prevent the solar and wind cuts from coming into place. Those are real achievable victories. That does not mean that if they have complete control, that there's not going to be a subsegment of the population calling for like universal healthcare or doing a major climate change plan. 
+
+But they won't get that. They're not going to get that. 
+
+Let's backtrack for a second. Okay, so you're pretty confident the House is going to go Democratic. How do you feel about the Senate? 
+
+Yeah, so I'm mixed on the Senate. Trump only lost two Senate seats in 2018 even though he lost 40 House seats. 
+
+Okay. 
+
+So it's very different to win on a statewide basis than to win in these congressional districts. And it's really hard to beat an incumbent. What we know because we've had special elections since 2024, we've had about 85 of them and 75 of those special elections have moved more towards the Democrats relative to the 2024 election by 11 points. So that's why when you see New Jersey's governor's race or Virginia's governor's race, they move somewhere around 7 to 8 points to the Democrats. 
+
+Okay. 
+
+You apply that and the Democrats won't take over the Senate. 
+
+Will not. 
+
+They'll get close, but they won't take over the Senate. 
+
+So let's talk about the seats that are up. Just remind us, the Senate today is how many Republicans versus Democrats? 
+
+Yeah, so it's 53 Republicans, 47 Democrats when you include the independents who caucus with the Democrats, Bernie Sanders. 
+
+Yeah, so of all the seats that are up for election, walk us through the ones that are the most iffy that could go either way. 
+
+Right, and so the math here is that the Democrats need four. 
+
+They need four. 
+
+Net four. 
+
+Right. 
+
+Okay, and if they pick up three, you have a 50-50 Senate with J.D. Vance breaking the tie. So that's the magic number. North Carolina is likely to go Democrat. And it's a Republican state. You say, &quot;They're running a very popular former Democratic governor.&quot; And the state was only a couple percentage Republican. So if you get that national shift that's there, good candidate quality, they're likely going to win that seat. 
+
+Okay. 
+
+The second seat that the Democrats have their eye on, which again candidate quality will matter, is Maine. And we see what's happening with Maine. You now have an official candidate after last night's primary, right? 
+
+Platner. And the Democrats have to make a choice whether they're going to try and replace him before the July deadline. And I think it would be very hard. He just won with like 70% of the vote. 
+
+Right. 
+
+But they're very worried that Susan Collins is a great candidate. Remember, Susan Collins won in 2020 with Trump losing the state very bad and she being a Republican. She's an excellent candidate. 
+
+So, Susan Collins versus Platner. How do you feel about that right now? 
+
+So, right now the market gives it a 60% chance that the Democrats are going to win that seat. 
+
+Really? 
+
+Yes. Absolutely. It's a very Democratic state. 
+
+Right. 
+
+Republicans do well. There's a congressional district there that's a little bit more blue collar that the Democrats haven't really been able to break. They think with Platner on the ticket, he'll actually do better in that district. You have to understand, Susan Collins is a great candidate. She's been able to win in that state for decades. 
+
+Even with a Republican president who loses that state. 
+
+Right. 
+
+So, I think the race is going to be extremely close. So, now you got North Carolina, you got Maine. Now you're going out to the middle of the country. You have Ohio. Ohio's a 13% Republican state. The country's moved 8, 9, 10. Be competitive. Sherrod Brown, former Democratic senator, on the ticket. And the Republican gubernatorial candidate, Vivek Ramaswamy, isn't running that strong on that ticket. So, there's this belief that the Democrats can win the governor's race and then pull that Senate race above that. So, that's another seat that's important. 
+
+Who's running for Senate? 
+
+Sherrod Brown. And then you have the existing Republican senator who has a very low approval rating. So, when you pull that together, you look at it, you say to yourself, that race is going to be close. Republicans could keep that seat, but they're going to have to spend a lot of money to keep that seat and a lot of money to keep the Texas seat as well. So, that's how the map starts forming. 
+
+Texas. 
+
+Texas, yes. 
+
+That Texas is up for grabs is shocking. 
+
+Right. And Republicans may win by 3% in Texas. 
+
+Right. 
+
+Okay? But, it's going to be close. And the Republicans are divided, and the Democrats, you know, their candidate's not that great. But, like, you know, 40% probability the Democrats win. 
+
+Any other seats that are kind of up for grabs? 
+
+Yeah. So, Alaska is the one to watch. Alaska has weird voting rules, you know, they have ranked choice voting. You got some candidates in there with the same name. 
+
+Oh, I heard about this. 
+
+Right? So, I keep an eye on Alaska. I'll be in Iowa next week. I keep an eye on Nebraska, Alaska. So, the Democrats have some opportunities, but I do think that it's going to be very difficult for them to pull off all four. And by the way, we just talked about where the Democrats can pick up. The Democrats are on the verge of making a nomination error in Michigan. And you have a very good Republican candidate with a very prestigious name running in New Hampshire. So, there could be areas where the Republicans actually do better. 
+
+Who's the prestigious name in New Hampshire? 
+
+Former governor. 
+
+Okay. 
+
+And so, you pull all that together, and you're talking about a 50/50 country with a 50/50 Senate. 
+
+Okay. Got it. 
+
+Very close. 
+
+Let's move on. Let's go back to our original thing that we talked about a year ago, which is tariffs. I've kind of lost track. Like, where are we now? 
+
+So, why don't we take a step back? Last year, tariffs were a major headwind for the economy. 
+
+Yes. 
+
+We fortunately had artificial intelligence just completely overpowering it, that made the tariffs not look as bad as it is. But, we've moved from a headwind on tariffs to a tailwind on tariffs. We have only collected in the US Treasury $35 billion of net tariff revenue year to date. Just an amazing number. It is nothing. 
+
+It's nothing. 
+
+Okay? And the reason is that the effective tariff rate was 11% in October. Today it's 7%. So, you've got a 400 basis point reduction. Supply chains are adjusting. The IAPA tariffs were thrown out by the court, but there's another thing that's happening. We're giving out tariff refunds now to companies. We gave out $23 billion of tariff refunds in the first month. 
+
+Okay. Now, that's the context of what you're asking about. You're asking where we are. The Supreme Court threw out the president's tariffs in February. The president's replacement plan, which is legally sound, will start to come into effect in July. And that's called Section 301. It's pretty technical in terms of what they're doing. But they're basically going to have the old tariff system replicated through a new legal mechanism. 
+
+What's interesting is as those tariffs come online, you have the tariff refunds coming into place. And so what you're actually seeing here on the tariff side is that the tariffs are actually working as a stimulus for the economy. And one of the main components of our view of what's cushioning the Iran conflict right now economically is the fact that the tariffs are a tailwind. 
+
+Yeah, tailwind. And I'll give you an example. We did a podcast you and I in July right after one big beautiful bill passed. So we talked a lot about these expensing provisions. 100% expensing of capital goods and research and development and property. 
+
+Right. 
+
+We've handed out $75 billion of corporate tax cuts for new investment and collected just $35 billion of tariffs. So, you actually have more corporate tax cuts this year than you have actually in tariff revenue. So, it's a very interesting move. So, now you're getting the boost from AI and you're getting the tailwind from the stimulus from tariff reductions and corporate tax cuts. And last year you only had the AI, and that's why you're seeing growth really start to pick up here, even with the Iran conflict happening. 
+
+Is there anything left to Trump's agenda that he wants to get through, or is he kind of basically done? 
+
+No, I do think that there's probably going to be more to Trump's agenda. If you look at his trade policy agenda, it's really three steps. Step one was the tariffs. Step two was the business incentives to do more investment in the United States. So, we're at the beginning of that stage. But the third step is probably a bigger step, and that is getting the dollar lower. The dollar's been propped up by the Iran war. When you have a conflict like this, people rush into the safety of the US dollar. He is probably trying to get the dollar closer to where it was 20 years ago, and get that dollar lower so that you then get the full impact of the investment. So, that's on the domestic economy. 
+
+That's number one. Where Trump has been more focused in Trump 2.0 than he was in Trump 1.0, is on foreign affairs. And he is nowhere near done what he wants to do on foreign affairs. And the best way to think about this is that for 30 years, the US had unipolar leadership. Now, you have challenges from China and Russia and all their proxies, and the world's moving into a multipolar direction. So, Trump's view is he's got to control the energy and control the technology so that the US can be the leader for the next generation. So, we have the energy, a lot of countries have energy, but only two countries have the tech. 
+
+And so, China in October basically started weaponizing rare earths to the United States, and Trump is now trying to realign the world with the US so that he has some counter to those rare earths. What do I mean by that? Venezuela, Argentina, Panama, kicking the Chinese out of Panama, shoring up the Western Hemisphere, getting better control of the oil resources, which you see in Venezuela, but also what you see, even what he was trying to do in Iran. Just basically make it more expensive for China to be able to buy that Iranian oil by competing with India and other places that are out there, and using that as some sort of counter to China overall. And this is what's going to consume him for the next 2 years, even if the Democrats win the House and Senate. 
+
+Interesting. Okay. Let's go to the Fed for a little bit. 
+
+Oh, yeah. 
+
+Hi, Steve Eisman here. Running a business means you're always reachable, always, until you're not. And the moment you miss that call, that text, that follow-up, a competitor is the one that picks it up. That's why today's episode is brought to you by Quo, spelled Q U O, the business phone system built so you never miss an opportunity. At Quo, all your calls, texts, and voicemails live in one place, so anyone on your team can pick up a conversation, see the full history, and respond fast. Quo is the number one rated business phone system on G2, trusted by over 90,000 businesses who rely on it to stay reachable and look professional every day. Set up in minutes on any device, keep your existing number, and add teammates as you grow. No IT, no hassle. 
+
+Quo integrates with tools your team already uses like HubSpot, Zapier, Claude, and more, helping you save time, stay organized, and spend less time chasing information between systems. Money is on the line. Always say hello with Quo. Try Quo for free, plus get 20% off your first 6 months when you go to quo.com/eisman. That's q u o .com/eisman. If you've been a real Eisman playbook follower for a while, you know that I recently finished treatment for cancer, and I feel very lucky to be in recovery. A cancer diagnosis is a lightning bolt I did not see coming. Breast cancer as a man was definitely not in my life's bingo card. As a podcaster and a cancer patient, I have learned that too many people affected by cancer don't have access to the care they need. 
+
+This is why I feel very strongly about the most recent sponsor for our show, Color Health. Color has created the first ASCO certified virtual cancer center of excellence that is available all over the nation. Certification by the highly esteemed American Society for Clinical Oncology matters a lot. Color's goal: reinvent how we all manage cancer from screening to diagnosis through treatment and all the way back to the life you thought you lost. You no longer have to live near the world's top cancer centers. Color has created the first cancer center of excellence that is available all over the nation. The best possible care for everyone, everywhere. Color works with employers, unions, and health plans to lead the way through the human, clinical, and financial impact of cancer. 
+
+You've all seen some of my recent episodes about the state of American health care. Getting the care you need is too often unaffordable. Almost half of all cancer patients lose their entire life savings within two years of being diagnosed. Catching cancer early saves lives and money. This is why Color's work is so important. The facts are that Color delivers the speed needed to get from suspecting cancer to treating a cancer 66% faster than the average in-person clinic visit. As a virtual cancer clinic, it's accessible across all 50 states 24/7 working with local providers. If your rising cancer costs for your company feel out of control, you have to check out Color because there is a better way to get strong member use, better health outcomes, and real control of cancer costs. Learn more about Color as a partner to overhaul your cancer strategy at color.com/eisman. And while you're at it, get screened. 
+
+New man? 
+
+Yep. 
+
+New team? 
+
+Yep. 
+
+New guy? 
+
+The irony is that, you know, when you listen to the commentary, like if we were talking 6 months ago, everybody was saying, &quot;They're going to cut. How much are they going to cut? When are they going to cut?&quot; Then it was there's no cutting, and now you're hearing commentary and they may raise. Any thoughts about all that? 
+
+Lots of thoughts about it. But you got to think about it. We've moved 75 basis points on the Fed funds rate expectations from 50 basis points to cut to a 25 basis point increase, and stocks have just shrugged that off. Okay? And the reason is that the economy is way stronger than people anticipated. We don't even need the cuts right now. 
+
+Okay. Now, as you start getting deeper into rate increases, that's going to cause some anxiety in financial markets. But this has been a big move. Okay? And I look at it and say, okay, that's a good starting point for Kevin Warsh. But when you start to think about where we are, if you take the 5-year real versus nominal bond yield, markets think that the inflation rate's going to be 2 and 1/2%. Now, you could say, &quot;Hey, I think it's going to be higher or I think it's going to be lower,&quot; but it's not at that 3% rate, which is the real danger sign that forces Kevin Warsh to raise, but it's not at the 2% rate where you say, &quot;Hey, we're going to cut.&quot; 
+
+So, I think from a rate perspective, we're just going to stay somewhat neutral until we begin to see how long the Iran conflict lasts, how long this growth begins. But I don't think that's the important issue at the Fed. I think that's where the consensus is talking about. But what's happening with a Kevin Warsh Fed is massively fascinating to us. He's literally saying after the financial crisis in 2008, we changed the entire framework for monetary policy and the way the banking system works. The Fed was able to pay interest on reserves, which was in the TARP bill. That allowed the Fed balance sheet to expand, and boy did it expand. And now we've become dependent on the Fed balance sheet every time the system gets low on bank reserves. 
+
+So the Fed has been increasing its balance sheet since December. We were running low on reserves in September, October, and November and we get these liquidity crunches every time Americans have to pay their taxes in April. 
+
+Right. 
+
+What Warsh is literally arguing is that we're making a policy choice to have a large balance sheet and high interest rates. And what I mean by that is that as you expand the Fed balance sheet, you're increasing the money supply and the money supply leads goods inflation by 15 months. 
+
+Okay. 
+
+What Warsh is saying is we need a new model. We need a lower balance sheet. And when we get that lower balance sheet where we're tightening, then we can actually start to get rates lower. And it's a very fascinating process, but he's not trying to reduce the balance sheet today. He's sequencing it. And the Fed is moving forward on financial deregulation proposals and they're hoping to get some of this done by the end of this year. 
+
+What financial deregulation proposals? 
+
+Liquidity coverage ratio, right? They've been doing a whole bunch of stuff just to try and get banks more liquidity into the system. What he's basically arguing is, &quot;I'm going to privatize the Fed balance sheet.&quot; 
+
+Now that's to the banks. 
+
+To the banks. And like Wells Fargo, their asset cap got lifted. What did they do? They bought Treasuries right away. 
+
+Yes, they did. 
+
+Okay. So that may not be the perfect example but it's a good example that you take some of the pressure off the banks that we've been putting in since 2008. There's a private system that can come in and our estimates, my colleague Chris McGrath estimates that the Fed can probably get the balance sheet down by a trillion dollars over a couple years. 
+
+How big is the balance sheet right now? 
+
+About $6 trillion. 
+
+Okay. 
+
+So one trillion sounds like a lot, but in the context of six it's not the biggest thing in the world. 
+
+Right, but it's a much more efficient way of doing it and it gets the money supply down. And when you get the money supply down, then you could start to bring rates down. Because right now those high rates are strangling home builders and a few interest rate sensitive sectors. You can actually do it in a reverse way. So, I think the regime change that's happening that he talks about, if he's successful in doing it, will actually be quite beneficial. But it's going to take years. 
+
+Let me make one other point about the Fed, which if you ask me what's the one thing about the Fed that's not in the press that investors should know, is that I don't know if J. Powell's going to do this or not, but I believe that J. Powell is also watching the midterm elections. 
+
+Powell or Warsh? 
+
+Powell. 
+
+Okay, people want to know when J. Powell is going to leave the Federal Reserve. It's the most valuable real estate in Washington right now. Because the Board of Governors is seven members of the Fed. Trump has appointed three of them. That means when he gets that fourth seat, that Powell seat, that will give him a majority. With that majority, they could change the regional Fed presidents. They can do all sorts of stuff. They have a lot more power. Powell understands that. So, Powell is like, &quot;Hey, if I stay here until the end of the midterm elections, if the Democrats win, my seat needs Senate confirmation.&quot; And if I need Senate confirmation, then Trump can't appoint a MAGA person there. He's got to appoint a more mainstream establishment economist to win Senate approval. So, I don't know if the Democrats are going to win the Senate. I don't think J. Powell knows, but there's a chance. The market actually gives it a 50% chance right now. 
+
+Okay. 
+
+And he's waiting to hold that seat out. Very important for what we just explained because if Trump gets that seat he can replace the New York Fed and that's where the balance sheet is run out of. So, personnel is policy and it's easier for Warsh to get his agenda through if he has people aligned with his policies. 
+
+Let's move on to bank regulation for a little bit. I've been looking for an M&amp;A wave in banks forever. 
+
+Yeah. 
+
+Do you think the regulators are pushing for it at all or not really? 
+
+You're a better expert on this than I am, but I think from a bank perspective now's the time to do it. Right? You don't know what's going to happen in the midterm elections. You don't know what's going to happen in the presidential elections and your regulatory structure may be very different if you wait it out. So, if the banks have a need to merge, now's the time to go do that. That's number one. Number two is I wouldn't be surprised if the bank regulators are pushing for more mergers because it doesn't make sense to have thousands and thousands of community banks and they're probably encouraging some of that consolidation, but I do think that your time window for doing that starts to run out particularly if you get a progressive president in 2028. 
+
+Yes. 
+
+Talking about 2028, yeah, let's first focus on the Democrats and then we'll focus on the Republicans. Who are the most likely candidates right now on the Democratic side? 
+
+So, I saw a quote yesterday from Rahm Emanuel which I thought really illuminated the Democratic primary. He said, &quot;I don't know what takes longer, building a high-speed rail in California or counting the votes in California.&quot; 
+
+Shots are fired here and it's telling you that the Democratic presidential primary is off and running. Okay, so Gavin Newsom is the frontrunner in the betting odds right now. People view him as the frontrunner. Usually frontrunners at this point don't actually end up being the winner at the end of the day. And of course Vice President Harris is going to put her hat in the ring or pretend to have her hat in the ring. 
+
+You think she's actually going to run? 
+
+I'm not sure she's actually going to run, but why wouldn't I pretend to be a candidate? It keeps me more important. And 70 million people voted for her, right? So she'll be out there. I would keep a very close eye on Pete Buttigieg. And what people don't realize is that Pete Buttigieg won the Iowa caucus and came in second very close to Bernie Sanders in New Hampshire. Now COVID happened and the field cleared, but he actually did really well and he's proving to be what the Democrats want, which is a fighter. So that means that you got Buttigieg there. Then you got a series of governors like Whitmer, Shapiro, the governor of Maryland, Governor Moore. You know, they're all going to be in the mix for this as well. And so I would say there's like eight or nine really prominent Democrats who have a chance to do it. Then you have people like Ro Khanna coming in. 
+
+But you got to think about what happens in '26 and how that frames 2028 and who wins in these elections and how people frame it. Let's just say the candidate in Maine wins over Susan Collins 60-40. She's been able to win in that state for decades. And then she loses to somebody with all of these skeletons in his closet, all these things and still wins. That's authenticity. That's Donald Trump saying John McCain was a traitor and his poll numbers go up. That's what the Democrats think that they might have here with Platner. Yeah. So '26 will shape how the '28 debate goes. It won't be the all be all of everything, but I do think it's important that if the Republicans have a surprise win, the Democrats are going to have a cleaning of the house of the old guard. They're going to have to figure out something else that needs to get done. 
+
+Elaborate on that for a second. So, you're saying if the Republicans keep the Senate. 
+
+Yep. 
+
+What happens to the Democrats? 
+
+Imagine if the Republicans keep the house in these kind of conditions. And the Senate is a good example as well though. You look at it and you go back to your earlier comment that the Democrats have gone far left. Right? Now they've lost to Trump in '24 and they didn't produce in '26. At that point they're going to be looking for a more moderate candidate and saying we got to drop this one. 
+
+I disagree. I think it goes the other way. I think it goes the other way. 
+
+It could go the other way. 
+
+It's just a prediction of mine. I think the party would move even more left, saying we want to be more authentic. We want to be more on the left wing. That's what's going to attract people. 
+
+I think your point's a good one. Because when the Republicans lost in 2012 with Mitt Romney, the idea was that they had to go more populist. And that's what happened with Donald Trump. I just think that there's internal forces at the Democratic Party that are much stronger than the Republican side and they said, &quot;Well, we won with Biden in 2020 by going in this direction. We got to go back to that direction. We've lost our way over the last 8 years.&quot; And that's where my comment is coming from. But your thesis is exactly what happened in the Republican Party. 
+
+Vance versus Rubio. What do you think? 
+
+Neither. 
+
+Neither? 
+
+Neither. 
+
+Woo! Cool. 
+
+That's a headline, ladies and gentlemen. 
+
+Dan Clifton says neither. Wait, let's just do that again. Vance versus Rubio, Dan. 
+
+Neither. 
+
+Wow. Okay. Talk to me. 
+
+But first I want to say if a vice president wants to run for president, that vice president's going to have a lane. It's very hard to be the vice president. It's even harder to be this vice president because he does not have the shackles that other vice presidents have. 
+
+Explain that. Okay. What does that mean? The president is not worried about J.D. Vance taking his job in a way that Bill Clinton worried about Al Gore or Ronald Reagan worried about George Herbert Walker Bush. So, J.D. Vance can go out and raise as much money as he wants. He can do all of his political activities and Trump is not reining him in in any way possible. 
+
+What do you mean Reagan was worried about Bush and Clinton was worried about Gore? 
+
+You're my vice president. Our job is to serve the country. I don't need you in Iowa every week in New Hampshire, you know, going to rubber chicken events to build for your presidency. And they're very forceful about it. This is why George W. Bush chose Cheney, because he knew Cheney wasn't running for president. He didn't have to worry about it. J.D. Vance, Trump is encouraging him. 
+
+Trump doesn't care. 
+
+He's like, &quot;Go. Do what you got to do.&quot; Before the Iran war, why do you think that is? Because he's confident in himself. He knows he's out of office and he's like, &quot;Okay, do what you want.&quot; As long as you're doing what I need you to do, you go do what you want. That gives J.D. Vance an enormous level of head start that other vice presidents don't have. And it's already tough to beat a vice president. But think about J.D. Vance. J.D. Vance is vice president. Busy job. J.D. Vance is going to run for president while he's vice president. Really hard to do both. And he's about to have his fourth child. So, like he's trying to raise a family, be vice president, and run for president at the same time. There is a chance that a lot of people you see on stage, Republican and Democrat right now, don't actually run for office. And some of it's going to be over family concerns with young families. 
+
+So, I'm not sure he's actually going to run for president. But he's creating the optionality for him to run for president. 
+
+Personal opinion? 
+
+No doubt in my mind he's running for president. 
+
+Great. 
+
+And that's possible and he's doing everything he can to get there. Remember though, he is going to adopt every single word of President Trump running for office. 
+
+He's going to hang that around his neck. 
+
+Right. No question. So, now if you're at the White House and you're in a meeting with Trump, he says, &quot;Hey Steve, who do you think, is it going to be Rubio or Vance?&quot; The same question that you asked. Because it's interesting. Marco Rubio is the superstar in the Republican Party right now. He is. Oh, absolutely. No doubt about it. 
+
+Why is that? 
+
+Because he's very eloquent in explaining Trump and what Trump's trying to do on foreign policy in a way that Trump could never do. But he also has support from the establishment because he's an establishment guy, but he also plays in Trump land. But you're starting to see that support begin to erode as the Iran conflict goes south. Remember, he will adopt all the warts of the Trump administration as well because he's likely going to be very unpopular again. 
+
+So, both of them have all the warts. So, Ted Cruz, I'm not saying Ted Cruz is going to be the nominee, but Ted Cruz sees exactly what I just said. And he's creating the optionality for him to run for president. And then Governor DeSantis. Look at Governor DeSantis. It's amazing when you look at Governor DeSantis. This is a guy who knows every town in Florida. He's an excellent governor of Florida. He ran for president and just didn't care what was going on in the Des Moines economy. Now when you go read his Twitter feed, he is involved in every single national issue. He's involved in all the state issues. And think about what he is talking about. Restricting data centers. Playing into the affordability issue. 
+
+That's amazing to me, Steve. I get the sense that he's creating the optionality to run for president as well. So, I look at all that and I say to myself, there's going to be more to the Republican primary than Vance and Rubio. And there are going to be surprise factors that come in. 
+
+Interesting. 
+
+If you want the tail event, which again 10%, 15% probability, is that the populist right and the populist left be able to establish a candidate and Rahm Emanuel and Glenn Youngkin stand up together and run together as a joint ticket to try and cut off the progressive populism down the road. That's the thing that I would look for. By the way, I want to stress it's a low probability event. 
+
+It's a very low 
+
+But you're starting to see the establishment begin to not fight over tax cuts and abortion anymore, but over this growing populism that's happening. More Democrats aligning with Republicans, more Republicans aligning with Democrats. 
+
+So, to finish up, what else should we talk about? 
+
+Well, I think there's an enormous amount of fiscal policy that's out there right now that I think is underappreciated. And it's not just the tax cuts from OBB. The Fed balance sheet's been expanding since December. We have $700 billion of new bank deposits that's out there. I talked about the tariff refunds previously. So, there's just a lot of stimulus out there and I do believe that the 10-year yield is moving with these higher growth expectations and less on the inflation expectation. So, very different than what you read in the mainstream financial press. The biggest domestic policy issue that's out there is AI and data centers. It is the most important issue. I think the Democrats are going to make a big case for restricting AI and data centers in this campaign. And the stocks aren't reflected on it. We can look at the odds of the Democrats taking the Senate and bank stocks move with it. 
+
+Right. 
+
+Or pharmaceutical stocks move with it. The AI stocks are not moving. And then it's going to just sneak up on us as we get into the summer time. 
+
+People do not want this in their backyard. 
+
+No. 
+
+They really don't. 
+
+No. Because look, it's happening where there's large amounts of land. They tend to be more rural, more Republican type voters. And their electricity prices are going up and they may lose their job. Directionally, this is a political loser. 
+
+And their water. 
+
+And their water. And this is the brilliance of Elon Musk, where he's like, &quot;Okay, well, we're just going to build them in outer space because we have unlimited sun and we don't need the water to cool it.&quot; And he understands the politics of it. 
+
+How you get the electricity back, I don't know. 
+
+Right? He thinks he's got all the solar to be able to do it, but I look at it and I say to myself, &quot;How is this going to play out?&quot; And I think the technology industry is just behind the ball. And it reminds us a lot of the fracking debate 15 years ago. So, our big thesis is data centers are the new fracking. By the way, it's the same environmental money that's being used to oppose the data centers, and they got to get out in front. And so, we just did an analysis of local property taxes in Virginia, which has a large amount of data centers. Those counties with the data centers have decreasing property tax rates. They have increasing home prices because the data centers in Loudoun County are paying 40% of the education bill in Loudoun County. 
+
+Wow. 
+
+Isn't that amazing? 
+
+That's amazing. 
+
+So, the savings on your property tax are $2,500 a year. Your electricity bill might be going up $20. 
+
+Okay. 
+
+So, the scale of it is much more beneficial. And the technology industry is just starting to figure this out. Like, what is the public good that's coming from these data centers rather than just focusing on what the bad is. 
+
+Well, let's finish up just so quickly with the war. Political implications right now. How unpopular is this war right now? 
+
+Well, the war is very unpopular. Usually presidents get bumps from geopolitical events. Trump got no bump from Operation Hammer in June of 2025 when he took out the nuclear sites. He got no bump from Maduro in Venezuela. Now you're bogged down in a Middle East war. It's actually hurting him more than it's helping him, and he's had higher gasoline prices. What's interesting is that the US government has what I call the 5% limit. No 5% on the 10-year yield, no $5 gallon gas. And they have been able, the US government has been able to use reserves in a very plentiful way to be able to keep oil prices down. 
+
+And by the way, it's not just the US government, it's China. China's using their reserves as well. So it's kept gasoline prices at $4 a gallon, which has hurt them politically, but it hasn't killed them. But that means that there's not enough pain for the US to make compromises. There's not enough pain in Iran for them to make compromises. And so it's just a waiting game that's going on with the strait closed. There is a belief out on the street that there's probably about 3 million barrels of oil going through the strait every day that's not being counted. That started around the Trump meeting, and one of the reasons why oil prices have been behaving a lot better is because that's coming through. I have no way to confirm that, but we have seen oil prices diverge away from that. 
+
+But what it's done politically in the Republican Party is divide Republican voters. There's a lot of Republican voters who voted for Trump thinking he was going to get us out of Middle East wars, and now he's started a new one overall. So, he's got to figure out how to get that fixed. He's got to figure out how to get those oil prices down, and the impact isn't really on the house races, it's really on keeping those Senate seats Republican is why I think he wants to do a deal. The other reason why he wants to do a deal is that he did not take out 100% of their rockets, or 100% of their launchers, or 100% of their mines. 
+
+And so there's definitely retaliation risk from Iran. If he hits them, they're going to hit the US bases all over the Middle East. They're going to hit our allies. And so it's not a cost-free thing just to say, &quot;Okay, I got to go back in and blow these guys up.&quot; And I think there's a lot of hawks in the Republican Party who are pushing for Trump to do that, but there's a major cost to doing that. And that's the second idea of re-escalation overall. I think what's interesting from an investment perspective is what we've learned from the Iran war and from the Ukraine war. And that is that the technology and this defense tech is the big winner. And so you've seen this dramatic rise of large-cap defense stocks and now a major underperformance. You have not seen that same level of underperformance from the defense tech companies and that's where the new model is going to be. 
+
+Yeah, yeah. Dan, thank you. That's great. 
+
+We'll have you back again and again and again. 
+
+Great. 
+
+Thank you. 
+
+All right, thank you. 
+
+Bye-bye. 
+
+And we're back. So that was really interesting. Let me give you some thoughts and just some summations about what Dan had to say. With respect to the midterm elections, which is where we started, he thinks the odds are pretty good that the Democrats will take the House. He thinks the odds are pretty not so good that the Democrats will take the Senate, so we'll have split government. But he doesn't have a lot of confidence in it, so it's a kind of a story that's evolving. 
+
+We also talked about the Fed, whether the Fed would raise rates or not do anything. Dan wasn't really so much focused on that. He thinks Kevin Warsh is really focused on the Fed's balance sheet, reducing it over time, which would be a real sea change in Fed policy because ever since the great financial crisis, the Fed balance sheet has ballooned to $6 trillion. And he thinks over time Warsh will take that down by about $1 trillion. 
+
+We talked about the presidential election going forward. On the Democrat side, Newsom seems to be the frontrunner, but as he said, typically anyone who's the frontrunner at this point is not the end runner at the end of the day. It's going to be a very messy field. On the Republican side, he kind of shocked us by saying he didn't think either Vance or Rubio would win, but that was kind of in jest. Clearly Vance has the lead, but Rubio is a possibility, but don't count out the governor of Florida, DeSantis. 
+
+And then finally, we ended up talking a little bit about the war and how a lot of people who voted for President Trump did so because he was going to keep us out of wars, and now we're in this war, which has now become kind of messy. And he thinks the president really wants to end this as soon as possible. My view though is that that's not possible because you're dealing with a country that at the end of the day doesn't really want to negotiate. I hope I'm wrong, but I think this is going to go on for quite some time. So, I hope you all enjoyed that interview. I certainly did, and we'll see you soon. 
+
+This podcast is for informational purposes only and does not constitute investment advice. The host and guests may hold positions in stocks discussed. Opinions expressed are their own and not recommendations. Please do your own due diligence and consult a licensed financial advisor before making any investment decisions.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-2">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=u3xipu_sz3w" target="_blank" rel="noopener">This CEO Raised $400 Million To &quot;Poison&quot; Your Data (And Protect Your Privacy) | The Under 30 Podcast<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_nulMc6GNIrLUi_wcTCKojfsfro0dsNLAueuj4edxt_Kl4T=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Forbes</b><span class="subs">(2.1M)</span></span><span class="dot">&middot;</span><span>35:18</span><span class="dot">&middot;</span><span>609 views</span><span class="dot">&middot;</span><span>2026-07-06</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Alex%20York%22">Alex York<span class="chip-desc">Host, Forbes Under 30 Podcast</span></a> <a class="chip" href="index.html?q=%22Zoya%20Hasan%22">Zoya Hasan<span class="chip-desc">Host, Forbes Under 30 Podcast</span></a> <a class="chip" href="index.html?q=%22Arjun%20Bhatnagar%22">Arjun Bhatnagar<span class="chip-desc">Co-founder and CEO, Cloaked</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>1.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">Arjun Bhatnagar, CEO of Cloaked, has raised $400 million to pioneer &quot;data poisoning,&quot; a privacy strategy that uses masked, unique credentials for every transaction to disrupt the ability of AI and data brokers to track individual identities.  The Vulnerability of a Single...</div>
+                    <div class="sum-full" id="full-2"><p><strong>TL;DR:</strong> Arjun Bhatnagar, CEO of Cloaked, has raised $400 million to pioneer "data poisoning," a privacy strategy that uses masked, unique credentials for every transaction to disrupt the ability of AI and data brokers to track individual identities.</p>
+<h3>The Core Philosophy: Data Poisoning</h3>
+<ul>
+<li><strong>The Vulnerability of a Single Number:</strong> Bhatnagar highlights that a single phone number can reveal an individual's Social Security number, address, family members, and credit card history because it acts as a universal identifier.</li>
+<li><strong>The "Poisoning" Strategy:</strong> Rather than just deleting old data, Cloaked "poisons the well" by providing users with thousands of unique phone numbers, emails, and credit cards.</li>
+<ul>
+<ul>
+<li><strong>Disrupting Identity:</strong> By giving different information to every merchant (e.g., Domino’s vs. Sephora), there is no clear consensus for surveillance systems to build a profile.</li>
+<li><strong>Contextual Relevance:</strong> Data brokers value current, contextual data; Cloaked renders this data useless by ensuring it doesn't map back to a central identity.</li>
+</ul>
+</ul>
+<li><strong>The Privacy Paradox:</strong> Bhatnagar notes that "people like to feel known, but they don't want to feel surveilled," aiming to balance personalization with safety.</li>
+</ul>
+<h3>Product Capabilities and Security Infrastructure</h3>
+<ul>
+<li><strong>Three-Pillar Protection:</strong> The platform is designed to manage the full lifecycle of personal data:</li>
+</ul>
+<p>1. <strong>Clean up the Past:</strong> Scanning the dark web and removing existing data.</p>
+<p>2. <strong>Defend the Present:</strong> Using AI agents to screen calls; 40% of the millions of calls Cloaked handles daily are identified as AI scams.</p>
+<p>3. <strong>Protect the Future:</strong> Generating real-time masked credentials (emails, phone numbers, credit cards, and soon physical addresses).</p>
+<ul>
+<li><strong>Technical Architecture:</strong> To prevent a mass breach, Cloaked does not use a single "multi-tenant" database.</li>
+<ul>
+<ul>
+<li><strong>Unique Infrastructure:</strong> Every user has their own unique database and infrastructure.</li>
+<li><strong>Zero-Knowledge Encryption:</strong> The company cannot access user data; even if the system is breached, an attacker would have to hack every individual user's encrypted database separately.</li>
+</ul>
+</ul>
+<li><strong>Financial Services Integration:</strong> Cloaked allows users to create merchant-specific credit cards with hard spending limits (e.g., a card exclusively for Spotify capped at $15/month).</li>
+</ul>
+<h3>Explosive Business Growth and Market Scale</h3>
+<ul>
+<li><strong>Funding Milestones:</strong> The company has raised over <strong>$400 million</strong>, including a $375 million Series B in 2024.</li>
+<li><strong>User Adoption:</strong> </li>
+<ul>
+<ul>
+<li><strong>Consumer Base:</strong> Grown from 20,000 to nearly 400,000 paying subscribers in approximately one year.</li>
+<li><strong>Pricing Model:</strong> Primarily B2C, with users paying roughly $10/month or $100/year.</li>
+<li><strong>Enterprise Shift:</strong> Expanded from zero to over 50 enterprise accounts in four months, driven by employees wanting the tool for business use.</li>
+</ul>
+</ul>
+<li><strong>Strategic Partnerships:</strong> </li>
+<ul>
+<ul>
+<li><strong>NFLPA Partnership:</strong> Cloaked has a deal to provide privacy services to every NFL athlete to protect them from doxing, physical threats, and financial fraud.</li>
+<li><strong>Sports as a Standard:</strong> After working with the Chicago Cubs, Cloaked views professional sports as the "gold standard" for testing high-stakes security.</li>
+</ul>
+</ul>
+</ul>
+<h3>Founder Insights: High-Stakes Leadership</h3>
+<ul>
+<li><strong>The $1.5M Marketing Gamble:</strong> In late 2023/early 2024, Cloaked was nearly out of cash. Bhatnagar decided to spend the final $1.5 million on performance marketing to prove the "story" of their growth. The gamble worked, leading to their massive Series B.</li>
+<li><strong>Storytelling Over Decks:</strong> Bhatnagar advises young founders to "ditch the deck." He practiced by sending voice memos to investors while driving, refining his ability to explain the AI privacy crisis without visual aids.</li>
+<li><strong>AI Origin Story:</strong> The idea for Cloaked began in 2020 when Bhatnagar built a personal AI that accidentally began "automating" his relationship, sending "I love you" texts and memes to his girlfriend without his knowledge. This made him realize the terrifying lack of control individuals have over personal data used by AI.</li>
+</ul>
+<blockquote>
+"I realized the question of security and privacy and personal data will be the biggest question of our lifetime when AI comes to life. Now, surprise, we're exactly in that world." — <strong>Arjun Bhatnagar</strong>
+</blockquote>
+<blockquote>
+"People like to feel known, but they don't want to feel surveilled... what we really want to accomplish is to make those statements true, so you can keep living your life, but there's Cloaked in the middle saying, 'Let’s figure out how this data should look.'" — <strong>Arjun Bhatnagar</strong>
+</blockquote>
+<blockquote>
+"One investor gave me this advice: ditch the deck and tell the story." — <strong>Arjun Bhatnagar</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">Hi, I'm Alex. And I'm Zoya. And we're the host of the Under 30 podcast. Alex, did you know that I have access to your social security number? I can just go look it up. Zoya's not kidding. And today our guest, Arjun Banagar, told us how he raised $400 million for his startup to protect your data. Arjun, thank you so much for joining us today. We are thrilled to have you on our Under 30 podcast.
+
+Of course, excited to be here. Welcome, welcome. Arjun, I want you to start us off with a non-humble brag. Tell us about what you have built with Cloaked. Non-humble brag? Yep. I try to be more quiet. Let it out.
+
+Well, as a company Cloaked's been exciting is that I've been thinking about what the world would look like with AI six plus years ago, and now we're living exactly in that world. So, I'm very proud of the fact that we've built really fundamental technologies that operate directly at being a telco level. We are full telco, we're an email company, we're full credit card company. We're getting to physical address masking, but ultimately the idea is that we've built very deep technologies such that it's not about an app or a website. How do we fundamentally make you feel more private and secure online? And I've just been so excited the fact that it's always been deep tech. But the we're not building for a deep tech audience. Everyday consumers using us. My bragging point is that I've got moms, I've got accountants, I've got lawyers, even a fisherman I interviewed once, all using Cloaked, and that's my most exciting aspect of all this. Not just the tech, but the people using it.
+
+Okay, yeah, that's pretty exciting. What about on the financial side though? Give us some numbers there. Funding, number of clients or customers, like what does it look like numerically?
+
+Yeah, so as a company we've raised over $400 million to date. The company started in 2021. We had our biggest round was part of our Series B, raised over $375 million, and that was a big, big jump for us. And I think it comes back from the thesis where a lot of point times VCs talk about series B, what does that mean? It usually means you got one thing right. And so from our consumer business where we really started focused, now we're expanding all over the place, we have more than 350,000 paying customers. We're growing rapidly month over month. I think we'll be at 400,000 before this even comes out, or more than that. I think from enterprise we've also grown from zero to more than 50 plus enterprise accounts in just the last 3 and 1/2 to 4 months. And then we've also been excited to serve lots of different geographies starting to come up. I think the way to look at this is that I look at the business, we had less than 20,000 paying customers in January last year, and now getting close to 400,000 in just kind of less than a year perspective. And that's just consumer; now enterprise and other aspects are also growing.
+
+Yeah, I mean those are really impressive numbers. And 375 million dollars raised in a series B round, that's a lot of money. But let's really pair it down. Let's go to your first million. How, when Cloaked was just an idea and you were pitching to investors, what was their reaction initially? Tell us about the early days of fundraising.
+
+Yeah, so when we were thinking about Cloaked, we actually started off thinking about grants. I didn't actually look at VC funding 'cause at the time I was actually a VC. And I was like, I said, &quot;Oh, VC funding is very predatory, won't be great, so think about grant programs.&quot; So as I was researching and applying for grants, I got rejected from a number of them. And then I applied to one VC one, and I was like, &quot;Oh, this is interesting, they're actually supporting grant programs.&quot; When we pitched, they were big fans of us, me and my brother, who were co-founders, and then they said, &quot;How about instead of the grant we do proper VC funding?&quot; They said, &quot;Hey, this is what we're thinking about.&quot; I said, &quot;Pretty favorable for us.&quot; And they wrote the first 250K check. And that was a really exciting moment 'cause I was like, &quot;Okay, I can't quit my job yet, but I can get there.&quot; And then within, I think, 3-4 months we raised our seed fund, but we raised about 4 million.
+
+Wait, I need to know why as someone coming from the VC world, you were so against taking VC money in the beginning. That's so interesting.
+
+Yeah, so I realized that when we first fundraised, we didn't have a product. We had a deck because I'd been building with Electric Sheep Co. for a little while, and then when we actually fundraised, it's just, &quot;Here's what I think Electric Sheep Co. would look like,&quot; because I didn't know the right manifestation of what the product should look like, how we're going to approach it. We very quickly figured out after we got that 250K, I said I want to first build out the product, validate with customers, design our go-to-market, try to get closer to profitability, and then think about VC because I knew at that point more cards are on my table. But I realized that when you have a good partner, and it's not just a VC you find that's like, &quot;Oh, this is a cool idea. Let me invest,&quot; but someone who really cares about you, how you approach the world, then I was like, &quot;Well, then we're just partners together.&quot; And I think that was the big distinction for me to say, &quot;Okay, it's not just 'cause I was a VC hat. Oh, a really interesting idea. I really cared about the entrepreneur, but I noticed there's always a mix and match between which VCs and founders fit.&quot; When we had that fit, I was like, &quot;Oh, let's go all in.&quot; We didn't have much built, but we very quickly adapted and grew from that point on, and that made me say, &quot;Okay, I think this was the right decision.&quot; But it took us finding the right VCs from the onset.
+
+So, let's go back a little bit because before, you're mentioning here before you raised that money, you started thinking about what data security and privacy looked like in a world of AI, which to your point earlier, like 6 years ago, we did not know what that was going to look like. You have a pretty crazy story about building your own models and how you kind of had like a lightbulb moment of this is not the future that we are expecting, and we're not ready for this. Can you tell us a little bit about that story?
+
+Yeah, so it was definitely a non-traditional story and with the announcement and seeing of Open AI and all these different things, I kind of saw this world coming ahead. I'd say before even getting to that story, what led me to think about privacy security, I've always been privacy conscious but never super privacy deep. I've now become way deep in the iceberg and can tell you all sorts of things going on, but I still remember in '05, '06 I was opening my Facebook account and I put a fake name on it and I was like, &quot;Well, what if this company becomes big one day and people start using this to look at your profile and it might affect your job, other things?&quot; Everyone looked at me as if I was crazy. Now, we laugh, like, &quot;Wait, this is exactly where we live.&quot; And I eventually changed my name to my actual name, but I've always thought about what the world plus you as an individual would look like. And so that premonition, that kind of starting point led to 2020. I was just a VC at the time. I was thinking around where's the world headed? And what I wanted to first unpack was more about me. Coming back to the same roots, could I understand everything about myself? So what I did was I connected my Facebook data, my Google calendar, I hacked iMessage, my banking, my workout, eating, health care, GPS, movement, everything I could find inside a Mac mini in my apartment, which is not too different and similar to what's happening in the world now, but in that moment I got all this data. I wrote some crude AI models at the time or crude ML models. It wasn't called AI. And I said, &quot;Try to help with my life.&quot; And I put some confidence thresholds and looked at all this different data, and it kind of one of my first hypotheses was that in the world of AI, breadth of data is going to be more relevant than depth of all these different users and quite a wide variety of data. And I started seeing that statement come true to life. Very quickly, my own personalized AI started telling me, &quot;I know you skipped your workout yesterday. Do 15 push-ups in these two meetings.&quot; Based on my spending habits, it said, &quot;I noticed a big uptick in Chinese food,&quot; and so let's maybe cut that down. But, one day I was at lunch with somebody and I put my phone down. End of lunch, I picked up my phone and I realized my really crude AI had a full conversation with my then-girlfriend. It told her I love you, it sent her memes, it went back and forth. And this is back in 2020.
+
+She had no idea this was you? She had no idea. She didn't know three years later. Did I say then-girlfriend? We did break up, but we're still friends, we're still in touch.
+
+And that's a whole thing. It was like not real the whole time. Actually proud because our relationship led to the birth of the company.
+
+Right. So, she can take credit for it a little bit. You have to give her equity.
+
+Yeah, well, I don't know about that, but we talked about it and we joked around it because I don't tell this part of the story, is that I'd started automating the entire relationship, which kind of is a whole deeper part of this. Downfall.
+
+You should not automate your relationship, no matter how much AI is advancing. And now with my girlfriend there's no AI involved. I do have AI again, but this is now very visible and conscious that she's texting. But, back then, so it started it texted her and I noticed it when I picked up my phone, and I said, &quot;This is crazy.&quot; And two things hit me, that light bulb moment was that I realized I didn't own any of this data. It had all related to me. It was every aspect of my life. And I said, &quot;We're going to be heading to some AI future. I don't know when, where, what it looks like, but I wouldn't trust major companies like Google, Facebook, Amazon, etc., to make these AI models because they're already built on data predatory practices.&quot; And so, I said the question of security and privacy and personal data will be the biggest question of our lifetime when AI comes to life. Now, surprise, we're exactly in that world and we're still talking about AI and data as if it's an enterprise security problem. The reality is AI systems and businesses have access to everything about you. And so, how do you feel comfortable when everybody wants to get deeper and deeper into you and everything around you and personalizing to you? Where do we have some sense of control and safety?
+
+Like personally, I feel like I never think about that. Like, I do not think about where my data is going and who knows about me.
+
+I agree. And Like, what should I be worried about?
+
+That was going to be my question. Like, do people, do consumers know the gravity of this situation?
+
+So, the good answer is people are aware. And now 92% of America has felt frustration, anger, upset at how companies track aggregate user data against them. They don't wag their fingers and say, &quot;Bad data privacy practices.&quot; But, it shows up when you use a Finsta. It shows up when you don't give your phone number to a person you just met. It happens when you say, &quot;I don't want to try this new app. They want me to put my credit card, my first name, all this information.&quot; They're like, &quot;I don't want to bother.&quot; And it's becoming where you may not realize it consciously, but people are starting to show it. It is starting to show, for real, when a company that is promoting trust, brand, or safety, you actually kind of lean more into that business in your purchasing decision than you do another business. So, these practices are happening more and more, but if you also grab it by the horns and show people the problem, they actually activate. So, we built a whole moment for Cloaked where we show you how your single phone number can reveal everything about your life. Anyone can find out your name, social security number, address, credit cards, passwords, family members, everything from just one number. And that's crazy because we give it out to everybody we talk to. So, that's kind of where we tapped into it. We started to show people the problem. And Cloaked, the product, starts to then navigate that entire story for the individual.
+
+That's very interesting. Yeah, I really never thought about that. Like, I know that my data is out there. Like, I know people can find my address, but like, I never thought my social security or my credit cards could be out there. That's very interesting. So, how might I use Cloaked as a consumer?
+
+Yeah, so as a product, we try to start from that problem space. You feel the awareness of the problem, make it more visible and tangible, and we try to break it into three parts. How do we help clean up your past? 'Cause something comes right to mind, &quot;Oh, my data's out there, isn't it already done?&quot; Well, let's start doing something about it. Let's defend your present. There's scam, spam, fishing happening on your device. And then protect your future. How do we actually fix this problem? So, our platform technology does all three. We start with cleaning up your data online, helping expose information on the dark web. We've got insurance, just like the age-old LifeLock. We've built AI agents that stop scam, spam, and phishing. So, if you call me, an AI agent picks up the phone. And it's not a call screener. It's actually something that understands, &quot;Is this my child's daycare? Is this Uber Eats?&quot; We'd really get the Uber Eats right. Or is it another AI scam? 40% of the calls we answer, which are millions per day at this point, are AI scams targeting our consumers. So, that AI says hello, our AI says hello, and they duke it out. And then the core part of our product is how do we protect you going forward? And we do that by actually creating emails, phone numbers, credit cards, passwords, soon even physical addresses, all in one. Because we realized to actually fix the problem, it's not about just deleting and stopping, 'cause you can clean your data all day long, but if you go into Shake Shack and buy a burger, you're back to square one.
+
+Really?
+
+I realized you can just skip it and press 111 or a cloak number. But the reality is that the systems that are built to harvest your data, there's actually the same fatal weakness. Nobody wants to know things about you 15 years ago. They want to know the most relevant, most contextual data. So then I say, let's poison that well.
+
+So, I have 2,000 phone numbers via Cloaked. I have a different email address for everything I do, different credit card for different aspects. So, now systems are trained to say, &quot;Well, Arjun actually lives in Mississippi.&quot; But I've never been to Mississippi. &quot;Arjun's is this, Arjun is that.&quot; There's no clear consensus of who I am, what my actual information is. My personal number I use day-to-day, people are like, &quot;Oh, that number is not valid anymore. He doesn't use that anymore.&quot; But that's the number I still have with my friends and family. So, it's actually not too late. I think the window is getting shorter and shorter to take back privacy in the age of AI, but you can start to poison and fight back the system.
+
+Are there any concerns with this though? Like, as you know, a lot of, I don't know whether it's governmentally or or employers or things like that needing to either get in contact with you or know these things about you when data becomes poisoned or things kind of get shaken up in the ways you guys are trying to protect people. Like are there any downsides of it?
+
+Yeah, that was my exact question too, because like on the Under 30 list for example, one of our things is to background check people. That's a big part of it. So, does it affect things like that? Like will you still be able to see things like government documents essentially?
+
+So, we're not cloaking your driver's license or SSN yet. Yet. So, the thing is the good thing is that we are working with different companies, even agencies, to see how you make sure that individuals have the right to defend themselves. We actually worked on a bill with Congresswoman Trahan in Congress right now around how do you help fight for privacy instead of just making companies change what they're doing—'cause we will all die before we change all the businesses at once—but instead enshrine your right to privacy. Now, customers today are already opening up bank accounts, like Coinbase accounts, Robinhood accounts, all my own IRS accounts, all cloaked. Everything can be swapped or cloaked 'cause ultimately you still need to give your SSN or driver's license, but you don't need to use my PII, my phone number, my address, my credit card to then track me everywhere. So, we haven't broken that underlying system. It still works. The thing is it doesn't need to connect to everything about me. And we had a funny situation where my own brother was in for—what was it? I think the Global Entry interview—and they're like, &quot;What's your phone number?&quot; and he's like, &quot;Hold on, I don't know,&quot; and then checks it, and he's like, &quot;All right,&quot; &quot;What's your email address?&quot; and he's like, &quot;Oh, actually, give me a second, I don't quite know,&quot; then he's like, &quot;What's your address?&quot; and he's like, &quot;I actually don't know what your address is.&quot; They're like, &quot;Wait, this is getting a little shady,&quot; it's going shady. But we still got through because he gave the information, everything checked out. It didn't work and because we operate like a Telco, a credit card company, texts, calls, even transactions all route back to you, so you still keep everything like normal. This is the thesis that privacy always gets wrong; they say let's go use and change everything about an individual, but nobody wants to have now another thing they have to manage. So how do you fit into someone's existing workflow? And that's what we really indexed on. So I give you a cloak number, the calls come right to me.
+
+What if Cloaked gets hacked? What if you have a data breach?
+
+Yeah, so not going to lie, against that. Yeah, but we approached this problem from the very beginning. This is the first code I wrote, was thinking, &quot;Well, what happens in an incident with Cloaked?&quot; Now I can't stop hackers trying to come in, etc., but the idea is how do you limit the impact to you as an individual. So we did that with Cloaked. The first core premise is when you sign up for an account, we create a unique database for every single user. So it's actually not just multi-tenant which you might hear with enterprises, it's literally multi-infra. Apple's really good at branding, they call it private cloud compute; well, we did that a few years earlier. You actually have your own little database, your own infrastructure for every single user. The beauty of that is to attack Cloaked you have to hack us and then every user separately, so this kind of makes it a multi-vector attack problem. And then on top of that, we're zero-knowledge encrypted. So if you're, if you lose your password, it's a little tough because now your whole account is kind of screwed, but the idea is that your passwords help to decrypt that data, so you have to get access to your system and then the data itself is encrypted.
+
+Got it, and so essentially here with Cloaked, you're, as a consumer, as a user, you have your platform and then you guys are basically rerouting everything else about them. Correct, is that a way to look at it? We're cleaning, we're stopping, all in one.
+
+Can you tell me a little bit more about the data poisoning? For someone who hasn't heard that term before, I think it seems like, you know, aggressive, a little bit scary that all these things about you are being poisoned in the ether where they live. Can you tell me about the power of that and kind of how you guys think through that?
+
+Yeah, so I think the first principle is that when you give out your same phone number, whether it's to Domino's, the IRS, to Sephora, whatever it is, that number is constantly affirming your identity. In the United States and most countries now, some countries are changing this, there's no system of identity. You think the government knows who you are or the bank knows who you are. Nobody actually has a sense of &quot;this is your identity.&quot; It's based on a collection of people and businesses that say, &quot;Yeah, that's Arjun.&quot; Even the government is just one party of that. There's not a clear representation of you as an individual. It's like 10 different entities that say, &quot;Yeah, that's about right.&quot; And so, when you think about data poisoning, what we say is, &quot;Well, let's make sure that people can reach you, can contact you, can transact business with you, but every single piece of data should be separate.&quot; 'Cause the biggest way to compromise you as an individual is to start with, &quot;Let's not hack your bank account. Let's hack where you bought jeans, and then use that to keep compromising that threat forward.&quot; So, what we do is we make sure every instance where you give out your own information is distinct. And that information actually then can't be tracked with other aspects of you. Your bank information shouldn't be the same information for Grubhub. It shouldn't be the same information when you're doing Starbucks rewards. 'Cause ultimately, that's how systems follow you everywhere. It's because the systems for good, yes, they want to transact with you, are also used for surveillance.
+
+There seems to be a very clear use case here for public figures, celebrities. I know there is talk, or maybe even a deal with the NFL going on. Can you tell us a little bit more about what celebrities can get out of Cloaked specifically and how you sort of brokered these deals with sports leagues?
+
+Yeah, so this kind of fell a little bit in our lap. We started with—a couple years back we got a deal with the Chicago Cubs. They brought their organization onto Cloaked, got the whole team, from executives and employees to players, all using Cloaked because they kind of saw that problem ahead. Now, they separately also did end up investing in us and then kind of started thinking about, &quot;How do we look at sports?&quot; I was then independently invited to the NFL a year ago to speak; the NFLPA invited me to speak to all the athletes. And I went on stage, talked about it, I put the Cloaked phone number on the screen, everyone called it, and it told them their social security number, their address, like 150 people—you could see their jaws dropping. And it left a mark. I remember I was in New Orleans and I was walking the streets and athletes in their Cadillacs rolled their windows down, &quot;So you're the Cloaked guy?&quot; and it was a funny moment. But we started opening the eyes around how your personal information is out there and it does lead to incidents. There's a number of judges whose houses have been—the incident—houses have burned down. There's a congressman I believe in Minnesota whose house is broken into and threatened. And then athletes a number of times, when they're at away games, people know that and that's the time to strike, but that puts the family at risk. The athletes also make silly decisions when they're meeting people late at night. They go and put their information out and so that phone number then could lead to a compromising event for the brand. And I'm looking at some basketball players where this has happened, point-blank. But that's kind of the thinking around it's not just about protecting you from data surveillance, but it's about you, your personal safety, your family safety, financial fraud. How do you feel better about that problem? And so, we already have a number of celebrities on Cloaked. We started now with the sports. Now we have a number of sports teams already on Cloaked. And then, we now brokered this deal with the NFLPA to get every athlete on Cloaked this coming season. And why I was excited about the NFL and the NFLPA was that they're the group that everybody looks to to say, &quot;What should we be doing?&quot; And so, we wanted to start there because football kind of drives everything else for everyone. So, now if you see that's the gold standard for security and safety, let's get everybody else on board. And so, we're excited to be partnering and working through this coming season, how we get everybody set up with Cloaked from the beginning, then working through and how do you help the teams, the executives from that point on.
+
+So, is the majority of your revenue then coming from those enterprise partnerships essentially, or is it coming from normal consumers?
+
+Yeah, so it's funny. It's almost, say, going down now in total percentage, but 90 to 85% is direct-to-consumer paying subscriptions. And now the enterprise and partnerships are all growing, but it is a lot of people just paying us 10 bucks a month, 100 bucks a year.
+
+Something that we've been talking a lot about for the purpose of these conversations on this podcast is like what do young founders need to know? Why do they need to watch this show? And I think that something that you mentioned there is when you first pitched to the NFL, it wasn't like an explicit pitch like, &quot;I'm asking you guys for money.&quot; You came and you told them about the problem at hand and how you guys were solving it. Can you walk us through a little bit of how that relationship then was built upon? And for other young founders out there, how can they find these opportunities that maybe it's not an ask right away, but it's a door that's opening into like so many of these other opportunities that come on the tail end of it?
+
+I think it's a good question. The one thing I always tell young founders is that you are always storytelling. And that's the first thing you have to realize. As you said, I did the talk with the athletes a year plus ago and with no—I don't know if a partnership will happen, etc. But I said I was invited to speak, let me tell the story. And you're always talking to investors, but not just them, your own team members, potential customers. What is a story worth telling? And in these elements of the story, think around who's the hero, what's the villain, what's the arc. And why is that relevant? It's that when you recognize that, you don't look at everything as &quot;have to close a deal.&quot; You kind of ask, &quot;Do people understand what's happening?&quot; And then you'll find that things kind of—this world is very small. The other thing I learned from fundraising Cloaked and all the big names that back us, that world is very tiny. And I've heard from investors, &quot;Oh Arjun, I was with some big-name person and then another big-name person, we were playing tennis for an hour. We spent the whole hour talking about you.&quot; I was like, &quot;Oh okay.&quot; I didn't realize that was happening, because they were kind of nattering away about how we're talking about Cloaked, where the industry's headed, where the world's headed. So I think one investor kind of really gave me this advice: &quot;Ditch the deck and tell the story.&quot;
+
+And we actually practiced a lot around when I was first raising our seed, and he would make me actually record voice memos while I was driving—as this is all pandemic time—and I sent him voice memos and he would tear it apart. And then I got really good at it. And why that I think is relevant is that when you do that right, if I'm talking to somebody for 30 seconds or I got 3 hours, there's a story I'm kind of building around. So that, just for young founders, think about that. The other part is that make it fun. I think part of this telling the story is they want to make it interactive. I always showed Cloaked. And I think people love to show Figmas or now cloud designs or they have some pre-recorded videos—make it interactive. And I think that's where now I'm like, in 2 seconds I can show you your social security number and people like that; that really clicks.
+
+It's also proof that it works. Like if you're having the people who you're either talking to or pitching to or just telling about it—like to your point—actually try it, call the number and see the serious issue that needs to be solved here. That's just all, you know, more vetting as to why you guys are a necessary product.
+
+Oh, yeah. And how are you storytelling to consumers? You know, like I know how you're doing it to the investors and in these rooms with the NFL players, but when it comes to your marketing strategy, I feel like we never really talk to AI companies about their marketing strategy and how they're using social media, but there's such a big use case there. So, what's yours?
+
+Yeah, so I remember a year and a half ago going to the whiteboard with my marketing head and I said, &quot;All right, we got to first figure out our marketing story,&quot; before we kind of test a bunch of random ads and do this. This is what led to a lot of our rapid growth, is that we designed that story. The approach, and there's two parts to the story. The first was that we said, &quot;Identify, remove, protect.&quot; That's like a thematic aspect of what we designed. And I said, and it's kind of conceptual, &quot;Identify the problem really succinctly to somebody.&quot; So, whether it's Facebook ads or performance marketing, in that ad make sure you can do that clearly. Second, show that we can make value in day one. And then how to protect you going forward. That was kind of the thesis and then from ad to landing page to the product, we kind of carried that story through. Now we've sharpened that message, which is around cleaning up your past, defending your present, protect your future. But those two kind of sides of the coin connect together. That's the story we tell. And people may not see those exact words, but if you actually—we make thousands of ads now, static, videos—you can kind of say, &quot;I see what Arjun is saying. There's a story arc moving.&quot; It's why even showing your social security number on the screen when you type your number in is because it's connecting the dots. There's like, &quot;This is a real problem.&quot; You're burying your head in the sand and saying, &quot;Oh, my info isn't out there.&quot; Anyone can get your social security number for a penny. And now they can commit crimes, fraud, etc. All these things are connected. Let's let Cloaked unpack it and fix it for you.
+
+Great. Great. Where in terms of like how you... 'cause of course, these are serious issues that, to your point, everyday consumers need to know about. Where are you connecting with them? Like where is this marketing going? Is it on social media? Is it, you know, where else?
+
+Yeah, so we are everything at the moment, right? So, performance marketing is a big thing for us. We're also doing brand marketing. We shot our first couple commercials that's been going. We did, we hired actors. There's a guy named Ron—kind of a little bit like the Mayhem from Allstate, showing how there's a creepy guy who's trying to get you, and that guy could represent an individual hacker, could represent an organization, could represent somebody trying to fish/smish you. The villain in your story. And so, and then we're doing podcast content. I think the reality is because we're a consumer brand, and everyone's very enterprise, consumers are becoming a dying breed, and in that, cybersecurity for consumers is almost non-existent. So we've really had to lean into consumer DNA, which has helped us though as we got into enterprise because consumer customers work at large enterprises and said, &quot;I want this for my business,&quot; which has become a funnel for the enterprise side, and then the other aspects of what we do.
+
+Well, I think too, like so much of the AI world right now is so focused on enterprise. So there is a hole in the market to be found if you're able to connect with them and educate them in a way that makes us understand as consumers that this is an important thing.
+
+Yeah, I completely agree and there's also so much sort of noise around the whole premise of your startup, you know, how AI is taking our data, so I think people are scared. So I think when an AI consumer startup comes in and it's like, &quot;We can help you solve this problem using AI,&quot; it's an interesting kind of juxtaposition. So you're pouring in all this money into ads. You've raised what, $375 million just now. Five years from now, what do you hope Cloaked becomes?
+
+Yeah, it's an interesting question, 'cause for me it's like, &quot;Oh, where are you headed? What do you want to do?&quot; I think for us, this is such a big problem. I now, enterprise SaaS is kind of scary, but I was like, if I wanted to get an easy simple exit, I could have done enterprise SaaS a few years ago, grown, scaled, get acquired. I think this is a real problem we're all facing. And so, in 5 years, my goal is that every data point around the world has a cloak around it. Okay. And so, when you think about the world, companies, people wanting to contextualize, personalize everything around you, it creates a simple statement I say: &quot;People like to feel known, but they don't want to feel surveilled.&quot; How do you make them feel good about what's going on? People like technology to feel custom and personal to them, but they shouldn't feel compromised in that process. So, what we really want to accomplish is make those statements really true, so you can keep living your life, but there's kind of Cloaked in the middle saying, &quot;All right, let's figure out how this data should look like.&quot; You don't need to get everything when I'm making a purchase for a sandwich. How do we find that right balance?
+
+I want to touch really quickly on the payment side of it. You mentioned a little bit ago that someone isn't necessarily going to hack you directly at the pain point, like your credit card or your phone number, but they'll go to that place that you bought a pair of jeans or a sandwich or Chinese food, whatever. Where are we now right now with like the payment side of things, the credit cards coming into play? Can you walk us a little bit through how that's being shaped up within Cloaked?
+
+Yeah, so this is coming out this quarter. We've spent 2 plus years in the making working with the networks and banks to make sure that you feel safe in making transactions. So, what we're going to be launching this quarter is that Cloaked can create credit card numbers on top of your existing debit, credit, or ACH. So, your existing card transactions keep working like normal, but now every transaction you make, whether online or even physical, we're generating a new card number in real time. And what we're excited about is that people talk about &quot;How do you protect your cards?&quot; They always think about tokens. The real—or virtual card numbers come up, but it's about, &quot;Oh, here's a new virtual card number that Google made,&quot; but it still has your entire balance access, and you can just turn it off or on. The goal is that we can make each card unique, so I have a card just for Spotify. It'll only work on Spotify, and it'll have 15 bucks a month for it. And so you set these limits. We actually experimented with this. We put a card number on a billboard. We made the bank a little uneasy about it, but then we kind of resolved it, but I put it out there 'cause I felt good about nobody being able to transact. And we saw thousands of people trying to use my credit card. A lot of Roblox. I don't know, there's a lot of things that were there, but there's a lot of attempts to use that credit card.
+
+You said Roblox? That's what they're trying to buy?
+
+That's what we saw. We saw all the attempts. Someone tried to buy a PlayStation. A lot of attempts, but that card was only good for one merchant, and eventually I think people got it. It's only allowed 10 dollars. But I felt comfortable with that because no one aspect of me was tied to that card. I lost my credit card once, but that was totally my fault, and someone tried to charge it at a Foot Locker. But jokes on them, 'cause it declined.
+
+I had a similar situation, but it got actually approved. I was flying out from Miami, and then literally on the plane, I was like, &quot;Oh, where's my credit card?&quot; And I saw $1,500 worth of different things. People bought shoes, they bought this, and it all got approved. So I had the opposite problem. You got too much money in the bank. I don't know, the credit card had a balance. I don't know about the money in the bank.
+
+So, speaking of good and bad money decisions here, I want to know from either the fundraising side of things or investing in things like marketing or product development, what is the best money decision that you guys have made as a company, and what's the worst?
+
+Well, I think the way to get to that question is to realize you make a thousand good decisions and a thousand bad decisions. So if you keep that trend going, you're on the right track. I think the good use of funds from our side, obviously we have a very heavy engineering base, so we built a lot of the core technology. I think everyone thought we were stupid to do performance marketing. And I think we said, &quot;Hey, let's go lean into that first.&quot; We looked at the landscape, people were sponsoring influencers, they were doing every single podcast, all the dollars were there. But performance marketing, there's no clear winner. So, we poured every dollar we had to get performance marketing working with our story last year. Oh, sorry, in late 2024, which made it a monster year. And right by December, we were basically out of cash, and I said, &quot;Let's spend another 1.5 million, and we will be lights out by January.&quot; But our growth was starting to show, and I said, &quot;I think I can show people the story that we've cracked how to do this.&quot; And I don't think the team fully knew how close we were to burning, and a lot of founders gave me advice. They're like, &quot;Arjun, you should cut down the team, you should scale back.&quot; And I said, &quot;I want to scale up.&quot; And try to really show that how this is going to work. And that paid off. We ended up getting investment end of 2024, and then now we raised our next round that people saw what we were doing, they were starting to see what was working, and they doubled down with us. But that was running in blind faith. And literally got the check or the sign-off on the check on December 27th, 2024. And I still remember that. I was like, &quot;This is the end of the year, and I got... all right, Arjun, let's go keep going.&quot; I was like, &quot;Okay.&quot;
+
+I think the worst decision from our side—it's hard 'cause you just make so many decisions. We made bad sponsorships where we spent like 70 grand or something, or we tried some experiments, but there's not—knocking on wood—one singular bad thing. That's my kind of slight Indian way of approaching it, but there's nothing, one bad decision. I think there's probably a lot of minor or medium ones, but I think the good one, which is the scariest, was spend every dollar you had at the last minute and have complete conviction you're going to figure it out, even though you don't have a clear path.
+
+Speaking of money, I have a loaded last question for you. Okay. How much did you pay to get on the Forbes under 30 list?
+
+I did not spend anything to get on the Forbes 30 under 30 list. Thank you. Sounds about right. Sounds about right. People think that. You don't spend money to get on the list. Right. Exactly. So, thank you for helping us, you know, debunk it a little bit.
+
+Yeah, and thank you so much for joining us. Of course. Thank you for having me.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
