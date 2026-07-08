@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Wednesday, July 8, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260707.html">&larr; Jul 7</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Wednesday, July 8, 2026</h1>
+            <p class="day-sub">5 videos &middot; 5 channels</p>
+        </header>
+        <nav class="toc"><div class="toc-label">In this briefing</div><ol><li><a href="#video-0">Solving the Blank Canvas Problem: <strong>Gusto</strong>'s AI Co-Founder</a></li><li><a href="#video-1">The Network at the Heart of AI Factories With <strong>NVIDIA</strong> Spectrum- X Ethernet​</a></li><li><a href="#video-2">Episode 56: <strong>Gavin Baker</strong> - Managing Partner of <strong>Atreides Management</strong></a></li><li><a href="#video-3"><strong>John Graham</strong>: Inside the Fund Investing for 22 Million Canadians | Podcast | In Good Company</a></li><li><a href="#video-4">President Trump on The Axios Show | Full Interview</a></li></ol></nav>
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=xpeRVyFFy_Q" target="_blank" rel="noopener">Solving the Blank Canvas Problem: Gusto's AI Co-Founder<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Y Combinator</b><span class="subs">(2.3M)</span></span><span class="dot">&middot;</span><span>32:27</span><span class="dot">&middot;</span><span>4.5K views</span><span class="dot">&middot;</span><span>2026-07-08</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Eddie%20Kim%22">Eddie Kim<span class="chip-desc">Co-founder and Head of Technology, Gusto</span></a> <a class="chip" href="index.html?q=%22Harj%20Taggar%22">Harj Taggar<span class="chip-desc">Managing Partner, Y Combinator</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;The tech world is on the cutting…</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Gusto Co-founder is an agentic AI product that automates end-to-end business workflows—such as payroll, compliance, and customer communications—via SMS and Slack, leveraging Gusto’s proprietary data to solve the &quot;blank canvas&quot; problem of traditional AI.  Beyond the...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR:</strong> Gusto Co-founder is an agentic AI product that automates end-to-end business workflows—such as payroll, compliance, and customer communications—via SMS and Slack, leveraging Gusto’s proprietary data to solve the "blank canvas" problem of traditional AI.</p>
+<h3>Solving the "Blank Canvas" Problem</h3>
+<ul>
+<li><strong>Beyond the "Glorified Search Engine":</strong> Eddie Kim (Gusto Co-founder) observes that 99.9% of users still treat AI as a search or summarization tool rather than an autonomous agent that performs tasks.</li>
+<li><strong>Overcoming User Friction:</strong> Most users struggle with "the blank canvas"—knowing what to ask an AI to do. Gusto Co-founder solves this by:</li>
+<ul>
+<ul>
+<li><strong>Suggesting Automations:</strong> Proactively offering to handle recurring tasks like approving timesheets or running payroll based on existing Gusto data.</li>
+<li><strong>Leveraging Context:</strong> Using Gusto’s "system of record" status to provide the AI with the necessary data (hours, employee roles, industry) to act without manual input.</li>
+</ul>
+</ul>
+<li><strong>System of Record Advantage:</strong> Because Gusto holds the core business data, the AI can find hidden value, such as identifying a $50,000 R&amp;D tax credit for a customer that they were unaware they qualified for.</li>
+</ul>
+<h3>Product Interface and "The Work Before the Work"</h3>
+<ul>
+<li><strong>SMS and Slack as the Primary UI:</strong> The product avoids the web browser entirely. Business owners can approve payroll or trigger workflows via a simple text message.</li>
+<ul>
+<ul>
+<li><strong>Low Friction:</strong> Kim noted that users find the ability to manage a business via Telegram or SMS "mind-blowing" compared to logging into a complex dashboard.</li>
+</ul>
+</ul>
+<li><strong>Automating Data Manipulation:</strong> Most small business labor is "the work before the work"—exporting data from one system (e.g., MindBody for spas), manipulating it in Excel, and then uploading it to payroll. </li>
+<ul>
+<ul>
+<li>Gusto Co-founder uses "connectors" (QuickBooks, Google Workspace, etc.) to automate these middle steps end-to-end.</li>
+</ul>
+</ul>
+<li><strong>Proactive Agency:</strong> The tool is designed to be a "co-founder" that looks ahead, such as checking weather reports for a tour business and proactively texting customers to bring umbrellas if rain is forecasted.</li>
+</ul>
+<h3>A New Paradigm for Product Development</h3>
+<ul>
+<li><strong>Extreme Velocity:</strong> The product was built from prototype to a "Tier 1" company launch by a team of only five people in just ten weeks.</li>
+<li><strong>The "Anti-Process" Approach:</strong> To maintain speed, the team intentionally eliminated traditional corporate overhead:</li>
+<ul>
+<ul>
+<li><strong>No Documentation:</strong> No PRDs (Product Requirement Documents), no Jira boards, and no formal text specs.</li>
+<li><strong>No Static Design:</strong> The team bypassed Figma, moving straight from whiteboarding to code.</li>
+<li><strong>24/7 Collaboration:</strong> Instead of scheduled meetings, the team utilized a "perma-Zoom" room that stayed open 24/7 for instant, high-bandwidth communication.</li>
+</ul>
+</ul>
+<li><strong>Role Merging:</strong> AI tools allowed the team to blur traditional boundaries:</li>
+<ul>
+<ul>
+<li><strong>Designer-Coders:</strong> The lead designer contributed as much production-grade code as the engineers.</li>
+<li><strong>Engineer-Designers:</strong> Engineers prototyped their own UI/UX, which the designer then refined directly in the codebase using AI coding assistants.</li>
+</ul>
+</ul>
+</ul>
+<h3>Future Roadmaps and the "Abundance" of Startups</h3>
+<ul>
+<li><strong>Channel Expansion:</strong> Gusto plans to expand beyond SMS and Slack into WhatsApp and Telegram to meet international and vertical-specific communication needs.</li>
+<li><strong>Lowering the Barrier to Entry:</strong> Future versions will allow users to use Co-founder before they even have an EIN, helping them register businesses and automate the "side hustle" phase.</li>
+<li><strong>Secular Trend:</strong> Kim believes AI represents a "step function" in making business ownership easier, shifting the owner’s focus from "arcane HR rules" to strategy and growth.</li>
+</ul>
+<p>***</p>
+<p><strong>Notable Quotes</strong></p>
+<blockquote>
+"The tech world is on the cutting edge... but the remaining 99.9% are still kind of using [AI] as a glorified search engine. What we wanted to do with Gusto Co-founder is bring all of these agentic promises we received and turn them into reality." — <strong>Eddie Kim</strong>
+</blockquote>
+<blockquote>
+"We didn't have meetings. We didn't have any text specs. We didn't have any Figmas... it was almost more defined by what we didn't do versus what we changed in how we build software." — <strong>Eddie Kim</strong>
+</blockquote>
+<blockquote>
+"Small business owners... are entrepreneurial, they're scrappy, they're founders. Anything you give them that can save them time so they can go spend more time on building their business—that's a hard yes for them." — <strong>Eddie Kim</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">I'm here with Eddie Kim, Gusto's co-founder and head of technology. Gusto was in YC's winter 2012 batch and recently crossed a billion dollars in annual revenue and now serves over 500,000 small businesses in the US. In fact, one in five new businesses started today are Gusto customers. Today we're going to talk about a new product they're releasing which Eddie actually built himself called Gusto Co-founder which uses AI to automate running a small business. Welcome, Eddie. 
+
+Thanks for having me. 
+
+Cool. So why don't we start? Tell us a little bit about what exactly is Gusto Co-founder? What does it do and who is it for? 
+
+Yeah. So simply put, Gusto Co-founder is for small businesses and it will automate most of the business processes that a small business has. Many of those things they're already doing on Gusto, but Gusto Co-founder can take those things and automate them fully. So, anything from running their payroll from start to finish, approving time off, reminding your employees to submit time sheets, or even things outside of Gusto. One example I like to give is texting you if it's going to rain today because if you have a business like a tour guide business where it's highly dependent on the weather, you want to know that and then have a co-founder actually email all of your customers for the day to let them know that it's going to rain and they should bring an umbrella. 
+
+I mean, I think that's actually a really interesting point. You guys are in a unique position because you build for small businesses that are probably less technically sophisticated than a lot of the customers that at least certainly YC companies today or other technology companies are building for. So what do you see as some of the challenges when you're trying to design a product for a small business owner, and especially an AI product that is living at the edge? 
+
+Yeah, I think one of the issues that I see, especially for small businesses, is they really still use AI as sort of a glorified search engine. They kind of ask it a question, and it will reply. The more advanced small businesses out there—and I would argue not just small businesses, but like most people who are using AI—the more advanced version of this is like maybe you have it do some research for you, generate a report, or summarize something that you wrote or authored. But they are still kind of largely thinking, &quot;I have this thing I have in mind,&quot; and then I'm expecting a response from it. This sort of agentic world that we've been promised has never really materialized for most people out there. 
+
+I think there is the tech world that is on the cutting edge, folks that are creative enough to come up with all these ways to automate all parts of their lives, but the remaining 99.9% are still kind of using this as a glorified search engine. What we wanted to do with Gusto Co-founder is bring all of these agentic promises that we received and turn them into reality. One of the ways that we've done that with Gusto Co-founder is, instead of starting with an open-claude type experience, which has a lot of powerful capabilities but has a problem which I call the &quot;blank canvas problem,&quot; we actually start with all of the things that Gusto is already solving for our customers. Those are things in payroll, HR, time, and scheduling, and then we sort of suggest ways that we can automate their running payroll or approving time sheets. These are things they are doing on a regular basis; payroll is run once a week usually for hourly employees or twice a month if you have salaried employees. We will suggest ways that we can actually take it end-to-end without the user even having to log into Gusto and run their process. 
+
+Something I'm really curious about because you guys are already at such massive scale: what does it look like from the inside trying to get a product like this out there? How did you come up with the idea and how do you sort of, at your scale, figure out if this is something customers want? How does it live alongside the existing product? It feels like there are so many more complex pieces than if you were just starting from scratch. 
+
+The original idea came from when I actually set up an open-claude instance myself. I spent eight hours just setting the thing up. I had to buy a Mac Mini—it was at the time of the world where you could still get a Mac Mini—so I was able to get one within two days. I installed everything on it. I wanted to make sure—I heard all the horror stories of it deleting people's emails—so I was very careful to air-gap it and I set up this pretty solid, secure open-claude instance, which only an engineer could really do. 
+
+Once I had set all of that up, I kind of really didn't know what to do with it. I actually found myself also using it as sort of a glorified search engine. I thought there were some really cool aspects of this, like the ability to just text it over Telegram, which sounded simple and not that innovative to me at the time. But when I actually had hands-on experience doing it myself, it was just like, this is such a way better experience to interact with AI than having to open up a web browser and log into Claude or ChatGPT. I had exactly the same experience with my open-claude, and I've been saying this a lot around here: I think people just really underestimate chat as the interface. If anything, I found that I tried to build out more functionality from open-claude, but as an engineer or tech person, your natural inclination is always, &quot;Let me add more functionality or make the client better so it has a project management view or something like that.&quot; But I think in the world of AI, you actually want to figure out ways to make the agent smarter so that you can do what you want from Telegram without needing a fancy UI. Has that kind of played out for you guys? 
+
+Yeah, absolutely. The other learning, by the way, was that everybody—it's not the first time I heard about this—people were saying, &quot;Yeah, the ability to talk to this thing with Telegram is pretty cool,&quot; and we read about it and lots of people were making YouTube videos about it. But then you really don't get it until you actually set it up yourself and have hands-on experience. That was one important learning: it is really important to still get into the weeds. If you're a technical leader, you should be coding. If you're not, you should not just be reading about these things like open-claude, but you should be going out there and setting it up yourself because I just realized there's this big gap between what you read about and what you actually experience. They're the same thing, but they're completely different experiences. 
+
+So, how did you go from being a hobbyist interested in open-claude to the initial idea for Co-founder and building version one? 
+
+I had set this all up and had my open-claude running. I actually went on vacation to Madrid and on my way back, my layover was in London. I actually missed the second leg of the flight that was flying from London to San Francisco. I had all this time—I was kind of pissed—but I had my computer on me and I was writing a lot of code using Claude code. I was just blown away at what you could do with it; I could share my intent of wanting something and Claude code would build it for me. I asked myself, &quot;Why can't we bring this power into the hands of our customers?&quot; Why do they have to wait for Gusto to build its roadmap and deliver it? Why can't our customers say, &quot;I want this from Gusto,&quot; put in a prompt, and Gusto actually builds that experience for them? I had that idea percolating in my mind, and because of the missed flight, I actually had five hours of uninterrupted time where I could try to build this. I took out my computer, used Claude code, and built a prototype in that five-hour sitting in the lounge at the airport. I was pretty excited about what I had built. When I got back to work, I started showing it to a few engineers, designers, and our leadership, and I spent the next couple of weeks refining that idea. Through conversation, it evolved—there were pieces we really liked and pieces that didn't work so well—which eventually led to the development of Gusto Co-founder. 
+
+What did that first prototype do, and how did you shape it with the team? 
+
+It was really just a chat prompt. The customer would say, &quot;I want a user experience where I can send out a form to my employees and they can fill out the survey,&quot; or &quot;I want to build a to-do tracking application,&quot; or &quot;I want to build a CRM.&quot; The customer would just say, &quot;I want this,&quot; and the prototype would build a web app essentially, using our Gusto design system. It would look like Gusto had actually built it, and it would just be an application that they would add to Gusto. You could literally have any application that you wanted. 
+
+Is all the context and data being pulled from their Gusto account, or do you have to go elsewhere? 
+
+The use case for this prototype was really just a CRUD web app builder. It wrote code, saved it into a database column somewhere, and then it would just execute that code whenever you visited that page. I added the ability to store data, but it would be the data that you would bring into it. 
+
+That seems like a huge advantage for you and any company that is a system of record. You already have a ton of data on the businesses. Personally, for me, the unlock of open-claude was finding a way to securely give it access to my email and use embeddings. It has lots of context on me, personally and professionally, so it's orders of magnitude more useful. For your customers, how does it use the context you already have on them to help them do things? 
+
+The prototype was really cool, but it didn't leverage anything about what we knew about the customer. It didn't populate it with data we had. That's how this idea evolved to be less about building a web app and more about building workflows that we would automate for our customer. We do have a lot of data on what customers are doing on Gusto; we have data on what industry they're in—if they're a dentist, for example, we know what things they would typically want to automate. We have this data in aggregate across all our customers, and also for each individual customer. The idea evolved to: what if instead of building a prompt that builds a web app, we leverage a prompt plus the data we have to build them an automation for a business process they are doing every single week? That became the main concept of Gusto Co-founder, which is centered around an automation that runs on a heartbeat that gets triggered on a regular basis. 
+
+Part of that was when I was setting up open-claude, I was curious how it worked. It's open source, so I read the source code. It was surprisingly simple: it's a cron job that runs an LLM every 30 minutes. That's exactly how it works in Gusto Co-founder. It wasn't even just the concepts of being able to text it through SMS or talk through Slack; the technical design of Co-founder was heavily inspired by some of these tools I started using personally. I will say the open-claude heartbeat idea is great, but I found that I end up having to write a lot of cron scripts outside of the gateway myself because some things you want to be deterministic—payroll is probably one of those things. I found the heartbeat not being deterministic means I can't guarantee exactly when it's going to fire. 
+
+Exactly. For that reason, we started with a heartbeat and then improved on it, adding multiple ways to trigger a job. In Gusto Co-founder, you have the ability to schedule a job via a regular cron, and we will detect if what the customer is asking for is more suitable for a cron versus running a prompt every 30 minutes, which can get expensive. 
+
+You're in a unique position given your customer base. Some things I'm curious about from a sales perspective: AI feels like a hot topic in the enterprise world right now, but I'm imagining your customers have read about AI, but they don't necessarily know what &quot;automating workflows&quot; means. How do you message this differently when you show these products to them? 
+
+Businesses on Gusto are in a unique situation because the things people do on Gusto are recurring tasks—running payroll, approving time off—things they do week in and week out, and they know it wastes a lot of time. Running payroll is an involved process that usually involves exporting data from one system, manipulating it, and putting it into Gusto. For example, a massage spa business I talked to exports data from MindBody, puts it into Google Sheets, does all these calculations for commissions and tips, and only then do they put it into Gusto. That last part is simple, but it's the work before the work that takes them so much time every single week. When you talk about this to a customer, they instantly get it because they have these tasks on their calendar that take an hour every week. If Gusto Co-founder can do this for them and just text them a summary with a final approval where they just say yes or no over SMS or Slack, they really get it. It doesn't take much selling at all. 
+
+That makes sense. And there's a headwind you don't have, which is that in an enterprise, you might face resistance from people worrying about how it's going to affect their jobs. Whereas with small businesses, it seems like all upside because nobody wants to be exporting data out of MindBody and putting it into QuickBooks. 
+
+Totally. They just want to do more with less. Small business owners are entrepreneurial, scrappy, and founders. Anything you give them that can save them time so they can spend more on building their business is a hard yes for them. 
+
+Extending that out, what do you think happens if Co-founder is successful and frees up a lot of time? Where does that time go and what are the knock-on effects? 
+
+I think they're going to spend this time looking for ways to grow their business, expanding into more products, and thinking more about strategy. It frees them up to do things they wanted to do but didn't have time for. That's step one. Step two is that we want to be more than just a business process automator; we want to proactively let the customer know about things they should be doing. That can range from compliance tasks to tax credits. For example, there's a tax credit called the R&amp;D tax credit. Based on what I'm seeing in your company, you're probably eligible for this, and I can fill out the forms for you. That business owner might say, &quot;Wow, that's amazing, I didn't know that existed.&quot; That's not a hypothetical story; there was a company called Cabana Pools that we found $50,000 in R&amp;D tax credit for. 
+
+I bet you're in an interesting spot to level up the businesses, too. I used to build software for eBay power sellers, and I found there was a sliver of power sellers who understood the value of tools to automate listings. They would look at their competitors and check pricing constantly, but those were the top 1% of technically sophisticated sellers. You could take any small business and give them market intelligence: what should you be selling, how could you optimize? 
+
+One of the automations I saw was, &quot;Every week, take a look at what my competitors are doing, generate a report, and give me suggestions on how I could stay ahead.&quot; That's one of the more creative automations I've seen. There's no reason why we shouldn't be able to say, &quot;Oh, you're an eBay seller, this is what you should be doing,&quot; and ask if we can run this for them every week. That's a great example of the proactive business partner Gusto Co-founder could become. 
+
+How's it going so far? How many businesses are using it, and what's surprised you? 
+
+We just launched it and added 500 customers to Gusto Co-founder. Before that, we had a pre-launch with a small business council—a small group of 20 customers—and the feedback has been incredible. Everybody is blown away by the ability to run everything through text message. I saw it in their face when I said, &quot;Try this thing, put in the eight-digit code to set up the connection, and now you can run your payroll or contractor payment through text.&quot; It's so accessible. It's been cool to see the automations companies are creating. What's been surprising is that a lot of the automations don't necessarily have to do with things Gusto is already doing. They are doing things like, &quot;Text me every morning if it's going to rain, and if so, send an email to my customer list in this Excel file.&quot; That has nothing to do with what Gusto does, but it's absolutely possible. 
+
+What's next on the roadmap? 
+
+There are so many things. Right now we have SMS and Slack, but I want to add more channels. I think a lot of businesses do things through WhatsApp. SMS is a pain because you're limited on character count, so Telegram or WhatsApp are important channels. We want to add more connectors; right now we have things like QuickBooks, Notion, and Google Workspace, but there are so many vertical-specific connectors. I talked to a dental practice that uses a system called Curve Dental, so why couldn't we get information in and out of there? There are probably hundreds of connectors we could add. We're going to observe what people are doing and let the customers guide how we evolve the roadmap. 
+
+Will this help people start businesses who wouldn't have done so otherwise? 
+
+One of the things we want to do in our next version is open it up to people that don't necessarily have a company today. Right now, you have to be an administrator for a company to use Gusto Co-founder, but we built the data models in a way where that doesn't have to be true. You could use it even if you don't have an EIN yet. If you're thinking about starting a business or have a side hustle, you should be able to use it to automate and grow. At some point, your business grows and you might ask, &quot;Can you help me get an EIN or register to be an employer?&quot; And we would go do all that for you. 
+
+How has this launch felt different for you personally? I'm guessing in the era of vibe coding, you were able to build the prototype yourself versus trying to get a team to rally around it. 
+
+That was more mind-blowing than what we built—how we built it. I started with this prototype, showed a few engineers and designers, and ultimately roped them into working on this for me. This was built by five people over 10 weeks, from a whiteboarding session to a tier-one launch. That would never have been possible without AI. The fact that it was just five people—and I was one of them—is mind-blowing. It changed how I view coding. We had four engineers and one designer, and this designer was contributing as much code as any of the engineers. It was cool to see a designer be able to write production-grade code, and engineers become comfortable with design. The craft became secondary, and everybody's shared responsibility was to write and commit code. We moved with a speed I'd never seen before. 
+
+What's your advice to other companies at scale trying to get that velocity and get their team to build with AI? 
+
+It's something we are discussing a lot at the company. A lot of it is defined by what we didn't do. We didn't have meetings, text specs, or Figmas. We set a goal: we're not going to write any docs. Now, I wouldn't recommend that for every part of the organization, but for a zero-to-one thing, we didn't have Jira boards or sprint planning. We just had one perma-zoom; we had a Zoom meeting that was going 24/7 where people could hop in and out, lots of Claude code tokens, and that was it. 
+
+It was funny because in a sense, there were no docs, but in a way, there was more documentation than ever because the transcripts with code are effectively documentation of thoughts and direction. 
+
+Another thing we learned is that all of us, myself included, threw away so much code. You would have an idea, and before discussing it, I would just open a pull request for it. Then I'd go to the Zoom and say, &quot;Hey, I made this thing, what do we think?&quot; If it wasn't what we wanted, we'd delete the code and that's okay. If you have a hit rate of 50%, it's significantly faster than writing a PRD and a Figma and getting a green light. That process ends up taking longer than just trying to write it three different ways and picking one. 
+
+A debate at YC is whether, because AI makes it so cheap to write code, you should build 10 things at once or just one or two. Do you have thoughts on that? 
+
+I think you still have to be really disciplined about what the product looks like. If anything, you have to be much more disciplined than before. You can't just throw every bell and whistle into this thing. You have a lot more things to say &quot;no&quot; to now, which makes it harder. But I think the way you get to that disciplined set of functionality is to write the code in every permutation you can think of and then have a discussion. When you're talking about it from a PRD perspective, you lose information because you don't have the implementation in front of you. You learn so much when you actually implement something. 
+
+We live in an age of abundance; we can think anything and make it happen. What's your advice to small businesses to make the most of this? 
+
+We've been on a secular trend for 15 years where it's become easier to start a small business. I think Gusto's been a part of that. Now, with AI, it's a step function easier. All these things like compliance and arcane HR rules still exist, but with AI, you can automate many of them and focus on what owners want to do most, which is building products and growing their business. We're seeing it in the data; more people are seeing this as a viable path. It's a pretty amazing time to be alive, and I love small business because walking down the street and seeing all these random, quirky businesses makes communities so much more interesting. 
+
+Cool. Well, Eddie, thanks so much. I'm really excited to see where Gusto Co-founder goes. That's all we have time for today. 
+
+Thanks for having me.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-1">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=tjGVnjsvi-k" target="_blank" rel="noopener">The Network at the Heart of AI Factories With NVIDIA Spectrum- X Ethernet​<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/btm1_PK-7VRUr9GY2D0UV_2XfbUZPBjghyptjSO1crsfN86HyTYDWPmUbq7JxC3H0Lxe_s067nA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>NVIDIA</b><span class="subs">(2.2M)</span></span><span class="dot">&middot;</span><span>30:28</span><span class="dot">&middot;</span><span>467 views</span><span class="dot">&middot;</span><span>2026-07-08</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Alan%20Weckel%22">Alan Weckel<span class="chip-desc">Analyst, 650 Group</span></a> <a class="chip" href="index.html?q=%22Gilad%20Shainer%22">Gilad Shainer<span class="chip-desc">SVP of Networking, NVIDIA</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Modern AI factories require four distinct, purpose-built networking infrastructures to function as a single compute unit; NVIDIA’s Spectrum-X Ethernet is the first &quot;AI-ready&quot; Ethernet designed to eliminate jitter, achieve 95% effective bandwidth,…</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">and reduce optical power...</div>
+                    <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
+<p>Modern AI factories require four distinct, purpose-built networking infrastructures to function as a single compute unit; NVIDIA’s Spectrum-X Ethernet is the first "AI-ready" Ethernet designed to eliminate jitter, achieve 95% effective bandwidth, and reduce optical power consumption by 5x through co-packaged optics.</p>
+<h3>The Four Pillars of AI Networking Infrastructure</h3>
+<p>NVIDIA SVP Gilad Shainer argues that traditional hyperscale cloud architectures are insufficient for AI, necessitating four specific, interconnected infrastructures:</p>
+<ul>
+<li><strong>Scale-Up (NVLink):</strong> A purpose-built infrastructure designed to connect multiple GPUs to form a single unit. It has evolved from connecting 8 GPUs to supporting 576 and 1,152 GPU units with high radix and extremely low latency.</li>
+<li><strong>Scale-Out (Spectrum-X Ethernet):</strong> Unlike off-the-shelf Ethernet designed for single-server workloads, Spectrum-X is built to eliminate "jitter" and ensure hundreds of thousands of GPUs remain fully synchronized.</li>
+<li><strong>Scale-Across:</strong> Enables the creation of "Giga-scale" factories by connecting multiple AI factories using distance-aware congestion control and adaptive routing.</li>
+<li><strong>Context Memory Storage:</strong> A new infrastructure utilizing BlueField-4 as a storage controller to manage the growing memory requirements for AI inferencing efficiently.</li>
+</ul>
+<h3>Spectrum-X: Redefining Ethernet Performance</h3>
+<p>Traditional Ethernet often suffers from inconsistent performance and high latency in distributed computing environments. Spectrum-X addresses these via an end-to-end integration of switches and "Super NICs."</p>
+<ul>
+<li><strong>Effective Bandwidth:</strong> Reports from the first massive installations show <strong>95% effective bandwidth</strong> across the network.</li>
+<li><strong>Zero Collisions:</strong> Shainer highlights that Spectrum-X achieved zero collisions on a 100,000-GPU cluster, a feat impossible with traditional Ethernet.</li>
+<li><strong>Adaptive Routing vs. Data Ordering:</strong> To maximize performance, Spectrum-X separates the mission of the switch (traffic distribution) from the mission of the NIC (data ordering), preventing the bottlenecks found in single-device solutions.</li>
+<li><strong>Deterministic Performance:</strong> The platform provides the consistent latency and performance required to maintain strict Service Level Agreements (SLAs) in AI clouds.</li>
+</ul>
+<h3>Production Launch of Co-Packaged Optics (CPO)</h3>
+<p>As bandwidth requirements double annually, power consumption has become the primary limiting factor in AI factory growth.</p>
+<ul>
+<li><strong>5x Power Reduction:</strong> By integrating optical engines directly onto the switch packaging rather than using external transceivers, NVIDIA has reduced the power required to drive data by nearly five times.</li>
+<li><strong>10x Reliability Increase:</strong> CPO technology provides a <strong>10x improvement in Mean Time Between Interrupts (MTBI)</strong>, significantly increasing the residency and durability of the factory.</li>
+<li><strong>Production Readiness:</strong> While CPO has been a conceptual industry goal for years, Shainer confirms that Spectrum-X with CPO is moving into production in the second half of 2024.</li>
+</ul>
+<h3>The Shift to a "Single Unit of Computing"</h3>
+<p>The fundamental difference between a traditional data center and an AI factory is the level of integration required.</p>
+<ul>
+<li><strong>The "Server Farm" vs. The Supercomputer:</strong> Shainer notes that connecting compute engines with off-the-shelf Ethernet merely creates a server farm; a purpose-built AI network turns those engines into a single supercomputer.</li>
+<li><strong>Accelerated Innovation Cadence:</strong> The industry has shifted from a 3-to-4-year upgrade cycle to an <strong>annual release cycle</strong>. NVIDIA is now developing multiple generations of switches, NICs, and GPUs in parallel to keep pace with AI demands.</li>
+<li><strong>Research &amp; Development:</strong> The complexity of these systems requires a "single unit" R&amp;D approach, combining GPUs, CPUs, DPUs, and switches to behave as one cohesive machine.</li>
+</ul>
+<blockquote>
+"If you connect [compute engines] with an off-the-shelf Ethernet network, you just build a server farm. No more to that. If you build it with a network that was purposely built for AI, you got the supercomputer." — <strong>Gilad Shainer</strong>
+</blockquote>
+<blockquote>
+"Spectrum-X was the first one to connect hundreds of thousands of GPUs... the highly effective bandwidth we’re seeing immediately—we’re talking about 95% effective—with zero collisions." — <strong>Gilad Shainer</strong>
+</blockquote>
+<blockquote>
+"By reducing the distance between the optical engine... and putting that on packaging together with the switches, we can save almost 5x power. And that’s actually the minimum power you can have for an optical network." — <strong>Gilad Shainer</strong>
+</blockquote>
+<blockquote>
+"We actually shipped more bandwidth in one quarter than what we did just two years ago. That acceleration in innovation is really highlighted in the data." — <strong>Alan Weckel</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">Hi, I'm Alan Welkel from 650 Group, and today we're going to be talking about network, the heart of AI factories. Specifically looking at NVIDIA's Spectrum-X Ethernet. It's my pleasure to be joined today in this fireside chat by Gilad, SVP of networking at NVIDIA. He actually doesn't need any introductions, but with that being said, Gilad, it's a pleasure to be talking to you again today.
+
+Yeah, likewise. Cool. A lot has happened so far this year. We're in the early stages of the 800 gig upgrade cycle, bandwidth is exploding, scale out is going crazy, and we've got scale across these days. Can you kind of ground us in how network architectures are changing within the AI factories?
+
+Yeah, sure. When we talk about networking architecture, or networking architectures, there are actually multiple networking infrastructures that are required in order to build an AI factory. Each infrastructure is different and needs to support a different set of elements; some elements are common, while some elements are less common. The first infrastructure—something that didn't exist a few years back when we were building hyperscale clouds—is scale-up. It's an infrastructure created for AI training and inferencing, with a mission to connect multiple GPU ASICs to create a single GPU unit.
+
+It started with connecting eight GPUs to form a single unit, then it grew up to NVIDIA 72. Now we're talking about building 576 and engine 1152. The scale-up network is growing in radix, delivering a massive amount of bandwidth, extremely low latency, and of course, supporting in-network computing and reduction on the infrastructure itself. NVLink is a scale-up infrastructure, and I believe it is the only purpose-built scale-up infrastructure that exists today. It's an amazing network that creates a GPU unit.
+
+After we create the GPU unit, we need to scale it out. In the past, we used off-the-shelf Ethernet to connect hyperscale clouds, but that technology was built for single-server workloads. It delivered the required bandwidth, but it didn't tackle issues of jitter or multi-process workloads, which are necessary for AI and distributed computing. For that reason, we created another purpose-built network: Spectrum-X, which is purposely built for AI and scientific computing. Its first mission was to eliminate jitter, which is the unique value of Spectrum-X.
+
+To ensure that every GPU unit is completely synchronized with any other GPU unit in a system that can consist of hundreds of thousands of GPUs, we needed to build a full end-to-end infrastructure. It’s a combination of a switch and a SuperNIC, where each needs to do different things to build that scale-out infrastructure. It is completely different from any other Ethernet that existed before. After we scale it out, we can also talk about scale-across, or connecting multiple AI factories to form a giant factory.
+
+Scale-across is based on the algorithms we developed for scale-out, but we added &quot;distance aware&quot; capabilities. The algorithms for congestion control or adaptive routing have added capabilities so we can modify them based on distance, which enables us to build a giga-scale factory. Recently, we introduced another infrastructure that didn't exist before: our BlueField context memory storage infrastructure for inference. Context memory is growing and we need more places to store data. We wanted to build something very cost-effective that consumes less power compared to other storage infrastructures, leveraging the capabilities of Spectrum-X. The combination of our storage controller with Spectrum-X created a new infrastructure for context memory storage.
+
+There are more elements around Spectrum-X, such as the ability to connect DPUs or the new LP-X racks into the data factory, creating a low-latency version of Spectrum-X. The basis for the off-the-shelf Ethernet networks that existed a few years back is completely different from what we need today when we talk about a factory regarding latency, bandwidth capacity, in-network computing, and jitter. There is no one infrastructure that fits all; we have four infrastructures. I didn't even touch on a secure access network with BlueField, which is also needed to support multi-tenant access into an AI cloud, for example.
+
+I think that's important because in traditional data centers, we had one network, or maybe two if we count DCI. Now we're at four. You kind of glanced over it, but that scale-up network is at least 100x the bandwidth of what we've traditionally seen in compute. We're talking a tremendous amount of connectivity here; every vector—higher rate, higher speed, and raw throughput—is far higher in AI than anything we've seen historically.
+
+The cadence of new releases, new technology, new switches, new SuperNICs, and new storage controllers is amazing. If you look back, the cadence between generations was around three to four years, so you could release technology and then have three years to develop what would come later. In our era, when we're talking about AI, there is a new platform, a new switch, a new SuperNIC, and a new GPU every year. The cadence of progress is amazing; companies can't just work on one generation at a time.
+
+You're already working on two generations in parallel. You need to understand what technologies are going to come next, such as co-packaged optics or optical package optics. There will be other integrations, so you need to have a very strong research entity. That's what we are very proud of within NVIDIA—a working research entity that looks ahead at what's coming in the next two, three, and four years. It's an amazing R&amp;D team that works on multiple generations at the same time and fully operates as a single unit. Essentially, we're building a single unit of computing, which is the AI factory; it combines the GPUs, DPUs, CPUs, switches, and SuperNICs all together to behave like a single unit.
+
+Yeah, absolutely. I track bandwidth every quarter, and it's really interesting to your point of how quickly things are moving. If we look at any of the recent quarters, we actually shipped more bandwidth in one quarter than we did just two years ago. That acceleration in innovation is really highlighted in the data in terms of just how much bandwidth is shipping. You hinted at the DPU, so here is a broader question: what is changing inside the switch as we move from traditional connectivity to AI factories?
+
+In traditional connectivity, if we look at hyperscale clouds, the usage of optical connectivity was not much. Most network connectivity was within a rack, where we had a top-of-rack switch and the servers were connected through copper. When we're dealing with distributed computing workloads and the need to connect across the data center on a massive scale-out with tons of bandwidth, the usage of optical connectivity is huge. We're using a lot of transceivers, optical engines, and lasers, and it's doubling from generation to generation.
+
+The power consumption on a scale-out network is getting close to 10% of compute capacity in an AI factory, which is a big number. As we all know, power is the number one limiting factor when building a factory. Power determines how much compute we can place in there, and we want to save power as much as we can. It's not just the infrastructure; we're saving power by moving to liquid cooling and hot liquid cooling so we can save on chillers and have more power dedicated to compute. The infrastructure is no different; since the optical piece of the network consumes a lot of power, we want to look at how we can save it.
+
+The best way to save power is to integrate optical engines with the network devices. Optical networks consume a lot of power because there is a distance between the network device—the switch—and the optical engine that sits on a transceiver plugged outside the box. That distance requires power to drive data. By reducing the distance between the optical engine and the switch and packaging them together, we can save almost 5x the power. We know that optical networking is a must because we're running long distances on scale-out, and that was the reason for co-packaged optics.
+
+Co-packaged optics isn't a new concept, but we wanted to make sure we built something robust that could support large-radix switches. We wanted to make sure we were spending the least amount of power and saving components. We also wanted to take advantage of increasing the resiliency in the data center—increasing the mean time between interrupts. That was the basis of our co-packaged optics, starting with designing optical engines based on micro-modulators and working with TSMC to create a new packaging process.
+
+There is a huge ecosystem of partners that we brought in to build a production-ready co-packaged optics solution with Spectrum-X, and now it's moving into production. It's not just saving power; we're also seeing a 10x increase in the mean time between interrupts, so the durability of the factory is increasing. Those are two great attributes of co-packaged optics. As we enter the second half of this year, we will start seeing our customers building their AI factories with co-packaged optics.
+
+I think that's an important thing to think about when we go through AI. We talk about Ethernet, but we're really reinventing Ethernet for AI. What we were doing in the past—the radix, the mean time between failures—those metrics in a traditional cloud need to look very different or be improved significantly to handle the AI workload. CPO is one of those enabling technologies as we go on that journey.
+
+Yeah, and that's why we see a lot of excitement around co-packaged optics. Our partners and customers cannot wait to get their hands on it and bring Spectrum-X and CPO into their next generation of infrastructure for the factories they are building.
+
+So, you hinted a little bit about performance. I've seen some performance metrics on Spectrum-X and they're very impressive. Can you talk a little bit about what your customers are seeing in real-world deployments?
+
+Spectrum-X was built to eliminate jitter; that was priority number one. As you connect many compute engines together for distributed computing—whether training or inferencing—you need to make sure all those engines distribute data at the same time and are fully synchronized. The network cannot add delays; it needs to be jitter-free. We also developed congestion control to eliminate hotspots, because hotspots create delays and can impact different workloads or users sharing the same infrastructure.
+
+We saw that in the first installation of Spectrum-X, which was the first to connect 100,000 GPUs in a single infrastructure. The highly effective bandwidth we're seeing is 95%. At the same time, there were zero collisions on a large three-tier network; zero collisions on 100,000 GPUs is amazing. When you have zero collisions, it means there is no congestion, so multiple workloads can run at the same time without impacting one another. The adaptive routing was responsible for the highly effective bandwidth, and congestion control was responsible for zero collisions.
+
+In off-the-shelf Ethernet, performance is not consistent. When it's not consistent, you cannot rely on a specific performance level for workloads, and you cannot provide SLAs. With Spectrum-X, the reports were of deterministic performance, constant performance, low latency, and 95% effective bandwidth—everything Spectrum-X was designed to deliver.
+
+So, when you say that 95% effective bandwidth is the thing that stands out most, is that the primary metric? Or is it the zero collisions and jitter-free operation?
+
+Zero collisions and jitter-free operation is great, and that is something taking a lot of effort to provide. You cannot build an AI network just on a switch, and you cannot build it just on the NIC. You need the switch to do things; for example, you don't want the switch to know about data ordering at all. GPUs need to receive data in order, but if the switch needs to ensure in-order delivery while also distributing traffic across multiple ports, those two things cannot coexist. That's why you cannot implement an AI network just on a switch. That's the secret sauce behind Spectrum-X—we built the infrastructure end-to-end. In my eyes, zero jitter is the most complicated thing to achieve.
+
+No, that's impressive. I've seen some of those jitter charts and it's very, very clean. Since we don't have jitter and we aren't dropping packets, the uptime on these systems is probably improved significantly compared to a year ago. Performance and the performance of our workloads is amazing. At the end of the day, you want to achieve the best high performance you can get. The difference in how computing engines work together is the infrastructure. If you connect them with an off-the-shelf Ethernet network, you just build a server farm. If you build it with a network purposely built for AI, you get a supercomputer.
+
+On my end, I see the performance gap between those high-end factories—the 100k-node systems going up to million-node factories—as increasing, not decreasing. Are you seeing the same thing? Do high-end factories have far higher performance compared to the rest of the industry these days?
+
+Whether it's training or inferencing, they all require the same thing: low latency and zero jitter. The combination of all these infrastructures creates AI factories built for training or inferencing. There are other workloads that are single-server workloads, and those are being run on traditional data centers. Traditional data centers can continue using traditional off-the-shelf networks, which is fine. But for AI workloads, I see the gap continuing to increase versus off-the-shelf networks—not just in bandwidth, but in integration like co-packaged optics and the ability to support more complicated workloads. Even though you have multiple network infrastructures, they all need to work together because we are building a single unit of computing.
+
+Can you touch on some of the pain points you've seen on high-end AI factories that you've already solved, which haven't quite gotten to the rest of the industry yet or to smaller operators who are a little further behind on their journey?
+
+My focus is on the AI factory, so that's where I live. We build things to eliminate jitter, deliver high bandwidth, and do integration like co-packaged optics. In traditional hyperscale clouds or data centers that are single-server workloads, most of the data goes between the server and the top-of-rack switch; they're going to run on copper, there's no more optics, and they may not use co-packaged optics. They may be good with traditional off-the-shelf Ethernet, which is fine. But our focus is AI factories—this is what we drink and what we breathe. Other data centers that do not run distributed computing workloads can definitely continue to use off-the-shelf networks.
+
+Are we seeing a lot of connection between the two? As we get a mixture of experts and, to a certain extent, agents doing valuable workloads, aren't traditional data centers and AI factories talking more to each other?
+
+I think the fact that you have multiple agents and all of them need to talk to one another requires an infrastructure that is low latency. Jitter is always important because those are still distributed computing workloads; they still want to get answers, dispatch data, and collect data. All those AI workloads require the same thing: an infrastructure built for distributed computing. I need the low latency, I need the bandwidth, and I cannot create delays or have one workload impact another. Those are all the things we built into our infrastructures.
+
+We're seeing a pretty big upgrade cycle across the board there to support the existing infrastructure, so that makes sense. As we wrap up, what excites you the most as we look into the second half of '26 and early '27 with Spectrum?
+
+Everything is exciting; there is no piece of this that isn't. The very big systems going out, Spectrum-4, the switches, the BlueField for SuperNICs, the context memory for switching, and co-packaged optics going into production—that’s something people talked about for several years, and now we're bringing that into full production, delivering a 10x improvement in mean time between interrupts and saving power. We're already working on the next generation and even the generation after that. There is no dull moment. I wish we could have more than 24 hours in a day, but if I need to point to one thing, it's definitely co-packaged optics going into production. It's an amazing milestone.
+
+I think the industry has been talking about that for a very long period of time, so seeing it move from the trade show floor to actual production data centers is a significant milestone.
+
+You should see the faces of our folks. We've built the CPO systems already, and the people operating them are so happy. It's amazing.
+
+Great. Well, I'd like to thank the audience for spending the time with us today. Gilad, I'd like to thank you; I always learn a ton when I talk to you, so I appreciate the time you spent with me. With that, we can go ahead and wrap up the fireside chat. Thank you very much.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-2">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=FmLGYLQ6DFY" target="_blank" rel="noopener">Episode 56: Gavin Baker - Managing Partner of Atreides Management<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/nugvoFYJuO3NhFEZ96x1yN61T1ZfiBGe2BV0WClQyggmdzb1m8d0JN3ydARmGCR6_Ih_UhuO_Q=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Generating Alpha Podcast</b><span class="subs">(2.1K)</span></span><span class="dot">&middot;</span><span>75:05</span><span class="dot">&middot;</span><span>257 views</span><span class="dot">&middot;</span><span>2026-07-08</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Gavin%20Baker%22">Gavin Baker<span class="chip-desc">Founder and CIO, Atreides Management</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;I think being a successful investor is about finding an investment philosophy and process that fits with your own unique emotional makeup such that you can be rational when you are wrong.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">Gavin Baker argues that the current AI cycle is not a valuation bubble but a transformative revolution structurally limited by a shortage of &quot;watts and wafers,&quot; emphasizing that long-term investment success requires matching one's strategy to their unique emotional...</div>
+                    <div class="sum-full" id="full-2"><p><strong>TL;DR</strong> Gavin Baker argues that the current AI cycle is not a valuation bubble but a transformative revolution structurally limited by a shortage of "watts and wafers," emphasizing that long-term investment success requires matching one's strategy to their unique emotional resilience.</p>
+<h3>The AI Revolution: Constraints and Valuations</h3>
+<ul>
+<li><strong>Structural Shortages:</strong> Baker identifies a fundamental shortage of "watts" (power) and "wafers" (semiconductor manufacturing capacity) as a natural brake on the current cycle.</li>
+<ul>
+<ul>
+<li><strong>TSMC Bottleneck:</strong> TSMC remains a critical bottleneck; Baker notes their executives previously dismissed high-profile AI figures as "podcast bros," leading to disciplined, slow capacity expansion.</li>
+</ul>
+</ul>
+<li><strong>Valuation vs. Bubble:</strong> Unlike the 1999 dot-com era, current tech valuations are often at a discount to consumer staples when adjusted for growth and margins.</li>
+<ul>
+<ul>
+<li><strong>The "Scars" of 2000:</strong> The memory of the 80-85% drawdowns in the early 2000s acts as a psychological lid on current market multiples.</li>
+</ul>
+</ul>
+<li><strong>ROI of Compute:</strong> While current Blackwell expenditures are in a "training divot" (where spending doesn't immediately show revenue), Baker expects agentic AI to deliver massive returns.</li>
+<ul>
+<ul>
+<li><strong>Probabilistic Software:</strong> AI differs from human-written software because it is "probabilistic," recomputing answers each time, which makes it computationally expensive but capable of superhuman tasks.</li>
+</ul>
+</ul>
+</ul>
+<h3>Formative Frameworks: The Fidelity Masterclass</h3>
+<ul>
+<li><strong>Outcome-Based Culture:</strong> At Fidelity, Baker learned that investing is about finding a process that fits one’s "unique emotional makeup" to remain rational when the market moves against you.</li>
+<li><strong>Commodity Training:</strong> Baker began his career covering cement and aggregates.</li>
+<ul>
+<ul>
+<li><strong>Supply/Demand Discipline:</strong> This taught him that every business eventually comes down to price, volume, and fixed costs—a framework he used to call the semiconductor inventory buildup that preceded the 2000 crash.</li>
+</ul>
+</ul>
+<li><strong>The Pharma "Blow-up":</strong> At age 25, Baker moved from being a "star" tech analyst to the bottom decile while managing a large-cap pharma fund.</li>
+<ul>
+<ul>
+<li><strong>The Arrogance Trap:</strong> He cites *A Wizard of Earthsea* as a touchstone for navigating failure caused by ego.</li>
+<li><strong>Psychological Anchors:</strong> During drawdowns, he recommends having a hobby where effort correlates directly to a "number improving" (e.g., weightlifting or gaming) to maintain mental stability.</li>
+</ul>
+</ul>
+</ul>
+<h3>Conviction in "Deep Tech": Nvidia and Tesla</h3>
+<ul>
+<li><strong>The Nvidia Story:</strong> Baker identifies Jensen Huang, Hock Tan (Broadcom), and Lisa Su (AMD) as the rare semiconductor CEOs who successfully retain "exceptional engineers."</li>
+<ul>
+<ul>
+<li><strong>Gaming Roots:</strong> Baker’s early conviction in Nvidia was bolstered by his hobby as a gamer, where he realized a superior GPU allowed even a less skilled player to see enemies first.</li>
+</ul>
+</ul>
+<li><strong>The Tesla Bull Case:</strong> Baker’s investment was rooted in first principles, viewing EVs as the only transportation form with "deflationary core inputs" (batteries).</li>
+<ul>
+<ul>
+<li><strong>Engineering Superiority:</strong> He highlights that EVs allow for lower centers of gravity, better traction control, and massive "crumple zones" because they lack an 800-lb internal combustion engine.</li>
+</ul>
+</ul>
+<li><strong>Mission-Driven Talent:</strong> Baker argues Elon Musk wins because he offers engineers "mission-oriented" work (decarbonization, multi-planetary life) rather than optimizing "clicks on a blue link" for ad-tech giants.</li>
+</ul>
+<h3>The Craft of Investing and Career Advice</h3>
+<ul>
+<li><strong>The Binary Choice:</strong> Baker cites mentor Jennifer Yurg’s philosophy: An investor must either "panic early or double down late," as almost no one can successfully do both.</li>
+<ul>
+<ul>
+<li><strong>Self-Knowledge:</strong> Baker identifies himself as a "double down late" investor, a realization he only reached after failing early in his career.</li>
+</ul>
+</ul>
+<li><strong>The "Kind and Scrappy" Rule:</strong> Baker advises young professionals to be both kind (to build a long-term "keiretsu" or network) and scrappy (persistent).</li>
+<ul>
+<ul>
+<li><strong>Reputation as Capital:</strong> He references Steve Schwarzman’s view that your reputation is formed in your 20s; the people in your training class will remember how you treated them 20 years later.</li>
+</ul>
+</ul>
+<li><strong>Seeking Hardship:</strong> Baker emphasizes that "even God would get fired as an active manager" due to probabilistic volatility. </li>
+<ul>
+<ul>
+<li><strong>Early Failure:</strong> He argues that experiencing a major drawdown early is the greatest gift an investor can receive, as it builds the resilience necessary for higher-stakes roles later.</li>
+</ul>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"I think being a successful investor is about finding an investment philosophy and process that fits with your own unique emotional makeup such that you can be rational when you are wrong." — <strong>Gavin Baker</strong>
+</blockquote>
+<blockquote>
+"Ultimately, as an investor, you either have to panic early or double down late. And essentially, no one does both." — <strong>Gavin Baker</strong> (quoting Jennifer Yurg)
+</blockquote>
+<blockquote>
+"If you're a really talented engineer, for a long time your choices were: work on making people slightly more likely to click on a blue link for Google search, or focus on decarbonizing the world. Elon's missions are authentic, and that is why he attracts exceptional talent." — <strong>Gavin Baker</strong>
+</blockquote>
+<blockquote>
+"Being early is the same thing as being wrong. If you're losing money, you're wrong. The market isn't being stupid; you're wrong. The question is: what decision do you make then?" — <strong>Gavin Baker</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">On today's episode of Generating Alpha, I sit down with Gavin Baker, managing partner and CIO with Trajectory Management, one of the most respected technology investors on Wall Street. Before founding Trajectory, Gavin spent nearly two decades at Fidelity, where he managed the flagship $17 billion OTC portfolio and helped make Fidelity one of the largest institutional holders of both Nvidia and Tesla, long before either became the defining stories of this generation. Today, Gavin is widely regarded as one of the foremost experts on AI investing. Few people have thought longer or harder about the compounding effects of AI on markets, valuations, and the broader economy.
+
+This conversation goes beyond AI. Gavin opens up about what it actually takes to be a great investor, the mindset, the discipline, and the emotional fortitude required to hold conviction when markets turn against you. We get into how he's navigated downturns throughout his career and what separates investors who survive volatility from those who get washed out. Consider this your masterclass in AI, in markets, and in the craft of investing itself. I hope you enjoy my conversation with Gavin Baker.
+
+If you enjoy this conversation, I urge you to please subscribe to the YouTube channel, rate this podcast five stars on Spotify, and share it with any friends and family who you think might find it valuable. I really appreciate it. Thank you.
+
+Thanks for joining me, Gavin. I really appreciate it. 
+
+Really excited to be here, Amir, and I have a lot of admiration for the hustle, man. 
+
+I appreciate it. Well, I know a lot of people want you to talk about AI, semiconductors, space, and data centers, but before that, I want to stay true to the roots of my podcast and start at the beginning. I want to kind of get to know who Gavin Baker is and what made you the person you are today. So, I want to start off and ask you to tell me about growing up, what that environment was like, your formal education, and how all of that shaped you. I would love some background. 
+
+So, I grew up in Texas, which I think has shaped a lot of who I am. My parents really encouraged me and indulged me in all of my interests. Some of my earliest memories are loving illustrated books about ancient history—like the Phoenicians, the Israelites, the Egyptians, the ancient Greeks, and the ancient Romans. I've had a lifelong interest in history. You know, my parents were both attorneys, so I had a fortunate upbringing. 
+
+Some of my other fondest memories from my childhood are that we would go to a bookstore probably three times a month, and I had an unlimited book budget, and we might spend hours there. I think that was also important to me. I was probably in my teens the first time there was a family dinner that we went to and I did not bring a book to read. My parents would always ask if this was a one-book dinner, a two-book dinner, or a three-book dinner. I guess I wasn't reading very long books. So, I have a lot of gratitude to my parents. 
+
+The other part of my childhood was that I would spend most of the summer at my grandparents' house in the Texas Hill Country, which was really amazing. My parents—maybe if I was there for eight weeks—they’d be there for two to two and a half weeks of that time. Then I was there with all of my cousins. My dad had a big family, so I’d be there with all my cousins. We slept on a screened-in porch and were just encouraged to do whatever I wanted, you know, go hike in the hills or walk around the hills across the road and look for arrowheads. That was a big thing. Go fishing. It was a very free-range childhood. 
+
+My grandfather really also encouraged me to read. I was hurt because he wasn't as encouraging of me hunting and fishing maybe as he was with others. I wanted to do that, so I did a lot of that, but he was just always like, &quot;Gavin, if you're loving that book, feel free to hang out at the house.&quot; We called my grandmother Nanny. A signature memory from those days is probably like 4:00 p.m.; Nanny would always say to my grandfather, who we called Popo, &quot;David, I'm about ready for my first gin and tonic.&quot; I just knew that happened every afternoon and I didn't think anything of it. It was great, like staying up when there was an armadillo digging holes; we'd stay up all night with my grandfather with a high-powered rifle. Although I'm sure mine wasn't that high-powered, it was a different childhood. 
+
+I also always loved games of skill and chance—Stratego, chess, later poker. Poker in college, although I haven't really played poker more than maybe twice in my adult life, or three times. That's kind of how I grew up. I was not a good student; I was kind of an indifferent student. I wasn't as engaged. I found it hard to work hard on things that did not interest me, but I was very engaged in other things. Dungeons and Dragons was a big thing for me before high school. So, I had a very intellectual, free-range childhood, but was a relatively indifferent student. 
+
+And you eventually ended up at Fidelity, if I'm correct, in '99 covering semiconductors right during the time the dot-com bubble was peaking and then crashing. And then you eventually rose through the ranks and managed the $17 billion OTC fund. That was a very interesting period. I'm interested, first, in how that period of the dot-com bubble shaped your investment framework, and then, over time, the key decisions or key moments that really impacted you the most during that time at Fidelity.
+
+Sure. First, Fidelity is an amazing place. If you're looking for a place to learn how to be an investor, I just don't think there is a better place than Fidelity. The great thing is, I think being a successful investor is about finding an investment philosophy and process that fits with your own unique emotional makeup such that you can be rational and then wrong. It's different for everyone. 
+
+Almost every investor starts out thinking they've read Benjamin Graham and Warren Buffett and maybe Philip Fisher, and that they've discovered something unique. It's like everybody on planet Earth has read all that stuff many times. Most people come in as a value investor, but that's maybe not the right philosophy or process for a lot of people. At Fidelity, you're exposed to every kind of investor imaginable. You see people succeeding with very different philosophies, very different processes, and very different approaches. As an analyst, you have to learn how each of those PMs thinks because your job is to service all of the PMs and help them. Fidelity is an incredible place to begin your career, and I feel so lucky. 
+
+During college, it never occurred to me that I wanted to be an investor. Rock climbing and skiing were the most important things in my life; I kind of rock climbed my way through college. My plan was to graduate, live out of the back of a very cheap old pickup truck that I put a cab on, climb full-time in the shoulder seasons—during which time I'd try and be a photographer and write the next great American novel—and then work in the ski industry in the winters and the river industry in the summers. 
+
+That was my plan, and then my parents only asked two things of me. The first was that I couldn't join a fraternity in my freshman year at Dartmouth. They said, &quot;Gavin, that sounds like a great, fun idea. Just let us know where we need to send the tuition checks. We want to make sure we have the exact address.&quot; I asked, &quot;What do you mean?&quot; They said, &quot;We are not paying for you to go to college and be in a fraternity.&quot; They were the ones paying, so I listened. 
+
+The second thing was, I told them about my plan to take junior fall and just drive around the American West to climb and boulder. They said, &quot;Gavin, apart from not joining a frat, we haven't asked you to do anything. Our only ask is that you just have one real internship. We're super into this plan to go to the American West; we love the mountains and we understand why you love the mountains, but just have one internship.&quot; 
+
+The only internship I could get was at Donaldson, Lufkin &amp; Jenrette working in a retail brokerage. I lived in the basement of a woman's house in Harvard Square. My job was to print out—it was a long time ago—the paper copies of every research report that the DLJ sell-side analysts published the day before. There were like 50 paper copies of every report. My job was to say, &quot;Okay, here's your report on FedEx, let me see which clients own it, put it in an envelope, and mail it to them.&quot; 
+
+I started reading the research reports and I was like, &quot;This is amazing.&quot; It felt to me like investing was a game of skill and chance where the way you won—and I liked those games—was by intersecting the most thorough understanding of history possible with the most accurate understanding of the state of the world to form a differential opinion about what is going to happen next. That was super exciting to me. I think I read Warren Buffett's letters to his shareholders twice. I read *Market Wizards* twice. I taught myself accounting. I came back to Dartmouth and I switched my majors from English and history to history and economics and just never really looked back. 
+
+By the way, there is a story I'd like to tell about how the love of the outdoors is something I will always be so grateful to my parents for. When I wasn't in the Texas Hill Country, we would always go to Colorado every summer. My mom loved Rocky Mountain National Park, so did my dad. I'm very proud of my parents; I think they summited Longs Peak when they were in their late 50s, but it was a big deal for them. They took 24 hours. I went up the same day with them; they literally left at midnight, and we got home at midnight because I left at 4:00 a.m. I didn't see them on the trail somehow. Came back down, and at like 9:00 p.m. I'm like, &quot;Holy cow, where are my parents?&quot; I went to the ranger station and they said, &quot;Yeah, we've had a lot of reports of an older couple who's moving really slow.&quot; I hiked back up with the ranger just to make sure they were okay. 
+
+We would always go to Chasm Lake and look at Longs Peak with binoculars at the climbers on what's called the Diamond, which, after the big walls in Yosemite, is for sure the most technically challenging multi-pitch climb in America. When my parents heard that I started to climb, a big thing in climbing is called a &quot;rack,&quot; and this just shows how privileged I was and I feel so lucky—I mean, it's amazing to be an American who was born in relatively fortunate circumstances—but they sent me a full climbing rack and didn't say anything. It was a perfect rack and it was just such a nice thing for them to have done. I'm very grateful to my parents. The fact that they asked me to not join a frat and have one internship were really good things for me. 
+
+One last thing I want to say because it is also important to who I was: I'll never forget the first Christmas I came home from Dartmouth. My dad picked me up at the airport—Intercontinental is like a 45-minute drive from where we lived in Houston, which is very sprawling—and he said, &quot;Listen, Gavin, we're so happy you're coming home, but I want you to know it has been 30 or 35 years since I've had more than a 10-day vacation. You have all these times where you have like big Christmas breaks, spring breaks, and opportunities to go places and see the world. Your mom and I love to see you, but we can come see you at Dartmouth. We would love to encourage you to go see the world, do what you want, and pursue your interests.&quot; That was such a loving thing to do, because I'm sure they wanted to be around, but that was really incredible. 
+
+So, I do history and economics, and I'm all in. I get another internship working in sell-side research, actually covering EDA—Synopsys and Cadence. It was awesome. They were initiating coverage on a really small company called Wind River, which was an RTOS system, a real-time operating system. They let me write the first draft of the report, and it was just the most exciting thing I could imagine. The internet was just starting up and I was so into The Motley Fool. There were all these guys, Dale Wetlaufer and others, talking about return on invested capital, which was kind of a new concept sweeping Wall Street as being superior to ROE. Just reading everything about ROIC and incremental returns on invested capital—it was just such an exciting time. I was learning so much. 
+
+I was pretty determined. I interviewed at Goldman Sachs for two jobs; one was investment banking. They asked why my grades in college were still uneven, and I said, &quot;Listen, I struggle to work hard on things that don't interest me.&quot; They said, &quot;Well, this probably isn't a job for you because this involves doing really hard work that is repetitive and at times boring, but essential, and you can't make a mistake.&quot; They said, &quot;We'll teach you everything you need to know, but you have to be able to do this detailed work.&quot; By the way, I do think banking is an incredible background; the kids who have had that banking training, you kind of never really catch up from a modeling perspective if you didn't have it. I told them, &quot;This does sound like the right job for me,&quot; and they said, &quot;Nope.&quot; 
+
+But then I got a job offer to work with a legendary Goldman Sachs research analyst who was one of the few partners and the entertainment analyst. He said, &quot;Listen, man, I'm tired of going to the Oscars and the Grammys. I'm going to send you.&quot; I was like, &quot;Whoa, that sounds fun.&quot; I was kind of interviewing with Soros and trying to interview with Tiger and hedge funds like that. This was late 1998. It never occurred to me to go to Fidelity, and I wasn't always certain about going to class, so the friends who had been going to econ class—that I wasn't super into—they had their notes, and I was going through their notes before a test. They were really nice, great guys. 
+
+They said, &quot;Man, we just went to this Fidelity thing and it sounds like an amazing job for you. We told the Fidelity recruiting guy, Steve Calhoun—who's still a very good and dear friend to this day and was the director of associate research at Fidelity at the time—about you. He's a Dartmouth grad, and he's super interested. Here's his card.&quot; At this time, I had several exploding offers from investment banks. Calhoun calls me up and says, &quot;Yeah, we got to get you to Boston, man. Your friends told me about you. You got to come to Boston.&quot; 
+
+I said, &quot;Well, I have these offers that explode literally on Wednesday. I can't come to Boston next week. It's Monday, and I have 48 hours to decide.&quot; He said, &quot;Listen, don't worry about it. If you're still worried about it in a day or two, just come. But don't worry about it.&quot; I said, &quot;What are you talking about?&quot; He said, &quot;Just relax. Plan on coming to Boston next week. Don't worry about these offers.&quot; Later that day, the investment banks call me up and say, &quot;Your offers are no longer exploding.&quot; So, I joined Fidelity. They sent me to the business bridge program at Tuck, which was a great program—a really good one-month training session. 
+
+The awesome thing about Fidelity is they give you the freedom to do the job however you want, provided it delivers an outcome. It is super outcome-based. That's a slight overstatement; when a company reports earnings, you update the model and publish a note, so there is structure, but your job is to generate alpha. There are many ways to generate alpha, and if you generate it, you will do well. Also, when Jack Welch would come in—the GE CEO—anybody could go to that meeting, which is really cool. When John Chambers would come in, anybody could go to that meeting. As a very young person, you get exposed to these great executives, and you see how you're often covering stocks that are maybe not super important to the big PMs with the great long-term track records. But you get to go to that meeting and see how these PMs who manage 50, 100, 200, or 300 billion in the case of Will, who's now retiring, engage with an executive, and you get to watch the questions they ask. What an incredible learning experience that was. 
+
+I actually started off covering cement and aggregates. I think it's amazing as an investor to start in a commodity industry where it comes down to supply and demand, to fixed costs—elements that are present in every business. Often in a lot of businesses they're obscured, but ultimately everything comes down to supply and demand. I covered those for three months and it was incredible getting that education in a commodity industry. 
+
+There was one PM who owned all the stocks, Neal Miller, and he also covered semiconductors. A lucky thing that happened to me is normally you cover the same group for your entire first three years at Fidelity. I loved cement and aggregates, but probably after the first three months, you've kind of learned what there is to learn; they're not the most complicated businesses. Just like modeling, getting into the habit of modeling where that price falls all the way down to the pre-tax income line—if you don't have that training of always modeling price and volume differently, I just think it's a really good framework to start in a commodity industry. 
+
+After three months, they moved me to semiconductors. Donaldson, Lufkin &amp; Jenrette was such an awesome place. The hotshot analyst was this guy named Rajiv Call, who's still a good friend of mine. I worked directly under Brian Hitson, who is also still a good friend. Brian was very close to a woman named Jennifer Yurg, and now Jennifer and Brian are some of my absolute best friends; he's a very important mentor to me. 
+
+I published a note in February of the year 2000 after six weeks of looking at these stocks. I think having that supply-demand framework was really helpful to me. The analysis I did was, &quot;Listen, let's look at the inventories of every semiconductor company. Let's look at their customers' inventories.&quot; What I saw was that customer inventories and days inventory were at all-time highs. Within that, finished goods were at all-time highs, and the semiconductor inventories were at all-time highs. The stocks were obviously trading at multiples no one had ever seen before. I wrote a note saying, &quot;Hey, this is not consistent with the demand environment. We need to remotely be comfortable with these valuations.&quot; 
+
+It didn't occur to me that this would be a big deal, but it sat in a cubicle. Rajiv—he has an office because he's a senior guy, and he grew up in Düsseldorf, so he had a German accent—I hear him walking around saying, &quot;Hello, Gavin Baker? I need to talk to that kid. Where is he?&quot; Oh my god, I didn't think about how this would reflect on Rajiv. I go to him, and he has a big stack of paper. He punches me in the arm and says, &quot;That was a great note. I printed out 50 copies of it. Here they are. I downgraded my stocks, and you and I are going to go see every PM today.&quot; I felt a lot of gratitude towards Rajiv for reacting that way. 
+
+A really formative experience for me was that the two stocks I liked were both pretty small stocks: Integrated Circuit Systems and Nvidia. Because I was the analyst, and Integrated Circuit Systems was run by Hock Tan—who is now the CEO of Broadcom—I was a little intimidated by him, so I did not talk to him as much. It's so interesting that model; it's the exact opposite of the Dell model. The Dell model is to find a rich profit pool and attack it and drain it. The Hock model has always been to find a profit pool that has been drained, where there's no competition left, enter that, and jack prices up. That's what he's done so successfully for so long. 
+
+What I'll give Hock a lot of credit for is that, unlike a lot of his semiconductor peers, the people who retain the exceptional engineers are Jensen, Hock, and Lisa. Most other semiconductor companies fail to retain exceptional executives. Hock clearly has an ability to identify talent and retain it. But Jensen, for whatever reason, was less intimidating to me. He was a pretty young man, and I was a pretty young man. It was obvious to me he was exceptional, for sure one of the most exceptional people I'd ever met. I was like 23 years old, so I hadn't met that many truly exceptional people yet, but now, for sure, Jensen is one of the two or three most exceptional people I've ever met in my life. Being exposed to him at such a young age really shaped me. 
+
+Wow. 
+
+So, my next group, they gave me large-cap pharma. It's difficult to explain how badly it was like in small-cap semis; large-cap pharma was the most important group in the market at that time. I was 25 years old. I had large-cap pharma, and I took over my first fund. With small-cap semis, there are maybe 15 people who cover them. It's not often that you see 100 out of 100 people looking at them. It's a different competitive set, very product-cycle driven and very idiosyncratic. Large-cap pharma, at that point, everybody covers it. It's 100 out of 100. I was one of the last people to cover it who wasn't an MD/PhD. Already, a lot of the people I was competing with were MD/PhDs. But it really came down to a sector call, and I just got the sector call wrong. 
+
+I went from being one of the most highly ranked analysts to the bottom. I think that time was super formative for me in a couple of ways. One, going through something like that early in your career is very advantageous. So much of succeeding as an investor in public equities—where it's not like private equity or venture, where everybody is kind of good-looking and well-dressed and you're only competing with 10 people to price a deal—you're competing with everyone on planet Earth. There are a lot of really smart people who are not good-looking, well-dressed, or well-spoken. You don't have to compete with those people in venture and private equity, but you have to compete with them in public equity. It's the biggest competitive set on planet Earth. That just means it's a really hard game and you're going to go through really hard times. No matter how good you are, you're going to have really hard times. 
+
+So much of success is just resilience, tenacity, and loving the game. Forget succeeding; you cannot succeed as an investor if you don't love the game, because you're competing with people who do. I see that Djokovic quote about how to be a great tennis player, you have to love hitting the ball. You can't compete if you don't love the game, but you also can't survive if you don't love it, because the love of the game has to be something that keeps you going. Having that experience early was really good for me. 
+
+One of my favorite books growing up was *A Wizard of Earthsea*. It's fundamentally great because the book begins with the guy as the Archmage and a legend, but the first book is about his struggles. He gets cast out of the wizard school. For sure J.K. Rowling read this book a few times; there's a lot of Harry Potter in it. It's all about arrogance. I do think a lot of investing mistakes come down to arrogance. I read that book, and that became a touchstone for me whenever I'd go through a hard time. I'd read that book again, and each time you go through a hard time, it gets easier because you remember the last time; it's good to have these touchstones. 
+
+The other thing is, I think it's really important to have a hobby of some kind where you can make a number improve—running, weightlifting, video games—you need a number that you can make improve through your effort. That's actually super psychologically helpful. That was the first time I really leaned into that. I lost like 30 pounds; I'd gotten very out of shape, and then I got very into shape just because of stress. 
+
+Fidelity had just hired their first team of quants. A lot of senior PMs were suspicious; they called them the &quot;green ash eight&quot; guys. They were suspicious that they were going to be used to take their jobs. This team of seven quants who all had PhDs came to meet with me. They started telling me about quantitative risk management, and I thought, &quot;Oh my god, this sounds amazing. This makes so much sense.&quot; That there are these common factors between stocks that you wouldn't think were correlated. I was a month into running a fund, and I asked, &quot;When is the next time I can meet with you guys?&quot; They said, &quot;Anytime you want, because so far you're the only person who wants to meet with us.&quot; 
+
+I literally met with these seven PhDs for an hour or two every day for a year. I read their risk manual, and that was incredibly lucky. After the experience on pharma, they gave me tobacco. Tobacco was all about litigation risk. I don't know how clearly they spelled it out to me, but there were three cases you had to get right that were existential risks to the stocks: Marlboro Lights, the DOJ, and something else I can't remember. My feeling was—because they only gave me tobacco, and normally people got more than that—if I didn't get all those cases right, I was going to be fired. That was my belief structure. 
+
+That was super cool because necessity is the mother of invention, and you have a lot of resources at Fidelity. I went to every single trial, hearing, and everything that was public. I found people who had been clerks who worked for each judge to help me interpret it. I read tens of thousands of pages, and I got the stocks right. I called the cases right. You can for sure get an edge in litigation if you do that kind of work, even though it's obviously binary and in a jury trial anything can happen. Going to the DC Circuit, which is the second-highest court after the Supreme Court, was so cool to me. 
+
+After that, they gave me the rest of HPC and retail. This was another incredible experience, because back then HPC was all about globalization and the BRICs. I would go to each of the BRICs once a year—Russia, China, India, Brazil—and other countries. That was an incredible experience learning that it's a big world. Retail was also incredible. I did have the benefit that if you love the stock, if you love the story, and if you love the product, you'll love the stock. That's Peter Lynch. Peter Lynch and Buffett are really all you need in investing, along with maybe the concept of reflexivity from Soros. 
+
+I was doing all my shopping at Amazon, and I would ask every retailer, &quot;Why aren't you guys investing in e-commerce?&quot; They all said, &quot;Well, we don't like the margins.&quot; I'd say, &quot;But it's obviously the future.&quot; They'd say, &quot;No, it's not.&quot; I'd think, &quot;But what do you know, little kid?&quot; You learn things at Fidelity. I'll never forget Tim Conneen; all good ideas are so obvious once you hear them. It had never occurred to me how powerful it was if you're a retailer and what you sell is inflationary versus if you're selling deflationary stuff. This is why e-commerce got started in things where there was a deflationary aspect, and the working capital cycle really worked for you and gave you a pricing advantage versus, like, Home Depot, where the stuff doesn't deflate really. 
+
+Then I covered telecom during the early days of smartphones. I was the TMT analyst when the iPhone came out. From 2007 through 2021, I was essentially asked about the bubble in 90% of client meetings—the internet bubble—asking why I would own Google, Meta, Amazon, and Apple. They'd say, &quot;They're clearly in a bubble.&quot; From the time I was first asked about a bubble and for the next 15 years, your performance as an allocator or fund manager really came down to whether you were overweight or underweight the internet.
+
+And one thing I've learned is, you know, when Elon says something to take it seriously. Just when he says, you know, work will become optional and money will become meaningless, you know, I think that's a real possibility. Antonio talks about the Star Trek future or the Terminator future. I'm so here for the Star Trek future, and I might modify it a little bit to be the vision of future for humanity that's described in Iain Banks' Culture books, which are fantastic.
+
+But look, in the short term, AI is going to be amazing for the video game platforms. So I think AI's impact on video games has been very misunderstood. AI world models are going to lower the cost of developing a game by 90%. If it used to cost 300 million to make a AAA title like Call of Duty, or 200 million or 100 million or whatever the number is, it goes down 90%. This might end up being really bad for companies that make video games because you're going to have a lot more competition. But if you were a video game platform, and we all know what those platforms are, this is going to be really good for you because there's going to be an explosion of content.
+
+The idea that we are going to use AI to render a video game on the phone instead of the GPU that is on every phone, every iPad, every PC in the next 5 to 7 years is ridiculous. But listen, AI is like—I vividly remember Eric Schmidt in 2010, 2011 saying never bet against the internet, never bet against AI. But for the foreseeable future, video games are going to be played on engines rendered locally. Monopoly Go is a game where we have the revenue and the hours played, and to render it using list prices for something like VO3 is more than two orders of magnitude greater than its revenue. So what is the role for human creativity, man? I don't know.
+
+One of the reasons Neuralink is such an exciting company and the Elon-stated reason for inventing it is to help biological intelligences, i.e., humans, coexist with digital intelligences. What's amazing about the human brain is we can get scores on all these AI benchmarks and we do it with 20 or 30 watts. It's hundreds of megawatts of training to train that model, and then way more than 20 or 30 watts for the inference. We are extremely energy-inefficient in our minds, and in a watt- and energy-constrained world, I am optimistic that I will have value for a long time, and I'm optimistic that you will, too, Amir.
+
+We need to approach AI with a lot of humility. Neuralink exists to solve an IO problem. In the same way, I like to read transcripts rather than listen to someone talk because I can read faster than they can speak; that's an IO problem. If Neuralink fixes that IO problem and lets us take in information and output information at a much higher rate than speech, writing, or typing—which are the ways we communicate, along with all the nonverbal cues that go into human interaction—that will be a big unlock.
+
+I do just want to talk about something else because I feel like I didn't hit it enough, which is just the importance of resilience and tenacity and knowing yourself. There are going to be really hard times. As an investor, your goal should be to get to a place where you have a touchstone, like a book that you read or remembering to go back and read your journal. Earlier in my career, when I was in a big drawdown, I'd always think of the movie The Perfect Storm; that was another book I would read during drawdowns. There's a great scene where George Clooney, the sky briefly clears, they get optimistic and they're in the sun, and then it gets dark again and George Clooney says, &quot;She's not going to let us out,&quot; and the waves get big again.
+
+There are times when you are in a drawdown, particularly in your career, where you feel like that. You just have to have a mechanism and a system. For me, it's exercise; it's returning to these touchstones; it's looking back at notes I wrote in other drawdowns where, instead of getting tense and choking up on the bat, you relax. Another psychologically helpful thing—this was important to me earlier in my career when I was going through a tough time, I think after the first month on the Pharma fund—Wymer said, &quot;Listen, man, you got to realize it's just as statistically difficult to be at the bottom decile as it is to be at the top decile in investing because it's probabilistic. Even if you try really hard to be in the bottom decile you might not end up there. In the same way, if you try really hard to be in the top decile, you might not end up there.&quot;
+
+That thought was important to me, particularly during the GFC. I'd quote that to myself a lot. But in going through a drawdown and dealing with it, this comes back to knowing thyself and having a philosophy and process that fits your own unique emotional makeup such that you can make good, high-quality decisions when you're wrong. Definitionally, if you're in a drawdown, you were wrong. I'm not one of these people who says, &quot;Oh, it's just early, it's not wrong.&quot; George Vanderheiden, a Fidelity PM, said being early is the same thing as being wrong. If you're losing money, you're wrong. What decision do you make?
+
+Jennifer Yuric, a woman I referenced earlier, such a good friend and mentor, had this phrase that I just always think about: ultimately, as an investor, you either have to panic early or double down late. No one does both. Know thyself. I am not a panic early person; I'm a double down late person. I think knowing that helps me go through a drawdown or a tough period of performance.
+
+I had to find out who I was when I blew up on Pharma at the age of 25. You go from having been such a star on tech, promoted early, getting all these accolades, and because you're young and silly, you start to believe some of them. You go immediately from being a big star in the department to literally the lowest of the low. It's hard. When you're in a drawdown, hindsight's always 20/20, so the mistakes seem so obvious. That's why I think if you were a young investor, the best thing that can happen to you is having an experience like that early, because it's going to happen. The earlier it happens to you, the better you will navigate it the next time.
+
+I felt conscious of how prideful I had been. I thought a book about pride is The Wizard of Earthsea, and I read that. It begins with Ged—these are not the stories of how he tamed a dragon when he was a famous archmage; this is a story of when he was a young man and failed utterly. It's a book about utter failure due to ego and then coming out of it. I probably read that nine months into a really tough time. I realized, instead of waking up at 8 a.m. on Saturday and working, I'm going to lift weights or go for a run, and that makes me feel better. You have to trial and error to find what works for you when you're going through a tough period.
+
+You want to get to a point, which I feel like I'm now at, where the decision quality actually improves because you have a bunch of data showing that I've been here before and I made high-quality decisions. So you're at your most confident instead of your most gun-shy.
+
+I always give the same advice: be kind and be scrappy. A lot of people who are kind are not scrappy, and a lot of people who are scrappy are not kind. Being kind is super powerful. There is karma in the world. I've had hard experiences, and you don't always know it, but if you are kind to people, a lot of people pay it back. My rule with someone is, I'll bounce the ball once to anyone. If they don't bounce it back, I'll bounce it back one more time, and then never again. You end up in a group of like-minded people who help each other and cooperate. I'm in a keiretsu; Antonio is an important part of the keiretsu I am in, and I owe him and his partners so much.
+
+Most importantly, Steve Schwarzman's biography is meaningful to me because he talks about how hard it was to start the firm. Being an investor takes tenacity, resilience, and determination. Steve Schwarzman said you are making your reputation to a degree you do not understand when you set foot in an investment bank or a private equity firm. People will remember the way that you behaved in your early 20s. He said there are people who were in my training class and I helped them or they helped me; we might not have spoken for 20 years, but there comes a time when I really need their expertise and I pick up the phone. Investing is a positive-sum game; it's not a zero-sum game. People won't remember that you were the best; they'll remember how you treated the other people in your class.
+
+Be kind, be scrappy, trust that there is karma in the world, and only be an investor if you love it. If the first time you go through a really tough period of performance you can't find a way to be emotionally and psychologically centered, maybe public markets investing isn't for you. In the Sun Eater series, one of the mantras that the main character repeats is &quot;seek hardship.&quot; You want hardship early in your career, especially as a public market investor, because no matter how good you are, you are going to encounter it. Going back to that paper by Alpha Architect, even God would get fired as an active manager. You are going to encounter hardship, and the decisions you make during those times will define your career.
+
+I really appreciate it. I'm so glad we could make this happen. I so admire the hustle. You are scrappy, man. It probably took you 100 emails before I responded to you. If you are a young person and you want to be mentored by somebody you don't know, you've got to be persistent. You can't give up quickly. Also, try and deliver value. If you're a young person, you know things that the people you want to mentor you don't know—maybe that the cool kids have started wearing Adidas Sambas or whatever it is. Always give more than you get. If you're going to ask for something, make sure that you've given a lot before you ask. I respect the persistence, and I do think that's another good piece of advice.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-3">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=LX8VCpl7rHQ" target="_blank" rel="noopener">John Graham: Inside the Fund Investing for 22 Million Canadians | Podcast | In Good Company<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/d6-Qg0SBaVFUWQYFcY1A92OgyamR1lZdMCmUZKeE-3Z7b8nNlCFufCfQfFg5B-Q-EkyJxR04=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Norges Bank Investment Management</b><span class="subs">(125.0K)</span></span><span class="dot">&middot;</span><span>44:03</span><span class="dot">&middot;</span><span>2.1K views</span><span class="dot">&middot;</span><span>2026-07-08</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22John%20Graham%22">John Graham<span class="chip-desc">CEO, CPP Investments</span></a> <a class="chip" href="index.html?q=%22Nicolai%20Tangen%22">Nicolai Tangen<span class="chip-desc">CEO, Norges Bank Investment Management</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>John Graham oversees Canada’s $800 billion pension fund, utilizing an independent &quot;total portfolio approach&quot; that prioritizes long-term compounding, heavy private market integration, and a view of diversification as a fundamental &quot;act of humility.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-3">&quot;  Fund Scale and Purpose:...</div>
+                    <div class="sum-full" id="full-3"><p><strong>TL;DR</strong></p>
+<p>John Graham oversees Canada’s $800 billion pension fund, utilizing an independent "total portfolio approach" that prioritizes long-term compounding, heavy private market integration, and a view of diversification as a fundamental "act of humility."</p>
+<h3>The Canadian Model: Governance and Mandate</h3>
+<ul>
+<li><strong>Fund Scale and Purpose:</strong> CPP Investments manages $800 billion for 22 million Canadians. Notably, $550 billion (70%) of the current fund is pure investment income, demonstrating the power of compounding over 27 years.</li>
+<li><strong>Liability-Driven Strategy:</strong> Unlike sovereign wealth funds, CPPIB is a pension plan with specific future promises. The strategy is dictated by a federal mandate to maximize returns without "undue risk of loss."</li>
+<li><strong>Structural Independence:</strong></li>
+<ul>
+<ul>
+<li><strong>Legislative Protection:</strong> Independence from the Canadian government is enshrined in federal law to prevent political interference in investment decisions.</li>
+<li><strong>The "Maple" Peer Group:</strong> While part of the "Maple Eight" (Canada’s largest pension funds), Graham emphasizes that each fund has a unique liability stream, preventing a one-size-fits-all approach.</li>
+</ul>
+</ul>
+<li><strong>Diversification as Humility:</strong> Graham views diversification not just as a tactic, but as a core philosophy rooted in the realization that the future is inherently uncertain.</li>
+</ul>
+<h3>Investment Strategy and Portfolio Construction</h3>
+<ul>
+<li><strong>The Total Portfolio Approach:</strong></li>
+<ul>
+<ul>
+<li><strong>Factor-Based Thinking:</strong> The fund avoids rigid asset silos, focusing instead on real economic exposures like duration and inflation sensitivity.</li>
+<li><strong>Equities View:</strong> Graham treats public and private equity as the same asset class with different ownership structures rather than distinct categories.</li>
+</ul>
+</ul>
+<li><strong>Private Markets and Partnerships:</strong></li>
+<ul>
+<ul>
+<li><strong>Governance Advantage:</strong> Graham remains a believer in the private governance model, citing the benefit of being removed from the short-term scrutiny of public markets.</li>
+<li><strong>Hybrid Execution:</strong> CPPIB uses a "partnership model," investing with top-tier global managers while engaging in co-underwriting to improve economics (reducing fees and "carry").</li>
+</ul>
+</ul>
+<li><strong>Sector and Geographic Leanings:</strong></li>
+<ul>
+<ul>
+<li><strong>US and China:</strong> The US accounts for ~45% of the portfolio. Graham maintains a "reasonable" allocation to China, arguing that long-term investors must understand and have exposure to the world’s second-largest economy.</li>
+<li><strong>Energy Policy:</strong> The fund rejects "blanket divestment." It continues to support the oil and gas industry through active transition investment rather than exiting the sector.</li>
+<li><strong>Exclusions:</strong> CPPIB has notably avoided direct investments in crypto.</li>
+</ul>
+</ul>
+</ul>
+<h3>AI, Efficiency, and the "Quantitative Art" of Investing</h3>
+<ul>
+<li><strong>AI as an Operational Lever:</strong></li>
+<ul>
+<ul>
+<li><strong>Literacy First:</strong> CPPIB has rolled out multiple Large Language Models (LLMs) to all employees and implemented "AI bootcamps."</li>
+<li><strong>Productivity Gains:</strong> The fund manages $300 billion more than it did three years ago with a flat headcount, suggesting significant operational leverage.</li>
+<li><strong>Investment Decisions:</strong> Graham is skeptical ("TBD") on whether AI actually leads to *better* investment decisions, though it certainly leads to *faster* ones.</li>
+</ul>
+</ul>
+<li><strong>Investing vs. Science:</strong> Despite his background as a scientist, Graham insists investing is a "quantitative art" because it lacks the replicability of lab experiments. It requires human judgment to navigate a changing ecosystem.</li>
+<li><strong>Junior Talent:</strong> Graham rejects the idea of reducing junior hiring due to AI, stating that skipping a generation of talent would compromise future leadership.</li>
+</ul>
+<h3>Leadership and Organizational Culture</h3>
+<ul>
+<li><strong>Situational Leadership:</strong> Graham emphasizes "flexing" leadership styles. During COVID-19, he pivoted from his natural "pacesetter" style to a more empathetic approach to manage employee anxiety.</li>
+<li><strong>The "One Fund" Mindset:</strong></li>
+<ul>
+<ul>
+<li><strong>Star Culture Avoidance:</strong> CPPIB intentionally avoids a "star culture," building programs around organizational strengths rather than individual "geniuses."</li>
+<li><strong>Global Consistency:</strong> Graham notes that the "purpose-driven" culture remains remarkably consistent across their eight global offices, from Mumbai to London.</li>
+</ul>
+</ul>
+<li><strong>Managing Bureaucracy:</strong> Graham views bureaucracy as a "Frankenstein" that only grows in one direction. He advocates for periodic "purges" or "decluttering" sessions to keep the organization agile.</li>
+<li><strong>The CEO’s Biggest Regret:</strong> Aligning with other global leaders, Graham observes that most CEOs' biggest mistake is waiting too long to get the right senior team in place.</li>
+</ul>
+<blockquote>
+"Diversification is an act of humility. We don't know [the future]. And we do firmly believe in diversifying across asset classes and geographies as ultimately a risk management tool." — <strong>John Graham</strong>
+</blockquote>
+<blockquote>
+"You can't diligence a bad investment into a good investment. Spending another week is not going to turn a fundamentally bad investment into a good investment. And in fact, you may just convince yourself that it is." — <strong>John Graham</strong>
+</blockquote>
+<blockquote>
+"Investing is not science... It’s a quantitative art. It’s an art that requires judgment, experience, and until someone gives me data on the future, we are still trying to forecast out with a certain amount of uncertainty." — <strong>John Graham</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-3" onclick="toggleSummary(3)" type="button" aria-expanded="false" aria-controls="full-3">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-3" onclick="toggleTranscript(3)" type="button" aria-expanded="false" aria-controls="transcript-3">View transcript</button>
+                    <div class="transcript-content" id="transcript-3">Hi everyone. I'm Nicolai Tangen, the CEO of the Norwegian sovereign wealth fund. And today I'm joined by John Graham, the CEO of CPPIB, which is the Canadian pension fund, basically looking after the savings of 22 million Canadians. Now, CPPIB is one of the most respected pension funds in the world, and the Canadian model has become a blueprint globally.
+
+What makes John stand out is that he is a scientist first who found his way into one of the world's great financial institutions. I'm really curious to dig into what your scientific mindset brings to investing, John. So, big thank you for joining us.
+
+Well, thank you for having me. Lot to cover.
+
+Absolutely. Now, first of all, could you help us understand just what the Canadian pension plan is? Just how is it different from a fund like ours?
+
+Sure. So, CPPIB Investments is the third-party asset manager for the Canada Pension Plan. The Canada Pension Plan is the mandatory program that all working Canadians contribute to. So, it would be somewhat similar if you were in the US to Social Security. It is meant to provide an inflation-protected, defined benefit for working Canadians.
+
+How big is it?
+
+Today, the fund, the CPP fund, is around $800 billion, but it's actually a hybrid plan. One of the things that I think is important to appreciate because it really has a big influence on how we manage the money is that about 30 years ago, the Canadian government realized that the CPP, at its current contributions and benefit rates, was on a path to be exhausted. This was because it was a pay-as-you-go program, where money comes in and immediately goes out, and demographics were changing. You had an aging population, people having fewer kids, and people living longer. People living longer is obviously a good thing, but the plan was on a path to being exhausted.
+
+So, they restructured the plan. They increased the contribution rate, modified benefits, and they created CPP Investments as the money manager to invest the surplus funds that aren't immediately needed to pay out benefits. When we started out, that plan was about 15% funded, so it was still a pay-as-you-go plan. Over time, our very first check was $12 million. We got that check about 27 years ago. Today, the plan sits at about 800 billion and the plan is partially funded.
+
+You are independent from the Canadian government?
+
+Yeah.
+
+How hard is that to protect that independence?
+
+We were created to be independent with respect to investment decision-making, but we're still accountable. We still have accountabilities because we're accountable to all Canadians. I think this is something the Canadian government recognizes is important: to have independence with investment decision-making. That's enshrined in federal legislation. When we were created, the CPPIB Act basically enshrined our mandate to maximize return without undue risk of loss. You asked the question, how do we differ from, let's say, a sovereign wealth fund? I think the big difference is we're a pension plan, which means that we have liabilities.
+
+When people try to replicate the Canadian model, what do you say that they get wrong?
+
+First, I think the important thing is governance. Pretty much all the Canadian plans have some similar level of governance in that there is independence around investment decision-making, but obviously accountability to the key stakeholders. That independence around investment decision-making provides the flexibility to build an investment organization that has a lot of levers to pull for driving returns: public versus private, active versus passive, domestic versus global. I am a big believer in optionality, and having those various levers to pull over the long run drives value.
+
+We will get back to some of them, but in the meantime, you have eight pension funds in Canada, right? Sometimes called the Maple Eight. How did Canada develop this approach?
+
+There's definitely more than eight, but there is the term Maple Eight that really captures probably the eight biggest. There's now Maple Nine, so there's another plan coming in, and sometimes it's Maple 10.
+
+Is it good to have so many pension funds?
+
+It's good. They are very well run, and they have had good governance and good performance. I've never been a huge fan of the Maple Eight concept because I think one thing it does miss is that we're all a little bit different in that we all have different liability streams. At the end of the day, we're investing the money to meet the pension promise. Across 22 million Canadians, a promise has been made. At every paycheck, you have a deduction that says CPP, and what you get in return is a promise that when you retire, you're going to get a pension. Our job is to make sure that we meet that promise.
+
+In order to meet that promise, you need to invest well. Here you are, 800 billion. How do you decide where the money goes? How do you decide how to split the asset classes?
+
+We are very linked to our mandate. Our mandate, enshrined in federal legislation, is to maximize return without undue risk of loss, accounting for the factors that impact the funding of the plan. You have to invest the money to maximize return, grow the funding ratio of the plan, and make sure that we can meet these obligations or these promises.
+
+You don't have a mandate where the ministry gives you instructions on how much shares or how much bonds to hold?
+
+We don't have that. Literally, our mandate is to maximize return without undue risk of loss, taking into account the factors that impact the plan.
+
+Here you are, John Graham, with 800 billion. Go and see what you can do with it.
+
+What started as 12 million is now 800 billion, and of that 800 billion, 550 billion is investment income. It does show the power of compounding; 70% of the fund is investment income. We own the entirety of the investment process, so to be a little bit technical, we take that and think there are three big decisions we make. We take a total portfolio approach and fundamentally try to maximize the total return of the total portfolio.
+
+The first big decision: What level of risk are we going to take? How do we thread that needle of taking our time horizon into account, recognizing we are a pension plan and not a wealth-maximizing vehicle? There will be times—and I would argue we may be in that time right now with the concentration risk in the markets—when we are not looking to fully participate in parts of the market where we feel there might be an undue risk of loss. So, we are not always maximizing. When we think about the upside and the downside, there are times when we may give up a little bit of upside to protect the downside because we think that is more important for meeting our liabilities.
+
+Two, asset classes: How are we going to diversify? I say this often: diversification is an act of humility. We don't know, and we do firmly believe in diversifying across asset classes and geographies as a risk management tool. The third decision is security selection: which companies or assets do we want in the portfolio?
+
+You don't operate in asset silos, is that right? How do you think about the various assets?
+
+In the total portfolio approach, we try our best not to get siloed into thinking about asset classes and having fixed, hard allocations. We think in factor space. We think about the real economic exposure we're bringing into the portfolio, whether it be duration, inflation sensitivity, or whatever it may be, knowing that asset class labels can be a little bit misleading. Personally, I don't view public equity and private equity as different asset classes; I view them as different ownership structures within equities that have different ways of behaving through the cycle. We try not to have hard allocations that lead to strange behavior when you're trying to rebalance, but we think about the correlations between different asset classes. That being said, we are organized by asset class, so we do have soft allocations, and we do ask people on the execution side to really understand their asset class, whether that be real estate, infrastructure, or credit.
+
+What are the kind of things you don't do?
+
+There is very little we don't do at 800 billion. It's probably similar for you, but we also believe that we do not follow a path of blanket divestment. Take oil and gas: we have continued to invest in the industry. We never take a path of blanket divestment, so there's no industry that is offside for us. Now, there are some things we make a deliberate choice not to do. From a geography perspective, we have exposure to 50 countries, but we're only really active in 12 because we just can't be experts in every country. We will prioritize those 12. With respect to asset classes, we've chosen the big ones, but one thing we've never done is crypto. We've never directly invested in it.
+
+That's been pretty good lately, not to be in that one. But one asset class where you are, where we are not, is private assets: private equity and private credit. You have one of the largest private market portfolios in the world. What is your view on that asset class just now?
+
+I think we take a long-term view. Private equity undoubtedly has had a more challenging couple of years, but if I look over the past 10 to 15 years, it's been one of the biggest drivers of return for the portfolio. I personally continue to be a believer in the private governance model. I think for certain companies at certain times in their life cycle, private ownership makes a lot of sense—getting out of the scrutiny of the public markets and having investors be actively engaged from a governance perspective on the board. We continue to be constructive, recognizing that the returns over the past couple of years have not met expectations.
+
+You measure your returns against a benchmark portfolio which consists of bonds and equities?
+
+Yes, we have a benchmark portfolio that basically matches the big asset classes we invest in. It is bonds and equities, but there are also some sector-specific indices—real estate, credit, infrastructure, energy. Right now, one of the challenges we have is that the public markets, especially the broader markets, are just very concentrated into a handful of US-based technology stocks.
+
+That is not what our portfolio looks like.
+
+No, this is a challenge for most active managers these days.
+
+You manage a lot of your private exposure internally. How do you make the choice between outsourcing that versus managing it yourself?
+
+The way I describe our approach is that it's a partnership model. For private equity, we invest in managers around the world who we think are the best in their space, and then we do co-investing and co-underwriting with them. For infrastructure and energy, historically, we may have been a little bit more direct. These are choices the organization makes, and I come back to what we're solving for: maximizing the total return of the total portfolio. We see value in having both direct and fund relationships.
+
+Who does better? Your external managers or your internal guys?
+
+You have to think about why you're doing the internal side. With internal teams, you often have co-investing and co-underwriting at advantageous economics, so you're not paying the full fee and promote. It's hard to say who does better because your internal teams are benefiting from the origination and asset management of the external teams. They are not totally separable; they don't compete with each other. The internal teams are building off the external managers. I think what's important is to look at the blended returns as opposed to thinking of them as two separate, competing strategies.
+
+Canada and Norway compete in ice hockey. Let's not talk about that. But more importantly, we compete in transparency. Why, in your mind, is transparency important?
+
+I will concede I think you've gotten the gold medal the last couple of years. For us at CPP Investments, transparency is something we take very seriously. We are a mandatory retirement program that all Canadians contribute to, managing 800 billion of what is largely a public good. We have taken an approach to disclose at a level beyond what is required under the CPPIB Act, with the view that Canadians should understand how their money is being invested and the cost base we have. Within our quarterly statements, we release pretty much every investment we make. We think it's important because of who we are.
+
+Let's spend a few moments on the geopolitics. How much of your investments are in Canada?
+
+We have about 12% of the portfolio in Canada.
+
+And what about the US?
+
+It kind of ebbs and flows; we don't have hard allocations. It's 45%, plus or minus a few percent. It can get up to 50%. You are probably similar in that the US has been an incredible market over the past 10 years. One of our biggest challenges is that if we don't manage it, it'll just keep growing as part of the portfolio, so we try to manage around that 45 to 50% range.
+
+Is there any political interference, or any indications in terms of trying to get you to reduce your US exposure?
+
+No. Certainly, people would like to see us invest more domestically, especially right now. From a Canadian perspective, Canada is looking more interesting than it has in years, partly due to the ambition at the provincial and federal levels to build big things. Pension funds like infrastructure and big, cash-generative assets. People would like to see us invest more in Canada, and we are actively looking at opportunities, but we'll always do it with our mandate in mind.
+
+The government is trying to attract foreign investors. Do you think you would always get the best bits?
+
+I don't. The US is the most competitive capital market in the world, and it's been delivering the best returns. Competitive capital is a good thing. The ambition in Canada is going to require domestic and foreign capital. We are a big advocate that we should seek competition for capital; it will drive the cost of capital down and lead to better investment opportunities. Even at 45%, there's an argument that we are actually underweight the US, given it's 65 to 70% of global equity markets.
+
+What about China?
+
+China is a market where we've been active for quite a while. Our exposure has declined over the past few years, partly because the rest of the portfolio has grown around it. We maintain a reasonable allocation. My personal view is that if you want to be a long-term investor, you have to have some level of investment in the world's second-largest economy. You also have to have knowledge about it because it has real influence around the globe. It's a case of how much of the portfolio and how. What industries do we want to invest in? We are obviously sensitive to defense or dual-use technologies.
+
+How does AI change the way that you run your organization?
+
+We're figuring it out like lots of people. As an organization, we have prioritized literacy and fluency. We've rolled out multiple LLMs to every single employee and provided training and bootcamps. We've seen very good adoption at the grassroots level. At the more senior level, there are processes we're thinking through regarding where we can embed AI to be more efficient, but that's more on the operations side. Has AI made us a better investor? At this point, that is TBD.
+
+When you look 10 years out, how do you think it will change the way you work?
+
+We've encouraged people to use these tools to be more efficient. Over the past three or four years, we actually have fewer employees than we did three years ago, but we have 300 billion more in assets. So, I think we're more efficient. AI has contributed to that, or at least put a fire under people's feet to think about efficiency. Ten years from now, I don't see the organization being a lot smaller in terms of people, but we can add hundreds of billions in assets without adding a huge amount of cost. Will it help us make better investment decisions? I'm still TBD.
+
+I would disagree with you. Let's spend a few minutes on you as a leader. How do you think your scientific background has formed you?
+
+There are not many things I know with certainty, but one is that I'm not a scientist anymore. Investing is not science. Even though I see sophisticated models and quantitative approaches, investing is a little bit of art and science.
+
+If it's not science, what is it?
+
+It's a quantitative art that requires judgment and experience. In science, I could do an experiment in Toronto, and someone could replicate that in Japan five or ten years later. Investing is a living ecosystem that's changing every day. Our models are evidence-based, but at the end of the day, they are our best guess at how the world is going to unfold. Until someone gives me data on the future, we are still trying to forecast with a certain amount of uncertainty.
+
+To run a company in that environment, what are the most important leadership principles you have?
+
+Every leader has a preferred habitat, a style that is reflective of who they are. I have learned that you need to be situationally aware. Sometimes you need to flex the leadership style—not losing sight of the mission, but being able to approach a problem differently.
+
+Tell me about a time you really flexed it.
+
+COVID. When people were scared and there was a huge amount of uncertainty, people were worried about their health and their jobs. I think we needed to lean into empathy, and I think we did.
+
+Did that come naturally to you?
+
+I'm probably more of a pacesetter. I'm someone who is an in-office person who believes we need to be together. I've had to modify my approach to make sure we still give people agency and empower them to make decisions around their careers.
+
+Our listeners want to hear more about failures. Tell me about some of your biggest mistakes.
+
+In investing, you do have the opportunity to have failures. Any investor who says they haven't been humbled is probably not taking enough risk or is not being truthful. I've learned that you can't diligence a bad investment into a good investment. Spending another week on it isn't going to turn it around; in fact, you may just convince yourself it is good. You have to know when to quit and back away.
+
+What about on a personal level?
+
+Getting the right team around you is the most important thing. Having a senior team that is aligned to where you want to go, that is bought into the vision and acts as &quot;team one,&quot; is vital. You never get it perfectly right, but one of the most important things is to make sure you get your right team in place.
+
+Were you too slow in doing that?
+
+Like most people, you end up being too slow. If I ask leaders about their biggest regrets, it's that they waited too long to get their team in place. The advice I give new CEOs is that when that one-year anniversary hits, you should be able to look at your senior team and say this is exactly who I want with me.
+
+What is the culture like at CPPIB?
+
+I would describe it as very purpose-driven. It's not lost on anybody the important work we do for Canadians. In employee engagement surveys, the highest scores always come back to people believing in and being motivated by the purpose of the organization.
+
+How do you set expectations for performance?
+
+We are a talent-based business, so we have to be rigorous. I tell the senior leadership that at the end of the week, you should be able to look in the mirror and answer two questions: Did you help drive performance, and did you help develop the next generation of leaders? We have to be an enduring institution; we are the opposite of a founder-led culture. We have to institutionalize the investment process so it's never about the individual. It has to be about the purpose.
+
+What other part of the culture are you trying to improve?
+
+Ensuring that everybody understands why we're here. We have one fund and one mandate to maximize return without undue risk of loss. How do we embed that owner's mindset to ensure that everybody is thinking about compounding the value of the platform? I want to make sure this organization is more valuable five years from now than it is today.
+
+Do you think the culture is a reflection of your own personality?
+
+I don't. People who aren't purpose-driven will either self-select out or be selected out. You have to conform to the culture if you want to be a leader here. We have seven offices outside of Toronto, and the culture is remarkably similar. Whether we are in Mumbai, Hong Kong, or London, they are motivated by the purpose.
+
+How do you make sure it doesn't become bureaucratic?
+
+That is a constant effort. Most bureaucracy is put in place for good reasons, then it takes on a life of its own like a Frankenstein that gets fed. I have found that you have to hit a pause button periodically and do a decluttering of the bureaucracy. It only goes one way—it doesn't naturally de-bureaucratize. You have to slam the button and start purging some of it out.
+
+How do you switch off outside work?
+
+Probably not well. I have three dogs, and I will put in my earbuds, take the dogs for a 45-minute walk at night, and listen to podcasts. It's not the best way to recharge—by being alone for 45 minutes—but it works for me.
+
+What do you listen to?
+
+I don't read fiction. I listen to history, like the history of Rome series. I also listen to business and investing podcasts.
+
+What is your advice for young listeners?
+
+I have two children, 23 and 20. The advice I give them is to keep learning. Never stagnate. I've seen people go on cruise control and become complacent, and jobs evolve away from them. Take ownership of your career and make sure your value to the company is always increasing.
+
+That seems like really sound advice. It's been great talking to you, John. Please keep up the good work for 22 million Canadians.
+
+Great. Thank you very much. I really appreciate the opportunity to share the story.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-4">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=daA22MxJhi0" target="_blank" rel="noopener">President Trump on The Axios Show | Full Interview<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mEiSBOHT3zUGET-fXEAILCjadkWuffrvrqo9oSfcPO-ss=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Axios</b><span class="subs">(104.0K)</span></span><span class="dot">&middot;</span><span>44:44</span><span class="dot">&middot;</span><span>1.1K views</span><span class="dot">&middot;</span><span>2026-07-08</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Donald%20Trump%22">Donald Trump<span class="chip-desc">President, United States</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>President Trump asserts that his second term represents a more &quot;judicious&quot; and &quot;powerful&quot; exercise of authority than his first, characterized by a &quot;no limits&quot; approach to military power and clear dominance over global adversaries and technology.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-4">He highlights the total...</div>
+                    <div class="sum-full" id="full-4"><p><strong>TL;DR</strong></p>
+<p>President Trump asserts that his second term represents a more "judicious" and "powerful" exercise of authority than his first, characterized by a "no limits" approach to military power and clear dominance over global adversaries and technology. He highlights the total military defeat of Iran, a 48-minute victory in Venezuela, and a leading edge over China in Artificial Intelligence.</p>
+<h3>The Evolution and Exercise of Power</h3>
+<ul>
+<li><strong>Second-Term Authority:</strong> Trump claims his current administration is more powerful than his first, attributing this to the combination of experience and the "disaster" of his predecessor's tenure.</li>
+<ul>
+<ul>
+<li><strong>Philosophical Approach:</strong> He argues that "potential" and "ability" are more important than experience alone, though possessing both has allowed him to dominate the G7.</li>
+<li><strong>"No Limits" Doctrine:</strong> Regarding the use of power, particularly in the Middle East, Trump explicitly states there are "no limits" to what the U.S. can achieve through military and economic leverage.</li>
+</ul>
+</ul>
+<li><strong>G7 Dominance:</strong> Trump describes a "very dominant" performance at the G7, noting that other world leaders recognize him as "the boss."</li>
+</ul>
+<h3>Geopolitics and Military Conflict</h3>
+<ul>
+<li><strong>Iran and the "Conclusive Victory":</strong> Trump reports the total destruction of Iran’s military capabilities, including its Air Force and its 159-ship Navy.</li>
+<ul>
+<ul>
+<li><strong>Leadership Decapitation:</strong> He claims credit for killing Qasem Soleimani, whom he describes as the "father of the roadside bomb," and the Ayatollah. </li>
+<li><strong>The Naval Blockade:</strong> Trump emphasizes the success of a naval blockade that prevented all oil shipments, forcing a regime change toward a "less radicalized" leadership.</li>
+</ul>
+</ul>
+<li><strong>Russia-Ukraine War:</strong> Trump criticizes the initial Russian invasion strategy, claiming a record-setting rainstorm and poor tactical decisions by a Russian general—rather than Ukrainian defense alone—saved Kyiv.</li>
+<ul>
+<ul>
+<li><strong>U.S. Support:</strong> He asserts that his administration’s provision of Javelin anti-tank weapons was the decisive factor in obliterating the stuck Russian tank columns.</li>
+</ul>
+</ul>
+<li><strong>Venezuela and Cuba:</strong></li>
+<ul>
+<ul>
+<li><strong>Venezuela:</strong> Trump highlights a "48-minute" military operation that secured the country’s oil for U.S. companies.</li>
+<li><strong>Cuba:</strong> He indicates that a similar operation is being planned for Cuba, with Senator Marco Rubio playing a central role in the strategy.</li>
+</ul>
+</ul>
+</ul>
+<h3>Global Leadership and Strategic Relationships</h3>
+<ul>
+<li><strong>Relationship with Xi Jinping:</strong> Trump describes the Chinese President as a "strong man" and a "smart man" who is "all business." </li>
+<ul>
+<ul>
+<li><strong>Mutual Respect:</strong> He claims Xi respects U.S. military power and cooperated with U.S. requests to remain uninvolved in the Iran conflict.</li>
+</ul>
+</ul>
+<li><strong>Narendra Modi and India:</strong> Trump praises Prime Minister Modi as a "great leader" and a "tough cookie" who has brought stability to India.</li>
+<ul>
+<ul>
+<li><strong>Nuclear De-escalation:</strong> He claims to have personally intervened to prevent a nuclear war between India and Pakistan, potentially saving over 50 million lives.</li>
+</ul>
+</ul>
+</ul>
+<h3>Technology, AI, and Domestic Legacy</h3>
+<ul>
+<li><strong>Artificial Intelligence Superiority:</strong> Trump asserts the U.S. is "beating China by a lot" in AI. </li>
+<ul>
+<ul>
+<li><strong>Energy Innovation:</strong> To meet the massive electricity demands of AI, Trump has allowed tech companies to build their own private electric plants to avoid straining the national grid.</li>
+<li><strong>Regulatory Stance:</strong> While he views AI as potentially more impactful than the internet, he believes the "good far outweighs the bad" and currently favors responsible self-regulation over the Defense Production Act.</li>
+</ul>
+</ul>
+<li><strong>National Security Infrastructure:</strong> </li>
+<ul>
+<ul>
+<li><strong>The White House:</strong> Trump is personally funding a "safety net" renovation, including a bulletproof, drone-proof ballroom and a "drone port" on the roof.</li>
+<li><strong>Washington, D.C.:</strong> He claims to have transformed the capital from a "death trap" into one of the safest cities in America, citing a 94% reduction in crime and the planned construction of a "Triumphal Arch."</li>
+</ul>
+</ul>
+</ul>
+<p>***</p>
+<p><strong>Notable Quotes</strong></p>
+<blockquote>
+"I think that experience is good. I always say that potential is far more important... having ability is far more important than experience. But having both is very good." — <strong>President Donald Trump</strong>
+</blockquote>
+<blockquote>
+"There are no limits. No limits... We defeated them totally militarily. I was asked by Pakistan because they're close to please not do anymore. I said, I like them a lot." — <strong>President Donald Trump</strong> (On the conflict with Iran)
+</blockquote>
+<blockquote>
+"He’s [Xi Jinping] got a great look. Looks don't matter, right? ...But he's tall, he's six foot two. He's got a great stature. He's got great confidence and he is smart." — <strong>President Donald Trump</strong>
+</blockquote>
+<blockquote>
+"I have one primary wish as president, in terms of people: I never want to be the late great Herbert Hoover. So this is the kind of thing that could cause a worldwide depression." — <strong>President Donald Trump</strong> (On avoiding global economic collapse during the Iran blockade)
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-4" onclick="toggleSummary(4)" type="button" aria-expanded="false" aria-controls="full-4">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-4" onclick="toggleTranscript(4)" type="button" aria-expanded="false" aria-controls="transcript-4">View transcript</button>
+                    <div class="transcript-content" id="transcript-4">Mr. President, welcome to the Axios Show. Thank you. We wanted to make this more of a conversation than a typical interview where we're just going to hop around from topics to topic. Axios likes to do one big thing, and the one big thing we want to talk about is power, and how you think about it and how you wield it. A decade ago, you first became president and you've had loads of experience since then. In that span of time, what is the one big thing you've learned about wielding power?
+
+Well, I think you have to do it judiciously. I think that experience is good, but I always say that potential is far more important. In other words, having ability is far more important than experience, but having both is very good. I learned a lot during the first administration. I was told just the other day, because we had a tremendous and very dominant G7, that this is a far more powerful administration than the first one. We had a good first term; we had the best economy and we did a good job rebuilding the military. But I feel it's a more powerful term than the first one. Now that comes with experience. It also comes by having somebody precede you who was a disaster. I mean, the man was a disaster, so when you compare to somebody like that, you look maybe better than you are. That's possible, but I feel that it's a very powerful administration right now.
+
+But that's because you've applied lessons and done some things differently. What are some of those things you did differently, or better than you did before? 
+
+Well, it's a terrible answer actually, but I don't think about it. I just do what I have to do. I want to get something done. I don't say, &quot;Oh, I'm going to do it a little bit differently this time.&quot; I probably say that down deep, but I don't think about what I can do differently; I just want to get the job done, and I've always gotten the job done. That's how I got elected the first time, and that's how I got elected the second time. The second Trump administration feels more powerful to me. I may not be wrong, and you would know maybe better than I would. I don't give it a lot of thought, but I think it's a more powerful administration. The first one was really good; I rebuilt the military, I did Space Force, and we had the best economy and job numbers. We got hit by COVID, which is not my fault, but we had a great administration. This one is better.
+
+You've mentioned the G7 and seeing a number of world leaders. You walked in and you said, &quot;I'm the boss.&quot; How many of them believe that? 
+
+All of them. But I was just being funny. They were all sitting at this very long table meant for like 30 people, but there's only seven of them. The whole end of the table looked like almost the perfect podium-type setup. I saw them all sitting there—well-known figures, the heads of countries—and a couple of others like Modi of India, a great guy, were there too. I walked in, looked at them, and I said, &quot;I'm the boss,&quot; and you remember that. That was done as a joke. I can't believe this thing I carried all over the world; I was just being cute. I wasn't trying to be the boss.
+
+You have experience with world leaders from your two terms. How do you define a great leader?
+
+Well, you have so many different types of leaders. I've watched India all my life; they just kept changing, but then all of a sudden Prime Minister Modi ends up there. He's been there for more than 12 years and he's very solid. He does it with a great calmness, and yet he's not a calm person; he's a very tough guy. I know him very well. I watched the leader of Brazil, who I know a little bit; he's a very volatile person. I'm not a fan or not a fan of Lula, to be honest with you. I don't really think about him. I couldn't care less. But he's a different kind of person, very volatile. When you ask what leaders have in common, look, they're all smart. You can't get to that level without being smart. President Xi of China is a very smart man. You don't get to those levels where you are running a country, even if it was a small country, without having something special. 
+
+What is it about Xi that you find most admiral? 
+
+We have a very good relationship. I said yesterday, I want to thank him because he didn't get involved with the whole thing with Iran. He could have gotten involved; he could have sent a nice oil ship surrounded by 12 destroyers and tried to blast his way through the blockade, which was an unbelievable military maneuver. I think it's going to go down as one of the great military maneuvers. It was every bit as important as all the bombing we did. They were dying, they had no money, but President Xi was great. I asked him, &quot;I'd really appreciate you not getting involved,&quot; and he didn't. I don't think anybody else would've even asked him that. I get along with him well. He's a strong man. There's no games; he won't sit down and talk about the sunshine. It's all business, which I like. I think it's great.
+
+Is there something about the Chinese system that you think advantages him in his country that you wish you had here? 
+
+Well, it's actually supposed to be a disadvantage. We have the entrepreneurship, but they're there just about as quick as we are. You go to something that's hot, and we get there and the Chinese are standing there before us, or we beat them by a little bit. But I'll tell you, we're beating them on AI. We have the strongest military in the world; he admitted to me that you have the most powerful. I did a great job; I rebuilt our military in the first term and did it well. Look at Venezuela—48 minutes, the whole thing was over. By the way, now we have a great relationship and we've paid for that war with Venezuela many times over. We're taking out millions of barrels of oil and we're making them more money than they've ever made before.
+
+If I ask you who are the two greatest leaders you like the most on the world stage, I'll assume one of them is Xi. 
+
+Yeah, I think in terms of leadership, I think that's true. 
+
+Who’s the other? 
+
+Well, I think Modi. Very good, yeah. They've had some very good numbers announced. He stays out of wars, which is smart. He's got 1.5 billion people; he's actually the biggest. Modi's a great leader and we do a lot of business with them, but now we do fair business. They used to really rip us off. I don't blame them for that; we had stupid politicians that allowed that to happen. But now we do a lot of business. Modi is great. President Xi is great. Classics, you know? I mean, if you were going to make a movie about either one of them, you wouldn't be able to find the man in Hollywood. As an example, the look of Xi—he's got a great look. Looks don't matter, right? We say don't talk about looks, but he is tall. He's six foot two. He's got a great stature, he's got great confidence, and he is smart. Modi is a very different way, but just highly respected. I know the real Modi is a very tough cookie. I got to know some I didn't know very well. In Pakistan, you have the Field Marshal, who is great. Munir is great. And you have the prime minister, and they just get along great. It's a beautiful thing to see.
+
+Okay, let's talk about that. Who are the two weakest leaders? 
+
+Well, I can't say that because… 
+
+You're the president. 
+
+I can't say. I will tell you, though, that this couple of days was interesting. It was held in France, and Emmanuel Macron of France—who won't be there that much longer—did a great job of hosting the G7. Really good. No games. He invited me about a week before and asked if I would come into Paris because he'd like to honor me. I view it as honoring the nation. He had the biggest people in Europe there at Versailles. I was sort of not going to do it, but he knew my weakness, which is places like Versailles. It's incredible. They don't do dinners at Versailles. We had a fantastic dinner; I think he did a fantastic job. I've been to a lot of G7s, and it used to be G8s. They should have kept the G8. You probably wouldn't have the war with Russia and Ukraine if they did, but Obama didn't want Putin there. They wanted Putin out. It would've been much better if they kept that that way.
+
+Speaking of Putin, who do you admire more out of the two of them? Putin or Zelensky? 
+
+Well, I think it's amazing what's happened, actually. You have a war that should have been over very quickly. When that started, Putin had hundreds of tanks driving up a highway—solid as a rock right into Kyiv. They would've been there in three hours going at 51 miles an hour. They had this big line of tanks, and I don't think anyone even knows this story, but some general decided rather than going right into Kyiv and ending the war on the first day, he would go through the farmland and through the mud. They had a record-setting rainstorm a couple of days before, and those tanks got stuck in that mud. I gave them Javelins and they took out the tanks. People say, &quot;Oh, you're so nice to Russia.&quot; I'm not nice to Russia. I've been very tough on Russia. I've been very tough on China, tougher than anybody. That's why they respect me. Those tanks were obliterated. They were locked in quicksand, practically. Had the general just gone right up the concrete highway, they would've been in Kyiv within four hours. That war would've been over in one day.
+
+Let's shift a little to Iran. There's now light at the end of the tunnel for the conflict. What have you learned about not just the exercise of power, but the limits on your power as a result of the conflict? 
+
+There are no limits. No limits? No, none. I haven't learned that lesson yet. I know there are, but there are no limits. We defeated them totally militarily. I was asked by Pakistan because they're close to please not do anymore. I said, &quot;I like them a lot.&quot; I stopped Pakistan from fighting India, two nuclear nations, and the prime minister of Pakistan said, &quot;President Trump saved 50 million lives.&quot; They were going to use nuclear weapons. 11 planes were shot down. They were at it. The prime minister of Pakistan said Donald Trump saved 50 million lives, but it's much more than that. I think there are no limits. We have the most powerful military in the world by far. Who else could have done a blockade like that? I did a naval blockade where not one ship was able to get through. It certainly brought Iran to the table more than before.
+
+However, beginning a conflict you had talked about you only wanted unconditional surrender. And… 
+
+Well, it really probably is unconditional surrender. I think so. Look, they have no military; they're all at the bottom of the sea. 159 ships. That's what they had. 
+
+Sure, but they could still menace. They only had these small go-fast boats. 
+
+Look, you call it what you want. I hear the JCPOA, the Obama nuclear catastrophe, which was so bad when Obama left; he didn't hit their military. He didn't damage their Navy or destroy their air force. I destroyed the air force. I destroyed their anti-aircraft weapons. That's why we were flying over there totally unimpeded. He didn't kill their leadership. I did, twice. Two and a half times, to be exact. I killed Soleimani. I killed the Ayatollah, and a number of IRGC officials. 
+
+Soleimani was the father of the roadside bomb. When you see soldiers walking around without legs, without arms, with an obliterated face, 96.2% of that came from Iran. Came from Soleimani. It was his favorite weapon. And I killed him. Israel at the last moment backed out when I killed him, that was supposed to be done with Israel. It was a joint thing. I went to certain generals—not the stupid ones like Milley and some of these guys that decided to leave equipment behind—and they said, &quot;We can do it without them, sir.&quot; It was a flawless attack. That was one of the biggest moments in the history of the Middle East because he was the most feared man in a hundred years. Even Iran feared Soleimani. Did Obama do that? No. 
+
+If I didn't take him out, and they also in doing it took out the head of Iraq’s ISIS, we may not be talking today about such a conclusive victory. He was a very evil guy. He was a bad guy, but he was smart. He was a very tough general. You know what he was going to do? He was going to blow up five of our military bases. I got him one week ahead of that attack. I've been very tough. I took out their biggest bridge because they showed up late at a meeting. That bridge, that's their George Washington Bridge. I wiped it out in three minutes. I took out Kharg Island. I think we were very tough. I've wiped out their military; the Air Force is gone. There's no airplanes. Navy, 159 ships, all at the bottom of the sea. Leadership, their first stringers all gone, including Khomeini. They then put a new group in there—very good, but very nasty. I dealt with them. They're gone. 
+
+Then we're dealing with the third group, who I actually think is the smartest group. It's regime change if you want to know the truth. 
+
+How was the regime change if you had… 
+
+Because they're different people. We have people that are much less radicalized than the previous two groups. Oh, why aren't you tougher? The only way I can get tougher is if I go in there for another two or three weeks and continue to bomb the hell out of them. But what does that get us? The Strait of Hormuz will not be open. Right now, our stock market is through the roof. The oil prices are tumbling. The big difference is that Iran will never have a nuclear weapon. They're never going to have a nuclear weapon. If I were hitting them right now, the Strait of Hormuz would be totally closed. We wouldn't have oil for months. The stock market is up thousands of points. Everybody's richer. Now, would you rather have that or be like some stupid people?
+
+I don't want to mention the names of who I lost respect for. But there are hardliners. You've got to take them out yet. Well, let me tell you, they're unable to win the argument with me. If I went further, the stock market would be much lower. I never want to be the late great Herbert Hoover, so this is the kind of thing that could cause a worldwide depression. Do you know that for the last two months I've been taking many ships out there and nobody knew it? We knocked out their radar and defensive stuff, and they were unable to see. I was taking many ships out there every night at one o'clock in the morning. And we were never detected until about a week ago.
+
+I wanted to shift to Cuba and AI. If Iran is finished, then it's time for Cuba. Is there a countdown clock on Cuba?
+
+It’s a flexible line, but Marco is involved very much. Marco's doing a great job, by the way. His parents were from Cuba. It's such a great story. 
+
+Do you see the Cuba operation running similarly to the Venezuela operation?
+
+Possibly. It's possible. These places are close by. Whereas if you look at Iran, that's a very long trip. Venezuela is relatively close and Cuba is hopscotch. We're going to have Marco get involved with Cuba. Cuba wants to talk very badly. We have a lot of people that voted for me, like 95%. Some of your strong support is in the Cuban American community. 
+
+When you look at the map of the Western Hemisphere, do you see this as a fundamentally American hemisphere?
+
+More and more so, yeah. We're much more respected. We had a man that couldn't walk up a flight of stairs, and I don't want to talk about this because if I have a trip a little bit, they'll say, &quot;Oh, this is terrible.&quot; You can't trip every time you go on a stage. We had a man that wasn't respected. He wasn't smart 40 years ago. He was the worst thing that ever happened to old people. Biden was the worst thing that ever happened to old people because you guys were not honest with the public. The public saw it; he was a disaster. I had to make an excursion to stop a very volatile group of people. If they had a nuclear weapon, they would use it. If it weren't for me, Israel would not exist today. I terminated the Barack Hussein Obama deal, the JCPOA, which was a road to a nuclear weapon. 
+
+I came back with a roar, but better than before. If we didn't hit them with the B2 bombers, all that enriched material—they were one month away. The mountain collapsed on top of it. Had we not hit them, they would've had a nuclear weapon. They would've used it on Israel. You would've used it also in Saudi Arabia. Because when that war started, I guess my biggest surprise, almost immediately missiles were flying at these five other countries. That brought those five countries right into my lap. They were great.
+
+Artificial intelligence. Is it a weapon? 
+
+Well, improperly used it could be. If properly used, I will tell you one thing: it's so big. It is bigger than the internet. It's an age where people like you, smart people like we are, watch and we see what's happening. This AI is incredible. You're going to have medical cures coming up 25 years early because of it. We have a situation with Anthropic and we didn't like what they were doing. So far, I think they behaved very responsibly to our request. 
+
+Do you view Anthropic as a threat to national security?
+
+Well, not now, but a week ago maybe. I was with him yesterday; he seems like a nice guy, smart guy. But he responded to us very quickly because you know it's a tremendous liability. People get put in prison immediately for that. You can't play games with that. He responded very responsibly, I thought. 
+
+Do you have the power and the inclination to shut them down or possibly take them? 
+
+Well, I don't want to do that because we're beating China by a lot on AI. I was with President Xi. We talked about it. Everyone thought that we didn't have the electricity, but I came up with an idea: I let them build their own electric plants when they're building their factories. They actually sell back into the grid at a cheap price. It's amazing, Marc. They need double the amount of electricity that this country produces. They're building the most incredible electric producing factories you've ever seen. We are leading China by a lot. It's going to be for the good and we're watching for the bad. The good far outweighs the bad. We are going to find the bad and we're going to stop it. 
+
+Would you consider using the Defense Production Act? 
+
+I would, but I'm not sure I have to do that. I think so far it's been very responsible. 
+
+France at the G7 had talked about having an international group, as they want the United States to share more on AI. 
+
+Well, the problem we have is that we are leading everybody by a lot. In Europe, the first European company that's in AI is number 187. So that's not too good. Europe has to be very careful; they're losing their way entrepreneurially. And energy-wise, the UK is sitting on the greatest oil find, one of them in the world, the North Sea. They're not using it because of the environment. If they did use it, their energy prices would be cut by 75%. They don't want to use it. They buy their energy from Norway, which uses the North Sea, and Norway's got $3 trillion sitting in the bank. So it's crazy. I have to go; I'm so late. 
+
+Where are you in, as you wind down your presidency? 
+
+I don't call it a wind down. I think we got a lot of time. We have two and a half plus years. 
+
+Every presidency has a life cycle. As a president comes to his last midterm, his party usually loses control of the House, his poll numbers decline, and he starts to weaken. That's happening to you. 
+
+No, it's not. Fake polls. I have great poll numbers. I would beat any candidate they have by 25 points. All I do is do my job. I have more than two and a half years; I have a lot of time. We have other things, very big things that I want to do. Some very impactful things. Things are happening that aren't good and I'm going to straighten them out, and some things are happening that should be better and I'm going to make them better. This is a great presidency. 
+
+Are you going to miss being in this White House? 
+
+Well, it's so early. I love the building. I'm fixing the building. You see the granite; they had stones that were broken. The marble's broken. The tile they have is garbage from a low-class place. This is the White House. I fix it; I pay for it myself. I don't want money. Most importantly, I'm building what will be one of the greatest ballrooms and safety nets anywhere in the world. It's all bulletproof glass. It's all drone-proof roofs. It's actually a drone port on the top of the roof. You're going to be able to get there through the Senate. I don't need money from the Senate; I'm putting up my own money and the money of very great patriots. We don't need money. 
+
+We have a judge that probably doesn't like Donald Trump. Fortunately, we have appellate judges. But I will say, just in finishing, we've taken Washington, DC from a death trap to one of the safest cities in America. We took crime down 94% in a period of a year. I beautified it. New grass. Got rid of all of the graffiti. 48 fountains and monuments were bad, graffiti all over, they weren't touched for 50 years. And now they're all beautiful. And then there's going to be an arch. I think maybe the greatest of all will be what's called the Triumphal Arch. 
+
+Mr. President, I appreciate your time. I know you've been rushed today. 
+
+I had two hours for you. You need more than two hours for him, right? Anyway, thanks. 
+
+Well, I appreciate your time. Thank you very much, sir.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
