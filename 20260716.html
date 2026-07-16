@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Thursday, July 16, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260715.html">&larr; Jul 15</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Thursday, July 16, 2026</h1>
+            <p class="day-sub">3 videos &middot; 2 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=G3fCkeo2kY8" target="_blank" rel="noopener">GameStop CEO Cohen Discusses eBay Bid, Video Game Software<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/JrVD7EseOyOiGrgN4-2HQjuP7m6LHL5Cb-XBo0SCRO020W0bQ4W8Sve522ellwQ77_A5JapEKQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Tech</b><span class="subs">(731.0K)</span></span><span class="dot">&middot;</span><span>21:53</span><span class="dot">&middot;</span><span>4.9K views</span><span class="dot">&middot;</span><span>2026-07-16</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Ryan%20Cohen%22">Ryan Cohen<span class="chip-desc">CEO, GameStop</span></a> <a class="chip" href="index.html?q=%22Ed%20Ludlow%22">Ed Ludlow<span class="chip-desc">Host, Bloomberg Technology</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>GameStop CEO Ryan Cohen is aggressively pursuing a $56 billion acquisition of eBay, aiming to transform the e-commerce giant into a high-growth &quot;live commerce&quot; leader while slashing $2 billion in annual costs.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Cohen emphasizes his personal $500 million stake in the deal,...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
+<p>GameStop CEO Ryan Cohen is aggressively pursuing a $56 billion acquisition of eBay, aiming to transform the e-commerce giant into a high-growth "live commerce" leader while slashing $2 billion in annual costs. Cohen emphasizes his personal $500 million stake in the deal, framing it as a battle between a shareholder-aligned visionary and "entrenched" eBay management.</p>
+<h3>Strategic Vision: Synergies and Growth</h3>
+<p>Cohen argues that combining GameStop’s physical footprint with eBay’s digital reach creates a unique competitive advantage in the collectibles and gaming markets.</p>
+<ul>
+<li><strong>Physical Infrastructure as "Nodes":</strong> Cohen plans to use GameStop’s 1,600+ locations (within a 15-minute drive of 80% of the population) as authentication centers to combat fraud in trading cards and tech.</li>
+<ul>
+<ul>
+<li><strong>Same-Day Authentication:</strong> Shifting from a centralized shipping model to local store verification to reduce seller costs and buyer wait times.</li>
+</ul>
+</ul>
+<li><strong>Live Commerce Expansion:</strong> Cohen views live commerce as a $1 trillion addressable market (highly successful in Asia but lagging in the US) and intends to use GameStop stores as studios and logistics hubs for content creators.</li>
+<li><strong>Digital Marketplace:</strong> Plans to leverage eBay’s infrastructure to build out a digital marketplace for in-game items.</li>
+<li><strong>Irrelevance of "Diskless" Gaming:</strong> Addressing concerns about digital-only consoles, Cohen noted that software now accounts for less than 12% of GameStop's business, while collectibles make up over 50%.</li>
+</ul>
+<h3>Financial Mechanics and Cost Reduction</h3>
+<p>Despite eBay’s rejection of the offer as "not credible," Cohen maintains that the financials are robust and the combined entity will be highly profitable.</p>
+<ul>
+<li><strong>Aggressive Cost Takeout:</strong> Committed to removing $2 billion in costs within the first year.</li>
+<li><strong>EBITDA Projections:</strong> Cohen estimates the combined entity will reach over $5.5 billion in EBITDA by 2026, including his proposed cost savings.</li>
+<li><strong>Personal Risk:</strong> Cohen is personally committing $500 million of his own capital to the transaction to signal alignment with shareholders.</li>
+<li><strong>Financing Support:</strong> Claims a "highly confident" letter from bankers (TD) and significant interest from capital markets, dismissing Moody’s "credit negative" outlook as a media-driven fantasy.</li>
+<li><strong>Accretive Dilution:</strong> Argues that while increasing GameStop's share count causes technical dilution, it is "accretive" because it enables the purchase of a business that can be scaled to "multiples larger" than its $56 billion valuation.</li>
+</ul>
+<h3>Management Conflict and Shareholder Alignment</h3>
+<p>A central theme of Cohen’s argument is the disparity between his incentives and those of current eBay leadership.</p>
+<ul>
+<li><strong>Entrenched Management:</strong> Cohen criticized eBay’s board and management for "hiding behind advisors" and having "no skin in the game," noting the CEO makes $30 million annually without buying shares on the open market.</li>
+<li><strong>GameStop’s Turnaround:</strong> Pointed to GameStop’s Q1 operating earnings of $143 million—the highest in its history—as proof of his ability to manage distressed assets and ignore "mainstream media" skepticism.</li>
+<li><strong>Direct Appeal to Owners:</strong> If eBay management continues to refuse collaboration, Cohen suggested the decision will ultimately be left to the shareholders (the "owners of the business").</li>
+</ul>
+<h3>Current Status and Next Steps</h3>
+<p>The deal remains unsolicited and unreciprocated by eBay, but Cohen indicates he is not backing down.</p>
+<ul>
+<li><strong>No Price Negotiation (Yet):</strong> Cohen stated he will not "negotiate against himself" by raising the bid immediately but left the door open for future adjustments.</li>
+<li><strong>Proprietary Plan:</strong> Refused to share a "codified" business plan on television to avoid tipping off competitors, stating the plan will be brought directly to shareholders in due course.</li>
+<li><strong>Warrants:</strong> Declined to predict the outcome of GameStop warrants expiring in October 2024.</li>
+</ul>
+<p>***</p>
+<p><strong>Notable Quotes</strong></p>
+<blockquote>
+"eBay is a platform that I can build into something much more profitable and much larger... It makes too much sense. So that's why I want to buy it. It's not that complicated." — <strong>Ryan Cohen</strong>
+</blockquote>
+<blockquote>
+"The business of live commerce is $1 trillion addressable market... The ability to go and use our nodes as studios and as fulfillment and logistics for content creators is huge." — <strong>Ryan Cohen</strong>
+</blockquote>
+<blockquote>
+"I want you to look your viewers in the eyes and tell them: Are you going to bet on an entrenched management team running the business or me, someone... risking their own capital? There's nothing more American than that." — <strong>Ryan Cohen</strong>
+</blockquote>
+<blockquote>
+"I’m not going to call my shots, but we’re coming for eBay one way or another." — <strong>Ryan Cohen</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">One of the biggest potential deals in technology is GameStop's attempt to buy eBay. In May, the video game retailer and its CEO, Ryan Cohen, launched an unsolicited $56 billion bid for the e-commerce platform. eBay rejected the offer, calling it neither credible nor attractive.
+
+Since then, Cohen has scrapped a controversial multibillion-dollar pay package, and GameStop shareholders have approved increasing the company's authorized share count, giving it more flexibility to pursue strategic transactions. So where does the deal stand now? Ryan Cohen joins us on Bloomberg Television and Radio. Ryan, thank you for your time and good morning. Welcome to Bloomberg. Tack on the long list of things that have happened since May. Our audience just has a very simple question for you, which is what's changed and what's developed in that period of time?
+
+There has been a complete failure by the media to explain why this transaction makes sense. Number one, my track record with Chewy and GameStop speaks for itself. My alignment with shareholders is clear, as I am putting $500 million of my own money into the transaction. The high-margin growth opportunities for this business within live commerce—which the company has not been doing well—and using GameStop stores as nodes for both the marketplace and live commerce is huge, because the business today in live commerce is tiny. Building out a digital marketplace for in-game items is just one of the high-growth opportunities within the business.
+
+And then there is the cost takeout opportunity. I've committed to taking out $2 billion within the first year, and that's just the beginning. So this whole narrative that the business is going to be too leveraged is a fantasy invented by the media and it's just simply not true.
+
+On the banking side, let's go there. You lined up some banking support, right? I think that one of the concerns that Moody's put out there as an example was the credit rating and the creditworthiness of the combined entity. So again, another question from the audience is to explain the banking support that you've secured since May, but also that concern that the debt component of that—what the credit negative outlook would be for a combined entity based on the plan that you've just outlined. 
+
+We have a highly confident letter from our bankers. We have a lot of parties that are interested in this transaction. And the most important thing is that, ultimately, if we can't get the debt, then it means that eBay can't get the debt, and eBay can get the debt. So its entire narrative is simply not true. 
+
+I didn't explain that question very well, Ryan. If I'm self-reflective and honest about it, I'm just going to go back to it. Your financing is from TD, right? And it was widely reported to depend on the combined company maintaining an investment-grade credit rating. Then Moody's came out and said that this deal would be credit negative for the combined company. Have you taken steps to address that? Nobody has reached out to us, including the credit agencies, but the pro forma company is going to be investment grade. 
+
+We talked at the beginning of the conversation about shareholders approving an increase to the company's authorized share count. Does that allow you to do something new that you couldn't have otherwise done in the context of the eBay deal? Yes, it does. And what would that be? Buy the business. Buy eBay.
+
+I posted on X that you were coming on the show, and in the context of what you've done with financial mechanics of late, the question the existing GameStop shareholders sent me over and over again is that you're asking them to accept pretty significant dilution. They're basically asking, what's the payoff for them in accepting that dilution? 
+
+There's different forms of dilution. Most dilution is dilutive to shareholders when you're buying a business, and I've committed to pulling $2 billion of costs out. So if you do the math on buying a business for $56 billion, and the business is forecasted to make over $3.5 billion—that's the consensus for 2026 plus what I would be pulling out in costs—you're at over $5.5 billion of EBITDA. And then there is the ability to take this platform and build a much, much larger business. The upside is huge. So I wouldn't go and buy a business if I didn't think I could take it from $56 billion and turn it into multiples larger. So it's accretive to shareholders, but most of the time when companies are issuing shares, it's dilutive and earnings per share go down. In this case, it's a different story. 
+
+But most of the time you have management teams—a good example is this company—that collect tons of risk-free compensation, and they're not aligned with shareholders. In this case, that's not the case. You have the letter from TD. You said earlier you're going to put $500 million of your own money into this transaction. Outside of that, is there any other financing support or any other parties that since mid-May you've pulled into it? We've had a lot of parties come to us, and there's been a lot of interest from the capital markets. 
+
+We live on Bloomberg Television and Bloomberg Radio with Ryan Cohen, the CEO of GameStop. We're talking about Ryan and GameStop's bid to buy eBay. Really simple question: has anyone from eBay, the management team, or the board reached back out to you or responded to you in this interim period? No, I hope they do. But they're entrenched and they're hiding behind their advisors. If I go to a telecom site on any browser, I'm diverted back to GameStop.com. Why? I'm focused on GameStop. 
+
+The root of the question is, let's say that you proceed with this. There's a very wide range of opinion and speculation. Why does Ryan Cohen want to buy eBay? At one extreme is the idea that you just want to be the CEO of eBay rather than GameStop. At the other end is the idea that you have a bigger master plan. You kind of talked about it a little bit earlier, but what's the reality here? What is the bigger picture for a combined entity?
+
+eBay is a platform that I can build into something much more profitable and much larger. The ability to take GameStop stores and our experience in gaming, and refurbish tech and collectibles, combined with eBay and be a leader in live commerce, build out an in-game digital marketplace, use the stores for same-day authentication, and ultimately pull out significant cost—none of these things come at the expense of growth. It's actually the opposite. The more efficient you get, the easier it is to grow. It makes too much sense. So that's why I want to buy it. It's not that complicated. There is such overlap between the businesses and my experience in e-commerce. 
+
+Are you prepared to improve the offer? I'm not going to negotiate against myself. But that might be what it takes. We'll see what happens. A lot of people point out to me that you've done a number of interviews in quick succession. What happens if eBay just keeps saying no? Ultimately, it's going to be the owners of the business that are going to decide who is more competent, who is more aligned with shareholders, and who is more capable of building a much, much larger business. So the management team can only hide for so long. And I would love for this to be a collaborative process and a consensual process. That's my preference, that's number one. But if that doesn't happen, then it's going to be the shareholders' decision because they're the owners of the business. 
+
+I do want to talk a lot more about the GameStop business, a lot more about eBay. We're going to take a break and come back and do that—talk about what's really happening. I have a final question from the audience that I promised I would put to you, and it's from GameStop shareholders. A lot of GameStop shareholders have asked about the warrants that expire in October. What should they expect happens with those warrants between now and October of this year? 
+
+I don't have a crystal ball. I can't answer that question. Their expectation is that when they expire, I think the due date is October 26th. People that have invested alongside me when it comes to Chewy or GameStop, and me committing $500 million into eBay, they've done very, very well. So I don't have a crystal ball. I can't predict the future, nor can anyone that I've ever met. But GameStop is a business that was on the brink of bankruptcy, and everybody was betting against it for good reason. Now the company is making more money than it's ever made in its history. Whatever happens, GameStop is still one of the biggest names in gaming. 
+
+I get a lot of questions about that. And Ryan, if you're up for it, let's start with Grand Theft Auto six. It's expected to be one of the biggest entertainment launches ever. You go to GameStop.com, pre-orders are available. What are you seeing? What are customers telling you? 
+
+I want to go back and talk about eBay. I want to know if you wanted to build a trillion-dollar business and you had the existing management team, a guy running the company making $30 million a year, and hasn't bought a single share in the open market. And then you have someone that's committed $500 million like me. We don't have to talk in hypotheticals. Who's more competent and capable of building a larger business? I want you to look your viewers in the eyes and tell them: are you going to bet on an entrenched management team running the business, or me, someone who went head-to-head against Amazon selling $30 bags of dog food, turned around a very tough situation at GameStop, and now the company is making a lot of money? 
+
+I really want to know your opinion, Ryan. I'm not here to answer the question. The audience doesn't care what I think about this deal. They're here for you. But the link to Grand Theft Auto six, for what it's worth: GameStop has 2,200 stores across the jurisdictions it operates in. It sells hardware, video games, consoles that are going diskless. At some point, you need to hire people for those stores. People are looking at what they know about the proposed structure of this deal that's on the table and trying to understand—in part we talked about earlier—taking the costs out of the combined business to understand what the plan is here, what the master plan is for the combined entity. 
+
+So let's go with that. Like, what is the synergistic play here between eBay, the e-commerce business, and GameStop, which right now is a brick-and-mortar business selling video games, consoles, and collectibles? We are going to unlock live commerce. We're going to use the stores for same-day authentication. I'll give you an example. Let's just talk about trading cards right now. The biggest issue on eBay is fraud, so they've done really well on the authenticity guarantee because when you buy an item now and it's got the AG certification, it's legit. It's going through a centralized model right now, so the seller's shipping at a cost of a lot of money. There's a few fulfillment centers, it takes some time, and then it goes to the buyer. Once these businesses are together, we've got 1,600 nodes there within a 15-minute drive of 80% of the population. You can authenticate the item same-day for cheaper. So that's just one item. 
+
+Live commerce is a $1 trillion addressable market. It's really, really big in Asia. There's some competitors in the U.S. that are doing very, very well, but it's not doing very well. So the ability to go and use our nodes as studios and as fulfillment and logistics for content creators is huge. And then we have a bit of experience in gaming when it comes to the buy, sell, and trade model. So the ability for us to use eBay's rails to build out an in-game digital marketplace is huge. So those are just some of the opportunities to take this business and build it into something that the existing management team on a standalone basis can never do. 
+
+So the situation is, collectibles are clearly a central part of the plan, right? If this deal goes through, the combined entity. On gaming, it sounds like you are preparing for a world where gaming is diskless. There will be trade-in and secondhand trading, but this is the umbrella point, right? If the hardware makers Sony and Xbox are reportedly moving to diskless on the console side, future game launches are digital only. Where does that fit in for your business plan and the combined entity? 
+
+It doesn't matter. It doesn't matter at all. Software mattered in the past, but software today makes up less than 12% of the business, and collectibles makes up over half the business. So it's totally and utterly irrelevant. 
+
+Is there anything that you learned from the NFT marketplace experiment at GameStop that you think you can put into practice if the deal goes through in this combined entity? What was the takeaway for you from that? GameStop has looked at digital business lines outside of the physical world. What did you learn from GameStop looking at those markets? 
+
+You know how much money GameStop is making today? It's making $143 million in Q1, the highest operating earnings in the company's history. There was surprise at the strength of earnings recently. But again, everybody in the media wants GameStop to fail. Explain that to me and why everybody in the mainstream media wants GameStop to fail. There's nothing more American than GameStop committing its balance sheet. This company is a great American company by being aligned with shareholders. That's how this country was built—is risking your own capital. If the business succeeds, you make money. If the business fails, you lose a lot of money. And what I want to understand is why everybody wants GameStop to fail, both its core business and in this transaction. Why are we rooting for an entrenched management team that has no skin in the game versus someone that's risking their own capital? There's nothing more American than that. You want us to fail? I want to understand that. 
+
+Ryan, I'm a technology journalist. I host the tech show on Bloomberg. When this deal broke in May, I and my team invited you onto the show, and it took a number of months. You're now here on the show. In advance of you coming on the show, I posted on social media that you were coming on the show. I always give our audience the opportunity to ask their questions. That's what we're doing here, giving you an opportunity to present. I think the one outstanding thing is people asking when they will see a codified plan from you, a business plan presented for this combined entity on paper. You've explained a bit of it in the course of this conversation, but that's why the audience is here—to listen to you explain the future of a business that is a combination of GameStop and eBay. 
+
+But I'm going to bring that plan directly to shareholders. It's not going to be through a TV show, you can count on it. It's going to be directly to shareholders. And do you have a timeline for that, Ryan? We've had an influx of parties that have come to ask, and they're interested. In due course, the plan is going to be made public. 
+
+But in the short term, I'm going to ask you about building a much larger business. What is the goal of business? My goal is to make the business a lot more profitable and to maximize shareholder value because I own a lot of stock and don't have any perverse incentives. So that's the plan; it's not that complicated. And I've spoken about huge growth areas within cutting costs—that's just short term. But live commerce and building out an in-game digital marketplace, I share that with you. But everyone in the past has said, &quot;What's the business plan?&quot; but they only do that with GameStop for whatever reason. Well, you know what the business plan is: to make money. 
+
+GameStop just reported its highest earnings in the company's history with a fraction of the stores, and everybody in the media said GameStop was going to fail. So the plan is to make more money. The plan is to maximize shareholder value. Am I going to go and share my proprietary plan and every single detail and give it out to my competitors? That would be a pretty stupid thing to do. 
+
+Ryan, we have literally 30 seconds left in the show. Again, are you prepared to raise your offer for eBay? You set out your vision, but what is the action you're willing to take to do it? I'm not going to call my shots, but we're coming for eBay one way or another.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-1">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=JfKoWdd-HE8" target="_blank" rel="noopener">Texas Governor Abbott, Saronic CEO on Floods, Shipyard Plans<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/JrVD7EseOyOiGrgN4-2HQjuP7m6LHL5Cb-XBo0SCRO020W0bQ4W8Sve522ellwQ77_A5JapEKQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Tech</b><span class="subs">(731.0K)</span></span><span class="dot">&middot;</span><span>11:29</span><span class="dot">&middot;</span><span>465 views</span><span class="dot">&middot;</span><span>2026-07-16</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Greg%20Abbott%22">Greg Abbott<span class="chip-desc">Governor, Texas</span></a> <a class="chip" href="index.html?q=%22Dino%20Mavrookas%22">Dino Mavrookas<span class="chip-desc">CEO, Saronic Technologies</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Saronic Technologies is investing $3.2 billion to build &quot;Port Alpha,&quot; a massive autonomous shipyard in Brownsville, Texas, designed to 1.5x U.S.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">commercial shipbuilding capacity in its first phase and address a critical national security gap.  Strategic Investment: Saronic...</div>
+                    <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
+<p>Saronic Technologies is investing $3.2 billion to build "Port Alpha," a massive autonomous shipyard in Brownsville, Texas, designed to 1.5x U.S. commercial shipbuilding capacity in its first phase and address a critical national security gap.</p>
+<h3>Port Alpha: Revitalizing U.S. Shipbuilding</h3>
+<ul>
+<li><strong>Strategic Investment:</strong> Saronic is committing $3.2 billion to develop a next-generation shipyard at the Port of Brownsville, focused on manufacturing medium and large-class autonomous surface vessels.</li>
+<li><strong>Addressing the Naval Crisis:</strong> CEO Dino Mavrookas noted that the U.S. currently holds only 0.1% of global shipbuilding capacity, leading to a shrinking naval fleet. </li>
+<li><strong>Unprecedented Scale:</strong> </li>
+<ul>
+<ul>
+<li><strong>Phase 1:</strong> Occupying 835 acres, the facility will provide 150,000 gross tons of capacity, immediately increasing current U.S. commercial shipbuilding capacity by 50%.</li>
+<li><strong>Long-term Expansion:</strong> The project can expand to over 4,000 acres, with a goal of reaching 2 million gross tons of capacity—a 20x increase over current national levels.</li>
+</ul>
+</ul>
+<li><strong>Combat Ready:</strong> The announcement follows the first successful combat use of Saronic’s autonomous technology by the U.S. military (Centcom).</li>
+</ul>
+<h3>Economic Impact and Regional Transformation</h3>
+<ul>
+<li><strong>Job Creation:</strong> The project is expected to create 10,000 new jobs in the Rio Grande Valley. </li>
+<li><strong>High-Value Wages:</strong> Governor Abbott highlighted that these positions will average $75,000 in annual salary, injecting approximately $750 million in total payroll into the state.</li>
+<li><strong>Macroeconomic Growth:</strong> Saronic estimates a $160 billion economic impact on the region over the next ten years.</li>
+<li><strong>Industrial Shift:</strong> The Rio Grande Valley is transitioning from a historically agricultural region into a "critical corridor" for high-tech defense and space, joining the ranks of major economic hubs like Austin and Dallas.</li>
+</ul>
+<h3>Why Texas: Workforce and Infrastructure</h3>
+<ul>
+<li><strong>The "Tipping Point":</strong> While land availability and deepwater access were essential "binary" requirements, CEO Mavrookas cited the local workforce as the primary reason for choosing Brownsville.</li>
+<li><strong>Educational Pipeline:</strong> Governor Abbott emphasized a multi-tiered training strategy involving:</li>
+<ul>
+<ul>
+<li><strong>Texas State Technical College</strong> for specialized technical skills.</li>
+<li><strong>State Universities</strong> focusing on real-life job skills and expanding campuses in the South Texas region.</li>
+</ul>
+</ul>
+<li><strong>Tech Ecosystem:</strong> The proximity to SpaceX (Starbase) in Cameron County has created a collaborative environment where infrastructure and talent pools are shared across the defense and aerospace sectors.</li>
+</ul>
+<h3>Operational Update: Severe Flooding in South/Central Texas</h3>
+<ul>
+<li><strong>Emergency Status:</strong> Governor Abbott provided an update on "massive flooding" currently affecting regions from Kerrville to Laredo.</li>
+<li><strong>Current Toll:</strong> There has been one confirmed fatality and approximately 80 successful rescues as of the interview.</li>
+<li><strong>State Response:</strong> Over 1,300 personnel, including the National Guard and Department of Public Safety, have been deployed with helicopters and boats.</li>
+<li><strong>Safety Warning:</strong> The Governor urged residents to "turn around, don't drown," noting that the current rainfall totals are exceeding the record flooding levels seen in July of the previous year.</li>
+</ul>
+<blockquote>
+"Our naval fleet is actually shrinking. We have 0.1% of global shipbuilding capacity. Port Alpha is going to turn all of that around... We will 1.5x the commercial shipbuilding capacity in the United States. And that’s just phase one."
+</blockquote>
+<p>— <strong>Dino Mavrookas</strong>, CEO of Saronic Technologies</p>
+<blockquote>
+"The Rio Grande Valley has historically been an agricultural region... But now, with Saronic and Starbase, there is a massive explosion of economic activity. Our state is absolutely booming."
+</blockquote>
+<p>— <strong>Greg Abbott</strong>, Governor of Texas</p>
+<blockquote>
+"This is built from the ground up to be the most advanced, to be the most efficient, but most importantly, add net new capacity, brand new shipbuilding capabilities to this country in a way that we haven't seen since World War II."
+</blockquote>
+<p>— <strong>Dino Mavrookas</strong>, CEO of Saronic Technologies</p></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">Texas is quickly becoming the epicenter of America's next industrial build-out. From AI data centers and semiconductor fabs to defense technology now, autonomous shipbuilder Saronic is making its own major bet on the state. The companies announced a $3.2 billion investment building a next-gen shipyard at the Port of Brownsville, manufacturing medium to large-class autonomous surface vessels. 
+
+Joining us now for an exclusive conversation are Saronic CEO Dino Mavrookas and Texas Governor Greg Abbott, alongside our Bloomberg Texas bureau chief Julie Fine. Governor Abbott, good morning to you from San Francisco. If we could, I'd like to start with a sort of operational update, please, on the flooding situation in your state. I know it's something that you want to communicate on.
+
+Sure. Listen, well, thank you for offering that up. We've been following all day yesterday, all last night, and today, the massive flooding going on in central and south Texas. It's the same area where we had the massive 4th of July flooding last year. The difference this year is we're actually getting more rain over the past 24 hours and over the next 24 hours than we got last year. 
+
+Overnight there was one life lost. We are continuing to surge resources; we've made almost 80 rescues already. I will be leaving here after this interview to go focus on our current response in regions ranging from the Kerrville area all the way down to Uvalde, to Del Rio, to Laredo, where we expect continued flooding. 
+
+I just want to make sure that all Texans know that we have more than 1,300 Texas personnel, the National Guard, and the Texas Department of Public Safety. We have all resources, boats, and helicopters available to make sure we will be doing everything possible to save human life.
+
+Governor Abbott, I just want to follow on that briefly. As you remember, just a horrible time last year when there was that flooding in the same area. Your advice to anybody in the area that sees this water, that is concerned—what should they do and where should they go?
+
+So great, great question. And you all are one of the best communicators to the general public that we're going to have out there with the news media showing this, what I'm about to tell you. And that is there are rapidly rising rivers that will continue to rise through the remainder of today and tomorrow. If you do not need to be out, don't go out. 
+
+We have one leading reason why people may lose their life in rising waters like this; it's because people drive into waterways and get swept away. There's an old saying, &quot;turn around, don't drown,&quot; and that applies here. Second, because rivers are rising so rapidly, if you are near a river, try to get away from that river so you can protect your own life. Each individual in the state of Texas has a full capability of protecting and saving their own life right now by staying away from the rising rivers and not driving into it.
+
+Governor Abbott, thank you very much for that. As a reminder to our audience, Saronic, a defense tech startup focused on autonomous maritime drones, is investing $3.2 billion in the state of Texas, a facility at the Port of Brownsville. Dino Mavrookas, Saronic CEO, welcome back to Bloomberg Tech. The question we get most often is the simple one: why Texas? What did Texas do to win your business?
+
+And before I even talk about that, I just want to say our thoughts and prayers go out to everybody involved in the flooding. Saronic keeps that very, very front of mind. We're very proud to call Texas home and invest in the community here. So, governor, if there's anything that we can do to support, please let us know.
+
+Sure. Thank you. Texas is a great state. I mean, the leadership and the partnership, the governor—look, we're building a next-generation shipyard. We're going to go and build the most advanced, most efficient, highest throughput shipyard, not only in the country, but in the world. So when you're doing that, you're looking for land availability, you're looking for deepwater access; those things are kind of binary. You either have them or you don't. 
+
+What really tipped the scales was the workforce. The people down in Brownsville that we're going to build this company and this project around, and then the partnership with the state and local government. It's the governor's leadership and support, the partnership with the state, Cameron County, the city, and the port of Brownsville that helped bring this generational project to life. You know, Brownsville’s close proximity to space, so that was interesting. The workforce was the tipping point.
+
+How competitive is it in your industry right now in hiring the best people across lots of different disciplines?
+
+I think what you're seeing, it's actually more collaborative than it's competitive. You're building up industry, you're building up infrastructure, you're investing in the community. When you look at what we're going to do in Brownsville, we're going to invest billions of dollars not just into infrastructure, but into the local region. 
+
+We're going to create 10,000 jobs, and we're going to create $160 billion of economic impact in the region. And that's just over the next ten years, right? With companies like SpaceX and others doing that, it creates an entire ecosystem not only in that part of the state, but in the entire state. 
+
+Governor Abbott, we just heard Dino talk about the workforce again; that's 10,000 jobs. And I'd like to hear about the plans on how you plan to develop that workforce to make sure there are enough people available.
+
+I'll tell you this, and that is Texas ranks number one in the United States for having the best workforce. Texas ranks number one for adding more new jobs than any other state. And there's reasons for that, and that's because we work more than the state to make sure we have the best-trained and qualified workforce. 
+
+We have these massive education programs across the state. One is through the Texas State Technical College; two is through our two-year colleges; but three is through our universities. And we focus our education in Texas on real-life job skills that will ensure that when a student graduates or completes the course study there, they're going to be ready to go straight into the workforce. 
+
+We talked to Dino. We talked to Saronic about what our capabilities are to make sure that we would be able to develop the workforce they need. That's exactly what Elon Musk found with regard to SpaceX; it's what other companies coming to the state of Texas are realizing. I talk to the CEOs all the time. They're coming to the state of Texas, and they tell me the leading reason why they're coming to the state is because we do have that pipeline of well-trained workforce, and we will be able to deliver it for Saronic, just like we have been for all these other companies where Texas now is home to more Fortune 500 company headquarters than any other state, because of the workforce and supply that we have. 
+
+Governor Abbott, when you look down the road five years, what does the Rio Grande Valley look like with this addition?
+
+So it has changed dramatically. You're familiar with it; maybe many Americans watching this show may not be familiar with it. But listen, the Rio Grande Valley has historically been an agricultural region and things like that. But when you look at some changes taking place, you know, you mentioned one obviously was Starbase down there in Cameron County, which is near the Brownsville area, plus Saronic, which is going to be near the Brownsville area. There is a massive explosion of economic activity.
+
+And because that, kind of going back to the education component, what our universities are doing—our universities are servicing campuses and expanding campuses in those regions to make sure that we will be educating students, not just to be able to go to work for Saronic, but also to fill the other education needs in the entire area. 
+
+But going back now, the Cameron County area where this project is going to be located is going to be one of the fastest-growing regions in the entire state. So we're building out transportation facilities, other facilities to make sure this is going to be a thriving community. But it also shows how Texas is the most diversified economy in the United States, not just with regard to different business sectors, but geographically in the state. 
+
+Obviously, with the booming Dallas, Austin, and Houston areas, but now we have the booming Rio Grande area. And so our state is absolutely booming, and we could not be more proud to have Saronic down there and the jobs they're providing. 
+
+So good. This real quick number: over the course of the coming years, Saronic is going to be adding more than, or up to at least 10,000 new jobs at $75,000 per job at least. When you put it all together, they're going to be injecting $750 million in paychecks for our fellow Texans. That's going to make a massive difference in our state.
+
+Let me just jump in because there's another big moment this week with CENTCOM sharing this video, the first combat use of autonomous surface vessels by the US military. Your technology—what was the biggest lesson from that operation?
+
+I mean, it's delivering the capabilities to our warfighters at speed and scale. That's what Saronic has been based around since the day we founded the company. We looked around and we said, &quot;What is the capability that our Navy is missing?&quot; and &quot;How do we build that fast and get that to our warfighters to deliver real combat power?&quot; 
+
+And that is actually exactly what we're doing in Brownsville as well. There's a shipbuilding crisis in this country right now; our naval fleet is actually shrinking. We have 0.1% of global shipbuilding capacity. Port Alpha is going to turn all of that around. On day one, our initial phase of the project, this will be the largest shipyard in the country. We will have 150,000 gross tons of shipbuilding capacity, which means we will 1.5x the commercial shipbuilding capacity in the United States. And that's just phase one. 
+
+We're going to take that all the way up to 2 million gross tons of capacity—20x the current capacity in this country. And that's what we need. And in Brownsville, what you're going to see is the development, with space already being there; it's just going to become a critical corridor, not just for business and commerce, but for national security. 
+
+You know, we just have about 60 seconds left in the program. You said this is phase one. Would you just give us a look into the future in phase two?
+
+Absolutely. So based in the initial phase of the project on 835 acres, we talked about massive land availability. We have the ability to expand up to and over 4,000 acres. We're going to continue to invest, continue to build out infrastructure, and keep in mind we are building a brand-new shipyard. This is built from the ground up to be the most advanced, to be the most efficient, but most importantly, add net new capacity—brand new shipbuilding capabilities to this country in a way that we haven't seen since World War II.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-2">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=hDJW4TOCElQ" target="_blank" rel="noopener">A Script for Mark Zuckerberg | Stratechery by Ben Thompson<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/G3KKbnKufJOIVSn2K-p-4DrmYkR50LHZileEND4IhJ38sLdznQIYOUShN7qqvG1G5vPvB63Mml8=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Stratechery</b><span class="subs">(15.8K)</span></span><span class="dot">&middot;</span><span>13:17</span><span class="dot">&middot;</span><span>123 views</span><span class="dot">&middot;</span><span>2026-07-16</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Ben%20Thompson%22">Ben Thompson<span class="chip-desc">Founder, Stratechery</span></a> <a class="chip" href="index.html?q=%22Mark%20Zuckerberg%22">Mark Zuckerberg<span class="chip-desc">CEO, Meta</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Meta is pivoting its strategic narrative to embrace its identity as an advertising and entertainment powerhouse, justifying massive AI CapEx by treating compute as a rentable asset that establishes a strict internal &quot;hurdle rate&quot; for ROI.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">The &quot;Platform&quot; Fallacy: Mark...</div>
+                    <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
+<p>Meta is pivoting its strategic narrative to embrace its identity as an advertising and entertainment powerhouse, justifying massive AI CapEx by treating compute as a rentable asset that establishes a strict internal "hurdle rate" for ROI.</p>
+<h3>Admitting Strategic Errors and Redefining Identity</h3>
+<ul>
+<li><strong>The "Platform" Fallacy:</strong> Mark Zuckerberg admits to a long-standing obsession with becoming a platform provider (e.g., Reality Labs, early mobile web efforts) which often distracted from Meta’s true strength: the advertising business.</li>
+<ul>
+<ul>
+<li><strong>Reality Labs:</strong> Zuckerberg acknowledges "burning credibility" with investors by spending 12 figures on VR/AR primarily because he thought it was "cool" and wanted to own a platform.</li>
+<li><strong>Apple's Unintentional Save:</strong> He credits Apple’s mobile ecosystem for forcing Facebook to abandon web-platform ambitions and focus on being an app, which inadvertently supercharged its ad revenue.</li>
+</ul>
+</ul>
+<li><strong>The Entertainment Shift:</strong> Meta failed to realize early enough that "connection" was no longer sufficient; TikTok proved that social media had evolved into algorithmically-driven entertainment.</li>
+<li><strong>Affirmative Case for Ads:</strong> Zuckerberg argues that Meta’s ads are a "force for good" because they generate new desires and connect entrepreneurs with customers, rather than acting as a "tax on search" like Google or Amazon.</li>
+</ul>
+<h3>The Strategic Necessity of AI Investment</h3>
+<ul>
+<li><strong>Existential Defense:</strong> Everything digital is vulnerable to AI; Meta views massive infrastructure investment as a necessity to avoid "terminal value risk" and dependency on third-party AI providers.</li>
+<li><strong>Inventory Expansion:</strong> AI represents the largest inventory expansion in history. By making "every pixel monetizable," Meta expects a massive top-line growth opportunity similar to the transitions to Stories and Reels.</li>
+<li><strong>Performance Enhancements:</strong> Beyond LLMs, GPU-dependent machine learning is already driving content recommendations (keeping users engaged longer) and predictive ad targeting.</li>
+<li><strong>Addressable Market:</strong> Because Meta’s products are free, the capacity to increase the top line through AI is unbounded by price elasticity.</li>
+</ul>
+<h3>Financial Discipline: The Compute Spot Market</h3>
+<ul>
+<li><strong>Selling Excess Compute:</strong> To offset massive CapEx, Meta will rent out portions of its compute infrastructure on the spot market.</li>
+<li><strong>Establishing a Hurdle Rate:</strong> These rentals serve as a financial benchmark. Meta will only "claw back" compute for internal projects if those projects can generate more revenue than the rental income would have provided.</li>
+<li><strong>Prescience in Spending:</strong> Zuckerberg points to the 2022 GPU spending spree—which initially caused a stock dip but was validated by the launch of ChatGPT—as evidence that early infrastructure investment pays off.</li>
+</ul>
+<h3>Meta’s Competitive Moat vs. AI Rivals</h3>
+<ul>
+<li><strong>Connection vs. Productivity:</strong> Unlike OpenAI or Anthropic, which focus on "work" and "replacing humans," Meta’s AI strategy is focused on "off the clock" experiences: connection, entertainment, and commerce.</li>
+<li><strong>The Hardware Opportunity:</strong> While admitting VR was over-emphasized, Zuckerberg argues the groundwork laid by Reality Labs positions Meta to lead in AI-centric hardware (like glasses) that enables AI access everywhere.</li>
+<li><strong>Human-Centricity:</strong> Meta’s core insight remains that humans are primarily interested in other humans; AI will be used to facilitate those human interactions rather than replace them.</li>
+</ul>
+<blockquote>
+"Building a platform is antithetical to building an ad business. A platform’s goal is to feature third parties. An advertiser’s goal is to capture attention for itself." — Mark Zuckerberg
+</blockquote>
+<blockquote>
+"AI makes every pixel monetizable, which means we are looking at the largest inventory expansion ever... It will take a few years to realize this opportunity, but the technology is there." — Mark Zuckerberg
+</blockquote>
+<blockquote>
+"We are not out here to make chatbots or compete with OpenAI and Anthropic. They can fight for work and productivity... Our goal is to celebrate humans, to connect them, to entertain them, and to enable commerce among them." — Mark Zuckerberg
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">A script for Mark Zuckerberg was published on Tuesday, July 7th, 2026. The setting, Meta's earnings call in early August 2026. The speaker, Meta CEO Mark Zuckerberg.
+
+Good morning, everyone, and welcome to Meta Platforms second quarter 2026 earnings conference call. Our remarks today will include forward-looking statements, which are based on assumptions as of today. Actual results may differ materially as a result of various factors, including those set forth in today's earnings press release and in our quarterly report on Form 10-Q filed with the SEC. We undertake no obligation to update any forward-looking statement.
+
+I know it's weird that I, Mark Zuckerberg, am doing the director of investor relations job, but anything is possible when the speech is made up. What follows isn't actually me. It's what Ben Thompson of Stratechery thinks I should say on this call. I know that Meta and myself are facing a lot of questions about AI, particularly the amount of money we are spending on CapEx. Our core business is an asset-light cash generation machine. So, why are we spending tens of billions of dollars on AI? To answer this question, I want to give you a quick recon over history, what I've learned, and why I'm so confident that we are doing the right thing for our future. So, let's get to it.
+
+A brief history of Facebook. Facebook was, as you know, the digital representation of Harvard's analog facebooks. What was clear from the very first day we went live was the extent to which humans are, first and foremost, interested in other humans. People would spend hours clicking around to people's pages. To put it another way, our first algorithm was human curiosity. 
+
+What truly supercharged Facebook usage, however, and which transformed the internet, was the feed. Now, instead of actively surfing your friends' pages to look for an update, we showed updates to you in a single feed on your homepage. You may remember that we got a lot of heat for this decision, including protesters outside our office in Palo Alto. The lesson we took from that, however, is one that has guided us to this day. First, the revealed preference of users, as captured by data, was that they loved the feed. Engagement skyrocketed. Second, we wanted to trust our own, my own, product intuition. And that conviction has served us well over the years.
+
+Another critical moment in our early history was the shift to mobile. We didn't get this right in the beginning. More on that in a moment. What was quickly apparent is that more access to Facebook meant more uses of Facebook. I can't emphasize this point enough. When humans can connect to humans, they do. And when they can do it more conveniently and in more places, they do it more often. 
+
+Finally, I'd be remiss to not mention Instagram. Obviously, Instagram has been a major part of our growth over the last 15 years. And I would add, we have been a major part of Instagram's growth. To that end, an important thing to understand about Instagram is the extent to which it has evolved. Just because we gave our users what they wanted at one particular moment in time, does not mean we can afford to sit still. More bandwidth first meant more pictures and stories, and then video and Reels. Instagram has gone from strength to strength precisely because it has changed as technology has changed.
+
+My mistakes. We, I, haven't done everything perfectly. We've taken our arrows through the years for lots of things that frankly aren't our fault, but are rather the reality of being the primary communications platform for all of humanity. And humanity is flawed. I'm proud of the efforts we have made to ameliorate humanity's worst impulses, while enabling some of our best tendencies, including that desire to connect. Rather, my mistake is itself a very human one. 
+
+For many years, I have resisted embracing what Facebook, now Meta, is. And spent too much time trying to emulate some of the tech titans who came before me. Specifically, I've been obsessed with becoming a platform. The first manifestation of this error was the initial shift to mobile I referenced above. When Facebook was primarily a browser app, I invested heavily in trying to build a platform with things like Facebook games, payments, etc. We had some success there. Some of you on this call might have played FarmVille back in the day. But when mobile came along, we mistakenly tried to hold on to web technologies that supported my vision, and were years too late in investing in a truly native smartphone experience. 
+
+The reality, and this is hard for me to admit, is that Apple saved us from my mistaken obsession. Mobile made Facebook just an app and that was great news. Instead of diminishing the Facebook experience so that we could feature third-party developers, we had to cede that space to Apple and put our own content front and center. It turns out that was what people wanted the most. In fact, they wanted it so much that they willingly scrolled through and clicked on the most compelling ad units ever. And make no mistake, we paid back our debt. Facebook built the App Store just as much as Apple did. 
+
+My second error was Reality Labs. While recent years I have framed our investment in Oculus and virtual reality as a necessary response to Apple's attempt to handicap our business, the truth is that I invested 12 figures into this technology because I thought it was cool. And yes, because I wanted to own a platform. I do think we've made compelling strides in this area and we've created technology that is going to matter in the long run. But I now recognize that part of the reason I'm delivering this mea culpa right now is because I burned a lot of credibility with investors with all the losses Reality Labs has endured with very little to show for it.
+
+My third error was not in trying to make Facebook something it was not, but rather failing to appreciate what it had become. While I was thinking about platforms, I took for granted that connection was enough for the core business. In fact, Facebook had evolved into entertainment, at least in its public-facing forms. I will take credit for the acquisition of WhatsApp and realizing that messaging was mobile's killer app. This was an insight that TikTok figured out first and it was a blind spot for me. 
+
+The ad blind spot. What I've come to realize is that all these mistakes are symptoms of what has been my biggest failing as CEO. All of you on this call have appreciated our ad business more than I have. I've been very blessed as CEO to have excellent coworkers who have over the years developed the world's best digital ad business, while I frankly haven't taken as much interest as I should have. My failure to appreciate our ad business is another lens through which to examine my mistakes. 
+
+Building a platform is antithetical to building an ad business. A platform's goal is to feature third parties. An advertiser's goal is to capture attention for itself. Investing in an entirely new technology, including developing hardware, fundamentally limits our addressable market. An advertiser's goal is to maximize its market size. Entertainment is the best possible category for an advertiser to own. People willingly give entertainment their attention, which is exactly what an advertiser wants to sell. 
+
+This neglect of CLF is badly exposed in our disputes with Apple. I firmly believe that Apple's characterization of digital advertising was unfair, dishonest, and self-serving. What I failed to do, not just in that bruising battle, but in the years leading up to it, was make the affirmative case for ads generally and Meta ads in particular. It's easy to see how the internet has made it possible for an entirely new category of entrepreneurs to create products that uniquely serve the tremendous capacity of humans to manufacture an infinite array of desires, growing the economy to the benefit of everyone. What's harder to appreciate, in part because I haven't made the case, is that the only way to connect those creators to the consumers who love them is digital advertising. 
+
+We don't serve ads like Google or Apple on the App Store or Amazon on amazon.com that in many respects function as a tax on search. We show people products they never knew existed, but that immediately generate desire and, ultimately, happiness. In short, I believe that we are a force for good in the world, not just because we connect people to each other, but because we connect entrepreneurs with customers in a way no one else does. 
+
+Why AI matters. Forgive the long preamble, but this is necessary context for me to properly explain why AI is so important to Meta and why I am making the right choice to invest so heavily in both talent and infrastructure. First, when investors compliment our asset-light business, what they are complimenting is the fact that our business is purely digital. Everything digital, however, is firmly within AI's crosshairs. It may seem odd to begin my AI pitch by highlighting terminal value risk, but today is about honesty. Every single digital company on Earth faces an existential threat from AI, and we are no exception. Meta must invest in AI because a failure to do so would cost us far more in the fullness of time, particularly now that we've seen the very real risks entailed in depending on a third party. 
+
+Second, AI makes our business better, and by our business, I mean ads. AI is more than LLMs. It is machine learning, and we have been using machine learning to improve our ads business for years. More recently, we have developed GPU-dependent algorithms that have significantly improved our ability to not just target ads, but also recommend content, which keeps people entertained longer, which lets us serve them more ads. And looking forward, LLMs themselves will transform advertising, not just by generating copy and images, but by predicting the ads and content that people want to see. Every single one of these improvements goes directly to our top line. And remember, because advertising enables us to offer our products for free, the capacity to increase our top line is unbounded by price elasticity. 
+
+Third, the single most important indicator that our business is on the verge of a step-change in growth is when we dramatically increase inventory. This is something investors regularly get wrong. Back when we added stories, investors panicked about falling prices per ad without realizing we were increasing inventory we could grow into. Five years later, investors made the exact same mistake with Reels. Those were the two best opportunities to buy Meta stock, or any stock really, in history. We are facing an even larger opportunity over the next several years. AI makes every pixel monetizable, which means we are looking at the largest inventory expansion ever. Yes, it will take a few years to realize this opportunity, but the technology is there. 
+
+More importantly, what I've come to realize as I've embraced our status as an entertainment provider and ad provider is that our nature as a digital business notwithstanding, we are remarkably well placed to thrive in an AI era. Remember what we learned about humans. They are obsessed with other humans, and they want to connect with them. That obsession and desire are only going to increase as we interact more and more with AI. AI is going to make our properties more essential, not less. 
+
+Moreover, and here I must issue one more mea culpa. AI is a productivity tool, but productivity is not the end-all, be-all of the human experience. I've talked over the last year about building superintelligence that helps you get things done, but that's a business story. What we can uniquely do is give people the experiences they want, from connection to entertainment to shopping, when they are off the clock. The fact that we are investing in AI, but not selling solutions to businesses, is actually one of our biggest advantages. Oh, and by the way, AI might actually lead to new hardware paradigms. I admit I was wrong to spend so much time on virtual reality, but that did lay the groundwork for a unique opportunity to develop devices that make much more sense in a world where we want to access AI everywhere, not just on a phone in our pocket. 
+
+The compute hurdle. I know that many of you in this call have doubted my investment decisions before, and I understand the consternation about Reality Labs in particular. However, keep in mind that when our stock dipped in 2022, one of the big reasons was because of our aggressive CapEx spending, which went primarily to GPUs. ChatGPT came out a month later, and that decision to spend heavily with Nvidia looked incredibly prescient in hindsight. That prescience, however, pales in comparison to the payoff that will accrue to anyone with the foresight to build data centers and buy compute over the last several years, and for years into the future. 
+
+We don't have the luxury of waiting until the future is invented and then investing. We need to invest now, especially when the opportunity in front of us is so apparent. That noted, we are in a truly unique time when there is a real market for selling compute on the spot market. To that end, we are going to sell access to a portion of our compute infrastructure on a short-term basis, with the ability to claw back that compute at any time. This will accomplish two important things. First, the proceeds from these rentals will fund an even larger build-out going forward. We will need this capacity in the future. Second, rental prices will provide a hurdle rate that will focus and discipline our decision-making. 
+
+Let me expand on this point because it brings this entire opening statement together. I now realize that my obsession with platforms and productivity has frequently led us astray and that I've given insufficient appreciation to our advertising business and failed to embrace the reality of what Meta is. I truly believe we have compelling reasons to invest in AI, arguably the most compelling reasons, and the fact that the market doesn't agree is my failure. To that end, making our compute available for rent means that we can only take it back if we can make more money on it ourselves. The only way we can do that is by leaning into what we are good at, not what I've spent too long wanting us to be. 
+
+To put it another way, our best practices have been intuition validated by data and revealed preference. That's how we're going to approach AI. We will build because we must, but we will let the market decide who gets to use it. I'm confident my newfound religion on ads will result in all that compute being used by us to make more money than we can ever make as a permanent cloud provider. We are not out here to make chatbots or compete with OpenAI and Anthropic. They can fight for work and productivity and charging subscriptions and replacing humans. Our goal is to celebrate humans, to connect them, to entertain them, and to enable commerce among them. We need compute to do this at scale and I know it will pay off. My commitment to you is that we will structure our business so we have no choice but to do just that. We've done it before and we will do it again. And with that, over to Susan.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
