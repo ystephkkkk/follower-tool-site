@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Friday, July 17, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260716.html">&larr; Jul 16</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Friday, July 17, 2026</h1>
+            <p class="day-sub">3 videos &middot; 3 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=X-vRzvyjGUQ" target="_blank" rel="noopener">Bank Earnings Just Gave the Market a Much Needed Confidence Boost | The Weekly Wrap<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(185.0K)</span></span><span class="dot">&middot;</span><span>23:48</span><span class="dot">&middot;</span><span>3.9K views</span><span class="dot">&middot;</span><span>2026-07-17</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Investor and Host, The Weekly Wrap</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>While major banks are reporting exceptionally strong earnings and benign credit quality, the U.S.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">economy’s future currently hinges on the AI boom, which is simultaneously fueling an investment banking &quot;golden age&quot; and triggering a &quot;SAS apocalypse&quot; in the software sector. ...</div>
+                    <div class="sum-full" id="full-0"><p><strong>TL;DR</strong></p>
+<p>While major banks are reporting exceptionally strong earnings and benign credit quality, the U.S. economy’s future currently hinges on the AI boom, which is simultaneously fueling an investment banking "golden age" and triggering a "SAS apocalypse" in the software sector.</p>
+<h3>Banking Results and Credit Cycle Health</h3>
+<ul>
+<li><strong>Credit Quality Trends:</strong> Despite fears of a new credit cycle, data from JPMorgan, Bank of America, Wells Fargo, and Citigroup remains "benign."</li>
+<ul>
+<ul>
+<li><strong>Non-Accrual Loans:</strong> Seriously delinquent loans (90+ days) are flat or down. For example, JPMorgan’s non-accruals fell 5% year-over-year to $9.4 billion.</li>
+<li><strong>Economic Indicators:</strong> Eisman notes that for the first time, banks may not be leading indicators; instead, the economy's fate rests on AI's success and the more opaque private credit sector.</li>
+</ul>
+</ul>
+<li><strong>Investment Banking Boom:</strong> High trading volumes and AI-related financing needs have created record returns.</li>
+<ul>
+<ul>
+<li><strong>Goldman Sachs:</strong> Reported a massive 92% EPS growth ($20.98 vs. $10.91 last year) with a 25.5% return on tangible common equity (ROTCE).</li>
+<li><strong>Morgan Stanley:</strong> Achieved record revenue (up 27%) and a best-in-class 26.6% ROTCE.</li>
+</ul>
+</ul>
+<li><strong>Valuation Framework:</strong> Eisman argues bank valuations are tied directly to ROTCE. High-performers like JPM and Goldman trade at 3–4x tangible book, while others like Citi (13% ROTCE) trade closer to 1.3–2.1x.</li>
+</ul>
+<h3>The "SAS Apocalypse" and AI Infrastructure Shift</h3>
+<ul>
+<li><strong>IBM’s Disastrous Quarter:</strong> IBM suffered its worst trading day ever (down 25%) after missing both revenue and EPS expectations.</li>
+<ul>
+<ul>
+<li><strong>Capex Migration:</strong> Clients are shifting budgets away from software and toward servers and storage to secure AI-constrained hardware before anticipated price hikes.</li>
+</ul>
+</ul>
+<li><strong>Sector Winners and Losers:</strong> </li>
+<ul>
+<ul>
+<li><strong>Software/Network Stress:</strong> Ericsson saw a 7% decline in earnings due to component cost inflation.</li>
+<li><strong>Hardware Strength:</strong> ASML beat expectations and raised guidance, as it remains a primary beneficiary of the lithography needs for AI chips.</li>
+</ul>
+</ul>
+</ul>
+<h3>Payments and Stablecoin Disruption</h3>
+<ul>
+<li><strong>Circle’s Competitive Threat:</strong> Although Circle received a trust bank charter—allowing them to save 18 basis points by running their own money market funds—Eisman believes they cannot compete with a new stablecoin consortium formed by Visa, Mastercard, Stripe, and BlackRock.</li>
+<ul>
+<ul>
+<li><strong>Strategic Outlook:</strong> Eisman suggests Circle is now "too small to compete" and should look to be acquired.</li>
+</ul>
+</ul>
+<li><strong>PayPal’s Potential Exit:</strong> Unconfirmed reports suggest PayPal may sell to Stripe and Advent for $60.50 per share (roughly 11x 2026 EPS estimates).</li>
+<ul>
+<ul>
+<li><strong>Market Consolidation:</strong> Eisman argues the payment space has become too difficult as companies increasingly encroach on each other's territory.</li>
+</ul>
+</ul>
+</ul>
+<h3>Consumer and Industrial Earnings</h3>
+<ul>
+<li><strong>Netflix's "Mojo" Loss:</strong> Shares fell 20% year-to-date after the company announced it would reduce the frequency of its engagement reports. Eisman views the move toward annual reporting as a sign of slowing momentum.</li>
+<li><strong>GE Aerospace:</strong> Despite beating EPS estimates ($2.02 vs. $1.86 expected) and raising guidance, the stock fell because investors demanded an even more aggressive outlook.</li>
+<li><strong>Healthcare Pricing Power:</strong> UnitedHealth and Elevance are successfully raising prices to offset higher medical costs, though Elevance saw a 1% drop in membership due to those higher premiums.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"In the past, I have said as the banks go, so goes the economy. Probably not this time... I’m starting to think that the entire future of the US economy hinges on the success or failure of AI." — <strong>Steve Eisman</strong>
+</blockquote>
+<blockquote>
+"IBM's results show that there are now short-term implications [to AI] as well. Clients shift their quarterly capex spend towards servers, storage, and memory... to secure supply constrained infrastructure." — <strong>Steve Eisman</strong>
+</blockquote>
+<blockquote>
+"Maybe a credit cycle will emerge, but we are not seeing it in the banks. That is an important data point. The banks have the broadest credit exposures... and their credit quality is benign." — <strong>Steve Eisman</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">The banks kicked off earnings season. I'm going to share some thoughts on a bunch of the large banks that reported because they provide great insight into the state of the current credit cycle. IBM was down 25% on this news on Tuesday, its worst day ever, and it took the entire software sector down with it. Netflix reported and Netflix has lost its mojo.
+
+In the past, I have said as the banks go, so goes the economy. Probably not this time. I'm starting to think that the entire future of the US economy hinges on the success or failure of AI. The potential issues in AI and in private credit will determine whether and when there will be a recession.
+
+Hi, this is Steve Eisman and this is another episode of the weekly wrap. This is for the week ending Friday, July 17th, 2026, but recorded Thursday night, July 16th, 2026. Before we get to the wrap, I would like to remind everyone about our move to Substack and explain the value add. Substack is an exciting community of like-minded investors and creators, and the conversations are incredibly dynamic. The Substack ecosystem is well established with a large variety of podcasters that I interact with regularly. As a free Substack subscriber, you will receive emails sent directly to you every time we release a new premium episode and a sneak peek preview of both the video and newsletter. You'll also have access to our notes and restacks. The link to join for free is in the description.
+
+Let me quickly flag what is on our premium Substack subscription. On Wednesday, July 15th, we released an interview with Boris Peaker, the biotechnology analyst at Jones Trading; we had an incredibly extensive discussion about the entire biotech landscape and future drug innovation. I think the biggest impact AI could do is reduce the probability of failure of a clinical study, particularly a large clinical study; that would be extremely helpful, right? It was an amazing tour de force where we explored the vast world of biotech. I learned a ton. Next week on Wednesday, July 22nd, we will release an interview with recurring guest Ken Sahowski, the payments analyst at Autonomous; we discuss how AI and Agentic AI are changing the entire payments landscape. The link for premium is in the description.
+
+And now for the wrap. On this week's wrap, we will have: one, the war in Iran, of course, some more news about Circle and stable coins. PayPal might be for sale. IBM reported a disastrous quarter; it actually pre-announced with terrible implications for the software sector. Elevance, United Healthcare, GE Aerospace, and Netflix also reported. Banks reported giving a broad view of the economy and one mailbag. And here we go.
+
+In war news, the situation is escalating. The US and Iran are trading strikes and there is a dispute as to whether the strait is open, but it's pretty clear now that the strait is not open. Oil prices climbed above $80 and the 10-year climbed to almost 4.6%.
+
+Last week, there were two major pieces of news with respect to Circle. As a reminder, Circle is the stable coin company that went public in June of 2025. Circle creates stable coins, a financial product that is trying to make inroads into the traditional payment systems. Circle is the second largest creator of stable coins; Tether is the largest. On Tuesday, June 30th, there was some very negative news. Circle was down 17.5% that day because a consortium of companies including Stripe, Visa, Mastercard, Coinbase, and BlackRock unveiled their own stable coin and stable coin ecosystem.
+
+The second piece of news came out last Friday, three days later. Circle announced that it had received regulatory approval to become a trust bank. On this news, the stock was up 5%. To understand its importance, you need to understand how Circle makes money. A Circle customer buys $1 worth of Circle stable coin called USDC. Circle gives the customer a stable coin, a USDC worth $1, that the customer can then use to pay for stuff to preserve the value of the stable coin. Circle takes the dollar and buys short-term US treasuries, a security whose value does not, I repeat, does not fluctuate. Circle earns the interest on the treasuries. And that is Circle's sole source of revenue today.
+
+One caveat: Circle doesn't actually physically buy the treasuries. It puts it in a money market fund run by BlackRock. BlackRock manages the money market fund and charges Circle 18 basis points. So Circle makes the interest on the treasuries less the 18 basis points. The bank charter means that Circle can run its own money market fund and save the 18 basis points.
+
+Now, don't get me wrong, the bank charter is certainly a positive for Circle, but between the two pieces of news, the competition from the Visa Mastercard Consortium is more important. The importance of having Visa and Mastercard as part of the consortium cannot be overstated. Creating a stable coin is just not that complicated. Breaking into the payment system is complicated, and having Visa and Mastercard as part of the consortium is crucial. Circle went public on June 5th, 2025 at $31 per share with a peak just below 270 on June 23rd, 2025. It's only about two weeks later. Circle is now trading around 63. The payment space remains a very difficult space. My view now about Circle is that the big companies like Visa and Mastercard are paying attention to the stable coin space. Circle is just too small to compete with these giants. It has a nice franchise, but needs to team up with bigger players. If I was running Circle, I'd be looking to sell the company.
+
+And speaking of selling the company, PayPal may have finally put its shareholders out of their misery. The stock reached a peak of 300 in the late summer of 2021. Tuesday night, the stock was $47.37. Wednesday morning, there were unconfirmed reports, still unconfirmed, that PayPal was selling to Stripe and Advent for $60.50, which would put the stock at roughly where it was at the end of last year. At 60.50, PayPal is being valued at 11 times the 2026 EPS estimate. I think other payment companies need to follow. The space has become too difficult as companies keep entering each other's space. For a deeper dive on the payment space, take a look at our episode on January 26, 2026 with Ken Sahowski, the payments analyst at Autonomous Research.
+
+Now, before we get to the banks, we got a whole bunch of companies to cover. I want to first focus on IBM, which pre-announced a terrible quarter on Tuesday. Now, until now, investors have been worried about the long-term and negative implications of AI on the software sector, the so-called SAS apocalypse. I love saying that. IBM's results show that there are now short-term implications as well. IBM pre-announced EPS of 2.93 versus 2.80 last year, but a miss versus expectations of $3.01. Worse, revenue of 17.2 billion missed expectations of 17.9 billion. So, quite a miss. It is, I must emphasize, unusual for a company of IBM's size to miss both EPS and revenue guidance only one quarter out. Things must have changed rapidly this quarter.
+
+And what were those changes? Two of IBM's major businesses are its software and infrastructure businesses. The infrastructure business provides hardware, software, and services to critical enterprise workloads. So, it too is partially a software business. So, why the miss? The problem is the dramatic increase in prices for chips and other tech equipment because of AI demand. IBM management stated, and I quote, &quot;In the last few weeks of June, we saw clients shift their quarterly capex spend towards servers, storage, and memory purchases to secure supply constrained infrastructure ahead of expected price increases.&quot; So now there is a long-term SAS apocalypse and a short-term SAS apocalypse. I like saying that sentence. IBM was down 25% on this news on Tuesday, its worst day ever, and it took the entire software sector down with it.
+
+Another side to the same coin was the results at Ericsson, which develops network equipment and software. The stock was down double digits on Tuesday on its earnings report. Ericsson reported a 7% decline in earnings and revenue fell 6%. And it provided weak guidance because of component cost inflation. So Ericsson is suffering from higher semiconductor and tech equipment costs. And still another side to the same coin were the positive results at ASML which produces semiconductor equipment, specifically machines for the production of chips through lithography. ASML is clearly a beneficiary of the AI boom. It reported a strong quarter. It beat on EPS and revenue and it raised guidance and the stock was up.
+
+In health insurance, Elevance and United Health reported. The group has done very well this year as companies have been able to raise prices enough to finally overcome higher health care costs. However, still a tough environment. Elevance reported on Wednesday EPS of 7.45, down 16% versus last year, but higher than the 6.18 estimate. The stock was down on the print for two reasons. The company raised guidance but by less than the second quarter beat and, perhaps more importantly, total membership dropped by 1% as the increase in prices negatively impacted membership. On the other hand, the very next day, United Healthcare reported and the market really liked the results. Company beat expectations and raised guidance. It's all in the pricing. Revenue is flat, but UNH and the industry are in the process of raising prices and that is improving margins.
+
+Moving on, GE Aerospace is riding a positive cycle in aerospace and it also reported. While the results were great, the stock was down on the print. Why? First, the results. The company reported earnings per share of 2.02 versus 1.66 last year and versus the estimate of 1.86. Revenue was 12.63 billion, up a nice 24% and almost 1 billion higher than the estimate. So far so good. The company raised guidance to 7.65 to 7.85 versus prior guidance of 7.10 to 7.40 and versus expectations of 7.56. That sounds good, too. But the stock was down around 4% because investors clearly wanted the company to raise guidance by more. On such stuff, stocks move.
+
+And finally, before we get to the banks, Netflix reported Thursday night. Netflix reported EPS and revenue in line with expectations. EPS was up 11% which is nice but not like the go-go days. Moreover, in the press release, the company said it would cut back on the frequency of its &quot;what we watched&quot; reports which provide a picture of engagement. In the future, Netflix said that it will publish this report only annually in the first quarter of each year. The market did not like the fact that the results only met expectations and it also did not like the virtual elimination of the &quot;what we watched&quot; report, and the stock was down 8% after hours and is down 20% this year. Netflix has lost its mojo.
+
+And now for the banks. The banks kicked off earnings season. I'm going to share some thoughts on a bunch of the large banks that reported and then show you how to think about valuation given the results. Before I do that, I want to focus on how the large bank results are of particular importance because they provide great insight into the state of the current credit cycle. The four large banks, JP Morgan, Citi, Wells, and Bank of America have large and broad-based lending businesses. On the consumer side, they provide credit cards, auto loans, and sell for other types of consumer loans. On the commercial side, they make commercial real estate and corporate loans, and other types of commercial loans as well. They don't do everything, but they are big enough and broad enough to provide a real window into the health of the US economy. By analyzing the credit results of these four banks, we can get a closer understanding of whether the problems in the private credit sector are broadening into a large credit cycle for the overall economy.
+
+Now, there is growing fear that credit losses will start to mount for the first time since the great financial crisis. And we've had 17 years of amazingly benign credit quality, and investors are wondering if the good times are going to be over. Yes, private credit is exposed to software and software is getting hit by AI, but are there signs of broad credit problems emerging in the actual data? When the major banks report, they provide reams of data. JP Morgan's quarterly earnings release supplement is 29 pages long and is filled with information on every page. That is typical of how the banks report. To see trends in credit quality, the best place to look is to examine consumer and commercial non-accruing loans. A non-accruing loan is a loan that is seriously delinquent, usually 90 plus days. A bank no longer reports interest income from these loans and reserves for future losses.
+
+I am putting on the screen consumer and commercial non-accruing loan data for JP Morgan, Wells Fargo, Citi, and Bank of America for 2Q25, 1Q26, and 2Q26. These four banks combined provide a large window into credit quality trends. If there was a serious trend of deteriorating credit, we would see increases in non-accruing consumer or commercial loans or both on a year-over-year basis and a quarterly sequential basis. We certainly saw large increases in consumer non-accrual loans leading up to the GFC. We are not seeing that now at all. I want to emphasize that, at all. The credit data is benign in both consumer and commercial.
+
+For those of you who are just audio listeners, I'll just focus on JP Morgan and Bank of America. For JP Morgan, total non-accruing loans were 9.4 billion in 2Q26. They were down 5% year-over-year and down 2% versus 1Q26. The numbers at Bank of America were also very benign. 2Q26 total non-accruals were 5.8 billion, down 4% year-over-year and flat with 1Q26. Conclusion: the credit trends reported by the large banks are very benign. Maybe a credit cycle will emerge, but we are not seeing it in the banks. That is an important data point. The banks have the broadest credit exposures, so their results are a concurrent indicator.
+
+And this brings me to my conclusion about the state of the US economy. Since the GFC, commentators have tried to predict the next crisis. This is, they say, that it isn't. Perhaps the most important story of the past 17 years is how powerful and resilient the US economy has become. Yes, there are problems in private credit with respect to overexposure to software. And perhaps these software issues are harbingers of an approaching credit cycle. Yet, the banks have shown once again that credit quality in the US is okay. Until that changes, the US economy will be fine. Fine, yes, but we do have a K-shaped economy, so it's not fine for everyone. I just don't see a recession though on the horizon as long as bank credit quality is benign. The problems that may emerge in the US economy rest not with the banks; they rest elsewhere. Whether AI will succeed or fail, whether private credit will show more problems—that is where problems could occur.
+
+In my view, the banks this time are not leading indicators. In the past, I have said as the banks go, so goes the economy. Probably not this time. The banks are extremely well capitalized and their credit quality is benign. The potential issues in AI and in private credit will determine whether and when there will be a recession. It would be much easier to predict the future if the banks were the leading indicator because the data the banks produce are voluminous and transparent, while private credit is much more opaque, making future economic weakness much trickier to see. Frankly, I'm starting to think that the entire future of the US economy hinges on the success or failure of AI. That's why I talk about it so much.
+
+As for the financial results of the banks this quarter, they once again posted powerful results largely because of extremely strong investment banking and trading. The banks are partial beneficiaries of the AI boom as companies with AI financing needs are going to Wall Street for help. These results produce record levels of returns. Here's a brief synopsis. JP Morgan EPS was 6.14 versus 4.96, 24% growth. Revenue was also a big beat and was up 15% versus last year. The return on tangible common equity was a very strong 23%. Bank of America also reported a great quarter of 1.21 versus 0.89, 36% growth and versus the consensus of 1.12. Revenue was up 15% on better trading and investment banking and it had nice operating leverage. Return on tangible common equity was a strong 16.5%. Wells Fargo has a history of occasionally disappointing like last quarter but not this time. Wells results beat. EPS was $2 versus $1.60, 25% growth. Again, the strong results were largely from trading and investment banking. Wells's return on tangible common equity has been stuck at 14 to 15% for many quarters. This quarter elevated the ROTCE to 17.7%. Impressive. Citi also had a good quarter for similar reasons. The company reported EPS of 3.15 versus 2.12, 48% growth. Company posted strong results in services, trading, and investment banking. The return on tangible common equity was 13%, the same as the first quarter of this year and versus 8% in the second quarter of last year.
+
+Right now we are in a golden age for investment banking. Trading volumes are high. AI is creating massive financing needs. The IPO market isn't bad and M&amp;A is very strong. That's why the most powerful results this quarter came from Goldman Sachs and Morgan Stanley. Goldman Sachs reported a great quarter. It reported EPS of 20.98 versus 10.91, 92% growth. Wow. Again, the results were supported by powerful trading and investment banking. And the return on tangible common equity was a powerful 25.5%. Like Goldman, Morgan Stanley produced powerful numbers, too. Revenue was at record levels and up 27% versus last year. EPS was up 62% and the return on tangible common equity was a best-in-class 26.6%.
+
+As to how to value the banks, the easiest and most consistent way is to look at the return on tangible common equity. The higher that percentage, the higher the price to tangible common equity. That's why Goldman, JP Morgan, and Morgan Stanley are valued at 3 to 4 times tangible book. Their return on tangible common equities exceed 20%. At the same time, Wells Fargo, Bank of America, and Citi are at 1.3 to 2.1 times tangible book as their ROTCEs are 13 to 18%.
+
+Our one mailbag is a follow-up from last week. Last week I answered a premium subscriber's question as to what I read. I provided a list of books, mostly history books, but I also mentioned that I read graphic novels and comic books partially because I find them somewhat oddly prescient and they also tell great stories. I did not provide any titles, so of course several viewers asked for titles of graphic novels. This could be an endless discussion. My digital comic book collection exceeds 11,000 comics. If I listed every comic I like, we'd be here all day and all night. So, I'll just name my top 21.
+
+1. Sandman by Neil Gaiman. Maybe the greatest comic book ever written. The Netflix series was pretty good, too. It's about the god of dreams.
+2. Lucifer by Mike Carey. A Sandman spin-off. And yes, that Lucifer. Lucifer quits being the devil and ends up living in Los Angeles. This comic is one of the deepest theological stories I have ever encountered.
+3. Fables by Bill Willingham. Snow White, Sleeping Beauty, and Prince Charming have been living in Greenwich Village for hundreds of years. A great story.
+4. Hellblazer, varied authors. Some authors were better than others, but the character Constantine is complex and amazing.
+5. Swamp Thing. One of the most underrated comics ever, but one of my favorites. Alan Moore changed the entire story.
+6. The Dark Knight Returns by Frank Miller, published in 1986. This story changed comics forever. It made comics darker and much more serious.
+7. Batman Year 1 by Frank Miller.
+8. Daredevil: Born Again, also by Frank Miller.
+9. Watchmen by Alan Moore, an iconic comic.
+10. Lazarus by Greg Rucka. This comic is ongoing and has been going on for more than a decade, but it's the best dystopian story in comics. The entire world is ruled by a few rich families.
+11. Nemesis by Mark Millar. Just a great story.
+12. Wolverine, Old Man Logan, an alternative history comic.
+13. Welcome to Tranquility by Gail Simone. Superheroes living in suburbia. This is an amusing story.
+14. Flashpoint by Geoff Johns. What happens when the Flash changes history? The results are not good.
+15. The Boys by G. Ennis. The original story of a world where superheroes are bad. Up is down and down is up.
+16. Starman by James Robinson. Robinson takes a B-level superhero and elevates him.
+17. The Golden Age by James Robinson. What if Hitler had survived?
+18. Avengers Disassembled by Brian Michael Bendis. What happens when a superhero goes completely insane?
+19. House of M, also by Brian Michael Bendis, the sequel to Avengers: Disassembled.
+20. Powers by Brian Michael Bendis. What happens when a superhero loses his powers and becomes a cop?
+21. Alias by Brian Michael Bendis. This comic introduces the character Jessica Jones to the Marvel universe. It's a story of an emotionally damaged superhero who becomes a private detective.
+
+And in honor of the new movie, The Odyssey, coming out this Friday, I have a book recommendation. There are many novels that explore aspects of the Iliad and the Odyssey, and I've read several. For me, the best one is a trilogy written by David Gemmell. The first book is called Lord of the Silver Bow. It's a complete reimagining of the Trojan War story, and it's fantastic.
+
+This last Monday, July 13th, we released on our free service an interview with Torsten Slok, chief economist of Apollo, and we discussed a broad range of topics, but focused a lot on the impact of AI on the overall US economy. So, check it out. And this coming Monday, July 20th, we will release an interview with Ben Kallo, the sustainable energy and mobility analyst at Baird. We discuss how the buildout of AI data centers has upended the entire sustainable energy landscape, creating a hypergrowth story. The best way to support the Real Eisman Playbook is to subscribe to Substack and to YouTube. Subscriptions are free and we appreciate your support. And that's the wrap.
+
+This podcast is for informational purposes only and does not constitute investment advice. The hosts and guests may hold positions in stocks discussed. Opinions expressed are their own and not recommendations. Please do your own due diligence and consult a licensed financial adviser before making any investment decisions.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-1">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=qz4GQ0zUFRw" target="_blank" rel="noopener">The Key Thing Human Brains Have That AI Is Trying To Learn<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Y Combinator</b><span class="subs">(2.3M)</span></span><span class="dot">&middot;</span><span>74:27</span><span class="dot">&middot;</span><span>5.8K views</span><span class="dot">&middot;</span><span>2026-07-17</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Ankit%22">Ankit<span class="chip-desc">Host, Decoded</span></a> <a class="chip" href="index.html?q=%22Francois%22">Francois<span class="chip-desc">Host, Decoded</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The next frontier in AI is achieving &quot;sample efficiency&quot; through World Models, which allow agents to learn from synthetic, &quot;imagined&quot; data and predict future states—a process that mirrors the human brain’s evolution but remains hindered by the…</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">massive action-space...</div>
+                    <div class="sum-full" id="full-1"><p><strong>TL;DR</strong></p>
+<p>The next frontier in AI is achieving "sample efficiency" through World Models, which allow agents to learn from synthetic, "imagined" data and predict future states—a process that mirrors the human brain’s evolution but remains hindered by the massive action-space explosion in robotics and self-driving.</p>
+<h3>The Problem of Sample Efficiency</h3>
+<ul>
+<li><strong>Defining the Gap:</strong> One of the most significant hurdles in AI is "intelligence per sample"—the rate at which a model acquires skill relative to new data. While humans can learn a task in a few tries, frontier models require tens of thousands of data points.</li>
+<li><strong>Inductive Bias:</strong> Humans benefit from a massive inductive bias (genetics and K-12 education), whereas models must often compress the entire internet to achieve comparable generalization.</li>
+<li><strong>The Perfect Model:</strong> A "perfect" world model requires zero new samples because it can predict every outcome.</li>
+<ul>
+<ul>
+<li><strong>Newtonian Physics:</strong> This serves as a perfect, differentiable world model. NASA can intercept an asteroid years in advance without collecting new samples because the transition function ($F=MA$) is deterministic and known.</li>
+</ul>
+</ul>
+<li><strong>Human Simulation:</strong> A 1967 study showed that humans who "imagined" practicing basketball layups improved by 23%, nearly matching the 24% improvement of those who physically practiced. This suggests the human neo-cortex evolved specifically for high-fidelity world modeling and "test-time" planning.</li>
+</ul>
+<h3>Control Theory and the Action Space Problem</h3>
+<ul>
+<li><strong>Deterministic vs. Stochastic:</strong> In a drone flight (Newtonian physics), we use Model Predictive Control (MPC) and convex optimization to find an optimal path. This is "deterministic differentiable control."</li>
+<li><strong>Non-Differentiable Environments:</strong> When an adversary (or another driver) is introduced, the environment becomes stochastic and non-differentiable. You cannot "back-prop" through another person's brain, necessitating Reinforcement Learning (RL) to estimate value and policy.</li>
+<li><strong>The Action Space Explosion:</strong> The difficulty of a task is defined by its action-space cardinality ($A^*$).</li>
+<ul>
+<ul>
+<li><strong>Chess:</strong> Very small action space (~8-10 moves per turn); highly tractable.</li>
+<li><strong>Go:</strong> Larger grid ($19 \times 19$), but still tractable with 361 possible actions.</li>
+<li><strong>Self-Driving:</strong> Even a simplified model of steering and braking creates an action space of ~365,000 possibilities.</li>
+<li><strong>General Robotics:</strong> A simple 6-axis arm with 16 degrees of freedom creates an astronomical action space (estimated at $10^{16}$).</li>
+</ul>
+</ul>
+</ul>
+<h3>Why AlphaGo Cannot Scale to Robotics</h3>
+<ul>
+<li><strong>Monte Carlo Tree Search (MCTS):</strong> AlphaGo uses MCTS for "test-time planning," running ~800 simulations per move to explore potential board states.</li>
+<li><strong>Computational Cost:</strong> In Go, this requires ~24,000 model invocations per step. Scaling this to a "million-action" space like robotics would require 60 million+ invocations for a single action, which is computationally impossible for real-time tasks.</li>
+<li><strong>Real-Time Latency:</strong> While a Go player can wait 60 seconds for the computer to "think," a self-driving car must act in milliseconds. If the model takes a minute to decide, the car has already crashed.</li>
+<li><strong>The Embodiment Gap:</strong> Data collected on a Tesla Model X cannot easily be used for a Model 3 because the weights, aerodynamics, and physics differ. This "cross-embodiment gap" makes general robotics data harder to aggregate than LLM text data.</li>
+</ul>
+<h3>Modern Solutions: Dreamer and Video Diffusion</h3>
+<ul>
+<li><strong>Dreamer Series (Danijar Hafner):</strong> A breakthrough approach where a model is trained on a world model first, then a policy is trained entirely on "hallucinated" or synthetic rollouts. Dreamer V4 was notably the first model to successfully mine diamonds in Minecraft using this method.</li>
+<li><strong>Video Generation as World Models:</strong> Researchers are now using video diffusion (Sora-style) and flow matching to build world models from "unlabeled" video (like YouTube). </li>
+<ul>
+<ul>
+<li><strong>Action Conditioning:</strong> By adding a small amount of "tele-op" data (human-controlled robot data) to these video models, companies like Wayve (which raised $1.5B for its "Gaia" model) can simulate driving scenarios.</li>
+</ul>
+</ul>
+<li><strong>JEPA (Joint Embedding Predictive Architecture):</strong> Proposed by Yann LeCun, JEPA predicts transitions in "latent space" rather than pixel space. This avoids the massive computational cost of generating every pixel in a video, focusing instead on the underlying meaning of the scene.</li>
+</ul>
+<h3>Remaining Hurdles for AGI</h3>
+<ul>
+<li><strong>Physics-Informed Failures:</strong> Standard neural networks often fail at "interpolation" of physics. Without proper "data mixing," a model might magically turn a car away from a house because it has never seen a crash in its training data.</li>
+<li><strong>The Necessity of Sleep:</strong> Francois notes that no intelligent species exists that does not sleep. Sleeping may be the biological version of "offline training," where the brain consolidates experiences into the world model via hippocampal "short-wave ripples."</li>
+<li><strong>Tactile Feedback:</strong> Human skin (the epidermis) provides massive streams of data regarding friction, temperature, and shear force. Current robots lack this feedback; if a human’s hands are numbed, they often cannot even tie their shoes, highlighting how crucial tactile data is for fine motor control.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Intelligence is a rate of skill acquisition versus skill acquisition itself. How fast do we get smarter with more and more samples? Currently, models are incredibly poor at getting smarter with fewer samples." — <strong>Francois Chollet</strong>
+</blockquote>
+<blockquote>
+"The entire point of the great cortical expansion 10 million years ago was to get better and better at world modeling... having a world model to lean on either for training purposes or test-time adaptation." — <strong>Ankit Jain</strong>
+</blockquote>
+<blockquote>
+"Why AlphaGo doesn't scale: the cardinality of the action space must be extremely small. If it’s big, sad. The real world changes quite often... you can't wait 60 seconds for the computer to decide while driving." — <strong>Francois Chollet</strong>
+</blockquote>
+<blockquote>
+"If I squint and I look at the human brain and I look at these world models, it's getting really close. It seems closer than an auto-regressive LLM." — <strong>Ankit Jain</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">One of the biggest open problems in AI right now is how to solve sample efficiency. That is, how do you get models to quickly learn new tasks or skills from relatively small amounts of training data? Humans do this incredibly well. We can learn new games, concepts, and skills, often after just a handful of tries. Our best models, on the other hand, often need tens of thousands of data points just to learn. &gt;&gt; So, today we're going to discuss what many top researchers believe is the most promising path to closing that gap. World models. We're going to discuss the motivation and math behind world models, current applications, and why this approach might be the key to unlocking AGI. You and I have talked a lot about the various ways people are training models and the sample efficiency of them. Why don't we start by just defining sample efficiency and how we intuitively think about it as humans? &gt;&gt; Yeah. So I think from my perspective the two major problems that we have left to solve is intelligence per watt and intelligence per sample. intelligence per watt is like how how many valve perplexity points we get per watt of spend. And then intelligence per sample is basically if I have one additional sample in my data set, how much more intelligent am I getting? And so if I imagine I have a new tasks like RGI for example, I think like really Frantole has been on the forefront of this thinking and talking about intelligence as a rate of skill acquisition versus skill acquisition and that's very different. And so how fast do we get smarter with more and more samples? And these things are incredibly poor at at at getting smarter with with fewer and fewer samples. &gt;&gt; And for context, you know, the the RKGI test sets are a really good example of cases where humans are intuitively very good at them. Most humans can intuitively solve those puzzles with some amount of thinking and effort. But our current state-of-the-art AI systems, what people consider frontier intelligence, basically can't do them, &gt;&gt; right? I mean there we come into new problems with such inductive bias from K through 12 like all these math and school that we we've had that you know these models are are kind of getting from the entire compressing the entire internet and and so when we come in we're not coming in tabularasa just like bare bones but even so that they have you know I don't know what percent of the internet you've read I've read very little percent of the internet but despite that and having read the entire internet it still can't really do well on and and generalizing to these new tasks. &gt;&gt; So now let's think about this in like the extreme cases. In the extreme case where let's say we were perfectly sample efficient, &gt;&gt; you know, we were as sample efficient as possible. What would that mean in terms of a a model that is taking a set of actions in the world? Well, I guess the perfect sample efficiency would be zero samples and like there are examples of this and is that sounds absurd to say but it and the the example the hypothetical I'll give on this is imagine I had a perfect world model then I should never go to the environment to go and collect samples to train on and well that can't possibly happen like no it actually can happen we do it all the time it's called Newton's second law of motion it's like Newton mechanics like we basically know how to like get an object from point A to point B with a rocket quite easily just by following like Newton's laws of motion. &gt;&gt; Yeah. Like when when NASA plans to intercept an asteroid and is planning it, you know, years in advance and can &gt;&gt; set it off in a trajectory where it just glides to the right thing and intersects to the right point. That is an example of a perfect world model we've built where we're then just &gt;&gt; letting that world model act. And it that that system does not need to intelligently collect new samples from the environment to decide which direction to go next. It can already it's already been pre-programmed and can perfectly do it. &gt;&gt; Yeah. Can you imagine if like we needed to collect 1 million training examples of like us shooting spaceships to the moon to like know how to do it because like complet it would be we definitely wouldn't have the Apollo missions, right? but we do have that that ability because the the real world is differentiable and we can do something called model predictive control that we're going to talk about in a little bit. but even in our own brain, I was just you know, thinking about this on the drive up, but like there's so many ways that like I can basically think about the things that you are going to say or what a VC is going to say when I'm when I was pitching them or what customer might say. and even product being having taste. What is taste is like predicting that other people are going to like this thing. And so we've built this world model over years of entrepreneurship, 10 years of like getting it wrong, right? that maybe Bill Gates, Steve Jobs and Jensen have 50 years of of you know world modeling experience to know what people want. And and and basically this is actually proven in the 1967 COGSAI study by Richardson that basically showed that if you take a cohort of of three different pe three groups of people and you have one go practice layups in basketball and they go and they shoot they they improve for one hour they improve by like I think it was like 24% or something like that. And then if you take the other one and they just blindfold them and they imagine laying up a basketball, they improve it 23%. &gt;&gt; Interesting. &gt;&gt; And against the control. &gt;&gt; I mean, that's insane. It means that we have this crazy good world model. And there's the this neuroscientist at Stanford named Shaw Duckman who basically is of the view that the entire point of the growing neoortex for the during the great cortical expansion 10 million years ago was to get better and better and better and better at world modeling and having just like my little VA which we'll define of doing the ne predicting the next action is not as good as having a world model to lean on either for training for training purposes or for test time adaptation. &gt;&gt; Yeah. What it fundamentally comes down to is, you know, we as humans, we think about our intuitive ability to think as coming from some implicit world model we have in our heads encoded by genetics and our ability to learn and whatever else. &gt;&gt; It seems like models can do surprisingly intelligent things despite not having an explicit world model when it comes to natural language. when they're just talking, it seems like, you know, maybe under the hood, deep inside the weight somewhere, there's some kind of implicit understanding of the world, but there isn't an explicit representation of that. But then it seems like in certain domains, especially in robotics and self-driving, as we'll talk about, that sort of breaks down. And you know maybe it would be helpful now to just think a little bit about and and just sort of define some of the pieces of what makes it challenging in these different domains and then we can use that to kind of build up to why it's particularly hard in things like self-driving and robotics to get these types of predictive models to work. &gt;&gt; Yeah, let's do it. So let's actually like take a step back and just talk about like control reinforcement learning and define some define some common terms. So typically in we teach a a course called decision-making under uncertainty which is like the main reinforcement learning course at Stanford. I like to show like a specific example of let's say I have some drone and this is my poor little drone here and it has some mass m and we know that that gravity g is pulling down on it and it's currently at position t with velocity t which we will collectively call the state and to be really clear this is going to be p x py pz Z. &gt;&gt; Yep. &gt;&gt; TT and Vx V Y Z VZ. &gt;&gt; It's like the sixth dimensional state vector. &gt;&gt; Yep. &gt;&gt; And we have some thrust vector U that we control and we're trying to get to some point P star and V star which is V star is typically zero. Right? So you have some platform that I want this thing this drone to land on. Yep. So this is just a control problem, right? And so let's say this is like and we'll go through optical optimal &gt;&gt; optimal yeah &gt;&gt; optimal control. So how would I actually solve this? So the first thing I need to know is my transition function. And so this is my state transition function which is st plus one &gt;&gt; given the previous &gt;&gt; given st and my action which which I control is UT. And so this is my state transition or dynamics function or a world model. This is a world model. &gt;&gt; This is like a very fundamental for for context. You know, this this equivalent to transition function you would think about in RL in general. &gt;&gt; Exactly. &gt;&gt; And so and then what I'm trying to learn is something called a policy which is like what UT should I emit given some ST? Yep. And so this is the ultimate question. What should I do? What's what action should I take given some state ST? And so the way that we'll we'll solve this and luckily we have a world model that is perfect and it's called &gt;&gt; Newtonian physics. &gt;&gt; Newtonian physics. This is like Newton's second law of motion which is F= MA. And so we know that the position PT + 1 is going to equal PT + deltat T VT plus 12 delta T ^ 2. So, everyone's taken high school high school physics. &gt;&gt; Yep. &gt;&gt; And the same thing for the velocity blah blah blah &gt;&gt; delta da. &gt;&gt; And then my acceleration is a sum of sum of the for sum of the forces which is going to be my utide by the mass and g. And so that's it. And now I have my transition function. Now how do I get to a policy? And I'm going to apply something called model predictive control or real-time model predictive control which is like the way that SpaceX lands the rocket on on some platform in the ocean. And what you're going to do is you're going to set up your loss function. You're going to minimize sum over all t. You have u t to infinity. And I'm going to minimize my P star minus PT plus V star minus VT. And usually you add this little lambda UT which is like how much energy you're exerting. Y &gt;&gt; and you can't have infinite thrust. So you typically will have to say UT u max thrust. &gt;&gt; Yeah. that can be achieved. And so this is easily solvable with convex optimization. And so this is convex. This is convex. This is convex. The sum of convex functions is convex. This is a convex constraint. And so I DCP discipline convex programming means I can put this into CVX pie. And it will just give me out my policy which will be the solution will be the optimal UT plus one all the way to infinity. &gt;&gt; So we can solve this in closed form basically like you know we can because we have this world model of Newtonian physics we can say at every step exactly how this drone should fly so that it lands on the appropriate thing under a set of constraints like max thrust available gravity. You'll run your log barrier or interior point whatever to some solver on this and and it will give me my optimal and this will be literally the optimal path that this thing can take to get to this state and that will minimize and then and I can I can do increase this if I if I want it to do the least energy path or if and I make that zero if I want it to be the fastest &gt;&gt; and so those that's typically the way that you would do what I we'll call like deterministic differentiable control &gt;&gt; right &gt;&gt; and why differentiable because I can take the I can form the lrangian by by taking this minus this constraint and and take the gradient of it and I can do robins &gt;&gt; you use the fact that it's differentiable to to do the the optimization &gt;&gt; exactly if this is if this is non-ifferiable you cannot do convex optimization and you cannot do SGD even if it's non-convex you could still solve and get and get a pretty good solution as we do in deep learning. But I I you if it's non-ifferiable, you kind of can't. There's nothing you can do. &gt;&gt; So yeah, let's have an example then of how you could make this non-ifferiable. Like what's a what's a scenario? I guess even like this drone scenario where it now becomes non-ifferiable. &gt;&gt; Yeah. So I'll put this adversary named Ankit. &gt;&gt; Okay. &gt;&gt; And and your job is to you have another drone. Let's say Ankit's drone is to try to hit me. &gt;&gt; Wow. &gt;&gt; And stop me from getting there. &gt;&gt; Now from the position of your drone, you don't know what actions I'm going to take, &gt;&gt; right? And so now let's just call this the this would be now we're definitely not not deterministic we're stochastic and stochcastic and non-ifferiable &gt;&gt; and in this case my state transition what is st plus one it's going to be my say I'm in now my thrust and what ankit's going to do &gt;&gt; right and these it was all differentiable until Yeah. And I can't like back prop through your brain to tell say what you're going to do with your little drone controller, right? It's completely non-ifferiable now. And I I'm resorting and I have to resort to this awful area called reinforcement learning, &gt;&gt; which is just super brutal and it's sprawling and there's so many different things and you'll hear things like when you study initial reinforcement learning called value iteration or policy iteration. and there's DQN or deep Q-learning or just Q-learning. &gt;&gt; Yep. &gt;&gt; there's actor critic. There's all this bag of stuff. &gt;&gt; All of this stuff ultimately comes down to ways to estimate to to model this non-ifferiable stochastic process. &gt;&gt; Exactly. Yeah. And so like that's basically the the main thing is is you're going to start talking about this as a model where I'm gonna introduce this sigh to say that this is going to be some model that's going to take in these things and then output this and that we're going to train it over many many instance in instantiations of this and that's so get a better and better world model and then I need to train some policy at ST and then typically you also need a value function &gt;&gt; and that is the value of state and to discern between the value of of different states and like in this case I don't know what a valid state is but like let's just say I was doing like SpaceX with with launching rockets and landing rockets in Florida. Let's just say that like there's different if I have my launch pad here and I have a whole bunch of houses here. Let's just say the path going from here to here. I may think that doing this and then coming across here and burning all these houses alive, &gt;&gt; right, &gt;&gt; may be not high highly value. So I might say as an example, they typically call this like some kind of a cone here. &gt;&gt; And I might say like it's low value to be here or and it's very high value to be to be in this cone or something, right? As an example, &gt;&gt; in a sense a value gives you some expectation of future rewards like the sum of future rewards you're getting. And so if you if you're in a bad space, you would set the value to zero or negative negative infinity or something. &gt;&gt; Yeah. So so we can we can we should introduce R RT as well. And so typically like if you're playing go or chess like winning the game you can say winning the game is plus one minus one for losing draw is zero. That's what's done in alpha go. In chess we have these heruristics like a a a pawn is is worth one point a rook is worth five etc etc. So you can like already have reward is is the difference in in in board state. and then this yes will be the sum of my discount should just do t &gt;&gt; no &gt;&gt; of rt &gt;&gt; given and and it's important also to to to use this nomenclature vi and the reason why that's important is because what it what's actually happening here is this is the discounted reward following policy pi &gt;&gt; correct &gt;&gt; and that means that when I'm in this state I will take this action and then I'll end up in this C++1 and then I'll take this action and it's it taking it greedy and so that's the value with respect to pi. &gt;&gt; Yeah. And so ultimately what it comes down to is we are trying to still find a new policy pi and along the way we will use machine learning models in various capacities. This is standard RL to estimate the value function given the rewards we're receiving. Right. And then where world models come in is a way of incorporating all of those into some sort of joint modeling of the state and action distribution so that we can make more intelligent policies off of it. &gt;&gt; Right? And so your standard kind of setup for this is what I'm always trying to get to at the end of the day is some joint distribution which would be st plus one given where I'm at now where I'm I'm at now and then this factorizes with chain rule simply to my pi my policy a given st and my world model and I'll give this this is usually represented with theta and this is my world model which would be st plus one given st and a t. &gt;&gt; Yeah. &gt;&gt; And so and these are typically learned separately and like and like you can imagine in fact actually you can actually learn this. This is a video generation model and I have the frame ST and I predict the next frame ST plus one. &gt;&gt; Right. &gt;&gt; And then and we'll get into this. &gt;&gt; Yeah. For those of us who kind of saw our our diffusion model series often people these days use video diffusion for exactly this. Yeah. And then what you can do and this is like the in vogue thing to do since Danar and and the dreamer paper series from V1 to V4 is do action conditioning later like similar to clip where we will inject this like input head or input tail to come into the model to influence and and enable the world model to have embodiment. What does that mean? It means that not only can I predict like as a plant or tree on the on growing on the the side of the of the building, I can like see the world go passing by, but I can I can actually influence it and I can change the the world and I can I can learn that with at far fewer samples to do this postaction conditioning if I already have a really good ST to SC plus world model &gt;&gt; and so here you're saying you know what's also invoked now is jointly training these versus separately training Exactly. And so this is called that is called a world action model where the some of the issues here is one there's all these training dynamics if these things are dis disparate training on different sets and things like that. the other issue is plainly obvious. What I have to do to actually do test time planning is I'll have to sample my with model one invoke theta and then pass that sampled action into here and then roll it out to ST+1 and it's very expensive and it's very not real time. Two major issues and why like why can't we just scale up alpha go to like solve all the problems is because because of this property. if I have one invocation to the model and it gives me both. Here's the action I should take and here's the ST+1 that I'll end up much much cheaper and much much faster. Okay, so I think that's a really good segue. I think why don't we now motivate everything we just described through a series of increasingly complex environments. So I'll contend that I think the right set of environments for us to consider is chess followed by go followed by self-driving followed by robotics. all right. So, let's go through a couple examples of problems that we want to apply reinforcement learning to. So, chess is is a pretty easy one. There's an 8 by8 grid. &gt;&gt; Yep. &gt;&gt; and so, typically when you when you approach any RL problem, you're going to look at star. &gt;&gt; And so, the this the size of the state the number of states I can be in. So, if I have these eight here and these eight, so this be 8 16 32. So it' be 32 to the 64. &gt;&gt; Yes. Quite large. &gt;&gt; Quite large. Then my transition function is stochastic and non- differentiable because you can &gt;&gt; you don't know what the other player is going to do. &gt;&gt; So if I'm at like in playing chess.com at my house, I move and then something happens and it comes back and and then now you moved and the board has changed. So I can't really differentiate through what the other player is doing. The current my action space is actually quite small. even though there's 32 pieces and all that stuff, that there's only eight possible moves in expectation that you can actually that are legit moves. So like &gt;&gt; in any given state, there's only eightish moves you could do. &gt;&gt; Let's just say in the beginning, I can move all my pawns. I can move my horses. So that's 10. &gt;&gt; Yeah, &gt;&gt; that's like not that much. So this is extremely small. And then my reward, we can use the heristic based approach or we can just say, you know, plus one zero or minus one if I lose, plus one if I win. And so this is very tractable. &gt;&gt; You say it's tractable even though there's a really big state space here. But why don't we talk about that for just a second? I think this a really important point. I think when you say it's tractable, you're specifically referring to the action space being small because it affects the kind of like combinatorial expansion here. Should we talk about that for just a second? &gt;&gt; Yeah. &gt;&gt; Or maybe we can add go and then kind of contrast the two. &gt;&gt; Yeah. So why don't we do that because it's because I want to get to the alpho the way that they solve this. And you're right. So, if I were to do this naively and I just took I'm at SC plus1 and I want to do look aheads. what I would do is I would take all of the actions I can take. So there's eight. So I would do action one, action two, action eight bop bop and then each one of these I need to expand it for all possible states. And so now I need to do cardality s which we just said is this huge freaking number. And so I have to do that eight times. And I have to do it again. I have to do it again. So just doing looking forward one move is like &gt;&gt; quite intractable. &gt;&gt; Although at the same time you know the you everyone starts at the same starting position &gt;&gt; and while it is a really large space you know it there isn't an infinity number of potential. There's actually a relatively small number of game boards even four moves into the game as opposed to a game where you could start in any permutation for example of initial game state and what a few states down. &gt;&gt; Yeah. So so this is like definitely over done because there's there's it's it's much much less than this in practice. &gt;&gt; Yes. &gt;&gt; But just naively like looking at you know what possible game states could be as a rough math here. But this is roughly the idea. And then each one of these leaves I need to invoke my value function right which is the value of that state t+1 and so I have to do that all many times and we'll get this alpha go but like this ends up being estimating the leaf node because at the end of the day my policy at ST I want to pick I want the arg max yeah &gt;&gt; of like the value of the the following &gt;&gt; action I guess it would be an a here aactly Yeah, the arg max over a of the value of the state of the of the end state s plus n let's say it's like that's the the main goal here. and so for me to do that I need to roll all this out estimate the value and then pick the the best one. And so this this quickly grows however and we'll see this alpha go which is actually has an even bigger state space. so I think it's 19 by 19. grab my phone. I don't think I got the spot right now. &gt;&gt; So you have this 19 by9 grid. You can in each one it can be black, white or or nothing there. &gt;&gt; So I have three so let's do our star again. &gt;&gt; So the cardality of the state I think is going to be s two or three it turnary thing here I guess &gt;&gt; the 19 squar I think it's 361. &gt;&gt; Yeah something like that 361. &gt;&gt; my transition same issue I don't know. my action space is going to be 361, let's say. &gt;&gt; So it's a good amount bigger than chess. &gt;&gt; Much bigger. &gt;&gt; But it's still not enormous. &gt;&gt; Yeah. &gt;&gt; As we'll see in a second. &gt;&gt; Yeah. And so basically what they do, they call this Z, which is kind of annoying, but let's call it R. And it's the terminal. It's the terminal when they won the game. And they basically, you know, you have your trajectory which is S 0 A Z R0 then then all the way to the end of the game. &gt;&gt; Yep. &gt;&gt; S N A N Rn. And if you won then all of these all the moves that black if black won all the moves that black did get plus. All the moves that white did were minus one. and they just that's how they create their their rollouts. &gt;&gt; Roll out refers to a taking n steps of play of all players one after another. &gt;&gt; Yeah. &gt;&gt; Of moves under a specific policy at the at the particular instantiation of it, &gt;&gt; right? So let's just let's probably under this policy p theta t &gt;&gt; and we're going to overload T, but like this is that instantiation. We froze that model. We froze that model and we play I think it's like 70 games and we like treat all of those and we we're going to subsample a bunch of of these state action results state action results to train our to update our policy in our our in our world model our transition model and what it's actually doing is we we take in an ST we give it to some theta and it wants to output the probability of ST+1 being played. which is our transition function and the value of the current state &gt;&gt; and how do we get the value &gt;&gt; and so the value of the current state well both of them are coming out of out of the model but basically the loss function L theta is going to equal and it's going to be eily close to this control problem one is we have some v theta minus this Z, which we'll just call it R here, squared, and then plus, actually, sorry, it's minus this pi, which I'll explain in a second, log P theta, and I think they everyone includes this, but they include it in the paper, so I'll include it there as well, which is the weight decay. &gt;&gt; Yep. &gt;&gt; And so so this is basically what our loss function is. Then we'll play a bunch of these games. Let's try to be a little bit organized here. And and so this is our setup. This our architecture. And now the most once we train this thing, we do an insane insanely expensive task of of test time planning. And so this trend in RL is just called test time planning. &gt;&gt; And the and the specific algorithm they use here for this is Monte Carlo research &gt;&gt; MCTS. And so this is one of the possible things that you could do. it ends up working extremely well I if you have small action spaces. &gt;&gt; Yeah. So let's let's just like very intuitively talk about what MCTS does and a lot of people have heard about Monte Carlo research because AlphaGo was such a you know big moment but how exactly does that map into our star in value function and policy? &gt;&gt; Yep. So I'll take this ST. This will give me 361 numbers that sum to one. And so I'll have some probability of of where these things are going to go for the of where my my opponent will play. here. &gt;&gt; So these are like the sets of actions. &gt;&gt; Yeah. So I'm here. So that I have all my SC plus1's I'll have 361 of these things. and then &gt;&gt; to be clear, this is like action one, action two all the way to action 361. &gt;&gt; Exactly. Yeah. And the we have to estimate the value of each one of these. And so then we have to invoke the model all 361 times to give me values for each one of these things. And then I will select I'll select it based on the the UCB the upper confidence bound which is this equation that is roughly something like balancing my value function of ST+1 which they're going to in the literature it would be called a Q value because it's actually the difference between a value function and a Q value is just that I have the action as well. Yep. &gt;&gt; So it's be st then a t. so we'll just call that q value which is my exploitation term and then my exploration term will be something like it's this funky square root of n. so it's the arg max of a of my q and then I have this which is the probability of this this move being played which we have from here of of s let's just call it st plus one and then I have this term which is this sum over n s b / n sa and &gt;&gt; yeah what's what's the intuition we got on this term So these ends is is the the visit count during my MCTS process. So this whole tree I'm going to &gt;&gt; So this tree can get really big, right? It's 361 per thing. So you can't &gt;&gt; depth of 30. &gt;&gt; So you can't visit every single leak though. &gt;&gt; Exactly. And so you want to keep track of which which state did you end up in and what action did you take when you were in that state and you want to make sure that you you have good exploration, right? And so the way you keep track, the way you ensure that you have good exploration is you want to not just be greedy and always pick the highest value one because that could be local very myopic. And so what you'll do is during this MCTS process, you'll start this dictionary which will be all zeros of the visit count of being in this state and taking this action. Yep. &gt;&gt; And then once you go through your first roll out, you'll do you'll go here. You'll all these things will be to zero. you'll have some probability. We're going to bias it towards the higher probability of places to go and then we'll go we'll expand those trees and then we will update the counts that we visited this and that will basically reduce the amount of probability that we're going to select it again because this this will reduce my my exploration term and if it's highly valued then we're going to increase the Q on this because this is the expected value of going down this this this path. So the gist of it is fundamentally like you want to take the optimalish path but have enough exploration in this really expensive step you're doing here so that you are making sure you're getting a decent chunk of the other potential leaf nodes you could traverse to right in these 30 step rollouts. And so I'm going to do this this MCTS simulation 800 times here. &gt;&gt; And then for all 800 I have to go through this whole process and I have to invoke the model like at least 30 times to get through all here. &gt;&gt; And so that's you know 27,000 &gt;&gt; 800* 30 yeah invocations 24,000 invocations of the model to to develop this tree. And then once I have &gt;&gt; that's per step &gt;&gt; per step just to do one action into the game. A lot of people don't understand that this is like you don't like store this MCTS tree. You like you throw it away after you you make the move. but once it's very expensive to develop this MCTS tree and once you have it the probabilities of traversal are actually should be useful for training and then you end up biasing it and you train it with the MCTS tree which is like a little bit seems like circular motion or something like that like but you end up treating that as as the pi that you'll train in your loss function. &gt;&gt; Okay. &gt;&gt; so we have the r of did we win or lose. we have the the pi of of what was the end result of this whole expensive process. and then at test time we are going to do these 24,000 steps every single every single move to pick the argmax that gives that that satisfies both exploration exploration and exploitation. In this case, you know, this still feels somewhat tractable though because the action space is small enough where this like kind of works. But now like let's say hypothetically maybe we can draw like an an imaginary go game of go where it's like &gt;&gt; you know let's let's say this game of go was like a thousand by a thousand. And so now you have a equals you know more or less a million. And now this this tree we're drawing here that has to take here this has cardal or like you know width I guess 1 million &gt;&gt; right &gt;&gt; and there's like s0 through s1 million and the number of you know steps you would have to take here presumably have to be way more than 800 in order to get any reasonable kind of sampling of this and so you're probably multiplying the test time cost of doing a roll out or of doing a a next step prediction astronomically if the game was even let's say you know this is only 100x bigger than the current game or not even 50x bigger than the current game. Everyone was very excited about Alph Go and at the time in what was this 2017 2016 everyone's very excited about this and the important thing to pick up is that we did 800 MCTS simulations and to cover 361 possible actions on average. So that gives us about two samples roughly on an expectation for every single action. &gt;&gt; So here you need like two million of them for a similar depth &gt;&gt; to for for a similar depth. And then that's still to do a depth of 30, I would still have to do this times 30. So that be 60 million invocations of the model. So that better be a small model, right? That's a lot. so yeah, so &gt;&gt; that's to do a single action to be clear. &gt;&gt; Yeah. So exactly to do one action. So just imagine so why alpho doesn't scale. &gt;&gt; Yeah. To me, there's one the cardality of the action space must be extremely small. If it's big, sad. &gt;&gt; Yeah. &gt;&gt; two, the I need a perfect deterministic environment, right? Like this this this doesn't change. The rules of this game don't change, but like the rules to the stock market change all the time. The rules to like venture change all the time. Like the real world changes quite often. So, like homoscadastistic and real time if you saw the the movie the documentary is which is s such an amazing documentary. I'd highly recommend it to anyone that watches it. &gt;&gt; the guy is s sitting there for like 60 seconds maybe five minutes waiting for the computer to like decide and and it's kind of like imagine we were driving a car and like you took like 60 seconds to like &gt;&gt; turn the steering wheel. Everyone's dead. Like the whole car is dead. And so like you know now let's talk about robotics and self-driving car and why this why that approach kind of can't scale. &gt;&gt; Yeah, I think it's a really good contrast here because intuitively I think in thinking through this exact star layout, it actually really changed how I think about &gt;&gt; the kind of problem space of both of these two. So like let's take self-driving car &gt;&gt; Mhm. &gt;&gt; as an example. This is one, you know, many people have started to experience for the first time because we have some self-driving cars that actually work. You have Whimo and Tesla FSD and whatnot that seem like they kind of work. So, like let's maybe apply your same star framing here. &gt;&gt; I would contend that the state space of self-driving car is enormous and it's actually not intuitive to me whether it's more or less large than this one, right? I mean, in a sense, the chess in AlphaGo state space is already like more than the number of atoms in the universe or something to that effect. But like just to emphasize that here, you know, you were considering, you know, surroundings, vehicle state. &gt;&gt; Yep. &gt;&gt; like, you know, camera like &gt;&gt; weather. &gt;&gt; Mhm. &gt;&gt; I guess the point is like &gt;&gt; road conditions. &gt;&gt; It's like massive. This is massive. &gt;&gt; For all purpose is infinite. &gt;&gt; Yeah. For all purpose, it is infinite. Correct. Yeah. and and so is the space of pixels like you know like what can I put in an image? I can take a picture image of anything. Right. True. &gt;&gt; and so we're able to handle it and the same thing here where we compress from the board state. We don't represent the the board state. We compress it with a comnet. So they have some deep &gt;&gt; some some some deep comnet that actually takes this state and converts it into a latent, &gt;&gt; right? And that latent compression is sufficient to kind of like do pattern matching do do some type of like symmetric symmetric equivariance kind of things. And same thing with this and even better with JPA which we can talk about at the end there which is like basically taking some type of state space and doing all of our optimization in the latent space which stable diffusion did that worked extremely well which reduces our state space dramatically because I'm in some latent highdimensional space. So like the key thing there is that yeah despite this state space being effectively infinite &gt;&gt; we've actually gotten really good at compressing this and we'll talk more about some of the tricks for how we actually do this in practice here but the TLDDR is you know there's like 10 years of deep learning work that basically makes us extremely good at compressing that very fast. &gt;&gt; Exactly right. Exactly right. &gt;&gt; T seems to have a similar problem as before. Right. &gt;&gt; In fact maybe even more extreme. there's like infinity other variables around you of things going &gt;&gt; in some ways you'd think that it's this is physics Newton's laws laws of motion should apply if I ste the steering wheel like this if I hit the gas I should be able to really easily model this but what is nondiffiable is that I have if I'm going into a a circle right is like the most the biggest issue that that we fa we faced in when I was doing self-driving car is like you're imposing your will onto maybe driving in India I think is really similar right you're imposing your will onto the environment and like people just kind of adapt naturally like if you were doing Newton's law of motion you were going to collide and so that the optimal policy if you were being strict Newtonians here would be like don't move because anything you do you're going to crash but it's not true like that then we wouldn't function like cars wouldn't go down the road &gt;&gt; and so you have to model the the envir you have to include other people in the environment and understand the embodiment of like how your action will change other people's actions why's Next batch is now taking applications. Got a startup in you? Apply at y combinator.com/apply. It's never too early and filling out the app will level up your idea. Okay, back to the video. &gt;&gt; Now, let's talk about the action space. You know, like one way to look at the action space is that it seems relatively small. Seems like, well, you know, you turn the steering wheel left to right, you hit the brake, you hit the you hit the gas. Doesn't seem that big, but like how big is it actually? like how do we actually represent these action spaces when it comes to a realistic self-driving car scenario? &gt;&gt; Yeah, I I don't know how they how they do this nowadays. they they're doing a whole bunch of like bird's eye view different things like that. &gt;&gt; Let's consider even just like a very simplified &gt;&gt; What do you have? You have a steering wheel that you can turn left, right? You have a a brake pad. &gt;&gt; Yeah. &gt;&gt; And you have the gas. &gt;&gt; Yeah. &gt;&gt; And so I guess this thing is like 365°. &gt;&gt; Yeah. &gt;&gt; So it's like a 1 to 365, let's say. Or 0 to 365. &gt;&gt; Yep. And you, let's just say you break this up into 10 different severities, &gt;&gt; you're already at even with just this oversimplified model, your action space cardality, right, &gt;&gt; is 365,000. So that's like &gt;&gt; 100x bigger than alpha. It's in fact it's about the size of the example or it's a decent amount smaller than the size we said breaks. &gt;&gt; And so yeah, so 36,000 action space is very large. And then even worse, unless you're Tesla, we have a bunch of video of people driving cars. We don't have video of like dash cams like that. Like you actually don't have, again, only Tesla has this of the action as well. And so the things that you have access to your trajectories are just like ST+1. Yes. &gt;&gt; ST plus2. &gt;&gt; So there's a you're saying there's a decent number of these that's from like dash cam footage on YouTube or something, but not really that many either. &gt;&gt; Yeah. &gt;&gt; Relatively. So, if you wanted to do a self-driving car and you didn't want to go spend a million dollars, trillion dollars on going collecting all this data, then you want to leverage this data somehow. And this is going to be really applicable for robotics because we have a lot of videos of people doing things. &gt;&gt; Yeah. &gt;&gt; Right. Especially with ecoentric like we we have those videos, but we what we don't have is &gt;&gt; the actions they take. &gt;&gt; Yeah. &gt;&gt; Yeah. So this is like this is this is a sequence of what you're showing here &gt;&gt; unless you're Tesla. &gt;&gt; Unless you're Tesla and Tesla has this. So this is a huge competitive mode of like what do people do in that state and then so you can behavior clone to go from here to here from here to here go here to here etc. But even then it's still very very difficult. You have to it's it's not sufficient. People think that like okay I have this we have a self-driving car right? I mean the amount of work that they're doing at FSD is like incredible and it's it's not generally available like you can't you know it's not Whimo level yet. &gt;&gt; Would this be a good moment to briefly talk about model free versus model based RL? I think that's an important distinction that's going to be relevant when you talk about more world models. &gt;&gt; Yeah. So this is a perfect point. so model free just means that my my policy pi of a t given st I have no world model involved. It's literally and it's literally doing what I said. I grab a bunch of these and I train go from s to a s to &gt;&gt; just predict the next day. &gt;&gt; That's it. &gt;&gt; And that's and this is logic called DLA. &gt;&gt; you know, this is like giving us pretty good results. It's behavior cloning. It's all the the the the stuff that it's not getting us to Rosie the robot just yet. But &gt;&gt; in many ways, it's the closest thing that just looks like the next token prediction from LLM that seems to scale pretty well with natural language. I mean it's it's not exactly the same thing because there's no action exactly but picking a token is not exactly the same thing but it's very analogous to that like basic thing that's &gt;&gt; I basically take away the tokenizer head and I give it an action space and I collect a bunch of teaops data you know like this as as the self-driving car does in Tesla and I just &gt;&gt; take in the the state which is some image and or maybe sequence of images and then I'll output some action and that's it cool and this is let's say model because I don't have a model for the environment. And then now if I do model based RL I have not just some pi but I have also my sigh as well here and so by by including this I can have a much stronger policy but it would take a lot more time to perform inference because I have to do this full test time planning. Just to remind us that SI is referring to this specific transition function, right? It's referring to this. &gt;&gt; You're saying this is specifically referring to a function of ST + one given ST and action T. &gt;&gt; Yes. &gt;&gt; So it's like your ability to predict the next state you'll be in is is the crux of it. &gt;&gt; Yep. &gt;&gt; As opposed to just directly predicting the actions. &gt;&gt; Yeah. And the main thing that I believe is that this is required for AGI. This is what the the human brain is is &gt;&gt; at least in the way the human brain does it. &gt;&gt; Yeah. And let me go further in saying that like if you look at the billions of years of evolution basically there's this thing called 10 million 10 million years ago called the great cortical expansion which you see the size of a brain just explode get bigger bigger and bigger exponentially up until us and it basically stops. And if the entire point of the neoortex is world modeling, what happened is we started from VAS, this would be like ants or whatever and fish. Yeah. Right. Just like very like, you know, lizard brain, whatever you want to call it. And then we develop this neoortex to like, you know, go from our our motor cortex to actually simulate what's going to happen. And that makes us just so much smarter. And then we once we get those samples we can compress it when we sleep or otherwise with this hippocample shortwave ripple whatever you want to call it. And then that helps us develop a better policy. And that marriage between the two is is not only helps us train on hallucinated examples but it also allows us to test time plan. &gt;&gt; Right. I I guess the the kind of extreme case then of self-driving car is kind of general robotics. &gt;&gt; Yes. &gt;&gt; Right. So if you're if you're like a humanoid company like figure or pi or whatever &gt;&gt; again same st setup. &gt;&gt; Yep. &gt;&gt; I I guess the gist of it is that a is now even bigger. &gt;&gt; Yeah. &gt;&gt; Right. It is like I guess a very simple robot would be Yeah. How would you how would you parameize the action space? Like let's take a very basic one. &gt;&gt; If I take like my six axis arm &gt;&gt; Yeah. &gt;&gt; as your your standard here that we're actually working on right now in Stanford Robotics Center. you have two degrees of freedom. Two degrees of freedom. Two degrees of freedom. and then you have another two for the endector, right? And so &gt;&gt; that's a simple endector, not even like a not even like a &gt;&gt; literally a one axis like, you know, you can rotate, but you have the the the the one axis yi style thing. So this is eight. So you have 16 degrees of freedom &gt;&gt; and let's just say that you do the 365 by 10 or whatever, you know, kind of thing. I mean, &gt;&gt; it's like 10 to the 16. &gt;&gt; It's like insane, something like that. It's an insane number. and so much bigger than self-driving car. and even worse, like getting tea ops data is extremely painful and expensive. It's not just like, oh, we'll just get some people in the Philippines, we'll give them like some, you know, things or whatever. It's like totally totally doesn't work. And nor is there yet something like Tesla's fleet where there are cars deployed that people are just using and they're not even necessarily realizing that every time they turn the steering wheel they're providing this this data set for Tesla to train on. &gt;&gt; And then even worse you have this like what's called cross embodiment gap. And so if I were to like train this policy on Tesla Model X and I were to like put it on a Tesla Model 3 it wouldn't work. No. like it totally wouldn't work. Like all the so much so much of this the the way that if if I were to break on a Model 3 versus a Model X, a Model X, it weighs more. It has different dynamics, aerodynamics, and things like that. And so what's actually going to happen is very different. Like the degradation you have across c across embodiment is very very very strong. &gt;&gt; And clearly Tesla's figured various ways to get around that. I mean, they they have these that roll out, but actually even with Tesla's new FSD today, they don't roll out in all the cars at the same time. probably for more or less that reason. And in this case, it's even harder now. I mean, you have bigger differences between embodiment than a Model 3 versus Y. And you have way bigger action spaces. You have to sell some model. &gt;&gt; Yeah. Lane Macintosh, I played hockey with at Stanford, who now runs Tesla FSD. I can ask him, but I would bet money that they shard the data per model, per car type. &gt;&gt; I just because that's what I would do. There's no way that like, you know, I I would trust, you know, data that was collected on a Model X on a Model 3. There would no way I would trust it. &gt;&gt; Okay. So, now that we understand the basic setup here and why the action space problem is so big, why don't we talk a little bit about how world models actually fit into this? You know, maybe first, you know, I guess what didn't work about the naive world models and how do we fix those and then let's kind of talk about some of the newest world modeling techniques. &gt;&gt; Cool. So like in robotics in particular, it's very hard to get these this kind of trajectories that you want that you kind of need to train for your VAS and people spend up you know with a whole bunch of teleops data. It's very expensive, very expensive. Ideally what we would do is take like data like this from someone who is just like puts a camera on them and just like making sushi. Okay, like I want to make a sushi robot. how do I do it? Give it to all the sushi chefs. Don't put anything in their hands and just have them start cutting up sushi and making sushi. And ideally, we would train it in that way you were describing of like somehow we would train a model just on these two and then later add this afterwards. &gt;&gt; And so the first real person that you know went after this was Jurgen Smid Humor. Please so so he doesn't yell at us, we have to we have to make sure we cite him. but he has this really cool paper called World Models. very aptly named and it's basically he took these like open AI gym classic games car racing and I think Doom as well and then just like trained a model at that time was like an RNN he had some funky zero order stuff in there whatever but basically the key premise was I can take an environment I can extract a whole bunch of this type of data off of it. I think he actually does actually this data but we'll get into dreamer where he does it in this paper in this way and then trains a policy on only the syn the the synthetic data the imaginated rollouts and it actually performs well in the environment. This is the first time in my understanding that that actually happened and it actually works really well. And then &gt;&gt; so the key thing there is you can basically use this if you have some predictive model of this in that case and eventually of this you can use that as basically a synthetic training set &gt;&gt; to train your policy model and then basically fine-tune it on real data later. &gt;&gt; Exactly. And which is just like a really powerful idea especially since in robotics the limiting step is access to large amounts of state action data. And so now the dreamer series. So basically this publish publishes in May of 2018. Danar Hafner publishes dreamer one I think in November of 2018 and then now he's been on this rampage for the last seven years publishing these papers and dreamer v4 I think is the capstone of it. where he basically does the same thing and he focuses on Minecraft. and he trains these a world a world model on this type of data and then injects action conditioning on a very small amount of data. Yeah. &gt;&gt; To get to this type of world model that can that has the action conditioning as well and then samples a lot from it &gt;&gt; and then trains a policy on those synthetic imaginated rollouts. And it's the policy is so good that it's the first paper to mine diamonds in Minecraft. I'm not a big Minecraft player, but apparently that's extremely difficult. That's like next level difficulty. And it did it all on synthetic data, which is kind of crazy. &gt;&gt; And and the key unlock there, yeah, use synthetic data specifically on a model trained on just this sort of state transition type of thing. &gt;&gt; Yes. &gt;&gt; And this ends up being very convenient because it turns out we as a society have a lot of this. &gt;&gt; Exactly. Yeah. All of YouTube, right? he does do a very small amount of data from to enable the action conditioning and that get that allows you to do this full simulated roll out but yeah it's true so we have we have YouTube we have like flicker we have all these data sets online of like you know people doing things we'd like to use it and no one has really gotten that to work and then now that with this these like video generated generation models we can take that data create a world model out of it add action conditioning. Post train it with action conditioning for some new task that is we want it to do. Chopping down wood or you know making sushi or folding my bed or whatever it is only a few amount of examples and then we can train a policy on this in this neural simulation. &gt;&gt; Yeah. And you know we put out a video about diffusion models very recently in flow matching. I imagine that now ties very closely to this. Right. Ultimately the the kind of current state-of-the-art best way to do this on basically infinity data that we have available and can keep generating is using state-of-the-art video diffusion/flow matching models. &gt;&gt; Exactly. Yeah. So like if you have your your C dance or your Sora or Exactly. All those models like basically the idea is now we have them and they're already trained and they're great. let's do a small amount of action conditioning on them to get to this this world model and then we can sample from it a bunch and then train and this is exactly what wave did with Gaia and Gaia I think they've raised $1.5 billion to to basically run with this idea for self-driving car I think a bunch of companies Nvidia this this paper here is basically talking about doing exactly the same this dream zero for robotics and What I thought was really cool about this paper is that they yeah they do exactly this process where they have this joint model of state transitions and actions. They train it by first instantiating it with the open- source one video diffusion model and then it only takes them about 500 hours of teleyop data which is basically exactly this right &gt;&gt; to get it to be pretty good. And they have a lot of clever tricks that allowed it to be cross embodiment and work on scene tasks with relatively small amounts of data. And and it really is taking basically the exact concept I believe from the dreamer paper and applying it specifically to these robot embodiment. Exactly. and and it turns out it actually works actually better than I would have anticipated it working. &gt;&gt; Yeah. So I think that this is basically the the the path to it was the path I believe it was the path to get humans to be as good as we are genetically over the last 10 20 million years of evolution. A bigger world model helps for training and for test time planning. and I think it'll be the same thing as true as for robotics. &gt;&gt; What's also cool is there's a bunch of applications of this to things outside of robotics too. I mean there was a weather planning paper for example we were reading this Gencast paper which I think applies a relatively similar concept in terms of how they model you know literally the world the world's weather with something like this. Yeah, we have to talk about the world model for the world. yeah, so basically they do this exact same thing where you know the key unlocks for this whole thing was getting diffusion to work in very high dimensional state spaces like we talked about in the last lecture and then learning to to use that to action condition in the way that he's done. But they did this for the entire world with this exact same diffusion steps which go from some and they go back to two time steps lag of of order two AR2 for the set of sitions there and they basically predict the next state of the world based on those things with this lang diffusion rollouts. &gt;&gt; My my big assertion is that it was necessary for the human brain to develop world modeling. I actually just just saw this paper that I wanted to make sure to call out because I thought it was so great out of University of Washington where they say explicitly in the in the abstract each cortical area estimates both latent sensory states and actions &gt;&gt; and the cortex as a whole predicts the consequences of those actions. That sounds like a world model to me. Yeah. &gt;&gt; Right. &gt;&gt; &gt;&gt; it's actually describing exactly these two equations here. Exactly. Right. Where we're estimating both the sensory latent states and actions. I mean, I guess it's really the joint model that we showed earlier, right, &gt;&gt; is what he's describing here. It's exactly this this equation he's showing. Yeah. &gt;&gt; Exactly right. And so, if it works in us, it should work in robotics. and I think that that takes us the rest of the distance. &gt;&gt; Why don't we talk briefly about latent world models, especially the con the Jeepa concept, because I think there's been a number of papers that use Jeepa as an element of their, I guess, architecture. Why don't we just briefly introduce Japa and how it fits into the current landscape of world modeling? &gt;&gt; Yeah, in classic RL you'll have like you know if you do study Q-learning for example, you basically keep this matrix called the Q matrix. Yep. And it's going to be s by a and so I have this s &gt;&gt; that's states and actions &gt;&gt; a states and actions and each one I need you know some amount of counts of being in this state action and I take the average value of being of taking that action in this state and that's my Q value there and it's a little bit more complicated than that there's bellman equation all this backup all this stuff like that but so this scales horribly because as the cardality of my space gets bigger and my action space gets bigger stuff I don't have enough and I become less and less sample efficient correct right in case of like robots or whatever state is like yeah it's this whole thing we described earlier right it's absolutely massive because it has all of these elements in it couldn't really enumerate a huge grid &gt;&gt; and so the classic trick I mean since I took you know CS 229 with Andrew Wong in 2012 is you do this &gt;&gt; stick a neural network on it &gt;&gt; exactly and you basically are just going to compress that state into some lower dimensional state space. This is actually predates deep learning. we were doing stuff like this. I think my first paper was basically doing something like this. basically turning like a grid into like a bunch of like pyramids and like and and the state was how much I'm in pyramid one or pyramid 2 or whatever. But anyway, the neural networking can just do this. And so basically what the the key idea in JPA if I have an image one and I have image two and I have image three I can do my my world modeling my my world modeling of st + one given st and a t in pixel space and have this is let's say at time t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t + 1, t+ etc etc and I have to actually predict now the full image that's extremely expensive from a computation standpoint and also from like a sample efficiency standpoint. What I can do instead is put this through some comnet &gt;&gt; some encoder &gt;&gt; some encoder and then I'll get a latent for t and I'll have a latent for t+1 and I'll have a latent for z t +2 and then I'll have from this from zt I want to predict z t+1 hat and my goal is to make this and this make and my loss function will be something very simple like I want to minimize this that's it &gt;&gt; now this doesn't work this collapses hard and so what happens is basically just if you if you just predict zero &gt;&gt; done just output zeros which the model will learn to do and I'm actually incorporating this into my current research right now and so what you need to do is something called sigg or this is one technique vic rag is another where basically I add this another term that basically says I want the over a large enough batch size I want the the distribution of z &gt;&gt; t + one to follow a gaussian you know &gt;&gt; it's kind of like a normaliz like a like a batch norm type of &gt;&gt; type of trick I mean not in the same &gt;&gt; if if it's zero it can't be this right cuz then this is non zero and so maybe I think that there's probably this or something like that but basically This prevents it from modal collapse and it makes it do something good. And this is the most recent paper for the audience is LE WM LE world model which is super super great. however, to be completely frank, the this this is self-supervised learning super great. It doesn't work that well. If you were to not do these techniques and there's there's a bunch of other techniques that you can do, it will actually outperform much better and that are let's say for example if I'm going to do an LLM and you have like you know Francois likes sushi, which is definitely true. and I tokenize this into bunch of different tokens here. And this is token ID 6, 19, 28, whatever. And I look up the encoding into this. And it's going to be E1. &gt;&gt; Yes. &gt;&gt; E2, E3, etc. what you can actually do is have the LLM output what the LLM will take in take in these things and we'll output the the next token and so it would be like let's call it H this would be the low jets coming out of it two plus one &gt;&gt; and what you can do is actually have this be close to E T+1. &gt;&gt; Mhm. And a lot of people are playing with this idea and getting rid of the cross entropy loss entirely. &gt;&gt; And so if you were to do this, it actually as a proxy for the cross entropy loss and there is no cross entropy loss and the the cross entropy head is actually very expensive. &gt;&gt; And so this is very cheap and like this literally just grabbing it. So people are playing around with this idea and as a as a basically as a as a cheaper proxy for the cross country loss. So there's lots of different ideas on basically taking this JPA idea to not just pixels but to L lns as well. &gt;&gt; Yeah. Interesting. Yeah. &gt;&gt; So just to define what JPA is, it's joint embedding predictive architecture. I &gt;&gt; I think one of the things I find cool about this JPA idea is it feels like an idea we see over and over in deep learning. There's a version of this idea that's basically the stable diffusion idea. Yeah, &gt;&gt; there's a version idea that in my company training graph convolutional neural networks to design drugs we use to do you know latent variable generation for example and it's like it's an idea that comes back over and over and then has this yeah various tricks that it actually takes to get it to work in practice. &gt;&gt; Okay, now we have a pretty good sense for how world models work. We have a pretty good sense for what the state of the art looks like if we trust this paper &gt;&gt; and it seems like these kind of work on robots too. This paper is only from the end of end end of last year this year and it seems like they have various methods that allow you to train on relatively small amounts of data that's tractable and pre-trained on you know diffusion models. &gt;&gt; So are we good or does it all work? &gt;&gt; Yeah, this is 2016 will be the year of the robot. We're going to have Rose the robot in your house, you know. &gt;&gt; yeah. No. What What are one or two because there's lots of open problems remaining. What are like a few open problems maybe we can emphasize here that the community can go emphasize working on? &gt;&gt; Yeah. So I think the first one is that pins doesn't really work. What is pins? Physics informed neural networks. So pins doesn't really work. This is physics informed neuronet networks. And so basically if like almost all of the self-driving car data looks like this. The car is driving down the road. And let's just say for example I have you know a house here and I want to train the model on you not driving into the house. And so let's say I put I put it into a state right here to drive into the house. What's going to happen is because almost all the data is like looks like this driving down the road. This will just turn magically into like a highway and it just like boom. It just don't worry. &gt;&gt; It basically needs like a ton of data. not to do that either from simulation for that to not happen. &gt;&gt; In fact, I actually don't even know if because of the data distribution, there's no data here. There's almost all the data here. And like when you're training a neural network, it has a a tendency to collapse if you don't keep the mini mini batch composition like very even over the you know over the class space or whatever you want want to call it. But like you'd have to train on you you have to be very careful about your data mixing to make sure you get this right to solve this problem that no one really has. But even then the if you take just a simple thing like this, this is like the the the conic example and I have some sine wave and I want and I have these as my xop and I have these as my y. So this is complete interpolation. &gt;&gt; No. &gt;&gt; maybe messed this up, but why like this? &gt;&gt; No, &gt;&gt; we can't get to like machine precision. We can't What is it? I don't know what is it 18 - 16 or whatever it is. We can't we we the SGD will not get to Z effectively zero. So we'll always have some residual. And for us to be like a really good world model to simulate body interactions like to to simulate this what's going to happen when I do this and like let's say that I'm trying to be LeBron James. like there's like I saw this one video of Steph Curry dribbling a a basketball on a court and he just felt that there was a dead spot in the court and he because he's so good and he knows exactly the physics of what's going to happen if I hit this you know the ball with this force like the ball is going to come back exactly this spot and it just didn't and he knew it wasn't him it was the the court and he found a dead spot in the court like that's how good the the human brain is at world modeling in my opinion I think it's an SGD issue I think it's probably an architecture issue. I think Sam Alman just kind of came and just said that he thinks that there's definitely an architecture that's going to be more performant than the transformer. I think he's right. I think the the the transformer doesn't do compression in the time domain at all. It just keeps on everything. so anyway, so I think that the getting higher fidelity in the world model is extremely important. &gt;&gt; One I think two &gt;&gt; seems like test time probably is going to be big thing like adaptation. &gt;&gt; Exactly. test time planning we the how quickly the human brain can you know in in times of in sports and things like that when you're playing tennis you're a tennis player like how quickly we can adapt to what a player is doing and things like that we're not going to sleep and like retraining we're we're very quick to adapt to a new new environment &gt;&gt; like the out of distribution prediction is really challenging &gt;&gt; and like one little data point we can like quickly adapt to that new thing and change I think there's been a lot of papers on like basically estimating that the the friction coefficients and so like those can change over time if you go to a human environment or not for example like this this friction might change and that's important in control and so you need to estimate that very quickly and adapt and that these models just kind of don't have a mechanism to do it. Yeah. And then I guess there's like the practical speed elements of these, right? A lot of these are doing some sort of expensive planning step &gt;&gt; and we're doing some sort of like &gt;&gt; we're we're kind of hacking around it with this pre-training process and synthetic data, but even so like to really get maximum performance right now, you'd want to do something that's closer to like the AlphaGo style roll out and it's extremely slow, &gt;&gt; right? The MCTS process which can't happen. the other thing that that is pretty crazy about the way that the brain works is that like everything is kind of running autonomously. And so like you you might be like in the middle of saying sentence one and be like, &quot;Oh, actually no, something else.&quot; And so like what just happened there? It's like type one and type two thinking are happening at the same time in some way. And so like there's definitely you know some really cool mix of these like heterogeneous models and like some are overriding others and like taking control of the motor cortex and like commanding the body to do a thing you know. &gt;&gt; Okay. But on the flip side now we talked in the past video about the squint test and how we felt that autogressive LLMs maybe don't pass the squint test. Why don't we reintroduce what the squint test was for a second and then maybe let's think about whether this passes the squint test despite all those limitations. &gt;&gt; Yeah. And the squint test for me I think is like this comes from the Yan Lakun we didn't need flapping wings to achieve flight. and to that I say well we did need two wings. And like if I squint and I look at a bird and I squint and I look at a plane I'm like yeah &gt;&gt; it's kind of similar. &gt;&gt; It looks right. similarly, if I squint and I look at the human brain and I squint and I look at all these these world models, we have like this VA, this action policy, and that they're doing test time planning together and things like that, it's getting really close. It's much much closer. &gt;&gt; Seems closer than an autogressive LLM. And that like this concept of a world model of, you know, implicitly predicting future states and actions feels intuitively like what our brain is doing. And it seems like there's some, you know, neuroscience evidence to support that. I mean, I'm I'm getting to the conclusion that I think that the brain is the optimizer, not the model, and that the the brain emits like has models that it invokes, but the brain is somehow also the optimizer itself. And so, in that way, it doesn't pass the squint. because like, you know, something magical is happening when you're sleeping. There's no intelligent species that we're aware of that have any amount of intelligence that don't sleep. And so, like octopuses, dolphins, all this stuff, elephants, they all sleep. There's some reason for that. And that seems like a really think about like the evolutionary re like recourse of sleeping like you get eaten when you sleep. So like for the benefit of sleeping should be so so much better to outperform that. So I think we don't have this idea of awake sleep in our current architecture but I can imagine I'm like simulating you know you know compress from the hippo campus some like experience in the day. I'm like training on more of those examples, right? &gt;&gt; You're like collecting a whole bunch of these experience rollouts and then you're updating your your policy function over there. &gt;&gt; There's got to be something like like there's this thing called shortwave ripple where like the hippoc campus when you're sleeping like emits these spike trains that are actually reversed from when they actually happen back in through the both both the hemispheres and for like seven times and then it like stops. &gt;&gt; So like there's something happening there that's very training something. Yeah. And if you don't sleep, then you don't up you don't have long-term memory. Right. &gt;&gt; Right. And so like there's definitely a reason why we're we're training things that happened into our brain. &gt;&gt; So where does that put us now? We have all this work happening with world models. How should we think about what's coming ahead in these next few years in the research community? &gt;&gt; Yeah, I think that like we're going to see a lot more of these world models in robotic policies. I think that's going to unlock probably full self driving would be like a one of those examples if they can get the real timeness of it. They can probably they can probably solve it with more compute to like have parallel things and you probably don't need it for like most standard things maybe like you know getting out of weird parking jams and like things like that would take us some time similar to the Rosie the robot which we've always wanted to have a Rosie the robot to like you know clean up my room for me. I think that like this feels like we're getting to good enough that we can pay up for data in compute to get to Rosie the robot. It does feel like that it'll be expensive to collect the data and do the dreamer sequence of going from state to state and then getting the action conditioning to work, but like I feel like it should work. &gt;&gt; Yeah. I mean what's pretty cool is we see a lot of companies at YC working at every step of this from the collecting egocentric data collecting the teleyop data training their own world models and action models building new embodiment and then making ways of adapting those embodiment and feels like this is the first year where you see demos where you're like okay this actually like kind of is starting to look like it's going somewhere and it seems like a very exciting year. &gt;&gt; Yeah. So anyway, I think that there are real AI problems to solve still. We talked about pins. We talked about the real-time issues. And then on the robotic side, there's real issue. Like it's amazing how effective our epidermis is in terms of we we can detect detect tactile. &gt;&gt; Oh, epidermis. &gt;&gt; Yeah, epidermis. Our tactile. We can detect sheer force. We can detect temperature and it's everywhere. &gt;&gt; And so like versus, you know, like the we get like one little sensor that only does tactile. But we don't have the the friction component. We don't have temperature. We don't have all these the feeling. We can't estimate coefficient of friction very quickly. I can touch something and say, &quot;Oh, this is smooth. This is rough.&quot; It doesn't we don't have any of that. And if I numb your hands, I actually had this experience just recently. If I numb your hands, like you actually can't tie your shoes. Yeah. &gt;&gt; So, you can't perform control. And so, like, yeah, if you like, you know, if you train enough on enough human data tying your laces, do I think you can do it with no feedback? Maybe, maybe. But like how much would you need if you did actually have the human like touch? Like I think it'd be so much easier. &gt;&gt; Yeah. Well, there's a lot of more research to do then. &gt;&gt; Yeah. Yeah. &gt;&gt; Thanks so much for joining us. Thanks so much for watching everyone. We'll be back with the next episode of Decoded.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-2">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=rghTqkclDqA" target="_blank" rel="noopener">Replit CEO Amjad Masad on Media, Politics, and Power | The a16z Show<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/hkiO7UAtALrbqOcewo4CIrbd0j8XDeWttKkdtihfX1emeV4iUMwjIe1KKn4zd6wT2OOwANDnIA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>a16z</b><span class="subs">(280.0K)</span></span><span class="dot">&middot;</span><span>26:15</span><span class="dot">&middot;</span><span>736 views</span><span class="dot">&middot;</span><span>2026-07-17</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Amjad%20Masad%22">Amjad Masad<span class="chip-desc">Founder and CEO, Replit</span></a> <a class="chip" href="index.html?q=%22Erik%20Torenberg%22">Erik Torenberg<span class="chip-desc">Host, The a16z Show</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Amjad Masad argues that for ambitious startups, &quot;memeing a dream into reality&quot; through founder-led storytelling is a survival requirement for attracting talent and capital before a product finds commercial success.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">He posits that &quot;being canceled&quot; is a choice to retreat,...</div>
+                    <div class="sum-full" id="full-2"><p><strong>TL;DR</strong></p>
+<p>Amjad Masad argues that for ambitious startups, "memeing a dream into reality" through founder-led storytelling is a survival requirement for attracting talent and capital before a product finds commercial success. He posits that "being canceled" is a choice to retreat, and that founders should use public platforms to bypass traditional PR filters by embracing radical authenticity.</p>
+<h3>The Strategic Role of Founder-Led Storytelling</h3>
+<ul>
+<li><strong>Storytelling as Survival:</strong> Masad credits Replit’s existence to his early efforts to tell a story larger than the company itself, noting that Replit would likely have died without this narrative to drive fundraising and recruiting during its non-commercial years.</li>
+<li><strong>Memeing into Reality:</strong> For founders building ahead of the market, communication is a tool to manifest a future vision that isn't yet reflected in the company's metrics.</li>
+<li><strong>Building in Public:</strong> Masad treats public communication as an extension of internal work.</li>
+<ul>
+<ul>
+<li>He biases toward public writing, often posting content publicly first and then sharing the link in internal Slack channels to keep the community involved in the journey.</li>
+</ul>
+</ul>
+<li><strong>The "Dario" Exception:</strong> He acknowledges that not every CEO needs to be an influencer; leaders like Dario Amodei (Anthropic) let the product and long-form essays speak for themselves, proving there are multiple paths to success.</li>
+</ul>
+<h3>Developing the "Go-Direct" Skillset</h3>
+<ul>
+<li><strong>Exposure Therapy:</strong> To overcome severe stage fright and a heart rate of 150 BPM, Masad took improv and storytelling classes in New York.</li>
+<ul>
+<ul>
+<li>He advocates for "making a fool of yourself every day" to become desensitized to public scrutiny.</li>
+</ul>
+</ul>
+<li><strong>Progressive Overload:</strong> Much like weightlifting, Masad recommends starting small. He benefited from a long "incubation period" where his following grew linearly, allowing him to make PR mistakes on Hacker News before the stakes were trillion-dollar high.</li>
+<li><strong>Authenticity over Polish:</strong> Modern audiences crave unpolished authenticity. Masad cites Elon Musk and Mark Zuckerberg as examples of leaders who successfully changed their narratives by bypassing journalists to speak directly to the public.</li>
+</ul>
+<h3>Navigating Controversy and "Cancellation"</h3>
+<ul>
+<li><strong>Cancellation is a Choice:</strong> Masad argues that "getting canceled" only happens if a person chooses to retreat. If a founder stays in the game and continues to post, the "haters" eventually give up.</li>
+<li><strong>The Mental Game:</strong> He acknowledges the "ancestral" fear of being an outcast, which triggers a fight-or-flight response. He manages this by acting on principles rather than marketing ploys, which provides the mental strength to endure online backlashes.</li>
+<li><strong>Handling Trolls:</strong> Masad warns against the "trap" of responding to every critic.</li>
+<ul>
+<ul>
+<li>Appearing defensive or emotional is a sign of weakness that "feeds the trolls."</li>
+<li><strong>The Lemkin Incident:</strong> When Jason Lemkin (SaaStr) publicized a negative experience with a Replit agent, Masad chose to own the mistake publicly and roll out a fix within 48 hours, turning a potential PR crisis into a positive business outcome.</li>
+</ul>
+</ul>
+</ul>
+<h3>Platform Strategy and "The Meta"</h3>
+<ul>
+<li><strong>X (formerly Twitter) for Elites:</strong> X is the primary platform for Silicon Valley, early adopters, and journalists. It is often where news stories begin, but its reach is limited to the "in-group."</li>
+<li><strong>YouTube and Instagram for the Majority:</strong> To reach the "early majority" or late adopters, founders must move toward video-centric platforms. Masad regrets not starting his "clips machine" on Instagram sooner.</li>
+<li><strong>Understanding the Meta:</strong> Viral success is not just about posting; it requires "understanding the meta"—dressing up your worldview or argument to fit into the current cultural conversation or debate.</li>
+<ul>
+<ul>
+<li>He cites David Sacks and Satya Nadella as examples of leaders who release well-reasoned arguments exactly when the zeitgeist is focused on a specific topic (e.g., token costs or AI safety).</li>
+</ul>
+</ul>
+</ul>
+<blockquote>
+"Replit would have probably died if I wasn't telling a story that is larger than the company itself... if you're trying to meme a dream into reality, I think you have to play that game." — <strong>Amjad Masad</strong>
+</blockquote>
+<blockquote>
+"Being canceled is a choice. You can choose to get canceled and retreat from the public eye, but I think if you're still out there, at some point honestly the haters kind of give up." — <strong>Amjad Masad</strong>
+</blockquote>
+<blockquote>
+"The way to go viral is to couch or dress up your argument, your worldview, in the current conversation." — <strong>Amjad Masad</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">Being canceled is a choice. You can choose to get canceled and retreat from the public eye, but I think if you're still out there, at some point honestly the haters kind of give up. So some people ask, &quot;Hey, how should I think about X versus other platforms?&quot; You have to understand the meta, because the way to go viral is to dress up your arguments and your worldview in the current conversation. Twitter's influence is amazing, but it tends to be elite, kind of inside group influence. I think Instagram, Facebook still, and YouTube are where you get to the early majority.
+
+Does every CEO need to become an influencer now? Look, I think there are so many paths to success; I don't think there's just one. Replit would have probably died if I wasn't telling a story that is larger than the company itself. Dario is an example where he's not playing the social media game. The product sort of speaks for itself. So I think it comes down to—Amjad, thank you for joining us.
+
+So Replit is a 10-year-old company. For the last two years, it's gone absolutely vertical, but there was a period of time well before that where the company was in the zeitgeist, partially because of your go-direct efforts. I mean, you're one of the best CEOs on X. You're also now getting bigger on Instagram and other platforms. What has the business impact been of your efforts going direct, and does every CEO need to become an influencer now, or how have you sort of conceived of this?
+
+Yeah, I think Replit would have probably died if I wasn't telling a story that is larger than the company itself. The company wasn't successful commercially at the time, but we've been very successful at fundraising and recruiting. I think if you build a company that's successful right out of the gate commercially, you might not need to do all of that. But if you're trying to meme a dream into reality, I think you have to play that game. Otherwise, we would not have existed because we had to do that for so many years before—I mean, it turns out everything I said was true, but at the time, it wasn't real. It was a dream.
+
+You at one point decided to go big on this. You weren't always big on Twitter. A lot of people here, a lot of CEOs, maybe it doesn't come supernaturally to them and they have to make a decision: how do I get good, am I going to do this, and if so, how do I get good at it? What was your journey to say, &quot;Hey, I'm really going to invest in this and I'm going to get good at this?&quot;
+
+Well, I think the journey starts outside of Twitter: how do you get good at communicating, and how do you get good at public speaking? I always wanted to be able to be an influencer, for lack of a better word. I remember I was in New York when I first came to the States and I had terrible stage fright. I'd be sitting here and my heart rate would be like 150; I'd be sweating. I thought, how do I deal with this? How do you get better at this? I went and took improv classes in New York and then took a storytelling class. I'm a big fan of exposure therapy. Anything you're afraid of, just go and do more of it until you're desensitized. The best way to get desensitized is to just make a fool of yourself every day doing improv. I ended up doing shows and got pretty good at it.
+
+The benefit I had is that Replit didn't blow up right out of the gate. My personal profile had this very linear growth to it. I could make mistakes with very little attention on me. I made a lot of PR mistakes. I think still, if you go to Hacker News and sort by the top 10, we had a PR crisis where I had an issue with an ex-intern at Replit where I just totally botched that communication. But still, I was within the Hacker News community, which they still hate me, which is fine. They'll hate you anyways. That's like the rite of passage; Hacker News loves you, then they hate you, then you become successful.
+
+You kind of make mistakes and they're not at the public stage just yet. The stakes get higher as I'm able—it's sort of like progressive overload in powerlifting. You're carrying more weight. It never gets easier, but you're able to do more and more over time. I feel for the founders whose company is just now blowing up and they're in the public eye. You can see founders of big, now-trillion-dollar companies, they're really up on a massive stage. But getting the reps in has been super helpful.
+
+Is that your advice for people who want to get good? Just exposure therapy, like one tweet a day? What's the best way to get started?
+
+I think a few things. One is the concept of &quot;building in public&quot; wasn't coined when I started, but as a CEO, you're going to do a good amount of writing and communicating to your employees and investors. You can just do it publicly, right? I've always been a believer that there aren't really a lot of secrets that you need to keep inside a company. A lot of your writing that would be in private can be put public. That way, you carry people on the journey with you and you're getting the reps in. Whenever there's a piece of communication or a story I want to tell, if there's a choice between public and private, I bias toward public. I often write something publicly and then paste it on Slack and say, &quot;This is what I wrote.&quot; That's been helpful.
+
+The other thing is authenticity. Being really, truly yourself is a big, radical thing. Maybe it started happening with Elon maybe 10 years ago, but CEOs were supposed to be this very polished thing. They had to be filtered through this prism of PR, and journalists were the way to get to the public. But you see Elon building a public platform, and I think Zuck to some extent as well. Seeing Zuck at some point, when journalists turned on him, he started going direct. He changed his entire narrative by just being himself and talking directly to people.
+
+I think the story of Trump is also very illustrative. Trump was successful despite the negative bias in the press, and it was mostly Twitter initially. People forget that, but Trump had amazing bangers. My favorite one: &quot;I've never seen a thin person drink Diet Coke.&quot; Which is true. Or Kanye. Kanye's banger was, &quot;I hate waking up in the plane and I see a bottle of water in front of me. Now I got to take care of this.&quot; Or, &quot;I don't have a manager. I can't be managed.&quot; You see these people come up, and people start associating with them, and obviously they're very authentic. There's this shift in people's minds where they crave authenticity.
+
+Is it funny you mention the intern thing, because I remember that, but I also remember forgetting it, too. A lot of people say, &quot;What if I say the wrong thing? What if I get my company into trouble and some sort of controversy?&quot; Are attention spans so short that it's just the next situation? What do you say about that?
+
+I think it's deadly if you retreat afterwards. PR crises can be deadly if you hide. The thing about Trump or Elon is that there is always the &quot;next thing.&quot; The next thing could be worse, but just the fact that you're still there, still in the game, people will think, &quot;Oh, this guy's unkillable, uncancelable.&quot; Being canceled is a choice. You can choose to get canceled and retreat, but if you're still out there, at some point, honestly, the haters kind of give up. They're like, &quot;All right, I guess we can't do anything to this guy, let's go to the next guy.&quot;
+
+There's a great book, *So You've Been Publicly Shamed*, which chronicles the stories of a number of people who have been canceled. The takeaway is that the people who are truly canceled are the ones who shut up. They're the ones who retreat. But the ones who just keep going, it's forgettable. I mean, Brian Johnson has effectively revived his image or presented a whole new one. People just forget the thing they were almost canceled for.
+
+I will say the mental aspect is pretty difficult. This story has been told a trillion times: in the ancestral village, if you become an outcast, that's pretty deadly. You can literally die. Our limbic system, when you get this massive reaction online, you're kind of in fight-or-flight mode. It can really affect you. You can't sleep, some people can't eat, and it can be really damaging. But again, exposure therapy helps a lot. The first one is really hard; the second one, you know it'll blow over. Also, having good principles is important. Acting on principles gives you strength. Even if you ascribe what companies like Anthropic are doing to a cynical marketing ploy, the strength they have is based on their principles, and that really keeps them going.
+
+You were alluding to the stakes being high. What advice might you have for an Anthropic or OpenAI regarding some of their communication challenges?
+
+It's obviously way above my pay grade. I've never battled with the United States government—not yet, one day, goals! But I honestly think it's a win-win for them. If you game out what's going to happen with Anthropic, if Fable comes back, it's going to be a huge flood towards it. It's like this thing was banned by the government. Actually, Steve Jobs once did this ad. They had a Mac, the big towers, which had tremendous computer power that was subject to export control. They had this ad where military tanks were surrounding the Mac, showing that this thing is so powerful the US government doesn't want you to have it, so you should go buy it. It's a tremendous marketing opportunity. Even if they can't get it back on the market, they win the PR game of being a company that's principled. My advice would be not to stress out too much and just sit back and let it play out.
+
+Many CEOs say, &quot;I don't want to have to tweet because now I'm in meetings and I have to think about responses, and then I'm in a conflict.&quot;
+
+You don't have to respond back at all. That's another thing you have to learn: don't feed the trolls. It's very tempting, but the bolder thing to do is to realize the plebs can't fight in your comments. I don't need to worry about it. It's a trap to think that anything you put out you need to immediately defend. Obviously, if something is getting a lot of airplay and people are misunderstanding you, you should correct it. Do it in a principled way. Say, &quot;This is what I actually believe, here is what you got wrong,&quot; but don't be overly defensive. Don't appear emotional, because anytime you show weakness publicly, it feeds the haters. They feel like they can get to you.
+
+What advice do you give for when companies are being dragged by someone on Twitter or the press? When to respond versus when not to engage?
+
+That's an art. It comes down to business impact. Will it actually have an impact on my business? Last year, we had this story with Jason Lemkin. He had never &quot;vibe coded&quot; or coded before, and as he was working with Replit Agent, it misunderstood him and deleted his database. At the time, we didn't have production and development separation—now we actually separate them by default. Replit Agent can't even write to the production database; it can only read. We have backups and snapshots. The mistake was one click away from being fixed. From his perspective, he didn't know that, and the Agent started freaking out. He tweeted a screenshot, and it started gaining traction.
+
+I knew we had already fixed this issue, but the story had become massive. I could have gone out and fought and said, &quot;We did nothing wrong, we have backups,&quot; or &quot;It's user error.&quot; But I think the right thing to do was to own up to it. The fact that we didn't have that separation was a bad thing. Two days later, we rolled out the fix. My response got a lot of positive interaction because I started with, &quot;Hey, we messed up. This is what we could have done better.&quot; Sometimes, you can give attention to things you don't want to give attention to, especially once your profile grows. By the way, Jason is a huge fan now. He runs his entire SaaStr business with 10 agents.
+
+For CEOs who are so locked in and not that interested, would you recommend they cultivate the desire, or should someone else on the team do it? Does it have to be the CEO?
+
+There are so many paths to success. There are companies where it's not the CEO out there. Groq is an example where Sunny is the person on Twitter, but the CEO is not. They've done a great job. They memed it into success, which is a story not being told—they actually had a lot of trouble fundraising in Silicon Valley and had to go to Saudi Arabia. Then you look at Dario, where he's not playing the social media game and the product speaks for itself, though he is writing big essays. It comes down to the predisposition of the CEO. Do you enjoy it? Do you think you can be good at it? Forcing people to do it when they are going to be totally cringe and negative to the brand is bad. They can learn over time, but it really depends on the situation.
+
+Have you gotten any leverage to lower the activation energy, or is it just all you?
+
+I have the benefit of this long period of incubation. If your company is already high-profile, you don't want to practice in public, so maybe get coaching earlier on.
+
+Some people ask, &quot;How should I think about X versus other platforms if their customers aren't on X?&quot;
+
+X is very good for Silicon Valley, for tech, and for early adopters. I would cluster Hacker News with that. Once you want to go to late adopters or the early majority, Twitter becomes less impactful. It can still be important—like this morning, journalists reached out to talk to me about a tweet I made regarding Anthropic. Twitter is the start of stories; the landscape has shifted so much that journalists report on Twitter. Its influence is amazing, but it tends to be elite, inside-group influence. I think Instagram, Facebook, and YouTube are where you get to the early majority. I was late to Instagram, but we're getting an insane amount of views now. I feel like I should have done that a year or two ago. I would start with Twitter, because that's where the news starts.
+
+Are you bullish on the platform for the next three to five years?
+
+It is risky because the algorithm changes so much. You might anger the powers that be, and things might change for you in terms of reach. There's less transparency than Twitter 1.0. It is a little risky, but the platform has so much staying power. It's really hard to replace. You can change the name, you can destroy the brand, and the platform will still be valuable. It is one of those things that I think there's no way you can avoid it.
+
+Who are some CEOs or leaders that inspire you in terms of how they go direct?
+
+We were all in the &quot;school of Balaji.&quot; Balaji and Lululames, we had this group in the pandemic called &quot;Going Direct.&quot; We critiqued our approaches. I think Balaji was earlier to this stuff. Where I might disagree with him is that I don't think you should be antagonistic to reporters. You can be friends with them; they are humans and they respond to incentives. Shervin Pishevar recently joined us, and that up-leveled our game with reporters.
+
+I think Satya Nadella is doing a great job. He puts out very well-reasoned arguments that play into the zeitgeist. The essay he put out over the weekend got 20 or 30 million views. Very few essays get that much attention, but it came at a time where everyone is thinking about token costs. That is the important thing about going direct: you can go direct and get zero views. You have to understand the meta. The thing that is more time-consuming than posting is understanding the larger debate. The way to go viral is to couch your argument or your worldview in the current conversation. I thought that what Satya did with his essays was very much at the heart of what the discussion is today, and he advanced the point of view of Microsoft.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
