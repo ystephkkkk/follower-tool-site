@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Thursday, April 17, 2025</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><span class="disabled">&larr; Older</span><a href="20250830.html">Aug 30 &rarr;</a></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Thursday, April 17, 2025</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=v2q3yPwEo5w" target="_blank" rel="noopener">Tariffs, DOGE &amp; Fixing America: Peter Thiel's Skeptic Solutions<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/tETiipOdl2JkqNBf0xy4Nd8vNbVx-ub_xxfDj9OshSQd3zzZdpBs0XTUEzJYP12yuK3Bnk-9Zg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Joe Lonsdale</b><span class="subs">(87.8K)</span></span><span class="dot">&middot;</span><span>48:24</span><span class="dot">&middot;</span><span>212.8K views</span><span class="dot">&middot;</span><span>2025-04-17</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Joe%20Lonsdale%22">Joe Lonsdale<span class="chip-desc">Host, Joe Lonsdale</span></a> <a class="chip" href="index.html?q=%22Peter%20Thiel%22">Peter Thiel<span class="chip-desc">Co-founder, PayPal and Palantir</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Peter Thiel argues that extreme optimism and pessimism both lead to inaction, advocating instead for a pragmatic &quot;moderate optimism&quot; that tackles broken, sclerotic institutions by systematically exploiting structural barriers and cultural blind spots.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Decaying Elite...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Peter Thiel argues that extreme optimism and pessimism both lead to inaction, advocating instead for a pragmatic "moderate optimism" that tackles broken, sclerotic institutions by systematically exploiting structural barriers and cultural blind spots.</p>
+<h3>Society, Elite Institutions, and How to Choose a Path</h3>
+<ul>
+<li><strong>Decaying Elite Institutions:</strong> Elite universities (like Harvard, Yale, and Stanford) and organizations (like the CIA) no longer function as elite-forming mechanisms or entry points into societal leadership; students at top colleges are completely lost because high school and college organizing functions have broken down.</li>
+<li><strong>The Tech Vector:</strong> For the past 25–30 years, computer science, software, the internet, crypto, and AI have represented the primary vector of progress where new things can actually be built, whereas tracks like law, banking, medicine, and consulting remain stale and sclerotic.</li>
+<li><strong>Avoiding Over-Indexed Sociological Traps:</strong> Venture capital and startups in deeply broken sectors (like healthcare IT and educational software) frequently fail because participants chase popular trends, vanity metrics, and networking prestige rather than foundational truths.</li>
+</ul>
+<h3>Overcoming Systemic Barriers: Defense, Infrastructure, and Space</h3>
+<ul>
+<li><strong>Palantir’s Origin and Army Lawsuit:</strong> Started in 2003–2004 to provide intelligence and counter-terrorism capabilities with less intrusive civil liberties violations, Palantir faced immense skepticism, had zero venture capital interest, and ultimately had to sue the U.S. Army in 2016 under a 1994 open procurement law to break through a decade-long billion-dollar boondoggle.</li>
+<li><strong>The Elon Musk / SpaceX Playbook:</strong> SpaceX proved that entering heavily protected, poorly managed industries (like aerospace) requires immense persistence to climb the "big fence" and face a bloodbath against incumbent "fat cows."</li>
+<li><strong>Tunneling and Infrastructure Inefficiencies:</strong> Projects like The Boring Company face massive cost multipliers in traditional cities (e.g., Manhattan subways cost <strong>$1 billion a mile</strong>, roughly <strong>10x</strong> the cost in Paris, while Elon Musk aims for <strong>1/10th</strong> the cost of Paris), driven primarily by corrupt labor unions, mafia-adjacent contracting, and political blockers rather than pure engineering limits.</li>
+</ul>
+<h3>The Trump Administration, DOGE, and Trade Resets</h3>
+<ul>
+<li><strong>Hope for the New Administration:</strong> The current political environment offers the first real opportunity for foundational change since early Reagan, as the opposition is exhausted and out of ideas, and this second Trump term functions as a "real first term" unblocked by internal sabotage.</li>
+<li><strong>Government Waste and DOGE:</strong> With a <strong>5% to 6% of GDP</strong> budget deficit and government spending running at <strong>$6.5 trillion</strong> against <strong>$4 trillion</strong> in revenue (driven heavily by <strong>$3.8 trillion</strong> in entitlements and out-of-control NGO/non-profit virtue-signaling), projects like DOGE can uncover massive fraud. </li>
+<li><strong>Criminal Fraud Potential:</strong> A researcher noted that mischaracterizing level-5 government line-item data into level-4 summaries for political appointees mirrors the precise Iran-Contra-era mislabeling for which Oliver North was prosecuted, suggesting thousands of NGO actors could theoretically be prosecuted criminally for fraud.</li>
+<li><strong>Trade and China Tariffs:</strong> China accounts for roughly half of the U.S. trade deficit (about <strong>1/4</strong> bilaterally and <strong>1/4</strong> indirectly through components reassembled elsewhere); a radical economic reset and decoupled trade policy are vital to build a stronger Western alliance against a geopolitical rival.</li>
+</ul>
+<h3>Silicon Valley Vibe Shift and the Collapse of Conformity</h3>
+<ul>
+<li><strong>The Collapse of Silicon Valley Groupthink:</strong> For years, tech companies like Meta (where Thiel served on the board for <strong>17 years from 2005 to 2022</strong>) conformed to center-left regulatory pressures and employee mobs by adopting policies like DEI to appease the regulatory beast.</li>
+<li><strong>Private Truths vs. Public Lies:</strong> Driven by remote work inefficiencies (which proved federal and corporate workforces could shrink dramatically without negative impact) and mounting speech code fatigue, a rapid preference cascade occurred where private skepticism transformed into an open rejection of progressive orthodoxies across top tech CEOs.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"At the extreme, optimism and pessimism are the same thing, because if you are extremely pessimistic, there's nothing you can do. If you're extremely optimistic, there's nothing you need to do... both extreme optimism and extreme pessimism converge on laziness, and on people not doing anything."*
+— Peter Thiel
+</blockquote>
+<blockquote>
+*"If you actually had a newcomer, they would just eat the field or whatever... they try to crush you. It took us thousands of pages of regulation. But, I think there was an Elon metaphor... there were these three or four aerospace companies in the US that were like really badly managed... and it was sort of they were these very fat cows on this grassy enclosed field, and if you ever got in there there was just going to be a bloodbath."*
+— Peter Thiel
+</blockquote>
+<blockquote>
+*"Virtue signaling is a sign that you're doing something evil... many of this left-wing philanthropy, non-profit world, I think was, you know, it was just a cover for, you know, borderline criminal."*
+— Peter Thiel
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">I'm into winning and into ideas. I like both. This is where you can do new things, this is where you can build new companies. How do you decide what to focus on, what to work on in our society? People tend to over-index on these sociological factors and what's popular. I would tell people to go into... the place where I quibble with the name of your show is that at the extreme, optimism and pessimism are the same thing. When we started Palantir, the idea of trying to do a military-related software startup, people thought we were insane. Yeah. We had to sue the army. All our consultants quit. You can't sue your customer. If Austin can be fixed, you'll be the one to fix it. If it can't be fixed, I'll be the one to have told you so. This is Peter trolling me.
+
+Peter Thiel is truly one of the great minds of Western civilization. He's been an important mentor to me, someone I've been lucky to get to learn from and partner with in business since I first came to the business world 20 years ago. He's constantly reinventing himself. He's constantly exploring and looking at the world from totally new angles. He's been successful again and again and again in a variety of different areas, and it's always a delight to get to talk to Peter, to get to hear about what he's thinking about, what he's pondering, and to hear what's next for our civilization, and to get to hear some unique views he always has. He always has an orthogonal take on things, and he's always working on the cutting edge of what's going to happen next in the world. Let's hear from Peter Thiel.
+
+Welcome to American Optimist. Really excited to have my old friend and mentor and American legend, Peter Thiel, here with us today. Great to be on the show. Yeah. Peter, I got to describe you as founder of PayPal, and Palantir, and Founders Fund. How else would you describe yourself? Founder, investor, I don't know. I like figuring things out, where the world's going. I'm, I'm into winning and into ideas. I like both. Winning and ideas. I always think of you as kind of an applied philosopher, but you don't like the term philosopher. It sounds really lame, actually. Well, you're in Austin for a special luxury series at UATX. Let's start there, just briefly. What's been your impression of our new university and the students? It is, it is surprisingly strong. I, I, you know, I, but, you know, Joe, I, I've told you before that if you don't pull off University of Austin, if you're not able to create a successful university at this time when they're all committing suicide and engaged in self-destruct, it is like, it's like an absolutely hopeless thing to do. So, but I think, yeah, I, I think the, the, the caliber of the people is, is, is, is really high. And I've, I've done a decent amount of lecturing, speaking at, at different universities in the last, in the last few years, and it is, it's just, it's just striking how there's, it's very unclear what people are doing. it's, you know, it was, it was a big achievement in a way for them to, for students to get into, you know, elite colleges like Yale, or Harvard, or, or Stanford. but, they're completely lost once they're there. you know, high school still has an organizing function for it, where the point of high school is to get into college. Yeah. And then, college, you know, elite universities, I, I think the organizing function 50+ years ago was, you were supposed to get into the, the elite in our society, and, and that is completely broken down. You know, there was, there was an Alan Bloom speech at Harvard in the 1980s, where, he started with this obnoxious frame as, my fellow elitists, because everyone at Harvard pretended to be egalitarian, but they were secretly elitist. And I think, I think you couldn't give that speech at Harvard today because there's nothing elite about it, nothing about forming an elite. you're not, you can't even pretend it behind closed doors, or, or anything like that. And, and so, and so for the next generation of people going into these places, they're just, they're just really lost. It's unclear what to do. It's interesting, a lot of our elite institutions are broken down, where they're not as good. Yeah, but they're not, they're not, they're not, they're not elite institutions. They're not anywhere. A lot of the institutions that run our society have kind of broken, so they're not elite. And of course, of course, the the institutions they they feed into are probably also, they're much less elite. So, I don't know, 1950s and 60s, the CIA was elite, and, you know, people at Harvard and Yale would, would get in there. At this point, probably, I don't know, they're probably done too many illegal drugs to, to get into CIA. You probably wouldn't want to get into CIA. It's not elite anymore. Yeah. But, you know, there's, there there there are, there are no real elite institutions that tracks into. They're all these things around it that were the best things in our society that aren't anymore. So, so stepping back a second then, this is a question, we have a lot of builders and investors in our audience, and we have these kids at these top colleges, some of them are pretty smart. Assuming you're talking to like a smart ambitious person, how do you decide what to focus on, what to work on in our society? What should their goals be at this point? You know, it's, I, I'm always, I'm always so bad at the sort of how-to, how-to-help advice, but I, but I, but I, but I would, I would say that for the last 25, 30 years, tech, meaning broadly, you know, computer science, software, internet, mobile internet, now, now crypto and AI, in the, in the last few years, this has been, this there's been, this has been sort of this, this one vector of, of progress in our society. This is where you can do new things, this is where you can build, new companies. we can debate, you know, whether it's big enough to take our civilization to a new level, or whether it's just big enough to build, you know, companies that are worth billions, or hundreds of billions, or trillions of dollars. but it's been sort of the one place you can, meaningfully do things. And then almost everything else is, is, is somehow stale, sclerotic, you know, it's extremely Malthusian in practice. You know, I was, I was, I studied philosophies as an undergraduate, and then went to law school, which, you know, I, I didn't realize when I majored in philosophy as a sophomore, you're actually deciding to go to law school. And then you sort of get narrowed, and theory law school gets advertised as this broad form of graduate education, but you just get narrowed into being a, a corporate lawyer, and it's probably, of the, you know, law, banking, medicine, consulting, those are like the four big tracks you had, people had at Stanford in the, or I probably in the late 80s when I was there, probably also in the early 2000s when you there. Maybe two-thirds of the, undergraduates were, were on one of those four tracks. law's the one that's held up the best, I would say, and it's still pretty, you know, it's pretty unhappy. Yeah. I would tell people to go into tech. Yeah. That, that, that and, that's, that's broadly what you're supposed to do, and, you know, it doesn't necessarily mean you should start, start a company, but there are, you know, there's sort of a, a range of, of these companies you can work for, and it's, it's surprising how much that's still not the narrative. You know, it's, especially like if you're, if you're at the, I don't know, at the, at a place like Harvard, my, my impression is they don't even know that Zuckerberg created Metaphacebook at Harvard. It's, it's like, this is, this is, they're disconnected from the reality. They have not even caught up to 2005. So the time I was, we, were working together, I was working for you, you were working on the hedge fund, you were invested in Facebook, you're doing other investing, and we decided to really go all in and spend a lot of time on Palantir. Why, why was that the right choice then as tech? But would be go more specifically, like what, what was, what was your high level around that at that time? How were you thinking about it? What, what gap were we going after? It was very broadly, government, and then it was within that, it was defense, more narrowly, it was sort of the, the intelligence community that sort of adje- you know, defense adjacent, I, you know, was a couple of years after 9/11, we were sort of starting it in 2003, 2004, and, there were all these ways that, I felt that we didn't, you know, that we- that we had these very low-tech and very privacy-violating solutions for the terrorism problem. You know, it was- it was annoying that you had to take off your shoes at every airport, which was like just not security, but it was this incredibly intrusive security theater. And, and then, yeah, the, the question was, could you do something where you'd have, you know, way more security with way fewer, you know, technologies doing more with less. And so, the, the terrorism context was, could we have more security against terrorists with less intrusive, civil liberties violations? And then, and then, and then there was broadly this question, you know, was there some way to reset all these things in the government? And, it was a black box, and, you know, we did not know whether places like the CIA and NSA and places like that had, you know, some super-duper computer working in the background that was catching all the terrorists. we sort of suspected they didn't, and, and then it took, it took a while to figure that out, but, I think our suspicions were probably correct. Yeah, we saw them doing a lot of things that made us suspect that they're actually gotten way behind Silicon Valley. No, and they were, I mean there were details that, you know, it was hard to say, you know, with our- I remember our first trip to Langley in, in 2005. We've gotten In-Q-Tel to invest, and you and I were there, and I think it took us about a day or two to process, but you know, it was at the end of the trip, it was like, do you want to come, do you want to buy some stuff from the CIA gift, gift shop? And it was like you can get a windbreaker and a CIA cap, Coins, they were kind of cool. I think they were half of them more made in China, which is, you know, but, but, and then, of course, there was probably some, you know, there's some steel-manned version where the- it was just a decoy and there was really a lot of stuff going on in the background, but, You remember the doors all had these, we had our doubts, I-detectors on each of the door that you're supposed to scan your ID get in, and none of them worked. So wherever you go around, there'd be like the I-detector, but they were broken. They turned them all off, which I thought was kind of like a, kind of a typical, Yeah, I don't know. There were there were yeah, they were, yeah, there were, yeah, there were all these all, all, all these play- and so, in that context, you, you, you'd think, okay, there's, there's some very big problem that can be, can be solved. It, you know, in some ways it turned out to be more difficult than, than one would have thought. you know, there obviously are all these pro- all these sectors we have that are very, very broken, where, you know, education, healthcare, all, all these sort of deeply broken sectors, where the solution, you know, there's some obvious solutions and the fact they have not been implemented tells you there's some big barriers to implementation. They're- they're set up not to allow you to break them. This is kind of what I think of with the the Palantir version is, you know, there was, there was this, I forget what the acronym stands for, but there was this, software program, this was once we moved from intelligence community into the broader military called D-SIGs, which was a sort of this, in theory, it was a system where you were supposed to figure out ways to integrate the data across all these units in the field and headquarters, and, you know, integrate what was going on, which is incredibly important thing to do. In practice, it was sort of a c-ludgy, consultant, billion dollar boondoggle that didn't work, and, and we naturally thought we would replace it in, in 6 months, and it took, it took something like 10 years. We finally replaced it in, in 2019, and, you know, we had to sue the army, which and, you know, we had to get all our, all our consultants quit, and said, you know, this is, this is just the most ridiculous thing. You'll never get a, you can't sue your customer, and, and you definitely can't sue the Army, and, not only will you not get them as a customer, you will not get anybody else in DC, you'll just be blackballed by everybody. And then, but then you know, and it was under, we, it was, it was in 2016 that we sued them. It was under a 1994 law where, you know, the military was supposed to have an open procurement process, and then when you, and then what you can do when you sue somebody is you get discovery, and you discover and you sort of discover what's going on in the sausage-making factory that no one's investigated for 22 years, and there's a lot of stuff, and there was sort of, you know, there were- there were internal reports that Palantir worked better, which didn't matter because obviously nobody can assess the software. But then, more scandalously, there were, you know, there were orders to suppress the reports, there were emails that people had to hide the findings, and there was a cover-up, and this- this didn't- did not sound like the open procurement process, and, and then, you know, and then you won at the court level, then you won at the district- at the DC circuit level, and, you know, you were forced to- they were forced to reopen the process, and then, you know, after- after a decade we, we sort of got the contract. So, Yeah, so the- the- there was something that was doable, but it was, it was not as straightforward as it- as it sounded. It feels like there's these, and SpaceX had to sue as well, of course. It feels like there's these parts of our society that are set up to just maintain their broken nature and you have to just punch really, really, really hard through them, and it's very rare people do that, you know. Yeah, SpaceX was the first successful template to do it. and there's, you know, there's obviously something like this, you know, the university system seems as broken or or more than the military procurement process, and then especially with the, you know, accrediting agencies and all these things where, where they, where they just, are designed to, to prevent newcomers, and the it's, it's like if you actually had a newcomer, they would just eat the field or whatever, I, they try to, they try to crush you. They try to crush you. It took us thousands of pages of regulation. But, it, I- I think there was an Elon metaphor he told me once and this was like, I- I remember the moment, this is like maybe 2010, 2011, and it was, it was this, it was this, it was sort of like, there were- there were these three or four aerospace companies in the US that were like really badly managed and, be- badly run, and it was sort of they were these very fat cows on this grassy enclosed field, and if you ever got in there there was just going to be a bloodbath. Oh yeah. So it was kind of, It's like, yeah, you're, you're seeing like this is like this- this is this- this is this- this, this, this, this carnivore and there's a big fence and you got to climb this really big fence. But eventually you get in there and it's going to be, it's going to be, yeah, it's, yeah, so, It's like yeah, you're looking like this, she's like this, this, this, this, this is a carnivore and there's a big fence and you got to climb this really big fence. But eventually you get in there and it's going to be. It's good. It's, but so, so this is a very optimistic thing though, because both Elon, and, and what we built together, with Palantir, were- were able to be great enough and persistent enough to overcome unnatural barriers and, and do something very optimistic and fix things. It should we also be trying to do that in healthcare and education and universities in some sense? Is it because it was almost impossible, but it, turned out after like years of work that we did it. Shouldn't we also do that now in other areas? It is, it is worth trying in a lot of areas. Look, I, I always think it's better to be optimistic than pessimistic. It is, it's probably not I, the, the place where I quibble with the name of your show is that, I, I don't think it's- I don't think it's good to be, insanely optimistic or insanely pessimistic. At the extreme, optimism and pessimism are the same thing, because if you are extremely pessimistic, there's nothing you can do. If you're extremely optimistic, there's nothing you need to do, you just need to, you know, the singularity is near, it's the Kurtzweil, book titles, it's the very optimistic title and all you need to do is sit back and eat some popcorn and watch the movie of the future unfold. So both extreme optimism and extreme pessimism, converge on laziness, and on people not doing anything. So, so I, so I, I, yeah, so I think moderate optimism is the, correct thing and then, and then I- I- I think you have to always pick, pick your battles. The, the part that's, the part that's, I think more difficult about education and healthcare, or historically was more difficult, was that these were, these were areas that lots of people were trying to reform, and there were lots of different attempts people had, if I- whereas, let's say the in 2004, 2003, 2004, 2005, when we started Palantir, the idea of trying to, to do a military-related software startup, there was nobody who even wanted to give you money as a venture capitalist. People thought we were insane. Yeah. And so, there was sort of an element where, if you could get through, you would have no competition, and then, you know, a decade later we still had no competition. There's probably a lot more going on in the, in the defense space now than there was in the, in the mid-2000s, but and, and again, and again, having zero competition, it, it's good if it works. Maybe it just tells you you're insane. So, even that's an ambiguous thing. But then, the- the- the place where I've had- we- probably the two areas where we've tried to invest- I mean I've at this venture capital thing. We started Founders Fund in 2005, and some in different ways I've been- been at this and I've done some angel investing before that, but I've been- been doing this for 20 plus years. And the area where we've probably had the least success from a returns basis in software, the two worst areas are, are educational software-related companies and healthcare IT companies, and, and prob- like education, we- we felt was so hard, we- we didn't even, - we did very little. Healthcare, we tried a few more things, but, it's, and, and and the- the- the rough version of what's gone wrong in the healthcare sectors- we've done so little in education, I feel like I can't even comment on it. But, but healthcare, what's, what's roughly gone wrong is, you have all sorts of things that sound like a pretty good plan for reforming the system, and it's okay, it's this one angle on the pricing model that you need to change. But then, there are 10 different ways you can do it, and it's these complicated, ways you have to get the payments to shift from the insurance companies, or the government, or, the hospitals, which are very c-ludgy. If you can just get consumers or doctors to change, that might be easier, but they- they typically are not the people who pay. And so, there's sort of our, there's this, you know, very c-ludgy, messed up system. Lots of people try- try to do it. My, my sociological model is always that I'm- I'm deeply skeptical of, of investments where a lot of VCs, would go to some silly VC networking event and, want to brag about it. And I, I- I feel there's a lot of that with the healthcare, education, startups. probably not so much the- This is like this- this is like the green- this is like the green tech stuff, too, was too popular maybe. The green- green tech stuff, yeah- yeah, I mean, at some point, it- it loses money and then it's not popular anymore, but- but while it lasts it's very popular because there's- there's no fast-term accountability in venture capital. You know, sometimes you have momentum, and the valuations go up, and that- that does give you a feel whether the things are working, but in practice, you of- you know, it's- five, ten years later you get liquidity on- on these businesses, or even longer. It- it takes incredibly long. And so, people tend to over-index on these sociological factors and what's- what's popular. And that's- and so the- there was- there was- there's a way that, the healthcare, education, sectors, even though they're very broken, people have these- often too conventional ideas on how to fix them, and, and so, yeah, it- it's- I don't know, you know, an- an- another trend where I- I've tried investing some over, over the last decade is- the, you know, is- is- all these marijuana-related businesses, and it's like, yeah, it's- it's obviously like a big trend. but it's- it's an obvious trend and then, it- it turned out to be extremely hard to figure out what- what to do with. Yeah. It's- it's- some- that- the think things that are too popular and too obvious, it's just you have to have a totally different take on them or it's not going to work. yeah, you- you- like if you have an unpopular take on it. That- that- that might work. That- that's interesting. I- I- I want to- I want to pivot to macro for a little bit. We're a few months into the new administration. Donald Trump, hired a lot of people, a lot of people we know are working different parts of the administration. be- be- I want to, maybe- I see an obligatory question on trade, but first, like what are you most excited about in this going on in the administration right now? Are there things that you think are really cool or things that they're doing well? I'm the most hopeful I've been about things in a- in a long time. I think, I think there are some very deep problems that need to be fixed. I think, I think the opposition is- is completely exhausted and out of ideas, and so, so it's- it's- it's maybe the first time since, since early Reagan that there's- there's really an opportunity to, to change some things in this country, and- and- and it's not the sort of, lame Bush, Republican thing we had in the, you know, for- for a long time in between, and I don't think it's the- completely sabotaged first Trump administration where you had, I don't know, it- it- it got blocked on every level outside and inside the administration. Yeah, I- I- I think they will get, you know, and it's very unusual, normally the second term does less than the first term. This- this- this is going to be the- I think will be the real first term. Yeah, I have a lot of really bold friends in HHS and DOD, and Department of Education, and all these places. And then there also are extremely big things that are very broken. You have a- you know, you have a 6% current account- a 6% budget deficit, of 6% of GDP, but- 5 or 6% budget- GDP budget deficit, and- and that's basically, there- there's probably no fun way to fix that. You know, you raise taxes, you cut- you cut spending, you know, that- the- probably are some efficiency gains you can make, but what do you think of DOGE, speaking of efficiency gains? It's like, can they get a half a trillion dollars with DOGE? Like, what- what can they do? What do you think? Can they do more? I think there's a lot you can get. There's going to be a lot of resistance to getting it. You have to, you know, the- the- the correct answer is just, you need, you know, is- always my- my correct answer- my, you know, the- my answer on tax policy, you know, what should tax rates be, just always a little bit lower. Not going to tell you the number. They should always be a little bit lower. And, you know, how- how much should it should- it should always be the government should be more efficient, and then once you've made it more efficient, you should make it more efficient, and- there's, a lot of room for that. And- and so, Yeah, so I- And then there's- I don't know, I- I- I wouldn't want to limit it to half a- I don't know, it's- it's a, what is it, it's a 4 trillion dollar annual spend budget, I think it's- I think it's- I think it's higher now, yeah. I think it's- And then of course, you know, a lot of that's entitlements, but I think, I think, I think, I think, I think, I think, I think, 6 and a half now actually. Because 4- that- that were taking in, 4 words that we're taking in, we're spending 6 and a half, because 3.8 is entitlements. That's a lot. Yeah, and but even the non-entitlement pieces, you know, is- is incredibly, is incredibly off. No, and entitlements have lots of fraud, too, probably, and- but- but I- I usually I- I've been a little bit shocked. Like, I knew there was waste, but there seems like a lot of scams they're finding. I- I guess, like a lot more scams, I guess, than I- even knew. I think there's scams, I think the non-profit stuff is, is- it- is- The NGO stuff's out of control. is really out of control. It's- it's- it's- it's sort of like, I don't know. It's- it's- it's- it's sort of like vir- virtue signaling is a sign that you're doing something evil. Yeah, and- and- and so many, so much of this, left-wing philanthropy, non-profit world, I think was, you know, it was just a cover for, you know, borderline criminal. That's how you shield yourself. You put a virtue signal up while you're stealing money from everyone. Yeah. there's one of the, and there's all this stuff you have, you'd have to really go into the weeds of how this stuff works, but the way it was explained to me, there's- there's sort of a level 5 description, which is a line-item, you know, description of what the actual dollars are going to, and then there are ways these things get summarized, and the way they got summarized for, you know, a lot of the political appointees was a level 4 description, where you summarize a bunch of level 5 descriptions as a- you know, as an alternate, as a- in a level 4 way, and then obviously there are ways, you know, you can have, I don't know, you can have 20 groups that are, you know, providing food to- to different African countries and you can summarize that as food to Africa. That's- maybe an accurate description, and then if they're actually all working on the Biden reelection, that's an- that's an inaccurate description. At some point the descriptions are
+
+so inaccurate that the people in the government could be prosecuted for fraud. And you know, one of one of one of the, one of one of the people, who, who looked that I know who looked at this a lot, thinks you could just prosecute these people for fraud. This is something like this is what Oliver North was prosecuted for in the Iran-Contra scandal in the 80s was he mischaracterized the money and he mislabeled it. And it was like, you know, he was accused of defrauding the government. And I think you could prosecute thousands of these people for criminally for the thing that they wanted to prosecute Oliver North for in the 80s. Well, I hope they do. I think a lot of people need to be punished not to do it again, otherwise it's going to get turned back on. Let's I I want to ask you we've been talking about China on and off for over 20 years and they're imbalances. I think this week, the President declared trade war on them effectively with 125% tariffs as of as of now, it'll probably change in the next few days because these things keep changing. But it is like like what what do you think of the trade and tariff policy? What's going to happen? Bond yields sold off more than I expected. They yields were higher than expected so far. Like what what's what's going on? Well, it's Yeah. I'm hesitant to comment since obviously it's it's a very very fluid situation but but something like the sort of reset that's they're talking about now, seems where we're going where you need a very drastic reset with China. in theory, you need a reset with other people, but what we really need to get them to do is also reset things with China. I I think the rough numbers are that about a quarter of the U.S. trade deficit is bilaterally with China, but another quarter is indirectly with China. So China is is sort of half the problem and and so it's selling components that then get reassembled elsewhere. And and so if and and then China is the geopolitical rival. So you know, there's there's a way in which if, you know, people in, in a, I don't know, in a, Mercedes in Germany, are selling cars to the U.S., we might want to have those pretty well paying jobs in the U.S. and, and not in Germany and there are all kinds of sort of mercantilist policies that at the margins, Germany engages in. But you know, it's not going to, it's probably not going to repurpose the Mercedes factory to build tanks to invade the U.S. or something like this. Whereas whereas this you know, this sort of dual-use problem is the is the problem with China. And so it's, it's, you know, there's, there's sort of our there are ways the economic relationship with China is, is, is fairly efficient. You know, if people working for, you know, a dollar and a half an hour in a Foxconn factory, we don't really want to get those jobs in Wisconsin. But but it is this geopolitical rivalry where that's in the background, where that you have to somehow factor in. And this, the economists never are able to factor in properly with China. And so I think, yeah, the the, I don't know. I'm not sure it's, I would call this the optimistic plan but, but the the, the reset in trade that seems desirable to me would be that, we, we radically change the relationship with China, and we sort of induce a lot of other countries to radically change their relationship with China and, and that's that's how we, you know, and and maybe that's how we build a stronger Western alliance of of the free world. It was going to be some interesting negotiations in the next few months. Do you do you think that we could maybe using AI some more advanced manufacturing here that was in China? Is that a real thing in the next decade to do a bunch more of it here thanks to our more efficiencies and productivity? there's there's probably always a decent amount of things like that. You you have to you you have to always be extremely granular on how expensive the robots are, how expensive the equipment is. Because in some sense, manufacturing has been getting steadily more automated for 250 years and, you know, and and you've had the machines that make the machines, the machines that make the machines are getting sort of smarter and more complicated. and, and there are ways in which AI is a quantum leap, there's a way in which it's just, you know, a natural continuation of this, you know, two-century, two-century long, long process. I think but yeah, I think I think there are some parts that can be moved to the U.S. with AI, maybe also if you if you change some of the environmental rules and some of, some of the other anti-industrial policies we have in the U.S. and then but then I if if parts of this are moved to other emerging market countries, you know, I, I don't, Vietnam is look it's a communist country. It's, it's, it's a, it has bad mercantilist policies, but it's not planning to take over the world. And so at the margins if we can move things from China to Vietnam, that's a big win. I want to ask you about a theory I have that's based on how you see things. So one of the things you've been talking a lot about lately is is how our culture, I don't want to put words in your mouth, but things are broken to such an extent that like we're not advancing as quickly as we were in the, in the industrial revolution, right? There there something's wrong with our culture, something's wrong with science, it's not not advancing. Yeah, I would I would say yeah, the, the, there's it's generally been stagnant in the world of atoms, not the world of bits, for something like 50 years. And, and then the why it's happened is over-determined, but there are cultural factors, maybe we just ran out of ideas, which is a very pessimistic version. Maybe there's something wrong in our culture, maybe we're too risk-averse, maybe we're, we're scared about how apocalyptic some of the science and tech are. but for, for a range of different reasons, it's, it's slowed down since the 1970s. And I, I tend to think of things, and I'm not sure this is how you see it, but I take I take some of maybe your interest in Gerard and in mimetic theory and I say people tend to all think of things the same way even when it's incorrect because that's natural to be mimetic and to think of things the wrong way together. That's that's kind of why culture is moving in the wrong way. And so I I tend to see that there's a lot of opportunities right now thanks to the fact that you do have this kind of broken cultural situation where people are thinking of it wrong. So for example, I'm particularly bullish and not strictly random on Elon's Boring Company. I'm excited I was working on it with some of the guys yesterday on tunnels, because I think it's just obvious we could create trillions of dollars of value by building tunnels and getting rid of traffic around our cities, and the reason that opportunity exists is because of this thing that's really broken because it's an obvious thing, but just it's it's so broken that no one's doing it. Is there other things like that where there's opportunities tied to the fact that things are broken, and do you see it that way? Well, the those those those anything that fits that pattern is a great opportunity. So, it's, if it's, if you have some if s if you, you know, it's it's always, if it's broken, not because of the science or tech. So, it doesn't require a miraculous, you know, you don't have to have a dozen miracles in terms of tech breakthroughs. You have to just do something in this, you know, in this non-mafia-controlled drilling way or whatever where, you know, I think so many of the, tunneling is this, a super corrupt, contracting, it's mafia-adjacent, you know, sort of super corrupt labor union-adjacent. And so, I don't know, it costs, you know, what it cost to build a subway in Manhattan. It's like a billion dollars a mile. It's like a billion dollars, billions, yeah. Billions, yeah, a billion dollars a mile, so ten ten times I think it's ten times as much as Paris or something like that, which we don't think of exactly capitalist efficiency. It's the same. So, and Elon's a ten, and Elon's a tenth the cost of Paris, so it's like a hundred X multiple. It's crazy. But, but, you know, but then the the the place where I, I always think it's non-trivial is, is there's there's some non-tech reason we're not even at the Paris level. Yep. Yep, and so but if you could push through then you could do something big. You could you could do even but you can do something big, even if you could get to the Paris level. And, and so you have to think really hard about what that what that political blocker is and how to, how to overcome that. And and so there's all these things that are that are dysfunctional and broken and not working. And like, and like, if things are right now, I think you're more optimistic than you have been, you said. Like, should we be trying to use our voice and fix things more? Should like, I know a lot of friends who have just decided to exit, right? And a lot of friends are in Singapore and Switzerland, they gave up, they think it's going to be too hard to fix it. I I feel like you I feel like you're in between this where you're you you've done a lot of things to fight for our society and to fix a lot of things, but then you're like skeptically you should be pushing too hard to a bunch of areas. How how do you think about that trade-off with voice and exit on these things? I think it's I think it's very important to try. It's very important to pick, it's very important to pick the right battles. Is what I is what I would always what I would always say. And so I don't know, yeah, the, the, the in-between answer is, you know, I, I don't think you can just be, I don't know, shooting at bad guys when they're two miles away and firing your guns at random, and it's it's like yeah, you get, you get credit, you get credit for some kind, you know, Marxist labor theory of value, you're trying hard, but, we're not, Joe, we're not Marxists. You're it's not about trying, it's about actually winning. It's about it's it's not we're not measuring input, we're measuring, you know, where where you can actually, where you can actually get output. I, I I, I keep trying in a lot of these areas. I, you know, we've we've we've made a number of investments over the years in, in nuclear technology. and it it always, it always when you look at the science, there are all these much better ways that in theory, you could do it, you could build small modular fission reactors. Maybe the fusion technology's not that far away. There are different verticals within the industry where things are extremely broken, and in theory should find a way to to, to build a successful company that overcomes some of these these problems. And then, there's, you know, and then there's a sobering reality that, you know, the Nuclear Regulatory Commission basically hasn't approved a new reactor design in in 50 plus years. And so there's so so it's always, it's always these these these these things that you're you're trading off. Probably, I don't know, probably one place where I'm I'm structurally a little bit more pessimistic is that, there's there's something about the cities that I think is very hard to reform. and and you know, I'm I'm in I'm in Los Angeles. We just had these catastrophic fires. And what's what's what's what's I think just depressing about it is that there are half a dozen reasons we can give for the fires. It can be, you know, it can be the California Coastal Commission that didn't allow people to build modern houses that were fireproof. It can be, it can be the fire department that didn't have, you know, where there was no water in the reservoir. it can be the three Kristen women running the fire department that maybe will be now replaced by three Karen women or something like this. Or, it can be the homeless people with blowtorches running around, or, you know, and, or it can be the mayor who is, you know, out to lunch in Africa or whatever. And and and and somehow the pessimistic thing is that, I, I, I, maybe the mayor gets turned to scapegoat and gets, you know, doesn't get re-elected or something like this. But, but that, that's about the, that's about the limit. And then, this just looks like a, a structurally hard, hard to reform thing. It's very hard to fix. So, but could you Then And then, this is where, you know, this is where, this is where I would be deeply skeptical even of of a place like Austin, Texas, you know, it's, it is, I mean it's a government town, it's a, bad university college town. It is, it is one of the, it is a It is a pretty good university. Well, University of Texas, not not University of Austin. We're doing well but even UT has some great students, too. It's not too bad. It is it is, yeah, but the whole, the whole, the whole structure, the whole structure The professors are going to be more progressive, they're going to break they're going to break the policy, the economic structure. The the the the economic structure. but there is an answer here. There is an answer here, right? So, what's fascinating is in the Texas constitution, cities only exist at the behest of the state. And so, if you actually got the city to be a little more if it became a little more broken, and you get the legislators and the governor to step up, you can create a capital district and you could actually run it like in a competent way. So, I, I think the very first governor to actually fix a blue city will be like a hero and then you'll do it in a bunch of other red states. So, I think it's possible. Right? and wait let me just totally naive here? What you have had 20 years of Republican governors, why have they not pushed for this in Texas? You've had a bunch of Bush Republicans, as you would call them, who and I I like Greg Abbott, I think he's a good guy. But there's just not like the energy to like go in and be like, &quot;We are just going to fight this and fit it and it's unacceptable and we're getting rid of this nonsense.&quot; There has not been that energy yet in the party. So, like if I for example were to take over in 10 years and do that, I would just fix the city. I see this is unacceptable, it's broken, here's what we're going to do instead. Like there's the fact that there's more people dying from not having enough police, the fact it's just insane, we just got to fix it. You know, I that that's what I would do. Okay. Well, anyway, this is where this is where I would push back, where, you know, this is just walking around Austin the last few days, it seems like there are right now it's a a lot of homeless people. Right, right now the progressives are in charge. Yeah, that that's that's in the city, you're right. You're right, it's a problem. And then, and then somehow it doesn't bother, you know, it doesn't bother the Republican governor because, you know, Republicans, well, they don't have to live in Austin. They live elsewhere and maybe I think it bothers him and they've talked about making a capital district. I think there's I think they need to they need to, yeah, they, they're, there's a lot they're trying to do well right now, but that's not a, it's not a top-ten issue. Yeah, it's not yet and I think it should be. So, just going back to the question then. Like, so do you do you I think so we talk a lot about so, so, yeah, so I I there's there's some point where it's, you know, it's the right battle to to pick, but you can't you can't do all of them obviously. You can't, I don't know. I don't know this is probably not the best analogy but it's, if you if you go surfing, you know, it's, yeah, you you want to paddle just in front of a wave, and you have to you have but the wave has to be there. Yeah. And if you're if you're paddling like crazy on a still day where there are no waves, it doesn't work. Yeah. So we we live in these complex systems and like a lot of people they they basically are maybe too pessimistic or too optimistic like you said, they just think the system's going to happen no matter what. I guess, from the great man theory of history you say, it's not just that a great man come and does something, you have to understand the system, you have to understand what's possible, but you do believe people can then make a big difference if you if you understand it well enough. Yeah, you have to there's probably some sense of timing, there's, there's, there's, there's some point where where these things where these things where these things can break through, you know, yeah, if, if, if Austin can be fixed, you'll, you'll be the one to fix it, if it if it can't be fixed, I'll be the one to have told you, told you so. And maybe that's a lesser achievement. We will we will, we will, we will see what we can do. There's been But, but Joe, like the optimistic thing is, I think there are some other things you could do that might be bigger than fixing Austin. And so if you, so if you get too distracted by Austin, this could be a very, very costly mistake. Although although studying you're writing yourself short. You're You're just you're just thinking fixing Austin is, is this really big thing you can do. And for an average for an average person, this would be a big thing. But, you know, I I get it. So, I think studying SF and studying Austin led me to understand the NGO thing, which I then was very helpful with with with with with DC and we actually are working with people running a lot of agencies in DC to go after the NGOs and based on things we've learned the last seven, eight, eight years. So, I think, I think sometimes studying the problem around you, kind of you follow the trail and you do find useful things to fight for. And, let's, you know, speaking of timing, there's a big vibe shift going on in Silicon Valley right now. I think I think it's very different than it was two years ago, in a positive direction. Some people say there's a even a spiritual revival component to it. Like, do you think it's real and what's what's what what's what's changed in the vibe in Silicon Valley? What what's possible now based on that? I think, I think it has, I think it shifted a lot. and then, of course, it's you have to sort of think about why was it so monolithically center left, left before? And, and you can, you can analyze it on the level, you know, I was I was on the, I was on the Meta board for 17 years from 2005 to 2022. And, there's sort of one version where it was people like Zuckerberg or Sheryl Sandberg were just these sort of communist billionaires. and then there is a, there was sort of a bottom-up theory where it was kind of, this, woke, millennial workforce that that was sort of this mob that was ruling the company or something like this. But then there's also sort of a top-down theory that it was basically, incredible pressure from this, left-wing regulatory state that pushed these companies. And I think, you know, I think that was, that was a, a big a big dimension. there was sort of a lot of surface area where these things could be regulated. And as long as you sort of tilted them to the left, you you ended up, you thought you were appeasing the, the, the, the beast. And you're protecting yourself. There's some way in which, the founders, you know, I again, I cite someone like Zuckerberg. I don't think we're, you know, deeply political. He didn't want to, you know, he wanted to spend his time building products, thinking about that. He didn't want to spend his time, you know, at congressional hearings in DC. So it was easiest to do something. It was easiest to do something, and, and it often seemed like it was sort of a moderate amount you had to do. We had to do, okay, we do some DEI, it's, you know, we'll get credit for this and then it won't hurt us that much. And, and then, and then, basically at some point. And then, you know, if you, if you do something and it doesn't work. So let's say, let's say we're doing DEI, but we are, our our workforce is getting, is not getting better. it's always ambiguous and you can say, you can say that you haven't done enough of the thing, or you have, you can say we have to stop it all together. And so the, the way I would tell the arc was for, for many years, the answer was just, we have to do more, and we have to do more. And then, at some point, it completely collapsed. And that collapse happened in some way over the last four or five years. But it it wasn't really safe to admit it until like the last several months, right? In some ways. I think I think it was it felt very unsafe to admit it in the first Trump administration, because in some ways, all these things went into overdrive, and they were sort of polarized around these sort of tribal politics, or the tribal politics were used to push these things into overdrive. I think by the time, by the time Biden came in, it was safe for people behind closed doors to say, &quot;This stuff is is is really not working,&quot; or, you know, you know, and and then and then and then, certainly by the time by the time Trump came back, it was, you know, even if people did not support President Trump in 2024, didn't support him publicly, there was an incredible felt sense among all the top CEOs I know in Silicon Valley that there's there's all the stuff you can't talk about. There are things they tell me behind closed doors that are very different from what they feel they can say in public. And the, the gap, the gap felt really, really big for, you know, a number of years. There was I, I know there was a, one, one of the bigger tech companies, you know, again, there's it's, it's over-determined, there's a bottom-up, top-down, you know, middle-level management layer, there are all sorts of layers of this stuff that got messed up. But, their version was, &quot;Yeah, you had the the most woke workforce in San Francisco, and so, it was just, they were going to move a certain percentage of their people out of San Francisco every year,&quot; and that was, that was, that was the plan. And then, you know, that, that was not what they could talk about. So there was sort of a conversation they'd have with me, and, you know, not, not inside, not inside the company. And so I think, I think the, I think the, the delta between what people said behind closed doors and what they thought they could say in public was extremely big. And I guess this is always a problem with these, you know, speech codes, these, these, restrictions on free speech, is that they eventually backfire very badly on the left, which is pushing them, because, at some point, it sets up this thing where people don't flip at the margins, at some point sets up this thing where they flip radically. At some point, you know, it only takes, you know, one little child to say the Emperor has no clothes, and you get a cascade. That's right. So, it's scary about woked AI as well, I guess, the same way. You don't want to make too many rules to try to protect it from saying things because all of a sudden, I mean, could, could could go the other way. It's interesting. But, but well, Yeah, there are other reasons you want to do that, too. But but but I, I think something like this is what happened. It was, you know, I think there's sort of this the setup for I think it's the Teamwork Rand Private Truths, Public Lies, this sort of economics theory of when you have a revolution. And it's, it's when everybody is lying and everybody knows that everybody is lying. And then, then you can get this at some point, you can get this very, very fast preference group cascade, and something like this happened in in Silicon Valley in the last few years. There was a, there was a buildup that took a few years for people to realize that, you know, things were very different, and then eventually they realized, that everybody realized it, and then, then it can break. Probably, this is by the way, also the, the more, the hopeful thing on on Doge where the pessimistic view is, &quot;Man, you know, the government always grows and no departments ever get shut down and nothing ever changes.&quot; I think Milton Friedman's line on it was, you know, there's not a single government program that's ever gotten defunded once it gets started. So, it's, it's always just a one-way racket. but then, you know, in 2019, maybe people like the two of us had our suspicions that there were people in government that weren't working very hard. But after five years of remote work, and what we know from our companies is that remote work is not working, and five years of people, 90% or whatever of the federal workforce not working, and not making a difference, you sort of realize that these people weren't working before and it doesn't matter and maybe and maybe maybe, you can, replace them with AI, or maybe you can replace them without AI, and just use, the AI can be completely fake and we can improve things tremendously. Well, that's that's a very optimistic note from you, Peter, to end it on. So thank you very much for for being here today. All right. Thanks for having me.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
