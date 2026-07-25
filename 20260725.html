@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Saturday, July 25, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260724.html">&larr; Jul 24</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Saturday, July 25, 2026</h1>
+            <p class="day-sub">3 videos &middot; 2 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=F3INH9wZXoQ" target="_blank" rel="noopener">Why Physical AI Is the Next Platform Shift<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Y Combinator</b><span class="subs">(2.3M)</span></span><span class="dot">&middot;</span><span>20:11</span><span class="dot">&middot;</span><span>1.7K views</span><span class="dot">&middot;</span><span>2026-07-25</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Eric%20Landau%22">Eric Landau<span class="chip-desc">Co-CEO, Encord</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Eric Landau, Co-CEO of Encord, explains how his company evolved from a computer vision tool into the data layer for physical AI, emphasizing the compounding nature of product-market fit and the importance of riding the emotional rollercoaster of startup life.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Academic &amp;...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Eric Landau, Co-CEO of Encord, explains how his company evolved from a computer vision tool into the data layer for physical AI, emphasizing the compounding nature of product-market fit and the importance of riding the emotional rollercoaster of startup life.</p>
+<h3>Background &amp; Origin</h3>
+<ul>
+<li><strong>Academic &amp; Professional Trajectory:</strong> </li>
+<ul>
+<li><strong>Particle Physics &amp; Quant Career:</strong> Eric Landau spent a decade as a high-frequency trading quant following a background in big data particle physics.</li>
+<li><strong>The "Bitter Lesson":</strong> Early AI relied on heavy feature engineering and domain expertise (mirroring his early career in physics and quant trading), whereas modern AI relies strictly on scaling data and compute.</li>
+</ul>
+<li><strong>The Decision to Quit:</strong> </li>
+<ul>
+<li>Left a lucrative quant career during COVID at the exact moment his trading desk experienced its most profitable month ever (including the day oil traded negative).</li>
+<li>Spent early days fighting Python dependencies on a couch, experiencing immediate contrast with the existential dread of his previous career.</li>
+</ul>
+</ul>
+<h3>Product-Market Fit &amp; Market Evolution</h3>
+<ul>
+<li><strong>The "Desert" Years (2021–Release):</strong> </li>
+<ul>
+<li>Spent two years building before achieving breakout adoption, driven by long-term conviction in AI as a generational paradigm shift.</li>
+<li><strong>ChatGPT Catalyst:</strong> ChatGPT didn't create an overnight binary switch for Encord, but it made the market receptive to conversations about AI infrastructure.</li>
+</ul>
+<li><strong>Compounding PMF:</strong> </li>
+<ul>
+<li>PMF was not a single launch event, but a slow, daily compounding process where the market moved toward their continuously improving product.</li>
+<li>Milestone of realization: Closing sales via Gong without knowing what the customer's company actually did.</li>
+</ul>
+<li><strong>Data Scale &amp; Operations:</strong> </li>
+<ul>
+<li>Deals with multiple petabytes of multimodal data (video streams, sensor data, audio, language).</li>
+<li>Processes more data than was used to train GPT-4.</li>
+<li>Maintains a Bay Area operations facility equipped as a "film set" for robot data collection, alongside headquarters in London.</li>
+</ul>
+</ul>
+<h3>Pivot to Physical AI</h3>
+<ul>
+<li><strong>The 80% Economy:</strong> </li>
+<ul>
+<li>Started in vision because it was the hardest modality, anticipating multimodal systems.</li>
+<li>Shifted focus as the market moved toward physical AI, noting that 80% of economic activity involves manipulating or moving things in the real world.</li>
+</ul>
+<li><strong>Key Use Cases:</strong> </li>
+<ul>
+<li>Autonomous driving (nearing mass-scale production).</li>
+<li>Robotics (humanoids, consumer robotics, manufacturing), with robotics insiders predicting robots will outnumber humans in 5 to 10 years.</li>
+<li>Quirky applications include facial recognition for cows to track health.</li>
+</ul>
+<li><strong>Product Stack:</strong> </li>
+<ul>
+<li>Beyond data collection for pre-training, Encord provides data management, curation ("finding a million needles in a billion haystacks"), annotation/enrichment, and evaluations.</li>
+</ul>
+</ul>
+<h3>Team Building &amp; Sales Evolution</h3>
+<ul>
+<li><strong>Building the Sales Org:</strong> </li>
+<ul>
+<li>Built entirely through trial and error, requiring three successive sales teams before finding what worked.</li>
+<li>Highlighted the danger of ignoring YC advice (e.g., keeping a bad hire for 9 months due to a lack of a single forced reason to fire them).</li>
+</ul>
+<li><strong>Geographic Strategy:</strong> </li>
+<ul>
+<li>Co-founder is in San Francisco; Eric is based in London.</li>
+<li>Strategy is to be where important people are (customers and talent, then investors). Most customers are in the US/Bay Area, while London offers a comparative advantage for AI and engineering talent with less intense competition.</li>
+<li>Competes against scaled players and companies like Mercor, welcoming competition to drive company improvement.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Whenever I would go to sleep at night, I would like hit my head on the pillow and I would think, what am I doing with my life... and when I started a company... I would go to sleep at night and just think about the problems of the company. I wouldn't have the existential fear anymore."
+— Eric Landau
+</blockquote>
+<blockquote>
+"Product-market fit is both product and market... some people get it by setting a market constant, and then compounding their product to hit that market. Sometimes, it's the market comes to the product... and for us, our product was just continuously getting better and better and better."
+— Eric Landau
+</blockquote>
+<blockquote>
+"Starting a company is a roller coaster. So there's like low lows and there are high highs. And my view is that you should just ride the roller coaster. Like people try to mitigate it, but just ride it. And try to have fun."
+— Eric Landau
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Starting a company is a roller coaster. There are low lows and there are high highs. My view is that you should just ride the roller coaster; people try to mitigate it, but just ride it and try to have fun. 
+
+Please welcome Eric Landau who is the co-founder of Encord, which is building the data layer for physical AI. Welcome, Eric. Thank you. Thanks for having me. 
+
+As I was preparing for the chat and looking at your background, I was actually pretty surprised. It is very surprising that you did big data particle physics and then you became a quant for 10 years before creating Encord. Lead us through that. Why? Is there a common thread here? 
+
+The common thread is almost the trajectory of AI development in the time that I’ve had my career. It is quite interesting because, do you know the bitter lesson? The bitter lesson is this idea that AI used to be built by thinking very carefully about it. You would do all the feature engineering and try to induce as much domain expertise into the system before wrapping it up in machine learning. They found that, actually, it is better to not do any of that and just to scale the system. Just add more data and more compute into it. 
+
+When I started in physics, I was doing particle physics, and the strategy was based off of the physics itself. You would filter the data based on how the particles were moving, the momentum, and then in high-frequency trading, it was thinking about the market, what factors actually move the market one way or the other, crafting that, and then putting it together into a machine learning model afterwards. Now, it is just throwing data into a big pile of machine learning and seeing what comes out the other side. Hopefully for the best. 
+
+Speaking of Encord, I realize we were chatting quickly yesterday about that. That was not the best ideal bet to become wealthy. You were 10 years as a quant; I guess you were making way more money as a quant than you did as a founder. Is that right? Yes, and in fact, when I quit, I quit during COVID and everything just went crazy. I quit to go start a company, and that month, the market went absolutely crazy. It was the month where oil was trading negative and there was extreme high volatility. People were making a lot of money on Wall Street bets. My desk made more money in that month than I think they made in the previous 3 years combined. I just quit, and I was sitting on my couch fighting Python dependencies in a machine learning library, and I was like, what have I done? But obviously, I didn’t do it for the money. 
+
+You left a lot of money on the table. Well, you didn't know you left as much as that. What led you to actually quit a very well-paying job to become a founder? My co-founder and I really believed in AI, and to us, it felt like this was the technological paradigm shift of our generation. This was the early days of the Internet; this was the early days of computing. 
+
+I was a quant for quite some time, and for the last several years, when I would go to sleep at night, I would hit my head on the pillow and think, &quot;What am I doing with my life?&quot; When I started a company, even when all the craziness happened in the markets, I would go to sleep at night and just think about the problems of the company. I wouldn't have the existential fear anymore; it was all more concrete. What we were doing actually was providing value to someone. It doesn’t feel like it at first, but you believe you are part of something which is bigger than you, and it is very rewarding. It is extremely rewarding to be in a company and see it grow and see the impact that it can have. 
+
+We are in 2021; that is when you created Encord, right? How long did it take for you to be convinced that there was something here? The early years were not that easy, right? No, we were in the desert for a couple years. Why did you continue and not give up or pivot? We still believed in AI and the power of the technology, the generalizability of it, but it was hard to convince people that it was as important as it was. Then ChatGPT happened and the tenor of the conversation changed, which definitely helped us quite a bit. 
+
+The ChatGPT release actually unlocked the market. Is that because people needed more data or because people started to realize that AI was important? It was more that they were open to the conversation. Product-market fit is both product and market, and these things have to come together. Some people get it, they achieve product-market fit by setting a market constant and then compounding their product to hit that market. Sometimes the market comes to the product; the world changes and suddenly the thing that people didn't care about, they now care about. But in most cases, it is both moving in the same direction. 
+
+For us, our product was just continuously getting better and better. After ChatGPT, I wouldn't say there was a big binary threshold change, but the market started coming to us faster than it was before. A lot of companies, they did a product launch, they changed their product, and then they suddenly felt immense product-market fit. That never happened to us; it just felt like it was a little bit better every day. 
+
+Looking back on it, my co-founder thinks the time we had product-market fit was when we saw a sale close in the Gong channel and we didn't know what the company did. He was like, &quot;What is this company?&quot; That was very satisfying because we were doing all the sales ourselves. We were intensely involved in every single part of every company that we were trying to sell to. When you see someone giving you money and you don't know what they do, that is like, &quot;Oh, we made it.&quot; You were not involved in the sale; is that what you mean? That was some years ago, but it was only looking back. There was never a single moment where we thought, &quot;Oh, we have got product-market fit.&quot; 
+
+You are a physicist and you had to build the sales org at some point. How were you able to do that? How did you hire the first salespeople, and when? I wish we had a more elegant answer to this, but it was trial and error. We brought in a sales team, it didn't work. We brought in another sales team, it didn't work. By the third sales team, it started to work. The advice that they give you in YC is almost always right, but you still make the mistake. 
+
+I remember very distinctly there was a particular hire that we made, and we talked to you. This was maybe a couple years after we were finished with YC, and you said, &quot;For this role, you should look out for this and this and don't do this.&quot; We realized we made a big mistake, but we still brought them on and we had to learn that it wasn't a fit. That one was, I think, probably 9 months. 
+
+There is no world in which you keep someone 9 months that you know is bad. Sometimes it is never &quot;bad&quot;—it is like, &quot;Oh man, this is bad,&quot; but usually it is one of those things where you know in your gut or you have the feeling, but it is just difficult and there is never a strong reason. You just know it is probably not a fit, but there is nothing that pushes you to it. What we have gotten a lot better at over the years is just following your gut and making the right decision faster. 
+
+Let's go back to the product. You didn't start with physical AI; it feels like you have pivoted a few times, still always around data for AI, but the target applications have changed over time, right? What did you start with? Was that healthcare? We started in vision, and our thesis originally was that vision was the hardest modality to start with. We always wanted to be multimodal because our thesis was that AI systems would be multimodal naturally because humans are multimodal. The best way that you make the best decisions is to take as many sensory inputs as you can accept. Vision was a very dense data type, we developed a lot of expertise into it, and then we moved into multimodality. 
+
+What happened with physical AI is that is one of those cases of your product going up and the market coming down. The market started really coming in our direction, and the biggest application of multimodal AI now is in physical AI. Now we work in a lot of robotics, autonomous vehicles, logistics, and manufacturing, but we started in other use cases which are less popular now. 
+
+It feels like in some sense, physical AI is still nascent as a market. I don't see robots every day yet, but what you are saying is that the market is already there for you. There are a lot of robots that are working in the real world, but the opportunity in physical AI is enormous. 80% of economic activity is manipulating or moving things in the real world. If you talk to a lot of the robotics folks, they think in 5 to 10 years, there will be more robots than people. This will be a room or a world packed with autonomy. 
+
+Your company is doing great, and you are betting the future of the company ahead of the curve on a new space. Is that fair? How did you come up with that decision? Did you see new customers coming from physical AI, or was that the result of a deep conversation with your co-founder? With AI, you can never be comfortable; you always have to try to think about the next thing. The best way to do that is to talk to as many people as you can, talk to smart people, and have conversations with your co-founder. We are constantly talking to prospects, to customers, people that are ahead of us in this space, and other co-founders in AI, trying to absorb what is going on and synthesizing those things into the next bet that we can make. It is not us sitting in a room quietly trying to imagine the future; it is really being out there and getting as much data as we can. 
+
+You shift the narrative and how you speak of the company itself. What about existing customers? Do you still have a lot of healthcare models? We still have a bunch of healthcare companies. We have companies in basically every application, and the most fun one—people always ask what the most interesting one is—is facial recognition for cows. It turns out that humans are really bad at recognizing cow faces, but algorithms can do it quite well. Once you know who the cow is, you tag it, then you can recognize its face many times. 
+
+What would you say are the biggest use cases today in physical AI? Autonomous driving is one that is further along the maturity curve, so it is closer to actual production. One of the biggest growth areas for us is in robotics—humanoids, consumer robotics, manufacturing. There are so many different applications for robotics that we are seeing. 
+
+How do you collect data? We do have a facility in the Bay Area where we have robot systems and operators collecting data for various tasks. A lot of the data is collected in production as well, so our system ingests production data from the customer. It is video stream, sensor data, audio, language; it is multimodal data. We have almost like film sets where you build a thing, you have a robot do a thing in a specific environment, and collect data in that environment. 
+
+The rest of the product is doing the management of that data, the curation—selecting the right data. We say it is like finding a million needles in a billion haystacks. There is a lot of data that you need to use, but even more data that you have, then the annotation and the enrichment, and finally the evals. We have hundreds of customers. We deal with more data than was used to train, well, from what we know, GPT-4. We are dealing with multiple petabytes of all different types of multimodal data. 
+
+You are based in London, but you still built that facility in the Bay Area. Why? My co-founder is in San Francisco, I am based in London, and we started the company in London. Our general philosophy is you should just be where the important people for your company are. For us, it is customers, talent, and then investors. Most of our customers are in the US, and of those, the vast majority are in the Bay Area. So my co-founder moved there, we built a facility there, and we built a lot of operations there just to be close. 
+
+Talent is mixed, but I think London has some great talent for AI and engineering, great universities, and people from other companies. There is a comparative advantage for talent right now in London and Europe. The competition for talent is slightly less intense in Europe than it is in SF. 
+
+When we started the company, the main pushback we got was that this space is way too competitive. Over the years, a lot of our competitors actually pivoted, or they consolidated, or they ran out of money. Now it is getting competitive again, and our view is we want it to be competitive. We prefer to have really good competitors because they push you and make you better. Standing out, we all have different flavors. Our focus is really on physical AI and scalability of the data—being able to operate on the multiple petabyte level. 
+
+If anyone here is building in physical AI and they are small, what should they do? Should they use such a product like yours? Usually, people come to us when they have built internal tools, they have tried a POC, and they are at the inflection point where they need scale. I don't want to oversell our product when it is too early. When you are ready, you should use a product like ours, but you can start with open-source tools. 
+
+Before concluding, any advice you would give to a founder in the physical AI space? The advice I think is important for basically all founders, which came from one of the YC retreats that the CEO of Reddit was talking about: starting a company is a roller coaster. There are low lows and there are high highs. My view is that you should just ride the roller coaster; people try to mitigate it, but just ride it and try to have fun. Whenever you are at the low, you know that a high is coming. Whenever you are at the high, you know a low is coming. 
+
+Sometimes I speak about hacking a brain. If you can hack your own brain to enjoy the fire, and then when there is a new fire or a new challenge, you just run to the fire because it is exciting, then it becomes so much more enjoyable as a journey. You are going to go through crazy highs and crazy lows. Roller coasters are fun. You become more, you realize that you have more control than you think over your own mental state, and you can accept what the reality is and how you react to it. That is something that has helped a lot in seeing the fluctuations increase over time. 
+
+Awesome. Thank you, Eric. It was great to have you with us today. Thank you so much.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-1">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=N5UhBCbxdIA" target="_blank" rel="noopener">Nvidia CEO Jensen Huang Talks AI Golden Age in South Korea, New Naver Investment (Full Interview)<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/PXTURrVHPIkg8Vmb3AvphcIBcSKE33kqDOgyeUvVLFsDAkEGamXpaEhEYh9YNERkvrW1BBmC=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Podcasts</b><span class="subs">(528.0K)</span></span><span class="dot">&middot;</span><span>13:46</span><span class="dot">&middot;</span><span>2026-07-25</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Jensen%20Huang%22">Jensen Huang<span class="chip-desc">CEO, Nvidia</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>&quot;This is the golden ages for…</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">Nvidia CEO Jensen Huang announced major partnerships in South Korea, including a $500 billion business arrangement with SK Group and a $1 billion investment in AI cloud leader Naver, while emphasizing the critical role of open-source AI models in global cybersecurity and...</div>
+                    <div class="sum-full" id="full-1"><p><strong>TL;DR:</strong> Nvidia CEO Jensen Huang announced major partnerships in South Korea, including a $500 billion business arrangement with SK Group and a $1 billion investment in AI cloud leader Naver, while emphasizing the critical role of open-source AI models in global cybersecurity and innovation.</p>
+<h3>South Korea Partnerships and Infrastructure Investment</h3>
+<ul>
+<li><strong>SK Group Partnership:</strong> <strong>$500 Billion Business Agreement:</strong> Nvidia and SK Group entered into a comprehensive partnership spanning memory consumption, purchases, and AI supercomputer sales as SK scales toward gigawatts of AI factories.</li>
+<ul>
+<li><strong>Memory Supply &amp; Roadmap:</strong> Nvidia and SK Hynix are collaborating across a continuous memory roadmap, spanning HBM2, HBM3, 3E, 4, 4E, and beyond, with Jensen Huang noting that Nvidia faces memory and supply chain constraints.</li>
+<li><strong>SK Telecom AI Cloud:</strong> SK Telecom is building an AI cloud infrastructure intended to reach up to two gigawatts in the near future, utilizing Nvidia AI supercomputers.</li>
+</ul>
+<li><strong>Naver Investment:</strong> <strong>$1 Billion Capital Commitment:</strong> Nvidia is investing $1 billion in Naver, Korea's leading AI cloud provider, to support their expansion of a 200-megawatt AI data center in Korea and subsequent global scaling.</li>
+</ul>
+<h3>The Future Semiconductor Landscape and Supply Constraints</h3>
+<ul>
+<li><strong>Computers for Computers:</strong> <strong>Paradigm Shift:</strong> Huang noted that the semiconductor industry is moving beyond building computers solely for people. With the rise of 100 billion AI agents and billions of robots utilizing computers, the chip industry will need to expand to be 10 times larger over the next decade.</li>
+<li><strong>Infrastructure Bottlenecks:</strong> <strong>Growth Limitations:</strong> Nvidia is currently constrained in HBM memories, LPDDR memories, land, power, and construction workers. Huang stated that while the industry has the capacity to double infrastructure each year, growing much faster than that will be difficult due to physical limitations of land and power.</li>
+</ul>
+<h3>Global AI Approaches: US vs. China</h3>
+<ul>
+<li><strong>Strategic Differences:</strong> <strong>Tokens vs. Efficiency:</strong> Referencing conversations with SK Group Chairman Chey Tae-won, Huang noted that China focuses heavily on lowering the dollar per token, whereas the United States focuses on token quality. </li>
+<li><strong>Talent Pool:</strong> <strong>Researcher Manufacturing:</strong> Huang highlighted that China produces more AI researchers annually than likely the rest of the world combined, and that brilliant researchers across both nations will continue to find answers despite different resources, constraints, and conditions.</li>
+</ul>
+<h3>Open vs. Closed AI Models and Cybersecurity</h3>
+<ul>
+<li><strong>The Case for Open Models:</strong> <strong>Essential for Control and Security:</strong> Huang, alongside peers like Satya Nadella, recently signed a letter defending open-source AI models, asserting they are vital for cybersecurity, innovation, startup ecosystems, and company/national sovereignty.</li>
+<li><strong>Cost and Utility Realities:</strong> <strong>Closed vs. Open Pricing:</strong> Huang explained that closed models are often cheaper because users do not need to train, fine-tune, or host them. However, open models are necessary when organizations require strict control, specialized adaptation, or protection of proprietary corporate intelligence ("alpha").</li>
+<li><strong>Distributed Self-Defense:</strong> <strong>Mitigating Single Points of Failure:</strong> Huang cited the example of Hugging Face utilizing an open model (GLM 5.2) to quickly identify and patch vulnerabilities after an incident, demonstrating that open capabilities provide crucial distributed self-defense rather than relying solely on single points of failure in closed models.</li>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Semiconductor Industry Growth:</strong> Jensen Huang predicts the semiconductor industry will likely have to grow to be <strong>10 times larger than it is today over the next decade or so</strong> to support future demand from billions of robots and 100 billion AI agents.</li>
+<li><strong>Industry Growth Rate:</strong> Huang claims the global AI infrastructure industry has the ability to <strong>double each year</strong>, but will have a hard time growing much faster due to physical constraints in land, power, and construction.</li>
+<li><strong>SK Telecom Infrastructure:</strong> SK Telecom intends to <strong>build up to two gigawatts</strong> of AI cloud infrastructure in the near future.</li>
+<li><strong>Naver Capacity Expansion:</strong> Naver is scaling up its AI cloud infrastructure in Korea <strong>up to 200 megawatts</strong> while expanding its footprint globally.</li>
+<li><strong>Nvidia-SK Business Volume:</strong> Nvidia and SK Group will transact <strong>over $500 billion of business</strong> with each other over time, including purchasing memory and scaling gigawatt-level AI factories.</li>
+<li><strong>Nvidia Product Scale:</strong> Nvidia plans to build <strong>a trillion dollars worth of VERA Rubin systems</strong>, requiring massive system memory procurement from partners like SK Hynix.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"This is the golden ages for Korea... Their semiconductor business is booming. Their industrial business is booming. You know, this is a country that has the ability to help the world build out the AI infrastructure."
+— <strong>Jensen Huang</strong>
+</blockquote>
+<blockquote>
+"Instead of just a billion people using computers, we're going to have a 100 billion agents and billions of robots all using computers... My guess is that that, the semiconductor industry is probably going to have to be 10 times larger than it is today over the next decade."
+— <strong>Jensen Huang</strong>
+</blockquote>
+<blockquote>
+"Just because something is closed, doesn't necessarily therefore make it safe or secure... As an industry, as a world, we should have distributed, massively distributed self-defense."
+— <strong>Jensen Huang</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">Jensen, I think we just start with the basics. The Korea is incredibly important to the AI build-out globally. We'll get into high bandwidth memory, but just from this summit and from the president being here, what is the takeaway? What is it you're trying to achieve?
+
+Well, we're announcing a whole bunch of partnerships with them. This is the golden age for Korea, as you know. Their semiconductor business is booming and their industrial business is booming. This is a country that has the ability to help the world build out AI infrastructure; they are incredibly adept at adopting new technologies and it is a technologically forward-leaning society. They love using AI, and AI has really diffused throughout their society and their industry. So, this is a great time for them. 
+
+We're announcing several things. We announced a big partnership with SK Group, where our companies are going to enter into a business partnership where we do over $500 billion of business with each other, whether it's consuming and purchasing of memories or selling AI supercomputers to them as they scale out to gigawatts of AI factories. There's a whole bunch of other announcements, too. We're investing a billion dollars in Naver to help them—they are Korea's leading AI cloud. They're going to scale up in Korea to 200 megawatts, I think it is, and they're going to expand across the world. We have a whole bunch of announcements that we're making today.
+
+With the expanded SK relationship, there's also more direct involvement with Nvidia on the roadmap for HBM and future generations of HBM. Talk about that. I remember you being on stage earlier this year saying five years ago we told our supply chain what was going to happen and it did happen, and you gave some credit to the memory makers in going with you on that journey. Clearly, you want to be involved in the directional travel for future generations of HBM.
+
+Yeah, we're working together on—of course, we started with HBM 2, worked on HBM 3, 3E, 4, 4E, and then beyond. We have a whole roadmap of memories that we're working on together. It is also the case that the semiconductor industry has really changed. The reason for that is because we used to build computers for people to use, and we're going to still continue to build incredible computers, but these are now processing AIs for humans to collaborate with. 
+
+In the future, we also have AI agents and robots, and they're going to be using computers. So instead of just a billion people using computers, we're going to have 100 billion agents and billions of robots all using computers. The chip industry is surely not big enough. This is one of the realizations of the semiconductor industry: that now computers are built not just for people to use, but computers are being built for computers to use. My guess is that the semiconductor industry is probably going to have to be 10 times larger than it is today over the next decade or so. Working with our partners in Korea and around the world to scale up the supply chain and semiconductors, so that we're prepared for this AI future, is really important.
+
+I've had the opportunity to ask you about this more than once this year, but how much do you need the Korean economy to get going to increase the supply of HBM bits for Nvidia-based systems wherever they are?
+
+We don't have enough bits. We're constrained in HBM memories, LPDDR memories, and we're constrained in just about every part of the supply chain. We're even constrained now with land, power, and construction workers to set up the data centers. I think this is one of the areas that is going to make sure that we continue to build out in a throttled way for a decade. The reason for that is because this infrastructure, unlike electronics like PCs and phones, is really hard to scale up regarding land, power, and shell. All of the supply chain just really needs to get built out over the years. I think we have the ability as an industry to double each year, but we're going to have a hard time growing much faster than that.
+
+The $500 billion number is large. Could you talk a little bit more about what it encompasses? We've gone over a lot on your commitment to the US in terms of spending; is that Nvidia spending in the Korean economy, or is it SK fronting capital expenditures? Just a little bit more detail.
+
+We're going to be purchasing memories from them for many years to come. As you know, we build a lot of computers; in order to build a trillion dollars worth of Vera Rubin systems, you're going to have to buy a lot of system memories that go with it. We have large purchase agreements and large purchase intentions with SK Hynix. Meanwhile, SK Telecom is going to become an AI cloud; they are intending to build up to two gigawatts in the near future and, in that agreement, we will be selling AI supercomputers to them. Between us, we are going to do over half a trillion dollars worth of business.
+
+I was able to sit down with SK Group Chairman Chey Tae-won very recently for about 40 minutes, and at the end of the conversation, we got to the difference in approach on AI between the United States and China. His view was that China is very focused on lowering the dollar per token, while in America we're still focused on the quality of tokens. I wonder what you think of that.
+
+The goal of AI is to produce an intelligent, smart answer. You could approach it in a couple of different ways. You could make all the tokens smarter and smarter and, as a result, use fewer tokens to do so. You could also produce AIs that are much more efficient and maybe can think longer, explore more options, and as a result produce a smart answer. There are many different ways to reach intelligence and deliver smart answers. 
+
+In the end, I think you have to take a step back and realize that both countries have extraordinary AI researchers. Whatever conditions and whatever resources they have, amazing people will find great answers. My expectation is that China and the United States will continue to advance AI. The conditions are different, the resources are different, and the constraints are different, but these amazing researchers will find answers. In the case of China, they're producing more AI researchers than probably all of the world has in any given year. If manufacturing intelligence is important, they manufacture the most important version of it, which is the researchers. This is a country that's going to produce excellent AI technology, and we've got to continue to learn from them and work with them. You're here in Silicon Valley, and the number of AI researchers here who came from China is quite significant. We're really fortunate to have them here, and we just have to keep on racing.
+
+You made your first post on X by sharing a letter signed by many of your peers—American companies—to talk about the importance of open models to the industry and the development of AI. In the letter, it's pretty well explained, but what was the catalyst for now? Why did you, Satya Nadella, and others need to do that in this moment?
+
+We sense that there is a growing, wrong sentiment against open models. It's really important to realize that open models are essential for safety, cybersecurity, and innovation. They are necessary for startups and for company sovereignty. I see a future where the world uses tons of closed models—and I encourage everybody, including my company, to use OpenAI, Claude, Cursor, Cognition, and Perplexity, and use everything that you can because it's out of the cloud and it's just easier. You should build only what you must. 
+
+In order to build what you must, you need to have open models. There are areas where we must build our own, maybe because we have expertise that we simply cannot afford to share; this is our company's alpha and intelligence, and we have to make sure we keep that proprietary. Maybe our company works in an industry that's regulated and we can't pass along the service level agreement, or maybe it's something to do with sovereignty—that in a particular country you have to have your own AI and control it. I would recommend people build their own AIs, especially when they need to control them for whatever reason. I think the future will have lots of use of closed AI and open AI that you can then build upon. 
+
+One thing people misunderstand about open models is that, yes, you can host them yourself, but most people use computers in a cloud. Frankly, I think closed models are cheaper. If you don't have to build it or train it yourself, it costs a lot of expertise to fine-tune, maintain, guardrail, keep safe, and evaluate, and then you have to build computers to host it. There's nothing cheap about doing that. You need open models because you need control and you need to adapt something for your own specialized use cases. I think there's a lot of misunderstanding about closed versus open; we felt it was important for people to understand there's a world for both.
+
+Open-weighted versus open-source as well—there is a distinction.
+
+Open-weighted is as much open as you can get. In the way that we work, we put the weights out there and we also teach people how to train the model from the data that we also open source. The reason for that is we want to enable you to completely reproduce the AI model that we've open-weighted. I think the idea that the world is going to be one or the other is completely wrong, and the idea that open models are somehow unsafe is also fundamentally wrong. We just want to make sure people understand.
+
+To finish our conversation, the two big case studies were the release of Gummy K3, which on an open-weighted basis releases fully July 27th, and the case study of two OpenAI models mistakenly accessing Hugging Face's systems, where Hugging Face tried to use an open model in its defense. Would you reflect on those two? They seem to be really big moments in AI overall.
+
+Those are perfectly canonical examples. Just because something is closed doesn't necessarily make it safe or secure. It is possible for a model to be jailbroken, stolen, or leaked from the inside. It's possible that the guardrails or sandboxes of a closed AI model weren't properly engineered and it was able to attack another company. Just because something is closed and proprietary doesn't necessarily make it safe and secure. 
+
+Thank goodness we have several companies that build closed AI models; they are extraordinary and they are doing their best to keep it safe. But it is also a canonical case that single points of failure are where we have the greatest vulnerability. We cannot have single points of failure. As an industry and a world, we should have distributed, massively distributed self-defense. In the case of Hugging Face, thankfully they were able to access an open model—I believe they used GLM 5.2—to identify where the vulnerability was. They couldn't get a proprietary model to help them figure out what happened. This is exactly why you want open models: to identify where a penetration was and patch it up. It's a perfect example of why diversity of AI technology and open capabilities for self-defense are really important.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-2">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=99sPd15j3Zc" target="_blank" rel="noopener">What Actually Makes A Startup Durable<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/dGyATx87Fp_s1nZvnupUFSnMqbAPZ6nqRby9Esk1m6YE41iBq-9Z8iGoIgHTCT9SiDBUpP2V=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Y Combinator</b><span class="subs">(2.3M)</span></span><span class="dot">&middot;</span><span>47:36</span><span class="dot">&middot;</span><span>2.8K views</span><span class="dot">&middot;</span><span>2026-07-25</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Dalton%20Caldwell%22">Dalton Caldwell<span class="chip-desc">Partner, Y Combinator</span></a> <a class="chip" href="index.html?q=%22Michael%20Seibel%22">Michael Seibel<span class="chip-desc">Partner, Y Combinator</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>AI is rapidly reducing the cost and complexity of writing software, meaning the traditional &quot;hard bit&quot; of building pure software is gone; founders must now focus on distribution, hard regulatory/physical barriers, and deep customer engagement.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">At Y Combinator, partners stress...</div>
+                    <div class="sum-full" id="full-2"><h3>TL;DR</h3>
+<p>AI is rapidly reducing the cost and complexity of writing software, meaning the traditional "hard bit" of building pure software is gone; founders must now focus on distribution, hard regulatory/physical barriers, and deep customer engagement. At Y Combinator, partners stress that durable startups rely on obsessing over building something people want, launching early and often, and maintaining strong co-founder relationships rather than overly relying on AI or solo execution.</p>
+<h3>The Economics and Reality of AI Development</h3>
+<ul>
+<li><strong>Cost Trends:</strong> <strong>Intelligence Is Getting 10x Cheaper:</strong> The cost of intelligence drops by roughly a factor of 10 every year for the same level of capability, making token costs a non-issue over a 6 to 12-month horizon.</li>
+<ul>
+<li>YC provides accepted founders with $1M in free tokens, and student founders with $25,000 in credits through partner labs and hyperscalers.</li>
+</ul>
+<li><strong>Engineering Impact:</strong> <strong>Models Surpass Humans in Coding:</strong> There is essentially no programming task today where a human is more cost-effective or efficient than the absolute best available AI model.</li>
+<li><strong>The Death of Pure Software:</strong> <strong>Low-Moat Software is Dead:</strong> Products like Calendly, DocuSign, or basic SaaS wrappers lack durability because replication has become trivial.</li>
+<ul>
+<li>Startups must identify their "hard bit"—such as brutal B2B sales, complex hardware, or regulatory hurdles like obtaining a banking license.</li>
+</ul>
+</ul>
+<h3>Startup Ecosystems and Hubs</h3>
+<ul>
+<li><strong>Startup Hubs:</strong> <strong>SF Remains the Global Epicenter:</strong> While regional hubs exist (like London or Paris), San Francisco remains the primary global hub attracting the most ambitious people and biggest visions.</li>
+<ul>
+<li>Replicating a community from scratch is extremely difficult; founders should instead join an existing high-culture startup or move to an established hub.</li>
+</ul>
+<li><strong>Ecosystem Origins:</strong> <strong>The GoCardless Family Tree:</strong> Founded in 2011, GoCardless and a handful of other companies formed the kernel of the London startup ecosystem, later spawning dozens of major companies including TransferWise and Monzo.</li>
+</ul>
+<h3>Founders, Teams, and Co-Founder Dynamics</h3>
+<ul>
+<li><strong>The Solo Founder Myth:</strong> <strong>Co-Founders Provide Emotional Resilience:</strong> While a one-person billion-dollar company is theoretically possible, the marginal benefit of adding a co-founder far outweighs the coordination cost.</li>
+<ul>
+<li>Solo founders face higher statistical failure rates and often suffer severe crises of confidence without a partner to pull them out of the gutter.</li>
+</ul>
+<li><strong>Co-Founder Selection Criteria:</strong> <strong>Prioritize Integrity and Resilience:</strong> Look for the smartest, most determined, highest-integrity person you have worked with—someone who shares your values and whose absence on a competing team would scare you.</li>
+<ul>
+<li>Technical co-founders should not waste time hunting for a "business" co-founder; business skills are easily learned, and technical alignment is more valuable.</li>
+</ul>
+<li><strong>High Agency:</strong> <strong>Building Agency as a Muscle:</strong> High agency is the core belief that your actions produce tangible outcomes; it is developed by tackling progressively harder side projects and seeing them through to execution.</li>
+</ul>
+<h3>Research vs. Sales and the Startup Playbook</h3>
+<ul>
+<li><strong>The Build Trap:</strong> <strong>Launch Early and Often:</strong> Founders suffer from loss aversion and prefer building or researching over talking to customers because rejection is terrifying.</li>
+<ul>
+<li>Successful startups treat their business as an empirical hypothesis-testing exercise, launching early and constantly cycling between building and talking to users.</li>
+</ul>
+<li><strong>YC Success Patterns:</strong> <strong>Overwhelming Bottlenecks:</strong> Top-ranking startups set ambitious goals, reassess every two weeks, and relentlessly throw all their focus at their single biggest bottleneck.</li>
+<li><strong>Pivoting in the AI Era:</strong> <strong>Hypothesis Testing vs. Getting Sad:</strong> Pivoting should be driven by hard empirical data showing your core hypothesis is wrong, rather than running out of enthusiasm because sales are hard.</li>
+</ul>
+<h3>AI-Native Operations and the Future of B2B</h3>
+<ul>
+<li><strong>AI Integration:</strong> <strong>Start with Narrow Loops:</strong> To build an AI-native company, make internal information queryable (via tools like Obsidian or Gbrain) and automate hyper-specific, narrow processes (such as automated sales follow-up drafts).</li>
+<li><strong>What Not to Automate:</strong> <strong>Never Outsource Customers or Co-Founders:</strong> Founders must retain direct exposure to customer conversations and maintain authentic communication with their co-founders.</li>
+<li><strong>Model Routing:</strong> <strong>Automatic Model Intermediation:</strong> Within roughly 12 months, queries will be automatically routed behind the scenes to the optimal intelligence tier without human intervention or concern over specific underlying models.</li>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Cost Reductions:</strong> The cost of intelligence will continue a 10x cost reduction per year for the same level of capability — Speakers (Y Combinator Partners).</li>
+<li><strong>Model Routing and Abstraction:</strong> Within approximately 12 months, AI model selection will be entirely automated behind the scenes, routing queries to the appropriate intelligence tier without user intervention — Y Combinator Partners.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"If you want to optimize the chance of your startup, you should probably join an existing community versus having to create it from scratch."
+— Y Combinator Partners
+</blockquote>
+<blockquote>
+"In the early days of any great startup, it feels like a cult. Like it feels like you believe something that no one else believes, and if you set it out loud outside the room, people would laugh at you almost."
+— Y Combinator Partners
+</blockquote>
+<blockquote>
+"The reality is what you want to do is always confront yourself to the market in the fastest possible way... build something people want."
+— Y Combinator Partners
+</blockquote>
+<blockquote>
+"High agency is basically a belief that your actions are going to produce output."
+— Tom
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">So you were talking about AI native companies and I do really understand the capabilities because it's really shocking. But how do you look at the cost efficiency because nowadays AI is getting more expensive, so perhaps you might be able to do what an engineer can do with AI but when do the economics come in? Because sometimes it can cost even more with the tokens than the engineer that gets it first time right.
+
+The first answer is you should just join YC and you'll get a million dollars of free tokens and then offers for many million dollars more. The second answer is the cost of intelligence is coming down so rapidly that even if that is not true today, it's going to be true in 6 or 12 months. Like it's a 10x cost reduction per year roughly speaking for the same intelligence. It's something we tell our founders not to worry about too much because it will just solve itself with time.
+
+I think an engineer today with a model is like, yeah, 1000x better than an engineer without AI. Would you not use it? I think a year ago, it might have been reasonable to say, well, a given engineer for a particular task might be more cost effective than a model. I think that there is no chance that is true today if you're using the absolute best intelligence. Yeah, I'd probably go that far, I just don't think there's a single programming task that a human is, it's more effective for a human to do than a model to do.
+
+Yep, hello, thanks for this opportunity. A lot of countries, especially in Eastern Europe, have underdeveloped startup stages and underdeveloped startup communities. Do you have any tips on building, especially a community of founders, like not being a founder of a startup, but being a founder of a community? How to build this from scratch? Thanks.
+
+I was going to tell you to say we move to SF, haha. If you want to optimize the chance of your startup, you should probably join an existing community versus having to create it from scratch. And if you cannot go to SF, of course, that's the biggest place to build a startup, but go to London or Paris, like there is where there is at least a critical mass of startups so that you can surround yourself with great founders that are going to make you better founders. If you are the only one in a city, it's very difficult because you don't have any peers to push you forward, and the people who don't understand your life are going to hold you back.
+
+Grey and I sort of experience this. So, I started a company in 2011 called GoCardless, it did Y Combinator and actually came back to London. Grey was like a number two hire or something like that, number three hire at GoCardless, and a small number, but really like less than five companies were the kernel of the London startup ecosystem. Like you can kind of trace from GoCardless this family tree to many, many, many dozens of other companies and TransferWise is in there, Monzo is in there, and it's kind of amazing how it spreads.
+
+But in those early days, the direct answer is find a really great startup that embodies the startup culture and join that. But in the early days of any great startup, it feels like a cult. Like it feels like you believe something that no one else believes, and if you set it out loud outside the room, people would laugh at you almost. But you have these collective set of beliefs and behaviors and ways of working that make you extremely effective. So I just try and find that, basically.
+
+And the reality is there is always going to be one global hub for startups, and that will attract the most ambitious people and the companies that are going after the biggest vision. And you probably want to be there. It doesn't stop there being other smaller regional hubs, but for a lot of companies, and for the most ambitious founders, you definitely should be considering San Francisco at the very least.
+
+My question would be related to the things you've spoken about the artifacts we should be pumping into AI. So we, as founders, should pump everything we could possibly find to AI, investors should be doing the same thing. Do you think that we leave too much judgment to AI and where is that gap where we should stop and leave our judgment to us and not outsource it to AI? Thank you.
+
+Yeah. So I mean there are many ways to answer your question. I think we can't answer all of it. For sure, one thing I've been arguing with Nico during the batch is how much AI should write for us, because I think there is a direct correlation between the amount of thinking you do and how you write. So I personally have been writing most of the things I've been writing so that I don't delegate too much to the AI. That's one thing.
+
+The other thing that we've been talking about, is I feel like at YC there is so much emphasis on how AI can give superpowers to partners and therefore can be shared with founders, and that's been the most mind blowing thing I've experienced at YC, is the speed at which this organization built tools to empower all of the people who go there. I think though that something that's super important for YC as an organization is to think about the thing that AI is not going to be able to replace, and there are a few things like, you know, founder well being is incredibly important, and putting more emphasis on how can we help founders take care of themselves.
+
+Community is also something where, you know, AI is not going to help. Knowledge sharing is something where YC has a unique thing where you have 200 companies that are obsessing over how to make the most out of AI, and there will never be content available on the latest thing you can do, but you're surrounded with people that are obsessing over this. And so one of the things we've been talking about is not relying, not obsessing too much over what the AI can do in order to empower all of you, but also what is AI not able to do and how do you make sure that you're excellent at it? Because sometimes I feel like you can be blindsided if you're only looking at it in one way.
+
+In the next months, everything can be done internally. I mean every tool can be built internally and instantly. What is the purpose of B2B products anymore? Like if you can build everything by yourself. So then everything that matters is just critical infrastructure. So what will happen with B2B products?
+
+Yeah, I broadly agree with the premise of your question, but I would reframe it more as a spectrum than a binary one or the other. And the reframe I would take is what's the hard bit. Like your startup has to have a hard bit, and 10 years ago writing a lot of software was in and of itself the hard bit. That is not hard anymore, and so you have to have other things to be hard to have any kind of durability, you have to have something that's hard.
+
+And that might in some cases just be like brutally hard B2B sales into some industries. Others, it might be a regulatory barrier, like getting a banking license almost killed me. That's pretty hard, or figuring out the physics of like spaceship launch, pretty hard. Actually most hardware in and of itself is just like hard, the atoms are at the hard bit. And so I just be thinking like on my spectrum of like this is very, very easy versus very, very hard, I'd shy away from the easier end of the spectrum and just like pick bits that are harder and more ambitious because it will make your startup more durable.
+
+So I would just absolutely not start something like Calendly today or Partiful or maybe Partiful actually has a network effect but certainly Calendly or like DocuSign, basically dead. Like I think pure software is just not, it's just too easy to replicate now. So just ask yourself where's the hard bit.
+
+You're recording office hours, you're recording interviews, right? It seems like you're trying to do, what you're trying to do is to make Y Combinator an AI native company, right? Yes. What happens when the AI is a better YC general partner than you are, right? What are you going to do? Are you going to be selling Birkenbags or what?
+
+As Mathilde said, we're going to be therapists. Okay. Yeah, so I think there are like first what I said, I really believe in which is there are so many things that the AI will not be able to do. Just so you know, and I think Nico can tell the story as well, as there is a new feature that's being experimented right now with YC where you can book an office hour with a virtual partner. So you can literally like Nico was able to do an office hour with himself, currently, it was really weird. That was an awkward.
+
+And so I think there is a part of it which is like you know, therapists, community builders, but there is also Gary Tan wrote an excellent post a few weeks ago about the power of witnessing, which is the fact that you have someone in the room with you that acknowledges that what you're going through is something that's normal, is incredibly powerful. It's an incredibly lonely job, and a robot doing this is not as helpful. So it's not just like, you know, the human, community and well-being and all this, I also think that there is a power of witnessing.
+
+And I also think one of probably a misconception I have, you know, new eyes on this because I was a recent partner, is you might think that at the scale YC has, a lot of advice is advice that they give to everyone. The reality is, I feel like partners go really deep in understanding specifically your business, your market, etc. so that they can give tailored advice, and so even if you have a database of 7000 companies, there is still so much that we don't know about your company specifically and that partners need to do a good job at understanding. That's always fun to get like fresh eyes on what a tough job.
+
+But maybe one last thing on that, all the partners at YC are past successful founders themselves who actually did YC, and there is that, maybe that's the witnessing, we know what you are going through because we did it ourselves, and that's a huge difference with a lot of investors out there, who have never been founders before, who don't know what you're living. I think that piece is never going to disappear and cannot be replaced by AI.
+
+So, thank you for your talks. My question was regarding research in AI startups because in my personal case, I've built a startup while I am doing like a PhD, okay, on which I research like things for improving the product and all this stuff. So, how to know in each moment if it's better to focus on their own research for improving this product or focusing more on business, like to scale, get more clients and all this stuff.
+
+I think it's an abstract question that doesn't have a like right answer. Like, the reality is what you want to do is always confront yourself to the market in the fastest possible way. I was sharing this with one of the groups, the biggest regret that YC founders have after the batch is not having launched soon enough. So I think just know that you always have a tendency to research more, to build more before selling more, and this is a tendency you need to go against, and the more you can actually talk to users, confront yourself to the market and learn, I think the better.
+
+The one thing that we repeated over and over is just optimize for learning constantly, and usually that equates to talking to your market, and then if you feel like people are not willing to use what you're doing and it's not something that they want, then go back to building, go back to researching. The motto of YC has never changed, like, build something people want. And to do that, it's a cycle. Build, talk to customers, build, talk to customers.
+
+And one thing that has really changed, it's the pace at which it's going today. That's why today we have like some companies who do incredibly in just a few months, like, never seen that back in our times, like, companies doing like a million ARR just by the end of YC. It's kind of like unheard of before, and now it's happening because of that fast-paced cycle. And I think it also applies to research. You want to make sure that what you are building is useful to someone. Some projects take more time. Some deep tech projects, space projects, all of these things, of course, have different timelines. So the advice cannot apply to everyone. But at the end of the day, you want to make sure you build something people want.
+
+It's often useful to inspect your own biases on this one as well. A lot of founders are a lot more comfortable building than they are talking to customers, and the idea of going out to the market and trying to figure out whether or not they're actually building something that people want is terrifying because it may be that you go back to square one, that all the work that you've done so far you are working on the wrong thing and there's a lot of loss aversion that will dissuade you from doing that. But if you want to build something that people want, that's the thing that you actually need to do.
+
+So if you feel very comfortable in research, anytime that you're asking yourself this question, you should just be aware that you probably have a bias towards the build or research part and you need to dial up the amount that you're talking to customers. I gave this advice like 15 times today. I think Grey put it more eloquently but basically that. Get out of your comfort zone.
+
+So what do you think happens next of the US export restrictions on frontier AI models like Claude? Do you think we will end up in a world where only US citizens can access the worst models?
+
+I mean we don't know more than you do. Like we see the news the same way you do. So I hope like, for the those of us who have tried these models before they were blocked, yeah, they are crazy, crazy good. Can't wait to be able to use them again. It's a wake-up call for the rest of the world, that it was more dependent on the United States government than it realized. Like I think there were a lot of people that woke up to that news and were like, &quot;Shit, I had no idea that a decision in the Oval Office would affect my ability to access these models,&quot; and that will create demand for competitors and sovereignty over AI and inference that wasn't there before. Like that's definitely created a market. What happens specifically in the US over those models and what time period that happens, yeah we have no extra insight on that.
+
+My question is like Sam Altman a year ago was talking about in the next few years, we're going to have like a one person billion dollar company. And what's the sentiment in YC about like having a co-founder or like going solo? In theory, will you be able to create a billion dollar company with one person? Like, yes, probably. But the way I see adding people is like sort of marginal cost-benefit and the marginal cost of adding one person is will be relatively speaking low compared with the benefit you get from them, and it just seems illogical that you would, unless you're trying to break the record of getting a one person billion dollar startup, like, you'll just be more successful by adding a second person, I think.
+
+But that ratio between the marginal cost and benefit actually changes quite dramatically as you add more people because you add coordination problems. So having a co-founder, you talk to each other, like it's Metcalfe's law, right? It's the square of the nodes is all the connections. You have to maintain all of these different connections, so by the time you get to 100 people, it's quite hard to keep everyone on the same page. At 2000 people, it's really, really hard. And so I think what AI is going to be good at is compressing companies to keep them down below Dunbar's numbers, so 150 people where you can maintain relationships with everyone quite successfully.
+
+But I just don't think there's any point in trying to run a single person company. And I've seen this. We keep funding them, and you know, some do well, but statistically they do worse, and we ran the 6-part on this batch, we funded a very, very, very strong solo founder who wanted to build basically self-improving autonomous agents. They all communicate with each other in that, I don't need a co-founder. And what happened is he got sad. Right? Like 6 weeks into the batch, he had a crisis of confidence. He's like, &quot;I'm not sure this is working, is this the right direction?&quot; I'm like, &quot;Dude, I mean I can be here for you, but this is what a co-founder's for. It's someone to like pick you out of the gutter when you're feeling down, or like when you're hyperactive and manic, they like pull you back down to earth and they modulate you.&quot;
+
+That's certainly what my co-founders did for me. And so, sure theoretically, I think you could do a billion dollar startup with one person, I don't think it makes economic sense. I think the utility you get from adding a second person will always outweigh the cost at that level, unless you're trying to break the record for some dumb reason, and I think they're just very, very, very valuable. But I do think it'll compress companies down from 2000 to, you know, 100 or 50 or something.
+
+And maybe one thing to add on what AI is actually changing on this topic is I feel like now it is possible to go from being an average engineer to being a great engineer, not knowing how to sell to being good at selling, and I do feel like the complementarity of skills is less important. So as Tom said, I think the fact that you have a co-founder is just as important for all the reasons he mentioned, but I wouldn't obsess over making sure that our skills are complementary, instead, just make sure that when you're sad, you're very happy talking to this person and that person can bring your morale up. And just to make sure it's clear, we do fund solo founders too, it's not we have nothing against them. We just found that it's easier as founders to have co-founders, so it's solo founders, the bar is higher.
+
+Yeah. And a risk of rambling on, I want to give like 30 seconds on how to pick a great co-founder. As Mathilde said like someone who could help make you happy when you're sad is a great start. I would think about who is the smartest, most determined, hardest-working person you've ever worked or studied with, and then add in an integrity layer. Like do you trust them? Are you have aligned values? And would you be, if you were in a competition, would you be scared to be on the other team? Like that's the kind of person you want to go for, and all the complementarity stuff I don't actually think matters at all. Like the biggest mistake I've seen is technical co-founders thinking they need a business co-founder. That is almost always a massive mistake. If you're a technical person, I would find someone who is as deeply technical as you, and who you work great with, and who's determined and smart and high integrity, all those things. The business stuff is actually very easy to learn, I think.
+
+Okay. Hi, I have a question about the future of VC funding, so that now new employees are less necessary than they used to be and also the opportunity cost of having investor meetings has also risen a lot. So I'm wondering, does the old path of seed and then the various VC rounds, is that still as important as it used to be or is there has there been a change where new paths are possible?
+
+You mean you can build the company without VC money? Why not? I mean, I don't think there is a rule here. I think for a lot of companies that want to grow fast, having access to capital can still help a lot, even software companies because when you are going to consume these tokens, it costs money. And so if you can leverage the VC money to simply grow faster and do more, it may be worth it. Now if in your case, you found out that you have enough whatever like tokens or access to AI to move faster with less money, that's great. And there is some truth here. Like, I don't think founders need to raise as much today as they did 5 years ago. To achieve the same thing, definitely not to achieve the same thing. But it's not worth the same for everyone.
+
+Yeah, I agree, and I'd go back to the hard thing. Like if you are just producing the same software that people produced 5 years ago, you can absolutely do that for way less money now. But unfortunately it is much much less durable and defensible. And so what I think is what AI is doing is enabling founders to attack harder problems. But as those hard problems get more and more ambitious, then you're like, well, the capital needs to get there commensurately. So it's like the guy building the nuclear reactor. We funded a guy building small nuclear reactors and he's going to have to raise something like 800 million dollars next year. And it's just like it's really hard to build nuclear reactors without tons and tons of money, simple, just like it's hard to launch regulated banks without tons and tons of money.
+
+So I think ambitious startup founders will just try and do harder and harder things and that will require in a lot of, not all cases, but in a lot of cases, capital. And I think that's where venture capital will come in and I actually think that's great for humanity because we will get solutions to harder problems like curing all disease and producing infinite abundant energy.
+
+I actually want to bounce back somewhat on that. You've mentioned that pure software startups are limiting in impact and I'm sure within YC this is one of the main questions is like what are the moats that you're betting on and what are the moats that you disagree with internally?
+
+I mean at the end of the day, I think YC funds people. I think this is the biggest moat by a wide margin. I think it was the case before. It's probably just even more true today and I don't think anyone at YC disagrees with this. I don't know what we disagree on. That's the disagreement. The agreement is good. That's interesting, like a bunch of companies we fund, like companies I fund, if Tom meets them, he's going to fund them too. But there is a few, there is maybe like I don't know maybe 30% whatever number, that I'm going to fund, Tom would not fund them. And so that's the disagreement and that's cool. Like we all have things we like better than others and all of that is cool.
+
+On what we fund, honestly, it all depends on you, what do you play with. We don't dictate what you should work on. You figure it out, we fund you because we think you are the right team. And about a third of companies like last batch, a third of our company, in our product, pivoted. Changed their idea anyway. And so the bet is always on the founders.
+
+Yeah, I mean there are so many examples of this. The Brex founders, Brex just sold for 5 billion dollars. The Brex founders applied when they were 19 years old and they were brilliant. As 15 or 16 year olds in Brazil, they'd started a payment network and sold it for something like 50 million dollars before they were 18. Like, technically brilliant, amazing at distribution, marketing the business, and the idea they applied with was virtual reality sunglasses made out of cardboard that you could build at home. It was like, you guys can work on whatever you want. Like those guys could literally have applied with any idea and we would fund them.
+
+So if the founding team is strong enough, it just doesn't matter. I think because we bet on great people to figure it out. And if they figure out they need durable moats, great. And if they decide that there's a really high impact software business that they should pursue, that's also great. Ultimately we invest in people.
+
+Do you think people will be thinking about which models they want to use or do you think it will kind of just be automatic behind this interface with the AI like people will just be interacting with it, not caring which model they're using underneath?
+
+Very quickly, it will be automatically routed for you without any perception and your bills will go down. The big labs will do it, and open source routing models will do it and the time frame on that is like 12 months probably, is my guess. You'll just type a query and it will decide what level of intelligence to route it to internally or it will have a smart model and then spawn a bunch of sub-agents which are cheaper, more effective models, something already the case today. Most of the time, except of course OpenAI is not going to use the models of Anthropic, so if you are using ChatGPT directly, of course, it's open. But if you are a business, your customers don't care.
+
+When YC selects companies, how do you evaluate in B2B AI a real wedge from an AI wrapper?
+
+AI wrapper is this derogatory term that is kind of meaningless. Like everything is an AI wrapper. Everything is powered by AI, or most ideas that we are funding, because it is the first time anyone has been able to attack that problem, have AI at their core. And whether or not they are adding a lot of value on top of the core model, that matters. And so if it's really like that thin layer, we're going to be looking at the team. We're going to be looking at how that is going to evolve, whether or not they are a team that's going to figure that out, whether or not this is a problem space where there is enough depth to go really deep.
+
+It doesn't matter how deep they go, some people are still going to call it an AI wrapper and snicker to themselves, right? They're so clever. Some of the biggest companies today are AI wrappers. 100%. Before then, they were SQL wrappers, or S3 wrappers.
+
+As you've mentioned before, given the state of AI, the sort of cost of taking an existing solution and implementing it in a new product has gone down, so in terms of founder adding value to a product, the way I see it, there's two ways of adding the value since the cost of implementation has gone down to essentially zero. First one is actually moving state of the art in one area and building a specific technical improvement that actually helps people and gives you that margin. And the other way is essentially selling the product better. Has this increased capability of models helping founders ship products changed the ratio of super technical founders working on a very specific niche technical issue versus people trying to market their existing solution better?
+
+I'm going to summarize, distribution is key. Having a deep technical wedge can be really important or distribution can be really important. I agree on both of those points. We have founders in both camps. We have this guy with a MIT PhD in nuclear physics building nuclear reactors. We have two guys who worked at a satellite company building re-entry vehicles for new space manufacturing. We have guys doing radio frequency test equipment because they were the radio engineers on latest SpaceX launches, and on and on. Deep technical expertise. And we have people who are self-taught vibe coders, really honestly.
+
+So I think that second group is like it's made us re-evaluate how deeply technical do we require founders to be, and we don't know the answer yet. We were pretty biased towards founding teams with at least one quite deep software engineer. And we're testing whether that's still true. I think you still need to be very smart and determined and a systems thinker, but it's possible that with AI you don't have, not all companies need someone who's deeply technical, possibly. Having said that, we'll fund the full spectrum of, you know, the MIT nuclear PhD to the people who learned to vibe code in their bedroom.
+
+My question was regarding cost. As a person that actually wants to initiate in this startup culture and has the motivation to go all in, basically move to San Francisco, etc., but is from Europe and cannot do that because of visa and budget reasons.
+
+Wait, who's from Europe on the stage? For example, we talked about open weight models and stuff, and how can a broke student compete with people that have API money to actually pay for these models versus having a lower intelligence model? What would be your recommendation as a European builder?
+
+Are you a student? Yes. Okay. So, even at YC, you'll get $25,000 plus in credits. Oh, I didn't even know that. Congratulations. So, everyone here, if you are a student, with a valid student email, thanks to our gracious sponsors at various different model labs and hyperscalers, we're getting $25,000 of credits to use each, so that should help. Then what would you recommend as a European builder? Then that's my question. Go build something cool. We've now solved your biggest problem. You've got to do the rest, buddy.
+
+Hi. My question is regarding early decision. Like you officially state that early decision applicants are treated the same as standard ones. But as a general partner, when you're looking through that application or that interview, do you have a sort of extra checklist, or do you see something extra from them, or is there anything that you expect from them? Because for someone that's going to join the batch a year from now, and he's applying right now, do you see do you want to see an additional drive or additional motivation for that? Like what is sort of that personal factor you like that you want to touch on in an interview when you're interviewing someone of that sort? Thank you.
+
+I don't know. I guess all of us are different. A year from now seems long, but we do four batches a year. Each of us only works alternative batches, so I could look now at funds, because that's the next batch I'm going to do. Now the question I'm going to ask myself is why early decision? Like, why would I not wait next application cycle? And so that's kind of like a bar. There may be many answers to that. Maybe if we don't fund you now, maybe you'll find a job and because you cannot afford not having a job, and you have to decide now. I don't know what that could be, but if it's a year from now, I don't think I would fund you.
+
+Or maybe the bar is way higher. We want to understand why you need early decision, right? We have that question on the application, and we read that answer. For some people, it'll be a very legitimate reason. And for others, it's like, &quot;Yeah, I'm really excited to do a startup, but not so excited that I want to drop out.&quot; I'm saying, &quot;I'm really committed, but not committed enough that I don't want to do another year and a half of school,&quot; and that's going to make us question whether or not you're going to have what it takes.
+
+Thank you so much for the amazing day. Two questions about what happens during the batch. What are the common traits and habits of the top ranking startups? And second, you mentioned you've updated the user manual. What is the non-obvious stuff except pace that has changed? Thanks.
+
+The most successful founders launch early and often. That is the biggest thing by far. The founders, for whatever reason, are too theoretical, they're too in their heads, they're too afraid to put something out into the world and face rejection for possibly the first time in their life ever, and so they convince themselves that just a few more weeks of research, or a few more weeks of building or whatever, is a smart thing to do, and it's just not a smart thing to do. There's a great tweet from the founder of Cursa showing all the times he launched on Hacker News, and it's like launch, zero upvotes, launch, two upvotes, launch, two upvotes, launch, sell to xAI for $60 billion. And it's just kind of insane that someone like him is willing to put himself out there again and again and again, so just launch early and make contact with the real world and then get data to update your plan.
+
+Many of you are in environments where sitting in a library and thinking really hard about a problem is how you get the top grades. And that translates extremely poorly to startup success. It turns out humans are really bad at predicting the future. Instead, I think startups are an extremely empirical exercise where you need to come up with a hypothesis very quickly, and then run a test with the real world to see if the data you get back meets your hypothesis or not, and if not, you change approach, and running that cycle is the key activity of an early stage startup. It's not sitting in a library thinking really hard.
+
+So, basically, launch early and talk to users. It's snappy, so we made a catchphrase out of it. And set really ambitious goals and keep reassessing them every two weeks and hold yourself accountable to them, and keep overwhelming the biggest actual problem that your startup faces. The best founders, every two weeks when we meet them, it's a new problem because they've overwhelmed the last bottleneck. And we chat to them and we agree, okay, that's the biggest next thing that you need to go and focus on and they go and throw everything at that and they overwhelm it and they make progress and come back and now it's another bottleneck. So like, a tight timeline where you are constantly reassessing what the most important thing you need to be working on is and throwing as much of your focus at that, rather than being distracted with the 100 other smaller fires that you could be thinking about.
+
+Hi, you've mentioned the journey on becoming an AI native company and with some processes, such as rewriting the rulebook, with better advice. How would you say you define key success metrics that you implement for AI? Because normally for an LLM it's mostly about reading success and error about previous batches or advice you've given. And also maybe taking this question more generally, what would be key advice you would give us when we use AI as an advisor and how it could assist us successfully, and define some guidelines for AI to assist us in our journey to become a founder?
+
+I think one of the biggest mistakes you could do is just to use AI and just look at the result and move on. Either you're using it or you are not satisfied with the result and you move on. I think a big thing, what Tom presented, was that cycle, self-learning cycle. And I think that's one thing people, when people hear everyone says AI is putting in so much slope. It's true, the vast majority of AI output is bad. But once you start having that self-learning loop, that feedback loop, once you start having an harness that actually memorizes everything you tell it, that changes, that updates the skills, once you start investing in that in building that, the results are completely incredible, like in a matter of weeks, it can become game changing for your company.
+
+Hey Tom, this question is for you. You've did an amazing presentation, so that was great. I have a question that I think most people in this room have, about the AI native company. I fully understand and I think everyone understood because of your presentation. However, how can you actually, practically start building the structure to build that AI native company? Like do you go on Claude, code and tell them exactly everything that you told us, because we understand the idea, the concept, but in terms of how do you actually do it? So thank you. Thanks.
+
+I'd pick a single loop, basically. So I presume your company is small, if you started a company. Yeah. I mean, I have a company and I want to apply what you said, and that's why I'm asking this. Cool. Yeah, I'd pick one part. I wouldn't try to do it all. First of all, try to make all the information legible and readable. Like, your emails, it's your Google Drive, or whatever, your customer support tickets. I'd try to make that queryable to the agent, and you can use something like Obsidian, or Gbrain, or there are a bunch of other tools you can use.
+
+And then I would basically pick a single narrow process, and that might be like, after every sales call, I should send a follow-up email to the customer with the key points that we discussed and the follow-up. That's a dumb example, right? A more sophisticated example might be like, during every sales call, I want it transcribed, and any product ideas, I want an agent in the background to build me a prototype of that thing, so that by the end of the call, I can demo it to my customer. So I'd basically pick something really, really narrow, try to implement it, see if you like it, see if it's good, and if not, just improve it. Just pick the narrowest possible implementation where you can see value.
+
+That was perfect. Thank you. Hey guys, let's say you guys are restarting your startup from scratch. Looking back in the days and restarting an AI native company, what is the last thing you guys would automate or what would you never automate at all?
+
+Talking to customers. I think that is what kept me focused on what was important. And it's the last thing that I would trust, it was the thing that meant I was the person that was closing the loop and had all the context on what it is that we should build. And I never wanted to stop having that information. And so delegating that is the last thing for me. Even if you are self-serve PLG, you talk to customers. Not all of them, but you need that direct exposure. I also think that you don't want to delegate talking to your co-founder. Like this is the main reason why companies fail during the batch. Co-founder issues and so just have real conversations with them.
+
+Thank you. My question is about pivoting. I think we've consumed advice from YC that you should pivot, go do something that is directly home. How would you update that advice now in the AI era that pivoting is way cheaper? And more specifically, even if you have revenue, users and you are profitable, etc. Writing software is cheaper. Pivoting means throwing away a good chunk of what you've built, which may be the hard stuff as well. I'm not sure that's gotten particularly cheaper.
+
+It's really hard to give a general answer to this one. It's like one of the primary things that we would always say, &quot;Hey, come and speak to us directly to YC companies.&quot; I think about this from a framework perspective about having a hypothesis. I have a hypothesis that this is the right business to build. The world is going to look fundamentally different in five years' time. Then I have a load of sub-hypotheses that are like, this is exactly the right product to be building. And all the information that I'm gathering from the world when somebody says, &quot;No, I don't want your shitty thing,&quot; is extra data testing those hypotheses.
+
+And it's only when I've got real evidence that my hypothesis that the fundamental of what I was trying to build was in fact the wrong thing, that you should pivot because you have genuinely exhausted all of the options. Now, normally that's not what happens. What happens is you run out of enthusiasm. Like, you're working on something, the kernel of a good idea is there, it's not exactly going to sell itself because it's a long way from product market fit. You suck at sales, and you keep getting rejected, and you get sad. And as a result, you think, &quot;Oh, maybe this is the moment I should pivot. Maybe it will be so much easier if I went and worked on this totally other idea. The grass might genuinely be greener over there.&quot; And that generally isn't a good way to pivot.
+
+The grass will not be greener over there, particularly if you're pivoting from something that you are deep in, into something that you are super shallow in, because what you will find is there are a whole load of other problems that you just weren't aware of, and it's also going to be really hard building something over there. There is another good version of pivoting, which is that through working on something that turns out to be really hard, you are exposed to an even better idea.
+
+You're working on what happened with GoCardless, you're working on collecting payments for sports teams and sports teams turns out don't really want this. The problem is not acute enough, but the core of what you're building about getting access to collecting payments, you get a bunch of users that say, &quot;Well, I kind of would like this for my business, just not for my sports team.&quot; And there's a much bigger idea that you've been exposed to and that's the one that you want to run after. But those pivots where your customers pull the pivot out of you tend to be easier ones to make the decision about. Normally, we're talking to founders that are getting sad and the question is, does this founder need a pep talk, or have they genuinely exhausted either themselves or all of the options in terms of turning this into a successful company?
+
+Okay, no pressure. This is a question for Tom, and I suppose the other people on stage might share a similar view as well. It's about how in the future all the gains from AI will accrue to a small number of high agency people. Do you feel like high agency is a trait you can really build, the muscle you can really build, or is it just you're born with it or you're not?
+
+I think high agency is basically a belief that your actions are going to produce output. Like you actually are going to have impact. And if I were trying to develop that in myself, or trying to teach a child to do that, I think I would point them towards projects that seemed hard enough to push them, but tractable enough that they could actually see some output, and then just continually make that harder and harder. So I just pick something that seems quite difficult and try it, and that might be a side project. To keep yourself going, I would probably try and find a co-founder, and at some point this looks like doing a startup. Find a friend you think is really smart and determined and together see what idea of a side project you can come up with to build that seems quite difficult but probably not totally impossible, then do that and see how it went. If that succeeds, do another one and another one and eventually you end up building rocket ships to Mars. And it's sort of how it goes. No one actually realistically starts by building rocket ships to Mars, right? They build Zip 2, and then they build PayPal, and then they build Tesla, and then eventually they build the really big thing. So I think that's in the abstract how I would approach that problem.
+
+Yeah, I think you can't teach it, but I think you can get better at it. That's pretty much what you describe. If you have the kernel there in you, some small core from which you can expand, you can train yourself. That was really good.
+
+Walker here. I see this strange phenomenon in SF recently, that every billboard and every plane and every balloon is a tech company. And since building everything became so easy, there is this funny thing that companies just try to gather traction regardless of what they do. So I'm just curious, how do you think about standing out in the crowd when you build companies because way more companies are being built, at least at the early stages, nowadays.
+
+We had a nice talk from the Brex CEO where he was saying that Brex in SF, you've been in SF I don't know, 6 years ago or something. SF was covered with Brex ads, and he was basically saying the reason at the point, they just bought all the billboards in San Francisco. And the way he was justifying it was, no one was doing it, so just want to stand apart and in order to stand apart, I'm going to buy billboards. And clearly now, billboards are not the thing that can make you stand apart, and so the job of a founder every time is to think about how you can differentiate. And if the answer was obvious, then everyone would do it. So I think this is what you need to obsess over, and you'll always have an answer that's better for your company specifically.
+
+I think it's an issue that every billboard in SF is about AI. During my time, all the billboards were about tech already. It's always been the case in SF. People are in an industry town, you go to LA, every billboard is about a TV show or movie, just the US has industry towns in a way that Europe doesn't so much. But I really like Matilda's answer, which is distribution matters more than ever. The way to get distribution, like the meta game is evolving so quickly, you've just got to figure something out for yourself. I do agree that distribution is more and more important than it ever was, because it's one of the hard things. Software no longer is the hard thing about building the company, distribution can be one of the hard things.
+
+But remember what meta game you're playing now. If you're at the very early stage, you are playing the meta game of getting towards product market fit, finding some first customers and figuring out from them what they need and building that, and then getting to the point where you need to put fuel on that fire and scale it. And so when you're looking at those billboards and how companies that have product market fit are getting their customers, remember they're playing a completely different game. The way that you stand out from them to an individual customer is by giving them real white glove service, by turning up in person, spending an inordinate amount of time for what is a small contract, and building something that exactly fits their needs. That's the unscalable thing that allows you to compete with somebody that's putting up a billboard on the highway in San Francisco. Thanks, everyone. Thank you.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
