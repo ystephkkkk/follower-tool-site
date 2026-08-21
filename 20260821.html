@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Friday, August 21, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260820.html">&larr; Aug 20</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Friday, August 21, 2026</h1>
+            <p class="day-sub">2 videos &middot; 2 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-Sij_v-mcZXQ">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=Sij_v-mcZXQ" target="_blank" rel="noopener">Dario Defends Himself, Datacenter Panic, AI Doomer Trap, Senate Toss-Up<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>90:53</span><span class="dot">&middot;</span><span>72.2K views</span><span class="dot">&middot;</span><span>2026-08-21</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Dario%20Amodei%22">Dario Amodei<span class="chip-desc">CEO, Anthropic</span></a> <a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Host, All-In Podcast</span></a> <a class="chip" href="index.html?q=%22Jason%20Calacanis%22">Jason Calacanis<span class="chip-desc">Host, All-In Podcast</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Tech leaders and political figures are clashing over AI regulation, data center expansion, and economic affordability, driving growing public anxiety and a cultural shift toward socialist policies.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Meanwhile, venture capital and political markets face heightened scrutiny amid...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Tech leaders and political figures are clashing over AI regulation, data center expansion, and economic affordability, driving growing public anxiety and a cultural shift toward socialist policies. Meanwhile, venture capital and political markets face heightened scrutiny amid looming midterm toss-ups and Department of Justice investigations.</p>
+<h3>## Dario's Regulation Essay and the Doomerism Backlash</h3>
+<ul>
+<li><strong>The Regulatory Capture Debate:</strong></li>
+<ul>
+<li><strong>Anthropic's Response:</strong> Dario Amodei and Anthropic executives pushed back against accusations of orchestrating a regulatory capture scheme, arguing their stance balances AI risks and benefits.</li>
+<li><strong>David Sacks' Counter:</strong> Argued that Anthropic's aggressive lobbying for state and federal regulations—modeled after the FAA or FDA—inherently constitutes regulatory capture that favors deep-pocketed incumbents at the expense of startups and U.S. competitiveness against China.</li>
+</ul>
+<li><strong>Fueling the Public Fear Narrative:</strong></li>
+<ul>
+<li><strong>Job Loss Predictions:</strong> Critics pointed out that Anthropic's past public campaigns—including warnings that 50% of entry-level knowledge workers would lose jobs within 1 to 5 years and engineered "blackmail/alignment" studies—helped seed a toxic public "doomer" narrative.</li>
+<li><strong>Political Blowback:</strong> This fear-mongering has translated into real-world pushback, with governors like Greg Abbott (Texas) and Josh Shapiro (Pennsylvania) placing restrictions on data center growth, and political memos warning against tech rage-baiting.</li>
+</ul>
+</ul>
+<h3>## SRO Models vs. Government Intervention in AI</h3>
+<ul>
+<li><strong>The "DMV for AI" Critique:</strong></li>
+<ul>
+<li><strong>FINRA Model Opposition:</strong> David Sacks criticized proposals like Demis Hassabis's FINRA-style self-regulatory organization (SRO), calling it a sleepy, incumbent-protecting bureaucracy that would act as a "DMV for AI" and cause long approval queues.</li>
+<li><strong>The MPAA Alternative:</strong> Suggested modeling AI oversight after the motion picture industry's MPAA—an independent, non-governmental standard-setter created to forestall heavy-handed government mandates.</li>
+</ul>
+<li><strong>The Open Source Dilemma:</strong></li>
+<ul>
+<li><strong>Centralized Control Risks:</strong> Chamath Palihapitiya and David Sacks highlighted that closed-source frontier labs obfuscate their "thinking tokens," preventing open verification and forcing the public to rely on corporate interpretations of safety.</li>
+<li><strong>Threat of Open Source Bans:</strong> Sacks predicted that regulators will eventually try to apply the same restrictive safety standards to open-source models as closed models, effectively killing open-source AI and destroying foreign direct investment (FDI) in the U.S.</li>
+</ul>
+</ul>
+<h3>## The Macro Economy, Affordability, and the Rise of Socialism</h3>
+<ul>
+<li><strong>Vibes and Wealth Polarization:</strong></li>
+<ul>
+<li><strong>Tech Oligarch Backlash:</strong> Jason Calacanis and Chamath Palihapitiya argued that public anger is driven by poor economic "vibes"—high inflation, stagnant minimum wages, and the rise of uninspired tech elites projected to become the world's first trillionaires.</li>
+<li><strong>Conservative Socialist Shift:</strong> Citing Wall Street Journal and Fox News polling data, David Friedberg noted that 53% of self-identified conservatives under 40 now support government-run grocery stores, reflecting a broader disillusionment with traditional capitalism due to housing, healthcare, and education costs.</li>
+</ul>
+<li><strong>Fiscal Realities and Policy Solutions:</strong></li>
+<ul>
+<li><strong>The DSA Spending Threat:</strong> Citing Cato Institute data, David Sacks highlighted that proposed Democratic Socialist of America (DSA) platforms project between $71 trillion and $212 trillion in new federal spending, threatening a debt spiral.</li>
+<li><strong>Calls for Populist Action:</strong> The panel urged the administration to shift focus away from foreign conflicts and crypto toward concrete domestic relief, such as aggressive federal intervention to build affordable housing and establish vocational training programs.</li>
+</ul>
+</ul>
+<h3>## Venture Capital Scrutiny and 2026 Midterm Projections</h3>
+<ul>
+<li><strong>DOJ Investigation into a16z:</strong></li>
+<ul>
+<li><strong>Clayton Antitrust Act:</strong> Bloomberg reported that Andreessen Horowitz (a16z) has been under a Department of Justice investigation for over a year under Section 8 regarding "interlocking directorates" (board seats across competing portfolio companies like Databricks and FiveTran).</li>
+<li><strong>Venture Realities:</strong> The panel dismissed the investigation as a "one-way PR ratchet" driven by rival complaints, noting that startups rapidly pivot and that private companies share little actionable competitive risk via board seats.</li>
+</ul>
+<li><strong>Midterm Polling and Toss-Ups:</strong></li>
+<ul>
+<li><strong>Polymarket Shifts:</strong> Polymarket odds for the 2026 midterms have narrowed significantly, treating the House and Senate as tightly contested toss-ups despite historical polling biases favoring Democrats.</li>
+<li><strong>Republican Accomplishments vs. Missteps:</strong> Sacks argued that Republicans can run on sealing the border, a 20% drop in murders, a 20% drop in drug overdose deaths, and tax relief (no tax on tips/overtime), while critics pointed to lingering inflation and the Iran war as major headwinds.</li>
+</ul>
+</ul>
+<h3>## Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>David Sacks:</strong> Republicans will ultimately retain control of the Senate in the 2026 midterms after campaigning on border security, falling crime rates, and tax cuts.</li>
+<li><strong>David Friedberg:</strong> The compounding crisis of unaffordability (housing, healthcare, education) will accelerate a structural shift toward socialist policies, paving the way for figures like AOC to win the presidency by 2028.</li>
+<li><strong>Jason Calacanis:</strong> Regulators will ban autonomous robotaxis (Waymo, Tesla Cybercab) via municipal licensing restrictions in major metropolitan areas like New York, Boston, and Washington D.C.</li>
+</ul>
+<h3>## Notable Quotes</h3>
+<blockquote>
+*"You expect us to have amnesia about the fact that just about a year and a half ago? You said very specifically that within one to five years 50% of entry-level knowledge workers would lose their jobs. And this was not just some sort of idle speculation... this was something that they engineered and amplified into a full-fledged media campaign."* — <strong>David Sacks</strong>
+</blockquote>
+<blockquote>
+*"They're not aspirational and they're not the people that one would look up to. They're not Steve Jobs by any stretch of the imagination. And now they look at this other next generation and they're like, 'Wait, we're going to go from billionaire, decabillionaire, centillionaire to now trillionaire.' And it's those guys."* — <strong>Chamath Palihapitiya</strong>
+</blockquote>
+<blockquote>
+*"If RSI is a thing, you don't have a human process where you're stepping in to run this thing... All that it needs is the chips and the power and a connection. And if it's got the chips and the power and a communication connection, it can run."* — <strong>David Friedberg</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">All right everybody, welcome back to the number one podcast in the world. Your favorite podcast, the all in podcast. We had a huge, huge docket with me again. The core four, Chamath, Friedberg, Sacks, and your boy JCal. Topic one. Topic one. Let's get right to it. No small talk, boys. Dario has spoken. Apparently, he listens to the All-In podcast and he was compelled to respond to Gavin Baker's little discussion last week that many people inside, or some people allegedly maybe inside of Anthropic, believe quote that they will be the only private company in the world at some point.
+
+Some folks from Anthropic, Sholto, Douglas, fired back: completely false. Whoever told Gavin this is lying. And Dario decided he would come out of hiding and he entered the chat with an epic two-part essay on regulation. Sacks, he said, quote, &quot;I know the Silicon Valley shorthand where regulation equals regulatory capture equals concentration of power, but I've always found this to be an overly simplified picture.&quot; On messaging, he said, quote, &quot;I do not agree my messaging has been disproportionately negative. It has been about equally balanced between risks and benefits.&quot; It took a little responsibility. Quote, &quot;By far the most accurate criticism of AI companies, including Anthropic, is that we haven't yet delivered on our big promises to benefit the world. That is totally on us.&quot; Most quoted line: the thing that will work is actually curing cancer, not glitzy marketing questions.
+
+Sacks, you've been talking about Anthropic for a year and a half. He never responded. Gavin comes out and he suddenly is very talkative and responds. What do you take from the fact that he never responded to you and then he responded to Gavin? And then we'll get into the details. Does he not want to spar with you?
+
+In fairness, JCal, he did respond to me. I mean, I don't want to center myself, but the reality is he did not respond to what Gavin said. He easily could have said that what Gavin said he said is untrue, like Sholto did. He did not weigh in on that issue. Instead, he really weighed in on the regulatory capture issue. So that's the thing that I think drew him out here is I think he is a little bit irked by the fact that we keep accusing him of regulatory capture. And this is something I've been saying since last year: that they were engaged in a sophisticated regulatory capture scheme based on fear-mongering. And those are the points he's really responding to.
+
+And I think the thing that he doesn't like about it is that he feels like it impugns his motives, that he's not pure in pursuing all these regulations for the right reasons. And my response to that is, look, there's no question that Anthropic has been extremely aggressive about seeking to implement his preferred regulatory frameworks at both the state and federal level. That is regulatory capture. Now, look, I think that Dario may be sincere in his beliefs. I'm not saying he's doing this for pecuniary reasons. Nonetheless, he is seeking to capture the machinery of the state on behalf of his political agenda. It's just, there's not much to debate there.
+
+I don't think there's a few other things to say about this. So, let me go to point number two first. He says that he's not responsible for the negativity around AI, that he's been balanced in his portrayal of AI. Oh, really? Do you expect us to have amnesia about the fact that just about a year and a half ago, you said very specifically that within one to five years, 50% of entry-level knowledge workers would lose their jobs? And this was not just some sort of idle speculation on a podcast. This was something that they engineered and amplified into a full-fledged media campaign. You may recall that President Obama even retweeted this and many other Democratic Party officials did the same thing.
+
+Moreover, this pattern repeats itself with the whole Anthropic blackmail study. Remember, he's got a team at the company. They're supposedly studying alignment. They create this highly contrived study where they prompt this model over 200 times until they finally get the headline-grabbing result that they wanted. And again, my point here is that this is not just someone riffing on a podcast about the alignment risk of AI. This is them actually creating a study, engineering that study, and then pumping it to create the headlines they wanted. And Dario and his sister, who's the president of the company, and other executives went on 60 Minutes and breathlessly pumped this thing.
+
+And since that study has come out, a lot of people have looked at it and said, &quot;Look, this thing is highly contrived.&quot; Including the UK AI Safety Institute, they basically said that this thing was created under highly pressurized conditions and they engineered the result. So these guys have created campaigns to make people fear AI. Why is the public so afraid of AI? They think it's going to take their jobs. They think it's become the Terminator. It's exactly the fears that Anthropic has put in the media bloodstream, and no company—and you have to say, therefore, no founder CEO—has done more to promote these fears and pump these fears and amplify these fears than Dario has. And the fact that he can't see that either makes him, I'd say, disingenuous or delusional. I'm going with the latter.
+
+So that is point number one. And I really think that almost everybody who read that who's been paying attention felt the same way. It's like, Dario, you really have a blind spot with respect to your own behavior. By the way, can we talk about that one for a second or no? Yeah, let's do it. Just to build on what you're saying, the issue that we have right now is actually pretty problematic. If I had to take three different vectors of actions and now put them together, you've had a very disjointed, disorganized, and frankly pearl-clutching, disingenuous AI doom narrative. And it's actually seated and now it's growing, and as a result, what's happening?
+
+I was really shocked when I saw Governor Abbott of Texas put down this executive order around Texas data centers and limiting its growth. Josh Shapiro in Pennsylvania just did the same thing. Axios reported that the GOP party sent out a memo to the executives at the various AI companies essentially saying, &quot;Hey, stop rage-baiting people because we're about to lose this critical GOP Senate race in Ohio largely around this issue.&quot; So, you have doomerism and then you now have mainstream political pushback from both sides of the aisle, which I think is extremely dangerous. And then the third leg of the stool is rising yields. By the way, the Treasury Department just doubled its bond buying. If you put all of these things together, as a just a casual observer, what I would say is we have made some really stupid unforced errors in the United States.
+
+And the coda to all of this is, if you put all of these things together, rising yields constrains the money supply in terms of how people want to invest in risk-seeking assets because the risk-free rate just keeps going up. That causes people to be less likely to invest in all the data centers. Data centers themselves are being shut down. Where does that leave frontier model companies? They're the most at risk. Why? Because they're not investment grade. They're in the worst position in terms of their balance sheets. They're not in a position to then get access to the compute they need to be successful. So even as you grow, you're actually making your problem worse in the sense that you need more and more capacity to sustain that growth that you can't fund because all the negativity has turned people against you.
+
+So all roads lead to a big question mark and a head-scratching moment for me where I'm like, &quot;How did we end up in this situation?&quot; But whether it was accidental or whether it was well-intentioned risk management, whatever it was, we are now in a very precarious situation that we could have frankly avoided. Totally agree. Friedberg, your thoughts on this anti-data center movement or on Dario's going direct and writing the double missive? Do you think he's sincere, delusional, some combination? Why don't we steel-man it? Yeah. And if we put ourselves in the shoes of a frontier lab leader, and the leader is seeing capabilities of models that perhaps we don't see because we're working day-to-day in enterprise settings, making stuff, doing things in a benign, non-nefarious way.
+
+And they're sitting there and they're pressure-testing models and they figure out, &quot;Hey, there's ways you can jailbreak models to get them to do things that they're not supposed to do.&quot; And then you can use them to do things like design bio-weapons, make viruses, make infectious diseases that don't exist today. You could use them to design cyber-weapons to get them to go and do things online, like break into bank accounts and take people's money and all these sorts of things. And you can prompt them to do things that could broadly influence society by creating fake media, fake videos, fake images, propagate them through social media, hack the algorithms. I mean, X's algorithm is public. So theoretically, an agent could read it, copy it, understand it, and figure out a way to manipulate the broad public.
+
+And so you realize that as you're building these tools where there's a lot of benign, positive, world-leading, progressive kind of applications, you see all the bad stuff that could happen with it. And you can keep trying to build systems and keep trying to build ways to stop it from doing that. You can build all your own code that reviews every prompt that comes in, that reviews every API call. And yet somehow a network of agents can be used to do things and they can start to do things that we don't want them to do. And so let's assume that you're sitting there and you're the executive of the company building this great technology. You believe fully in its capabilities and its benefits to society, its benefits to the economy, but you can't get a grip on how to keep it under control and how to stop social engineering, bio-weapons, and cyber-weapons. What do you do differently?
+
+Okay. Okay. So, you're bringing up an exceptional path. I love this. There is one thing that you must do if you believe that this is true to further steel-man this thing. You cannot obfuscate the thinking tokens of a model. Then what do I mean? If you just compare open-source models versus the closed frontier models, there is no way for us to understand what the thinking tokens are. Meaning you give it a prompt, you get back something, but all the stuff in the middle is obfuscated. Claude obfuscates it. Okay, so do the OpenAI models. And I would say if I was really afraid, the first thing I would do is try to find a way to unobfuscate these thinking tokens so that you could have a third party actually legitimize what you're saying. Because what's interesting to me is I haven't seen the same doomerism from any open-source model company, including Nvidia.
+
+And the thing with the open-source models is you can actually see it thinking. So you can see its misalignment in real time. And so instead we have to basically agree to their interpretation of tokens that we can't see, that only they can see, that they can interpret how they want. And without judging whether it's right or wrong, I would say give them the benefit of the doubt that they're trying to do the right thing. Make the bloody thing available to other people. Let somebody else with some amount of judgment as well sit in the room and steel-man it with you.
+
+So then let me make this point. So Sacks, there was this argument that Demis put out for a FINRA-style regulatory system where industry participants that understand technology move quickly and are aligned with commercialization, actively review each other's systems and each other's models via an industry consortium that hires and assigns scientists to work on this stuff. And they're just doing it versus having it be owned and managed by the government and create some regulatory capture scheme. But then this week you were pretty against the FINRA system in your tweets. You seem to be supportive of it the first time around when Demis originally published it. It seems to me that the proposal from Demis that Dario signed up to, Sam signed up to, Elon all signed up to, you're now against. But that could be a solution to, if there is genuine concern here given Chamath's points, that the industry can kind of police each other.
+
+Let me clarify that. I think designing a new regulatory agency for AI that's designed after FINRA, which is a pretty sleepy regulatory agency that writes rules for stockbrokers in a fairly mature industry that's not dynamic at all, is a horrible idea. And by the way, FINRA is widely perceived as just protecting incumbents. And talk to any startup founder who's had to deal with them; they view FINRA as existing to protect the big banks from disruption. It's just not a good model to base regulation after. Perhaps the NFA, the National Futures Association, which is also one of these self-regulatory organizations in the financial markets, is a better alternative because that's a pretty dynamic market.
+
+Okay. So now what you're saying is very interesting, which is you mentioned the term self-regulatory organization or SRO, and there's many different models and one of them may work and that's been my point. The one I think is the most appropriate for this circumstance would be something like the MPAA, which does not report to the government at all and was formulated by the motion picture industry in response to the Hays Code. And what the government said is, &quot;Get your act together, guys, or we're gonna have to do it for you.&quot; And what the MPA did then was promote standards that then forestalled more intrusive, heavy-handed government action. So that is basically the model that I said I could get behind. But is that the model that Dario supports? No. Dario and I think Demis wants a FINRA, which is basically this rulemaking regulatory agency that would not only promulgate standards but also do pre-release model testing. Okay. And it would then report into the government and then officially be enshrined in law. And the reason why everyone says, &quot;Well, Elon's behind [it],&quot; I've talked to Elon about this. Elon does not support a FINRA for AI. What he could get behind is an MPA for AI. And that's my point is Demis wrote something—very saying on this podcast, Sacks, since the beginning I have been saying MPA self-regulate.
+
+I get it. But look, here's my point. Demis wrote something very high level. And so when you say something like, &quot;Well, everyone supports Demis' idea,&quot; there's many versions of Demis' idea. Some of them could be okay and some of them are bad. And what I'm saying is if it's a FINRA model, that will not work. Having spoken to Demis at length about this, I think that the general framework is SRO in the right structure. However, FINRA is often used as the example of an SRO simply because it is the most well-known SRO. But you are correct. I think that there's a mechanism by which this thing needs to operate that is distinct from any other SRO. But the idea being the industry gets together and to Chamath's point, they get to look at each other's models. They get to police it. They get to have independence, but they don't get to be controlled by government.
+
+Well, here's what I think is important. And just to be clear, this FINRA for AI idea, Dario's behind that; it's not an SRO because it's not self-regulating. It's a regulatory organization. And the S part is a total fig leaf designed to hide the fact that this is a new regulatory agency that reports to the government that does pre-release testing and approval of models. I call it a DMV for AI because I think what's going to happen is all these models are going to get lined up in a queue waiting to get their test done and then released and it's going to slow us down horribly. It's a terrible idea and it's just a repackaging of what Dario has always wanted, which is an FDA for AI. Now he's saying it's an FAA for AI. You know how long the FAA and the FDA take to approve new products? China's advantage. Exactly. China's going to win if we do this, and it will become pure regulatory capture.
+
+You should look at China's rocket that they landed yesterday. You know, it's completely steel and there's a good analysis that was done on how quickly they were able to do it from the last time they had an explosion of this. Then they got full steel done and Elon's still waiting for FAA approval on his steel Starship. You could actually watch it playing out in China where their regulatory agencies are allowing them to move much more quickly and as a result they're starting to gain real traction in the space race. And then separately, a lot of biotech has moved offshore from the US for the same reason that you're pointing out, which is the FDA approval cycle is so long and the stages slow people down so much. China's completely revamped their rules for getting to clinicals and getting to phase three, and then completing that all the biotech investing in the world is now moving to China.
+
+The fact that Dario could want and has called for, including in very recent blogs, a regulatory apparatus modeled after the FAA and that that is the right model for AI in my view is completely discrediting. And yes, we will get smoked by China because they will not subject all their companies to these constraints. Now, that could go back to your steel-man for a second. Just because I believe that we should not have a DMV for AI does not mean that I'm against AI safety. So, let's talk about some of the things that can be done. So, first of all, I think it's good that these Frontier Labs take safety seriously. Sam just came out with a post, I believe yesterday, saying that actually they're going to slow down the release of some of their Frontier models because they felt that their safety stack was not keeping up with the capability. Okay, that's responsible.
+
+By the way, do you know why I think they're doing that? Because they have huge and ample liability to take responsible steps, because if they don't, they're going to be subjected to all sorts of product liability lawsuits. Look at what's happening to Meta right now. They're getting sued because supposedly their product led to social media addiction, and they're being sued for over a trillion dollars right now. And this comes on the heel of them losing a $6 million jury trial in Los Angeles where a plaintiff sued them for creating her body image issues. So we are seeing massive product liability lawsuits against big tech companies like Meta and Google, and if OpenAI and Anthropic are smart—and I think they are—they do not want to be next. So these companies have ample reasons for liability protection not to just race out their product.
+
+Okay, safety is part of what they have to get right now. How should the industry coordinate with each other? There are tried and true ways of doing this. Companies in the industry publish papers. They publish technical papers. They publish blogs. These are good ways of sharing best practices. They attend symposia and conferences and they present at these things. They do requests for comments as part of open standard-setting exercises. There are ways of the industry collaborating on safety in very productive ways. But what is the common denominator of everything I just said? They are all open. They are not in secret. And that makes those judgments contestable to the point that Chamath made earlier about we need to see the thinking behind this. And what I'm against is these companies meeting in secret, whether it's part of some sort of like FINRA or otherwise, to set standards that are not transparent, that are uncontestable. And you know what's going to come out of that? Regulatory capture and anti-competitive behavior. So there are ways of doing this that will protect the public that are open and transparent. That is what we should lead towards.
+
+You will not see it happen. And I'll tell you why. Just again, the technical details matter. If all of a sudden competitor A, B, and C could see every single trace and span that your model generated as an artifact of going from input tokens to output tokens, you're essentially giving away a lot of your recipe. And I just don't think that if Anthropic isn't willing, even if I'm an API customer, to share my thinking tokens from my company with me, they're sure as not going to share it with OpenAI and anybody else in a room. Okay. Let's and let's just do one more steel-man. So, let's say that Dario is successful... JCal, I'll ask you the question because I've taken over as moderator of this segment. Go ahead. Yeah, no, I wanted to hear your whole position.
+
+Let's just say that Dario is successful. There's some regulatory scheme that's created that does in fact to Sacks' point slow down the industry, slow down model development, and China's Frontier Labs make significant progress and they start to leap ahead and they get this RSI, this recursive self-improvement going, and their models become the best in the world and they only get better and better and better. JCal, we'll start with you. And then we'll go around the horn. What is the implication for the American worker, for the American business, and for the American consumer in a world where China just has the best AI and they have all the data center? What happens in our world? What is the consequence? 'Cause everyone keeps hearing, &quot;Oh, China will win. China will win.&quot; Who cares? What does that actually mean?
+
+I don't think China is going to win. I think it'll be, you know, there's not going to be one person who takes the whole prize. I think it's going to be incremental improvement. So I don't think that that matters. I've been thinking about why this backlash is happening actually for the data centers and it was kind of shocking to see Abbott come out and Shapiro come out because those two people were the most pro-data centers, right? And if you kind of double-click on it, they just want to make sure you're not tapping into the grid. And, you know, the water concern, which we've talked about here, is not too serious, but I think it was very performative. And I think you and I were talking about this on the back channel, is they both are doing this because their constituents, the people who vote for them, really care about these data centers and they want to stop them. So then you have to work backwards.
+
+Why do they want to stop data centers so much? Why are Americans so opposed to AI right now? The perception of AI was already pre-baked with science fiction, of course. So we needed to work to get past the Skynet Terminator vision. But Dario told everybody, &quot;We're going to lose our jobs.&quot; Elon said, &quot;You're not going to have to work,&quot; which was a more world-positive view. But he did say that Sam Altman did, you know, studies on universal basic income and he told everybody you're not going to have to work. You have UBI. Saying that kind of stuff to people who have to work for a living and who have no savings and who are watching, you know, administration after administration not be able to tame inflation, whether they're Democrats or Republicans, and then watching the minimum wage just stay the way it is and barely move while the stock market hits records.
+
+And then all of us, all of us being tech executives get super rich. And you wonder why people now are embracing socialism and why you have Abbott and Shapiro saying, &quot;You know what, I—&quot; and Ro Khanna worst of all saying, &quot;I have to be anti-capitalistic. I have to be a decel. I have to decelerate.&quot; It's because, you know, they were supposed to see some relief and they haven't. And then what do people do who do not feel they have any power? They look to find power. And if you look at what's happened, they are sharpening the guillotines. And you know, that metaphor should wake people up. Whether it's, you know, the United Healthcare CEO getting killed or people firebombing Sam Altman's house, we need to wake up and look at why are people so upset? It's because they can't survive. They're having a hard time with affordability, with their wages. And what two things can they do? They can vote for socialists and they can actually stop data centers. And that's what this is about. Nobody, no regular rank-and-file American cares about AI safety. That's not the discussion for them. The discussion for them is, &quot;Why am I not getting rich and everybody else is?&quot;
+
+I would tune your argument by one degree. I really think you're on to something. But the one-degree shift is I don't think they think about it entirely that way. I actually think they think about it as if I think about who has won over the last decade. This generation of tech oligarchs who have won are pretty displeasing. They're not aspirational and they're not the people that one would look up to. They're not Steve Jobs by any stretch of the imagination. And now they look at this other next generation and they're like, &quot;Wait, we're going to go from billionaire, decabillionaire, centibillionaire to now trillionaire.&quot; And it's those guys. Those guys are even worse than the last crop. That's exactly what's happening. And so I don't think it's as specific as what you're saying, Jason. I think it's vibes. And the vibes are terrible. And they're looking around, they're like, &quot;If we can just slow this down, maybe another batch of people will show up and they will actually mean to do the right thing and will make me at least feel better and I won't be so begrudgingly hating the fact that you're about to make a trillion dollars.&quot; It is precisely that sensation. And the folks that are at the front of the show on this are not trustworthy. That's what it is.
+
+Sacks, let me ask you my question. And I just need to hear someone answer this question. Okay, I'll answer your question. I'd like... So my question again: if there is a regulatory slowdown with AI development in the US and China races ahead, what are the implications for American business, for American consumers? They will win. What does that mean? What does that mean? Help people understand. So like if I'm sitting at home, okay, let me give you like a counterfactual. Imagine if China had won the internet. Imagine if all the major internet companies were Chinese. I can't, I need you to imagine for me. Tell me what... give me a scenario of what this means.
+
+So imagine that instead—I know people don't like big tech—but imagine if Google and Microsoft and Meta and all these companies were actually it was Baidu and Alibaba and Tencent and all the rest of them instead. I mean obviously that would be way worse for the United States. Our economy would not be as vibrant; it would not be as cutting edge and all that wealth would have gone into China. There are also military or, you know, dual-use applications of this technology, especially with AI. The algorithms power all sorts of weapons, drones, things like that, so we'll be behind them. I mean, look, America is not going to be the number one country in the world economically and militarily if we lose AI. It's just that simple. Do you agree? Like what's your view of the world, the US business, consumer, individual in a world where China has &quot;won&quot; in AI? I don't know. What do you mean by &quot;won&quot;? I don't know what it means.
+
+Okay, so I'm what I'm trying to get to. If you could define that, it'd be easy. The implications of regulatory slowdown. So, if we do slow down AI, what are the implications for people? How do people understand tangibly what that means? Yeah, unless we actually go and ban—and I don't even know how one would implement a ban—so I think it's just a worthless exercise. Ban open source? I think we're going to be just fine. I think the consumer is going to win. I think American companies will win and I think the American economy will win. And the reason why it will win is that what we are finding—I'll give you an example of a really interesting insight. And this is about closed versus open. Okay. Three years ago, all there ever were were models. Yeah. And you would look at some benchmark and there would be a score, Friedberg, and you would say, &quot;Wow, the one with the higher score is better.&quot; And then in the last few years, what's emerged is what's called a harness, right? And a harness just wraps the model, right? Like CodeEx or Claude Code or Hermes or OpenClaude, these are harnesses. You know what the interesting thing about open-source versus closed-source models is? When you take a closed-source model, it does really well on a benchmark. When you wrap it in its own harness, it decays in capability. When you take an open-source model and you use any other open-source model, it improves in capability. What is that trying to tell you? What I think we are finding out—and this data is just going to be a tsunami over the next year—is there are all kinds of ways of using open-source technologies that are meaningfully more performant and dramatically cheaper than the closed-source alternative. Unless America stops us, us being consumers, business owners, from using the cheapest, fastest, best thing, unless they stop us from doing that, we will win. What we are debating at this point is which private American company will win or lose. I go back to the previous argument: I don't think Americans care that much whether any of these closed-source companies win or lose. And I think you're seeing that in the policy. So Friedberg, my explicit answer to you is as long as we don't do some draconian thing like trying to stop open source, the American consumer will win.
+
+I got bad news for you, Chamath. An open-source ban is coming. They're not going to call it that. You know what they're going to say? They're going to say that we simply have to apply the same standards to open models that we apply to closed. Okay, here's how they do it step by step. Let me explain how regulatory capture actually works. So first of all, you got to get this regulatory apparatus. Okay, Dario wants an FDA for AI, but he doesn't have enough political support for that. So instead, they do this Trojan horse of a FINRA for AI. They call it self-regulating. It's not really, but anyway, that gets them off the ground. Now they've created the standard-setting organization. Now they've got pre-release model testing. Then the pressure grows to codify that in law. So that happens next. And then what they do is they say, &quot;Look, all these standards need to apply equally to all models.&quot; But here's the problem with that: Open models and closed models, as you know, are technologically different. Go back to Dario's Senate testimony in, I think it was 2023, where he said that open models, if sufficiently advanced, are dangerous. And why are they dangerous? Because they cannot be centrally monitored and controlled and rolled back and withdrawn like a closed service like the one he hosts.
+
+Okay. I understand. Please let me just finish the point then you can respond. Dario basically says that open models are dangerous because of these characteristics they have. And those characteristics are immutable. They're technologically, they can't be changed. Once you release an open model into the world, you can't roll it back and you can't monitor exactly how people are using it because they run it on their own hardware. Dario says this is what makes open models dangerous. So what they're going to do is they're going to have the standard-setting body say, &quot;Well, we have to set the standards for AI safety.&quot; By the way, Dario and OpenAI, they're going to fund the whole thing. They're going to contribute all the compute. They're going to be behind it. They're going to be the ones coordinating with the government officials because, frankly, people in government have no idea how to monitor and control and set standards for AI safety. Technologically, this is way beyond them. So, they're going to go to these companies and say, &quot;Tell us how to do it.&quot; And so what will happen is the standards will get set and then it'll be a very simple matter of fairness to say that the standards need to apply to open as well as closed models. The open models cannot comply in the same way, and gradually they will be shut off to that. I understand, but the American economy would overnight... Why?
+
+So what you're saying... regulators have never done things that are... okay let me have Chamath answer. So let's take, again, I'll use the example of Coca-Cola. Coca-Cola is an extremely profitable, cash-generative, well-run business. It has existed for, I don't know, 100 plus years at this point. It will exist for many hundreds more if left to their own devices. It is a global business, right? Take Pfizer. Same situation. Well-run business, global business. And now what you will tell them is, unless you tell them, &quot;Hey, anywhere you operate, you need to follow American rules.&quot; Okay, that's one thing. Or it'll say, &quot;Inside of America you need to follow our rules,&quot; and other governments will have different rules. Now what is Coca-Cola to do? Run the slower, more costly, less effective, less valuable model in the United States? Sure, they'll do that, and their US business will... they will have a better flourishing business abroad. They will invest abroad. And what you will see is FDI, foreign direct investment, in the United States go off of a cliff. And what you will see is direct investments into other countries of the world rise. You've seen this, by the way, in China when China made all these moves to the Chinese tech companies. I think this is the best analogy. There was a moment where China was at a fork in the road where the large oligopolists there, the large tech oligarchs, were trying to seize power and the tip of that spear was when Jack Ma gave that very famous speech on the eve of the IPO of Ant Financial. What happened? Xi Jinping cracked down. They took complete control. They said, &quot;We are now operating together. Everybody that is worth anything will have a representative from the Chinese government on their board. We have the golden vote. We're going to work together.&quot; When you look at what happened to foreign direct investment and you look at what happened to their economy, it fell off of a cliff. That will happen here if this happens. So they can try and everybody will say, &quot;Okay,&quot; and what the KO CEO will do is redirect all of his capital allocation to outside of America. So will Pfizer. So will I. So will anybody. And then what are you going to do? Take away our passports so you can't travel? So I think it will be a very visible way of just destroying the United States, and you can do that if you want to, but you will see it play out almost instantaneously in the equity markets and in the capital allocation of companies.
+
+I agree with you about all the negative consequences if we ban open models, but that doesn't mean it can't happen. Look at all the negative consequences of banning data centers. Data centers are going to be 3% of GDP. It's basically creating all the gains in the stock market. But they're not voting against that. They're voting against two people that they deeply dislike becoming trillionaires. That's what they're voting against. That's a big part of it. JCal, what do you think? Well, I was just going to add to this. We already know what would happen with AGI, Friedberg, because your original question of like trying to explain to Americans what happens when China wins—we already know what happens when they win. Products get cheaper and you get more access to them. If they solve cancer, what are they going to do with that solution? They're going to just keep it for themselves? No. They're going to sell it to Americans just like they sell phones cheaper, just like they sell cars cheaper, and we try to block them. And then what are Americans going to do? We're going to lose our jobs to them. And so that would be the way, I think, to explain it to them.
+
+But if we want to turn this around, this really is just about convincing Americans that they're going to have jobs and that this is going to benefit them. The American people are scared of losing their livelihoods. That's the beginning and end of it. And the place where I have some expertise is in having invested in Zipline and Uber and a bunch of self-driving companies. And that's where... the money is not the issue here. But the thing that I think is—you know where this is going to play out is really on the autonomy and those jobs. Zipline just did a partnership with Uber. I'm an investor in both of those companies obviously, and they are going to do a million deliveries a day. Then you look at just massive progress by Waymo. They're doubling the number of cars on the road like every 6 months or so. Tesla's about to go CyberCab. And what people are perceiving is in their community that you're not going to have any money staying in their community 'cause those drivers, you know, as much as hand-wringing has occurred, that money at least stayed in the community. Oh, they weren't making enough. Oh, they're only making $18, $21 an hour, whatever it is. But now we're taking that away from them. And then where does that money go? Where does the money for a robotaxi, Waymo ride, Zipline, where does it all go? It goes up into the cloud and then comes back down into Silicon Valley, polarizing more wealth. And that's where you're going to see—I will predict it now—they're going to ban Waymos in New York, Boston, DC, and they're going to limit them with licenses. We must figure out how to explain to Americans that we're going to raise the minimum wage. Something that when I say we should raise the minimum wage and focus on that, people are like, &quot;That's crazy.&quot; But when we talk about an experimental tax cut, people are like, &quot;Oh yeah, let's do an experimental tax cut. We'll change the cost basis of capital gains. Great. Let's try it and see what happens.&quot; But nobody wants to try to raise the minimum wage. Nobody wants to give people an explanation of where their job will be in the future. And that's where, you know, whoever was making the point, I think it was about like, who are the spokespeople here? We need spokespeople who are saying this technology will empower you to get a great job. Paradoxically, the guy who did the best job explaining this—or the two guys—were Jensen, obviously, who said you're not going to get replaced by AI. It's going to be somebody who works with AI. And then Zuckerberg, who said, &quot;I'm going to give you a bunch of free tools.&quot; In his manifesto going direct, he was like, &quot;I'm going to give you free tools. I'm going to empower you. You're going to get agents. Your life's going to get better.&quot; Dario and Sam have not done that. And... Zuckerberg actually did a really great thing, which is he created this new program, or it's almost like a training school... it's like a trade school for people to go and learn how to get these various kinds of jobs: laying fiber, doing these new blue-collar construction jobs, which we have a huge shortage of.
+
+And that's why it actually... it's hard to build... it's a great program. Yeah, I mean, that we need more of. And so how is Zuckerberg all of a sudden the best spokesperson for our industry? It's a very low bar. I mean, I guess that's... look, I mean, this all goes back to the fact that Dario, not exclusively, but again, he was the one who put the most specific numbers on it and therefore made it the most tantalizing and salacious for the media. 50% of entry-level knowledge workers going to lose their job. Not in the distant future, as soon as one year. We're now past that one-year mark, by the way. Has he updated? Has he said I was wrong? Not really. Sam did, by the way, to his credit. To his credit, Dario should start talking about jobs. No, but Sam actually came out and said, &quot;I was too negative. I was wrong.&quot; Dario has doubled down. As far as I know, he's never recanted. He's an ideologue. So, but I mean to your whole point, yes, I agree with you that the animus and anger towards data centers flows out of the fears about jobs as well as other fears about AI. But it's the job loss that is the main concern. And there is no evidence of that. We're now years into the AI boom and there's no evidence of that. We only see net job creation. Exactly. It's only been the opposite. I mean, listen, I had massive concerns about it. And I'll also say something else. Business opportunity is so great. I got seven job openings. So, I keep saying... hold on, this is important. Hold on. JCal's got an important announcement here. No, I listen, what I've discovered is the—if you can convince your team to embrace the tools, so many business opportunities emerge that you wind up hiring people to work for the people in your organization who embrace the tools. So we have become so fast at building the syndicate, building our programs, that I'm like, &quot;You know, we need to add a couple people.&quot; So I thought we were going to automate them away, and we're adding.
+
+I'll just say another general point. Silicon Valley has completely lost what made it great. It was a place for weirdos, for people at the fringes, for people that really were idealistic. And it has become something that's far from that now. It is the equivalent of what Harvard used to be. It's a credentialing place. It's a place you come to to say, &quot;Oh, I came to Silicon Valley. I worked at a startup. I got into YC.&quot; You know, when we came, we used to aspire to meet the Bill Campbells of the world, Mike Moritz's, John Doerrs. Those folks are gone. We used to aspire to work for Steve Jobs. He's not here. And in that breach, all we have done is focused on making money in every single way that we can, hand over fist. And I think again, there's nothing wrong with that except now is a point where we need to do a better job of acknowledging it and trying to do a little bit better. And every time we don't, and we're given a chance to be better and we're not, the hatred builds. The animus, as you said David, builds, and that's what we're seeing now.
+
+Yeah. There's no question about that. But can I defend Dario? Let me just say something in his... I'm sorry, my headphone went out. You said you want to defend Dario. I actually think he is very idealistic. I don't think money is his main motivation. It's just what are his ideals? He wants to bring forth this new super intelligence, machines of love and grace that are going to apportion all the resources of society while humans twiddle their thumbs. It's not a vision that the average person believes in or is attracted to. In fact, it's dystopian. And that's why a lot of their messaging is dystopian. And because of that vision, no matter how idealistic his motives, it is why he does not inspire trust. I mean, I actually don't think he's lying to us, and what he's really trying to do here is capture all the wealth for himself. I actually think he's trying to bring forth this future, but it's not a future that I think the American public wants. And by the way, he should have to defend that. I mean, if you think you are bringing about the singularity, and let's face it, he probably is in the lead to do that, to bring about recursive self-improvement, he should defend this future. I see all these people on X like, &quot;Oh my god, Dario, thank you for coming forth, thank you for coming down from Mount Olympus and slumming it with the rest of us on X and finally engaging on social media,&quot; and it's like, &quot;No, he should have to do that.&quot; You know, if you're going to put yourself in the lead to bring about this crazy future, you should tell us why you're doing that.
+
+Well, and he should speak more. I think this is a key point. And to your point about it's not about money for him: the seven co-founders of this is my understanding—it's been documented I think in a bunch of press reports, but they never talk about it—they donated 80% of their shares. So, like 10% of Anthropic is in some sort of trust, which at two or three trillion, you know, 10% of that is going to be the largest... well, it's going to be the largest democratic PAC. It's going to be the largest... however they use it. But why aren't they talking about the largest trillion dollars to EA causes? What could go wrong? Well, I mean, let's hope they put it towards something that actually is humanity positive. But they allow only like 1.8% each. That's a term of art. Yeah. Well, and then I do think going direct is something you just—and I think we can move on after this—is critically important. What have you got to learn? You got an AI to talk?
+
+No, no, no. You got to... the playbook is very simple. You got to write it all yourself, which he clearly did and, you know, Jensen's been doing. You sure about that? I don't know. It felt like it was him. It felt very Claude-like to me. You think you know the Claude voice? I mean, he is the father of Claude. That's true. Actually Claude could sound like him rather than vice versa. It could be the other way with causation/correlation. But what he did is he did the exact playbook, which is you have to exhaust the audience. You have to go thousands of words like Zuck did, and then you have to get ahead of problems. That's where the leadership is breaking down. You have to talk about what's coming next and then never ever apologize or give an inch. Just attack whoever's attacking you. &quot;Fake news.&quot; I just, right now, I don't think he can win the argument by being transparent because what he's selling is fear in order to motivate the government to give him control to bring about this dystopian future that he believes in. At least that's my distillation of... do create a program for tool-belt generation. Come up with ideas like that. Do more of that. Friedberg, last, you get the last go.
+
+I think that it's worth having a view on whether or not you believe in recursive self-improvement. And recursive self-improvement is this theory that at some point an AI model can spin up a whole bunch of agents to do a bunch of work and they can work together to make a new AI model, and the new AI model is better than the last AI model. And at some point this all becomes effectively fully automated and self-evolutionary. The AI is now improving itself continuously. And that is this idea that you have the singularity as some people would call it, or you have the ASI, the artificial superintelligence that arises from this capacity. But the capacity is recursive self-improvement, RSI. Anthropic has stated they're not sure if it's going to happen but it could. And there is this kind of philosophical debate because companies have a different view on the path forward where it really needs to be human-constructed, human-designed, and there isn't this &quot;let it all go, let humans detach from the AI and let the AI evolve.&quot; And this is really like out of the movie Her where the thing just takes off and it evolves.
+
+But if it does happen and if RSI is a real construct, then you're almost fighting a fool's errand. And it's a fool's errand in the sense that all this idea that you've got human intervention in the stages of model development... You're scaring people again. Well, no, I actually... no, this is my point. If RSI is a thing, and by the way, RSI doesn't lead to some dystopian outcome, it just means that the models improve faster and faster without humans necessarily constructing, architecting, and designing the next evolution. And then you don't necessarily have space for, &quot;Oh, we just did one big model run every 6 months. We're going to go to the government regulator or we're going to go somewhere and get it approved.&quot; There's just this continuous policing and monitoring service that needs to take place at some point. And the truth is that all that you need to pull this off is you don't need governments in the US to say yes or governments in China to say yes or governments anywhere to say... I know what you're going to say. You need satellites in space. You need some sovereignty, some space where you can... and I don't know if it's in space. I don't know if it's with biology and the deal he just did in Kazakhstan and you've got some unique geography. It could be in Iceland. It could be where in the ocean people are floating it. It could be in the ocean. But the point is, if RSI is a thing, you don't have a human process where you're stepping in to run this thing. So you don't necessarily have a cohort of frontier lab scientists running it. Theoretically, an individual that's smart enough or a group of individuals that's smart enough can go spin up an RSI factory anywhere in the world or anywhere in space, and your attempts to ban the data centers or the attempts to ban or to create a regulatory body...
+
+That's why I call it a fool's warrant because the thing with the open internet and the thing with compute is all that it needs is the chips and the power and a connection. And if it's got the chips and the power and a communication connection, it can run. I'm not painting a dystopian view. I'm just saying practically, pragmatically, the labs are all talking about RSI. And so if RSI is where this goes, then the labs can go and set up data centers in Iceland, in China, or wherever—whoever will give them the freedom is a great question.
+
+Wouldn't we be better off having systems where we actually have those labs based, where we have those data centers based in the US, where we have jurisdiction over them, where we have capacity to monitor and control and police them rather than just have them sprung up in some random country or some random territory? So, I guess my point is we should be attracting and retaining the frontier labs, not trying to chase them off. And then here's the famous &quot;wait but why&quot; image of human progress going on a nice clip, and then recursive self-improvement and it just goes out of control. I'll tell you why I think RSI is legitimate.
+
+How close are we to it? That's I think what people would want to know. Honestly, there's a massive problem with time dilation in AI model development. What I mean by that is we would typically consider some sort of thing that takes a linear amount of time, there's a certain amount of compute to get somewhere. There are changes that happen that are nonpredictable that you don't actually know what the next phase, what the next step change takes in terms of time. The time models change a lot in terms of AI model development. And that's what's so crazy to make it so hard to predict, which is why no one's really good at predicting when is AGI happening, when's the next breakthrough happening, and then all of a sudden everyone's like, &quot;Oh my god, we're in the singularity. They just solved eight unproven math theorems in a week off of some model that's fairly cutting edge. It's now going to be the second cutting edge model.&quot;
+
+So it's moving very quickly, but a lot of the models are this mixture of experts concept where you've got these kind of smaller models that call each other to do things and then you wrap it up and you call it a big model. Those smaller models, it seems over time, look a lot more like you see in biology where you have genes, a gene makes a protein, and proteins interact in really complicated ways that we don't fully grok. Networks of proteins do things and then they complete tasks. I think the same evolution is likely to happen with the models where they break down into smaller models, and that makes them so much more efficient and that makes them so much more performant. We're seeing a lot of this in how a lot of the models are evolving. We call it a model, but it's actually many models underneath it that work together.
+
+And so if the models actually do evolve this way, then RSI is the perfect system for figuring out the right path, which is: how many submodels are there? What does each submodel function look like? How do they call each other? That evolution is likely going to happen without a human architect behind it. It's going to be developed through a test and deploy system, and it's going to be fully automated. That's why this approach, actually solving that problem, ends up becoming the future of how model development takes off, which is why I think RSI is probably the future. And when that happens again, it's just wherever the data center and the power is.
+
+I remember a few years ago everyone was like, &quot;Oh, AGI is imminent. AGI is imminent.&quot; And then where is it? I mean, maybe we're already—I think we're soaking in it. Okay, fine. But did it turn out to be the Terminator? No, that would be super intelligence. I mean, artificial general intelligence is like as smart as any human. Super intelligence is like you're getting towards—I get it. Free is talking about that's far off. Do I think RSI could possibly happen? Yes. I think there's lots of black swans that could happen. It's very hard to assess the probability of those things. What I do know is, like you're saying, I don't think some new government regulatory agency will stop it if that's the thing, because it won't be technically sophisticated enough. All it will do actually is concentrate power around that thing. It'll limit the options.
+
+You know, when it comes to AGI, let me talk about aging. We just want to have that technology in this country is my point. And I just want to go back to the point I was asking earlier. Why do we not want China to win? Because we want the best labs. We want the first breakthrough system to be here. Well, Dario made the argument. Dario actually made this argument in the context of trying to ban export of chips, which is one of his hobby horses, as Anthropic has really been behind a lot of the political activity to restrict Nvidia's sales internationally. The argument was that we want to have a data center full of geniuses in the US. And that eventually, what AI is going to be used for is you're going to be able to create all these agents that are basically Nobel Prize-winning level scientists. If we have thousands or millions of those and China has only dozens or hundreds, whatever, then we're going to win everything. And that was the whole argument. But now we're basically banning the data centers. We're not going to have those data centers full of geniuses, and he's done his best to restrict sale of chips to our allies as well. So I guess our allies aren't going to have the data centers either.
+
+So we are totally shooting ourselves in the foot, and probably it would be a good thing if Dario really does believe in the data centers full of geniuses idea that he was arguing for last year. He should come forward and say we're making a big mistake by overregulating data centers. Here's how we should do it. I haven't heard him step up in that way. It makes you kind of question, do you only fight for the doomer side of the argument, or are there versions of the positive side that you're willing to fight for politically? Now, Freeberg, to your just one last point about RSI, I think this is really important: look, again, black swan, very hard to say if it's going to happen. I do think that we're headed for AGI or already in AGI or whatever, but the most important thing about AGI is that we have choice. I'd much rather have multiple AGIs than just one, right?
+
+For example, Elon says that the way to keep AI or AGI aligned is to make it maximally truth-seeking. I kind of like that. That's a way to prevent it from becoming woke. What Anthropic says is the way to keep it aligned is to have this Claude constitution that is full of liberal values, and you train it on that, and they've kind of got this EA ethicist or whatever who's writing these things. So there's different approaches. I kind of want all of them to produce sophisticated AI to keep checks and balances, to keep these things in check. What I don't want is just a Skynet, or like a woke Skynet, is sort of the worst possible outcome. If we're going to go like sci-fi for a second, you know, there was like a Terminator TV show. Yes, that was pretty good. They stopped—it was pretty good. It got cancelled. This was like years and years ago. But anyway, what they figured out in the show, the plot was that the way they finally defeated Skynet was they created a good AGI to take on Skynet. They realized humans just couldn't do it by themselves. So they created a choice—good. Yeah, they trained it to be more benevolent towards humans.
+
+So, in any event, and if you're going to get like really sci-fi about it, look, I think choice has to be our hallmark. Competition has to be our hallmark. We want multiple winners here. We don't want a small number of elites guardrailing this thing. That is what you will get if you head in this FAA, FINRA direction. Breaking Freedberg. New nickname club just dropped. There it is. It's this is what you sounded like. Freeberg. Doc Brown. Marty, Marty, your future's not predetermined. You can make your own future. You can use RSI. I'm not trying to be an advocate for RSI. I'm trying to be pragmatic. In the future, you're back. If RSI is the way things are going to go, you definitely don't want to be trying to regulate AI to stall out because someone else will win it, and then you're literally handing the keys to RSI to them because they're suddenly going to be able to get there faster. And you don't want to ban the data centers because then they're going to be offsite.
+
+All right, there was a peculiar story this week. Andreessen Horowitz is allegedly being investigated. This is all according to a Bloomberg report that they're being investigated by the Department of Justice for over a year under something called section 8 of the Clayton Antitrust Act. This is a 1914 law, over a hundred years old, prohibiting interlocking directorates, which I guess is like old-timey English for board of directors. The conflict seems to stem from Ben Horowitz being on Databricks' board while another partner from Andreessen Horowitz, Martin Casado, sits on Fivetran's board. I don't know if you guys have heard about this story; it was like one of the top stories this week. Obviously, Dre and Ben Horowitz have been all-in with Trump and big donors, so put that into the mix as you will. Why is this happening now?
+
+I can tell you. Enemy of Andreessen Horowitz, jealous of their returns, says—what are we talking about? Do they not understand how venture works? Is it like you invest in one company, you can't invest in another? I don't understand. What did Bloomberg say? They said they've been under investigation for this conflict as described between these two companies—which means an enemy reported them to the DOJ and then said to Bloomberg they're under investigation. That's why I bring it up; it seems so odd and the timing to me likely seems, I will make a speculative guess, the CEO of one of these companies is pissed off that the other partner is on the other board, and reported it to the DOJ and reported it to Bloomberg at the same time. Interesting. All right. Well, there you have it folks. Moving on in the docket. I think we made quick work of that one.
+
+Let me just say, you know, you've been seeing like the distribution of Cursor and then SpaceX, and Horowitz is on fire. They are crushing. They've had two in the last few weeks. My God, congrats to them. They make—how many billions did they make on going? Well, Cursor, and didn't they make a lot of money off OpenRouter? OpenRouter was more like an AUM boost. It was like 600 or 700 million, but the Cursor was decent, like an appetizer, but SpaceX was the main course. That's like 157 billion. Now you're talking. Just by the way, even if you want to say that VC firms should not invest in competitors, the reality is that startups exist in a very dynamic environment. They frequently pivot and change their business models, and two companies that start off in totally different spaces can end up competing with each other. So now these are different board members, and they can probably set up a firewall between them. Yes, sorry, these are not failing companies. What confidential information do any of these private businesses have? And by the way, Andreessen Horowitz could also just put an independent director in there and just be done with it. So if this was some ticky-tacky very important thing, I don't know why the DOJ is on this.
+
+Freeberg is right. When you make a claim to the DOJ, if they open a file, you are technically under investigation. And so then you can report that to a buffoon reporter who doesn't know from shinola, and they'll just repeat it. It means nothing. All right. And then the DOJ doesn't tell you that you're under investigation, and then they also don't tell you when it's closed. Same as it's just a one-way PR ratchet for an enemy to exact some sort of chaos. Andreessen Horowitz is crushing it. God bless them. Godspeed to them. It is interesting that there's even this rule, but we had some fun with it. So let's keep moving.
+
+I want you, Freeberg, to join me and Sacks, Bestie, Chamath, at the All-In Summit happening September 13th, 14th, and 15th in Los Angeles; all has been announced. And hey, guess who's headlining the party? The same guys who sell out Madison Square Garden. I know that Freeberg has a personal relationship. Go ahead, tell everybody who's going to be there. Chainsmokers, which is going to be awesome. So, we'll have them at the closing party; it's going to be great. And then we're also doing another full takeover at Universal Studios. So, we got a whole party at Universal, which was awesome last year, where Sacks and I were with Diplo on stage. J, you were there, too. It was great. I was on stage dancing. Who's Diplo? Great. The DJ—Diplo our minds. Come to that concert. We have other special unannounced guests that we're not going to announce. So, this is it. We're done making announcements.
+
+All right. We know the Democrats have been favored to take the House in the midterms, which are just around the corner. Polymarket has them at 88% favorites, but Polymarket now has the Dems at 52%. It's basically a tossup. Current balance of power, GOP 53 seats, Dems 47, which means I guess the Dems have to flip four of those without losing any. 35 seats are up in 2026. There are some special elections going on in Florida and Ohio. 23 of those 35 seats are held by Republicans. Big races to watch: Alaska, Maine, North Carolina, and Ohio. On February 25th, the day before the Iran war started, GOP was favored 60 to 41. It's been as high as 70%. Here's your Polymarket. Sacks, what do you take from this? Why are the Republicans set to get trounced in the midterms?
+
+Well, first of all, polls are notoriously wrong in the summer before an election. And there's some data on this. So, we should just, if you're going to cite polls, let's just actually talk about the topic of whether political polls are even accurate at—these aren't polls. This is Polymarket. Just to be clear, the polls are slightly different. People—yeah. But the polls are shaping public opinion right now. So, political scientist Patrick Ruffini analyzed over 3,000 polls over the last four election cycles, every two years since 2018. And what he saw is that there is a huge bias. The preponderance of polls in all four cycles favored the Democrats, and the average polling error across all the polls was D plus 3.7 relative to the election outcome. I think this polling problem has become even worse recently. And you see it where there seems to be an oversampling of young progressives in these polls because it's not just the fact that the polls favor Democrats over Republicans. They also favor the DSA Democrat over the more moderate or centrist Democrats. You've seen this in a few elections where the DSA candidate was supposed to win by a lot, and then they basically eked it out or actually lost, like in Wisconsin. So, in any event, I just think that the polls are very unreliable at this time of the year, and a lot of the polls are actually created as internals by campaigns to motivate their donors.
+
+So, basically, people are upset, then they throw people out of office. That's just the trend and that's what happened over and over again. No, I just think that the polls somehow are oversampling Democrats and progressives and have a bias. That's what the data is showing. So, I just wouldn't read too much into this right now. I do think that the Democrats—I think it is legitimate to say that they are favored to win the House. I think the Senate right now is a toss-up and I would say that the Republicans will ultimately keep it if I had to predict right now. I just think that when you get back from Labor Day, that's when the campaign for the midterms really starts. And I think that Republicans need to focus on the right messages in this campaign. And I think there are plenty of good ones. They just have to remind him what are all the good things.
+
+What would you say the top three they should focus on are? Well, look, everyone's been overindexing on the war and that's been the focus of the news, and hopefully the kinetic phase of that is over and doesn't restart. And assuming that's the case, I think the Republicans can remind the electorate of everything that's happened over the last couple years. I think there is a good story to tell. So, first of all, remind people that the border has been sealed for the last year and a half. We haven't just slowed Biden's invasion; we've stopped it completely. Contacts at the border have fallen off a cliff to the lowest level in 50 years. Illegals aren't even really trying to cross the border anymore; it's been so successful. Second, sealing the border and deporting hundreds of thousands of the worst criminals has actually made the country much safer. Murders have dropped around 20% year-over-year, and the murder rate is the lowest in 70 years. So, that's number two. Third, deaths from drug overdoses have dropped 20% again thanks to tougher border enforcement. Fourth, Americans saw a 17% increase in tax refunds thanks to the president's &quot;no tax on tips,&quot; &quot;no tax on overtime,&quot; and &quot;no tax on social security.&quot; So, these are real increases in take-home pay as a result of those tax cuts.
+
+Also, the tax provisions in &quot;Big Beautiful Bill&quot; incentivize new equipment buying. We talked about the accelerated depreciation. And perhaps that's why small business optimism just reached its highest level in nearly a year, and more small businesses are saying they plan to hire in the months ahead. So, I think we do have a strong economy. Prescription drugs and auto insurance costs both fell last year after increasing a lot during the Biden administration. I think prescription drugs has had their steepest annual decline since 1963. So, there are positive things to talk about there. Everyone made a big deal of the surge in egg prices at the start of the administration, but few have bothered to note that there's now been a 39% decrease year-over-year in July. So, look, there are many good things, I think, for Republicans to talk about. They just have to kind of remember everything that's happened in the last two years.
+
+Okay, Freeberg, you have thoughts on what is going to happen this midterm and what people are making their decisions based on. Things are expensive. People can't afford housing, healthcare, or education and are leaning towards this DSA concept. There was a frightening statistic on young conservatives embracing socialism. Really? Wait, the conservatives like MAGA folks you're saying are embracing socialist tendencies? How are they conservatives then? Well, I guess ostensibly they're flipping or they're changing the composure of the issues they care about in some way. 53% of self-identified conservatives under 40 support government-run grocery stores, not Democrats—conservatives. Take that in first line of this Wall Street Journal article. July 2026 Fox News poll found that 61% of Republicans view capitalism favorably, down from 72% in 2019, while the share who feel strongly favorable has fallen from 54 to 41%. The share who say the system is rigged towards the wealthy has climbed from 30% in 2018 to 42% amongst Republicans.
+
+So, I don't think that this is a principled line in the sand anymore. I think that the problem with unaffordability, which I would argue continuously, and I've argued it since the first day of the show, is a function of government spending. The more government spends on education, healthcare, and housing, the more expensive those things get rather than the opposite. They're supposed to be able to provide access to those things, but when the government intervenes in those markets, those things get more expensive. No one wants to kind of acknowledge or admit that in either party. And I've been to DC enough now to know that no one actually acknowledges or cares about this point; they all think that their job is to get more money out of the government for their constituents. Every single person in every party. There's very few principled conservatives. Many of them are conservatives by title, by party affiliation, but they're not conservatives by principle in the traditional sense—small government, free markets, etc.
+
+I think that this is the motivating factor. I would argue if you take the look at the macro cycle, the macro cycle being we've printed so much money, we've got so much debt, the 30-year is now at 5.3% this week. It continues to hit new 20-year records every day. We, I think, are going to continue to face a problem of unaffordability, and ultimately there is going to be some sort of big movement towards more socialist policies that we're going to see play out between now and 2028. It's why I continue to believe I think someone like an AOC becomes president. I think there's going to be a wave this year and then there's going to be a bigger push in 2028 because I don't see the arithmetic or the fiscal situation changing to actually alter the affordability landscape. I just don't know what you could do from a policy perspective, and I don't hear either party talking about actual solutions to solve this affordability problem between now and 2028.
+
+And then the other kind of big problem that I've talked about is assets. Middle-class people, people that worked in private companies, people that don't depend on social security or public pension funds, they've all had 401ks and owned homes. So, they have seen their net worth climb with asset inflation surge. So, the top 50% of Americans have 178 trillion of net worth and the bottom 50% of Americans have 6 trillion of net worth. It's not the billionaires. It's the whole middle class. The middle class has all the wealth in the United States, and that's because they've owned assets. They've owned houses and they've owned stocks. Houses and stocks have surged in value. And so if you don't own a house and you don't own stocks, you were left behind. I don't see how from a public policy perspective we don't find ourselves walking down this very nasty, winding, dark path of socialism because the alternative policies that could be put in place to solve these problems are not being put forth by either party right now. So I do think that there's going to be a big socialist embrace. I've said this obviously for a number of years and I think we're going to see this play out in this midterm and that's going to create the momentum going into 28.
+
+And look, I mean, this polling data is very worrying. It's not just the Democrats. It's not just a party-based system. It's the horseshoe. It's the 63% of Americans that are living paycheck to paycheck that can't afford. That's the Americans that are going to vote for this system. And it doesn't matter what party it is; they're just going to vote for it. Chamath, 20 cents on the dollar going to our interest approximately on the federal side. Inflation, we thought we would get there. It's been 3 or 4% for the whole year; haven't been able to get down to two. And the GDP concept which we talked about here—getting to growth again and if we can get it, we can grow our way out of it—that hasn't happened as well. Obviously, the war, a big disappointment for many folks in both parties who were promised no war and here we are six months into it. What do you think is going to happen over the next, through the midterms, and then into 2028? And to Freeberg's point, any way to get out of this? Is this a debt spiral or is this something we can course correct out of? In your mind.
+
+I think that we can course correct. I just think it takes will. And I think that we need corporate America to step up and do their part of the job. And we need governments mostly to get out of the way and not have any hairbrained schemes on new inventive legislation that they think can solve the problem. I don't trust any polls. Just to be clear, I don't believe this polling data. And I think that we've gotten into a very dangerous point, which we already got into with the media, where the media lies. We all now know that the media lies, and the media can't be trusted. I would like to now go out on a limb—I don't think it's much of a limb, though. Pollsters lie and I don't think you can trust them either. I think that the media acts in concert with pollsters to find the data that allows them to write the headline that hopefully allows them to get the clicks. So I would just start there: pollsters trash, media trash.
+
+So what is really happening on the ground? I don't know. But I don't trust what this data tells. Now, what do I know is helping and hurting the incumbent sitting president? I think that if we as in corporate America get ourselves in a position to actually present the better face of capitalism, we allow the system as it stands to continue to work. And I think all of these things, if we don't wake up, are telling us that corporate America is not trustworthy anymore. Corporate America is not aspirational. Corporate America does not do the things that engender some amount of trust and respect. And specifically in Silicon Valley, we've completely lost the script because we've gotten to the far, far end of that. And everybody is in it for themselves to such a degree that it's either pearl clutching on the one hand or getting your hand caught in the cookie jar on the other. I posted the cookie jar thing that Anthropic did on the healthcare side. Cookie jar. Why are we in this? I mean, it's just so avoidable. Those are headwinds for the incumbent president, even if he has nothing to do with it. What is a tailwind? I think getting out of the Iran war can be a massive tailwind. I think structurally solving energy on behalf of American citizens can be a tailwind. I think making sure that all of the long-term and immediate-term investments of GDP can actually come and bear fruit can be a tailwind. All of those things. There are still a lot of levers to be pulled between now and November. Those can create pretty meaningful tailwinds, but the headwinds, unfortunately, are pretty strong. It requires some real coordination that the White House is going to have to do to get a bunch of these corporate CEOs in the room, to get a bunch of these Silicon Valley CEOs in the room, and to tell them, &quot;Guys, enough of this. Play nice in the sandbox because you're about to lose the standard operating procedure that allowed you to exist in the first place.&quot; And they need to get this message clearly.
+
+I can tell you the exact reason Democratic socialism is going to win, continue to win, and these far-left Democratic candidates are going to dominate. And it's the Republicans' fault. They had all three branches of government here really tightly in their control. If you look at what the podcast bros and the pro-podcast preferencing stack is responding to—and I listen to them, not every episode, but I dip in and out of Tucker, who is now making his own political party, Joe Rogan, Tim Dillon, all these folks who were all-in for Trump—they cite the Epstein investigation, which okay, whatever. I don't think it's particularly material, but it is to them. The Iran war is obviously top of what they believe is the problem here because they were promised that wouldn't happen. And then it's to your point, Freeberg: this inflation thing has not been solved, and it just keeps going.
+
+We're going to be sitting here I think in another 6 months or 12 months talking about, &quot;My lord,&quot; every investigation possible into the Trump administration. We need to start looking at what would be things to your point, Chamath, and I thought you summarized some of the broken parts of capitalism I think well, but we got to get granular about it. I brought up last week just the edge behaviors in capitalism where we overoptimize. I felt the delivery providers—that Sacks and I had a pretty hearty debate about it last week—were just being too clever, squeezing too much out of the last mile, quite literally on Amazon's part. How we treat the people who are at the bottom of the employment stack is what's causing this, and not being able to solve the cost of homes and not making that a focus. Not being able to solve the cost of childcare. Not being able to move the minimum wage. I think we have to look at all of these things and say that's, or Trump should look at all of those things and he should build a second half of his term just around those things. No more crypto stuff, no more wars, no more attacking our allies. All of this performative stuff and mistakes, they got to go away and we got to focus on what he sold people on. People feel they were sold that this would be a populist presidency that took care of the working man and woman in this country and it has been the opposite.
+
+Sacks, I'm sure you have some thoughts. We'll give you the final word on the inflation thing because you talked about it and Freeberg's talked about it. I mean basically you're saying the cost of living is going to drive everyone to socialism. I agree there's some risk of that, but let's break it down into a little bit more nuance here. If you look at where the most inflation has occurred, it's always in those sectors of the economy that the government's most involved. So healthcare and colleges where the government has massive amounts of subsidies and regulation, it only seems to make the problem worse. Kind of makes sense that if the government's paying for something, then the providers have a huge incentive to charge as much as possible. In fact, a lot of them engage in fraud as well. So we know these areas are rife with abuse. But those are the areas that are most inefficient and where you see the price going through the roof. I mean, hospital services, man, that's like just exponential.
+
+And then if you look at the areas where we've had not just no inflation, but actually prices have come down, it's in all the tech areas. It's basically TVs, or computer software, cell phones, things like that; the prices have come down a lot. By the way, this chart is showing all the way from 2000 to 2026. So, it's a 26-year time frame. And during that time, overall inflation went up 96%. So the price level almost doubled in that 26-year period. On average, that's right. But like I said, with certain things like healthcare becoming 300% almost more expensive, whereas computer software went down by 67% in real dollars. Meanwhile, the average hourly wage grew 135%. So at least the average hourly wage grew by about 40% more than the inflation level, but obviously it still bites that you have all this inflation. I guess my point is just, how do you solve it? We know that you bring prices down through vigorous competition, not through more government interference in these markets. Unfortunately, what happens is that socialism causes the problem, and then what happens is that groups like the DSA argue that the way to solve the problem is through more socialism. So it's a disease that claims to be a cure, and then people take it and they take more of it, and the disease gets worse and worse. That is the spiral that I think we risk being in.
+
+We are in a socialist debt spiral now. All this spending now. We're not in a death spiral. Take it easy. We're not in a death spiral. It's great for you to say because it sounds really like you got some real hot take. We're not there. America's doing fine. We are cranking. The economy is great. There are things that need to be fixed. I would say start with corporate America. Let's get our act together and let's start doing things that are honorable, interesting, and aspirational. Yeah, I think you totally missed the point. I think the real point here is if he hadn't started the war, we wouldn't have the same inflation issues. We wouldn't have the same expense issues, and this would be a totally different picture and it was his job, Sacks, when he promised the American people he would focus on affordability. He had control of both houses and the presidency. He's willing to do any executive order on crypto, on wars, on anything, but he didn't do any executive orders on affordability.
+
+Maybe you missed the point where Chamath said it'd be a tailwind to get out of this war. I think the kinetic part's already over, by the way. So it's just—let's hope. I mean, it just should never have been started. But in any event, look, the president passed his economic program last year on Big Beautiful Bill and I think it's working. We're seeing a huge investment boom. We're seeing small business confidence rise to its highest level in a long time. They are saying they're going to create more jobs over the next year. I think the economy is doing pretty well. I mean, we do have these issues; I'm not saying we don't. And spending is a long-standing problem. Can't disagree with you there. However, I don't think Democrats have the solution to the problem. And the Democratic socialists definitely don't have the solution to the problem because they want more spending.
+
+The death is that we are now incentivizing young people in the Republican party to embrace socialism. Moderates are embracing socialism. They're all looking at it saying, &quot;Well, that sounds better. If Trump won't be a populist, maybe these people are the populist.&quot; And that's what I mean by the death spiral because they're going to just keep spending money. They're going to increase the velocity of spending. By the way, that's what I—I don't think we're like in it now. We're kind of risking going—just one last point. They did a cost estimate of the policy platform proposed by the DSA. Remember we've talked about that before. And the estimate is that it would project new federal spending of between 71 trillion and 212 trillion over—by the way, total—entirety of the American population 182 trillion. Okay. But I'm just saying that's how much the DSA program would cost if you guys believe that the root of our problems is overspending and basically too much government. Unfortunately, this is not the—the DSA is going to—no, but here's what's going to happen.
+
+I'll just walk through the sequence of events. Sequence one, they enact a policy starting in 2028 with Comrade AOC in charge and the Politburo, Ro Khanna, Secretary of Housing and Urban Development, and the rest of the Politburo organizing themselves to launch these new programs. Those new programs get launched and costs balloon. The bond market sells off 30 years. So now the 30-year yield spikes 7%, 8%, maybe more; things become more unaffordable. So then the question is, okay, well, we can't bridge it from a fiscal perspective. We can't just get the Fed to start buying bonds. There's not enough buying power there to bring rates down, to bring inflation down. So we need more income. So now we need to pass a national asset seizure tax. And there's not enough money in the billionaire class or the 50-millionaire class. The total net worth of all people that are worth over $50 million is only 23 trillion. You could take 10% of their net worth and it would only cover 3 months of fiscal spending, today's fiscal spending. So at the end of the day, the only way to get there is to start doing massive taxation seizures. So seizures seize.
+
+So this just came out this week by the Cato Institute. Again, it shows the low end of the DSA spending is 71 trillion. The high end is 211 trillion. Now, you compare that to things like corporate profits or private sector wealth. Corporate profits are only 35 trillion. The Forbes 400, all the wealth of the Forbes 400, is only 6.6 trillion. So it's less than 10% of the low end of DSA spending. I keep telling you this is not about mathematical realism. This is about anger towards a class of people that are increasingly odious and mistrust. But people also can't afford to buy a house. People are 35 years old with roommates. And people go to the grocery store and they're shocked at the fact that they have to spend an entire paycheck or a third of a paycheck to buy groceries. It's not that people want to buy a yacht. It's that the yacht class are just—no, I mean, well, no. I mean, look, in every socialist revolution, every revolution we've seen historically around this, there is always an elite crunch of society, and they're typically classified different ways. It's wealth, it's Jews, it's some race, it's immigrants; there's some organizational assignment, some identity assignment that says this is the cause of unaffordability.
+
+At the end of the day, the dysfunction of the relationship between government and all the other organizations that make up that society. Those organizations can be states, they can be private companies, they can be NGOs. It is the dysfunction of the government's relationship with the other organizations that fundamentally causes things to become more expensive and dysfunctional, and the actual market for getting access to things for the individual fails. At that point you have to identify, and you don't identify the government because the government is the aggregate of all the people. So, remember the government is the system, the means of action. For the people to organize, they have to organize the government to go, and then they have to have an alternative system to go and destroy. You have to point the finger and you have to point the finger at somebody. And if you're going to scapegoat somebody in 2026, the best class of people to scapegoat are the billionaires, and frankly, even better than them. But at the end of the day, it's all tech, right? The data center is the temple where the billionaires and trillionaires pray. It's where they go to make their sacrifices. It is their gathering spot. So I think the data center is this, like, temple on the mountain. That's why I think the data center gets tied up in all of this. There's no rational discourse about data centers. It's like—no, no, look, you're if you take it through the René Girard lens, everything maps. It's like the billionaires will be scapegoated and the trillionaires will be—I mean even worse—and because that will allow the catharsis that will allow society to reset and realize, &quot;Wait a minute, oh my gosh&quot;—yeah, there's a generation of that though, there's a generation ahead—and only then. It is a long process. It is a long—
+
+Here's an idea: next president, or Trump in his second half, just putting it out there: do an executive order that you're going to build like a million homes, two million homes, if you can have executive orders. If you can start wars without the approval of Congress—that's not how it works, right? What's that? You know that that's not how it works, right? There are local, pulled-out-all-of-the-stops laws. Of course. But he pulled out all the stops for getting data centers greenlit. We know that. And he worked with the state governments. I'm talking about him coming out saying, &quot;You know what? We did a great job for the data centers. We did a great job for the crypto industry. And now we're going to do two great things.&quot; Hold on, let me finish. We're going to do two great things: we're going to make trade schools and we're going to make affordable homes. I'm just going to make that the next 24 months. We're going to figure out a way to mobilize the private sector, mobilize the public sector. We're going to make more homes and we're going to get you a great education that turns into a job. That would be a great thing for Trump to do.
+
+The federal government does control the largest amount of land in the United States. So, it could do something on federal land without the need for a bunch of other state and local gobbledegook. So, there is—may be true. Now, it may not be located in places that actually make sense for commerce and for people to live or that are already living there, because I don't think it really abuts most cities. So unfortunately it's not in his control even if he wanted to just kind of say let's make this happen. I think if the president can go spend a couple hundred billion on this war, he can go spend a couple billion on homes that are affordable. And maybe he can't put them in Manhattan, but he can put them other places. He should fight for the regulations to get just like he fought for the regulations on data centers and energy. He made a point on this very podcast at the AI summit: &quot;Hey, we're going to clear all the pathways to nuclear, to nat gas. We're going to—beautiful, clean federalism.&quot; State, I give him credit for that. Now do it. Now do it for homes. Let me see you do it for homes. Trump, use that same energy. They just passed a housing bill. When's the last time we heard Trump? Unfortunately, it was written by Elizabeth Warren, so I don't know how good it is, but—anyway, I'm just giving him the solution to save his legacy. All right, everybody. As always, you're looking out for everybody. Looking out for the audience. Nois, thank you. Nois is also looking out for you. Okay, wrap. I got to go. Come on. All right, everybody. It's been another amazing episode. Love you, boys. Nice to be on podcast. Good to have the quartet back. Let's go. Bye-bye. We'll let your winners ride. Rain, and we open-sourced it to the fans and they've just gone crazy with it. Love you. Queen of your Besties are gone. That is my dog taking notice of your driveway. Oh man, my Asher will meet me at—We should all just get a room and just have one big huge orgy 'cause they're all just useless. It's like this sexual tension that they just need to release somehow. Wet your feet. Your feet. We need to get murky. I'm going all in.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-bBYZn5vEgxY">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=bBYZn5vEgxY" target="_blank" rel="noopener">Nvidia's Risky Business | Stratechery by Ben Thompson<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/G3KKbnKufJOIVSn2K-p-4DrmYkR50LHZileEND4IhJ38sLdznQIYOUShN7qqvG1G5vPvB63Mml8=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Stratechery</b><span class="subs">(16.5K)</span></span><span class="dot">&middot;</span><span>20:22</span><span class="dot">&middot;</span><span>156 views</span><span class="dot">&middot;</span><span>2026-08-21</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Ben%20Thompson%22">Ben Thompson<span class="chip-desc">Analyst, Stratechery</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>- **Historical Parallel:** Liaquat Ahamed’s book *1873* draws a direct link between the collapse of the Northern Pacific Railway build-out and today's AI moment.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">Big Tech is leaning on unprecedented debt, equity, and private-market financing—mirroring the 1870s railroad boom—to fund an estimated $600 billion in 2026 AI infrastructure. Meanwhile, Nvidia and Google are pioneering massive new financial vehicles to sustain capital...</div>
+                    <div class="sum-full" id="full-1"><p><strong>TL;DR:</strong> Big Tech is leaning on unprecedented debt, equity, and private-market financing—mirroring the 1870s railroad boom—to fund an estimated $600 billion in 2026 AI infrastructure. Meanwhile, Nvidia and Google are pioneering massive new financial vehicles to sustain capital spending while navigating intense competitive and structural pressures.</p>
+<h3>The 1870 Analogy and Big Tech's Debt Boom</h3>
+<ul>
+<li><strong>Historical Parallel:</strong> Liaquat Ahamed’s book *1873* draws a direct link between the collapse of the Northern Pacific Railway build-out and today's AI moment. </li>
+<ul>
+<li>Using a 1,200x adjustment factor, the $500 annual investment in US railway bonds during the 1870s boom equates to roughly <strong>$600 billion</strong> in 2026—matching projected spending by major tech companies.</li>
+<li>Jay Cooke's aggressive retail bond sales and reliance on endless capital needs ultimately triggered the Panic of 1873 and a multi-year depression.</li>
+</ul>
+<li><strong>The Hyperscaler Balance Sheet Shift:</strong> </li>
+<ul>
+<li><strong>Microsoft:</strong> Alone among the hyperscalers, it still boasts substantial free cash flow (<strong>$19.6 billion</strong> last quarter) and abides by the rule that CapEx isn't funded by debt (cited *1873* on its recent earnings call).</li>
+<li><strong>Oracle, Meta, Alphabet, and Amazon:</strong> Issued a combined <strong>$80 billion</strong> in debt between September and November to build out infrastructure.</li>
+<li><strong>Escalating Issuances:</strong> After raising a combined <strong>$108 billion in 2025</strong>, these four companies raised <strong>$194 billion</strong> by July 7th.</li>
+<li><strong>Deteriorating Terms:</strong> Spreads are rising, 86% of bonds issued in 2026 are trading at higher yields than at issuance, and cover for recent issuances has fallen to <strong>less than 2x</strong> from <strong>5x in February</strong>.</li>
+</ul>
+<li><strong>Google’s Equity Move:</strong> At the beginning of June, Google announced it would raise <strong>$85 billion in equity</strong>, including a <strong>$10 billion</strong> special issuance to Berkshire Hathaway, serving as a powerful signal that expected demand outstrips current expectations.</li>
+</ul>
+<h3>Google’s DeepMind Turmoil and Infrastructure Pivot</h3>
+<ul>
+<li><strong>Leadership Shakeup:</strong> </li>
+<ul>
+<li>Demis Hassabis was kicked upstairs to chairman (no longer running day-to-day operations), and Gemini co-lead / chief scientist Jeff Dean departed alongside a host of reinforcement learning researchers.</li>
+<li><strong>SemiAnalysis Assessment:</strong> Declared that Gemini is cooked, stating that Google's odds of reaching state-of-the-art again have dropped to zero due to a bureaucratic, painfully slow, and strategically timid culture.</li>
+</ul>
+<li><strong>Google Cloud Triumph:</strong> </li>
+<ul>
+<li>Thomas Kurian won internal turf wars over compute allocation.</li>
+<li>GCP revenue growth accelerated to <strong>82% year-over-year</strong> (compared to 62% the previous quarter and 32% a year ago), with margins reaching <strong>36%</strong> (up from 33% last quarter and 21% a year ago).</li>
+<li>Sundar Pichai confirmed on the earnings call that short-term costly bridge deals (renting third-party capacity) are designed to support major cloud customers like Anthropic in multi-year opportunities.</li>
+</ul>
+<li><strong>TPU Strategy and Anthropic Partnerships:</strong> </li>
+<ul>
+<li>More than <strong>20% of total TPU shipments from Q3 2026 to Q4 2027</strong> are being sold directly to Anthropic.</li>
+<li>TPUs are positioned as general-purpose infrastructure (serving customers like Citadel and the Department of Energy) and offer a significant cost advantage over Nvidia GPUs in a world where compute is commoditized.</li>
+</ul>
+</ul>
+<h3>Nvidia’s "Investable Asset Class" Financing Platform</h3>
+<ul>
+<li><strong>New Financing Platforms:</strong> Jensen Huang announced partnerships with <strong>Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs, and KKR</strong> to establish independent financing platforms mobilizing over <strong>$500 billion</strong> of third-party capital over time.</li>
+<ul>
+<li><strong>Shift in Model:</strong> Moves the industry from project-by-project chip buying to financing AI factories as productive infrastructure backed by repeatable platforms and long-term institutional capital.</li>
+</ul>
+<li><strong>Nvidia's Backstop Risk:</strong> </li>
+<ul>
+<li>Nvidia is backstopping opportunities with up to <strong>25% residual value-based financing</strong>, effectively offering a hidden price cut and putting its own profits on the line to reduce capital costs for data center builders.</li>
+<li>This structure relies on safety-seeking assets like insurance floats and pension funds, carrying considerably higher risk than equity if AI revenue fails to materialize.</li>
+</ul>
+<li><strong>Software Moat Pressures:</strong> </li>
+<ul>
+<li>Anthropic has not been dependent on CUDA for years, and OpenAI is moving in that direction for inference. </li>
+<li>If frontier labs successfully escape CUDA, Nvidia's profits will face severe squeezing, amplifying the urgency behind Huang's open-source advocacy and aggressive financing plays.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"For all intents and purposes, we believe DeepMind is no longer a frontier lab... Google will continue meandering on and releasing models, but their odds of reaching state of the art again have dropped to zero."
+— SemiAnalysis
+</blockquote>
+<blockquote>
+"Today, we announce partnerships with Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs, and KKR to establish independent financing platforms designed to mobilize over $500 billion of third-party capital to support the build-out of AI infrastructure over time."
+— Jensen Huang
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">In video's risky business was published on Tuesday, August 11th, 2026. Good morning. On January 1st, 1870, Jay Cooke, held as an American hero for his role in financing the Union effort in the Civil War, signed a contract that would, if you squint, lead to World War. In 1864, Congress had created the Northern Pacific Railway Company with the goal of linking the Great Lakes and Puget Sound with tracks that would eventually run from Duluth to Tacoma. The charter included 40 million acres of land adjacent to the proposed line in exchange for accomplishing the build-out.
+
+For the ensuing 6 years, however, Northern Pacific struggled to secure financing, even as the Union Pacific and Central Pacific Railroads built towards each other, driving the golden spike linking Sacramento and Omaha in May 1869. Northern Pacific had approached Cooke about funding in 1866, but lacked the generous federal guarantees that undergirded Union Pacific and Central Pacific, which, it should be noted, went to an incredible amount of graft. Cooke, himself no stranger to the financial power of the federal government, wasn't interested. Ultimately, however, Northern Pacific gave him an offer he couldn't resist: a commission of 12% on every bond and $200 of Northern Pacific stock for every $1,000 in bonds he sold.
+
+Cooke soon found that his institutional peers agreed with his earlier refusal and weren't interested in his bonds. So, he leaned on the same tactics he honed selling war bonds: appeals to patriotism, control of the media, and promises of railroad fortunes backed by industrial-scale distribution. At the peak, Cooke employed 1,500 salespeople and funded 1,300 newspapers through a combination of advertising and direct payments. With a brand burnished by the Civil War, retail investors could already buy railway bonds, and Cooke made them his primary funding mechanism.
+
+This was, to be certain, an incredible innovation. It used to be the case that if you couldn't get loans from the government or from banks, you couldn't get much money at all. The problem was that Northern Pacific's capital needs were endless. And by September 1873, as credit tightened worldwide thanks to a crash in the Vienna stock exchange and the demonetization of silver, Cooke—who had been funding Northern Pacific from deposits in between bond issuances—could find no more buyers.
+
+The subsequent bankruptcy of Jay Cooke &amp; Company triggered the panic of 1873, culminating in endless railroad bankruptcies across the country, a multi-year depression, multi-decade deflation, and one could argue the financial conditions that made Europe, four decades later, into a tinderbox. Northern Pacific did eventually finish their line, by the way, with multiple bankruptcies along the way. Ultimately, they were one of four railroads that were merged to form the Burlington Northern Railroad. Burlington Northern would eventually merge with the Atchison, Topeka and Santa Fe Railway to form BNSF Railway. Berkshire Hathaway would purchase the parent corporation in 2009.
+
+Blowing through debt. If this story sounds vaguely familiar, it might be because Cooke is, for obvious reasons, a central character in Liaquat Ahamed's new book, 1873, released earlier this year. Ahamed is not shy about drawing a link between the collapse of the railroad buildout and the current AI moment. The book's very first page, even before page one, is about translating sums of money and concludes thusly: &quot;In order to grasp the true significance of sums of money that relate to the economic situation of whole countries, such as the size of the indemnity imposed on France after the Franco-Prussian War, it is most useful not simply to make allowances for changes in the cost of living, but instead to adjust for changes in the size of economies. To translate such figures into comparable 2026 magnitudes, multiply by a factor of 1,200. Thus, the $500 that went into US railway bonds annually during the boom years of the early 1870s would today be the equivalent of $600 billion, roughly what is projected to be invested by major tech companies in 2026.&quot;
+
+Microsoft CEO Satya Nadella is certainly aware of the connection. He cited 1873 as the book to be read on the company's recent earnings call. Perhaps it's not a coincidence, then, that Microsoft, alone amongst the hyperscalers, still boasts substantial free cash flow, $19.6 billion last quarter. Microsoft is the one hyperscaler still abiding by the dictum used to deny the existence of a bubble. Its CapEx isn't funded by debt.
+
+This was, believe it or not, a defense that could be used for nearly all of Big Tech a year ago. Then, between September and November, Oracle, Meta, Alphabet, and Amazon issued a combined $80 billion in debt for building out infrastructure. That was only the beginning. After raising a combined $108 billion in 2025, these four companies have, as of July 7th, already raised $194 billion this year. Unsurprisingly, spreads are rising, and 86% of the bonds issued this year are already trading at higher yields than at issuance. Cover for recent issuances has fallen to less than 2x from 5x in February.
+
+The real shock, however, came at the beginning of June, when Google announced it would raise $85 billion in equity, including a special $10 billion issuance to the aforementioned Berkshire Hathaway. I wrote at the time in the Google Capital Company, quote, &quot;It is worth noting that $10 billion is a relatively small amount of money to both companies. To that end, perhaps the primary utility is as a signaling mechanism. On Google's side, the signal is that the expected demand is actually far greater than anyone thinks, and that the company is ready and willing to fund supply using all means at its disposal, including equity. For them, Berkshire Hathaway's investment is an endorsement of this view and a validation of the wisdom of the investment.&quot;
+
+On the flip side, if the signal is correct, then Berkshire Hathaway is getting a deal and putting its cash flow machines to work building the future. I concluded, quote, &quot;Implicit analysis was that there was enough compute capacity in the world to be bought. What happens, however, when and if there isn't? What if the ultimate battle, the one that determines who gets compute, becomes a matter of who can bring the most cash to bear? And what if that advantage compounds, such that the company with the most cash capacity ends up with the most compute capacity, which we already know they will sell, in addition to using themselves, driving the ability to generate more cash. In that world, what company would be your best bet?&quot; The implied answer, of course, was Google.
+
+DeepMind drama. Google right now is no one's bet, at least in terms of the frontier. After the departure of DeepMind CEO Demis Hassabis, technically promoted to chairman, but no longer in charge of day-to-day operations, and Gemini co-lead and former chief scientist Jeff Dean, along with a host of other prominent researchers, Semi Analysis declared that Gemini is cooked. &quot;For all intents and purposes, we believe DeepMind is no longer a frontier lab. We said as much a few months ago to our Tokenomics clients due to large numbers of departures from their reinforcement learning teams and poor compute allocation. Google will continue meandering on and releasing models, but their odds of reaching state of the art again have dropped to zero. Furthermore, the biggest beneficiary of today's news is neither Anthropic nor OpenAI. It's Google Cloud. Whereas Gemini and GCP used to desperately fight for compute allocation, it's now clear that Thomas Kurian won. We expect GCP revenue growth to meaningfully accelerate as a result.&quot;
+
+From later in the post: &quot;We've obviously been quite bearish on DeepMind thus far, and if we distill in the case for why they'll still be able to train a true state of the art model in the future, it would go something like the following. The current setup clearly wasn't working. With the existing leadership team, their odds of catching up to Anthropic or OpenAI look extremely slim. Now that they've cleaned house, the new guys can start from a blank slate. Maybe they'll even acquire a new lab like SSI or Thinking Machines. With this new team, their odds of catching up to the frontier actually increase. Perhaps there's some world in which this happens, but we think the odds are basically zero.&quot;
+
+The issue with Google was not Jeff Dean nor Noam Shazeer, but rather their extremely bureaucratic, painfully slow, and strategically timid culture. Remember that DeepMind had an AI chatbot 1 year before ChatGPT, but was not allowed to release it due to fears of disrupting their core business. Actually, you could make the case the problem was also Hassabis in DeepMind. I explained it in update for Google IO how Hassabis' vision of the frontier was fundamentally different from the other frontier labs because he believed in world models, not just text and code, and concluded, quote, &quot;What falls out of Hassabis' vision are models with multimodality, in contrast to Quad, which outputs text only. And it must be said, not nearly as impressive coding capabilities.&quot;
+
+This gets to the point of this entire digression. I think it's possible that the reason Google was widely considered to be behind both Anthropic and OpenAI in terms of coding, particularly long-running agentic workflows that depend just as much on the harness as the model itself, simply comes down to their research team having other priorities. That's why the coding parts of this keynote fell on the anti-gravity team, not DeepMind, and why Hassabis was barely on stage. From this perspective, last week's events are less surprising, and were arguably foretold at IO. Hassabis might be right about world models being the path to AGI, but Google has run out of patience in terms of letting him find out. Google co-founder Sergey Brin is reportedly deeply involved and closely allied with Koray Kavukcuoglu, the new DeepMind CEO, and I won't be surprised if the company is pivoting to Anthropic's more text, and thus code-centered approach.
+
+Google's infrastructure bet. What is fascinating about Google's position is that these machinations do not necessarily mean the Berkshire Hathaway bet was a bad one. Indeed, it's arguably good news. This is what the SemiAnalysis article is driving towards, and it's a point I made last week about Google's recent earnings, quote, &quot;The story seems to be very similar to last quarter, with even more Google Cloud growth, 82% year-over-year, compared to 62% last quarter, and 32% a year ago, with 36% margins, compared to 33% last quarter, and 21% a year ago.&quot; I wondered then how much of this growth was actually Anthropic, and while we didn't get clear confirmation this quarter, I thought this answer from CEO Sundar Pichai in the earnings call about why Google needs to rent third-party capacity was notable.
+
+&quot;I think on the bridge deal, the main thing I would say is look, there are, on the margin, there are very, very large customers of ours on cloud who we are trying to support through this extraordinary moment and the incremental opportunities they are bringing to us while a short term cost over a few months may be very high in the lifetime of the deal as we bring more capacity on is highly ROI positive, right? So, those are factors we are taking into account. So, are you willing to, you know, take up front six month deal to be able to serve that customer in what is a multi-year opportunity where the margins and the returns are very, very attractive over that multi-year horizon? So, hopefully that gives some color on how we thought about those opportunities.&quot; That customer is almost certainly Anthropic.
+
+Again from Semianalysis: &quot;More than 20% of total TPU shipments from Q3 2026 to Q4 2027 are being sold directly to Anthropic. This is excluding the hundreds of thousands of TPUs GCP already rents to Anthropic today and the many hundreds of thousands more they've committed to rent to Anthropic and Meta over the next six quarters.&quot; If you've ever listened to an interview of Google Cloud CEO Thomas Kurian, you know he's not AGI built. In one podcast, for example, he argued that it's great for TPUs to become &quot;general purpose infrastructure&quot; that supports customers like Citadel, the Department of Energy, and generic high performance computing. And when asked why he was selling compute to Anthropic despite them competing with Gemini, he said this was the natural consequence of Google being a platform company.
+
+Kurian said the same thing to me in the Strictly Interview: &quot;We sell different parts of our stack. You know, one of the things people don't realize is we monetize many different parts of the stack in different ways. Like Anthropic, there's a lot of labs that use our stack. In fact, most of the large AI labs use our stack. So, if for example, somebody uses TPUs to either train the model or to use it for inference, we're monetizing that part of the stack. That gives us resources to then fund our R&amp;D and other investments. Some of the labs use our TPU and our Gemini model. Others may use our TPU and then buy our cybersecurity protection for their models. So, as a platform player, we have to allow our technology to be monetized in as many ways as possible. And we don't see this as a zero-sum.&quot;
+
+We'll see how zero-sum compute actually is. There are reports Google's researchers have been starved for compute, but the overall takeaway is that whether or not Google is competing for the frontier, they are absolutely competing to dominate AI infrastructure. And in a world where intelligence is a commodity, TPUs in particular are a big deal. Last month, in Who's Afraid of Chinese Models, I talked about commodity markets in the context of frontier labs versus everyone else. In commodity markets, marginal costs are determinative of not just profitability, but also viability. And I made the case that the frontier labs are well positioned to have superior cost structures for any given unit of intelligence.
+
+That cost structure, at least for now, includes the cost of renting compute. And it seems likely that TPUs are cheaper than Nvidia GPUs. Anthropic may have built for TPUs and Amazon's Trainium chips because only Google and Amazon had the wherewithal to fund them. But at this point, that ability may very well be a significant advantage. The fact that Anthropic is straight-up buying TPUs for its own data centers, converting compute costs from marginal costs to capital costs, suggests that is the case. What is notable is how amenable Google is to share, even at the price of needing to issue equity.
+
+This, however, fits the Berkshire Hathaway model that I wrote about in the Google Capital Company. Quote, &quot;One of the businesses Berkshire Hathaway used the See's profits for was on the opposite end of the spectrum in terms of capital utilization, BNSF Railway. Railways require a lot of capital to operate. BNSF consumed $3.8 billion last year. They also make a lot of money. BNSF's net income was $5.5 billion and revenue was $23.4 billion. To put that in perspective, the total amount that Berkshire Hathaway has made from See's Candies is probably less than $3 billion. The last disclosure was over $2 billion in 2019, i.e., less than BNSF made last year. In fact, you can make the case that Alphabet is actually just replaying Buffett's strategy. Only this time Berkshire Hathaway is See's Candies and Google is BNSF.&quot;
+
+At the end of last quarter, Berkshire Hathaway had $373 billion in cash and $25 billion in free cash flow in 2025. How many companies could actually employ that cash in a way that generated a high rate of return? It's hard to imagine a better option than Google. The company is not only investing in AI, but has optionality in terms of outcomes. Its services business benefits from the investment. It is in contention at the model layer with Gemini. And it can sell capacity to the frontier labs. Moreover, that capacity has a sustainable cost advantage because of TPUs, which means that in a world where compute becomes a commodity, as hard as that is to imagine right now, Google is the hyperscaler that is poised to make the most profit.
+
+Notice that I didn't say margin. If that were Google's concern, they would almost certainly be making different choices. Profit, however, is an absolute number and Google is bringing everything to bear. First, it's cash flow, then it's debt, and now it's equity. I'm making money from the infrastructure buildout.
+
+Nvidia's investable asset class. Today, corporate executives and financial engineers don't need to control newspapers. Thanks to his new X account, Nvidia CEO Jensen Huang can go straight to the public. From an X article posted last night: &quot;Nvidia AI factory compute is becoming an investable asset class. Today, we announce partnerships with Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs, and KKR to establish independent financing platforms designed to mobilize over $500 billion of third-party capital to support the build-out of AI infrastructure over time. This is a major milestone for NVIDIA and the AI industry. We have moved from an era in which companies bought chips and built data centers project by project to one in which AI factories can be financed as just productive infrastructure with the repeatable platforms, long-term institutional capital, and a diverse customer base that uses compute to create revenue. AI has reached an inflection point. It is moving from research into production. AI is creating real value, and the infrastructure behind it is becoming one of the world's most productive assets. In AI, compute is revenue.&quot;
+
+Huang argues that NVIDIA-based AI factories are fungible, protecting residual value, and that quote &quot;makes AI factories better over time,&quot; extending their economic value. According to Huang: &quot;these are the characteristics of an investable infrastructure asset. It produces revenue, serves a broad market, improves in performance over time, and can be redeployed.&quot; Thus, the attempted formalization of a new investment structure. &quot;The demand for AI infrastructure is extraordinary, but access to capital is uneven. Many great AI companies, enterprises, and AI clouds have demand for compute, but do not yet have access to financing at the scale or cost required to build quickly. That is why we are partnering with the world's leading long-term capital providers. Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs, and KKR are also among the world's leading infrastructure investors with deep expertise in underwriting long-lived productive assets. Together, we are creating repeatable financing platforms to help the AI ecosystem build the factories it needs.&quot;
+
+What Apollo et al. are, are new sources of capital beyond the investment grade debt markets. In that sense, this proposed structure is somewhat akin to Google's equity issuance, a way to secure funding beyond bonds. The difference, however, is stark. Whereas equity dilutes the upside for investors without adding risk to the company, this structure preserves Nvidia's margins by finding new pools of capital willing to bear risk. It's not a total free ride for Nvidia. The company is backstopping opportunities with up to 25% residual value-based financing, suggesting that Huang believes his &quot;investable asset class&quot; pitch much more than the market does.
+
+That is, in a certain sense, a price cut, as the goal is to reduce the cost of capital for entities building data centers with Nvidia chips by putting Nvidia's profits on the line for uncertain investments. That guarantee is downstream from Google's and soon Amazon's aggressiveness. Why build a data center with Nvidia chips if you can buy TPUs or Trainiums? Nvidia chips are likely better, but if the constraint on new data centers is capital, lower upfront prices may matter more than token efficiency. Nvidia's bigger problem is one that has been apparent for a long time.
+
+I wrote back in 2024, quote, &quot;In the before times, i.e., before the release of ChatGPT, Nvidia was building quite the free software motor on its GPUs. The challenge is that it wasn't entirely clear who was going to use all that software. Today, meanwhile, the use cases for those GPUs is very clear, and those use cases are happening at a much higher level than CUDA frameworks, i.e., on top of models. That, combined with a massive incentive towards finding cheaper alternatives to Nvidia, means both the pressure to and the possibility of escaping CUDA is higher than it has ever been, even if it is still distant for lower-level work, particularly when it comes to training.&quot;
+
+The situation today, with Anthropic and OpenAI appearing to pull away, is even more problematic. Anthropic has not been dependent on CUDA for years, and OpenAI is moving that direction, at least for inference. If those companies win, then Nvidia's profits will be squeezed. Indeed, the implication of that backstop is they already are. This, needless to say, is why Huang's first post was an open letter in defense of open models.
+
+Risky business. This might not cost Nvidia anything in the end. If AI revenues truly take off, then the debt markets will open back up, and ultimately companies will go back to funding infrastructure investment through free cash flows. Right now, however, is the danger zone as hyperscalers blow through the debt markets and Google at least starts to tap equity. To the extent Nvidia competes through novel funding mechanisms that, at the end of the day, draw on things like insurance floats and pension funds and other long-run liabilities that are the bread and butter of the asset managers the company is partnering with, the risk—unmarked, unlike equity—is considerably higher. That's why I started with 1870 and Cook's ill-fated agreement with Northern Pacific. Yes, the upside the deal afforded Cook was incredible, but it was incredible for a reason. It was very risky, and pioneering new funding mechanisms only served to spread the pain when it all blew up. It's one thing to spend all of your free cash flow. It's another thing to tap the debt markets. And beyond that, it's a completely new, nerve-racking thing to bring safety-seeking assets to bear. AI better deliver before it's too late.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
