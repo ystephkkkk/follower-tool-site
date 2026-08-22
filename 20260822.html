@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Saturday, August 22, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260821.html">&larr; Aug 21</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Saturday, August 22, 2026</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-ARdnl2kjmRU">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=ARdnl2kjmRU" target="_blank" rel="noopener">Yuval Noah Harari on the dangers of an AI future | The Economist<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/pBw3GOKlTYBarIE0qE5-cNoIHMNbPGsER61kuJC5MSI6HzqV16fcaQZQlUSxlJMUFi0_-S9VAw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>The Economist</b><span class="subs">(4.1M)</span></span><span class="dot">&middot;</span><span>12:28</span><span class="dot">&middot;</span><span>21.2K views</span><span class="dot">&middot;</span><span>2026-08-22</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Yuval%20Noah%20Harari%22">Yuval Noah Harari<span class="chip-desc">Author and Philosopher</span></a> <a class="chip" href="index.html?q=%22Zanny%20Minton%20Beddoes%22">Zanny Minton Beddoes<span class="chip-desc">Editor-in-chief, The Economist</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Yuval Noah Harari warns that while an AI takeover of finance, politics, and relationships within a decade is not inevitable, humanity is running out of time to maintain control.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Speaking with Zanny Minton Beddoes, Harari argues that AI can mass-produce intimacy and shift human...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Yuval Noah Harari warns that while an AI takeover of finance, politics, and relationships within a decade is not inevitable, humanity is running out of time to maintain control. Speaking with Zanny Minton Beddoes, Harari argues that AI can mass-produce intimacy and shift human trust from institutions to algorithms, requiring urgent political action by voters before critical thresholds are crossed.</p>
+<h3>The Narrative of Inevitability and Elon Musk's Contradictions</h3>
+<ul>
+<li><strong>The Danger of Surrender:</strong> Harari states that if the accelerating AI race continues unabated, AIs will take over in 10 years, but emphasizes that humanity is still in control in 2026.</li>
+<li><strong>Flawed Fatalism:</strong> <strong>Elon Musk</strong> and other tech leaders argue that an AI takeover is inevitable, which Harari characterizes as a narrative used to deflect personal responsibility.</li>
+<li><strong>Contradictory Predictions:</strong> Harari highlights internal contradictions in Musk's outlook:</li>
+<ul>
+<ul>
+<li>Musk predicts AI will take over the world and money will disappear in <strong>10 years</strong>, yet worries heavily about events 20 years out (like Muslim immigration in Britain).</li>
+<li>Musk suggests government-issued checks will solve AI-driven mass unemployment without causing inflation (predicting deflation from AI productivity), yet simultaneously cuts US aid to Africa to save money.</li>
+</ul>
+</ul>
+</ul>
+<h3>The Transformation of the Financial System and the Erosion of Understanding</h3>
+<ul>
+<li><strong>Evolution of Trust-Building:</strong> Throughout history, humans have invented increasingly sophisticated financial devices (like worthless gold or paper money) to build trust between strangers.</li>
+<li><strong>Surrendering Control to Algorithms:</strong> Because the bond market and modern financial systems require processing data and mathematical functions that human brains struggle with, humans will increasingly hand financial control over to AIs.</li>
+<li><strong>The 10-Year Horizon:</strong> Within <strong>10 years</strong>, humans will entrust AIs with the financial system to the point where no human on the planet—including advisers and presidents during a market crash—will understand *why* an AI orders a specific emergency action.</li>
+<li><strong>The 2007-2008 Crisis on Steroids:</strong> Beddoes raises the concern that a total lack of understanding could cause a massive loss of trust and a catastrophic collapse of the financial system, mirroring the 2007–2008 financial crisis.</li>
+</ul>
+<h3>The Shift of Trust and Mass-Produced Intimacy</h3>
+<ul>
+<li><strong>Migration of Trust:</strong> Trust is the world's most important asset (surpassing oil, money, electricity, or chips). Rather than evaporating, human trust is shifting from human bankers, journalists, and editors to algorithms and cryptocurrencies.</li>
+<li><strong>Mass Production of Relationships:</strong> AI makes it possible for the first time in history to mass-produce intimacy, deploying millions of networked AIs to act as best friends, boyfriends, or girlfriends to individual users.</li>
+<li><strong>Existing Demographics:</strong> <strong>1 in 5 young Americans</strong> already has a personal relationship with an AI.</li>
+<li><strong>Deepfakes and Impersonation:</strong> Harari notes that AI-generated deepfakes of himself giving 30-minute lectures are now so convincing that it took him a minute and a half to disprove them, and his own sisters—who have known him for <strong>50 years</strong>—had to ask if the video was genuinely him.</li>
+</ul>
+<h3>Political Accountability and Urgent Policy Solutions</h3>
+<ul>
+<li><strong>Crucial Voter Questions:</strong> Harari urges voters to challenge political candidates on AI stances rather than focusing solely on traditional topics like the economy, immigration, or foreign policy.</li>
+<li><strong>Top Legislative Priorities:</strong> When asked by Beddoes about the most urgent actions for the upcoming midterms, Harari outlines two primary legislative bans:</li>
+<ul>
+<ul>
+<li><strong>A ban on AI personhood</strong> (legal rights for AIs).</li>
+<li><strong>A ban on AI mimicking</strong>, impersonating, or pretending to be human beings or conscious entities.</li>
+</ul>
+</ul>
+<li><strong>Corporate Safeguards:</strong> Harari questions the ethics of companies selling AI boyfriends to <strong>10-year-old kids</strong> and demands legal frameworks to prevent it.</li>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Yuval Noah Harari</strong> predicts that AIs will take over the world in <strong>10 years</strong> if the present accelerating pace of the AI race continues.</li>
+<li><strong>Yuval Noah Harari</strong> predicts that money will disappear in <strong>10 years</strong> as AIs take over the financial system.</li>
+<li><strong>Yuval Noah Harari</strong> warns that humanity might cross critical development thresholds by <strong>November 2028</strong>.</li>
+<li><strong>Yuval Noah Harari</strong> states that it will certainly be too late to control AI development by <strong>2036</strong>.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"The narrative of inevitability is a narrative of having no responsibility."*
+— Yuval Noah Harari
+</blockquote>
+<blockquote>
+*"AI makes it possible for the first time in history to mass produce intimacy. You can have millions of AIs working as part of a network... building relationships one person at a time becoming their best friend, becoming their boyfriend, becoming their girlfriend."*
+— Yuval Noah Harari
+</blockquote>
+<blockquote>
+*"Trust did not just evaporate, it shifted from humans to AIs. And this is happening right now. This is not a future prediction."*
+— Yuval Noah Harari
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">If we continue with the present accelerating pace of the AI race, yes, this will be the result. In 10 years, the AIs will take over. But this is not inevitable. We are still in control in 2026, and it's our decision what to do now, and that's crucial. 
+
+Everybody realizes this is very dangerous to give AI control of finance, to give AI control of war. But everybody, like Elon Musk, is telling us, &quot;But this is inevitable. What do you want from me? I'm just the richest person in the world in charge of one of the biggest AI corporations in the world. What can I do?&quot; The narrative of inevitability is a narrative of having no responsibility. 
+
+What really struck me about the conversation you had with Elon Musk is a kind of contradiction, because he says in 10 years AI will take over the world and then he worries so much about Muslim immigration causing civil war in Britain in 20 years. This doesn't make sense. If the AIs take over the planet in 10 years, why do you care so much about things that will have an effect when we have no idea what the planet will be like? Similarly, he gave another prediction—I think equally important—that money will disappear in 10 years. And I think he's correct because the AIs will take over the financial system. 
+
+And then he cuts US aid to Africa because he wants to save money. Again, at one point he says the solution for mass unemployment, because AI will take the jobs, will be for the government to just issue checks for everybody. And when you pushed back and said, &quot;What about inflation?&quot; he says there won't be inflation; there will be deflation because there will be so many more products and services produced by AI. If this is the case, why do you need to save money today? 
+
+The financial history of the world is the history of how humans invent more and more sophisticated financial devices in order to build trust between themselves. Money, in essence, is a very creative, imaginative way to build trust between strangers. I go to the market, I meet a stranger that I never met in my life, I give her a piece of worthless gold—because you can't eat or wear gold, it's worthless—or a piece of paper, and she trusts it, and because of that, she gives me bread. Now the financial inventions of humankind became more and more sophisticated so that today very few people understand the financial system. You need to understand enormous amounts of data and very complex mathematical functions to understand the bond market. 
+
+Now this is something our brain struggles with. For AIs, it's easy. So increasingly, humans will give AIs control of financial decisions. AIs will come up with new financial devices far more sophisticated than bonds and stocks, and we will not be able to understand it anymore, just as cows don't understand checks or stocks even though these things control their lives. 
+
+Will it be all that different to the financial system today? We still have some humans who hopefully understand what is happening in the financial system, and the human brain is still the kind of boundary of where the financial system can develop. But in 10 years, when we have entrusted AIs with the financial system, no human on the planet will understand it. Like, there is a financial crash and advisors are running to the president or the prime minister and saying, &quot;The market is collapsing. We don't understand why. We know we have to do something. The AI said do X.&quot; We have no idea why the AI said do X, but we just have to believe it because we don't understand what's happening. 
+
+But won't there in that case be a massive loss of trust in the financial system, that you would have in some sense what you had in 2007 and 2008 on steroids, that you would have a loss of, and this whole sort of figment of the financial system would fall apart? That's the key question. I mean, the most important asset in the world is trust. It's more important than oil or money or electricity or chips or anything else. Trust—and the question is, what will happen to trust? 
+
+One likely scenario is that trust will migrate from humans to AIs. People will stop trusting other humans and will instead trust only AIs. We already see it happening in the financial system with cryptocurrencies. Not all cryptocurrencies, but a lot of them are based on this thinking that &quot;I don't believe these human bankers. They are part of the deep state, the elite, the whatever. But I do trust the algorithms that run cryptocurrencies,&quot; because cryptocurrencies are basically AI money. 
+
+Similar thing is happening with the media. I watched the interview with Elon Musk with all the talk about how people hate the media and love journalists. A lot of people—and he's correct—are completely losing trust in human journalists, in human editors, but they still consume news. Where do they get their news from? From the algorithms. The same people who have no trust in you have a lot of trust in the algorithm that manages their social media feed. So trust did not just evaporate; it shifted from humans to AIs. And this is happening right now. This is not a future prediction. 
+
+I think that's a really important insight because I think it suggests that if we are on a path towards the AIs eventually being in control, it is because we allow them to be in control because we, as you say, perhaps develop more trust with AIs. And let's—there are various sorts of ways in which that can happen, and one is I think that already many people—one in five young Americans—has a personal relationship with an AI. Yeah, they treat them, they anthropomorphize them, they treat these—and the models are very open to that happening. They're designed to do that. 
+
+Do you think that is the likely way that we will go, in addition to what you've already laid out, that we will increasingly start to treat these AIs as, if not our peers, as sentient creatures? Again, there are an increasing number of people who have not just AI friends but AI boyfriends and girlfriends and are convinced that these are sentient, conscious, feeling entities. Now trust—there are many ways to build trust; the most powerful way is through relationship. We don't trust anybody in the world as much as we trust the people with whom we build a personal relationship. 
+
+Now, until today in history, this powerful mechanism was not really available to political and financial and religious institutions because it is difficult to manufacture on mass. It's difficult for a Hitler or a Stalin to build a real personal relationship with every person in the Soviet Union. You can give a speech on radio and force everybody to hear it, but this is not a personal relationship they have with their mother. AI makes it possible for the first time in history to mass produce intimacy. 
+
+You can have millions of AIs working as part of a network in the service of someone, or in their own service, building relationships one person at a time, becoming their best friend, becoming their boyfriend, becoming their girlfriend, and then using that power of intimacy to convince them of whatever political or commercial interests they want. So then the quest—and presumably that becomes much easier when the AIs are embodied in humanoid robots? It's already happening now without a body. So just imagine if you also add a body into the mix. But again, we don't really even need the body. We already see it happening right now. 
+
+And the AIs are just becoming so good at relationships because they accumulate enormous amounts of information about us individually. So they know things about us that we forgot, or that our mother or husband never even knew. And they master language, which is the main medium for communication and building relationships. You know, I just had a couple of incidents in the last two weeks. People that are now AI fakes of me giving lectures and doing interviews about something like that. They're extremely good. I mean, a couple of people sent me the same video—a 30-minute long lecture that I supposedly gave about the future—with complaints about, &quot;You said this and you said that,&quot; and I kind of scratched my head. I don't remember saying these things. 
+
+So they sent me the video and I opened it, and it took me a minute and a half to conclude this isn't me. Now, my sisters sent me this video; my sisters know me for 50 years, and they felt something was off, but they weren't sure. They said, &quot;Is this you?&quot; And it took me a minute and a half. So the... and now I'm in an exposed position because there is so much of me online already. So the AI, it's easy for the AI to know how I sound and what are ideas I talk about. But this will soon be coming for everybody. We don't know how fast AI development is progressing, but it is accelerating tremendously. By November 2028, we might have crossed some critical thresholds. 
+
+So, again, I don't want to tell people who to vote for, because I don't know the specific candidates in each Senate district, but the crucial questions to ask the potential candidates—much more than you ask them about the economy or immigration or foreign policy—what's your stance on AI? Would you support a ban on legal rights for AIs? Would you try to slow down the accelerating pace of AIs? What do you think about companies selling AI boyfriends to 10-year-old kids? How are you going to legally prevent it if we vote for you? This is now the crucial time to ask these questions, because it might be too late by 2028. It will certainly be too late by 2036. 
+
+So let's talk about those and let's talk about exactly what has to happen right now. You mentioned four things that you wish would be discussed in the November midterms. What would be top of the list? What are the most urgent things that politicians have to decide right now for it not to be too late, as you say? I don't know what is the most urgent. The things that come to the top of my mind are a ban on AI personhood and a ban on AI mimicking, impersonating, pretending to be human beings, or pretending to be conscious.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
