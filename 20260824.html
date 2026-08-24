@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Monday, August 24, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260822.html">&larr; Aug 22</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Monday, August 24, 2026</h1>
+            <p class="day-sub">2 videos &middot; 2 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-ed63yMFRly8">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=ed63yMFRly8" target="_blank" rel="noopener">Treasury Secretary News Conference on Iran Sanctions<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mE7sPnKhbJKbqDc9ESEjaK0Ip3jwQkGY4a3USPkxEXSUw=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>C-SPAN</b><span class="subs">(1.9M)</span></span><span class="dot">&middot;</span><span>17:15</span><span class="dot">&middot;</span><span>1.7K views</span><span class="dot">&middot;</span><span>2026-08-24</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent announced &quot;Operation Economic Outcast,&quot; an unprecedented global economic campaign to sever all financial lifelines to Iran and its enablers through strict zero-leakage enforcement, sectoral sanctions, and secondary sanctions on non-compliant entities.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0"></div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Treasury Secretary Scott Bessent announced "Operation Economic Outcast," an unprecedented global economic campaign to sever all financial lifelines to Iran and its enablers through strict zero-leakage enforcement, sectoral sanctions, and secondary sanctions on non-compliant entities.</p>
+<h3>Launch of "Operation Economic Outcast"</h3>
+<ul>
+<li><strong>Strategic Objective:</strong> Sever every economic lifeline sustaining the Iranian regime until Tehran stands completely isolated.</li>
+<li><strong>Comparison to Historical Precedents:</strong> Secretary Bessent compared the initiative's spirit to D-Day in World War II, aiming to drive the enemy from financial positions globally rather than managing the threat.</li>
+<li><strong>Scope of Enforcement:</strong> Enforcing a "zero leakage approach" with no breathing space for the regime to rebuild terror capacity.</li>
+</ul>
+<h3>New Sectoral Sanctions and OFAC Targets</h3>
+<ul>
+<li><strong>Five Vital Sectors Targeted:</strong> New sectoral sanctions determinations expand secondary sanction risk across five key areas:</li>
+<ul>
+<li><strong>Technology</strong></li>
+<li><strong>Goods</strong></li>
+<li><strong>Gold</strong></li>
+<li><strong>Aviation</strong></li>
+<li><strong>Shipping</strong></li>
+</ul>
+<li><strong>OFAC Sanctions:</strong> The Treasury's Office of Foreign Assets Control is sanctioning over <strong>60 entities, individuals, and vessels</strong> globally involved in procuring illicit nuclear/missile technology, conducting cyber operations, and generating oil revenue.</li>
+<li><strong>Banking Penalties:</strong> Any entity facilitating money laundering on behalf of Iran will be removed from the U.S. dollar system.</li>
+</ul>
+<h3>Diplomatic Outreach and Timelines</h3>
+<ul>
+<li><strong>Presidential Calls:</strong> President Trump is actively calling world leaders with specific requests to cease interactions with the Iranian regime, supported by follow-up calls and visits from the State Department and U.S. Treasury.</li>
+<li><strong>Compliance Expectations:</strong> Every country and entity has a defined timeline to shut down illicit activities; failure to act will result in unilateral Treasury enforcement.</li>
+<li><strong>Role of Regional Partners:</strong> Bessent noted that actions taken by the United Arab Emirates (UAE) last week were likely causal, praising them as good partners who have taken the brunt of Iranian attacks.</li>
+</ul>
+<h3>U.S. Debt and Financial Operations</h3>
+<ul>
+<li><strong>Quarterly Refunding:</strong> The Treasury issued its quarterly refunding announcement two and a half weeks prior and will continue with its regular auction program.</li>
+<li><strong>Bond Buybacks:</strong> The Treasury has not bought a single bond yet; the next scheduled operation is set for <strong>September 9</strong>.</li>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Major Enforcement Timeline:</strong> Scott Bessent expects a major announcement of a financial institution being sanctioned by the end of the current week.</li>
+<li><strong>Sanctions Wave:</strong> Scott Bessent stated that a wave of sanctions would begin spreading out immediately following the news conference, with that cadence continuing.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Our objective is to sever every economic lifeline that sustains this tyrannical regime until Tehran stands alone."
+— <strong>Treasury Secretary Scott Bessent</strong>
+</blockquote>
+<blockquote>
+"Any entity that facilitates in money laundering on behalf of Iran will be removed from the U.S. dollar system. The clock just started ticking."
+— <strong>Treasury Secretary Scott Bessent</strong>
+</blockquote>
+<blockquote>
+"Why would I want to blow up the global financial system? We believe it's important to level set and give people a cure period. But they should know that that will move very quickly, and we are serious."
+— <strong>Treasury Secretary Scott Bessent</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">THERE IS A LOT OF BORROWING IN SEC. BESSENT: GOOD AFTERNOON. TODAY, AT PRESENT FROM'S DIRECTION, YOUR TREASURY HAS BEGUN OPERATION ECONOMIC OUTCAST, AN UNPRECEDENTED CAMPAIGN AGAINST THE ISLAMIC REPUBLIC OF IRAN AND ITS ENABLERS. THE SECOND WORLD WAR MARKED THE HISTORIC BEGINNING OF A CAMPAIGN WITH OUR ALLIES TO TARGET AND DRIVE THE ENEMY FROM ITS POSITIONS, INCLUDING THOSE IN THIRD COUNTRIES. TODAY, IN THAT SAME SPIRIT, WE ARE LAUNCHING AN ECONOMIC ONSLAUGHT AGAINST IRAN'S FINANCIAL CONNECTIONS AROUND THE GLOBE. AROUND THE GLOBE. OUR OBJECTIVE IS TO SEVER EVERY ECONOMIC LIFELINE THAT SUSTAINS THIS TYRANNICAL REGIME UNTIL TEHRAN STANDS ALONE.
+
+FANATICS DEVOTE THEMSELVES TO DEATH TO AMERICA AND SEEK NUCLEAR WEAPONS TO DO JUST THAT. THEY HAVE MAIMED AND MURDERED MORE OF OUR CITIZENS AND SERVICEMEMBERS THAN ANY OTHER TERRORIST REGIME ON EARTH. AND THEY HAVE BEEN AT WAR AGAINST AMERICA, THEIR NEIGHBORS IN THE GULF, AND MUCH OF THE WORLD FOR 47 YEARS. PRESIDENT TRUMP HAS TAKEN ACTION AS HIS PREDECESSORS LONG DEFERRED. UNDER HIS LEADERSHIP, AMERICA IS NO LONGER MANAGING THE IRANIAN THREAT. WE ARE ENDING IT.
+
+GREAT ARMED FORCES HAVE LAID THE GROUNDWORK FOR ACHIEVING THE PRESIDENT'S OBJECTIVES OF PREVENTING IRAN FROM EVER OBTAINING NUCLEAR WEAPONS. THEY HAVE SHOWN AMERICA'S RESOLVE TO FINALLY END THIS THREAT. THE STRENGTH OF AMERICA'S ECONOMY UNDER PRESIDENT TRUMP ALLOWS US TO WAGE THIS SUSTAINED FINANCIAL OPERATION ALONGSIDE THE MIGHT OF OUR MILITARY. IRAN NOW FACES A VERY CLEAR CHOICE WITH ONLY TWO PATHS BEFORE THEM: ISOLATION AND A SUBSTANCE-LESS ECONOMY, OR A PATH BACK TO NORMALCY WITH AN OPPORTUNITY TO REJOIN THE GLOBAL ECONOMY.
+
+TODAY, WE ARE LAUNCHING OPERATION ECONOMIC OUTCAST TO FORECLOSE EVERY OTHER OPTION AVAILABLE TO THE IRANIAN REGIME. TREASURY HAS MAPPED EVERY NODE, EVERY FACILITATOR, AND EVERY NETWORK THAT IRAN HAS USED TO SMUGGLE OIL AND EVADE SANCTIONS. BEGINNING TODAY, THE ACTIONS OF TREASURY AND OTHER AGENCIES WILL TIGHTEN THE NOOSE AND BLOCK EVERY POTENTIAL SOURCE OF REVENUE THAT FUNDS THE IRGC AND THE IRANIAN REGIME. WE ARE ENFORCING A ZERO-LEAKAGE APPROACH. THERE WILL BE NO MINIMAL BREATHING SPACE FOR THE REGIME TO REBUILD ITS CAPACITY TO INFLICT TERROR AGAINST AMERICA AND THE WORLD.
+
+THE FINAL REFUGE OF THIS REGIME IS THE MISTAKEN CONCLUSION OF NATIONS THAT STILL FINANCE THE IRANIAN THREAT IN THE HOPES OF EVADING IT. IT IS NO LONGER ACCEPTABLE TO OPERATE IN THE GRAY SPACES OF THIS CONFLICT. COUNTRIES CANNOT CLAIM THEY ARE BLIND TO ENABLING THIS ACTIVITY. IRAN'S NEIGHBORS PURCHASE AND TRANSPORT PETROLEUM TO FACILITATE THE FLOW OF ITS FINANCES THROUGH EXCHANGE HOUSES AND FREE TRADE ZONES. THEY WELCOME IRAN'S ILLICIT ACTIVITIES AND MAINTAIN REGISTRIES ON ITS BEHALF. THEY TURN A BLIND EYE TO TRANSFERS AND OVERLAND TRANSITS. THEY CONDONE ILLICIT USE OF THEIR BANKS ALL THE WHILE CONCEALING THE EXTENT OF THEIR COMPLICITY.
+
+BUT THE PRESIDENT IS MAKING PHONE CALLS TO WORLD LEADERS WITH SPECIFIC REQUESTS TO CEASE THEIR INTERACTION WITH THE REGIME. WE ARE ALREADY SEEING RESULTS. OVER THE WEEKEND, COMMENTS FROM IRANIAN LEADERSHIP CLEARLY ACKNOWLEDGED THE EFFECT OF THIS CAMPAIGN. NATIONS THAT FACILITATE ANY INTERACTIONS WITH THE REGIME SHOULD QUICKLY HEED OUR MESSAGE. THOSE WHO STAND WITH THE UNITED STATES WILL REAP THE REWARDS OF OUR PARTNERSHIP. THOSE WHO TETHER THEMSELVES TO THE IRANIAN REGIME SHOULD EXPECT TO SHARE IN THE ISOLATION OF A WITHERING REGIME.
+
+STATE AND TREASURY AND THE U.S. MILITARY ARE NOW MEETING WITH THEIR GLOBAL COUNTERPARTS TO TELL THEM THAT THE UNITED STATES EXPECTS ACTION. EVERY COUNTRY HAS A DEFINED TIMELINE TO SHUT DOWN ACTIVITIES WE HAVE IDENTIFIED. IF THEY DO NOT TAKE ACTION, WE WILL DO SO UNILATERALLY THROUGH TREASURY AUTHORITIES. FOR EXAMPLE, EVERY BRANCH OF AN IRANIAN BANK MUST BE SHUTTERED AND DARK. LET ME BE CLEAR: ANY ENTITY THAT FACILITATES MONEY LAUNDERING ON BEHALF OF IRAN WILL BE REMOVED FROM THE U.S. DOLLAR SYSTEM. THE CLOCK JUST STARTED TICKING.
+
+THE NEW SECTORAL SANCTIONS DETERMINATIONS ISSUED TODAY TARGET FIVE OF IRAN'S MOST VITAL LIFELINES THAT IT EXPLOITS IN OTHER COUNTRIES: TECHNOLOGY, METALS, GOLD, AVIATION, AND SHIPPING. THESE MEASURES BROADEN SECONDARY SANCTION RISK FOR ANYONE FOOLISH ENOUGH TO CONTINUE CONDUCTING BUSINESS WITH THIS REGIME AND WILL ACCELERATE THE SPEED WITH WHICH WE PURSUE THEM. TREASURY'S OFFICE OF FOREIGN ASSETS CONTROL IS ALSO SANCTIONING OVER 60 ENTITIES, INDIVIDUALS, AND VESSELS AROUND THE WORLD THAT ENABLE THE IRANIAN REGIME TO PROCURE ILLICIT NUCLEAR AND MISSILE TECHNOLOGY, CONDUCT CYBER OPERATIONS, AND GENERATE OIL REVENUE.
+
+THIS IS A SUSTAINED CAMPAIGN TO COLLAPSE EVERY LAST OPTION FOR IRAN. LET THERE BE NO AMBIGUITY AS TO THE POSITION OF THE UNITED STATES; ANY ECONOMIC ENGAGEMENT OF ANY KIND WITH THE MURDEROUS REGIME WILL EXPOSE THOSE RESPONSIBLE TO THE FULL REACH OF AMERICAN POWER. FOR DECADES, THIS REGIME HAS DRAWN STRENGTH FROM A CALCULUS THAT REGARDS IRANIAN RETALIATION AS CERTAIN AND AMERICAN ENFORCEMENT AS NEGOTIABLE. UNDER PRESIDENT TRUMP, THAT IS OVER.
+
+TO THE ORDINARY SOLDIERS SUPPORTING THIS REGIME, AS MORE OF YOUR PAYCHECKS STOP OR ARE JUST DELAYED, ASK WHERE YOUR COMMANDERS ARE LEAVING YOUR COUNTRY—TO TRIUMPH OR TO RUIN. AND RECALL THAT THE BERLIN WALL FELL WHEN ORDINARY SOLDIERS DECIDED NOT TO SHOOT AT THEIR OWN PEOPLE. AND TO THOSE WHO ENABLE TEHRAN, DO NOT DISCOUNT THE COST OF TESTING WASHINGTON'S RESOLVE. NO NATION SHOULD EXPECT TO ENJOY THE REWARDS OF OUR SYSTEM WHILE HELPING THOSE WHO SEEK TO DESTROY IT. NOW IS A TIME FOR LEADERS TO MAKE A DECISION BETWEEN PROSPERITY AND ISOLATION, PEACE AND TERROR, AMERICA AND IRAN. THE CAMPAIGN WE BEGIN TODAY WILL GATHER FORCE WITH EVERY DAY THAT FOLLOWS, AND IT WILL NOT END UNTIL THIS REGIME STANDS ALONE. WITH THAT, I WELCOME YOUR QUESTIONS.
+
+DAVID FROM REUTERS: THANK YOU, SECRETARY. ONE OF THE MOST POWERFUL TOOLS YOU HAVE AT YOUR DISPOSAL IS THE ABILITY TO IMPOSE SECONDARY SANCTIONS ON BANKS AND FINANCIAL INSTITUTIONS THAT FACILITATE TRANSACTIONS FOR IRAN. CHINESE BANKS HAVE ALSO BEEN TALKED ABOUT BEING TARGETED BUT WE DON'T SEE ANY OF THOSE INSTITUTIONS TARGETED HERE. IS THAT SOMETHING THAT IS COMING IN THIS CAMPAIGN? IS A TRADE TRUCE WITH CHINA SOMETHING THAT COULD PROHIBIT YOU FROM GOING THAT FAR AND TAKING THAT VERY BIG STEP?
+
+SEC. BESSENT: WE WANT TO MAKE CLEAR HERE TODAY THAT NO ONE IS ABOVE THE REACH OF U.S. SANCTIONS. IF THEY FACILITATE TRANSACTIONS AND ARE PART OF THE ECOSYSTEM THAT TURNS IRANIAN OIL INTO REVENUE, THEY WILL BE TARGETED. THE BEST WAY TO ENGAGE WITH COUNTRIES IS THROUGH QUIET DIPLOMACY. WE ARE LEVEL-SETTING WITH EVERY COUNTRY TO TELL THEM OUR EXPECTATIONS. WE KNOW WHO THEY ARE; THEY KNOW WHO THEY ARE. SO WHEN THE HAMMER OF U.S. TREASURY ACTIONS FALLS UPON THEM, THEY WILL HAVE NO ONE TO BLAME BUT THEMSELVES.
+
+RICHARD FROM CBS: THANK YOU. YOU SAID THE PRESIDENT IS CALLING WORLD LEADERS WITH SPECIFIC ASKS, AND THAT THERE IS A DEFINED TIMELINE. WHO IS HE CALLING, AND WHAT ARE THE ASKS?
+
+SEC. BESSENT: WE ARE NOT GOING TO NAME NAMES. WE HAVE ALREADY SEEN SOME RESULTS. I AM CONFIDENT—THE PRESIDENT, AS YOU KNOW, IS QUITE PERSUASIVE. WE ARE FOLLOWING HIS CALLS UP WITH VISITS AND CALLS FROM THE STATE DEPARTMENT AND FROM THE U.S. TREASURY, TELLING THE LEADERS, THE COUNTRIES, AND THE ENTITIES EXACTLY WHAT WE EXPECT AND THE TIMELINES. I WOULD EXPECT THAT VERY QUICKLY, IF THEY DO NOT RESPOND, THEN YOU WILL SEE THE RAMIFICATIONS OF THEIR ACTIONS.
+
+RICHARD: CAN YOU SAY HOW FAR THE TIMELINES ARE?
+
+SEC. BESSENT: AGAIN, I WILL NOT SET TIMELINES. WE DO NOT HAVE INFINITE PATIENCE HERE.
+
+JENNIFER FROM YAHOO! FINANCE: THANK YOU SO MUCH, SECRETARY. YOU SAID MOMENTS AGO NO ONE IS ABOVE U.S. SANCTIONS. WHAT SPECIFIC SECONDARY SANCTIONS OR PENALTIES IS TREASURY PREPARED TO LEVY AGAINST THE CHINESE BANKS AND SHIPPING FIRMS IF THEY DO NOT COMPLY? SECONDLY, AS YOU LOOK TO TAKE THESE UNPRECEDENTED SANCTIONS, YOU ALSO SAID THAT OIL PRICES RECEIVED WILL HELP TO BRING DOWN LONG-TERM BOND YIELDS. IN THE MEANTIME, YOU HAVE MENTIONED YOUR TOOLKIT. I'M CURIOUS IF YOU ARE LOOKING AT REDUCING AUCTION SIZES FOR LONGER-TERM TREASURY DEBT GOING FORWARD, AND WHAT OTHER ACTIONS YOU MAY CONSIDER FROM THAT TOOLKIT?
+
+SEC. BESSENT: WHY DON'T WE WORK BACKWARD. WE ISSUED THE QUARTERLY REFUNDING ANNOUNCEMENT TWO AND A HALF WEEKS AGO. WE ARE GOING TO CONTINUE WITH OUR REGULAR PROGRAM OF AUCTIONS. YOU WILL BE HEARING FROM US AGAIN AT THE BEGINNING OF NEXT QUARTER. EVERY COUNTRY AND EVERY ENTITY SHOULD KNOW THAT THEY SHOULD BE PREPARED TO FACE U.S. SANCTIONS. NO ONE IS ABOVE THIS. WE ARE GOING TO HOLD EVERYONE ACCOUNTABLE IN THIS ECONOMIC ASPHYXIATION OF THIS REGIME. AS I SAID, NO ONE SHOULD TEST OUR RESOLVE.
+
+REPORTER FROM NEW YORK POST: YOU SAID YOU WERE NOT GOING TO NAME NAMES, BUT THERE HAVE BEEN SOME REPORTS THAT THE UNITED ARAB EMIRATES IS AMONG SOME OF THE FIRST NATIONS TO TAKE SERIOUSLY THESE WORDS FROM THE UNITED STATES TO CUT OFF ALL BUSINESS INTERACTIONS WITH IRAN. IS THE UAE LEADING THE WAY IN THIS RESPECT?
+
+SEC. BESSENT: I THINK THE ACTIONS THEY TOOK LAST WEEK WERE NOT A COINCIDENCE, BUT LIKELY CAUSAL. I WOULD EXPECT TO SEE A BROAD ARRAY OF COUNTRIES TAKING SIMILAR ACTIONS. AS WE CONTINUE OUR ENGAGEMENT, THE UAE HAS BEEN A VERY GOOD PARTNER. THEY HAVE TAKEN THE BRUNT OF THE IRANIAN ATTACKS IN THE GULF. WHAT HAVE THESE COUNTRIES GOTTEN OVER THE YEARS FROM APPEASING IRAN? THEY WERE SUBJECT TO VIOLENT ATTACKS. WHILE WE WERE BOMBING IRAN, THEY WERE BOMBING THEM. APPEASEMENT DOES NOT WORK. ON THE OTHER SIDE, WITH THIS REGIME, TRYING TO BUY APPEASEMENT WILL NO LONGER WORK IN THE EYES OF THE UNITED STATES OF AMERICA. I WANT TO EMPHASIZE, SPREADING OUT ACROSS THE WORLD AS WE SPEAK, YOU WILL SEE A WAVE OF SANCTIONS WHEN YOU LEAVE THIS MEETING TODAY, AND YOU SHOULD EXPECT THAT CADENCE TO CONTINUE. I WOULD EXPECT THAT YOU WILL SEE A MAJOR ANNOUNCEMENT OF A FINANCIAL INSTITUTION BEING SANCTIONED BY THE END OF THIS WEEK.
+
+SAMIRA FROM SKY: DOES THE UNITED STATES AND PRESIDENT TRUMP STILL WANT CANADA TO BECOME A STATE? HE SAID THEY ARE GETTING ALL THE BENEFITS OF BEING A STATE WITHOUT BEING ONE.
+
+SEC. BESSENT: I THINK HE WOULD LIKE CANADA TO COME TO THE TABLE AND NEGOTIATE IN GOOD FAITH. THEY WERE OFFERED QUITE A GOOD DEAL LAST WEEK. THEY CHOSE TO REJECT IT. UNFORTUNATELY, PRIME MINISTER CARNEY ROSE TO POWER ON AN ANTI-AMERICAN, ANTI-TRUMP PLATFORM. I BELIEVE HE WAS MORE THAN 20 POINTS BEHIND. YOU SEE HIM GOING BACK TO HIS OLD PLAYBOOK. I THINK ONE HAS TO ASK ONESELF, IS HE TRYING TO BENEFIT HIMSELF, THE LIBERAL PARTY, OR THE CANADIAN PEOPLE? THEY WERE OFFERED A VERY GOOD DEAL.
+
+REPORTER: THANK YOU, SEC. BESSENT. IF I COULD SHIFT TO BOND YIELDS QUICKLY. WE SAW THEM TICK DOWN TODAY AFTER SOME TURBULENCE GOING UP LAST WEEK. ANY POSSIBILITY THAT THERE WILL BE MORE BOND BUYBACKS ANYTIME SOON?
+
+SEC. BESSENT: AGAIN, WE HAVE NOT BOUGHT A SINGLE BOND YET. THE NEXT TIME WE HAVE AN OPERATION IS SEPTEMBER 9, SO WE WILL SEE ON SEPTEMBER 9. ONE MORE. LET'S SEE. YOU IN THE FRONT.
+
+REPORTER: YOU DESCRIBED THIS AS AN ECONOMIC D-DAY, BUT D-DAY WAS A THREAT OF AN INVASION AND THE U.S. DID NOT GIVE A TIMELINE TO GERMANY. WHY NOT IMPOSE THE SANCTIONS TODAY?
+
+SEC. BESSENT: WE ARE GIVING EVERYONE THE OPPORTUNITY TO REMEDY BAD BEHAVIOR. WHY WOULD I WANT TO BLOW UP THE GLOBAL FINANCIAL SYSTEM? WE BELIEVE IT'S IMPORTANT TO LEVEL-SET AND GIVE PEOPLE A CURE PERIOD. BUT THEY SHOULD KNOW THAT THAT WILL MOVE VERY QUICKLY, AND WE ARE SERIOUS. SECONDARY SANCTIONS ARE A VERY POWERFUL TOOL. HERE AT TREASURY, THIS IS THE ACTING UNDERSECRETARY FOR TERRORISM FINANCE. IN THE TERRORISM FINANCE DEPARTMENT, OFAC, THE REASON WE CAN USE SECONDARY SANCTIONS IS BECAUSE WE DON'T TAKE THEM LIGHTLY. WE BELIEVE A WARNING SHOT AND A LEVEL-SETTING OF EXPECTATIONS IS APPROPRIATE. IF PEOPLE DO NOT WANT TO MEET OUR EXPECTATIONS, THEN THEY SHOULD EXPECT THAT THEY WILL LEAVE THE DOLLAR SYSTEM. THANK YOU ALL.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-GsSOWDF0g50">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=GsSOWDF0g50" target="_blank" rel="noopener">U.S. Trade Rep. Jamieson Greer on failed U.S.-Canada trade talks: 'They wanted more'<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/m5dRXUmCucfjKzBPXgu_Rztfe2glZ3Otj22pX3hoRkzMYY9A7YcW3CZI-3VMa-KVBQPXE3eQLA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CNBC Television</b><span class="subs">(3.4M)</span></span><span class="dot">&middot;</span><span>11:05</span><span class="dot">&middot;</span><span>38.9K views</span><span class="dot">&middot;</span><span>2026-08-24</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Jamieson%20Greer%22">Jamieson Greer<span class="chip-desc">U.S. Trade Representative</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>U.S.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">Trade Representative Jamieson Greer stated that recent trade talks with Canada collapsed because Canadian officials &quot;wanted more&quot; concessions despite the U.S. offering the world's most preferential market access. Greer emphasized that the U.S. is moving forward with...</div>
+                    <div class="sum-full" id="full-1"><h3>TL;DR</h3>
+<p>U.S. Trade Representative Jamieson Greer stated that recent trade talks with Canada collapsed because Canadian officials "wanted more" concessions despite the U.S. offering the world's most preferential market access. Greer emphasized that the U.S. is moving forward with targeted 5% tariffs, dismissing market concerns and political friction with Commerce Secretary Howard Lutnick.</p>
+<h3>Background &amp; Historical Trade Friction</h3>
+<ul>
+<li><strong>Long-Standing Grievances:</strong> Greer stated the U.S. initiated talks after Canada maintained restrictions for over a year, specifically noting:</li>
+<ul>
+<li><strong>Wine &amp; Spirits:</strong> Canada prohibited the sale of American wine and spirits in their stores.</li>
+<li><strong>Auto Limits:</strong> Canada placed limits on the number of U.S. autos entering the country.</li>
+<li><strong>Dairy Restrictions:</strong> Long-standing restrictions on the sale of U.S. dairy into Canada.</li>
+</ul>
+<li><strong>The Auto Pact Context:</strong> Greer explained that Canada’s auto industry originated from a 1960s agreement where Canada required companies to build locally if they wanted to sell into the Canadian market.</li>
+<li><strong>Current Tariffs:</strong> The U.S. proposed tailored tariffs covering roughly <strong>5%</strong> of what Canada sends to the U.S., which amounts to <strong>0.06%</strong> of overall U.S. economic consumption.</li>
+</ul>
+<h3>Breakdown of the U.S.-Canada Trade Negotiations</h3>
+<ul>
+<li><strong>Canadian Outreach:</strong> Greer noted the U.S. did not initially ask to negotiate, but agreed in good faith after Canadian officials approached them about a month prior.</li>
+<li><strong>Near-Agreement &amp; Collapse:</strong> Parties reached sufficient agreement by Tuesday night to announce a deal framework, but negotiations collapsed in the final hours when Canadian officials demanded broader concessions.</li>
+<li><strong>U.S. Concessions Offered:</strong> To accommodate Canadian sensitivities, the U.S. offered:</li>
+<ul>
+<li><strong>Steel and Aluminum:</strong> Cutting tariffs in half.</li>
+<li><strong>Automobiles &amp; Lumber:</strong> Extensively reducing tariffs on autos and softwood lumber.</li>
+</ul>
+<li><strong>The Sticking Point on Trucks:</strong> Greer confirmed that negotiations stalled over expansions in scope, such as Canadian demands to ease tariffs on the heaviest medium- and heavy-duty trucks rather than just passenger cars, SUVs, and pickups.</li>
+</ul>
+<h3>Internal Administration &amp; Policy Clarifications</h3>
+<ul>
+<li><strong>Relationship with Commerce:</strong> Addressing reports of friction between his office and Commerce Secretary Howard Lutnick, Greer dismissed them as "garbage in, garbage out" from *Politico*. </li>
+<ul>
+<li>He stated he and Lutnick talk and work together every day under presidential direction.</li>
+<li>He acknowledged it may be frustrating for Canadians that tariff authorities are split across two agencies (with Commerce holding authority over <strong>Section 232</strong>), but noted "that's how Congress set it up."</li>
+</ul>
+<li><strong>Trade Deficits &amp; Oil:</strong> Addressing the U.S. trade deficit with Canada, Greer noted that while oil imports skew the numbers, the U.S. wants natural resources and minerals, provided there is a balanced economic and security partnership.</li>
+<li><strong>Language and Content Disputes:</strong> Greer debunked rumors regarding English-language mandates, clarifying:</li>
+<ul>
+<li>The U.S. supports French language and cultural identity, noting he speaks French and has family ties to Paris.</li>
+<li>The actual objection is to policies requiring American tech and streaming companies (like Netflix) to take earnings and pay a percentage (e.g., <strong>5%</strong>) to local content competitors, which the U.S. views as a discriminatory tax.</li>
+</ul>
+</ul>
+<h3>Market Reaction &amp; Broader Economic Indicators</h3>
+<ul>
+<li><strong>Market Resilience:</strong> Greer argued that markets are shrugging off the trade dispute because they understand it affects a very small percentage of trade.</li>
+<li><strong>Economic Trajectory:</strong> Greer highlighted positive domestic indicators, pointing to falling inflation prints in June, flat recent trends, and rising real wages for manufacturing workers.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<ul>
+<li>&gt; "The Canadians came to us about a month ago. They said we'd like to negotiate. We didn't ask for it, but we said, 'Okay, we're happy to move forward in good faith.' And we did... And then in the last hours, I think there were things that the Canadians just, you know, they wanted more." — Jamieson Greer</li>
+<li>&gt; "The reality is, for a long time, you know, we told the Canadians, here are some things where we think we can deliver you the best deal in the world... And they said, 'Well, we actually need a better situation than that' and walked away." — Jamieson Greer</li>
+<li>&gt; "Politico is a little garbage in, garbage out, as I think a lot of us know. You know, Howard [Lutnick] and I talked together every day. We work together every day, and we only act at the direction of the president." — Jamieson Greer</li>
+</ul></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">Canada trade talks collapsed and new U.S. tariffs are kicking in over the weekend. Canada is now preparing its own retaliatory levies. Joining us now is Jamison Greer, U.S. Trade Representative. We'd love to hear, Mr. Ambassador, exactly what happened in your view. I know you'll give an absolutely objective analysis of both sides and what went on, but how would you characterize the breakdown in talks? What caused it?
+
+Well, thanks, Joe, and thanks for having me on. To your point, I will be as objective as possible. I don't want to characterize anything that Canadians said or did; that is their thing. Just remember how we started with all of this. The Canadians, over a year ago, prohibited the sale of American wine and spirits in their stores. They put limits on how many autos could go into Canada, and even before that, they restricted the sale of U.S. dairy into Canada. So, there are lots of new and longstanding issues with Canada. After about a year of asking them to eliminate these, they said no. So, we proposed some very tailored tariffs covering about 5% of what they send us—a pretty low amount in the grand scheme of things—to counter that retaliation.
+
+The Canadians came to us about a month ago and said they would like to negotiate. We didn't ask for it, but we said, okay, we're happy to move forward in good faith. And we did. We progressed to a point Tuesday night where we had enough agreement among the parties to announce that we had found a way to a deal. Then we set about to finalize it, and in the last hours, there were things where the Canadians just wanted more. We offered them the best access to the United States of any country in the world. Obviously, there is always going to be tariffs and protection for American workers and companies; that is the President's trade policy and that hasn't changed.
+
+But we sought to accommodate the Canadians by cutting tariffs in half on steel and aluminum and extensively reducing them on autos and even on things like softwood lumber—accommodating some element of that, things that are sensitive for Canadians. They simply wanted more. I don't know if it was political for them; it certainly doesn't make economic sense, but perhaps for political reasons, they have some by-elections coming up. I don't know, but they came in and they wanted more, and we weren't prepared to do that.
+
+So many ways to approach it. You can see the markets today basically unchanged, even though the headlines in every paper are that the U.S. and Canada are spiraling towards a trade war. Maybe a year and a half ago, that would have caused more consternation in the back of people's minds, Jamieson, but we think this is just another negotiating step along the way to arriving at something. Are the markets wrong about that, or is that how you view it at this point, that an agreement will be reached pretty soon?
+
+Well, Joe, I think the markets understand that this affects a very small amount of trade. Ultimately, I know the Canadians use histrionics like &quot;trade war&quot; and all these kinds of terms. We don't do that. The United States, again, is set on our trade policy. The Canadians asked to come and negotiate with us a month ago, so of course, if people ask, we do so. We don't have any issue proceeding with our trade policy as planned, and I think the market understands that. I think the market knows that at the end of the day, this is 5% of imports from Canada; it's 0.06% of our overall consumption in this economy. There is no possible way it can really affect U.S. well-being.
+
+Right. We have been having great prints on inflation the past couple of months, going down in June and staying flat here, with real wages for manufacturing workers going up. So, we're on the right trajectory. The fundamentals are good, and I don't think this is going to affect anything. That's why I think the markets are shrugging it off. I don't know, the affordability issues, I think that's a red herring as well in terms of this. I can't imagine, but can you confirm that it was a heavy and medium-duty truck issue? Was that the straw that broke the camel's back when the U.S. wouldn't lighten up on those tariffs? Some of that is forward-looking; the Journal points out you're really just cutting off your nose to spite your face in this regard.
+
+I think the thing to keep in mind is the only reason Canada has auto production in the first place—and we've talked about this before—is that in the 60s, Canada did a very Trumpian thing. They came to the United States and said, &quot;If you're going to sell into the Canadian market, you have to build here.&quot; There was an auto pact, and at the time, the U.S. economy had a ton of leverage. They didn't think too much about the future of deindustrialization, and so they moved some plants to Canada. For a long time, for weeks, I've essentially been telling the Canadians, &quot;I'll see what I can do to deliver some results for you on a handful of these tariffs that are important to us for national security reasons.&quot;
+
+We don't change them lightly. They're very important to the President; they're very important, and they've driven reindustrialization. We were able to come back with a package, and they said, &quot;Well, we want the scope of that to be more.&quot; It's not just cars, it's not just passenger trucks, it's not just SUVs, it's not just pickups. They want the heavies; they want the heaviest trucks available. It's a sector with different economics and everything, and so that was just one of many things that the Canadians wanted an expansion on.
+
+Ambassador, what is your reaction? There's a political story that sort of tries to walk through the past 72 hours over the weekend. You may or may not agree with this, but I wanted to get your side of the story. The report says that, quote, &quot;the negotiations also exposed friction between Greer and U.S. Commerce Secretary Howard Lutnick's respective public policy spheres.&quot; While the White House has been adamant officials are in lockstep, two people familiar with the talks said that Lutnick felt that the deal framework hammered out by Greer's trade office was, quote, &quot;sprung on his agency,&quot; despite involving a number of policy issues he oversees. What do you think?
+
+Well, Politico is a little &quot;garbage in, garbage out,&quot; as I think a lot of us know. Howard and I talked together every day; we work together every day, and we only act at the direction of the President. So, there's not really a lot of freelancing going on. Howard's agency, the Department of Commerce, they have authority over Section 232. So, we met—Howard and I met together—with the Canadians on these issues when there were some of these last-minute issues. Again, we talked. This is something where I don't have the time or energy or patience to have a different view than my cabinet colleagues or the President. We work together really, really closely on that.
+
+I understand it could be frustrating for Canadians that we have tariff authorities in two different agencies, but that's how Congress set it up. So, we work together, and importantly, we do what the President says. I think that's a little bit of a red herring. The reality is, for a long time, we told the Canadians, &quot;Here are some things where we think we can deliver you the best deal in the world. You'll have preferential access over every other country into the United States, and you will be the most preferred partner.&quot; And they said, &quot;Well, we actually need a better situation than that,&quot; and walked away.
+
+So, you can't tell us when this comes around. Does the President view the trade deficit with Canada differently than other nations? It's also pointed out almost all of that is oil, which we want to import from Canada—heavy crude, which we can handle down here. So, without that, there would be a trade surplus. Is this one of the instances where, just because there's a deficit, the President wants to do tariffs?
+
+Well, the deficit does matter in some ways, Joe. That's a little bit of an accounting gimmick; you could just as easily say we're happy to have the oil because we get it at a discount. But why should we be importing cars and all these other things at the same time? It just depends. You can pick your product and say, &quot;But for that, we wouldn't have a deficit.&quot; In this instance, people are picking oil because it's convenient, and I agree, we do want to get that oil. We have minerals; we have natural resources in Canada. We want to have, again, we offered a partnership to the Canadians—a real economic and security partnership—where if everyone's protecting their market in an equal kind of way, the United States is in a better position to modify tariffs in some ways. But that was an area where the Canadians declined or we had a difference of view.
+
+Do you speak French? 
+
+I do.
+
+I really don't care whether they change some of the language up there, whether they make it—
+
+No, I mean, that was a funny fake story. I speak French, my kids speak French—one of my kids was born in Paris. So, I like the Québécois and I like that they speak French. What we don't like is a situation where Canada, the federal government, forces American tech companies to take their earnings and give a percentage to their competitors in Canada. But I understand why the Québécois want to have French language content and all of that, and we think that's a really valuable thing. We encourage countries to really put their own country first and put their national identity first; that's actually quite consistent with what we do.
+
+So what is that about then, Ambassador? There was some reference to the idea that we wanted some of it to be either in English or that English had to be first or something like that. True or not true?
+
+That's not true. I can tell you that's not true. I think that's just... I don't know what that is about. It's what I said: there are countries like Australia and like Canada where they go to somebody like Netflix or other streamers and they say, &quot;Okay, you make X money, you're going to take 5% of that, and you have to give it to Canadian content producers or Québécois content producers or Australian content producers.&quot; That's what you have to do, and we think that's a tax, a discriminatory tax on American companies. But we have no problem with French language. We like it; we think it's great.
+
+Can you tell us anything about what we'll hear from the Treasury Secretary, or, without front-running what he's going to say, can you give us an idea?
+
+Well, you know, he has his article out in the FT talking about what's going to happen with Iran and those who support Iran. So, I don't want to get too far ahead of him. But the reality is the President is very confident using all levers of power he has—using the U.S. market to shape global events. The President is trying to open up a lane for American families, American companies, and American workers to operate in the coming century with full freedom, economic freedom, and democracy.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
