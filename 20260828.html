@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Friday, August 28, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260827.html">&larr; Aug 27</a><a href="20260829.html">Aug 29 &rarr;</a></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Friday, August 28, 2026</h1>
+            <p class="day-sub">3 videos &middot; 3 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-m1oGaHK38Cg">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=m1oGaHK38Cg" target="_blank" rel="noopener">AI Could Push Inflation Either Way, Says BOE’s Bailey<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/JrVD7EseOyOiGrgN4-2HQjuP7m6LHL5Cb-XBo0SCRO020W0bQ4W8Sve522ellwQ77_A5JapEKQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Tech</b><span class="subs">(736.0K)</span></span><span class="dot">&middot;</span><span>11:09</span><span class="dot">&middot;</span><span>1.1K views</span><span class="dot">&middot;</span><span>2026-08-28</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Andrew%20Bailey%22">Andrew Bailey<span class="chip-desc">Governor, Bank of England</span></a> <a class="chip" href="index.html?q=%22Lisa%20Abramowicz%22">Lisa Abramowicz<span class="chip-desc">Host, Bloomberg Tech</span></a> <a class="chip" href="index.html?q=%22Kevin%20Warsh%22">Kevin Warsh<span class="chip-desc">Former Member, Federal Reserve Board of Governors</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bank of England Governor Andrew Bailey stated that AI could be either inflationary or disinflationary depending on whether demand shocks arrive before supply-side productivity gains.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Speaking with Bloomberg's Lisa Abramowicz at Jackson Hole, Bailey also discussed UK inflation,...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Bank of England Governor Andrew Bailey stated that AI could be either inflationary or disinflationary depending on whether demand shocks arrive before supply-side productivity gains. Speaking with Bloomberg's Lisa Abramowicz at Jackson Hole, Bailey also discussed UK inflation, defended a pluralistic committee approach, and emphasized that the BOE will make independent rate decisions regardless of Federal Reserve actions.</p>
+<h3>AI and Economic Shocks</h3>
+<ul>
+<li><strong>Dual Economic Impacts:</strong> AI and robotics will generate both demand and supply shocks that affect price stability.</li>
+<li><strong>Sequencing Dictates Inflation Direction:</strong> </li>
+<ul>
+<li><strong>Upward Pressure:</strong> If demand shocks and related asset market effects outpace supply-side productivity gains, the net impact will be inflationary.</li>
+<li><strong>Downward Pressure:</strong> If productivity and supply-side efficiencies materialize first, the technology will prove disinflationary.</li>
+</ul>
+<li><strong>UK Productivity Need:</strong> Bailey noted that the UK specifically requires faster growth and improved productivity, making AI and robotics a critical source for long-term economic gains.</li>
+</ul>
+<h3>Monetary Policy Frameworks and Forward Guidance</h3>
+<ul>
+<li><strong>Flaws of Forward Guidance:</strong> Bailey agreed with Fed Chair Kevin Warsh that forward guidance can become "antiquated," overly complicated, and tend toward inflexible, unconditional statements that complicate policy—noting the 2021 rate-hiking delay as an example of challenges during massive shocks like COVID-19.</li>
+<li><strong>Conditional Decision-Making:</strong> Monetary policy must look to the future due to the transmission lag of interest rates, but decisions remain inherently conditional amid ongoing uncertainty.</li>
+<li><strong>Decoupled Central Banks:</strong> The Bank of England will base its rate decisions exclusively on UK domestic economic conditions and inflation outlooks, regardless of whether the Federal Reserve hikes rates.</li>
+</ul>
+<h3>Committee Governance and Transparency</h3>
+<ul>
+<li><strong>Pluralism and Deliberation:</strong> Bailey defended the Bank of England's nine-member Monetary Policy Committee as a deliberate body designed for diverse viewpoints and rigorous debate.</li>
+<li><strong>Enhanced Transparency Innovations:</strong> The BOE adopted recommendations from Ben Bernanke, introducing transparency measures such as paragraphs detailing individual members' views alongside a clear majority consensus statement.</li>
+<li><strong>Rejecting Binary Labels:</strong> Bailey declined to label himself a hawk or a dove, pointing out that second-round inflation effects in the UK remain relatively subdued due to a softening labor market.</li>
+</ul>
+<h3>Structural and Fiscal Challenges</h3>
+<ul>
+<li><strong>Balance Sheet Management:</strong> Central bank balance sheet reduction is a complex global challenge; Bailey noted the importance of retaining future policy scope while reducing interest rate risk.</li>
+<li><strong>Long-Term Macro Pressures:</strong> Developed economies face interconnected pressures outside direct monetary control, including aging populations and the reversal of post-Cold War defense expenditure dividends, which are impacting fiscal policy and debt levels.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Monetary policy by its nature is in the business of making policy forwards. We can't influence what inflation is gonna be tomorrow. We can influence what inflation is gonna be at points further into the future." — <strong>Andrew Bailey</strong>
+</blockquote>
+<blockquote>
+"The whole reason we have nine members on the committee is to have a plurality, to have different views, to have deliberation, which is absolutely key to this process." — <strong>Andrew Bailey</strong>
+</blockquote>
+<blockquote>
+"If you get the demand shocks ahead of the supply shocks, then you will get pressure on inflation upwards... If you get the supply shocks first, you'll get the opposite." — <strong>Andrew Bailey</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">I am here with Andrew Bailey, who is the governor of the Bank of England, and just a little bit wet after walking on that walk. I can say it was actually really impressive. You guys seemed unfazed, but it just kept exploring on you. I'm just keen to take some of the rain back to Britain, although I think it has started raining in Britain now. But, yes, we could take some back. But, yeah, no mountains today. No, not today, been completely followed. And, actually, Katherine Mann had the same approach. So maybe we could take some of this back to England.
+
+Just wanna get your sense. What was your takeaway from Fed chairman Jerome Powell's speech? Was it a message that you were hoping for or that you thought was appropriate? Well, look. First of all, obviously, it's a common rule. We don't comment on each other's monetary policy. Okay. But let me say, I think in the broad position that Chair Powell took, I thought it was a speech of real substance. I think he made some very important points about the framework of monetary policy. I think he made very important points about forward guidance and how he's thinking about it. So I commend it because I think it was a real speech, a real substance.
+
+He talked about forward guidance as being somewhat antiquated to a moment that's much more complicated and that it can be more confusing and complicate monetary policy. It might have led to the 2021 delay in hiking rates to combat inflation. Do you agree? Do you think that forward guidance has outlived some of its purpose, including reaction function to some degree? Well, I think we all wrestle with this issue. It's a really important issue. The distinction I try to draw is this: monetary policy by its nature is in the business of making policy forwards. We can't influence what inflation is gonna be tomorrow; we can influence what inflation is gonna be at points further into the future. So we have to obviously look to the future, and we have to describe our policy in terms of the future.
+
+But Joe Powell made this point. There's always uncertainty. There's even greater uncertainty, I would say, at the moment, particularly about the immediate situation. There is always uncertainty, and therefore, our decisions are always conditional. I think the problem with forward guidance, and I think Jerome Powell put his finger on this, is that it tends towards making unconditional statements about policy. And I think that's the problem, and I think that's the danger, and I agree with him. You know, whether it's out of date is a good question. I think the 2021 point to me, as a veteran of that period, is COVID was such a huge shock that we had to—and there was huge demand on us to—in a sense, step forward and put the tools to work and to do everything we could to put the tools to work. We're not in that world now, and I don't think unconditional statements about policy work in that sense. But we have to describe what we're doing in terms of our views on the future, uncertain though they sometimes are.
+
+It was notable to me that Chair Powell talked about the components of PCE and that it was broad-based in the US. Is it as broad-based in the UK, or is it a different inflationary backdrop due to AI, the investment there, and some of the growth backdrop that's very different for the US and for the United Kingdom? A different growth story. Having said that, I think AI is critical here because we need to see faster growth in the UK. We need to see faster productivity growth, and I think AI and robotics are a critical source of that. I think the point that he made, which is very important—and I'll apply this to the UK—is he made a key point that he is looking to see whether—I think he used the word &quot;trend inflation,&quot; but underlying inflation—is going back to targets. And I think also over what period of time.
+
+And that's our issue as well. We are looking at the second-round effects of the energy shocks. We're looking at the question, over what do we expect inflation to return to target, over what time, and is that time and that trend sustainable and consistent with the inflation targets? Now in the UK situation at the moment, I would say, so far, I think we're seeing quite subdued second-round effects. I think we've seen a softening labor market for some time now. I think the second-round effects are at the moment quite subdued, and that's why I've taken the view that I think we can watch this situation for the moment. But every meeting we have, we have to come back to it.
+
+How much does it force your hand if the Fed hikes interest rates, which right now the markets are expecting the Fed to do? Does it put pressure on you to match that in some capacity, partly because of the currency differentials, partly because of this race for capital, this competition for capital? Well, I think Jerome Powell made the point that whatever the Fed does, they'll do it based on their remit and their responsibilities in respect to the US, and it will do it for reasons to do with the US. We will have to take decisions to do with the UK. Now, of course, we have an open economy. We all have to see the effects of what goes on in the rest of the world on our situation and on our inflation outlook. But that's the way we do it. We don't say, &quot;Well, they've done this, so we'll have to do it as well.&quot; We say, &quot;What's the overall impact of all of this on our inflation situation?&quot;
+
+One thing that the US hadn't had to deal with as much as you was a divided committee. It was normal to get unanimous after unanimous after unanimous decision, and then we would get the BOE's decisions, and it would be, &quot;Four people voted for this, three people said they were nuts, one person said, 'Why am I even here?'&quot; Then there was a big brawl. I'm just wondering, from your perspective, is there any advice you'd give Chair Jerome Powell on how to handle this sort of division that you gather on the central bank committee?
+
+Well, I think each of us obviously takes our own approach towards chairing committees. I think it's important that it is a plurality, first of all. I mean, the whole reason we have nine members on the committee is to have a plurality, to have different views, to have deliberation, which is absolutely key to this process. We sit in a room for more hours than we care to remember, and we deliberate, and we reach a conclusion. Now, I think it's important that we are transparent about that. So we've made some innovations, really following the work that Ben Bernanke did for us. For instance, we've introduced change to our transparency in the sense of now having these paragraphs giving the individual views of each member. The monetary policy statement, there is very clearly a view of the majority. I think that clarifies the division of views. But my view in our setting is I think it's very important that we're transparent, and I encourage, as I say, this plurality to come out. And then I have to try and steer it to a conclusion.
+
+Well, a question for you. We were talking about how we're hearing from a lot of hawks. We heard from a lot of hawks today. Your own colleague, Mann, she describes herself as on the hawkish side. We heard earlier this morning from Beth Hammack of the Cleveland Fed also talking about how it's just been too high for too long when it comes to inflation. Do you feel like you're in a minority saying, &quot;Hold on a second, wait. We need to really watch this because we don't wanna torpedo the economy before it has a chance to really rightsize?&quot;
+
+Well, look. I don't characterize myself as a hawk or dove. What I do think—and by the way, the majority of our committee has been in the same place—is, as I said, I think we are seeing at the moment relatively muted second-round inflation effects. But, obviously, this is an evolving situation. I can't give you any—and this comes back to the forward guidance point—promise that that will continue. What I can do is, our job is to get inflation back to targets. We will do that. We will consider not only the path back, but let's say how long that path takes, and is that consistent with price stability.
+
+How complicated is the job of central bankers globally, particularly from developed markets given how much debt has been incurred over a pretty low-rate period for a number of decades? Does that create a difficult issue with accusations of politicization given that what the Fed or the Bank of England does has a pretty direct ramification on the overall budget of different governments?
+
+I think probably the most complicated area for that is balance sheet management. You know, we have been reducing our balance sheets. We will have a decision in September. I'm not gonna prejudge what that decision is, but my view is that it's important that we have a balance sheet that gives us scope to do whatever we need to do in the future. But it is important also that we reduce the interest rate risk on our balance sheet. So that's important. I think this debt question—you have to put it into the broader context of the challenges that we all face, I think, in developed economies. And there are very big long-run challenges.
+
+So, I think aging populations is a big long-run challenge. I think the turnaround of the post-Cold War defense expenditure dividend, if you like, is now gone obviously into reverse; it's a very big challenge. And these are challenges that aren't direct challenges for monetary policy, but they are obviously challenges for economic policy, and they are having an impact on fiscal policy, they are having an impact on debt levels. If you look at the long-run projections, they tell you these are issues that we are gonna have to seriously manage.
+
+Well, it really is notable that, normally, this is much more attended by global central bankers, but a lot of people are distracted because they have to go to Asheville for the G20 meeting, which you're heading off to tomorrow morning. It's sort of notable at this moment. It's rare for this to happen, for this meeting to be so close to that meeting, both in location as well as in timing. But it sort of indicates the moment that we're in and really this idea that the financial picture, the fiscal backdrop can't be extricated as cleanly from monetary policy as it could be, say, 20 years ago.
+
+We've got a slightly different cycle this year. Normally, we have the G7 and the G20 meetings in February and July, whereas this year, we're having it end of August. So that's caused—in some ways, this works quite well because we're in the US. So, here we are. So it cuts down on the extensive travel that we do. I wouldn't really interpret it any more strongly than that, really, in terms of the meetings.
+
+Do you think that in the UK—just switching gears a bit—in the US, people are talking about AI being the holy grail of productivity. You're touching on this and saying that you hope that it would be the case. Do you see AI as being more disinflationary than inflationary in the United Kingdom? Do you see it being inflationary in the short term to the same degree that it's being seen in the United States?
+
+I think the interesting question there is there will be both demand shocks and supply shocks from AI. If you look back—the economic historian in me always comes out at this point, I'm sorry—if you look back at general-purpose technology innovations in the past, actually, they don't have the same pattern. But in terms of the sequencing of shocks, if we get the demand shocks ahead of the supply shocks, then you will get pressure on inflation upwards. And, of course, those can come through in terms of asset markets. If you get the supply shocks first, you'll get the opposite.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-g83mTdM5tQA">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=g83mTdM5tQA" target="_blank" rel="noopener">Inside Rocket Lab: How Sir Peter Beck Is Building Neutron’s Engines | Tour 02<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/Omr_orQNkUhWUe0f2IrvNiiy5GyUsyeJ6U-5ppcgqjFTa55aFZHwPEmhhdFKTkAAeJX4437eqQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Sourcery with Molly O'Shea</b><span class="subs">(67.8K)</span></span><span class="dot">&middot;</span><span>28:03</span><span class="dot">&middot;</span><span>38.5K views</span><span class="dot">&middot;</span><span>2026-08-28</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Peter%20Beck%22">Peter Beck<span class="chip-desc">Founder &amp; CEO, Rocket Lab</span></a> <a class="chip" href="index.html?q=%22Molly%20O%27Shea%22">Molly O'Shea<span class="chip-desc">Host, Sourcery</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Sir Peter Beck gives a behind-the-scenes tour of Rocket Lab's Engine Development Center (EDC), detailing how vertical integration, advanced 3D printing, and methalox propulsion enable high-cadence production for the Electron and Neutron rockets.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">EDC Real Estate Deal: Sir Peter...</div>
+                    <div class="sum-full" id="full-1"><h3>TL;DR</h3>
+<p>Sir Peter Beck gives a behind-the-scenes tour of Rocket Lab's Engine Development Center (EDC), detailing how vertical integration, advanced 3D printing, and methalox propulsion enable high-cadence production for the Electron and Neutron rockets.</p>
+<h3>Facility Acquisition &amp; Manufacturing Infrastructure</h3>
+<ul>
+<li><strong>EDC Real Estate Deal:</strong> <strong>Sir Peter Beck</strong> noted that the Engine Development Center (EDC) building—formerly a Virgin Orbit asset valued at over $100M—was acquired out of bankruptcy for <strong>$16M</strong>.</li>
+<li><strong>Additive Manufacturing Shop:</strong> The facility houses a massive 3D printing operation run by approximately <strong>10 people</strong> through full automation.</li>
+<li><strong>Printer Hardware &amp; Capabilities:</strong> Features 12-laser metal 3D printers that sinter materials including titanium, Inconel superalloys, copper, and custom alloys developed in-house.</li>
+<li><strong>Production Scale:</strong> </li>
+<ul>
+<li>The current line produces <strong>1 Archimedes engine every 8 days</strong>.</li>
+<li>The Rutherford line produces <strong>1 engine every day</strong>.</li>
+<li>Over <strong>930 Rutherford engines</strong> have been sent to space.</li>
+</ul>
+<li><strong>Testing Operations:</strong> Rocket Lab maintains <strong>2 engine test cells</strong> at Stennis Space Center in Mississippi running <strong>20 hours a day, 7 days a week</strong>, alongside a Rutherford test cell in New Zealand.</li>
+</ul>
+<h3>Engine Architecture: Rutherford vs. Archimedes</h3>
+<ul>
+<li><strong>Rutherford (Electron):</strong></li>
+<ul>
+<li><strong>Design &amp; Cycle:</strong> Powered by an electric pump cycle using kerosene and liquid oxygen (RP-1/LOX).</li>
+<li><strong>Scale &amp; Usage:</strong> Single-use engine built for a 5-minute qualification test and a 190-second flight lifespan. <strong>10 engines</strong> power the Electron first stage.</li>
+</ul>
+<li><strong>Archimedes (Neutron):</strong></li>
+<ul>
+<li><strong>Design &amp; Cycle:</strong> Stage combustion cycle using a methalox (methane and liquid oxygen) propellant combination.</li>
+<li><strong>Performance &amp; Scale:</strong> Features a turbo pump operating at <strong>plus or minus 15,000 horsepower</strong>. Powered by <strong>9 engines on the bottom and 1 on the top</strong> (configured for upper stage acceleration and terminal landing).</li>
+<li><strong>Longevity &amp; Reusability:</strong> Designed for extreme reusability with a qualification burn time of <strong>1 hour across 40 starts</strong> (compared to expendable standards).</li>
+<li><strong>Why Methane:</strong> Avoids the soot and carbon residue left by kerosene, enabling a quick-turn cadence and clean engine interiors.</li>
+</ul>
+</ul>
+<h3>Vertical Integration &amp; Strategic Expansion</h3>
+<ul>
+<li><strong>Complete In-House Build:</strong> <strong>Sir Peter Beck</strong> emphasized that every piece of hardware and software—including tanks, flight computers, reaction wheels, and solar panels—is built entirely by Rocket Lab.</li>
+<li><strong>Applications Layer Expansion:</strong> Following the acquisition of Iridium, Rocket Lab is entering the space applications layer to build a comprehensive com player ecosystem.</li>
+<li><strong>Strategic Philosophy:</strong> <strong>Sir Peter Beck</strong> stated that future dominant space companies require three pillars: their own rocket for launch access, in-house satellite manufacturing capability, and an applications layer.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"That was the old Virgin Orbit facility. There was over a hundred million dollars worth of asset in that building and we managed to buy the whole thing for sixteen million dollars."
+— <strong>Sir Peter Beck</strong>
+</blockquote>
+<blockquote>
+"We're not stupid. We don't like 3D print bolts and all that sort of stuff, but... we really become very good at designing these really complex architectures that... you can basically print multiple parts all in one part. And at the end of the day, it's all about speed and cost."
+— <strong>Sir Peter Beck</strong>
+</blockquote>
+<blockquote>
+"If your job was just to make a, you know, an expendable launch vehicle, we'd be there now. We'd be launching Newtrons flat out. But, what we're trying to do here is is make a a step change increment on the current state of the art."
+— <strong>Sir Peter Beck</strong>
+</blockquote>
+<blockquote>
+"I think the biggest thing to be done in space hasn't even been thought about, let alone talked about. So, I think we're at the very, very beginning of the whole process. If you want to, you know, make an analogy here, it's like we've seen that first email in the beginning of the internet."
+— <strong>Sir Peter Beck</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">That was the old Virgin Orbit facility. There was over a hundred million dollars worth of asset in that building and we managed to buy the whole thing for sixteen million dollars. &gt;&gt; What? &gt;&gt; This is an Electron. This is the rocket that we fly the most of right now. So, it's flown ninety-three times.
+
+The second most frequently launched rocket in the world behind the Falcon 9. This line right now can produce one engine every eight days. There's over nine hundred and thirty engines that have been to space. We've got two engine test cells and that runs twenty hours a day, seven days a week. &gt;&gt; keep a tracking list of all the potentially bankrupt space companies and which facilities you want to buy? &gt;&gt; Yep.
+
+&gt;&gt; Who's at the top of the list? &gt;&gt; comment on that. &gt;&gt; &gt;&gt; I can't be saying that. That'll get me in trouble. &gt;&gt; &gt;&gt; All right. So, now we're riding over to the engine propulsion lab.
+
+&gt;&gt; Engine development center, technically EDC. &gt;&gt; Okay. Technically, engine development center. How long did it take you guys to build out this entire facility? And are you going to be buying more buildings here? &gt;&gt; Oh, I hate buying real estate.
+
+It's my pet peeve cuz we just see much of it and it's just a cost. well, this this building we we kind of stood up fresh. Where we're taking you, EDC, was arguably one of the best deals of my life. &gt;&gt; Yeah. &gt;&gt; Because that was the old Virgin Orbit facility and you know, there was over a hundred million dollars worth of asset in that building and we managed to buy the whole thing for sixteen million dollars. &gt;&gt; What?
+
+&gt;&gt; Yeah, I know. It was the fantastic contribution from Sir Richard Branson to the space industry. &gt;&gt; One sir to another sir. Wow. So, what was what was the process like for flipping that over? &gt;&gt; Oh, it happened really really fast.
+
+Like they were in bankruptcy and we saw it we saw it sort of come up and we all just actually piled into golf carts like this, hanging off the back and nipped down there and made it happen. &gt;&gt; And you got to take all of the equipment inside? &gt;&gt; Oh, yeah. All the machines, everything, yeah. The whole lot. &gt;&gt; convenient.
+
+&gt;&gt; Oh, yeah. It was great. I mean, we didn't ever have to worry about a factory for building building engines ever again. Like, we're totally sorted. &gt;&gt; Do you keep a tracking list of all the potentially bankrupt space companies and which facilities you want to buy? &gt;&gt; Who's at the top of the list?
+
+&gt;&gt; &gt;&gt; that. I can't say that. That'll get me in trouble. These. &gt;&gt; I'm assuming there's going to be more. &gt;&gt; Oh, there is.
+
+There is. &gt;&gt; to be a bunch more. &gt;&gt; The the the funny thing is, like, space companies are really hard to kill. Like, the amount of space companies that should be dead and not the sort of zombie companies is quite quite incredible. It's not like other industries where, you know, you go to die, you just die. Like, space companies tend to linger for quite some time.
+
+&gt;&gt; Why is that? &gt;&gt; Don't know. They just They just seem to &gt;&gt; How do they continually get funding? &gt;&gt; Yeah, they just Yeah, it's a great question. No, I can't &gt;&gt; love space so much? &gt;&gt; Yeah, I think and there's like there's always enthusiasts that that you know, the thing about space is that it's like awesome that that somebody can be really really kind of forward-leaning and promotional and everyone gets excited.
+
+But, the downside to space is exactly the same thing. Where, you know, it's really difficult to to understand and comprehend. So, you know, people can stand up and make these claims and it's really really hard to collaborate unless you like go five layers deep into the rocket equation. So, &gt;&gt; Who has been the best at that kind of diligence and research that you found? &gt;&gt; Mm, there's investors. &gt;&gt; Are investors actually good at doing that?
+
+&gt;&gt; Not really. Not really. Cuz you see so many You see a company that's just objectively terrible. And they just continue to get funding. There's just new investor after new investor and after new investor, but and sometimes sometimes like the really big firms that you think are really good at it actually are the worst. &gt;&gt; Damn.
+
+So we're right next to the airport, do you fly your helicopter over here? &gt;&gt; No. No. No. No, that's purely a New Zealand activity. &gt;&gt; All right, we're now going to see the engine development center.
+
+&gt;&gt; Exactly right. &gt;&gt; How did you guys structure out this facility? So you have all these different units, what are we going to see? &gt;&gt; So there's a whole big machine shop in here. there's probably one of the largest 3D print shops you're going to see. So one of the things that we pioneered early on with with Electron was our was our 3D was our 3D printing of of engines.
+
+So most of the Rutherford engine is 3D printed and most of the Archimedes engine is 3D printed. So you'll see you should see some some cool stuff. &gt;&gt; How many times do you do this tour? Your typical day the space force on the store? &gt;&gt; Oh, yeah. Yeah, but I try and outsource that as much as possible, I think.
+
+Far useful for other things. &gt;&gt; What are we going to start with? &gt;&gt; to go in here. We're going to go in into additive manufacturing. &gt;&gt; Oh my god. &gt;&gt; So these are all 3D printers, so I added additive manufacturing.
+
+And you know, at least by mass the vast majority of all of our engines are 3D printed and we have some really really unique processes in here as well. So you have a look at this one here. So that's a a thrust chamber for Archimedes and that's getting So that's actually copper and then we clad it with a superalloy over the top. We use 3D printing because we're able to incorporate a whole bunch of geometry into into one kind of design. You know, we're not stupid. We don't like 3D print bolts and all that sort of stuff, but we really become very good at designing these really complex architectures that if you if you can get away with it you need 3D print, you can basically print multiple parts all in one part.
+
+And at the end of the day, it's all about speed and cost. &gt;&gt; Yeah. &gt;&gt; so, you know, an Archimedes engine is an incredibly cheap engine. Same with a a Rutherford engine, it's it's just ridiculously so. So, building engines fast, building engines cheap that are high performance. I mean, there's probably about 10 people that run this whole shop.
+
+So, it's it's all automated. &gt;&gt; Wow. &gt;&gt; So, there's a variety of machines, a variety of materials. So, we we print, you know, Inconel superalloys, copper, titanium, basically any material you can imagine, including our own material that we developed specially for the Archimedes engine. So, there's a whole lab back there with material scientists developing new materials, you know, for that for that particular engine and environment. &gt;&gt; What are the biggest differences, obviously there are some, between Archimedes and Rutherford?
+
+&gt;&gt; well, so the the Rutherford is a is an electric pump cycle, whereas Archimedes is a stage combustion cycle, and just the scale of the engines are, you know, we'll go and have a look at some, but are enormously different. so, yeah, it's it's a it's a much more complicated cycle and a much much larger engine. &gt;&gt; And different fuel type? &gt;&gt; Different fuel types. &gt;&gt; Okay. &gt;&gt; But, in saying that, a lot of the the kind of the the kind of I get the ethos of how you do it has remained the same.
+
+So, you know, how we do injectors and how we you know, combine multiple parts into an engine all remains the same. &gt;&gt; What's your favorite part? &gt;&gt; the favorite part of any of any like engine builder is the injector because that's where the magic happens. The black magic happens. everything else is to, you know, contain that mixing and produce thrust, but the injector and the turbo pump, those are the those two bits that are pretty cool. &gt;&gt; Do you go out there Where do you test these?
+
+&gt;&gt; So, we have a we have an engine test facility in Stennis, Mississippi. So, we've got two two engine test cells out there that &gt;&gt; far from here. &gt;&gt; Yeah. Yeah, but I mean, we're spread literally right across the world. No, this is this feels very close. but yeah, no.
+
+So, Mississippi, we've got two engine test cells and that runs 20 hours a day, 7 days a week. So, it's just firing firing engines all the time. And then down in New Zealand, we have an engine test cell for the Rutherford. and, you know, we produce one Rutherford engine every day. So, to support that program. &gt;&gt; Wow.
+
+That's wild. &gt;&gt; Yeah. &gt;&gt; This episode is brought to you by Brex, my favorite. You become what you spend on, and I refuse to spend my time on work that shouldn't exist. Expense reports, receipt chasing, and manual closes. The companies building what's next from Vercel, OpenAI, Anthropic, Granola, and Deepgram all made the same call.
+
+They all run on Brex. Brex is the intelligent finance platform that combines cards, expenses, and banking into a single stack with intelligent finance built in. AI agents that handle expenses automatically, enforce policy before spend happens, and close your books in minutes. That's why Sorcery runs on Brex, so I can spend time on building and not busy work. It's time to get Brex AF. Learn more at brex.com/sorcery.
+
+That's b r e x.com/s o u r c e r y. Bye. Turing is training the next generation of AI with tasks that require real and real-world judgment. That's why companies like Nvidia, Anthropic, Salesforce, and Gemini partner with Turing. Turing builds realistic reinforcement learning environments and data systems based on real operational traces, the kind of infrastructure frontier labs need to train superintelligence. Visit turing.com/sourcery.
+
+&gt;&gt; The machines are getting smaller and then they're getting bigger. &gt;&gt; Yeah. Well, there's actually a really, really big machine. we're going to It's going to turn up next year, which will be the largest. &gt;&gt; What is it? &gt;&gt; well, it basically can do a whole Archimedes engine in one print.
+
+&gt;&gt; Really? &gt;&gt; Which is tall as me, yeah. &gt;&gt; Where did you find it? &gt;&gt; these guys make it, so the same people. Yeah. But we're the we're the first customer of it in the world, yeah.
+
+we'll just go and have a look in. I'll just check this one's running first. Yep. &gt;&gt; So, what are we looking at here? &gt;&gt; So, this is a a laser powder machine, so there's 12 lasers in there. and we're ba- we're basically sintering the metal together to make a part.
+
+Which the technology has been around for, you know, quite a while, but you know, the speed and the complexity of the part that we make here is is pretty crazy. &gt;&gt; How expensive is this? &gt;&gt; They're not cheap machines. &gt;&gt; Like a couple million? &gt;&gt; Oh, yeah, no. &gt;&gt; Tens?
+
+&gt;&gt; Yeah, yeah, yeah. &gt;&gt; Hundreds? &gt;&gt; No, not a hundred, no. &gt;&gt; No? &gt;&gt; No, I I mean, yeah, for these big machines, it's sort of, you know, sle- less than 10 million, but you know, for some machines it it can be more. &gt;&gt; Do you have a favorite machine?
+
+&gt;&gt; They're all my favorite machines. Never choose one. That'll be the one that gives you the grief. Mesmerizing. You can literally stand there for hours. You're not careful.
+
+&gt;&gt; cam on this. &gt;&gt; Yeah, you get no work done. &gt;&gt; So, how long does it take from powder to engine? &gt;&gt; Depends on the on the size of the part. I think our longest print is like 3 and 1/2 days, somewhere around there. &gt;&gt; Yeah.
+
+&gt;&gt; Yep. &gt;&gt; For people that don't know, what is the biggest difference between your engines and the other engines that are on the market? &gt;&gt; well, I think our engines are are very much designed for the Neutron vehicle. And you know, it is a reusable launch vehicle at its heart. So, what that means is our approach to engine design is slightly different than an expendable engine. Because an expendable engine, you know, it needs to run for 190 seconds on the first stage, say, and then it never needs to run again.
+
+Whereas, you know, a reusable vehicle, especially the way we're doing it, we want it to just run and run and run and run. So, you know, the qualification burn time for an Archimedes engine is 1 hour. So, the engine, you know, has to do 40 starts and run for 1 hour. And whereas, you know, Rutherford for Electron, because it's a single-use engine, like its qualification or its, you know, acceptance test is is like 5 minutes. &gt;&gt; Wow. &gt;&gt; only needs to run cuz it only needs to run for 190 seconds in its life.
+
+So, 5 minute run is pretty much enough. &gt;&gt; What is the biggest engineering difference that you have to make? Just just &gt;&gt; make designing it for that longevity. Because I'm not going to say it's relatively easy to make a you know, an engine run for a short period of time. It's still difficult, especially with a stage combustion. But it's just way harder to make like a stage combustion engine run for 1 hour.
+
+&gt;&gt; Yeah. &gt;&gt; And just not even worry about it running for 1 hour. &gt;&gt; I was talking to someone else, but I was like so excited that when we started doing these interviews and these tours, they took off and we ended up on the fun side of this like new re-industrialization and renaissance. &gt;&gt; No, look, I right, I really enjoy your you know, your work. I think it's fantastic. &gt;&gt; Thank you.
+
+&gt;&gt; No, I think a lot of people these days they they're just always focusing on the the doom and gloom of the world like &gt;&gt; Yeah. &gt;&gt; having great stories where people are doing great things is super great to watch. &gt;&gt; Look, it's really cool cuz we're educating both investors, but then like I mean literally so many people are just excited about this stuff right now because they've never seen it before and like I don't know. There's just been more and more media that's picked up and then coming from like the new media angle doing it all on X and then sharing it on Instagram and YouTube. It's just It's been super fun. Okay.
+
+So, we were just looking at all the big huge machines. &gt;&gt; Yep, additive manufacturing, yep. &gt;&gt; Additive manufacturing. Now we're walking up on something that is also very large that will probably go into space. &gt;&gt; Yes, well, so before we go over to have a look at the Archimedes engines no tour would be complete without like an electron rocket. So, I figure you have to at least have a look at that.
+
+&gt;&gt; I was I was really curious about this because you guys have really great naming systems. &gt;&gt; Yeah, yeah, yeah, yeah. &gt;&gt; But they you know, they're all very different and unique. So, how did you come up with the Hungry Hippo? &gt;&gt; Well, it just looked like a hungry hippo. You didn't used to play that game as a kid like &gt;&gt; When are you going to develop your own game?
+
+&gt;&gt; Oh, I don't have the time for that. This is barely time to develop a rocket let alone a game. Yeah. Yeah. &gt;&gt; We can outsource that. &gt;&gt; Yeah, could, yep, yep.
+
+Yep. Well, we like to have fun with the mission names as well. because it's such a serious business so all of our rockets, you know, the all the mission names are always called something a little bit funny just to light lighten it up a little bit. &gt;&gt; Yeah. So, for people who have never seen this before, could you walk through the entire &gt;&gt; so this is an Electron. This is you know, the rocket that we fly the most of right now.
+
+So, it's flown 93 times it's the second most frequently launched rocket in the world behind the Falcon 9. the bit up the front is the fairing, that's where the payload goes. And this little bit in the behind that is the kick stage. This is the second stage of the vehicle, and then this down here is the the first stage of the vehicle. So it's, you know, in traditional Rocket Lab fashion, it's all carbon composite. you know, the the whole rocket is is in is incredibly light.
+
+you know, we are we're very good at those very super lightweight structures. &gt;&gt; Mhm. &gt;&gt; this is the hot bit. So this is where all the engines are down the end. So these are the the Rutherford rocket engine. they're all they're all gimballed themselves and and like we build everything in this vehicle.
+
+Every piece of hardware, every piece of software, tanks, engines, you name it. we build it and I think that's that's one of the key successes of the company is just that vertical integration. &gt;&gt; Yeah. And now you're expanding outward and building out space systems and apps. &gt;&gt; Yep. Yeah, and we do the same, you know, with that like if you if you pull apart a satellite that we build, but the flight computer will be ours, the reaction wheels will be ours, all the solar panels will be ours.
+
+So it's the same same philosophy, yeah. &gt;&gt; What else are you going to start to add on? You just &gt;&gt; We bought Iridium. &gt;&gt; Yeah. &gt;&gt; There's there's a lot to go. &gt;&gt; Well, you have a lot to do.
+
+The planet's they will will head down here. So yeah, so a a Iridium is just the start of our applications layer. &gt;&gt; Mhm. &gt;&gt; So you know, all the cool kids have got a com player. So we need to have one of those, too. and but no, seriously, Iridium was is incredibly strategic for us to enter into that that applications layer.
+
+And you know, I've always believed like the big space companies of the future going to all look a little bit the same. They're going to have their own rocket because access to space is key. They're going to have their own ability to build as many satellites as they need, and they're all going to have applications. &gt;&gt; What about tourism? Are you going to do that? &gt;&gt; do tourism.
+
+I don't think I'd be a very good tour operator if I'm honest. but I'd be a better engineer than tour operator. &gt;&gt; When you see that you're you're very serious engineer. They're they're serious engineers as well, but like how do you take on to the tourism bit of it? &gt;&gt; Yeah, but &gt;&gt; How serious is that? &gt;&gt; Well, I think look, I think there will be commercial space stations and there will be tourists go go to them and all the rest of it.
+
+I guess you know, for me personally, I'm I'm just not sure that's that's that exciting for me and for the company. I think it's it's always a tricky business. And you know, unfortunately, I'm the CEO. So, if anything ever goes bad, guess who's knocking on the door. So, I don't know if I want to want to have to have that kind of you know, level of responsibility. Well, we're here.
+
+We can sort of talk a little bit about so, what you what you've been walking up is the Archimedes production line. So, this line right now can produce one engine every eight days. and and there's a couple of elements here. This is the the thrust chamber of the Archimedes and this here is the the turbo pump. So, there are all the raw propellants come in here. This is, you know, plus or minus 15,000 horsepower if you're a mitra if you're sort of old school horsepower guy.
+
+And you know, these these two things together sort of really make up the Archimedes engine. &gt;&gt; And you're using nothing for this one? &gt;&gt; Methane oxygen, yep. More methalox, yep. &gt;&gt; And what what you're using kerosene for the &gt;&gt; For the for the Rutherford it's a kerosene vehicle, yeah. &gt;&gt; Why the difference in the &gt;&gt; Reusability.
+
+&gt;&gt; Okay. &gt;&gt; So, with the trouble with kerosene is that you you get these little soot deposits in the regen channels of the engine and you know, you have to purge the engine out and it's sort of dirty and this thing you know, the design requirement for the vehicle was turn in 24 hours, which was a you know, absurd design requirement, but it drove a whole lot of really good decisions. one of them being methane because you can run an engine and after the engine's run, like it's still shiny stainless steel and stuff. There's like there's just no residue whatsoever. You do the same with a kerosene engine, there's just soot and black crap everywhere. So, it's just just not fun.
+
+Yeah. So, every decision around the whole vehicle is designed around reusability and and quick turn cadence. &gt;&gt; What has been the biggest challenge? Cuz like I could imagine doing this you're going to constantly meet new challenges along &gt;&gt; Yeah. Yeah. Yeah.
+
+&gt;&gt; What has been the biggest challenge upon that, making it reusable? &gt;&gt; well, I think the reusability in itself is a challenge because if if our if our job was just to make a, you know, an expendable launch vehicle, we'd be there now. We'd we'd be launching Newtrons flat out. But, what we're trying to do here is is make a a step change increment on the current state of the art. So, not we we can't just come to market with a vehicle that's as good as the current one on the market. We have to come to it with a vehicle that's way better.
+
+So, I think, you know, designing a vehicle that literally comes off the barge and goes straight on the pad and launches again is is what we're trying to achieve here. So, that that drives a whole bunch of engineering compromise, a whole bunch of engineering decisions. So, that in itself is is, has been very very very difficult. I mean, if you look at the Archimedes engine itself, really the object of that engine was to make the most boring engine possible. I mean, if you're if you're sitting on an airplane and you look out at the engine on your wing, you're not marveling at how amazing that is and how on the knife edge that engine is. You want to know that engine is boring, right?
+
+It's not going to blow up. &gt;&gt; Mhm. &gt;&gt; Same thing for this, right? Is is, you know, the Archimedes engine needs to just go and go and go and go. So, that actually pushes you into a quite different design envelopes, which in itself creates challenges. you know, that the chamber pressure is relatively low for a stage combustion engine engine, which means the internal temperatures are low.
+
+And you think, oh, that's good for longevity, which it really is. But, actually it makes it much harder to light because the temperatures are way lower. So, you you you create these things that are that are you know, ultimately good, but you create a whole lot of problems along the way to try and make something good. &gt;&gt; Enduring global leadership demands advanced mission systems and technologies. At Applied Aerospace and Defense, they unleash the power of precision manufacturing with unmatched scale and agility. Their customers can focus on innovation, knowing their production is backed by an undeniable heritage.
+
+Applied Aerospace and Defense, engineered for the edge, trusted to deliver. Visit appliedad.com. Today's episode is sponsored by VCX by Fundrise, the public ticker for private tech, allowing investors of all sizes to invest in venture capital. Learn more at getvcx.com. Some of you may not have heard this yet, but our sponsor Public just launched something called generated assets, and it brings AI into investing in a way I've honestly never seen before. Here's how it works.
+
+You type in an idea like AI-powered supply chain companies with positive free cash flow, or defense tech companies growing revenue over 25% year-over-year. Public's AI then dispatches a swarm of agents that scan every single US stock, evaluates them, and instantly builds a custom index around your thesis. What really stands out is how clearly it explains why each stock is included. And before you invest, you can even backtest your idea against the S&amp;P 500, so you're making decisions with real context, not just guessing. And beyond generated assets, Public lets you invest in stocks, bonds, options, crypto, all in one place. They'll even give you an uncapped 1% match when you transfer your investments over from another platform.
+
+If you want to build a portfolio that actually reflects your thesis, visit public.com/sorcery. Paid for by Public Investing. Full disclosures in the description. Founders scale faster on Deel. Set up payroll for any country in minutes, hire anyone anywhere, get visas handled fast, and get back to building. Visit deal.com/sorcery.
+
+That's d e e l.com/sorcery. How often do you look around at the market and and see the different engines that are being built, whether it's Merlin, whether it's Raptor, other companies, and you try to like gauge whether or not you should take some components of another one or use it or test it against. &gt;&gt; Well, I mean I think I think everybody everybody looks at everybody else's work and and it would be it would be disingenuous to say that we don't look at other people's engines and failures and successes and and learn from them as well. But I guess our path is is probably pretty different to any other path. Like, you know, those engines you mentioned are really high-performance engines and you know, they're really strung out, which which is great. This is I would say is the first engine that is that is just not designed to be like that.
+
+It's designed to be like the most benign engine that you could possibly imagine so that you can just run and run and run and run and never ever think about it. So, a lot of the a lot of the lessons, you know, in some of those other other products probably don't apply to this so much cuz we've got our own set of unique problems. &gt;&gt; Anything else we should see? &gt;&gt; here's another engine up here. We can So, this is a vacuum engine with the turbo pump on the side of it. &gt;&gt; Mhm.
+
+&gt;&gt; so, you get the you get more of a picture of of of the actual the actual modulus itself. &gt;&gt; Pretty. &gt;&gt; Yep. &gt;&gt; How long did it take to design this? &gt;&gt; about 3 year 3 or 4 years the team's been working on the engine. I mean, the initial design's quick.
+
+But the the the challenge with a stage combustion engine is you can't you can't separate components and then go and test them individually and then bring them together. it's sort of you know, the first time you you hot fire an engine, you have to have the turbo pump and everything on it as as a thing. So, you have to be extremely hardware rich at the start of your program cuz you consume a lot of hardware. I mean, you know, you you you literally eat eat engines out. so, there was one engine hot hot fire that we did that very early on in the test program, the engine leaned out and it actually just consumed the whole injector. And which was bizarre because there was literally a just a big hole left.
+
+There was nothing left in the of the injector. and but, you know, the the propellants were still coming together and mixing and producing thrust and the engine was still running just fine. Well, not just fine, but still running. So, you know, it's it's one of those things where, it's very very difficult to analyze. You've just got to test. You've just got to spend heaps of time on the engine test cell.
+
+That's why we have two test cells, like I said before, running 20 hours a day, 7 days a week. So, at the other end of the scale is the is the Rutherford engine. So, these are the engines that that go on the back of the Electron rocket. So, you know, there's one engine, made in in shipped out every day. So, you know, there's there's, over 930, engines that have been to space. &gt;&gt; How many do you put on Electron?
+
+How many? 10? And then how many are you going to put Archimedes are you going to put on? 10? &gt;&gt; Yep. So, the reason for for that on on, on Neutron is, the upper the upper stage engine produces a certain amount of thrust and you have to, you know, manage that thrust for the acceleration of the upper stage.
+
+It just so happens that coincident coincidentally is the ideal amount of thrust to land a rocket. So, you know, you need one at least one engine to to do that final terminal landing phase. So, it just makes sense to have one engine and just have nine of them on the bottom and one on the top. That just That's just physics. It just works out like that. &gt;&gt; Yeah.
+
+So, I have to ask you a very difficult question. I know you're already nervous for this, but what is your hottest take right now? &gt;&gt; Hottest take right now? I I I think like we're in a really really interesting time within the space industry. Like I I've been doing this for 20 years and at the start of that it was like one day there'll be the democratization of space and like it won't be governments launching rockets, it'll be commercial entities. And we're like we're we're well past that.
+
+And I think, you know, my hot take would be I think the biggest thing to be done in space hasn't even been thought about, let alone talked about. So, I think we're at the very, very beginning of the whole process. If you want to, you know, make an analogy here, it's like we've seen that first email in the beginning of the internet. &gt;&gt; Damn. &gt;&gt; Was that hot enough for you? &gt;&gt; That's a pretty good line.
+
+&gt;&gt; Okay. &gt;&gt; Amazing. Thank you so much, Peter. We walked through the HQ, we walked through this facility, we saw all the engines, the machines that build it. Thank you so much. &gt;&gt; Oh, my pleasure.
+
+Yeah, it's great to have you. &gt;&gt; Cool. &gt;&gt; Hey, it's Molly. If you enjoy our interviews, check out our newsletter sorcery.vc, where we deliver a once-a-week top deals and tech headlines email, and also go deeper on our podcast interviews. Subscribe to sorcery today, and don't forget to subscribe to the podcast on YouTube, Spotify, Apple, or wherever you listen. Link in description to sign up.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-Zx1Ec8LWFeM">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=Zx1Ec8LWFeM" target="_blank" rel="noopener">Why Top Founders Are Racing Into AI Infrastructure<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/hkiO7UAtALrbqOcewo4CIrbd0j8XDeWttKkdtihfX1emeV4iUMwjIe1KKn4zd6wT2OOwANDnIA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>a16z</b><span class="subs">(290.0K)</span></span><span class="dot">&middot;</span><span>53:59</span><span class="dot">&middot;</span><span>42.2K views</span><span class="dot">&middot;</span><span>2026-08-28</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Ben%20Horowitz%22">Ben Horowitz<span class="chip-desc">Co-founder, a16z</span></a> <a class="chip" href="index.html?q=%22Martin%20Casado%22">Martin Casado<span class="chip-desc">General Partner, a16z</span></a> <a class="chip" href="index.html?q=%22Raghu%20Raghuram%22">Raghu Raghuram<span class="chip-desc">Former CEO, VMware</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The bottleneck in AI has shifted from models to the physical infrastructure beneath them—spanning chips, memory, networking, power, and data centers.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">To address this unprecedented resource constraint, a16z is launching the Machine Age Fund to back hard technical problems across...</div>
+                    <div class="sum-full" id="full-2"><h3>TL;DR</h3>
+<p>The bottleneck in AI has shifted from models to the physical infrastructure beneath them—spanning chips, memory, networking, power, and data centers. To address this unprecedented resource constraint, a16z is launching the Machine Age Fund to back hard technical problems across hardware and systems.</p>
+<h3>The AI Infrastructure Bottleneck and Surging Demand</h3>
+<ul>
+<li><strong>Massive CapEx Expansion:</strong> Hyperscaler capital expenditure is exploding, with total spend projected to reach $700 billion this year and approximately $1 trillion next year collectively across major hyperscalers.</li>
+<li><strong>Supply Chain Depletion:</strong> Every part of the AI supply chain is under duress, with critical components and GPU capacity essentially fully booked out through 2027 and into 2028.</li>
+<li><strong>Exploding Token Consumption:</strong> The volume of tokens consumed is scaling by orders of magnitude due to the transition from simple chat applications to reasoning models, long-running agents, and multi-agent workflows.</li>
+</ul>
+<h3>Physical Limits and Rebuilding the Computing Stack</h3>
+<ul>
+<li><strong>Power and Cooling Constraints:</strong> Rack power requirements are surging from roughly 5–10 kilowatts to 100–150 kilowatts, making traditional AC power obsolete and forcing a rapid transition to liquid cooling and DC power.</li>
+<li><strong>Data Center Obsolescence:</strong> Traditional data center designs are reaching physical limits regarding weight loads, acoustic output, water efficiency, and high-voltage electrical infrastructure (noting that only 2% of US electricians are certified on DC power).</li>
+<li><strong>First-Principles Innovation:</strong> Existing infrastructure was built for a different computing era, requiring founders to break down compute, memory, networking, and power from first principles and rebuild the stack.</li>
+</ul>
+<h3>The Shift in Venture Capital and Founder Dynamics</h3>
+<ul>
+<li><strong>Surge in Hard Tech Founders:</strong> The share of top-tier founders pursuing complex hardware and systems problems has risen dramatically from roughly 3% historically to north of 20%–30%.</li>
+<li><strong>Capital-Driven Scaling:</strong> Unlike traditional software where throwing money at engineering fails due to the "mythical man-month," AI allows capital ($3B+ clusters) to directly drive intelligence and compress competitive leads.</li>
+<li><strong>Experienced Leadership:</strong> Complex supply chains and manufacturing requirements are drawing more experienced founders and systems architects into the hardware space alongside younger software talent.</li>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Token Demand Growth:</strong> Demand for tokens will grow at close to 1,000% per year, far outpacing the physical rate at which supply can be expanded — Ben Horowitz, Martin Casado, and Raghu Raghuram.</li>
+<li><strong>5-to-10 Year Vision:</strong> In 5 to 10 years, America will win the infrastructure game, featuring an abundance of efficient, eco-friendly data centers, chips, memory, and power, securing technological leadership — Ben Horowitz.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Normally when we talk about the infrastructure world, we're talking about the servers and the storage and the network. Here it goes all the way down to the mines of copper mines. That's how widespread this thing is going to be."
+— Martin Casado
+</blockquote>
+<blockquote>
+"It used to be when you built something, it was an engineering problem... and here it feels like it really is a resource limitation. So whether it's tokens or not, we're pouring a ton of money into systems and then those systems are producing a result. And right now we're bottlenecked on the systems' ability to actually match the resources we're pouring into them."
+— Ben Horowitz
+</blockquote>
+<blockquote>
+"The leading memory vendor said the demand they have today will take them 3 years of capacity to supply."
+— Raghu Raghuram
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">We have a whole new technology. That's the most important technology ever. And you need a whole new infrastructure.
+
+Normally when we talk about the infrastructure world, we're talking about the servers on the storage and the network. Here it goes all the way down to the mines of copper mines. That's how widespread this thing is going to be.
+
+It used to be when you built something, it was an engineering problem. And here it feels like it really is a resource limitation. So whether it's tokens or not, we're pouring a ton of money into systems and then those systems are producing a result. And right now we're bottlenecked on the systems' ability to actually match the resources we're pouring into them.
+
+The leading memory vendor said the demand they have today will take them 3 years of capacity to supply. If this fund does what we think it will do, how do we see the world in 5 to 10 years? America wins in the infrastructure and that would be awesome.
+
+Ben, Martin, Ragu, welcome. Thank you. All right. Thank you.
+
+I want to start with a Mark quote to introduce this new fund. This is the biggest technological revolution of my lifetime. This is clearly bigger than the internet. The comps on this are the microprocessor, the steam engine, and electricity, or maybe the wheel. Guys, the machine age fund. Please introduce it. Ben, start us off.
+
+Well, basically what's happened is we have a whole new technology that's the most important technology ever. And what happens every time there's a dramatic new way of using all of the things that we love, infrastructure, you need a whole new infrastructure and never has it been more high impact as it is on this one. So not only do we need new chips, new system software, we need new ways of doing power, we need to replace copper. I mean like it's absolutely everything. So it's a very exciting time. So you know, particularly for the kind of hardware aspects of this new era, we needed a new approach.
+
+Yeah, I would agree. I mean normally when we, at least in the computing, when we talk about the infrastructure world, we are talking about the servers and the storage in the network. Here it goes all the way down to the mines, copper mines. That's how widespread this thing is going to be. That's number one, and number two, I think what we have seen over the last 3 years is the steady increase of the capabilities of the models where the model is no longer the bottleneck and in fact, using AI, these models are getting better faster and faster and faster. Now the bottleneck is all what I call south of the model and so that's why we need to work on that.
+
+You know, the only thing I'd add very quickly is like we tend to follow founders and what we've been watching over the last couple of years is the number of very strong teams going after complex hardware problems has increased. I don't know the actual numbers, but I was trying to estimate it over the weekend. So I think we'd get maybe 5% of the deals from top founders would come in and would be hardware before. Now I would say north of 20% or 30% right now. So like the founder community, which tends to be much smarter than the VC community, has identified this as a very active area for innovation and they're responding. I think 5% is probably generous.
+
+Yeah, it's very low. It is very low. Yeah, 3%. Yeah.
+
+And explain some of the macro conditions that have led to this change in terms of the surplus of founders pursuing these ideas. Like what are they seeing that's enabled?
+
+Well, I mean the obvious is like you know the demand for AI is basically infinite and as a result of that every part of the supply chain is under duress. I mean everything including like materials used to make things like memory. It's also very interesting whether there's something unique about AI which, because the demand is infinite and growth is infinite, what you tend to worry about is the margin of companies which is how efficient it is. Like normally you worry about growth, like can I just get people to buy this stuff. You don't have to worry about that here. The question is, can you do this in a way that's profitable?
+
+And a lot of the efficiencies are actually strictly a physical limitation of hardware. And so even the business model of the AI wave is really putting a lot of stress on the existing systems because they weren't built for AI. They weren't built for those workloads. And I think there's just this global observation that we actually need to change the core components to get that efficiency to help drive the growth and to drive the value of the businesses.
+
+Yeah. And how did we know that demand is actually outpacing supply here rather than this being another hype cycle?
+
+Well, I mean, yeah, there are any number of cities today. Firstly, it is that some of the smartest judges of demand are cutting huge purchase orders. I mean, if you look at the hyperscalers, right? Their capex spend has been exploding. Next year supposedly, it's going to reach a trillion dollars collectively across the big hyperscalers. This year, it's about 700 billion dollars, right? And if you think about the hyperscalers' position in the industry, they see demand from everywhere, right? They see obviously the frontier labs wanting their compute, they see the AI native companies, they see the enterprise, they see the US geography, the international geography. So if anybody has visibility, it is them, and they've been jacking up their capex like it's never been seen before, right? So that's a clear sign.
+
+And secondly, if you look at the companies that we see on a day-to-day basis, they are all ripping. All the application companies, the growth is insane. The frontier labs, the growth is insane. It's been documented. So I would say on the demand side, the signals have never been clearer that this is not a hype. To top all of it, all of it is just that prices are going up. Like we've never seen prices go up on chips.
+
+You think your prices went down. They always go down. Yeah, it always goes down. If you look at the price curve, it went like this and then went back this. And we know only like 5-10% of the addressable market is thought to be covered today.
+
+I mean, the supply, if you look across the board, it's basically all booked out to 2028. I mean, it's so bad we've actually seen multi-day auctions for a few thousand GPUs. You know, the other side of that, of course, is demand. And as Ragu said, we've seen the fastest growing companies we've seen in the history of the industry.
+
+But also the unit of work that AI can do, the value of that unit of work keeps increasing. But underneath the covers, the number of tokens that are consumed is growing by orders of magnitude, right? If it's one token for, I mean 100 tokens for chat or an agent, it's thousands of tokens, right? So you got expansion on both sides of demand. One is the unit of work is becoming more and more consumptive of tokens, and then secondly the number of people therefore that are going to be benefited, it's not just the developers, it's going to be all knowledge workers and then all of beyond that. So that's what we see.
+
+You said the key components in supply are sold out to 2027, maybe 2028. What does it mean for an entire industry to be sold out that far? I don't know if this has ever happened before. Do you guys recall? I mean, remember in the internet days when we were doing massive buildout, the majority that was actually being put in the ground was speculative and was dark. Remember the dark fiber? And here, basically every GPU that's being created is already pre-sold.
+
+Yeah, we weren't quite there. I mean there was a lack of bandwidth like in the 98-99 time frame, but there wasn't that much real demand for it because there just weren't that many people on the internet. So like it was a two-sided thing and the companies were all rushing there and needed more bandwidth theoretically, but there weren't the users on the other side to consume it necessarily. And then to really consume a lot of bandwidth, you have to do high-bandwidth things like video, which weren't really viable for a number of reasons that had nothing to do with how much bandwidth was in the data center. So it smelled similar, but it wasn't this. This is like we're flat out and people are reselling GPUs for four times what they bought them for and this kind of thing. Like it's just not. And then you know we're also out of power and cooling, and then on top of that, it's really hard to build because there's these incredible political headwinds going into it. So it's really unprecedented in my career that we've had anything like this.
+
+I want to give you a quick anecdote. I was talking to a CFO of a large company, a large public company who had historically been very resistant about going into the cloud. So they had a lot of servers and they were doing an inventory check and they realized that the memory in their servers had increased so much it could fund the entire migration to the cloud. So I just feel like we're in a very unusual situation.
+
+Yeah, that's right. We're out of many things: power, cooling, memory, GPUs, like you name it, we're out of it. So the flagship conference for the industry, the one called Hot Chips, is going on in Stanford, and the leading memory vendor said the demand they have today will take them 3 years of capacity to supply it. It's just today, it's not even future demand. So in terms of being about everything simultaneously, is it because people just underestimated how good the models would be, how useful they would be, they just couldn't have foreseen the demand?
+
+Well, I don't even think it's that. I mean, this stuff came out of nowhere, right? We're only four years into this. So even if we had a perfect oracle, once it started working, I don't think we could have built the capacity. There's no way. And we're talking about like chip cycles, which tend to be three to four years. We're talking about breaking ground and building data centers, which is four to five years. We're talking about breaking ground and building them and having a power source, which is not easy. You either have to build your own power, or like usually both. You've got to build your own power and have a power source.
+
+The ML industry, if it's growing at 20-30%, it's a great growth rate, right? And it's being connected to an AI software industry that's like triple digits as the base. You can see the disconnect, right? So it's just wide, and so why didn't this fund exist five years ago or seven years ago, or why was it not a great category to invest in in the same way?
+
+Well, I would say we're probably, I'd like to think, just in time, but we probably would have been well-suited to have it at least a couple of years ago. I will say you could actually point on basically every epoch to an independent company that came up, right? Clearly the move from the mainframe to the client-server, we saw a bunch of companies come up. The move to the internet, we got Cisco and Juniper. Even in the mega data centers, which by the way was largely driven by the incumbent cloud providers verticalizing, you saw the arising of Arista. So there has been the ability to invest in silicon and hardware, but it's been relatively minor because the change has been relatively minor, like one chip company, one switch company. Where here, everything is changing. So I agree with Ben, we're probably, we could have started a little bit earlier, but the amount of change is so high now that it's just an obvious thing.
+
+And the other thing is the demand for intelligence is so vertical with really no end in sight. Every company that's adopted it is growing very fast in its usage, and then most companies haven't adopted it to a high degree, and then consumers are just getting started. And so the demand for tokens is probably going to grow close to 1,000% a year, which you cannot grow supply that fast. The amount of work we're going to have to do across the board to get to the point where we can grow that kind of rate is pretty vast. So I think there's a lot of investing opportunity on the way. And by the way, the other thing is like all the architectures of the hardware systems were built for a whole different era of computing. So more than just needing more capacity, there are lots of opportunities to build different kinds of infrastructure.
+
+Yeah, they're all reaching their physics limits for what they were designed, right? Like what Ben was talking about, copper and so on. And you could go across every one of these categories and you could find, &quot;Okay, this is the limit of this type of technology.&quot; So now you got to get some technical breakthroughs to get to the next one.
+
+I want to dive deeper on the demand side for a second. As we've moved from chatbots to reasoning to agents to multi-agents, each step has multiplied the number of tokens a single task takes up by orders of increasing orders. Yeah, nobody likes to use AI more than AI. So, why does that keep happening instead of a leveling off? Do you just see that happening indefinitely?
+
+Well, so there's a couple things. The first one is, for sure, right now if you look at the way we're achieving scaling, the way we're doing it is through a lot of inference, so through a lot of tokens. If you think about what RL is, it's a lot of inference. If you think about chain of thought, it's a lot of inference. If you think long-running agents, of course it's a lot of inference. And so that's just basically been one of the approaches that we've been using to scaling. I think if you want to step back and say kind of what is the macro trend here, it used to be when you built something, it was an engineering problem and you throw a bunch of engineers at it. That doesn't scale and that would have a natural law of engineering physics, which is what the &quot;Mythical Man-Month&quot; came from. Here, it feels like it really is a resource limitation. So whether it's tokens or not, we're pouring a ton of money into systems and those systems are producing a result. And right now, we're bottlenecked on those systems' ability to actually match the resources we're pouring into them. So I think like tokens right now is probably where we are on the scaling curve, but we don't have a natural regulator like engineering like we did before. So I think we should expect this to continue and we have to build a supply to support it.
+
+Yeah. Like the simple way to think about it is any problem that you have can be solved with enough infrastructure, basically GPUs and power and money. And so until we run out of problems, we're not going to run out of demand. And that's the challenge. AI's answer to getting better and better is to use more AI, right? Inference is one basic building block that it keeps using over and over and over again, and so that's why these tokens multiply at each step.
+
+Yeah, even the autocatalytic effect—the idea of using AI to create more AI, like creating a GPU kernel—of course is just using more AI as part of the process. So again, one way that we think about it is in the past, money would come in, you have an engineering problem, we know that it takes two years, normally fails, and then you get the product on the other end. There is nothing between the money going in and the hardware creating intelligence. And so now we're just limited by our ability to create supply. It's a very, very different dynamic.
+
+It's fascinating because over the last decade, it feels like there were so many people, and the pervasive sentiment was there's too much money going to startups. We're overfunding these startups. There's too much money in venture capital. Say more, Ben, about what that means because there used to be this sort of skepticism that the more money you put into the industry, the bigger the outcomes. And now we were saying at the offsite that to some degree, the market is as big as we collectively contribute to it.
+
+Yeah. Look, the one thing we all knew in the startup world is that if I have a two-year lead on you and you try and catch me by hiring a thousand engineers, you're going to wreck your company. Like, that never works. It's a &quot;Mythical Man-Month.&quot; Nine women can't have a baby in a month. That never works. Okay, now that works. But it's not hiring a hundred thousand engineers. It's taking $3 billion and lighting up a magnificent cluster and then all of a sudden, whatever, Grok can come out of nowhere and all of a sudden it's real. It's just like these leads, you can throw money at the problem and you can throw money at almost any problem and that works. And so that is just completely different than anything we've ever lived through. So we're all psychologically adjusting to this.
+
+The ChatGPT app has a billion weekly actives. There's about 30 million developers who are using a relatively big portion of compute demands. How do we think about compute demands now and in the future in light of what people are actually doing with AI?
+
+That's the progression, right? So ChatGPT was a casual app and it's coding for professionals right now. Using coding, you have now built amazing tools for knowledge workers, so that's the next frontier. And now there are over a billion knowledge workers in line, and with that, it's a long ways to go for that demand. By the way, the work that they do, all this workflow and automation, and then you get to the back office, which is all the agents. So progressively each of these things unlocks, I would say, an order of magnitude more demand.
+
+And now you have &quot;computer use,&quot; which is kind of what happened with coding, is kind of happening with all use of the computer, and so we're in a whole another wave of demand and most certainly there's going to be more to come. So it does seem quite unlimited at the moment, and we haven't even gotten into embodied AI or robots, which are going to be another source of demand.
+
+Martine is an expert, but my understanding is that part uses computer use, which is just like a human being sitting inside the computer typing away. I literally used it over the weekend to update my credit card with a bunch of services that I'd been lazy to do, and cancel a bunch of subscriptions. I mean, this is not coding or whatever. This is true computer use. All of a sudden, you're creating half a billion knowledge workers, except they're all sitting inside of the computer doing what?
+
+I do think that Mark Andreessen is right. The right analog here is like the steam engine or electricity in the following way. We've introduced this new thing that you can turn to work, and there are some very obvious applications now, but there's probably 30-40 years of throwing compute at problems. Anything with a clear reward signal, and we're just starting. We've got language and code, that's it, and just starting computer use, but what else are we looking at? We're looking at science, materials, biology. I mean, of course, creativity is a massive use. We're at the very early part of a very long journey, and we've removed this key bottleneck, which is traditional software engineering. Now, of course, bottlenecks will move, and there'll be more complexity elsewhere, but I think we're at the very early part of a very long run of throwing compute at problems. So let's expect this compute need to persist for decades.
+
+But because we mentioned it, Marty, talk about Grok-bot, because we were talking at the offsite about what struck you about it. Obviously we're involved in every possible way you could be involved, but what did you find so interesting about it?
+
+So I think we've gone through kind of multiple realizations for how AI enters our lives. Very early on, we were like, &quot;Okay, well you add AI to a product, like a search bar, and then you do chat with it and it chats back.&quot; Then OpenAI showed up, and with OpenAI we said, &quot;Okay, well maybe it's just like Google but better. Maybe that's not the full embodiment of it. How about we'll have it be a standalone thing, but it'll be an extension of you and it'll share your keys and it'll know your passwords and it'll just do stuff that you would do.&quot; And then what I think Grok-bot got really right is, &quot;No, how about it's actually an employee?&quot; So now you have this thing that's an entity, and it doesn't have special access to your keys or whatever; it has its own computer, it has its own browser, and because these are the smartest models in the world, it can do whatever an employee can do. It's kind of interesting because now if I want something done, my first thing is like, &quot;Well, can AI do it for me?&quot; And often the answer is yes, even if it's something you wouldn't expect.
+
+The obvious ones are like managing my calendar or booking a meeting, but there are also non-obvious ones. Like, for example, I'll have it read through my email and do triage. I don't tell it how to do that, but it will know to check with me before actually doing the triage. So these things are sophisticated enough that you can give a relatively high-level task and it'll do sophisticated things as a result.
+
+Ben, I know you're thinking a lot about this and how this works in the organization. You think a lot about culture, of course. What are your thoughts here?
+
+Well, I think if you just look at us, it's like having a new kind of employee and there's going to be a lot of them. We have to, like with our regular human employees, spend many years figuring out how to work with them, and now we've got these other kinds of employees and there is a learning curve. They can burn a lot of tokens, spend a lot of money, and get nothing productive done. They can forget stuff. They can make stuff up. They can have good behavior, they can have bad behavior, and they can create security problems. There are all those aspects to it, but they can also be super duper productive.
+
+Figuring out how to integrate them and have them work nicely with the people—the actual humans—is all something that we're learning how to do. I don't want to sit up here and say I've cracked the code and the whole firm is completely automated now, and I'm going to get rid of all the humans because I can. That's not at all where we are. We're much more going, &quot;Okay, how do we make all our humans superhuman without wrecking the place because the bots got out of control?&quot;
+
+Yeah. It's interesting because we tried a couple of different ways as to how best to get agents into the system, and eventually it was Martin's insight: just treat them as people and get it done. That's turned out to be the most durable way of getting this thing going inside of an organization.
+
+I want to go back to the supply side and go deeper into the bottlenecks. You were talking about how in terms of the data centers, the chip architecture, system software, facilities themselves, that none of them were designed with AI in mind. What would it look like for them to be designed with AI?
+
+If you start with the statement that the original model of infrastructure on any of these has to change, you can go category by category and see how it breaks. Then you start unlocking the bottlenecks in each one. Eventually, you have to get to a system where if you look at what an inference engine does, it takes up a lot of memory, it generates new tokens along with the compute. And so you can just think about how do I optimize all of this? What does the memory need to be? What does the compute need to be? How do they need to talk to each other? How much power does each of them need? And if they need all this power, how do you cool each of them? Then how do you put the collections of these things together? That is the exercise that's underway in the industry right now with a lot of the founders. They're breaking down the problem into fundamental components and asking what is the exact nature of the compute being done. Okay, it's going to be matrix multiplications. How do I optimize my compute around that? Then they need to generate tokens. What is the best way of hierarchically arranging this memory? How does the power consume? Then you've got to connect it together. You have to progressively break it all down and rebuild it from these fundamental building blocks.
+
+Let me give you an interesting mental model to think about how the landscape has changed. Today, to build a frontier model costs, let's say, $3 to $5 billion. Inference has to pay back at least that, of course, in order for any of this to be viable. Let's say two times that—so $10 billion. If you can save 20% of efficiency on that, that's $2 billion, and you can easily build an ASIC for $2 billion. We've actually gotten to this interesting point where it makes sense to build an ASIC per model just because of the capital investment. And unlike traditional software, which has a lot of state and is very dynamic, these models are fixed. The model weights are fixed. We don't know if the world goes to per-model ASICs, but it gives you a great mental model of how you would evolve the architecture to be far more bespoke. I don't think in the history of the industry we've ever created a digital artifact with something like $5 billion going directly into it. This is going to put the greatest demands on hardware that we've ever seen.
+
+To that end, rack power requirements are moving from roughly 5 to 10 kilowatts to 100 to 150 kilowatts. Compute density is climbing something like 70x. Cooling is moving from air to liquid as a requirement. What are the investment opportunities as a result of this?
+
+Well, first of all, when you get to that level of power per rack, AC power doesn't work anymore. So now you're into DC power, which by the way also requires its own cooling and is super dangerous. Which is kind of ironic, because Edison promoted DC power by claiming how dangerous AC power was in demonstrating it by electrocuting animals. But he was right, and DC power is extremely powerful, so that's the good news.
+
+Starting with power—yeah, that's going to be very different. With cooling, we're going from air to liquid. I think we're already at liquid cooling for any state-of-the-art data center; that's already a done thing. But it gets into, &quot;Okay, given the political environment, liquid cooling isn't enough.&quot; It's got to be eco-friendly liquid cooling. DC power is not enough; it's got to be power that contributes back to society, not takes away. There are data centers that have been behaving badly, wasting a lot of water. I think all that's going to end. It's going to have to end. That requires a level of engineering that many haven't invested in yet. So that's coming. And then if racks are that dense, the floors have to support that weight. That kind of thing is for real. And then the things are really loud, so you have to build data centers with thicker walls or you're going to disturb the peace in the neighborhood. A lot of the ways people have architected and designed the buildings themselves are already completely obsolete. Once we get to fine-tuning, a much smaller percentage of the data centers that we have today will work. In fact, everybody talks about memory prices, but one of the fastest areas where prices are increasing is reinforced concrete.
+
+The other thing that happens when these data centers are sending 800 volts to the rack is it's become dangerous, and secondly, we don't have enough electrical contractors that have the expertise to deal with the 800 volts inside the data center. Only 2% of electricians in the US have been certified on DC power. That gives you an idea. Meta's got a whole program to train people up, which is great. It's like a new job corps. It's funny, AI is taking all the jobs, but AI is going to create a lot of new electricians.
+
+I think we're just doing something in space, too. The big guys that own the big data centers are all furiously experimenting with robots to do the work of assembling or putting servers into the data center. You will see that increasing. By the way, to be clear on the actual fund we're raising, our focus is on computer science infrastructure. So anything a model runs on—that's computer science. So think chips, network interconnect, storage, all the way down probably to the electricity.
+
+Say more about the robotics, in terms of what we'll be doing versus maybe American Dynamism or how to think about that?
+
+We think that any platform AI will run on—one of the great breakthroughs that AI does is it allows computers to interact with the physical world, right? It can see, it can hear, it can talk. This means new platforms. The simplest way people say &quot;edge device,&quot; but that doesn't really mean anything. It could be a mobile device, a CDN, a laptop, but it also could be an embodied device that goes around. We don't do heavily regulated industries or more verticalized industries, but any sort of computer science platform that's going to push AI further out, we're quite interested in.
+
+Going back to the data centers, by 2028, new data centers are going to need something like 44 gigawatts of additional power against maybe 25 gigawatts of expected grid additions. Hold on, hold on. We use that word, &quot;gigawatt.&quot; No, it's like 100 gigawatts, Martine. What's a gigawatt? How big is it? It's multiple football fields. It's massive. 50,000 homes. I grew up in Flagstaff, Arizona, which is a town of 40 to 60,000 people. We had less than a gigawatt of power consumption. You can basically light up and air condition your entire town for a gigawatt. No, but everybody talks about the gigawatt. There are very few gigawatt data centers that are actually up. We've got a long way to go, right?
+
+But then why can't utilities and hyperscalers just build faster?
+
+There are so many things there. First of all, right now you need humans to build them. So there's the regular construction, but much more than that, you need permits, access to power that you can plug into. So you're doing a combination of regulatory bidding struggles. There's very limited amounts of natural gas, power grids, what have you. But then you also have to build your own power, and guess what? We've got shortages of transformers, turbines, and everything that goes into that. It's not a software problem. It's not just like a bunch of engineers can work weekends. This is not that. These lead times are not that easy to compress. We have the best minds in the world trying to figure out how to compress them, but it's not easy. The demand is not slowing down; we're already behind. The demand is growing 10x a year. The supply just can't grow that fast.
+
+It is so bad that right now, if we have new companies going for GPUs, it's often in Mexico or Australia or another country just because it is so difficult in the United States. We're creating huge job and long-term economic opportunity in other countries by banning data centers here. The right answer would be to set a standard where a data center contributes back to the community—power gets better, there's no noise, no water issue, and it's adding jobs. That ought to be the standard. There are data centers that do that now; that's not a futuristic dream. Energy rates have gone down there every year, and the reason is they provide their own power. They give power to the state during the day and borrow power from the state at night when the state doesn't need it. Since a data center has steady capacity and a city goes way up in the day and way down at night, that's a symbiotic relationship.
+
+Zooming out, why do we think &quot;Machine Age&quot; is a compelling term for what we're doing here?
+
+Let me take it. The first one is, I think Ben is absolutely right: &quot;Artificial intelligence&quot; was the wrong word. We shouldn't have called it that; it's machine intelligence. Because it's not how humans think necessarily. It is a collection of humans' thoughts. To date, we don't know how to take an AI with no knowledge, put it out in the world, and have it reconstruct language. We've built something that can learn off of everything we've already learned and use that in a productive way. &quot;AI&quot; is a general term that goes back 70 years in computer science that applies to many different things, and it's got baggage from science fiction or Nick Bostrom. The first one is an acknowledgement that this really is machine intelligence. And then you want to emphasize the machine part of it. There's a deep irony that you pour money into something and then you're limited by the actual machines below it. I think it's a nod to the fact that the hardware component is so significant in this wave.
+
+I think that's what's going to create the next breakthroughs in intelligence: the quality of the machines underneath. That's basically the reason for the name. It's also a cool name. It sounds good. Futuristic.
+
+Given how much has been spent on AI infrastructure to date and how capex-intensive these businesses can be, are we past the point where new companies can break in at material levels? Why not incumbents like NVIDIA, Core, etc., just take the lion's share of these markets?
+
+They're all doing well; there's no question about it. But to our discussion earlier, you need fundamentally new innovations to keep the growth continuing, whether it's tokens per second per dollar, tokens per watt, or tokens per rack. If you want to have a 10x on those metrics, you've got to have new innovation. New innovation traditionally comes from brilliant founders thinking about solving the problem from first principles in a different way. That's what's needed here for the next jump.
+
+This is the law of markets. Let's assume the silicon incumbents are multi-trillion dollars in market cap, which is absolutely the case. Even 5% of that is a massive private company. You could say, &quot;Well, could NVIDIA do that?&quot; They could, but why would they if they're focused on things in the 90%? We asked these questions during the cloud days. Why wouldn't Amazon do this? The law of markets is that once you get to a certain scale, there's tremendous opportunity for innovation at the margins.
+
+There's a funny quote from our partner, Alex Rampell. He had this startup, TrialPay, and he was trying to sell his services to Facebook. Dan Rose, the head of corp dev at the time, said, &quot;Alex, that's great. It sounds like you can collect a lot of silver bricks, but I have so many gold bricks I can't even pick them all up. So the last thing I'm doing is looking at a silver brick.&quot; I think NVIDIA is in that position.
+
+Exactly. We were talking as it relates to the model providers: if you're in the sweet spot of what OpenAI/Anthropic can do, that might be a tough place to be. But anything outside of those three to five areas? Markets expand and they fragment. It happens all the time. In the early days of Ford, there was the 1913 Rouge River plant. Literally, water, coal, and rubber trees went in, and out came cars. He bought a whole rubber plantation in the Amazon jungle, &quot;Fordlandia.&quot; He wanted to own the complete vertical thing. It actually worked for a while until he made people show up on time. Now, if you look at the car industry, of course, there's multiple levels of suppliers. As markets expand, they fragment. Once that growth slows down, they tend to consolidate. The consolidation can either be acquisition or new challengers rise up. That is the everlasting cycle of private markets.
+
+The use cases are multiplying, and there's no way if you're the biggest company you can get to the biggest use cases, but there are so many valuable use cases that it's just very hard to get to in a great way. Even inference used to be one simple architecture, and it no longer is. It's so complex now, so it's inevitable that you can optimize things in a different way.
+
+By the way, people don't often understand that margins fell out of the standard way of doing technology with software. It wasn't really a technology problem. Once you got the business working, you tended to have pretty good margins. That's not necessarily the case with AI. We may be entering an era where hardware optimization is absolutely meaningful to the upside of the business in a way we haven't seen in the past. There's a lot of opportunity here.
+
+Let's get deeper into the types of companies we'll be investing in. Could we start by illustrating the subsectors?
+
+The obvious ones are computer chips, but these days it's not enough to build a chip. You need to build a full system. So, what goes into the system? There's potential memory innovation, networking innovation, power chips, and so on. Each of these categories are categories where you can see public-company-style companies emerging. That's another important area. These things keep building on each other, but every one of these categories is important.
+
+What's different about these kinds of companies? One thing you can tell from the companies we announced is their first rounds have been massive, hundreds of millions. Is it a different kind of founder, or what else is different?
+
+The big thing is that a lot of money goes in before they get to a product. That's just the nature of it. That's true on big models, but I would say this has a little more risk and a lot more money than some of the other things we've done. A lot of the chip founders are here from the past; the guys who know how to make memory, they're not young. That part is different, too, but it's exciting.
+
+The other thing is, these founders have all got to be systems founders. You can't just be a researcher or a great computer scientist. You've got to be able to architect and design the chip or the system. Then you've got to think about how this thing is going to actually get manufactured and who's going to be supplying this. To really be the best founders—and Jensen is the Michael Jordan of this—they think about the entire ecosystem from the get-go because of the nature of the bottlenecks.
+
+The labs are so desperate that they will engage with startups. We have quite a bit of signal early on because labs are inking deals with companies before they actually have hardware available. That's a big shift from five years ago. The capital availability has loosened up a lot. There's general consensus that this is the time to reshape this stuff, so follow-on rounds have capital available.
+
+Patrick Collison remarked a few years ago that it feels like there are fewer younger founders today. Does that resonate, and why?
+
+If you're building something that has a very complicated supply chain, has to manufacture things, and is technically complicated, some experience helps. Even the best guys like Elon or Travis, their companies when they were young were software companies. It wasn't until they graduated to much more elaborate domains that they needed that experience. There are so many more moving parts. When you're learning how to build a company, it's hard enough if you understand the product. If you don't understand the product and have to learn it while you build the company, that's such a steep learning curve. We're seeing a shift to experienced founders. It's important to remember that this has been de-focused by the entire industry and academia for the last 20 years. There just hasn't been the same opportunity; it's never been a growth area until now.
+
+And so I also think we just have a paucity of people coming out of the universities or having experience at large companies that have done this. There just aren't that many. You don't go intern and like build a chip. But a lot of that is changing now. Listen, we're going to create a whole generation of founders that come from these new companies that will know how to do this, and they'll be hired in much more junior. I would say actually one of the greatest legacies of Elon towards this is, of course, he's created these great companies, but the amount of entrepreneurs that have come out of SpaceX that are changing the entire industrial complex may be an even greater legacy than the companies themselves. I think we're going to see the same thing for computer science and hardware.
+
+As a matter of fact, all of our investments were started by two founders in their 20s. But if you go watch one of their offices, you see the experienced people as well. So it's an ideal combination here. It doesn't necessarily have to be the founder with experience, but that founder better be able to tap into that experience. They have to be able to work with them, and they have to be good, and all these kinds of things. It's complicated.
+
+Speaking of experience, this is a big new fund we're launching and there are no new GPs. We're sort of collecting. It's because you guys have a lot of experience and the rest of the group in this field that it's been kind of latent and dormant. Well, it's kind of funny. I think we almost had to be warned against it, almost just because our backgrounds are so hard. And I think the reason that we needed a reminder is because all of us have spent so much in our careers in existence and hardware. We're kind of drawn to that.
+
+Listen, we've been clearly invested in hardware over the years, right? We're in SpaceX, we're in Anduril. These are very early checks. We're in Astranis, we're in Waymo. We even early on did a number of those investments, but this is because it's so much in our DNA. So I don't think this necessarily needs to increase the team competencies; it's just a bonus.
+
+If this fund does what we think it will do, how do we see the world changing or looking like in five to 10 years? Well, you know, hopefully America wins in the infrastructure game. We have lots of like super eco-friendly efficient data centers out there and lots and lots of an abundance of chips and an abundance of memory and an abundance of power. That would be awesome.
+
+I think we really think America is a special place, and we're important not only to everybody here but anybody in the world who wants to kind of make a contribution and do something bigger than themselves. It's kind of the best place to come with nothing and do something profound. So we'd like to keep that going, and I think that doesn't continue to go if we lose our lead in technology. I think we'll be in another era and it'll be another country, and maybe they have a different set of values around that. Thanks. That's a wrap. Great. See you, Marty. Ben, thank you. Thank you. Thank you. Thanks.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
