@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Monday, September 7, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260904.html">&larr; Sep 4</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Monday, September 7, 2026</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-4m6174aphVA">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=4m6174aphVA" target="_blank" rel="noopener">P&amp;C Stocks Worth Owning: The AI Hedge with Ryan Tunis | The Real Eisman Playbook Episode 74<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(196.0K)</span></span><span class="dot">&middot;</span><span>47:57</span><span class="dot">&middot;</span><span>29.4K views</span><span class="dot">&middot;</span><span>2026-09-07</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Real Eisman Playbook</span></a> <a class="chip" href="index.html?q=%22Ryan%20Tunis%22">Ryan Tunis<span class="chip-desc">Property and Casualty Insurance Analyst, Cantor</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Property and casualty (P&amp;C) insurance is currently experiencing a generational personal lines soft market and a transition to a commercial lines soft market, with Ryan Tunis advising caution on personal lines due to ADAS-driven accident rate drops…</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">while highlighting AIG and...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Property and casualty (P&amp;C) insurance is currently experiencing a generational personal lines soft market and a transition to a commercial lines soft market, with Ryan Tunis advising caution on personal lines due to ADAS-driven accident rate drops while highlighting AIG and Travelers as top commercial picks.</p>
+<h3>## P&amp;C Sector Overview &amp; Dynamics</h3>
+<ul>
+<li><strong>Uniqueness of the Sector:</strong> Property and casualty (P&amp;C) insurance is a world unto itself that cycles according to its own rhythm rather than broader economic conditions.</li>
+<ul>
+<li>P&amp;C stocks are typically avoided when investors want growth, but sought after during periods requiring stability.</li>
+</ul>
+<li><strong>Component Sub-Sectors:</strong></li>
+<ul>
+<li><strong>Commercial Lines:</strong> Companies purchasing insurance to protect against property damage or liability.</li>
+<li><strong>Personal Lines:</strong> Consumer-facing products like auto and home insurance (e.g., All State, Progressive), plus ancillary products like pet insurance and renters insurance.</li>
+<li><strong>Reinsurance:</strong> Balance sheet protection where insurers buy insurance to scale down risk or protect against catastrophic events.</li>
+<li><strong>Insurance Brokers:</strong> Hybrid info-services/insurance entities sitting between commercial customers and commercial line underwriters.</li>
+</ul>
+</ul>
+<h3>## Personal Lines &amp; The ADAS Disruption</h3>
+<ul>
+<li><strong>State of the Market:</strong> Ryan Tunis describes the personal lines subgroup as a "once in a generation personal line soft market" where carriers are actually taking rate decreases on average.</li>
+<ul>
+<li>Over-earning persists; companies over-estimated inflation and pushed auto prices up by ~60% when they only needed ~40%.</li>
+<li>Tunis expects over-earning conversations to continue through the end of 2027.</li>
+</ul>
+<li><strong>Structural ADAS Threat:</strong> </li>
+<ul>
+<li><strong>Frequency Declines:</strong> Sharp declines in automobile collisions are attributable to ADAS (automatic driver-assisted devices), which are now present on roughly 40% of new vehicle sales (up from 15% three or four years ago).</li>
+<li><strong>TAM Risk:</strong> The $350B–$400B personal auto addressable market relies on exposure units. Fewer exposure units threaten the size of the total addressable market (TAM).</li>
+</ul>
+<li><strong>Direct vs. Agent Distribution:</strong></li>
+<ul>
+<li><strong>Auto:</strong> Direct model (Geico, Progressive) takes roughly 1.5 points of share per year and accounts for a little over 30% of the market. It works because auto is an involuntary product where customers are satisfied with single-market pricing.</li>
+<li><strong>Home:</strong> Direct model has failed to penetrate the homeowners market because homeowners are protecting actual assets and require bundled policies (home + auto) via trusted, long-standing agent networks. Progressive struggles to sell homeowners insurance outside of coastal markets like Florida.</li>
+</ul>
+</ul>
+<h3>## Commercial Lines &amp; The Soft Market Transition</h3>
+<ul>
+<li><strong>The P&amp;C Cycle Mechanism:</strong> Unlike banks where revenue is known and cost of goods sold (losses) is unknown, P&amp;C creates cycles based on loss-cost inflation over-running initial premium estimates.</li>
+<li><strong>Hard-to-Soft Market Shift:</strong> </li>
+<ul>
+<li>The industry is coming out of a historically long <strong>seven-year hard market</strong> (where insurers could raise prices at will, compared to normal hard markets lasting 2 or 3 out of 10 years).</li>
+<li>The market transitioned to soft about a year ago, with capacity lines (large-ticket property) softening first.</li>
+</ul>
+<li><strong>Top Stock Picks &amp; Preferences:</strong></li>
+<ul>
+<li><strong>Travelers (Recommended):</strong> Favored for its main street agent-based middle-market footprint, which is harder to penetrate and easier to manage through a soft market. Travelers trades at ~2.4x book value and boasts superior reserve positioning compared to peers.</li>
+<li><strong>Chub (Neutral/Not Recommended):</strong> Excellent company, but has more exposure to large corporate accounts that face the most intense competition in a soft market. Trades at ~2x book value.</li>
+<li><strong>AIG (Recommended / Self-Help Story):</strong> Trades near book value with low double-digit ROE (~11%). Despite a large-account commercial mix, it is recommended as a cheap, pure-play P&amp;C self-help story executing on expense saves, reinsurance synergies, and meeting 2027 metrics under new leadership.</li>
+</ul>
+</ul>
+<h3>## Reinsurance &amp; Insurance Brokers</h3>
+<ul>
+<li><strong>Reinsurance Status:</strong> </li>
+<ul>
+<li>Historically a difficult franchise value proposition (essentially a balance sheet).</li>
+<li>Franchise value has improved slightly due to massive industry consolidation (leaving giants like Munich Re, Everest, Hanover, Swiss Re, Ren Re, and Arch).</li>
+<li>Questionable pricing discipline remains a risk (TBD on long-term returns).</li>
+</ul>
+<li><strong>Insurance Brokers &amp; AI Risk:</strong></li>
+<ul>
+<li>Reinsurance and insurance brokers are a top subgroup due to automatic scaling on premium growth. Organic growth has bottomed at ~4–5% (higher than the 3% bottom in the last soft market).</li>
+<li><strong>AI Disintermediation Risk:</strong> Dismissed as minimal for core brokerage. One-third of all claims are initially denied, requiring human/broker representation (e.g., Marsh McLennan or Aon) rather than an AI bot. P&amp;C brokerage plumbing is too complex to easily disintermediate.</li>
+<li><strong>Consulting Risk:</strong> Limited risk exists on the HR consulting/benefit-plan side, but it does not mirror the tech-consulting headwinds seen at Accenture or IBM.</li>
+</ul>
+</ul>
+<h3>## Specialty Names: Trupanion &amp; Kinsale</h3>
+<ul>
+<li><strong>Trupanion (Neutral / Bearish undertones):</strong></li>
+<ul>
+<li>Animal health insurance company trading at a $1B market cap.</li>
+<li>Fails to generate acceptable unit economics (free cash flow is a negligible 2% of revenues, or $30M–$40M).</li>
+<li>Faces structural TAM limits: pet insurance costs ~$1,000/year, pricing out owners who want it while failing to attract high-disposable-income owners who can pay five-figure claims out of pocket.</li>
+</ul>
+<li><strong>Kinsale (Commercial Excess &amp; Surplus / ENS):</strong></li>
+<ul>
+<li>Operates in the non-admitted market for small businesses.</li>
+<li>Praised by Ryan Tunis as a savvy, low-expense-ratio underwriter, though Steve Eisman highlights customer complaints regarding claim payouts.</li>
+<li><strong>Soft Market Headwinds:</strong> Kinsale has never operated through a soft market as a public company. When markets soften, retail brokers pull business back into standard admitted markets, posing cyclical headwinds for Kinsale's small-business focus.</li>
+</ul>
+</ul>
+<h3>## Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Personal Lines Soft Market Duration:</strong> Ryan Tunis predicts that personal lines carriers will continue over-earning and the soft market environment will persist through the end of 2027. — Ryan Tunis</li>
+</ul>
+<h3>## Notable Quotes</h3>
+<blockquote>
+"The personal lines subgroup which I... have not been more negative on in my career... turns out these auto insurers probably only needed to increase your rate by about 40%. They got 60% greedy."
+— Ryan Tunis
+</blockquote>
+<blockquote>
+"A third of all claims that are filed are initially denied. Who do you want representing you? An AI bot or Marsh [McLennan] or a scale insurer?"
+— Ryan Tunis
+</blockquote>
+<blockquote>
+"We've had a seven-year hard market, right? So a very, very long time. The market started to transition about a year ago where we [shifted] to soft."
+— Ryan Tunis
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Hi, this is Steve Eisman and welcome to another episode of the real Eisman playbook. So, every group has within it subsectors and every group within the subsectors has growth, some are cyclical, some are stable. So, if you were to divide up the entire financial services sectors, you would have divide it this way. the big banks, the regional banks, some of the trading companies like NASDAQ and ICE, asset managers, alternative asset managers, specialty finance, and then you would get life insurance and property and casualty insurance. Of all the sectors within financials, property and casualty insurance is unique and a world unto itself. Yes, it is cyclical, but it's not cyclical with the economy.
+
+Its pricing cycles go according to its own rhythm. And so, as a result, during periods where people want a lot of growth in their portfolios, they're not going to own property and casualty stocks. But in periods where you're looking for something more stable, people are going to own property and casualty stocks. So, we're going to explore all this with Ryan Tunis, who is the PNC analyst at Caner, and we're going to do this very comprehensively. and afterwards, I'll be back with some lessons learned. Hi, this is Steve Eisman and welcome to another episode of the real Eisman playbook.
+
+So today we have as a guest Ryan Tunis, property and casualty insurance analyst of Kenter. Welcome Ryan. &gt;&gt; Thanks Steve. pleasure to be here. &gt;&gt; Thank you. So we've never done anything in the property and casualty sector.
+
+So I'm going to take this as an opportunity really to do a deep dive with you. So before we even get to any specific companies and what you like and what you don't like and we'll get to that. Why did you divide up the sector into its component parts? What how many parts are there to the property and casualty sector and what are the dynamics of each? &gt;&gt; Okay. Yeah.
+
+So I'll try to take a a &gt;&gt; very broad view. &gt;&gt; A broad view. So yeah, like you've got the company level and what I cover. So PNC is anything not related to life insurance. It's kind of risk in its purest form. but there's a sub- sector kind of tilt to it.
+
+So you've got first of all commercial lines insurance. That's that's companies purchasing insurance to protect risk of damage to property or or liability. &gt;&gt; Okay. &gt;&gt; Personal lines, which I think everyone's most familiar with like an All State or Progressive Homes. &gt;&gt; Correct. And you could get into some other ancillary products like pet insurance or renters or whatever.
+
+But &gt;&gt; there's that. &gt;&gt; So that's so it's commercial lines, &gt;&gt; personal lines. What else is there? big part of it is that reinsurance. So, this is a little bit this is where it gets a little bit abstract, but believe it or not, insurance companies purchase insurance themselves largely to it's balance sheet protection. But think about they're trying to protect themselves they're either trying to scale down their risk or more commonly they're protecting themselves against something catastrophic.
+
+That's called reinsurance. So an insurer will buy insurance from a reinssurer. &gt;&gt; That's correct. That's correct. And then the last So those are the balance sheet businesses. And the last the last segment which is a little bit yeah I mean it's it's a little more hybrid between you call it infoservices and and insurance is the insurance brokers.
+
+&gt;&gt; Okay. &gt;&gt; And when we talk about the insurance brokers, we're talking about not so much on the personal line side. We're talking about the brokers that sit between the commercial customer and and commercial lines and the commercial lines underwriter or insurer. &gt;&gt; So, let me ask you a question on that. So, Chub, let's say &gt;&gt; what do I need a insurance broker for? Like, let's say there's a company, call it IBM, and IBM is looking to buy insurance on Casualty and on all its properties.
+
+a big thing. Why does IBM hire an insurance broker or how does this work at why does why don't they just go directly to chub? So I think this is definitely a a really interesting question I think especially when we start talking about some of the AI disintermediation risk type chatter but let's first of all think about it let's we'll think about it from the point of view of the customer and then we'll think about it from the point of view of chub so let's start with chub what do your shareholders want you to do they want you to grow your premium and you're relying on a on a relatively small segment of brokers So what do you really have to gain to try to disintermediate a brokerage model by trying to go direct? Is that actually going to lead to better topline? Right? I think the other thing that Chub might think about is they might say the heck with these brokerage commissions, I get this all the time.
+
+This question of, you know, are brokers overly compensated. Where Chub and where the industry does not where the carriers don't get a lot of heat from shareholders is on their expense ratio. They all they run somewhat undifferiated. Now, Chub's a little bit better, but somewhat undifferentiated 30% expense ratios that shareholders are happy with. &gt;&gt; Define what's an expense. &gt;&gt; Expense ratio is it's it's your general operating expenses and your commissions as a percentage of your premium &gt;&gt; every quarter, every year.
+
+&gt;&gt; Yeah. &gt;&gt; Okay. &gt;&gt; Right. So, &gt;&gt; and you're saying that runs around 30%. &gt;&gt; Around 30 and these aren't companies that are being pressed to try to push that lower. So from Trump's standpoint, you really wouldn't benefit a lot if you tried to go direct.
+
+I think you'd probably end up in a worse place. &gt;&gt; And why do you think you'd end up in a worse place? &gt;&gt; I think that you would end up alienating the rest of the brokerage community around which you are, like I said, relying on a decent sized panel, but somewhat concentrated. and your shareholders are going to give you a small round of applause for improving your your expense ratio, which isn't something they necessarily asked you to do. So, I think that that that's one thing from the carrier side. Now, from the customer side, I I think it's important when you think about the insurance buying experience from a from if you're a customer, it's a it's a missionritical thing to get right.
+
+It's a relatively small portion of your overall expenses &gt;&gt; which is what what is also &gt;&gt; the purchase of insurance right to protect against your you know &gt;&gt; IBM buying insurance &gt;&gt; I IBM buying insurance right so it's something really small you don't want to get wrong &gt;&gt; right &gt;&gt; from a cost standpoint so it's not the type of thing where you're going to be sitting there you criticizing okay like what type of commissions are we paying a broker it's something you want to make sure you get it right but that also asks the question if did want to go to go direct. How would you ever be comfortable that you were getting the right price if you're only looking at one market? &gt;&gt; Oh, okay. &gt;&gt; So, direct works in one in one market within PNC in the United States. And we all know it. It's personal auto with the Geico and the Progressive.
+
+And I think that's a really unique situation where the customer is satisfied with the price they're getting from one market because both of those companies have spent tens of billions of dollars over the past two decades reminding you &gt;&gt; you could get it cheaper. &gt;&gt; You can get it cheaper. Right. Right. &gt;&gt; All right. So, let's let's turn it to since you brought it up, let's talk to the personal lines business.
+
+Talk talk to us about there are two companies that go direct. Tell us who they are. Everybody else has some combination of direct and indirect. Mhm. &gt;&gt; What's the dynamics of that business and what are the fundamentals like today? &gt;&gt; Sure.
+
+So, so the direct model to to be clear is it's what Steve was just talking about. It's a carrier that goes straight to the customer. That's Geico. That's Progressive. those are the two doing it. And just as a reminder, the personal lines market, it's it's it's big.
+
+It's probably half a trillion dollars of premium in North America, which is probably 80% auto, 20% home. the auto piece is the part where people go direct. and what you've seen over the past I don't know 15 years or so is the the direct market has taken share of the you know agents, right? Whether it's a captive agent like All State, like an agent that will sell just the All-State product or an independent agent that can sell products from multiple carriers. You've seen the direct the direct channel &gt;&gt; take share &gt;&gt; take maybe a point and a half a share over time. Doesn't mean that the &gt;&gt; mean a year &gt;&gt; a year, right?
+
+&gt;&gt; What today what percentage of the market is direct? &gt;&gt; I want to say it's a little over 30%. &gt;&gt; Okay. And still increasing. &gt;&gt; And still increasing. Correct.
+
+&gt;&gt; Okay. So simple question. &gt;&gt; Y &gt;&gt; why why has that happened? &gt;&gt; Well, I I think the biggest reason it's happened is again you have two really really good carriers that even if you were to run through an independent agent, I think you'd still probably on balance be finding the coverage you need and the price you need, right? So I think I think that's part of it. Some of it has to do with just you know auto as a product is what's called an involuntary product.
+
+It's something you're forced to buy. You'll just go out and you'll get the coverage you need. It's you're not protecting an asset. So I what I'd contrast that to is homeowners for instance has is a market that has been proven to be pretty impenetrable from a direct standpoint. That's when you're actually really protecting an asset and that's when folks actually start that, you know, that's the standard where folks thus far have started to say, I I want to know what coverage I actually need. &gt;&gt; So, it works in the auto space.
+
+&gt;&gt; doesn't work well in the home space. &gt;&gt; It hasn't worked so far yet in the home space, &gt;&gt; but Progressive does sell homeowners insurance. &gt;&gt; Progressive sells homeowners insurance. I don't want to call it a loss leader, but they're in the wheels business. So, this is another big part of personal lines distribution because I think another question could be why do we still have agents or like where does this direct market share get, &gt;&gt; right? &gt;&gt; A lot of the personal lines market is it's bundled.
+
+You bundle the home and auto, &gt;&gt; right? &gt;&gt; And you need a real agent to usually put together that bundle the right way, right? So, like if you're leading with the sale of the home, a lot of times you'll be able to bundle on the auto and that's why it works for you know, that's why a company like a travelers or something like that is is is still doing well. For a progressive, they haven't had that much success, believe it or not, Steve, selling. They've had trouble selling home beyond states where people don't want to sell home. So, broadly, &gt;&gt; say that again.
+
+I'm not quite trying to say what that means. &gt;&gt; Where they have scale selling homeowners insurance are in has been largely on the coast, a lot of which was in Florida. It's a totally different game. Everyone would like to sell homeowners in Michigan. That's when you start to need those those deeper client relationships. &gt;&gt; so that's where I would differentiate.
+
+&gt;&gt; Why is so why has Progressive had such a hard time doing it outside of the coast? &gt;&gt; because when you when you get to when you get to agent independent agent-based business, this is true at personal lines. This is true at at agency commercial lines as well. The relationships between these you know call it main street brokers and the carriers are formed over a long long period of time. There's you know there's some profit sharing commissions there. There's things like that.
+
+It's just not it's not easy to burn your way in to a to to that part of the market as an underwriter. like the relationships matter a ton in Florida from time to time. you know, I obviously there there's been well doumented capacity issues and things like that. Progressive is not going to have such a difficult time, right? But trying to move beyond that gets complicated. &gt;&gt; Okay.
+
+So, let's dig down into some stocks. &gt;&gt; Sure. &gt;&gt; You're not recommending Progressive. &gt;&gt; I'm not. &gt;&gt; But one could argue it may be the best insurance company in the world or it's certainly up there. Agreed.
+
+&gt;&gt; So what's going on in the personal lines businesses today that that gets you to have a neutral rating as opposed to a buyer? &gt;&gt; Yeah. So that's the bigger issue. I mean a little bit of it is the bigger issue is the personal line subgroup which I I've not been more negative on in and you know in in my career. and and there's a few dynamics here that that really give me pause. I think first of all, all those rate increases that we all know we got on our auto policies, we're all pro probably paying 60% more than we were three or four years ago.
+
+It turns out these autoinsurers probably only needed to increase your rate by about 40%. They got 60% greedy. &gt;&gt; I don't think they got greedy. They they they overestimated how much inflation how much So &gt;&gt; So they push price more than they needed to &gt;&gt; more than they needed to. And what that leads to is retrospect. &gt;&gt; In retrospect, &gt;&gt; okay, &gt;&gt; everyone's over earning.
+
+Everyone, with the exception of Progressive for multiple years, wasn't growing and now everyone's piling back in to grow. M &gt;&gt; so what you have is sort of a once in a generation personal line soft market for and this is not really a product personal auto that tends to be that cyclical but the last time we saw something like this happen was in 2006 where you get you get a market where carriers are actually taking rate decreases like that on average is what everyone is getting from a progressive or an all state is lower rates so you've got this deflationary component tons and tons of competition ition and we're still in a situation where yeah we're actually nowhere close to being you know in a situation where these companies are no longer over earning they're still over earning like I think we'll probably be having a conversation just like this through the end of 2027 if I had to guess. &gt;&gt; Okay. And then the other issue I have with the personal lines is it's it's more of a structural one and you know it's it's it's but it does come come back to this whole issue you have with deflation where the look the good thing about the personal lines market it's a gigantic TAM it doesn't really grow though I don't know three $400 billion so it's a great TAM company like progressive why they were a winner is overtime &gt;&gt; they took market share &gt;&gt; taking market share that's a could be a really good business. But what if you start calling into question the size of that market? And there's some, and this is where I just get a little bit, you try to put on my generalist hat a little bit.
+
+I get a little bit concerned. So, what we what we've had over the past couple years are declines in the frequency of automobile collisions. &gt;&gt; We've had declines. &gt;&gt; We've had pretty sharp declines. &gt;&gt; Why? A lot of it is it's attributable to something called ADAS, which is automatic driver assisted devices.
+
+&gt;&gt; Okay. So, the car stops stops if you about to hit somebody. &gt;&gt; The level two, level three stuff. It Yeah, it kind of it it does a little bit more than just break. It kind of pushes you back into the whatever. &gt;&gt; You know, that's on like I don't know 40% of new vehicle sales nowadays, which I understand.
+
+And three or four years ago it was 15 and that's just rising. So, we've always kind of had this like this threat of the autonomous car and what that means for the the personal auto liability risk on the horizon. My point is to a certain extent it's here. It's here today, right? Because the reason you have that $350 premium addressable market is that it it's a measure of exposure units in the auto industry. Fewer exposure units means you just don't have that TAM.
+
+So, I'm worried about how that theme is going to develop over the next several years. Okay, let's switch gears. &gt;&gt; Yeah. &gt;&gt; And let's go to commercial lines. So, the big names here would be Travelers, Chub, AIG, &gt;&gt; the Hyperscalers. &gt;&gt; Hyperscalers.
+
+&gt;&gt; Yeah, &gt;&gt; right. Hyperscaler, Papa Casualty. &gt;&gt; It's not fair that some other group got to come up with this really cool name. &gt;&gt; So, we already spoke about the brokers. tell us what the cycle is like generally in commercial insurance and then let's let's dig I mean these are big companies &gt;&gt; travelers AIG I mean look I mean AIG used to be a lot bigger market cap &gt;&gt; but what's going on &gt;&gt; &gt;&gt; what are the fund fundamentals like these days and and and and you know right now you're recommending travelers you're not recommending chub you I think you are recommending AIG &gt;&gt; I am re recommending AIG so &gt;&gt; and full disclosure everybody I own AIG &gt;&gt; he owns AIG okay though I'm hoping I'm hoping I want to hear good things recently. I have great recently hear good things but let's first talk more general like what's the dynamics now of of of the commercial lines businesses.
+
+&gt;&gt; Yeah. &gt;&gt; So I I think this is probably a good time to just kind of talk about what makes PNC cyclical and why it's different than Yeah. A lot of companies out there are cyclical because they know their cost of goods sold. They don't really know what revenue they're going to get off of whatever they're producing. That's different. As you know, Stephen, financial services, &gt;&gt; we have the opposite.
+
+We know what the revenue is. &gt;&gt; We don't know what the cost of goods sold on. &gt;&gt; So, you have this dynamic in property casualty in that dynamic naturally creates cycles whenever you have one of those two that are unknown and property casualty insurance. &gt;&gt; So, just to for viewers, when we say cost of goods sold, we mean losses, right? So problem tell me if you would agree with the problem with let's say a commercial lines business is you've written underwritten business to a certain level of losses &gt;&gt; and then something really bad happens that you didn't really a hurricane a plane crash whatever and and the losses are much higher &gt;&gt; I think yeah I think even a better way to do it is more continuously that if you have a million dollars of premium and you estimate at day one it's going to be $700,000 of claims and you write that policy, if the next year you only collect that million dollars, but there's inflation, then you're going to expect more than $700,000 of claims. Correct.
+
+&gt;&gt; And you're going to have margin deterioration. &gt;&gt; Correct. &gt;&gt; That's the part that causes the cycle. &gt;&gt; I see. Okay. So, where are we now?
+
+&gt;&gt; Hi, Steve Eisman here. It's midnight. You're googling Roth conversions. You didn't work this hard to be doing this yourself. Maybe you already have a financial adviser, but they show up once a year, usually because you called. Meet ARCA Wealth.
+
+ARCA is built for real complexity, tax planning, RSUs and options, accounts scattered across three different firms, a business sale, a retirement that's closer than it used to be. One adviser coordinates all of it. ARA remembers the tax deadline. Arkham knows when your equity vests. And when your life actually changes, a new job, an inheritance, an exit, they're already on it, not waiting for you to notice first. You shouldn't have to manage the people managing your money.
+
+The luxury was never the wealth itself. It's not having to think about it. Good service for members. Great service anticipates. Right now, the real Eisman playbook listeners can book a complimentary financial planning call with an Arca advisor at archawareealth.com/isman. That's arcawareealth.com/isman.
+
+Every ARC wealth advisor is a fiduciary legally and ethically bound to act in your best interest. Arca wealth is fee only. So what you pay is transparent. For important disclosures, please visit arcowalth.com. This segment is a paid endorsement for Arcawealth. I'm not a client and have an incentive to endorse Arca Wealth.
+
+In cyber security, the scariest thing isn't the attack you see coming. It's the attack path you didn't know existed. Horizon 3 is an AI native, proactive security platform that changes that. Here's how it works. Horizon 3's Node Zero is an autonomous AI hacker that continuously attacks your own environment at machine speed the same way a real attacker would, finding all the areas that are vulnerable. Trusted by the NSA, CISA, and Fortune 100 companies, so you know you can trust it, too.
+
+You can stop guessing and start knowing your defenses are intact because Node Zero's results is a loop. Hack, fix, verify, repeat. It finds a problem, you fix it, and in one click, you can confirm it's secure. What would it mean to you to actually know how an attacker would come after you? Not to wonder, but to know. What does that peace of mind change for you?
+
+I trust Horizon 3, and you should too. See exactly what an attacker would find in your environment before they do. Go to horizon3.aiisman and request your free node zero demo. Visit horizon3.ai/isman. Again, that's horizon3.ai/isman. No commitment required.
+
+Results in hours, not weeks. &gt;&gt; So, where we are now, &gt;&gt; by the way, so the two part big parts of the business are property. the property &gt;&gt; like you know you're you're insuring an office building &gt;&gt; a little more intuitive and casualty &gt;&gt; casualty which would be liability sometimes liability &gt;&gt; and I've never actually looked at numbers like this but I a very very large percentage of p you know legal private plaintiff settlements are probably paid by insurance companies think about like that right think about it like that &gt;&gt; like for example the Johnson Johnson talcum settlement that just took place almost certainly was paid for by insurance &gt;&gt; right that's Right. So where we are now is so PNC is different than banks I think because these cycles you tend to see a hard and a soft market at least once during a decade. It can take a little bit longer in other financials. &gt;&gt; It's not the difference is the bank cycle is economically driven.
+
+In other words, if the country if the country goes into a recession, there going to be more losses. The PNC loss cycle is sort of a world unto itself. &gt;&gt; World unto itself. That's correct. So what we're coming out of or what we had was kind of a historically long hard market. &gt;&gt; Define hard market.
+
+&gt;&gt; Hard market is when carriers are able to push for rate. Whether or not that means you're getting excess rate, meaning you're expanding your margins or just catching up. It it means that the it's it's a sellers market in insurance. And we could get to &gt;&gt; they're able to basically raise price at will. able to raise raise price at will. I don't know usually maybe two or three years out of 10 are a hard market and the rest are soft.
+
+we've been in a seven-year hard market, right? So a very very long time. &gt;&gt; The market started to transition about a year ago where we &gt;&gt; to soft &gt;&gt; to soft at this juncture. We're we're seeing softening and it is looking like what you'd expect in a classic type of market where what I'd call a capacity line. large ticket property, things that are easier to get on where you don't need that agent relationship. You need capital and a checkbook and a typewriter.
+
+I mean, I'm exaggerating, but you can burn your way in. That's softening &gt;&gt; and you're no longer having the same level of uncertainty that you did around inflation of those claims, &gt;&gt; right? &gt;&gt; So now it's starting to naturally leak. Companies are having a harder time growing, &gt;&gt; right? it's starting to leak its way into casualty lines. So I think there's sort of two real questions everyone's grappling with on or we are at least on the c on commercial side.
+
+I think number one how do you think about investing in a group now that the market's soft and it hasn't been a long time and number two what's a reasonable expectation for how long it could be like this because it sounds like it's just the beginning. &gt;&gt; Yeah it it seems like it's not a whole lot of fun. So I think that those are the those are the two things folks are are reckoning with. &gt;&gt; So why of the big three that you cover? You're recommending Travelers, you're recommending AIG. Let's take that last because it's kind of its own bizarro world.
+
+&gt;&gt; And you're not recommending Chub, which I would argue is probably the best popping casualty company on the commercial side. &gt;&gt; Wouldn't disagree. &gt;&gt; Okay. So you wouldn't disagree and yet you're not recommending it. But why you're recommending Travelers, which is run by a great a very good CEO. It is.
+
+&gt;&gt; And you're not recommending Chub, which is also run by a very good CEO. &gt;&gt; Yeah. So, I I there's a few things there's a few things to this. I think that the early soft market playbook, the the companies that are the least the the first kind of blush thing that matters, companies that are the least exposed, I think, to a softening rate environment are those that have that main street agent-based exposure. It's the middle middle market part of commercial and the small pricing. Just it's hard, like I said, it's harder to burn your way into that.
+
+It's easier to kind of manage the cycle &gt;&gt; in the middle market. &gt;&gt; In the middle market. So &gt;&gt; middle market meaning companies. &gt;&gt; Yeah. Right. Rather than you know large global corporates etc.
+
+So that's travelers &gt;&gt; footprint. Chub has I don't want to take away from chub. they have a you know a goodiz business there as well &gt;&gt; but &gt;&gt; but they also have a good amount of that large account type stuff and that is the stuff that ends up facing kind of the most competition right so I think that that's one distinguishing factor like between the two is I you know relative small relative preference for business makes travelers versus job. The other thing that I think is good so soft soft markets I think are are easier for stock picking because the one thing that happens in a hard market is it becomes difficult for companies to make mistakes &gt;&gt; right &gt;&gt; because &gt;&gt; because prices so you're just doing great &gt;&gt; and I think all these underwriters Steve are good underwriters that's not to say that any of them aren't but what happens in a soft market is the other thing that matters other than your business mix which kind of dictates how much your rates decelerate is how conservatively are you reserved and like going into that market because that actually allows you to absorb a lot of that rate pressure early on. &gt;&gt; Correct. &gt;&gt; Traveler's reserve position impresses me quite a bit more than the other commercial lines underwriters.
+
+&gt;&gt; Okay. &gt;&gt; so I feel better about the type of profitability they're able &gt;&gt; So you like the business is not well reserved but I think the travel is better &gt;&gt; is a little bit better. &gt;&gt; Okay. They're both the the the knock on both of them is they're both probably a little bit too expensive. Now we're talking 12 12 and a half times PE. &gt;&gt; Yeah.
+
+And there have been a lot of travelers downgrades recently that I haven't really agreed with. I don't love the valuation of these names, but what I'm saying is &gt;&gt; what's the price to book of the two? &gt;&gt; Travel is about 24 and and Chub is about two. &gt;&gt; All right. So &gt;&gt; and you know they're doing &gt;&gt; for banksid mid high teens that you know okay &gt;&gt; with deterioration nothing steep. &gt;&gt; So let's let's change gears to AIG.
+
+So one of my favorite charts in the whole world is to look at the chart of AIG. &gt;&gt; Oh no that that just before the financial crisis. So most people don't understand &gt;&gt; the market cap. &gt;&gt; Right. Right. Oh no.
+
+&gt;&gt; So &gt;&gt; AIG obviously had problems during the great financial crisis. They had to completely recapitalize. Today the stock is 80 something like that 780. At its peak before the great financial crisis the stock price was 1,200. Now I am very confident that when I die the AIG stock price will not be back to 1,200. I think I can very safe on that one.
+
+&gt;&gt; I I &gt;&gt; You concur? &gt;&gt; I I definitely concur. &gt;&gt; Yeah, I I definitely concur. But so here's my question. Why don't you tell because this has been a very complicated story. You're recommending it now.
+
+Why are you recommending it? &gt;&gt; what's I read one of the things that you wrote where you you said it's a self-help story. &gt;&gt; Like it's a cheap stock like like let's let's start with valuation. What's the valuation like? Why do you like it? Why is a self-help story?
+
+So I think that's the first thing is while I'm not saying I'm I'm not prepared to downgrade travelers simply because value val valuation is a a little bit rich &gt;&gt; I also think we are at a point in you know a year into the soft market where you've got to start getting a little bit creative right I mean that thesis of just buying things based on business mix is largely played out so part of it is being pushed out onto the curve of like okay like is there something that really hasn't worked AIG checks that box it really hasn't worked and &gt;&gt; why hasn't it worked? &gt;&gt; I think that's actually a reasonably good question. it trades it around book value. The the business mix is not the right type of business mix for a soft market. Like that's something I'll concede. &gt;&gt; It's a hard market business mix.
+
+It tends to be more large account stuff where you know where I said travelers is very much all &gt;&gt; AIG is very large account. &gt;&gt; Very large account. So that's kind of that's a negative. &gt;&gt; That's a negative. That's a negative. You're being compensated quite a bit on the fact that one, it's cheap.
+
+And I think the other thing too, and just in terms of a self-help story, like the metrics, they have a new CEO coming in. This will be his first quarter. He's already blessed the metrics that the old CEO put in place for 2027. And when you kind of go through the numbers, there's not a lot in those n in in the numbers are getting you at that are really that cyclical dependent. I mean, it's a handful of things. It's it's expense saves.
+
+It's it's re it's reinsurance synergies and buying now reinsurance. &gt;&gt; What's the ROE of the company right now? &gt;&gt; Low double digits. &gt;&gt; It's low double reliably 11%. That's not terrible. &gt;&gt; And and Steve, the company is I hear what you're saying.
+
+I've It's been It's very uncomplicated. I think they got rid of their last piece of Corbridgeidge in the insurance business. &gt;&gt; Just a pure play PNC company. &gt;&gt; Pure PlayNC. &gt;&gt; Pure Play PNC. &gt;&gt; So, it's as simple as it's been.
+
+&gt;&gt; I'll tell you a funny story about AIG. Couple years after the financial crisis, I was out to dinner with some friends and they brought along another couple, &gt;&gt; okay, &gt;&gt; who subsequently we've become very friendly with, no names. And so, I'm talking to the guy. So, like, you know, what is what do you do? He's he's a management consultant, you know, like for for what? He says mostly financials.
+
+So I start to pay attention. So he says he's doing management consulting for AIG. So I think, okay, now I got to talk to this guy. So So we're talking and we're just talking about all the problems that AIG had. This is just after the financial crisis. And he says to me, you know, Hank Greenberg when he ran the company basically ran in a completely decentralized way.
+
+like he he would he would say to you to Ryan go start a business to do X and you would go out and you would create an entire business from scratch including your systems and so he says he says because of that did you know that AIG has 200 operating systems in the company I said I didn't know that I said I said what's that like for you because it's like a full employment act it took AIG like 10 years to work through all of this. That's how badly run they used to be. &gt;&gt; Yeah, maybe even a little longer than 10 years. I think they're in a in a pretty good place now. I mean, where they are now is the underwriting was also really bad for it took a long time to reverse the culture and to being a good underwriting company. We got there maybe overshot a little bit.
+
+&gt;&gt; Now it's about getting the company to be able to underwrite well and to grow &gt;&gt; and to grow. Okay, I got it. Let's turn to reinsurance. &gt;&gt; Yeah, &gt;&gt; it seems to me, correct me if I'm wrong, that reinsurance is not a great business. Like there's no What's the franchise value? It's just a balance sheet.
+
+You know, Job is buying reinsurance from somebody and you know, pricing could be good, it could be not so good, but long term, I just don't get the what's the franchise value to ever owning a reinsurance stock. What do you think? &gt;&gt; So to that question, and believe me, I've had this this thought plenty. I think there's more franchise value now than there's been because there's been so much consolidation. &gt;&gt; And I don't know if that makes them better investors. &gt;&gt; There used to be many, many, many &gt;&gt; reinsurers.
+
+Many, many, many. And maybe they were better investments when they were many because they could cycle manage. And now it's like Munich, Everest, Hanover, Swisserie, Renery, Arch. &gt;&gt; They're less nimble, &gt;&gt; but &gt;&gt; because they're bigger. &gt;&gt; Because they're bigger. &gt;&gt; Okay.
+
+&gt;&gt; But I think that they're more reliable, stable, longerterm capital partners, right? So I I think there's a little bit more. I don't know exactly what that's worth, right? I mean, the bigger issue is it certainly isn't even in that scenario as much of a franchise type business as what you get an insurance broker or or a commercial lines car or a personal lines. Right. So, I hear your point.
+
+&gt;&gt; The bigger issue is we've seen the we've seen this industry willing to accept returns that are unacceptable. And currently returns are okay, but yeah, I think that there's real reason to question the discipline there. So, it's a TBD on the reinsurers. I think fortunately there's a lot of negativity priced in in in terms of where things are in the soft market from a pricing standpoint, but I I totally hear your point. And &gt;&gt; Okay. All right.
+
+Let's go on to insurance brokers. &gt;&gt; Yep. &gt;&gt; do you like any? And if you do, it's I mean, it's a soft market, so that hurts. what's going on? Do you like anything?
+
+I have spent my career reading financial statements, and I know how much rides on getting the numbers right. That's the job in FPNA, building forecasts that hold up, managing budgets people can trust, and turning the analysis into decisions. Wharton Online and Wall Street Prep built an 8-week FPNA certificate program to reach exactly that. You learn from Wharton faculty and working FPNA practitioners how to create forecasts, manage budgets, and support decisions. It's self-paced, so you can work it around your own schedule, but it never feels like you're doing it alone. There's live office hours and opportunities for real-time collaboration with your cohort.
+
+You walk away with a certificate in 8 weeks, plus lifelong access to materials and a network of more than 5,000 Warden online graduates. You're also invited to an in-person ceremony in New York where you can actually meet your cohort and instructors. Use code Eisman to save $300 on tuition. Enrollment closes October 5th. If you want to sharpen how you forecast, budget, and defend the numbers, start there. If you're hiring, you want a candidate who's passionate about your role, but you can't get that insight from a resume unless you post your job on Zip Recruiter.
+
+And now you can try it for free at ziprecruiter.com/isman. Zip Recruiter's powerful matching technology finds qualified candidates quickly. And Ziprecruiter has a new feature that shows you the most interested qualified candidates first, so you meet the right people faster. Candidates can tell you in their own words why they're interested in your job. No wonder Zip Recruiter is a number one rated hiring site based on G2. Find candidates who really want your job on Zip Recruiter.
+
+Four out of five employers who post on Ziprecruiter get a quality candidate within the first day. Try it for free at ziprecruiter.com/isman. That's ziprecruiter.com/isman. Meet your match on Ziprecruiter. &gt;&gt; Yeah. So, reinsurance broker is definitely my top subgroup without a doubt.
+
+and I think what I'd say about the and you know the if you think about how a reinsurance broker makes money, it's basically you latch onto a company, you have great retention, as the company grows, they buy more insurance premium and you get more commission, right? So it it the way it scales is sort of automatic. It the pricing environment does impact the brokers. I think in particularly it has the past year, but there's an economic component to that. There's a real component to that. What's what's been what I think is is important with the brokers is we've gotten to a place where I think we've seen the worst of what the pricing environment is going to do to them.
+
+In other words, I think there's evidence we've seen organic growth bottom and it's bottomed at a level that's higher than it did in the last soft market. So results call it four or 5% is where it's bottoming. Last soft market it was three &gt;&gt; and the stocks are trading at kind of multiples that were in line with where they were the last soft market. We can get into the AI risk and things like that as well. But &gt;&gt; let let's get into that. &gt;&gt; Yeah.
+
+&gt;&gt; Is there AI risk? So just for viewers to know few months ago there was like a some report that AI was going to get somehow into the insurance brokerage business and the insurance brokers rolled down 10% that day and then nothing basically happened. So I guess the question is what's realistic here? I mean, honestly, I'm more curious what Steve has to say about that than than me. But no, I I could give you the I could give you a little bit of color on why I don't think it's that big of a deal. Larry, &gt;&gt; I think first of all is what I what I pointed to earlier on this conversation about the market structure and the role of the broker.
+
+A lot of folks that buy insurance, I think Marsher Aon are their actual insurance company. there's been no work done to to try to disintermediate that relationship but you know the brokerage rem renumeration has been pretty flat for the past two decades. It's not been an a place where folks have really come after I think another another thing is here's here's another good data point. A third of all claims that are filed are initially denied. Who do you want representing you? An AI bot or Marsher or a scale insure.
+
+Okay. So it's when you get into the plumbing of it like the the process of placing a PNC brokerage is more complicated than I think we've been led. &gt;&gt; Got it. Okay. &gt;&gt; So not a big deal. It's where there's risk.
+
+It's on the consulting side. And you probably hear consulting and go that's the boogeyman. &gt;&gt; Yes. &gt;&gt; I'm not going to totally rule that out. Where I can tell you it's different is these tend to be it. To be clear, this is HR consulting, right?
+
+This is placement of health and benefits or you know consulting around benefit plans around pay compensation plans defined banish benefit custodial pension really boring stuff that I'm not saying there is no risk there but it it to me is in some way and I'm guess I'm curious what you think it's different than what what you see it for instance like an Accenture and IBM and and for what it's We haven't results and the outlooks for the second half of the year and &gt;&gt; unchanged. &gt;&gt; Yeah. It's not been like the type of the IBM or the extension product. &gt;&gt; Okay, cool. let's finish up with the two some odd I'd call oddballs. &gt;&gt; Sure.
+
+&gt;&gt; true panard. &gt;&gt; Yeah. &gt;&gt; So at your former firm you had a soul rating. You currently have a neutral rating. I've been short this thing for years. the true panion is an animal health insurance company.
+
+What are you thinking these days about Jupion? &gt;&gt; I think at these levels it I I think valuation I think is still the main thing that you have to fight, Steve. It's a billion dollar market cap. Just keep in mind we've seen M&amp;A in the space go off around these levels. There's been bids there. That's where I'd be nervous to get way too negative.
+
+I think on the why don't you get more constructive side of things. Look, I mean, this is a company that's not a young company that over time has not been able to generate unit economics that have been acceptable. I mean, whatever. Like, I think that what they target is free cash flow. A billion dollar company, free cash flow at 2% of revenues, which is like 30 or $40 million. It's free cash flow.
+
+You're nothing. &gt;&gt; It's nothing. &gt;&gt; So, it's a it feels like a really good product for people and maybe a pretty good nonprofit if they ever wanted to go that route. I don't know about &gt;&gt; I mean we we our customers my wife and I we have dogs and it's a I have no complaints about Traanion as a company. They pay &gt;&gt; they're honorable. &gt;&gt; Totally.
+
+&gt;&gt; I just think it's a bad business. &gt;&gt; It's a bad Yeah. I think on the business side of things, you have this this issue of it grows but the TAM is small and no one can afford the damn product anymore. It's $1,000 and you know, you think about who actually needs pet insurance. It's probably not you. which people who have the income to afford a $1,000 a year policy but they don't have the disposable income to pay a five figure claim right &gt;&gt; not a lot of people right I mean so you have that problem where it grows but what were $6 billion TAM of which they have 20% and they're losing share &gt;&gt; they're having trouble growing pets &gt;&gt; so it's a wait and see I think they probably need to try to do something different I think they need to do some figure out okay maybe we need to target a little bit of a higher underwriting margin and show that we can be profitable or whatever, but right now it's it's a it's a company that's twisting in the wind a bit at $50 a share.
+
+I might have had something different to say. &gt;&gt; Okay, last one. Kinsell. &gt;&gt; Yep. &gt;&gt; Tell people what Kinsel does. &gt;&gt; Yeah.
+
+Yeah. So, Kinsell is a great is a is a great one. It's a commercial lines insurer, but where I want to distinguish it from the from the hyperscalers, right, the AIGs, the chubs, the travelers, they write in the non-admitted market. So what basically happens is if if you want to get an insurance policy, you go to a broker. The broker will call the this admitted carriers and they have to call a certain number of them and if they can't get a placement then they can go to the non-admitted market. Kinsale operates through that market.
+
+Now these don't just exist like &gt;&gt; this is small companies they basically deal with. &gt;&gt; They deal a lot with small companies which is very important. &gt;&gt; So let me just before you continue. So, one thing that I a friend of mine who who who's done research on this says is that the issue with Kinsell is they took a page out of the old AIG playbook, which is you're a small company. &gt;&gt; Mhm. &gt;&gt; We give you insurance, somebody slips and falls, you submit a claim, we tell you to go take a hike.
+
+They don't they don't basically honor their own insurance policies. &gt;&gt; Yeah. So what I'll say is Kinsale is without a doubt a savvy underwriter. I'd like to see a little more cyclical history. The company's still somewhat young publicly, but I would call that good underwriting, Steve. That's good ENS underwriting, right?
+
+And especially and it works in a hard market when &gt;&gt; that sounds dishonest. &gt;&gt; It's not that it's dishonest. And if you look at their loss ratios, their loss ratios are not they're a little bit lower than like a travelers, but relative to other ENS carriers, it's it's typical to find loss ratios in the mid-50s. So &gt;&gt; Okay. No, you're right. If you look at like Yelp reviews and things like that, there's a lot of a lot of negativity.
+
+So, I just don't want to overgeneralize. &gt;&gt; You don't want to over overgeneralize it. &gt;&gt; Well, my point being is the point still stands. It's not just that. What I think is actually probably more interesting is Kale touts a really really low expense ratio. And one of the reasons why is they pride themsel they think that brokerage renumeration is too much.
+
+So, they don't pay super high brokerage fees. Mhm. &gt;&gt; The thing to keep in mind is when the market transitions from hard to soft, &gt;&gt; business doesn't just stay in the non-admitted market. The retail broker brings that back to the standard market. And that is most prevalent in the smaller part of the market, which is what Kinsale underwrites. So they have real headwinds that they have to deal with from a cyclical standpoint.
+
+You have to ask yourself if what you do is sort of, you know, pugnacious underwriting and underpaying. I don't want to say underpaying, but paying less. Is that a how good of a strategy? How soft market strategy is that? So that's that's my view on it there. It's a good company.
+
+It's it's one where I have more questions about valuation than do for travelers, for instance. But it's a good company. We'll see what they look like in a soft market. They've never really traded in a soft market before. Okay, Ryan, thank you. &gt;&gt; Thanks, Steve.
+
+That was great. &gt;&gt; Really great. Very comprehensive. &gt;&gt; Thank you. &gt;&gt; And we're back. So, couple of lessons here.
+
+The personal lines. He's I think the way I heard him, he's pretty negative about it. You know, we talked about progressive and he pointed out that the new technology in cars is causing accident rates to really collapse, which is causing pricing to go down. That may not change anytime soon. So, I walked away from this being more negative on personal lines than I thought. On the commercial lines, we're definitely going through a cycle of pricing weakness, which generally means you don't want to own the whole group, but he does like AIG because it's really a kind of a self-help story where the stock is really, really cheap.
+
+We talked about the insurance brokers. I didn't feel like there was much to do there, at least not yet. And then we touched on a couple of specialty names like Trupanion where I'm extremely negative. He's somewhat negative but not as negative as me. And then we talked about a company called Kinsale which I think could be a problematic company but Ryan actually thinks it's not a bad company as well. So I learned a lot from the interview.
+
+I think you did too. And we'll see you soon. This podcast is forformational purposes only and does not constitute investment advice. A host and guests may hold positions in stocks discussed. Opinions expressed are their own and not recommendations. Please do your own due diligence and consult a licensed financial adviser before making any investment decisions.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
