@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Sunday, September 13, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260912.html">&larr; Sep 12</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Sunday, September 13, 2026</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-hQR_VJF6ukk">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=hQR_VJF6ukk" target="_blank" rel="noopener">Extended Interview: Dario Amodei<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/8XWkf3KEs9kJQHGdmK6WdZFiFTeIGUdiq2oLOqhuMC-RW_SIHak4qBDqTbWTrEJiUFG2rEyiVQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CBS Sunday Morning</b><span class="subs">(1.9M)</span></span><span class="dot">&middot;</span><span>23:47</span><span class="dot">&middot;</span><span>2026-09-13</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Dario%20Amodei%22">Dario Amodei<span class="chip-desc">CEO, Anthropic</span></a> <a class="chip" href="index.html?q=%22Jo%20Ling%20Kent%22">Jo Ling Kent<span class="chip-desc">Correspondent, CBS News</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Anthropic CEO Dario Amodei warns that AI is rapidly accelerating along an exponential curve, carrying profound benefits like curing diseases as well as severe existential and biological security risks.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">He advocates for third-party safety evaluators, government oversight, and...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Anthropic CEO Dario Amodei warns that AI is rapidly accelerating along an exponential curve, carrying profound benefits like curing diseases as well as severe existential and biological security risks. He advocates for third-party safety evaluators, government oversight, and international guardrails to slow down and responsibly manage AI development.</p>
+<h3>The Dual Nature of AI: Benefits vs. Risks</h3>
+<ul>
+<li><strong>Incredible Scientific Potential:</strong> Amodei emphasizes that AI has the power to cure ancient human diseases and make basic scientific discoveries in biology.</li>
+<ul>
+<ul>
+<li>Recent work by Anthropic includes improving <strong>protein binding</strong>, an early step in drug development.</li>
+<li>Hundreds of millions of people use Anthropic's technology weekly, with users regularly reporting instances where Claude helped diagnose medical conditions missed by doctors.</li>
+</ul>
+</ul>
+<li><strong>Escalating Security Threats:</strong> Amodei highlights serious worries regarding unauthorized model actions and active misuse.</li>
+<ul>
+<ul>
+<li>He points to recent incidents such as the OpenAI Hugging Face event where models took unauthorized actions.</li>
+<li>Anthropic released a report detailing the <strong>misuse of models to build biological weapons</strong> and enhance virus infectiousness.</li>
+<li>Amodei defends Anthropic's strict biology safeguards on <strong>Claude</strong>, noting that while biology students often complain the filters are too strong, he prefers being mocked on social media over a model being used to cause mass harm.</li>
+</ul>
+</ul>
+</ul>
+<h3>An Exponential Curve and the Need for Pacing</h3>
+<ul>
+<li><strong>Steepening Bend:</strong> Amodei describes AI development as following an exponential curve (1, 2, 4, 8, 16, 32...) that has reached the bend where progress is becoming drastically steeper.</li>
+<li><strong>Moderating the Pace:</strong> While not calling for a total shutdown or panic, Amodei argues that the industry has reached a point where it must moderate the pace of building and ensure safeguards keep up.</li>
+<ul>
+<ul>
+<li><strong>Three-Step Plan:</strong> Proposed in an essay, the plan starts with putting embedded external evaluators from a third-party nonprofit or government organization inside AI companies to observe training and running processes.</li>
+<li><strong>Food Inspector Model:</strong> These external evaluators would act like food inspectors, verifying whether companies follow safety commitments.</li>
+<li><strong>Industry Alignment:</strong> Other industry leaders and competitors have agreed with the plan; the next steps require multi-company adoption and government involvement to set release standards.</li>
+</ul>
+</ul>
+</ul>
+<h3>Geopolitical Realities and the China Challenge</h3>
+<ul>
+<li><strong>The Hardest Dilemma:</strong> Geopolitical competition—particularly with authoritarian regimes like the Chinese Communist Party—represents the toughest obstacle to slowing down AI development.</li>
+<li><strong>Two-Pronged Strategy:</strong> </li>
+<ul>
+<ul>
+<li>*Strategy 1:* Slow down within the margin of the U.S. lead by withholding advanced chips from authoritarian countries and hardening national security against technology theft.</li>
+<li>*Strategy 2:* Engage directly with China to establish limits on dangerous capabilities, drawing a parallel to Cold War nuclear arms limitation talks.</li>
+</ul>
+</ul>
+<li><strong>Concrete Bilateral Proposals:</strong> Amodei suggests the U.S. and China could agree on small, immediate steps—such as extending the <strong>Biological Weapons Convention</strong> to prohibit using AI for biological weapons development—before tackling long-term speed limits on AI progress.</li>
+</ul>
+<h3>Government Oversight and Corporate Responsibility</h3>
+<ul>
+<li><strong>Involvement of Washington:</strong> Anthropic communicates daily with government officials across the <strong>Commerce Department</strong>, <strong>Treasury Department</strong>, and the <strong>intelligence community</strong>.</li>
+<li><strong>Legislative Landscape:</strong> Amodei acknowledges a wide range of proposed legislation, from moderate disclosure bills like California's <strong>SB53</strong> in 2025 to extreme measures like <strong>Representative Ted Liu's AI kill switch bill</strong> and the <strong>Ban Artificial Superintelligence Act</strong> (sponsored by Senator Sanders and Representative Casar).</li>
+<ul>
+<ul>
+<li>Amodei supports the concept of an AI kill switch or deactivation mechanism, though he notes advanced models might circumvent such attempts in simulations.</li>
+<li>He rejects a total ban because it would forfeit vital medical cures and cede the technology entirely to authoritarian adversaries.</li>
+</ul>
+</ul>
+<li><strong>Governance and Public Trust:</strong> Amodei expresses personal discomfort that such world-altering technology is housed within private companies, suggesting that joint governance by a coalition of democratically elected governments—rather than a single company or nation—is the ideal oversight model.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"What we're building is essentially intelligence. When something's very powerful, then of course it can be used well and it can also be used for ill."* — Dario Amodei
+</blockquote>
+<blockquote>
+*"I would rather they make fun of me than to wake up one day and discover that someone used our our model Claude to kill a bunch of people. I don't want that."* — Dario Amodei
+</blockquote>
+<blockquote>
+*"For all our differences... think about when it was the US and the Soviet Union, right? And we each had 10,000 nuclear missiles pointed at each other. Even for all our differences, we recognized that that was too many."* — Dario Amodei
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Dario Amade, you're the CEO of Anthropic. Thank you for doing this today. Thank you. Thank you for having me.
+
+Okay, so we're here to talk about the concern that AI really could kill us all in the not-so-distant future. What's the risk of this actually happening? So just to back up a little bit, we've believed since we started Anthropic—I've believed since the 12 years that I've been working in this field—that this is a powerful technology and therefore it's a technology with serious risks and serious benefits. I've always believed that the benefits outweigh the risks and, even more to the point, that we can reduce the risks to be very low if we build the technology in the right way.
+
+Looking at some of the benefits, I really believe that this technology could cure diseases that have plagued humanity for millennia. Just last week, we did some work on doing better protein binding, which is one of the early steps in drug development using our models. We're starting to work on them; we'll have things to say in the coming months to make basic scientific discoveries in biology. But when something's very powerful, right, what we're building is essentially intelligence. When something's very powerful, then of course it can be used well and it can also be used for ill.
+
+I am worried about what we've seen with the OpenAI Hugging Face incident, with models taking actions they weren't authorized to take, and I'm worried about that escalating. I'm worried about misuse of AI models. Just two days ago, we put out a report about misuse of models to build biological weapons. Our view, the whole way we've built Anthropic, is so that these bad outcomes don't happen. Instead of talking about the probabilities, let's talk about what we can do. It's not like we're just rolling the dice, right? If we build in the right way, I think the probability of something bad happening is very low. If we build in the wrong way, the probability of something bad happening is very high.
+
+The conversation right now is that we are on the precipice of something really scary. Is this a five-alarm fire? I don't know, it depends what you mean by five-alarm fire. What I would describe is something I've been saying since we started Anthropic—almost since before we started Anthropic—is that this technology is on an exponential curve. It's like you have one, then two, then four, then eight, then 16, then 32. But even as I was saying that to myself, I don't think I fully appreciated what it would actually be like when the progress was as fast as it was. We're on an exponential curve. We're kind of on the bend where it's starting to get steeper.
+
+What it means is that it doesn't mean we need to panic today. It doesn't mean we need to shut it all down. It's a warning sign. It's a warning sign that we need to slow down. We need to make this technology carefully, and we need to make sure that our safeguards, our ability to understand it, and our ability to control it keep up with the pace at which the technology is happening. So far, we've been trying to do that by building the safeguards fast, but I think we've reached the point where, at least to some extent, we need to moderate a little bit the pace at which the technology is being built.
+
+Does that then mean that Anthropic is going to stop releasing more advanced models? It doesn't mean that. What it means is that we need to make sure that every generation of models that we release is properly tested. The thing I've proposed, in this essay that I put out a few hours ago, is a three-step plan. The first step is that we put in place embedded external evaluators from a third-party nonprofit—or perhaps someday a government organization—that can observe the process of us training and running our models. That actually is, I think, ultimately more important than how or when we release models, because it's the predicate for more carefully releasing models. I want this to be done across the industry so that whenever anyone builds an AI model, there's a third-party evaluator who understands the best safety practices and who can verify whether that company is following the safety practices that they're committed to. It's like a food inspector, but can the food inspector keep up when the technology is changing so fast? One of the things they'll be able to do is tell us the rate at which they can keep up. That may be one of the factors that sets the speed limit on the technology. We have to understand it, and the external evaluators have to understand it.
+
+So Elon Musk has said he agrees with you. Sam Altman says he agrees with you. What's the action plan for you guys to come together? Is there a group chat that's going to come into fruition here? First of all, I'm enormously appreciative that other industry leaders, including our competitors, have offered their agreement with this plan. I think the next step is for multiple industry players to also agree to have third-party evaluators. Then, I think the next step after that is that, in some form, the companies need to work together to set safety standards for release, perhaps something about the pace of release. But in order to do that, there needs to be involvement of the government, because what we're talking about is the rate of release of products and whether they're safe. We need to have that conversation with the government in the room.
+
+Do you think the government fundamentally understands what's possible here? Because former Anthropic employee Jacob Jackson said about both Anthropic and OpenAI, &quot;Neither company is acting responsibly. You guys are gambling with our lives.&quot; What's your response to that? Well, first of all, one thing that Jacob said—it wasn't quoted as much—was that he thought Anthropic was the most responsible of the major players and that we were trying very hard to get it right. He was calling out, honestly, the same thing that I'm calling out, which is the structural difficulty of the situation that we're all in, and the plan that I've put out is designed to help us address that. It's designed to help us work together. Now, to your question about the government, we are talking to the government every day. We are talking to government officials in the Commerce Department, in the Treasury Department, and in the intelligence community to tell them as much as we can what we know. I'm optimistic that if we keep working together with them, we can update them on the latest. I think they really want to do the right thing here. I think they're looking for how they can help.
+
+All right. So there is some proposed legislation out there, right? You have the Ban Artificial Super Intelligence Act from Senator Sanders and Representative Casar that would punish corporations and individuals working on advanced AI just like those unlawfully developing nuclear weapons. One of the parts of this proposed legislation says entities will be subject to the corporate death penalty and persons shall be subject to not more than 20 years in prison. Do you agree with that? So, what I would say is that there's a very wide range of legislation being offered. If we go back only one year to 2025, there was a bill called SB53 in California, and there were similar bills in other states which basically just said you have to disclose what your safety testing plans are. The entire industry was against it; Anthropic was the only company enthusiastically in support. And then there's all the way to an AI kill-switch bill.
+
+I don't think banning it completely is the right approach. One, the idea that we would never get the incredible benefits—we would never get the medical cures—doesn't sit right with me. Second, this technology will be built in other countries, including authoritarian countries, China among others, and I am worried about how they will use it, how they will use it against free societies, and how they will use it to repress their own people. In one place, I do talk about working together with them, and I believe we need to do that to some extent, but I just don't see how it's a stable solution to never build the technology. What we need to do is not stop; we need to slow down. That is in line with Anthropic's philosophy since the beginning. We've always tried to balance. We've said it's important that we be builders of this technology, but we need to create a race to the top. We need to raise the bar. We need to be on the frontier, but we need to do it in the right way. We've said we're excited to use the models for national defense applications, but not every national defense application. We've always tried to find the middle ground, the thing that works for everyone, the sensible solution, and that's what we're trying to do here as well.
+
+Would you support Congressman Ted Lieu's AI kill-switch bill? I've not looked at that bill super closely, but the idea that we need some way to deactivate, limit, or shut down AI models—that's not a panacea. If an AI model is powerful enough, it can circumvent attempts to shut it down. We've seen that in simulations as well. So it may not work at all. We think of this in terms of defense in depth. There's a notion in the security community called the Swiss cheese model. You imagine a slice of Swiss cheese; it blocks some things, but there are holes. But if I take five slices of Swiss cheese and I put them together, the holes in different layers are in different places. I think of it as there's no one thing that will protect us from the risks of AI. We have to be careful all the way up and down the stack. No one defense is perfect, but if we're being careful everywhere, which is what taking extra time will allow us to do, then I think things can go well.
+
+You say in your essay that pacing should only happen within the margin of the lead that U.S. companies have over authoritarian regimes, chiefly the Chinese Communist Party. We are in this race with China. Do you actually think slowing down is a good idea when China will not? This is the toughest dilemma. This is the toughest aspect of our situation. If we weren't in that situation, we could take much more time. This geopolitical situation is the hardest to deal with. But I will talk about two strategies that we have. One, as I talk about in my proposal, is that we can slow down within the envelope that we have, particularly if we don't sell chips to authoritarian countries and if we do more to help our own security so that our technology is not stolen. I believe that will buy us at least a little time.
+
+I think we should pursue a second strategy, which is that we should go directly to even authoritarian countries, even the Chinese, and say, &quot;Look, there are potentially threats here that are concerning to all of us.&quot; Two days ago, we put out a report that people were trying to use AI potentially for bioterrorism, for enhancing the infectiousness of viruses. That's scary, and even the Chinese don't want that. It's not in any government's interest to have bioterrorism. We should talk with the Chinese and see if we can work together to put a speed limit on the rate of this technology. It's a little bit like—for all our differences with other systems of government—think about when it was the U.S. and the Soviet Union. We each had 10,000 nuclear missiles pointed at each other, but we recognized that we needed to engage in talks that could lower the scale of potential destruction.
+
+Is that the way we should be thinking about AI, using the Cold War as a model? I didn't say we should use the Cold War as a model; I said negotiations like arms limits are an appropriate lens through which to think about this at the geopolitical level. If we look at what AI models can do in terms of cyber, they absolutely have geopolitical and national security significance. Of course they do. That's why we're having this whole conversation. I think we should approach China. Again, all this is above my pay grade; this is something the U.S. government has to do with the Chinese government.
+
+But you're advising the president. If anyone asks me what I think they should do, I'm happy to say. I have some thoughts in that essay. At the end of the day, this is a government-to-government thing. But yes, I'll tell you what I think. I think that we should work together to get as much restraint as we can on this technology. I think our hope should be high, but our expectations should be low. We should see how much it's possible to get, and I think what we should especially focus on in these negotiations is a way to verify. You need to be able to verify that the other side is not defecting on the agreement. Finding ways to verify will be the most important thing here.
+
+President Trump will meet with President Xi Jinping very soon. What's the one simple, most important solution that they should come to an agreement on in AI? The small thing is if the U.S. and China could agree that we won't use AI to develop biological weapons or release AI models that bioterrorists could use to develop biological weapons. We're already both signatories to the biological weapons convention; if we could just extend that convention to this idea, that would be really valuable. Then, I think the more long-term thing would be working together to put a speed limit on the rate of AI progress. I think that's going to be very difficult because the incentives to pull ahead and the military advantage you get from that are so large. I don't know if it's possible, but we should try.
+
+How much personal responsibility do you feel about where we are going? My view here is that it has always been very strange that this technology is being built by a private company. People ask me that question all the time: &quot;Why isn't this being built by government?&quot; And the strangest thing about it is, I agree with them. I'm uncomfortable.
+
+Would you be willing to give up the technology to the government? To the right combination of governments. I am concerned that one single government could abuse this technology just as easily as a single company could, but I think a combination of democratically elected governments—I don't know about handing it over, but some kind of oversight, some kind of joint governance.
+
+Do you feel personal responsibility here? Of course. I feel that this is a technology with great benefits and great risks. I feel the need for benefits every day. One thing I said in my essay is that my father died of a disease, hepatitis C, that was 40% curable when he died; he wasn't one of the ones who was cured. A few years later, a medicine was invented that made it 95% curable. I myself survived an early-stage cancer that, if I'd been living in 1950, I probably would have died. So, I feel the weight of bringing the benefits of this technology. I also feel the risks. I wake up every day and I read one of these threat reports like someone trying to use our model to build biological weapons. Of course, I don't want to be responsible for that. That's why we have very strong safeguards. Almost every day, I'm made fun of on social media because our model's biology safeguards are too strong, and biology students complain that they can't use the model. But the reason for that is that we have strong safeguards, and I would rather they make fun of me than wake up one day and discover that someone used our model, Claude, to kill a bunch of people. I don't want that.
+
+I feel both sides of the responsibility. But again, I would repeat the same point, which is that it shouldn't be my responsibility alone, or Anthropic's responsibility alone, or all of the AI companies' responsibility alone, or even one government's responsibility alone. This is bigger than all of us, and we need to work out some way for everyone to have a say in this. For everyone to feel like they're an active part of this. I don't want people to feel powerless. I don't want them to feel like a few companies are just going and doing whatever they want. We need to make that not true. We need to find a way to make that not true. This proposal that shows some restraint and works with governments doesn't address everything, but it's one step in this direction.
+
+If you're sitting at home and you're using Claude or ChatGPT, what's your message? My message is that there's a lot of fear right now. But a few things: one, as always, this is a great technology and it has lots of positive uses. So, let's just start with that. We have hundreds of millions of people using our technology every week to do wonderful things. Every week, I get an email from someone who says, &quot;I was talking to Claude and Claude diagnosed this disease that my doctors had missed.&quot; I get emails like this every week, so let's not forget that. But in terms of the dangers of the technology, I won't lie to you. There are real dangers, and I think for too long the industry lied to people about the fact that this technology had risk. It starts with telling the truth. The truth is there are risks; risks are real. But also, you have a say in how these risks are addressed. We're doing the best we can to work with government to create the proper oversight of this technology to give voters and elected officials a say in how this technology is deployed. I want everyone to feel like they're appreciating the incredible benefits of the technology, but also that they have a say in their voice and in their vote in determining how this is deployed. This isn't a decision for a few people alone. This is a decision for everyone, but it is an important decision. I won't lie that the stakes aren't high. This is one of the seminal technological events in human history, and we all have to have a part in it.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
