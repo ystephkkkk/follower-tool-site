@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Sunday, September 20, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260919.html">&larr; Sep 19</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Sunday, September 20, 2026</h1>
+            <p class="day-sub">4 videos &middot; 4 channels</p>
+        </header>
+        <nav class="toc"><div class="toc-label">In this briefing</div><ol><li><a href="#video-JtomF4bGxHs"><strong>Adam Foroughi</strong>, <strong>Applovin</strong> CEO: Surviving a 92% Drawdown, Ads as ML 1.0 &amp; the $50B Game Ad Market</a></li><li><a href="#video-xCUala5j7aQ">Extended interview: <strong>Nvidia</strong> CEO <strong>Jensen Huang</strong> on fears about AI</a></li><li><a href="#video--ZdgxiRWuS0"><strong>Howard Marks</strong> Flags the Uncertainty in AI Investing</a></li><li><a href="#video-ZO6VyDvysxY">Why the People Who Built Hip-Hop Ended Up With Nothing</a></li></ol></nav>
+        <main>
+
+            <article class="video-card" id="video-JtomF4bGxHs">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=JtomF4bGxHs" target="_blank" rel="noopener">Adam Foroughi, Applovin CEO: Surviving a 92% Drawdown, Ads as ML 1.0 &amp; the $50B Game Ad Market<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>23:52</span><span class="dot">&middot;</span><span>2.8K views</span><span class="dot">&middot;</span><span>2026-09-20</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Adam%20Foroughi%22">Adam Foroughi<span class="chip-desc">CEO, AppLovin</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>AppLovin CEO Adam Foroughi details how the mobile gaming ad network transformed from a regression model to a deep learning engine, generating roughly $6 billion in cash this year with 84% EBITDA margins by successfully scaling performance-based advertising and aggressive share buybacks.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0"></div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>AppLovin CEO Adam Foroughi details how the mobile gaming ad network transformed from a regression model to a deep learning engine, generating roughly $6 billion in cash this year with 84% EBITDA margins by successfully scaling performance-based advertising and aggressive share buybacks.</p>
+<h3>Company Overview &amp; Market Dynamics</h3>
+<ul>
+<li><strong>Core Business Model:</strong> AppLovin operates as an ad platform monetizing mobile game developers, helping them match users with relevant content and driving app-to-app intent.</li>
+<li><strong>Massive Market Scale:</strong> </li>
+<ul>
+<li>Over 1 billion adults play mobile casual games daily.</li>
+<li>The mobile gaming ad spend market is estimated at roughly <strong>$50 billion</strong> annually.</li>
+<li>AppLovin's platform platform ad spend grew 60% year-over-year from a baseline disclosed nearly two years ago of $11 billion.</li>
+</ul>
+<li><strong>Expansion into E-Commerce:</strong> Deep learning models have advanced to the point where AppLovin can take adult gamers and deliver shopper behavior experiences, tapping into much larger economies.</li>
+</ul>
+<h3>Advertising &amp; Machine Learning Evolution</h3>
+<ul>
+<li><strong>ML 1.0:</strong> Advertising served as the original implementation of deep learning models and recommendation systems, laying the groundwork for modern AI trajectories.</li>
+<li><strong>Discovery vs. Search:</strong> </li>
+<ul>
+<li>Bottom-funnel search advertising (like Google) competes where consumer intent is already established.</li>
+<li>Discovery advertising (used by Meta and AppLovin) creates intent for products consumers didn't know existed, generating genuine economic expansion and GDP growth.</li>
+</ul>
+<li><strong>Privacy &amp; Ad Relevance:</strong> Despite privacy rule changes (such as Apple's tracking restrictions) and initial user resistance, technology adapted via deep learning to serve relevant ads that consumers engage with via rewards and previews.</li>
+</ul>
+<h3>Financial Turnaround &amp; Capital Allocation</h3>
+<ul>
+<li><strong>The 2021–2023 Tumble:</strong> </li>
+<ul>
+<li>AppLovin went public in April 2021 at a <strong>$28 billion</strong> market cap ($600M EBITDA).</li>
+<li>Due to supply overhang from private investors and lack of blue-chip research during the SPAC/IPO boom, the stock plummeted to a <strong>$3.8 billion</strong> market cap in 2022 despite generating <strong>$1 billion</strong> in EBITDA that year.</li>
+</ul>
+<li><strong>Becoming Their Own Best Investor:</strong> </li>
+<ul>
+<li>Realizing the market was mispricing the business, Foroughi halted investor relations and launched an aggressive buyback program.</li>
+<li>The company bought roughly <strong>$6 billion</strong> of its own stock, retiring 20% to 25% of shares outstanding.</li>
+</ul>
+<li><strong>The Re-engagement Surge:</strong> When Foroughi returned to New York to meet investors in September 2023 after launching an ML 2.0 deep learning model in April 2023, the stock jumped from $80 to $150 in a single week.</li>
+</ul>
+<h3>Operating Strategy, Margins &amp; Global Engineering</h3>
+<ul>
+<li><strong>Lean Execution:</strong> Maintaining a lean, hyper-focused team of subject matter experts allows AppLovin to move faster than tech giants.</li>
+<li><strong>Margin Profile:</strong> AppLovin boasts an industry-leading <strong>84% EBITDA margin</strong>, driven by automated, algorithmically focused performance arbitrage where advertisers cover consumer acquisition costs immediately upon transaction.</li>
+<li><strong>Global Talent Footprint:</strong> Engineering offices are distributed across Palo Alto, Singapore, and Beijing, tapping into elite, hardworking international engineering talent.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"In a world where things don't make sense, people think you're cheating, instead of realizing you built one of the cooler technologies the world's ever seen."* — <strong>Adam Foroughi</strong>
+</blockquote>
+<blockquote>
+*"Your price in the markets is determined by the quality of your investors... I turned internal to the team and said, 'I'm not going to talk to investors at all anymore. They're not buying our stock. It's a waste of time. But guess what? We generated a ton of cash. Let's start buying our own stock.'"* — <strong>Adam Foroughi</strong>
+</blockquote>
+<blockquote>
+*"We never think we won. We think every day we wake up and we're probably going to get screwed right now and we better work hard."* — <strong>Adam Foroughi</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Adam is probably the best founder no one's ever heard of. There's an ad platform hiding inside 100,000 mobile games and is quietly outperforming Facebook ads for e-commerce brands. Of all those thousand plus IPOs, the number one most valuable is AppLovin. The founder mentality has got to be Chase winning. They're going to print something like $6 billion in cash this year. In a world where things don't make sense, people think you're cheating instead of realizing you built one of the cooler technologies the world's ever seen. Please welcome Adam Foroughi.
+
+All right. Welcome, Adam. Hey, man. Big man. How you doing, bro? Good to see you. Likewise. Adam, thanks for being here. We thought it'd be really great to chat because a lot of people don't talk as much about you; you're not in the headlines all the time with your business. You're operating your business almost like absent media. You don't do a lot of press, and you don't get out there a lot talking about the company, but it's such an incredible business. Can you just tell the audience kind of what AppLovin is and maybe also frame up the market a little bit for us?
+
+Yeah, totally. I think the fact that we were able to build a very big company without having VC funding at the early stage created this world where we just had to build quietly, and then obviously the goofy name didn't help us all that much as well. But what we are ultimately is an advertising company that's helping mobile game developers monetize that space. Now, what people don't realize is just how big the mobile gaming universe has become. You've got over a billion people a day playing mobile casual games. These are all adults, heads of households, and the scale of the opportunity is just humongous.
+
+We disclosed last January, so nearly two years ago, that on our own platform, there was $11 billion a year of ad spend. Since then, we've grown 60% year-over-year roughly. And so, if you gross that up to a nice round number today, you get $20 billion. Now, we're not the only player in this marketplace; this is a market that's monetized by a lot of other ad companies as well. So then you'd probably more than double that again and round it off and say there's probably about $50 billion of advertising being spent every single year in this mobile gaming ecosystem. It was not very long ago that social was a $50 billion opportunity. Space is growing really quickly. A lot of these people watch ads; a lot of times they watch the ads to get rewards. And so that dynamic creates this possibility to create intent.
+
+For most of the company's life, we've been creating that intent to drive a user to take one game's experience and go to the next game's experience. And what's really gotten investors excited about our company and just us excited about the opportunity that we have in front of us is that deep learning models have gotten so, so powerful now that you could take that same space and try to take that adult and give them a shopper behavior experience. And that allows us to tap into much larger economies and make more of an economic impact in the world. And that's why our team's just really, really pumped up on what we're doing.
+
+The first wave of internet advertising was in many ways the spark for a lot of critical technologies that then sort of diffused out into the world. So, like, if you think what Google was able to do with Adwords, AdSense, applied semantics, all of that whole range of technology, is that true in this generation of internet advertising? Are there technologies and things that are being birthed here that are consequential and foundational now to the rest of the internet?
+
+Yeah, I mean advertising is like ML 1.0 but really was the first implementation of all these technologies that now are driving AI today. The economic value of a large language model and what it's doing in our society today is much greater than advertising. But advertising is a very profitable implementation of a deep learning model. Now, recommendation systems are structured differently than large language models, but in a lot of ways they follow the same trajectory. So, a lot of the research that's being done in the large language model space can port to recommendation systems and vice versa. A lot of the researchers in the large language model space might have started early in their careers looking at advertising systems. So these two spaces are really related. The nice thing about our business and any advertising business is that when you build a model, you're predicting a future outcome—an advertisement—or if you're building a social network, an engagement post, or a sequence of them, but you can translate the value of that prediction immediately.
+
+Is it true that there's just a broad-based behavior around humans' reaction to ads in 2026 versus 2006? Like, has there been an evolutionary arc that's very predictive?
+
+Yeah, it's interesting. I started my career in 2005, so I saw the ads back then; they were complete garbage. It was all spam and the technologies just weren't powerful enough. And your old company, Facebook, did a really good job of realizing if you can take all the data we have in front of us and pair it with good technology, the ads can become really relevant. And if you talk to most people who shop today, most of their shopping recommendations are coming from Instagram. The ads have become very much like content. And in our domain as well, people love the ads that we show. And you would think people wouldn't like them, but we see tons of engagement on little mini-games that are appearing in other games. And people are playing these previews because the technologies have gotten so good at recommending something relevant to someone.
+
+There's been a lot of hand-wringing about the impact AI will have on the ad networks, specifically Google's interface. And OpenAI has an ad product now; I'm sure you've been monitoring it and trying to learn from it. What is advertising going to look like when people are doing five or six queries with a chatbot? Because it's pretty obvious 95% of the world are not going to pay 20 bucks a month for this technology. They're going to expect it to be free. ChatGPT has already said they're going to make it free. Tell us what they're doing in advertising. And is it going to be less effective each time, but in aggregate people are going to use it more, or is it going to just be even better than Google search's franchise?
+
+Yeah, I mean there's two sides of advertising. One part of it is bottom-of-funnel advertising where a consumer sort of knows what they want to buy, but they're doing research to go complete the transaction. And that's Google's search business. If I wanted to buy a pair of dress shoes, I'd go to Google historically, do some research, and they direct me to where I need to go based on the ads. And today you can go to a large language model and close the loop on that same thing. So that ad model is almost going to exclusively compete with the Google search business. What we operate in is a world where we're showing a user an ad and we don't know what their intent is. So we're trying to create something that didn't exist before; show them a recommendation and get them to go, &quot;Wow, that looks really cool. Let me go transact on that and do it really quickly.&quot; That's what drives Facebook's ad business, too.
+
+And so the reason that's interesting to me is that the transaction via search or LLM was going to happen anyways. If the LLM didn't exist and Google ads had never come to existence, but Google search existed, that transaction, the closed loop, would have happened. So there's not actually a whole lot of economic expansion that happens from that. But when you show a consumer an ad for something that they had no idea existed, they didn't know they needed to buy.
+
+Discovery, basically.
+
+Totally, complete discovery. And this is what makes Meta so amazing in their ad business and what we aspire to do. You create that discovery moment. Not only is it a really fun moment for the consumer because then they're excited about what they bought, they wait for the package, they're excited to open it up, but you create economic expansion. 
+
+What about the arms race that develops over time where some people say, &quot;I mention something with my friends at lunch and all of a sudden I show up and there are these ads on Meta or wherever.&quot; Is that just us overreacting or is that actually happening? And is there a push not to be more intrusive, but the tendency to want to sell more?
+
+That's creepy. Yeah, it feels creepy when it does happen.
+
+Or just to push the boundaries, Adam. Like what is actually happening when people say, &quot;I say something at lunch and all of a sudden an ad for that same thing appears.&quot;
+
+I mean, I think you've done other actions that are trackable, like do a search, browse a website, do a product search, and you don't realize it and then you say something related to it and you start seeing ads that are relevant. So, it's not like the mic is on or there's an app that has actually taken space.
+
+There's a theory, though, that if we were all at lunch, especially with these apps, you know, our geolocation—you've kind of put us into a group. So, we might be talking about this new car we're all interested in or watch. And then, when he's leaving, someone searches for the watch to bookmark it after the conversation, but you're tracking all of our locations, and then you say, &quot;Okay, let's give all four of them the ads for the watch,&quot; and you're mix and matching based on—is that what's happening? That's what I'm told.
+
+I don't think advertising companies can track location. So, we don't track location at all. It's a really heavy concept to track people's precise location to then render an ad. And then to imagine the amount of data that's transferring if you're using the mic to then parse the mic on content to try to translate to an ad—not realistic.
+
+But what about us being friends and being connected together like groups?
+
+So, we wouldn't have that data. But if you're on a social network, of course, your relationships together might drive an ad experience. If someone searches for something, then you might see something relevant to it. There's nothing wrong with that. I mean, the one thing that people lose—there's a creepy factor that scares people somewhat—but all of the data collected at this point, given the scale of advertising across all these companies, is pretty much controlled in a lot of ways. What people then forget is the economic value that's created from these ads becoming that relevant. That ad that you saw, you recognize that ad. Twenty years ago, you would not have recognized the ad. And there's a big part of GDP that's now coming from this digital ad economy. The better these technologies get, faster GDP growth.
+
+Adam, let's just go back to the business, because what I find so fascinating is the way you've operated it. You're based in LA, is that right?
+
+I'm based in LA. Company started in Silicon Valley. We're in Palo Alto.
+
+Palo Alto. But you're here, and then you have a lot of developers in China, is that right?
+
+We have our engineering offices in Palo Alto, Beijing, and Singapore.
+
+And then the company didn't raise a lot of venture money. You took the company public in 2021. It went public, like, $20 billion market cap out the gate.
+
+Yeah, we were a 2021 IPO. We went out in April 2021. It was about $28 billion.
+
+$28 billion. And then in 2023, what did the market cap collapse to?
+
+Well, this is the funny thing about the public market. So, we went out in 2021, $600 million of EBITDA, $28 billion market cap. We got as high as 40 billion. And then in '22, the stock went down literally every day. We got to about a $3.8 billion market cap. In that year, we did a billion dollars in EBITDA.
+
+That's incredible.
+
+So, hold on. Let's just go through this. The market's in disbelief for some reason about the business. And what do you do?
+
+Yeah. What you learn pretty quickly, and I have a finance background so I had good education on this, is that your price in the markets is determined by the quality of your investors. We had private market investors, both private equity and ex-co-founders and other team members, that were going to sell when we went public. And because there were so many companies going public during COVID, by the time we went out, blue-chip investors weren't doing the research to figure out, &quot;What is this goofy-named company?&quot; So we ended up with no demand and a lot of supply. And that construct created this world where we just tanked, and the multiple went from fairly high—I mean, I wouldn't really value companies on 50 times EBITDA—to something that was absurdly low, sub-four times. 
+
+So, being that finance-minded person, you have to remember with that kind of a bashing, you do have an opportunity on the other side of it. And I turned internal to the team and said, &quot;I'm not going to talk to investors at all anymore. They're not buying our stock. It's a waste of time. But guess what? We generated a ton of cash. Let's start buying our own stock. Let's become our best investor.&quot; So we kicked off a super aggressive buyback program. And since then, I think we bought roughly $6 billion of the company's stock, retired 20 to 25% of the shares outstanding. At peak, that six billion was worth over 50 billion. And so you can take that moment, which does feel super depressing, and turn it into a huge—
+
+How did you manage—sorry. Did you feel that way the whole time, or was there this period of depression where you're like, &quot;Oh my gosh&quot;—that's what I was going to ask. How do you manage the internal culture when the stock is off 92%?
+
+It's tough. I mean, I'll tell you, I would get phone calls from family members, friends: &quot;Are you suicidal?&quot; And I'm like, &quot;Look, we got stuck at a penny. The stock's still like 10 bucks. It's still up a lot.&quot; But it's very tough then because you realize as a CEO, your team is getting those same phone calls from their family members. 
+
+And they don't have the gravitas that you do, nor the ownership.
+
+So, we built it by just saying, &quot;Look, it's an us-against-the-world mentality.&quot; Everyone's turned against us. We're going to buy back shares, and we implemented a performance stock plan, which typically goes to CEOs, but we did it across key people in the company and said, &quot;You know, we understand it's tough right now; we understand you thought you had a house and now you don't. But if you dig in and we recover, you're going to make a ton on the upside.&quot;
+
+And then what, investors started showing up and saying, &quot;Hey, we're paying attention again&quot;?
+
+It was interesting because for us what happened was we went from ML 1.0, like we talked about a couple of minutes ago, to ML 2.0. We went from a regression model to a deep learning model, and the outcome was we're driven by our advertising algorithm. The better it works, the better advertiser return is on our platform, and everything is performance-based. So we're selling revenue to advertisers, the more they scale. And so the company just started growing really quickly. Now we turned into '23 and launched that model in April. We still weren't talking to investors, so people hadn't found out. And then it was somewhere around, I think, September of '23 that I went to New York and I said, &quot;The stock's now like 80 bucks,&quot; and we'd recovered quite a bit because performance was good. But I said I'm going to start talking to investors because the market cap's getting high enough and we can't really buy back all that aggressively anymore. And in that week, the stock went from 80 to 150. And I think it was like 28 billion to 55 billion from me being in New York.
+
+From you just going out and saying, &quot;Hey, our company still exists. We survived this.&quot;
+
+Yeah. And then people—I'd sit in the meetings—it's pretty easy to read the other side of the room if you do that kind of thing. Sell your company. I'd sit in the meetings and I'm like, &quot;These people are literally calling their friends in the room going, 'Buy, buy, buy, buy, buy.'&quot; 
+
+And then what's the opposite side of that? Once they're long, are they now asking you, &quot;Okay, Adam, how do we expand? How do we grow faster? Why just games? Why not e-commerce? Why not this? Why not that?&quot;
+
+Absolutely. Damned if you do, damned if you don't. So, unfortunately, not a lot of people are contrarians. So, you can go to the extreme down, and then on the other side of it, you can go extreme up, too. We ended up going from $9 to $750 a share in a matter of two and a half years. So, like, it was a $3.8 billion market cap. Some people bought some options back then and were probably living in some massive homes, and we got to a $250 billion market cap. So, extreme on both ends. We've now settled into a place where we have a lot of excitement about our growth opportunities. But I found public market investors are not all that different than private market investors. They follow trends, but a lot of times later than you'd want. The most sophisticated hit those trends early. And that's why you have really good VCs and you have average VCs. You have really good public market investors and you have average public market investors.
+
+Maybe you could talk a little bit about privacy. Apple and the EU really are looking at companies like yours, and they feel this is a little too aggressive in terms of the data you're collecting. Some video game developers don't like having data collected on their users, and they've tightened the screws a bit. Zuckerberg had to deal with it specifically. So what's the headwind on this business and how do you manage privacy when Apple really is trying to—let's call it what it is—they're trying to neuter your business?
+
+Look, in any of these spaces, you want the regulations to be clear. So once they're clear, technology can deal with them. And so, if you could precisely target a user five years ago on iOS and today someone says, &quot;I don't want you to precisely target me,&quot; you group them in a bunch and you serve them a worse advertisement. Now, the funny outcome of that is we'll get a lot of complaints after that change that Apple made from users that say, &quot;Serve me more relevant ads. You're showing me a bunch of spam.&quot; So, there is this notion that you need privacy regulation so that technology companies can do exactly what's expected of them. On the other side, consumers do want relevant ads. It helps them discover products. If you're sitting there in a game and you're watching an ad for 30 seconds to get a free life, you're getting something that has monetary value. Now, if you're doing that, do you want to sit and watch garbage for 30 seconds or do you want to watch something relevant? And so, what's happened since a lot of the privacy noise is the rules were written, technology companies have adapted, and deep learning networks are really powerful. 
+
+One quick follow-up with this amazingly profitable business. I think you dabbled in buying some of the games, and we have Bending Spoons coming on today to talk about their aggressive acquisition of not-bad businesses, but let's call them slower growth businesses that maybe Venture isn't interested in. Is that going to be a sustainable plan for you to become a game studio? And does that put you in conflict with the partners?
+
+Yeah, we sold all those games. We bought them originally as a data play. We, when we built our first deep learning model, we needed to have data to train it, and game studios don't tend to want to share data to third-party companies. So we bought our own studios, we seeded the training data in our first model, we built a model that was really successful in market, and we started growing really quickly. Once we started doing that, third parties were coming in and we divested that. 
+
+What's the world of advertising look like where there's agents everywhere, agents are servicing you, maybe the human interface to compute changes, so it's not necessarily a computer that you're typing on or a phone that you're browsing? Maybe it's the Meta glasses or some other device. What role does the ad play and what happens in this agentic commerce that so many other people are trying to now push into existence?
+
+Yeah, I mean I think the reality is part of the world will start using things like agents to optimize for certain shopper behavior that's consistent. For instance, I might put my supplement subscription into an agent and have it optimized every single month and deliver on time. But these discovery platforms aren't that. And the typical shopper is not the person who's deep into agents and sitting on Twitter and adopting the latest technology. I sort of say like our audience is the New York Times audience; there's still a ton of people using Yahoo properties every single day. The typical shopper wants to find a product and wants to actually go through that shopper behavior. They want to window shop, they want to go through the transaction experience. 
+
+They want to compare, probably.
+
+Totally. They want to track it. And if you told them after the fact, &quot;Hey, an agent could have done this for you and saved you 20%,&quot; I don't think that matters on a $50 transaction because the dopamine hit from going through it is what they enjoy. So I think there is this part of the world that is technologically advanced that's going to adopt these technologies. I just don't think—I think we really over-index on the Twitter-verse and forget that the average shopper is not that. 
+
+Let me just try and understand how you won, because the two of the smartest companies in the world with the best engineers—Meta, Alphabet/Google—make most of their revenue from advertising. They've built their own models, they've been doing it now for one to two decades. How did a small company compete in this particular domain and win? And what's the operating model that you think gives you an advantage to continue winning?
+
+Yeah, here's something that helped us get to this point: we never think we won. We think every day we wake up that we're probably going to get screwed right now, and we'd better work hard. And so you've got a company that's lean with a lot of subject matter experts who are really, really focused on this thing, this mobile gaming experience, and translating it into transactional behavior on the other side. And so I think there's this ability to take on giants. If you're very focused, you remain lean, and you can just move faster than them.
+
+And what's the leakage in the business then? So meaning, when you look at a P&amp;L, you know, I did this thing with Amazon a decade ago where it's like you look at all of these places in which they were leaking, and our big insight is &quot;Wow, they just absorb these things and they'll become the new businesses.&quot; What's that version for you? There must be—is it payment infrastructure? Is it other kinds of things? Jason asked you about apps, but I guess you've divested that. So where's the leakage, or said differently, where's the opportunity for margin expansion so that people underwrite this thing?
+
+Well, our EBITDA margins I think are number one in the market. It's 84%. So I don't know how much leakage we have. But the way to think about it is an advertiser comes into our platform and they have a transactional model. Let's say they're selling lipstick; we give them an arbitrage. They are buying the consumer from us. That consumer transacts and they cover the cost of the consumer immediately. So the consumer buys the lipstick for 20 bucks, they pay us less than the 20 bucks minus cost of goods sold. They're happy, they scale up, and that performance model is very scalable. Now, our leakage is we're not the full chain; we're not the advertiser in the equation. But we want to power the advertisers to meet the consumer, and we've run extremely lean and been so algorithmically focused and automation-focused that we haven't had a lot of points of leakage.
+
+The other side then is when you have 85% EBITDA margins, people say, &quot;Wow, they could be over-earning.&quot; Right? That's the classic phrase. And then you have competition that says, &quot;I can compete Adam's margins away; I'm willing to do this at 60% or 50%.&quot; But sort of, maybe as a corollary to David's question, that hasn't really happened and it's been incredibly sustained. And why do you think that is?
+
+Because these technologies are really complex, and if you can innovate and you have differentiated data, you can build an advantage. By that token, Anthropic shouldn't be running away with the large language model space, but the power of a model that then reaches a point of scale and gets adopted by a large-scale community becomes something that is a moat that is hard for other people to overcome.
+
+And talk to us about this team in China and how big of an edge these folks are.
+
+I mean, Chinese people are very humble, they're very, very hardworking, and they're very sharp. And if you can work with them—whether out of China or United States or any other part of the world—you're working with some of the brightest minds in the world. And so, when I started the business, one of my goals at this company was just work with great people and figure things out. And so, when I sit in a room with some of the people on my team, I know I'm probably the dumbest person in that room. And that gets me excited to show up. 
+
+Gets me to show up for the—
+
+Feel when you hear that.
+
+Yeah. Works for me.
+
+All right, let's give it up for Adam. Adam, thank you. Thanks, bro. That was great. Thanks, man. Great to see you.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-xCUala5j7aQ">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=xCUala5j7aQ" target="_blank" rel="noopener">Extended interview: Nvidia CEO Jensen Huang on fears about AI<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/8XWkf3KEs9kJQHGdmK6WdZFiFTeIGUdiq2oLOqhuMC-RW_SIHak4qBDqTbWTrEJiUFG2rEyiVQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>CBS Sunday Morning</b><span class="subs">(1.9M)</span></span><span class="dot">&middot;</span><span>46:18</span><span class="dot">&middot;</span><span>2026-09-20</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Jensen%20Huang%22">Jensen Huang<span class="chip-desc">CEO, Nvidia</span></a> <a class="chip" href="index.html?q=%22Jo%20Ling%20Kent%22">Jo Ling Kent<span class="chip-desc">Correspondent, CBS News</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Nvidia CEO Jensen Huang argues that doomsday fears about artificial intelligence are dramatic and irresponsible distractions, emphasizing that the AI industry is simply transitioning from research labs to high-production product companies that must…</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">prioritize engineering safety...</div>
+                    <div class="sum-full" id="full-1"><h3>TL;DR</h3>
+<p>Nvidia CEO Jensen Huang argues that doomsday fears about artificial intelligence are dramatic and irresponsible distractions, emphasizing that the AI industry is simply transitioning from research labs to high-production product companies that must prioritize engineering safety under existing laws rather than new regulations.</p>
+<h3>Industry Transition from Research Labs to Production</h3>
+<ul>
+<li><strong>Shift to Product Focus:</strong> Jensen Huang notes that top AI companies have spent the past 10-15 years as research labs and are now shifting into high production ramp mode to meet massive global demand.</li>
+<li><strong>Token Generation Profitability:</strong> AI token generation products have become incredibly profitable, leading to widespread adoption by companies such as OpenAI (Astra), Cloud Code, Cursor, SpaceX, and Cognition.</li>
+<li><strong>Engineering Priority Shift:</strong> Just as the aviation industry matured to dedicate more engineering to verification and safety than building new aircraft, AI companies are necessarily shifting compute and researchers toward security sandboxes, isolation, containment, and testing.</li>
+</ul>
+<h3>Safety, Regulation, and the Rule of Law</h3>
+<ul>
+<li><strong>Rejection of Doomsday Narratives:</strong> Huang dismisses claims that AI will end humanity within a decade as false, ungrounded in science, and "irresponsible" drama designed for attention or ulterior motives.</li>
+<li><strong>Sufficiency of Existing Laws:</strong> Rather than calling for new AI-specific laws or an FDA/FAA equivalent for AI, Huang insists that current product liability and cybersecurity laws should be applied first.</li>
+<li><strong>Critique of Safety Advocates:</strong> Huang suggests that prominent lab CEOs calling for regulation may actually be seeking relief from existing legal liabilities rather than genuine oversight.</li>
+<li><strong>Empathy for First-Time CEOs:</strong> Huang expresses confidence in young, first-time tech leaders like Dario Amodei and Sam Altman, acknowledging the immense pressure of their rapid transition from research labs to businesses generating tens or hundreds of billions in revenue.</li>
+</ul>
+<h3>The Geopolitical Race with China and Global Strategy</h3>
+<ul>
+<li><strong>Need for Domestic Speed:</strong> Huang advises that America should go "as fast as we can" in AI development to maximize economic prosperity, national security, and philanthropic capability.</li>
+<li><strong>Disagreement on Chip Bans:</strong> Huang explicitly disagrees with Dario Amodei's recommendation to block sales of powerful AI chips to China, arguing that American companies should lead with advanced technology (such as the volume-producing Vera Rubin chips, which are years ahead of China) before competing in the global market.</li>
+<li><strong>Value of Global Collaboration:</strong> In upcoming talks with President Xi Jinping, Huang intends to advocate for shared best practices and global product safety standards while leaving military and national security boundaries to governments.</li>
+</ul>
+<h3>The Reindustrialization of America via AI Factories</h3>
+<ul>
+<li><strong>AI as Digital Intelligence Manufacturing:</strong> Huang reframes data centers as "AI factories" that ingest energy and data to manufacture digital intelligence ("tokens").</li>
+<li><strong>Economic Boost for Blue-Collar Workers:</strong> These data center buildouts represent the first major reindustrialization of the United States in decades, creating massive demand and prosperity for construction workers, electricians, and blue-collar trades.</li>
+<li><strong>Addressing Community Backlash:</strong> Acknowledging that data centers appeared too quickly in rural areas without sufficient community dialogue, Huang stresses the need for better upfront engagement, improved aesthetics, and contributions to local energy grids and community investments.</li>
+<li><strong>Debunking Resource Myths:</strong> Huang clarifies that modern data center cooling uses recirculating hot water (less evaporative water consumption than a backyard swimming pool) and that data center investments ultimately enhance grid reliability and lower energy costs.</li>
+</ul>
+<h3>Taxes, Philanthropy, and Personal Perspective</h3>
+<ul>
+<li><strong>Support for Wealth Taxes:</strong> Unlike some peers, Huang states he is completely fine paying higher taxes (such as California's proposed Proposition 40), viewing his ability to pay billions in taxes as a privilege of the American dream.</li>
+<li><strong>Gratitude for the American System:</strong> Reflecting on his early days as a dishwasher at Denny's in Onita, Kentucky, Huang credits meritocracy, grit, and the U.S. educational and economic system for Nvidia's success.</li>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Sustained Fossil Fuel Usage:</strong> Huang states that over the next 5 years, data centers and AI expansion will undoubtedly use much more fossil fuel energy.</li>
+<li><strong>Transition to Sustainable Energy:</strong> Huang predicts that in the decades following the immediate 5-year buildout, AI market forces will drive the widespread application and adoption of sustainable energy sources (including solar, hydro, and nuclear fusion/fission).</li>
+<li><strong>Multi-Trillion Dollar Industry Growth:</strong> Huang predicts that AI factories and digital intelligence infrastructure will become a multi-trillion-dollar industry touching every part of the economy.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Any anything all the messaging around the drama of it is unnecessary. It is is quite frankly uh too much drama irresponsible. It is now grounded on facts. It's not grounded on science." — Jensen Huang
+</blockquote>
+<blockquote>
+"The fact that I can afford to pay $8 billion in taxes over five years is a privilege. It's not that it it's not the $8 billion. It's the fact that I can afford to pay $8 billion... I'm not afraid of paying taxes. I'm just afraid of being poor." — Jensen Huang
+</blockquote>
+<blockquote>
+"We want America to be as prosperous as we can. The more prosperous we are, the richer we are as an economy, the more we could provide for social security, the more we could provide for national military security... I would advise that every single American citizen, everybody in America pulls in the same direction as hard as we can." — Jensen Huang
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">Jensen, thank you for doing this today. 
+
+I'm happy to do it. Nice to see you. 
+
+It's nice to see you, too. Thank you for your time. My first question: we've heard from some of the top CEOs—Dario Amodei, Sam Altman, Elon Musk—saying that we need to pace the development of AI. You've got whistleblowers saying that the end of humanity could be within 10 years. Do you agree with this? 
+
+Well, first of all, AI technology is incredibly powerful. It could, of course, do incredible good and it could be applied to terrible applications as well. And so, we have to make sure that when we're developing this technology, we develop it safely. The industry is transitioning from developing AI technology that was becoming capable. We went through a transition this year where AI became useful, and the demand for it is incredible. Token generation of these AI products is now profitable, and actually incredibly profitable. So, many companies are adopting it. OpenAI's latest Astra is incredible. We're using it all over the place. We use cloud code, we use Cursor, SpaceX's AI product, and we use Cognition. The capability of the technology has now reached an extremely useful state, and these companies are transitioning from being a lab trying to get the technology to work to being a product company. In fact, even calling it a &quot;lab&quot; kind of tells you something. They were in research for the first 10 to 15 years, and now all of a sudden, in the last six months, the industry has shifted to high production ramp mode. I think that all the reactions that are happening are part of that transition at its core. 
+
+Are they correct assessments of what could happen? Are we all going to be, in the words of some, gone in a decade? 
+
+No, that's completely false. That kind of narrative is dramatic. It gets a lot of attention; of course, obviously, it's gotten the attention of the press. I think at its core, they care deeply that the products are built safely. They're transitioning from a lab to engineering; they have to dedicate a lot more of their researchers and a lot more of their compute to safety. In the case of developing products, there's the engine, the design part, the capabilities part, and the verification part. In the beginning of any industry, most of the engineering goes towards making the product work. As the product becomes mature and it rolls out into society, most of the engineering is actually dedicated to verification, testing, evaluation, benchmarking, and attesting to standards, making sure that the product they ship is reliable, functions as expected, and delivers on the promise of the product. It is very sensible that right now, during this transition, they have to move a lot of their capabilities to AI safety. I think that is really the crux of it. Any messaging around the drama of it is unnecessary. It is, quite frankly, too much drama and irresponsible. It is not grounded on facts; it's not grounded on science. 
+
+So it's wrong? 
+
+Well, it's wrong because it's not grounded on science. Their concern is not wrong—I just want to make sure that at the core of it, the concern itself is not wrong. This is no different than—I just landed from a plane. I'm really glad that the entire ecosystem and industry of air travel takes safety seriously. All the people working around the clock—there are more people working on airline, aircraft, and air travel safety than there are working on making new types of aircraft. It makes sense, and we're just going through the same thing. 
+
+You've said we don't need any new laws. We don't need any new regulations. But you just said here that you support safeguards in major industries. Why not support the equivalent of an FDA or an FAA for AI? 
+
+Well, before we come up with new laws and new regulations, let's apply the current laws and the current regulations. There are all kinds of laws and regulations. We live in the land of laws, and it is the reason why we feel safe, secure, and governed. We have all kinds of laws and regulations applied to each and every one of those applications, whether it's food, air travel, or any other. 
+
+Specifically for AI? 
+
+Yeah. So, what is the missing part? Tell me the missing part. I'm curious to know your opinion on why you think there are no missing parts when someone like a Dario Amodei or a Sam Altman is saying we'd like to see regulation. 
+
+I think what I was responding to is that in the case of both labs, one lab had four cybersecurity incidents triggered by them; another one just had a couple more. In both of those incidents, there were plenty of laws to deal with it. You have cybersecurity unauthorized entry laws, you have damage liabilities, and you have all kinds of liabilities associated with products. If your product does harm, if your product doesn't perform as you promised, and if you entered into contracts with companies for service-level agreements, there are plenty of laws associated with that. My point is: apply those first, and don't let this doomsday narrative cause somebody to relieve them of the laws that currently exist. Go and read between the lines; they're actually not asking for more laws. They're asking to be relieved of the laws we do have. I think that's a problem. We have plenty of laws, so let's apply those first. 
+
+Do you think these companies are asking to be regulated in a sense because they don't want to have to handle this themselves and take their own responsibility for what they're building? 
+
+Well, they're moving from a lab to a product company, from a non-revenue producing to a revenue-producing business. That transition must be extraordinary because they're doing it so fast. These are two of the most consequential technology companies in history. There are incredibly talented researchers there, and they're doing excellent work, but it doesn't change the fact. The fact is they're transitioning from a laboratory into a product-service company generating tens of billions of dollars of revenue, expecting it to be hundreds of billions. Both of them are increasing their compute capacity at a rate no companies have ever seen in human history. Deservedly so, because their products are good, useful, people want more, and their investors want to see their growth. All of that is good. But there are laws. There are product liability laws, and those laws ought to be tested against the current incidents. We'll see what happens next. Do the obvious first. Do the practical first, and then we can talk about the theoretical later. But don't talk about the theoretical without doing the practical. 
+
+I'm arguing for exercising the current laws. Until we know what's missing, why add more laws? 
+
+On that note, do you have more faith in the four or five CEOs who control this technology than in additional regulation? Do you trust them to do the right thing and to allay some of the fears here? 
+
+They're surely capable of doing the right things. What they're transitioning from and to is an understandable thing. First of all, they're all young, first-time CEOs. I've been doing this for 33 years, and I get the benefit of hindsight and to sit here in the backseat and pontificate about their business. But the fact of the matter is they're going through this transition. It's not easy building a company, building organizations, building products, building industries, going public. All of that is new, and it's all happening at the same time. I'm empathetic to the enormity of the challenges that they're dealing with. I also have a lot of confidence in the capabilities of the teams that they have; these are extraordinary people. I believe in them. I believe in the people. I also am empathetic of the circumstances. I don't approve of deflections and distractions about the end of the world, and I'd rather them focus on the things that I know they're focused on. 
+
+Their engineers are absolutely able to understand that the incidents they had require them to create more secure sandboxes, isolation, and containment of their experiments. I am certain they have learned they need to monitor much more closely all of their software as it's operating during testing and evaluation. I am certain that if their software were to interact with external clouds and other services, they should let people know. If incidents were to happen, they should share it publicly so the whole industry can learn from it and we can all improve ourselves. This is how the cybersecurity industry works. Right now, all over the world, there are cyberattacks, and engineers are working feverishly to patch their software and improve vulnerability. These are incredibly complex systems. The fact that we have open software and open-source software so that all companies could defend themselves is one of the reasons why the industry works and is working right now as we speak. We watch each other's back. There are hundreds of companies that work together as a community, and we have the asymmetric benefit of having a lot of defenders against attackers. There's a lot of stuff to unpack about the incidents they had, but it doesn't change the fact that they are back to grounding themselves in engineering. They're going to improve their engineering; they're going to invest a lot more in evaluations, benchmarking, and testing. That's just a good transition for them. 
+
+As Americans look at you, the CEO and founder of Nvidia, the most valuable company in the world, why should they trust your perspective on safety when your company's success and your net worth are directly tied to selling chips? 
+
+Our company's success is directly connected to the safe deployment of products and services. If the computer industry doesn't provide value to the world safely and productively—if we don't continue to provide enormously positive impact—our value would be diminished. It is in our very personal and industrial benefit that this new class of applications called AI is able to be produced and delivered to the world safely. We have to do this; we have to balance this responsible optimism. The reason why we do what we do for a living is because we believe it's great for the world. We want our children to be part of it; my children are part of it. We want all of our families to be part of it. We want this future where we have less human suffering, where companies could be more productive, where we could discover knowledge more quickly. We want all of this in the future. We want to deal with aging populations, sustainable energy, and use AI market forces to drive the world into sustainable energy. We want all of these things, but we have to do it responsibly and safely. We have to do this all with maturity so that we don't scare people with dramatic and historical predictions of the future. That is just not true. 
+
+The elephant in the room here is the race with China. The argument has been we can't slow down AI progress lest we lose to China. Do you think that's a valid argument? 
+
+As an advice to every single CEO in every industry, every student, every professor, every member of the American society: we want America to be as prosperous as we can. The more prosperous we are, the richer we are as an economy, the more we could provide for social security, the more we could provide for national military security. The better we could be as a citizen of the world to support other people's challenges, trials, tribulations, pain, and suffering; the more philanthropic we can be as a nation. I would advise that every single American citizen pulls in the same direction as hard as we can. 
+
+So should we slow down and would that affect the race with China? The American standing? 
+
+We should go as fast as we can, irrespective of anybody else. If China were to discover a cure for cancer, it's great for us. If China were to invent a new technology for sustainable energy, it's great for us. If China were to lead in many areas of science and math and we were able to learn from them and benefit from it, it's great for us. Listen, we're packing heat as a nation. This is a nation with extraordinary capability, extraordinary innovators. I'm proud to be part of the American technology industry that I would consider one of the three pillars of our national treasures—our financial system, our military, and the technology industry. We are going to go as fast as we can, but we would never, ever—and never should—ship products before they're ready or deliver products that are unsafe. Nobody's expecting us to do that, but everybody is expecting us to succeed and help America be as prosperous as possible. 
+
+David Sacks told me earlier this week that he believes if we slow down the rate of AI development, it could do huge damage to the American economy, the American military, and put the United States at a disadvantage. Do you think that we should be pacing the development of AI right now given where we are vis-à-vis China? 
+
+First of all, David is incredibly smart. He's thoughtful, deep, and pragmatic; he is one of the great American patriots. It's been a privilege to know him. I'm not exactly sure what the context of what he said was, but I'm fairly certain he wants America to go as fast as we can, but not faster than we should. If we're compromising safety, that can't happen. If you're compromising safety and you deliver products that are unsafe, we have laws of all kinds to come after you. The companies that are developing these technologies are perfectly incentivized to do the right thing. I have every confidence that we will create advanced AI in a way that's safe to society. 
+
+Dario Amodei says we should stop selling chips to China. The quote is: &quot;Do not sell powerful AI chips or semiconductor manufacturing equipment to China.&quot; What's your response to that? 
+
+Well, we have to make sure that technology created by America advantages America first. Every country would do that; every company does that; every parent does that. The United States has decided—and I'm very supportive—that we provide Nvidia's best technology to American companies first. We are in the generation of what we call Vera Rubin, and Vera Rubin is in volume production. We are several years ahead of China with this technology, and it's being made available to the American labs and American industries. That's exactly what we're doing, and we're delighted to do that. On the other hand, remember that AI is a five-layer cake. It's the energy sector, the chip sector, the model layer, the data layer, and the application layer. We need every single one of these layers to win. We want to lead in the energy sector and the chip sector. I love the fact that FedEx is going to be an AI company, and Walmart is going to be an AI company. We need every single company in America to be an AI company. Remember, AI is digital intelligence. Why is it not possible for every single company in America to be supported by digital intelligence? Every company is going to be a company of the future with artificial intelligence as part of its structure. I want everybody to win, including the chip industry. 
+
+So you disagree with Dario's position that we should not sell? 
+
+I completely disagree that we should ban China from all American products. American companies should have advanced capabilities, but after that, every single layer of the American AI tech stack—including traditional companies, AI model companies, and every chip company—should go and serve the world and compete. Serving the world, capturing market share, capturing economic prosperity—that's all about competing. America is about competition, and we ought to go and compete and not seed entire markets. Our market is not his to seed. We ought to go compete for the world's market. 
+
+I want to ask you about President Trump and your relationship with him. Do you agree with President Trump? You're one of his advisers in tech and AI. 
+
+He has a lot of advisers; he has a lot of advice. He's an excellent listener and has a broad range of people he talks to. That's one of the reasons why he sees through these complicated situations. 
+
+Speaking of that, he said this week that he believes the concerns, the fears about AI's dangers are a hoax—the potential to destroy humanity with AI is a hoax. Do you agree with President Trump on this? 
+
+Oh, yeah. Now you and I started the conversation just now with exactly this. I completely disagree with that. I completely disagree that AI is going to destroy the world by 2030. 
+
+Do you agree with his characterization of it? 
+
+I don't want to speak for him. I believe the claims of the end of the world stirring fear across America—the people who are doing it—makes no sense to me. They must be doing it for ulterior reasons. Maybe it's political, maybe it's attention-grabbing, maybe so that they could get a great interview with you. I don't know what the reason is. However, 2030 is not going to be the end of the world. There is a zero-percent chance that's going to be the end of the world. I think that scaring people is unnecessary, it is irresponsible, and I don't know what their motives are. 
+
+However, he did say—and these are some of the other things—that we don't need more regulations, we need to apply the current regulations we have. That's a very practical, very sensible thing, and we just spoke about that. I agree with that. He also said something interesting about his ability to make sure that AI does not have this impact on Americans. Do you agree that President Trump has the ability to fend off and prevent an AI crisis while he's in office? 
+
+As the leader of America, with all the laws and regulations we currently have and recognizing the incidents that we now have in front of us, I believe we have the necessary laws and regulations to handle those things. 
+
+So he can fend it off in your view? 
+
+Yeah, because America's system already has a lot of laws and regulations that apply to many different sectors of products and services. I think he's saying practical things, and as we've already spoken, I think we have lots of laws and they should be applied. 
+
+I have two quick questions. You will be attending the state dinner with President Xi Jinping of China next week. If you get a chance to speak to him about this situation, what will you say to the president of China? 
+
+I would say that I'm delighted to see AI technology transitioning from laboratories to really useful capabilities. Because it's making that transition, it would be good for all countries that are advancing AI to do so in a way where we share best practices, maybe set global standards about product expectations. 
+
+Work closer together? 
+
+Yeah, of course. Work closer together. Look, they want China to be safe. They want China to have the benefit of AI; they want China to prosper just as we want the United States to prosper. I'm glad they have ambitious expectations and aspirations. Don't you wish every country has aspirations for a better tomorrow? I love that about them. As they advance the technology, we ought to make sure that we work with each other as much as we can. There are areas where we can't work together—maybe for military or other national security reasons—and those are for the governments to sort out. Other than that, I think it would be great for us to work in every possible way. 
+
+I would be remiss if I didn't ask about your personal status. You are a billionaire. You have said some of your fellow billionaires in California are spending millions to fight Proposition 40, the &quot;billionaire tax.&quot; You have said that if California passes it, you'd be perfectly fine paying it. Why do you see it differently than so many of your peers? 
+
+I don't mind paying taxes. I don't like tax dollars wasted; I like that our country is efficient. But I also support all that this country represents. I support all of our government officials in their civil duties to make America better. I love the infrastructure that we've provided for all of our citizens. I am the ultimate American dream. If not for this country—the education, the ability to create a new company, to pursue your dreams, and let merit be the reason why you succeed—I wouldn't be here. I wouldn't have met all the people that made Nvidia possible; I wouldn't have met my wife in school. I love this country in every possible way. It's not perfect, but it's incredible. I've had the benefit of traveling around the world, and sometimes looking back at our own country, the messiness of our country in a lot of ways—that's what makes it beautiful and what makes it work. I'm delighted to be part of it. 
+
+Even if you might end up paying perhaps eight billion dollars over five years, it's still worth it? 
+
+The fact that I can afford to pay eight billion dollars in taxes over five years is a privilege. It's not the eight billion; it's the fact that I can afford it. I'm not afraid of paying taxes; I'm just afraid of being poor. I have no trouble contributing to others. I'm famed for saying I want to pay all of our employees as much as I can, instead of paying people as little as possible to get their work. That's a privilege of being successful, and frankly, I'm delighted to do it. It's a responsibility, and nothing would give me more joy than to be able to pay even more taxes. 
+
+Are you asking to pay more? 
+
+No, the more you make, the more taxes you pay. I'm okay with that. 
+
+There's a lot of people who don't want data centers in their backyards. This is rare bipartisan unity; the backlash is bipartisan. Nvidia powers a lot of data centers. What do you say to the people out there who are speaking out and saying we do not want these in our neighborhoods? 
+
+Well, first of all, I would say we're sorry we didn't come talk to you sooner. We should have. Before you even stand up a giant data center in some rural area or small town—I grew up in a town of 600 people in Kentucky—if a data center were to crop up right next to the one grocery store, I think I would be alarmed. We need to go engage the communities long before we set up the data centers. All of my colleagues recognize this today. It happened so quickly all over America that sometimes we didn't get a chance to be polite or to be a visitor in a new town. 
+
+However, I will say that data centers are improving tremendously. The cooling systems are now recirculating water. We use hot water to cool them, so the amount of energy and water necessary is dramatically reduced. The energy that we consume—we should be contributing to the local power grid, enhancing its reliability. The United States is increasingly using the market dynamics of AI; it's the first time in 100 years we have an opportunity to invest in all kinds of sustainable energies. Whether it's solar, nuclear, or hydro, every form of power generation is on the table today. If we want a sustainable future, the next five years will use more fossil fuel, but the decades after that, we're going to see all kinds of applications of sustainable energy because of AI. 
+
+There are many great stories of towns that have benefited from investments from data center builders—community centers improved, new schools, new baseball fields, new roads, lower property taxes. I think data center builders should go to the communities, let them know they're considering building, and include an opportunity to upgrade their town, lower their taxes, and lower their energy bill. There should be some minimums and some expectation about the aesthetics of these data centers. They could be designed better. 
+
+Water consumption is a myth now. These data centers use less water than a swimming pool evaporating all year long. And energy bills going up? It's the opposite. These data centers contribute to the grid, making it more resilient and reducing power costs. We should have had dialogue with communities before we showed up; for that, it's unfortunate. But going forward, we can do a much better job. 
+
+You started Nvidia as a gaming chip company. You were a dishwasher at a Denny's 30 years ago. Did you ever think you would end up on the front lines of a debate regarding AI and the end of humanity? 
+
+No. I was just really focused on doing dishes like no dishwasher ever did dishes, and I was the best busboy that ever bussed tables. I brought enthusiasm to almost every job I had; it didn't matter what it was. 
+
+It seems like you're bringing that same level of enthusiasm to your job today. 
+
+This is consequential and important. It's an important conversation, and I want to make sure the American public understands that this industry will build the technology safely, just as it is the duty of the drug or automotive industry to build safely. We have to hold ourselves accountable to that. Number two: don't let the myths and the ridiculous dramatic stories cause us not to be optimistic about this incredible capability. We do not want to be the country that invented the technologies of this industrial revolution but was left behind. Don't let that happen. I don't want that for my kids, and I don't want that for your kids. 
+
+Can you explain what data centers actually do and why AGI could be a good thing? 
+
+About 350 years ago, the modern industrial revolution started. It was almost a mythical thing where you could have water come into machinery and an invisible technology came out called electricity. We could transport energy everywhere, replacing candles and wood-burning ovens. We built a whole industry on top of that. The next industrial revolution was the information age, where we built data centers so the internet could connect us to find anything. Now, we've created artificial intelligence. Given information and context, it can reason so that it can answer and do anything. 
+
+You can use tools like software that reasons about what you asked it to do, taking your intentions and doing the work for you. The latest generation from OpenAI, Astra, is incredible. You just tell Astra, &quot;Here's a picture of my backyard, here are some examples I like, maybe a pool or a garden.&quot; It turns it into a design file for my gardeners and carpenters. That's what AGI does. Now, we need a new type of infrastructure: an AI factory. Energy comes into it, data comes into it, and these numbers—we call them tokens—are reformulated into intelligence. Energy comes in, intelligence comes out. 
+
+Every part of the economy and every human likes to know things and do things. We want to automate our shopping, the planning of a vacation, or the design of a new kitchen. Every single industry has information work to do. With the world's industries having a hundred trillion dollars of economy, 15 trillion dollars would benefit from more intelligence than it currently has. These factories are a layer that goes around every single country; every company will use it. This is going to be a multi-trillion-dollar industry. This is the first time in at least 50 years that we have an opportunity to re-industrialize the United States, bringing manufacturing back. 
+
+It's not manufacturing atoms; it's manufacturing electrons. It's invisible, but it's manufacturing nonetheless. It's creating all kinds of construction and building jobs across the United States. Builders, electricians, and fitters are so incredibly busy because they're building out these multi-trillion-dollar AI factories. This is the great opportunity for the blue-collar workers and the crafts-people of our country. I love seeing that they are enjoying such prosperity. We have a shortage of electricians and construction workers, but this is a wonderful opportunity for the United States to be a manufacturing country again. Data centers are just a new version of manufacturing, producing products that are invisible—numbers—but it is manufacturing nonetheless.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video--ZdgxiRWuS0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=-ZdgxiRWuS0" target="_blank" rel="noopener">Howard Marks Flags the Uncertainty in AI Investing<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/PXTURrVHPIkg8Vmb3AvphcIBcSKE33kqDOgyeUvVLFsDAkEGamXpaEhEYh9YNERkvrW1BBmC=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Podcasts</b><span class="subs">(572.0K)</span></span><span class="dot">&middot;</span><span>13:12</span><span class="dot">&middot;</span><span>14.9K views</span><span class="dot">&middot;</span><span>2026-09-20</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Howard%20Marks%22">Howard Marks<span class="chip-desc">Co-founder &amp; Co-chair, Oaktree Capital Management</span></a> <a class="chip" href="index.html?q=%22David%20Gura%22">David Gura<span class="chip-desc">Host, Bloomberg</span></a> <a class="chip" href="index.html?q=%22Christina%20Ruffini%22">Christina Ruffini<span class="chip-desc">Host, Bloomberg</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Markets have been dominated by optimists driven by strong economic aggregates, the TINA trade, and AI enthusiasm, though this requires heightened investor caution.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">While AI's transformative potential is undeniable, extreme uncertainty surrounding future profitability and...</div>
+                    <div class="sum-full" id="full-2"><h3>TL;DR</h3>
+<p>Markets have been dominated by optimists driven by strong economic aggregates, the TINA trade, and AI enthusiasm, though this requires heightened investor caution. While AI's transformative potential is undeniable, extreme uncertainty surrounding future profitability and societal impact makes it impossible to definitively label current market exuberance as irrational.</p>
+<h3>The Macro Environment &amp; Market Psychology</h3>
+<ul>
+<li><strong>Federal Reserve Communication:</strong> Howard Marks argues that less central bank communication is preferable, as it forces businesses and portfolios to become antifragile rather than relying entirely on Fed projections.</li>
+<ul>
+<li>Expresses a personal preference for a less activist central bank that lets the free market determine natural interest rates through borrower-lender negotiations unless the economy is heading off the rails.</li>
+</ul>
+<li><strong>Optimism-Driven Markets:</strong> Markets have been ruled by optimists since roughly October 1, 2022, with the S&amp;P 500 more than doubling in that period.</li>
+<ul>
+<li>The S&amp;P surge is supported by positive underlying truths, including a US economy that performs as the best-developed world economy, the "TINA" (there is no alternative) trade, and AI excitement.</li>
+<li>Marks attributes persistent optimism partly to the absence of a truly severe downturn since the global financial crisis market bottom in March 2009, leading people to extrapolate good times.</li>
+<li>When optimists are in charge, they slough off bad news and react positively to settlement rumors without getting depressed when deals fall through, creating a positive market bias that calls for built-in defense and caution.</li>
+</ul>
+</ul>
+<h3>AI Investment &amp; Valuation Challenges</h3>
+<ul>
+<li><strong>The Definition of Value Investing:</strong> Marks defines his approach as a "small v" value investor whose goal is to calculate an asset's intrinsic value and buy it at a fair price relative to that value.</li>
+<li><strong>The "Too Hard" Pile:</strong> Evaluating pure-play AI companies is extremely challenging because they may not have produced profits yet, making it difficult to quantify earnings potential 5 years out.</li>
+<ul>
+<li>Hyperscalers like Microsoft and Amazon have supporting legacy businesses, but companies all-in on AI present an unusual degree of uncertainty for intrinsic valuation, fitting Warren Buffett's description of the "too hard pile."</li>
+</ul>
+<li><strong>Exuberance vs. Irrationality:</strong> Alan Greenspan's 1997 phrase "irrational exuberance" defines a bubble, and while AI exuberance is undeniable, Marks hesitates to label it definitively as irrational.</li>
+<ul>
+<li>Because nobody can definitively scope what AI will accomplish, its profitability, or its broader effects, nobody can prove the exuberance is irrational.</li>
+<li>The presence of uncertainty does not mean investors should do nothing, but it must be acknowledged to properly inform investment sizing and strategy.</li>
+</ul>
+</ul>
+<h3>Societal Impact &amp; Government Policy</h3>
+<ul>
+<li><strong>Existential Economic Concerns:</strong> Marks previously warned about the acute societal ramifications of AI displacing workers in Middle America and across the country.</li>
+<ul>
+<li>Reiterates that sentient human beings must acknowledge these risks, though he notes his wife defines worrying as "bleeding before you're shot" since individuals cannot personally stop the trend.</li>
+</ul>
+<li><strong>Policy Vacuum:</strong> Marks criticizes the lack of government foresight, stating there should be a dedicated task force examining the coming effects of AI.</li>
+<ul>
+<li>Poses a critical unanswered fiscal question for policymakers: If AI replaces human workers, will it replace them as taxpayers, and what will happen to government revenues when people lose their jobs?</li>
+</ul>
+</ul>
+<h3>Corporate Integration &amp; Critical Thinking</h3>
+<ul>
+<li><strong>Enterprise Usage at Oaktree:</strong> Oaktree Capital Management uses AI internally to marshal data and perform early analysis on tasks that used to take a long time, but has not turned business or investment decisions over to algorithms.</li>
+<ul>
+<li>Exceptional investing does not come from computers, but from a superior ability to assess the import of data—a superiority AI does not yet possess.</li>
+</ul>
+<li><strong>Preserving Cognitive Muscles:</strong> Oaktree does not encourage younger hires to outsource critical thinking to AI.</li>
+<ul>
+<li>Stopping critical thinking causes individuals to "lose the muscle," and the ultimate edge in investing remains fundamentally human.</li>
+<li>Marks compares AI's disruptive potential to indexation in equity investing—putting many active investors out of business, but not the best.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"When society thinks—when everybody in society thinks they know exactly what the Fed's gonna do and prepares for that, then the society is dependent on that outcome. And if if if something else happens, then, you know, bad things can happen."* — <strong>Howard Marks</strong>
+</blockquote>
+<blockquote>
+*"My wife defines worrying as bleeding before you're shot. And in this case, there's nothing we can do about it. Nothing certainly nothing I can do about it personally. So, you roll with it."* — <strong>Howard Marks</strong>
+</blockquote>
+<blockquote>
+*"If people are put out of work, they won't pay taxes. If AI takes their place as as workers, will it take their place as taxpayers and how? So what will happen to government revenues when when and if people lose their jobs?"* — <strong>Howard Marks</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">Howard Marks joins us now on set here at the Qatar Economic Forum. He's the cochair of Oaktree Capital Management. I'm very keen to talk with you about AI, something about which you've written a lot in recent memos. Before we get through, though, I'm very curious how you've processed what we've heard from the Fed chair in this most recent set of remarks that he gave after the Fed's decision, in the limited number of speeches he's done as Fed chair. Are you satisfied with the level of communication you're getting? How novel is the way that he's communicating with the markets?
+
+Well, I actually think that less communication is better. I'm not looking for the Fed chair to tell me what to do or even tell me what he's gonna do. But I think that to the extent that the central banker tells people less about what he's going to do, they have to make their portfolios and their businesses antifragile, which is better for society. When everybody in society thinks they know exactly what the Fed's gonna do and prepares for that, then the society is dependent on that outcome. If something else happens, then bad things can happen. So I think it adds to safety in the environment overall.
+
+So you think Bush was on to something with a bit of this tail wagging the dog at the Fed, let the markets decide without relying too much on this forward projection? I've learned a lot about the dot plots in the last month of my life; things I never knew I needed to know much about. Well, my personal preference is for a less activist central bank that normally lets the economy do its thing unless it's in danger of going off the rails—too hot or too cold. If it's not too hot or too cold, leave it alone. So, I'm in alignment on that. We talk about something called natural interest rates. Those are the rates that result from negotiations between borrowers and lenders. I think that's a great idea. This is called the free market. Let the market do its thing. Listen, I'm a tough negotiator. Anything that can get that mortgage rate down, you and I will go at it.
+
+Howard Marks, what is this environment like for a value investor like yourself? It occurs to me that we have been obsessing so much over the Fed that maybe to have it take, maybe not more of a back seat, but be less front and center, that opens the door to relying once again much more on the fundamentals of the asset than we have in the past. Well, look, I am what is called a value investor, not with a capital V, but a small v. That means our approach is to figure out the intrinsic value of an asset and see if we can buy it at a fair price relative to that value. That's all it means, in my opinion.
+
+The challenge today is that, in my opinion, since roughly 10/01/2022, I believe that the markets have been generally ruled by optimists. The S&amp;P has more than doubled in that period. It's been a very strong period. You have to recognize that when the optimists rule, prices tend to be high relative to intrinsic value, which means that it's a time for a little bit of caution. It's not the worst thing I've ever seen, but I do think it's important to note that the optimists have been in control.
+
+Why do you think that is? As someone who comes more from the diplomatic side, watching these markets respond positively to any trace of, &quot;Oh, we've got a deal coming out of either Washington or Europe or the Middle East&quot;—those of us who covered this know it's not gonna happen, but there's this indefatigable optimism that the markets at the moment just can't shake. Why is that? Well, that's a great question. But I think there are certain underlying truths which are positive, which are in the ascendancy. Our economy is doing pretty well in the aggregates. It is, in my opinion, the best performing developed world economy. 
+
+So, there is the old &quot;TINA&quot; trade—there is no alternative. And there is the excitement over AI. The optimism is just coming from the core. The other thing is that we haven't really had a bad time since March of '09 when the stock market bottomed during the global financial crisis. People get used to good times and they extrapolate good times, and that contributes to the optimism. Certainly, there is no rampant pessimism today. When the optimists are in charge, they kinda slough off the bad news. They get excited when there's word of a settlement; they don't get depressed when it falls through. You have to look at that, and you have to say there's a positive bias in the market today. When there's a positive bias, you should acknowledge it. What do you do about it? Maybe you build in a little defense, or maybe you take care in what you do.
+
+Before we get into AI from a market's perspective, what stood out to me—I think it was two memos back that you wrote—was your engagement with the potential societal ramifications of AI. You expressed very clearly acute concern about what AI, if it comes to the fruition that we've been promised, would mean for people across this country—maybe not in cities, but in Middle America—what it means if all of these jobs were to disappear. You've been listening as we have over the course of the last week or so about the larger existential fears brought about by the promise and perils of AI. I'm curious how you're processing those, how that builds upon what you warned about six months ago. Have your fears gotten worse, or have they compounded as a result of the conversations that we're having?
+
+Well, I think a sentient human being has to think about these things, has to acknowledge there's nothing we can do about it. When I reach that point in my own process, I kinda let it go because my wife defines worrying as bleeding before you're shot. In this case, there's nothing we can do about it. Certainly nothing I can do about it personally. So, you roll with it. That's all. You acknowledge it. Let people think about it, but it should not be a preoccupation in my life. Are you satisfied people are thinking about it enough or in the right way?
+
+Well, people are. On the other hand, I don't see anything out of government. I think there should be a task force on the coming effect of AI, and there isn't. When they form the task force, I don't know what they can do about it, but it might be nice to think about it. If you want one little task to work on, how about this? If people are put out of work, they won't pay taxes. If AI takes their place as workers, will it take their place as taxpayers, and how? What will happen to government revenues when and if people lose their jobs?
+
+Do you use it in your daily life? Do you ChatGPT things? Have you integrated it into your business? Oaktree certainly has integrated it into the business, and we use it to marshal data and do early analysis. It was a task that used to take a long time. We certainly haven't turned business or investment decisions over to it. I think that to the extent you wanna be an exceptional investor, the exceptionalness doesn't come from some computer or algorithm. The exceptionalness comes from being able to do a superior job of assessing the import of the data. That superiority, I don't think, is available through AI yet.
+
+Do you see when you hire younger people that they're outsourcing more and more of that critical thinking to AI, or have you not come across that? We don't encourage that. There's a lot of work to be done. But number one, if you stop doing critical thinking, you'll lose the muscle, I think. I continue to say, Christine, that the art is human. I think that, kinda like indexation did for equity investing, it'll put a lot of active investors out of business, but not the best.
+
+It would be great if we could spot a bubble in real time. As you've pointed out, you can't. It's something you do in hindsight. But I'm curious how bubblicious this environment looks to you right now. You've written before that when you're assessing a bubble, you're looking at company behavior and investor behavior as well. There is such a swirl of hand-wringing about circular financing and the like. Are there things that give you pause or concern when you look at the AI space in particular from a market perspective?
+
+Well, look, the main thing is, as I wrote in the last memo on the subject, Alan Greenspan used the phrase in '97, I think it was, &quot;irrational exuberance,&quot; and that is the definition of a bubble. We certainly have exuberance. The question is whether it's irrational. Since nobody, in my opinion, can spec out exactly what it is that AI is gonna be doing and with what effect and with what profitability, I don't think anybody can say that it's irrational. But you have to consider the possibility. When you tackle AI from an investment point of view, you have to think about how confident you are in your judgments. We have to think about how important it is for us to make all the money that's gonna be made by the most aggressive people, and are we willing to take on the uncertainty which is associated with that?
+
+Is it difficult for a value investor to warm to AI companies? A number haven't gone public, of course. But I think it's challenging because if you're talking about the so-called hyperscalers—Microsoft, Amazon, and the like—they have other businesses which will support, for example, an earnings estimate. But if you're looking at somebody who's just in the business of AI, their entire business model is dependent on AI. Maybe they haven't produced a profit yet. I just think that there's an unusual degree of uncertainty in coming up with any quantification of earnings potential and thus of what we call intrinsic value. I think it's gonna be hard. Warren Buffett always said, &quot;We put that on the too-hard pile.&quot; It may be too hard for the value investor, certainly the one with the capital V. It's challenging for the one with the small v.
+
+Yes, but given everything you just said, all of those unknowns, doesn't that make the exuberance kind of irrational? Why have you not reached that threshold? Not necessarily. Because maybe it's inadequate, but you don't know that. So, to me, that seems irrational. &quot;Don't know&quot; doesn't mean something's true. You're silly. We have to think that you take a traditional company today, you can make an estimate of their earnings. A tech company, you can only do that with less certainty. A pure AI company, which has never announced results—what are they gonna make five years from now? You have to say there's an unusual amount of uncertainty. The fact that there's uncertainty present doesn't mean you don't do something. You acknowledge it, and that may inform how you do it and how much you bet on that. But the fact that there's uncertainty involved cannot keep you from doing something.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-ZO6VyDvysxY">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=ZO6VyDvysxY" target="_blank" rel="noopener">Why the People Who Built Hip-Hop Ended Up With Nothing<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/hkiO7UAtALrbqOcewo4CIrbd0j8XDeWttKkdtihfX1emeV4iUMwjIe1KKn4zd6wT2OOwANDnIA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>a16z</b><span class="subs">(295.0K)</span></span><span class="dot">&middot;</span><span>57:03</span><span class="dot">&middot;</span><span>3.1K views</span><span class="dot">&middot;</span><span>2026-09-20</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Ben%20Horowitz%22">Ben Horowitz<span class="chip-desc">Co-founder, Andreessen Horowitz</span></a> <a class="chip" href="index.html?q=%22Nas%22">Nas<span class="chip-desc">Rapper and Co-founder, Paid in Full Foundation</span></a> <a class="chip" href="index.html?q=%22Grandmaster%20Caz%22">Grandmaster Caz<span class="chip-desc">Hip-hop pioneer</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The Paid in Full Foundation pairs financial grants with deep personal recognition to honor and support the foundational pioneers of hip-hop who built a multi-billion dollar culture while capturing almost none of its wealth.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-3">Founded by Ben Horowitz, Steve Stoute, and Nas...</div>
+                    <div class="sum-full" id="full-3"><h3>TL;DR</h3>
+<p>The Paid in Full Foundation pairs financial grants with deep personal recognition to honor and support the foundational pioneers of hip-hop who built a multi-billion dollar culture while capturing almost none of its wealth. Founded by Ben Horowitz, Steve Stoute, and Nas alongside Felicia Horowitz, the initiative fosters genuine community, healing, and cross-generational connection among hip-hop legends.</p>
+<h3>Origins and Mission of the Paid in Full Foundation</h3>
+<ul>
+<li><strong>Foundational Inspiration:</strong> Ben Horowitz was inspired to start the foundation because he purchased the album *Paid in Full* for $10 and derived at least $5 million in career value from it, feeling a pressing need to pay that value back.</li>
+<li><strong>The Core Problem:</strong> </li>
+<ul>
+<li><strong>Financial Disconnect:</strong> Artists poured immense creativity into culture—changing fashion, dialect, and lifestyle brands like Tommy Hilfiger and Adidas—while their bank accounts and acknowledgments remained empty.</li>
+<li><strong>Industry Division:</strong> The music industry historically separated artists by success, status, old school versus new school, and competitiveness, creating an every-man-for-yourself culture.</li>
+</ul>
+<li><strong>Nas's Insight on Delivery:</strong> When consulted, Nas noted that simply handing out money wouldn't work in hip-hop because artists would view it as charity or reparations; the support had to be paired with profound public honor, dignity, and celebration.</li>
+<li><strong>The Grandmaster Awards:</strong> Created to honor true greats, the foundation initially faced widespread disbelief, with some artists rejecting the calls or awards because they thought it was a scam due to decades of industry mistreatment.</li>
+</ul>
+<h3>Impact and Personal Stories from the Pioneers</h3>
+<ul>
+<li><strong>Grandmaster Caz:</strong> Wrote the rhymes that became "Rapper's Delight" (with his name in the lyrics), which was stolen from him without proper credit or reward.</li>
+<ul>
+<li><strong>Life Transformation:</strong> Receiving the 5-year grant allowed him to buy a house in Pennsylvania, move out of the Bronx projects, escape the day-to-day grind, and eliminate his fear of dying in the projects.</li>
+<li><strong>Ongoing Hustle:</strong> Emphasized that hip-hop lacks social security or health benefits, forcing pioneers to keep working park jams and tours to survive.</li>
+</ul>
+<li><strong>Scarface &amp; Medical Crises:</strong> Scarface needed a kidney transplant and open-heart surgery, but was initially in complete shock when Ben Horowitz called him from the South of France to cover his medical needs.</li>
+<ul>
+<li><strong>Felicia's Intervention:</strong> Felicia Horowitz personally flew to Houston and insisted Scarface go to the doctor, saving his life just as his aorta burst on the way in.</li>
+</ul>
+<li><strong>Roxanne Shanté:</strong> Her child asked if she felt bitter seeing new female rappers win awards; she replied that she didn't want those awards—she wanted the *Paid in Full* award.</li>
+<li><strong>Cross-Generational Bonding:</strong> At foundation events, multi-platinum icons like Dr. Dre requested introductions to legends like Slick Rick and Kurtis Blow, whom they had never met despite decades in the industry.</li>
+</ul>
+<h3>Scaling, Funding, and the Annual Gala</h3>
+<ul>
+<li><strong>Matching Model:</strong> Ben and Felicia Horowitz match every donation 2.5 to 1.</li>
+<li><strong>Volunteer Operation:</strong> There are zero paid employees at the foundation; 100% of donated funds go directly to the artists and grants.</li>
+<li><strong>The Gala Experience:</strong> </li>
+<ul>
+<li>Described as feeling like a joyful family reunion with zero egos, deep mutual respect, and unscripted park-jam performances.</li>
+<li>Past highlights include George Clinton (age 83) reciting Rakim's "Follow the Leader" lyrics on stage, and Ice Cube declaring he never dropped an album without first listening to Scarface.</li>
+</ul>
+<li><strong>The Quincy Jones Award:</strong> Created in direct response to the Grammys mishandling Quincy Jones's tribute; this year's recipient is Nile Rogers (producer of Chic, Sister Sledge, and Daft Punk's "Get Lucky").</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"Hip-hop don't have social security. You have to work. You got to stay out there."* — <strong>Grandmaster Caz</strong>
+</blockquote>
+<blockquote>
+*"I think in life it's impossible to do anything great if you start with what's possible. You have to start with what's right."* — <strong>Ben Horowitz</strong>
+</blockquote>
+<blockquote>
+*"My the last thoughts in my head for the last like 10 15 years [were]: I don't want to die in the projects. I don't want to end here."* — <strong>Grandmaster Caz</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-3" onclick="toggleSummary(3)" type="button" aria-expanded="false" aria-controls="full-3">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-3" onclick="toggleTranscript(3)" type="button" aria-expanded="false" aria-controls="transcript-3">View transcript</button>
+                    <div class="transcript-content" id="transcript-3">I think in life it's impossible to do anything great if you start with what's possible. You have to start with what's right. Hip-hop's not that big. The guys who made the art form are not that many, so why can't we honor them? Acknowledging and celebrating and then bringing this group of people together is something that the industry should have done a long time ago. When people see me and they see my passion, they know I've still got it. He's still doing it because I have to. Hip-hop doesn't have social security; you have to work.
+
+The whole thing about hip-hop is to grow and to be better. I think we are living our lyrics, we are paid in full. I want everybody to know around the world what Grandmaster Caz looks like, to celebrate him and applaud this man for what he's done. Celebrate Roxanne and celebrate Melly and the D.O.C. and everybody else who's had these achievements. The thing is the honor. The thing is putting you in the light that you deserve to be in if you're watching this and love hip-hop.
+
+So, this is the first time this group has gotten together to publicly talk about the Paid in Full Foundation. Guys, welcome to the podcast. Thank you. Yeah. Ben, why don't you introduce the foundation and maybe let's get into the origin story, as far back as you want to go, as to how this came to be.
+
+Yeah. So, Paid in Full is an organization meant to honor the legacy of the people who created one of the most important musical art forms of all time, hip-hop, and make sure that they're paid in full financially, spiritually, and culturally. The idea kind of started with me, Stephen, and Nas. It always bothered me that I bought &quot;Paid in Full&quot; the album for $10, and in my career—and those of you people in tech know this—I probably got at least $5 million worth of value out of that record, but there was no way to pay it back. It needed to be paid back.
+
+So, I had the idea originally and I called Steve. Steve and I have been friends for many, many years and I said, &quot;Steve, I have this idea, what do you think?&quot; He said, &quot;Well, it's not only a good idea, but it's a very timely idea because people are talking about this right now, but they're not doing anything.&quot; If you listen to the podcast, people are saying, &quot;Oh, these rappers, these old guys, they don't have any money. They're dusty.&quot; These are very, very important guys, but nobody's doing anything. So, I thought, let's do something. Then the next call I made was to Nas. Nas had a great insight because our dear friend, Quincy Jones, had a thing called the Jazz Foundation where he would give money to the old jazz guys. I told it to Nas and he said, &quot;That's not going to work that way in hip-hop. In hip-hop, you can't just give somebody money. It has to be more than that; it has to be a recognition of what they did and who they are.&quot;
+
+That's when we got the idea to have a big award show, have this Grandmaster Award for the true greats of hip-hop, and invite everybody to honor these guys. We started it off with two all-time greats: Scarface and Rakim. Before we even got to the first show, it was also timely because Scarface was going through a medical condition. Yes. I remember I was in the south of France and I called him. He needed a kidney transplant from his son, and it wasn't the right doctors. There was a lot of care and concern, but more specifically, it was the money and the doctor performing the surgery. I've known Scarface for years, but when I called him literally from the south of France in June about what we were going to do, he was in shock. Imagine a phone call coming randomly from a guy you hadn't spoken to in two years, and I'm calling you about your medical condition, telling you that we got you financially. We're going to help you. I remember calling Ben after that and saying, &quot;Look, I spoke to Scarface, and he was in disbelief.&quot; In fact, early on, people were in such disbelief they didn't believe that it was real.
+
+We had a hard time actually helping people because they didn't believe it. I have some stories on that—I don't even know if I can mention the names—but we had people who literally didn't get the award because they thought it was a scam. They didn't want to mess with it. That actually reinforced the belief that if you celebrated the artist—not like you were giving them something like reparations, but actually giving them the honor and dignity they deserved—then that would be the way it would be accepted. It wasn't until we did the first one. Like any other startup, you duct tape whatever you have to do to get this thing going, but we had Scarface and Rakim and the support of the board and Nas. It started to go through the community that there is something happening, and that's when it worked. But literally, it was disbelief from the initial phone calls. Why would anybody do this? That's how they've been for so long. Why would anybody come look and try to help us now?
+
+The rap community has been like that—not showing love, being so divided, acting like it's every man for itself. Rap is competitive, but at some point, we have to bring it around to what it's supposed to be. Nothing like this ever existed. When you were talking to me, I was like, &quot;Why hasn't this happened?&quot; I'm in the right circle of people to be talking about the right thing. It was almost like it was daring for us to even do something like this. Well, it's one of those things where I think somebody has to step up at some point. That's the thing about history in general; people act like things are inevitable, but they're not. Somebody has to do something. Once it's done, it's very obvious, but until somebody steps up, it doesn't happen.
+
+I met Caz in New York around the first year. We had a great conversation, and I was re-evaluating how important Caz was. Let me ask you this, Caz: in a different circumstance, in a different kind of timing, how big would Caz have been? The fact that you are so charismatic right now, that you hold no bitterness in your heart and you present yourself as a star—it's clear. If you would have gotten the credit you deserved from the beginning, we wouldn't even have to fast-forward 12 years. You have that level of presence, talent, and star power. It was shocking to me that everybody had known what happened to Caz. Everybody in the music industry knew. Caz wrote the rhymes that became &quot;Rapper's Delight.&quot; Those were his rhymes with his name in the rhymes. The first hip-hop hit was stolen from him, and he didn't get what he deserved. Everybody knew it, but no one ever did anything about it.
+
+When we were having our board calls and deciding who we were going to honor, one of the privileges of having this group of people is that you say certain names and it's unanimous. Everyone's arguing why their &quot;yes&quot; is more &quot;yes.&quot; Then you meet the person, and it is so beautiful when they walk in the room. We've been blessed to have honored people who not only deserve it, but when they got the phone call, they didn't come in with &quot;about time&quot; or any of that energy. They came in with a smile, bright, glowing. I think about Caz and Shante. When Roxanne got the award, she said her child asked, &quot;Mom, you see all these female rappers getting awards, don't you feel bitter?&quot; She said, &quot;No, I didn't want that award. I wanted the right award. Paid in Full.&quot; I thought, &quot;Yeah, that's awesome that we were able to do that.&quot; To be able to give these artists that recognition, and have them be a part of voting for future recipients—Caz is now a recipient and part of the committee—that's the gift that keeps giving about this foundation.
+
+Shante is one of the reasons I'm here. She's from my neighborhood. When she released &quot;Roxanne's Revenge&quot; back in 1984, she was a kid, but when I saw that she could be on the radio rapping and going after men, it was like she was an activist. That was unheard of in hip-hop. When I saw her be that bold, challenge an established rap group, and change the course of this whole thing, for me, that was incredibly inspiring. To have her be a part of this is still crazy.
+
+When I was brought in, I had no idea what was going on. I just knew someone I knew from a while back reached out, and that was Quincy D3. He was pretty vague, but he wanted me to come downtown. That's when I met Ben and everybody. I was being vetted to some degree. They wanted to see where my head was at, what my attitude was, because I've heard about other people who deserve it but don't. I just came with my spirit. A lot of these guys alluded to the fact that people have brought this up—I think Swizz Beatz made it public—that we should give the old school dudes a million dollars.
+
+I spoke about this in a magazine, maybe in the year 2000. They asked a bunch of hip-hop artists, and I described this to a T. I forgot I even said that until somebody pointed it out to me last month. We all have been wanting this type of thing. I would debate hip-hop with Ben forever. Me and Steve would stop speaking about disagreeing. Me and Ben would analyze albums to death. Ben got with you, Caz, and sent me a video of your conversation about the Sugarhill Gang and everything. I couldn't believe you cared so much, being from the Bay, about the origin story of some of the greatest hip-hop history. But I shouldn't have been surprised. The care that we have for the culture is the same. Caz, every time I approach you, I'm stalking you about what happened this year or that year. Paid in Full is a way that we convinced ourselves that we can be together and not just talk about it from afar. We can actually talk to Caz, be in a room with Rakim, and it's not just this thing that's so spread out. It's bringing us together.
+
+It feels like a class reunion. Last year, when Dr. Dre heard about Paid in Full and decided to come, I was in shock that he asked me if I could introduce him to Kool Moe Dee. He had never met him before. Dre did this to me, too, in Vegas. He asked if I could introduce him to Slick Rick. He had never met him before. It's wild that it took this foundation to bring these types of people together. The bond is so strong that 25, 30 years removed, Dr. Dre, with all of his glory and success, is asking, &quot;Man, could you please introduce me to Slick Rick and Kool Moe Dee?&quot; It took this celebration to create that moment.
+
+The industry itself separates us by success and status—who's hot, who's signed. If I see Nas, it's by happenstance, but there's mutual respect. If he reaches out and says, &quot;Yo, Caz, I want you to be a part of this,&quot; I'm on it automatically. Now I see him every year. I can call him on the phone. Steve Stoute, you hear about Steve Stoute, big businessman. He's made this person rich. It's a special moment that is growing every year.
+
+To Caz's point, this idea of separating artists—I'm not sure if it was the industry's doing on purpose, or if it was just that rap was broken into old school, new school, this, that, and the third. There was just no connection. But the truth is that the real artists have respect for the person they had a poster of on their wall, or the first tape that they bought. That respect that inspired me as a businessman, or Nas as an artist, or Ben as a businessman, that'll never go away. Like sports heroes, it never goes away. The foundation acknowledging and celebrating and bringing this group of people together is something that the industry should have done a long time ago. There have been attempts like VH1's &quot;Hip Hop Honors,&quot; which is cool—it puts a light on these artists—but it's not putting anything in their pockets. It's not investing in the artist.
+
+It was two things: starting Paid in Full, but also investing in UnitedMasters. The idea was, how do you contribute so much culturally but the financial take is so meaningless? How do you pour so much in and get so little out? Everybody became comfortable with that idea. They accepted it as &quot;that's just the way it is.&quot; Meanwhile, you're changing the way people are dressing, changing dialect, changing so much in the world, and yet your bank account or acknowledgment for what you've contributed is not even a partner. It doesn't add up. It doesn't incentivize creativity; it incentivizes people to feel like they've been robbed and stolen from.
+
+In the lyrics of hip-hop, we speak about the total opposite. We speak about breaking down barriers, changing the system, love, being entrepreneurs, and keeping it real. But the action of keeping it real wasn't happening outside the studio. You play a record, and this dude sounds like he's the realest ever, but then you see him and he won't speak to you. You see him, and you could be like, &quot;Yo, I need some help,&quot; and he's looking at you and laughing. It's competitiveness to the max, and it doesn't end up being like what the lyrics said. Since the beginning, since Caz was putting his DNA into this thing, the rap game was shifted with what he put down. The lyrics represent one thing, but how are we going to be real, say we're hip-hop, and then the actions aren't happening? It can't just be on record. The whole thing about hip-hop is to grow and to be better. I think we are living our lyrics. We're Paid in Full.
+
+It takes the courage of Ben and his wife, Felicia, and that foundation to put the money up and match the contribution. You would hope that it would come from an organization that benefited financially from these artists. One would guess if you just asked who would help these guys, you'd think, &quot;Oh, definitely the record company.&quot; No, it takes a crazy rap fan. And Felicia, who is an entrepreneur with deep soul and respect for creativity, made this one of her missions to solve this and make sure the right guys get properly awarded and the respect they deserve.
+
+I think this year is going to be a pivotal year. This is our fourth year, and we have a great lineup. It's very well-produced. The first year, we were feeling our way through it. We learned, refined, got tighter, and smarter. I think we've got it now, where it's going to be our biggest year. I believe that as well-produced as this show is, it's something we could take wider. At the same time, I want everybody to know around the world what Grandmaster Caz looks like, to celebrate him and applaud this man, and celebrate Roxanne, Melly, the D.O.C., and everybody else who has had these achievements that they've contributed so much to the culture, so they get a chance to see their heroes on the platform that they respect.
+
+When you do something big and important, people are going to emulate it. If they see a formula that works, Ben, you're a testament to this, they're going to want in. I think in life it's impossible to do anything great if you start with what's possible; you have to start with what's right. If you start with what's right, it may not be possible, but at least you have a chance to do something great. That's always how I came at it. Hip-hop's not that big. The guys who made the art form are not that many. Why can't we honor them? By the way, I'm a big beneficiary of Caz and Nas and Rakim, in that you all were the inspiration for my career and got me through very difficult times in business—so hard that I wrote a best-selling book about it. In the book, I had the rap lyrics, but in Silicon Valley, I got a lot of criticism. &quot;What are you doing with hip-hop? Is that some kind of gimmick?&quot; I was like, &quot;No, this is credit where credit is due.&quot; The ideas that I had in business came from those lyrics. It was my chance to do what was right and pay it back. I know how to build things, so building a foundation didn't seem that hard. If I got pushback, I don't listen. I can't even hear it.
+
+He doesn't hear it. You bring people who would probably have no interest in this topic, and I've seen it convert. They go there, and they're like, &quot;Oh, I didn't even know that.&quot; It connects a lot of dots. There's obviously a lot of empathy. How do you not feel empathy for somebody who's invented something and didn't get what they deserved? The theme of the night isn't &quot;get what you deserve.&quot; That's the underlying foundational truth. On top of that, we celebrate the fact that you are getting now what you deserve—the acknowledgment and the light put on you in the right way by a bunch of people who respect you. Last year, to see Grand Puba out there—that made me feel so proud. Why would you skip that? It's easy to skip it, but you've got Grand Puba, at one point the greatest rapper.
+
+It's funny about rap; I don't know if it's decades, but eras could be four years, and if you're not part of it, you don't realize how fast it changes. Masters of Ceremony, Brand Nubian, Puba, solo career. He went through three eras. Very few artists had done that. A lot of our favorite artists couldn't jump that fence, and they got stuck on the other side. To turn around and watch this man go on stage and get his props—no one else is going to do that. No one else is going to put the time in to have the people that understand that nuance. It's easy to write a check, but there's so much time going into making sure we get it right. Because of the love. Even if you didn't think you'd be walking in a room like that, you think it's going to be some type of typical award show, but it's genuine love. There are no egos. Nobody's putting their chest out. Everybody's here on a real thing of learning what's happening on the stage. You're being educated.
+
+Last year, George Clinton brought the Mothership. It was mind-blowing to see him reciting Rakim's lyrics to &quot;Follow the Leader.&quot; This is George Clinton, the outer space guy, the guy who shifted music, and at 83 years old, he's reciting Rakim's lyrics. This is a room of love on another level. To the Quincy Jones award: Quincy is the legend of legends, the triple OG, the foundation of it all. No disrespect, but the Grammys botched his celebration. The idea for the Quincy Jones Award was literally because of how bad the Grammys did it. We couldn't believe they got that wrong. QD3 was like, &quot;Let's do this,&quot; and now it's part of what we do on an annual basis.
+
+That's love. Can we say who the new recipient of the Quincy Jones Award is? We got to let Steve say it because he works so hard on it. It's such a funny story. We're not going to get into the details, but who is it? Nile Rodgers, man. How do you not have Nile Rodgers? He came up with a guitar lick that's been used—&quot;Good Times.&quot; Look at all the Sister Sledge, all the myriad songs he's produced, all the way up to &quot;Get Lucky&quot; with Daft Punk. He's that guy. So, we've got Nile Rodgers getting the Quincy Jones award. We're holding ourselves accountable to get it right. This is a big thing because you've got families, estates, and other artists looking at this.
+
+People ask, &quot;Are these real? Is this going away anytime soon? Is this another facade? What are they selling on the back of this?&quot; I called Kuriaki from the Fat Boys, and for a second he didn't think it was real. He was there last year and didn't think it was real until he walked off the stage. Kool G Rap was very appreciative. One of the greatest MCs of all time, one of my biggest inspirations. When people come, it's real love. It's your time. We're here for you.
+
+Nas, you just talked about the ego thing. First of all, at the end, you start going crazy on the mic—you and Kool Moe Dee last year—so that's still there. That park jam part is not going anywhere. Because there's so much ego in rap, at least in this room, it comes down to the point where Ice Cube came two years ago. He said, &quot;I wouldn't even put out an album until I listened to what Scarface had to say.&quot; Scarface came after Cube, but when Scarface came, woo. To watch Scarface and Rakim acknowledge each other's writing skills—yo, dude. That's like, if you love hip-hop, you have to know that to have Rakim and Scarface have a conversation about writing and the respect they have for each other in a real, pure way is special. You're talking about two of the greatest writers in anything.
+
+Okay, let me give the plug. PaidInFullFoundation.org. You can come and be a part of it. Felicia and I match every donation two and a half to one, which means that all your money goes to the artist. There are no paid employees at the foundation. Everything is volunteer. PaidInFull.org. And that's my plug. I want to ask Caz—that was pretty good, that's like a radio plug. Thank you. Caz, we've been talking about it, but as a recipient, what has it meant to you from an honor standpoint, from a financial standpoint? Tell us from that side.
+
+I was definitely going to address that. It's not about specifics, like this one gets that, this one gets that. It's like you get a grant over a five-year period, and it's helped change my life. I was on a path to self-improvement. LL Cool J called me a few years back and was like, &quot;Yo, it's time, I want you on the radio.&quot; But when Paid in Full called me, it was like, &quot;Now this is going to change your life.&quot; I bought a house. I moved out of the projects. I've lived in the Bronx all my life, and I thought I would always end up there. My last thoughts in my head for the last 15 years were, &quot;I don't want to die in the projects.&quot; It didn't end there. I got a nice house in Pennsylvania. My life has improved drastically. I got a cushion that I never had; everything was day-to-day, grind, hustle.
+
+When people see me and they see my passion, they see, &quot;He still got it.&quot; He's still doing it because I have to. Hip-hop doesn't have social security. It don't have health benefits. You have to work. You got to stay out there. For me, I got to keep working. So when you see me on radio, doing park jams, doing hip-hop sightseeing tours, all that was to maintain, to keep me up and at it. My attitude and the way that I deal with people kept me in people's consciousness, which I'm so grateful for. I can't speak for everybody, but I'm sure what it's done for me, it's done for everybody. I don't want to say which person, but when you were talking about how some people thought it was a scam, a couple people were like, &quot;Yo, I don't need this, I'm good.&quot; Nah, it's not about that. The thing is the honor. The thing is putting you in the light that you deserve to be in.
+
+I've got to salute LL Cool J for that, too. He put us, me, and Shy Rock on the radio when he didn't have to. He created a whole lane. So that kind of recognition resonates. When people see important people giving you your props, they feel obligated. What this does is it brings recognition. That's the gift that keeps giving because it's done out of love. It inspires more people to think, &quot;We can do things like this too.&quot; We've got to remember, let's take care of each other. I was getting reached out to by a few hip-hop artists for a while, from the late 90s on, and I would do things for different artists. I won't mention names, but I was there. I wonder how many more of us were doing that, but it's on the low. This is on a high—on an even bigger level. You can show the world we're taking care of our own, we're taking care of the thing that took care of us.
+
+In Ben's book, he has pieces of lyrics that inspired him. These things are important. If we forget, if we sweep it all under the rug, if you don't know that Puba took Hilfiger to another level, if you don't know Sprite—&quot;Obey Your Thirst&quot; is his line. That's their tagline. No one would ever pay attention to these things. These guys are pioneers above and beyond hip-hop. They created the culture around the music that lives on to this day—the fashion, the language. I love Tommy Hilfiger, he's a great guy and should be part of contributing to Paid in Full. If it wasn't for hip-hop, he was dead in the water. He was selling ties and trying to be Ralph Lauren. On his way home to Greenwich, he'd cut through Harlem and see everyone wearing their pants low with their Calvin Klein underwear showing. That's where he got the idea to make underwear, make the waistband bigger and thicker so you could really see it. That's how the whole thing got going. Seriously. That's when the brand took off and went from selling ties to now selling streetwear, the hottest fashion trend in the world. God bless Virgil and everyone else. These are things these guys have contributed that they never got their fair share of. What we're doing is just trying to get momentum. We need others to either come and donate or start other organizations that have the same motive—to help celebrate and give back to the guys who have helped inspire you, with love and respect.
+
+The love and respect part goes beyond even the award. Scarface had a heart condition. He comes from a place where people don't really go to the doctor, let alone for open-heart surgery. He was on the phone with my wife, Felicia, and she knew he was scared. She flew out to Houston to see him, and he didn't want to go in. He calls her &quot;The Bully&quot;—she's about 5 feet tall—and she says, &quot;No, I'm taking you to the doctor right now.&quot; Right as they got into the doctor, his aorta burst, and they got him in just in time and saved his life. That doesn't happen without her caring so much. She runs the foundation, and she's committed to taking care of them. Forget the award, forget the contract; she's going to do the work. That creates the culture of the thing, which is why that feeling at the ward is so different.
+
+Kudos to Felicia. None more serious than that. She makes it feel like there's love involved. It's beyond the award, beyond the check. You'll get a call: &quot;How are you doing? How's your wife?&quot; If you're sick, the next day flowers come. That's how Felicia is. That's the difference between this and anything I've ever experienced. I can't speak enough about the event that's coming up, the next Hip-Hop Grandmaster Awards. It's going to be monumental. If you haven't been abreast of what's going on with Paid in Full, definitely check in this year. Look back at what we've done in the past four years, and then get on board. Don't play with it, stay with it.
+
+Steve, I'm curious if you could talk about when was the moment you knew that you and Ben were going to be friends for life?
+
+Steve invited me to a dinner years ago—at Mr. Chow downtown. It was an interesting room of people. He put together a great room, and I heard about Ben through him. I met Ben there, and just our love for music and love for food was the thing that connected us. We've just been cool since then.
+
+Some of my best times are listening to Rakim with Nas. By the way, Nas hears things in Rakim songs that nobody else hears. Listening to Prince together, breaking it down, visiting Quincy Jones—just music fans who just, Nas is as great an artist as he is, he's that great a music fan. I was at Quincy's house when he had just moved in, and it was me and Chris Tucker. He was showing us the casting tapes for &quot;The Color Purple.&quot; There was Whoopi Goldberg, just talking, and then she starts reading the script and within a second starts crying. It was the first time I'd seen acting like that. Chris Tucker and I were blown away. I brought up Nas and Nas's dad, Olu Dara. Quincy Jones, at that age, was still moving very quickly. He went and grabbed a bunch of vinyls and showed me a picture of him with Nas's dad in St. Tropez in the 60s. I was like, &quot;Holy shit.&quot; I knew Nas's dad was a jazz legend, but I didn't know at what level these guys were running around.
+
+He'd tell me stories of people he'd been around, but I wouldn't listen. My pop told me about Moog when &quot;Juicy&quot; came out. He's like, &quot;Yo, that's my man.&quot; I'm like, &quot;Come on, you probably met him in passing.&quot; I didn't think anything about it. I got into the rap game, and I met him, and he's like, &quot;Yo, your dad is my man.&quot; I didn't believe him, not that he's a liar, but I didn't know they were like that. He was like, &quot;That's my guy, man.&quot; I'm like, you understand &quot;Juicy Fruit&quot; was the biggest song in the world? How could I believe that at the time? I'm a kid; I don't know. I think he's just trying to make me feel good. But Quincy knew everybody. Everybody knew everybody.
+
+The fact that Olu—you have to understand, the DNA thing—I mean, obviously I know Nas is a brilliant artist, but I had no idea the connection was that his dad was that level of brilliant. I thought his dad was... I didn't know it was that level where Quincy Jones could, within a second, go find a picture of them together. The whole thing was profound to me, reflecting on the fact that Nas comes from this great lineage of talent.
+
+They come from Mississippi. My pops comes from Natchez, Mississippi, and his dad was in a band. It's just music in the family.
+
+So, one more time. PaidInFullFoundation.org. All your money goes directly to the artists. We're matching two and a half times to one. It is everybody who's ever been to it will tell you it's the greatest charitable event in the world. There's nothing like it. I guarantee nobody's ever gone and not had a great time—a time that will be a memory for the rest of your life.
+
+All right. Thank you, guys. That was great.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
