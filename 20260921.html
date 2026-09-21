@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Monday, September 21, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260920.html">&larr; Sep 20</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Monday, September 21, 2026</h1>
+            <p class="day-sub">4 videos &middot; 4 channels</p>
+        </header>
+        <nav class="toc"><div class="toc-label">In this briefing</div><ol><li><a href="#video-fj9pHUbJhp4"><strong>Eclipse</strong>'s <strong>Lior Susan</strong> on $12.5B AUM and the Bet on Physical Industries</a></li><li><a href="#video-yAsrMA_ADPc"><strong>Naveen Rao</strong>: 4D Computing, AI's Energy Wall &amp; Beating Biology</a></li><li><a href="#video-s9oBPmKP8Xg"><strong>QIA</strong>, <strong>Apollo</strong> &amp; <strong>Goldman</strong> CEOs on Global Capital</a></li><li><a href="#video-tG8S5zpi9P0">Stock Picking in Difficult Times with <strong>George Noble</strong> | <strong>The Real Eisman Playbook</strong> Ep 76</a></li></ol></nav>
+        <main>
+
+            <article class="video-card" id="video-fj9pHUbJhp4">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=fj9pHUbJhp4" target="_blank" rel="noopener">Eclipse's Lior Susan on $12.5B AUM and the Bet on Physical Industries<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/Omr_orQNkUhWUe0f2IrvNiiy5GyUsyeJ6U-5ppcgqjFTa55aFZHwPEmhhdFKTkAAeJX4437eqQ=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Sourcery with Molly O'Shea</b><span class="subs">(72.7K)</span></span><span class="dot">&middot;</span><span>48:10</span><span class="dot">&middot;</span><span>2.0K views</span><span class="dot">&middot;</span><span>2026-09-21</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Molly%20O%27Shea%22">Molly O'Shea<span class="chip-desc">Host, Sourcery</span></a> <a class="chip" href="index.html?q=%22Lior%20Susan%22">Lior Susan<span class="chip-desc">Founder &amp; CEO, Eclipse</span></a> <a class="chip" href="index.html?q=%22Pierre%20Lamond%22">Pierre Lamond<span class="chip-desc">Mentor, Eclipse</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Eclipse has reached ~$12.5B in AUM and closed $1.3B in April 2026 for Fund VI and Early Growth III, driven by a thesis that physical industries comprise 85% of global GDP ($100 trillion) and require hands-on operators rather than passive capital.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Founder &amp; CEO Lior Susan leads...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Eclipse has reached ~$12.5B in AUM and closed $1.3B in April 2026 for Fund VI and Early Growth III, driven by a thesis that physical industries comprise 85% of global GDP ($100 trillion) and require hands-on operators rather than passive capital. Founder &amp; CEO Lior Susan leads the firm alongside 96-year-old co-founder Pierre Lamond, utilizing an intensive incubation model that has built 30 of its 90 total portfolio companies.</p>
+<h3>Firm Origins &amp; The "Operators with Capital" Model</h3>
+<ul>
+<li><strong>Background &amp; Founding:</strong> </li>
+<ul>
+<li>Founded in 2015 by Lior Susan (who left Flex) and Pierre Lamond (who started at Fairchild, co-founded National Semiconductor, and spent 35+ years at Sequoia Capital).</li>
+<li>Lior Susan recounts meeting Lamond in early 2015 when Susan was 31 and Lamond was 85; Lamond told him "we're going to start a firm together" four months later.</li>
+<li>Lamond still mentors the team and recently celebrated his 96th birthday.</li>
+</ul>
+<li><strong>Operating Philosophy:</strong> </li>
+<ul>
+<li>Positioned as "operators with capital" rather than traditional venture capitalists.</li>
+<li>Emphasizes discipline, institutional knowledge, and hands-on crisis management—such as Susan spending 72 hours in the Midwest handling a severe water-cooling leakage in a portfolio data center.</li>
+</ul>
+</ul>
+<h3>Fund Performance &amp; Milestone Investments</h3>
+<ul>
+<li><strong>AUM and Fundraising:</strong> </li>
+<ul>
+<li>Manages approximately $12.5B in AUM.</li>
+<li>Closed $1.3B in April 2026 across Eclipse Fund VI and Early Growth III (the firm's largest raise to date).</li>
+<li>Portfolio companies have raised $15.9B in 2026 alone.</li>
+</ul>
+<li><strong>Major Portfolio Outcomes:</strong> </li>
+<ul>
+<li><strong>Cerebras:</strong> 2016 Series A investment; returned roughly $2.5B at the $185 IPO price in May 2026 on about $147M total invested.</li>
+<li><strong>SpaceX:</strong> Named alongside Cerebras as recent successful IPOs in physical industries.</li>
+<li><strong>Other Noteworthy Portfolio Companies:</strong> Bright Machines, Bedrock, Maitra, Mind, Ursa Major, Vulcan forms, Auggury, Skyrise, Oxide, Wave, True Anomaly, Redwood Materials, Arc (The Nuclear Company), Verata, Anduril, and Peak Energy.</li>
+</ul>
+</ul>
+<h3>Incubation Strategy &amp; The "Eclipse Economy"</h3>
+<ul>
+<li><strong>Incubation Model:</strong> </li>
+<ul>
+<li>30 out of Eclipse's 90 total portfolio companies were built/incubated internally.</li>
+<li>Keeps the team's operating skills fresh by actively carving out and recruiting teams (e.g., spinning out <strong>Mind</strong> from Rivian with RJ Scaringe after three years of discussions).</li>
+</ul>
+<li><strong>The "Eclipse Economy" (Full-Stack Infrastructure):</strong> </li>
+<ul>
+<li>Integrates investments across the entire physical AI and compute stack: chips (Cerebras), manufacturing racks and hardware, server infrastructure (Oxide), nuclear/sodium-ion/gas turbine energy sources, and physical robotics (Maitra, Mind).</li>
+<li>Leverages internal portfolio cross-collaboration on multi-billion dollar commercial deals.</li>
+</ul>
+</ul>
+<h3>Macro Thesis: Physical vs. Software</h3>
+<ul>
+<li><strong>The $100 Trillion Opportunity:</strong> </li>
+<ul>
+<li>85% of world GDP (~$100 trillion) resides in the physical world. </li>
+<li>Metal manufacturing alone is a $3 trillion industry that historically received near-zero venture dollars compared to crowded enterprise software markets.</li>
+</ul>
+<li><strong>Re-evaluating Software Metrics:</strong> </li>
+<ul>
+<li>Traditional Silicon Valley obsession with 85% SaaS gross margins often masks cash burn hidden in R&amp;D accounting tricks.</li>
+<li>Free cash flow and solving massive, difficult physical markets (like energy, manufacturing, and defense) dictate true long-term value, comparing favorably to modern giants like Tesla.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"We never thought ourselves as venture capital. We call it operators with capital because we are operators with capital."* — Lior Susan
+</blockquote>
+<blockquote>
+*"You cannot fake it till you make it when you're manufacturing something because the yield will just be very bad."* — Lior Susan
+</blockquote>
+<blockquote>
+*"What you cannot fight against is 85% of the world GDP, roughly 100 trillion, is in the physical world."* — Lior Susan
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">You want to back startups that make actual physical stuff. The firm is at 12.5 billion AUM, which might be changed already. I'm not sure. I hope it's changed to the upside. We just named two IPOs, both Cerebras that we did and SpaceX, both in physical industries. They're doing extremely well. What you cannot fight against is 85% of the world GDP, roughly 100 trillion, is in the physical world.
+
+You're an experienced banana farmer. That's probably my number one achievement in life. What were the biggest lessons that you learned? Banana farming, it's hot in summer. But it's also the first time I was just like, &quot;I need to build physical things.&quot; This is my thing. Eclipse has 90 companies total, and 30 of them we built ourselves. Yeah, there's some amazing companies like Bright Machines, Bedrock, and Maitra and a bunch that we didn't announce yet. We never thought of ourselves as venture capital; we call it operators with capital because we have operators.
+
+All right, Leor, welcome to Sorcery. Thank you. Great to be here. So, Eclipse is on a run. Cerebras had a huge IPO. Yeah. The firm is at 12.5 billion AUM, which might be changed already. I'm not sure. Yeah, I hope it's changed to the upside. Yes. So, for people who don't know Eclipse, can you give a little bit of the background?
+
+Yeah, I think the short story is we started the firm 11 years ago. I know that we are counting as a venture capital for our limited partners. We never thought of ourselves as a venture capital. We call it operators with capital because we are operators with capital. We all left industries in order to go and build a firm that allows us to build companies in the industries that we are passionate about, and that's physical industries. Yeah, you're right; maybe in the first eight years, manufacturing, space, semiconductors, defense, and mining were very much kind of in the corner when software was doing really well, and enterprise software and cryptos and consumer and fintech. It definitely changed in the last two years and I couldn't be more excited about just the opportunities that there are right now in the world to build. It feels like the best founders want to build them, it feels like the world needs more of them, and yeah, we just named two IPOs, both Cerebras that we did and SpaceX, both in physical industries. They're doing extremely well. So, exciting times.
+
+Really exciting. We just had Andrew on, and that was a really fun interview. Yeah, he's funny. He's great. He's funny. He's really funny. He did name at the end, when I asked, you know, who inspires you, like who are those kinds of people for you, and he specifically called out Pierre, your partner. Can you tell more about Pierre? I know we were talking about this off camera, but this story is insane.
+
+Yeah, the story is pretty crazy. We were like this odd couple in the first seven years of Eclipse. When I was leaving Flex, I was thinking to start a vehicle that would allow me to build and invest in companies in the physical world. I got introduced to Pierre and this is early 2015. I'm 31 years old and Pierre is 85 years old, and we're having a meeting and like always, I'm not doing my homework and I don't know who the guy is. I see this older-ish person stepping into the room wearing a suit, full cologne, and he's like, &quot;Okay, young man, what do you want to talk about?&quot; And I'm like, &quot;I don't know, got introduced, but you know, I'm thinking to start a firm or a vehicle that will allow me to build companies in the industrial space.&quot; In a very Pierre fashion, after 10 minutes he interrupts me and says, &quot;Okay, young man, we're going to start a firm together.&quot; And I'm like, &quot;Sir, A) I didn't finish high school, B) I never invested a dollar in my life; I'm a builder, I know how to build, I'm excited to build companies in the sectors.&quot; And he says, &quot;Hey, I will teach you everything you need to know about that industry.&quot; And like four months later, Eclipse was born.
+
+So yeah, Pierre is a special, special man. As I told you off-camera, I'm taking him for dinner tomorrow for his 96th birthday and he's still mentoring most of us on the team. But he worked with us seven years full-time in the office and brought a lot of what I think maybe this industry was originally when he started at Sequoia, because Don was his VP sales at National and they left to start Sequoia, and he was there for 35 years. We had a huge privilege to just hear the stories and learn from him of what that industry was originally designed to be. It's actually very different today. You know, they were all operators, they were all hands-on, they did very few deals, they had a very gentlemanly relationship between the firms. He told us so many stories about Sequoia and Kleiner saving companies for each other. Something that—what? Can you imagine calling another VC today like, &quot;I have an issue with this company, I need you to come put capital and help me save that company&quot;? It will never happen. You'd probably get the phone call of like, &quot;All of my companies are doing amazing, up and to the right, come preempt the round.&quot; But yeah, Pierre and I were that odd couple and I said on his 95th birthday that for me, he is somewhere between a father, partner, mentor, friend, kind of all of the above. He is probably one of the most amazing persons I ever met in my life.
+
+And what kind of work culture did he bring to Eclipse? Yeah, I grew up in the special forces. He grew up naturally in World War II, got himself moved from France to the US for school, met Gordon Moore and got into Fairchild. Left Fairchild to do National, left National to start Sequoia. So I'd say he's a very disciplined person. The three values I can think about for Pierre are discipline, discipline, discipline. I think where I grew up, and that also maybe nicely connects to the companies that we like to build in this physical world, discipline is really important. You cannot &quot;fake it till you make it&quot; when you're manufacturing something, because the yield will just be very bad. He brought a lot of institutional knowledge of investing, managing your board, and how you write your quarterly reports. I think in some way, in our first year of Eclipse, we already operated in a way that maybe a firm that has been around for 10 years would, everything was much more institutional. But he also has a huge heart, although he tries to hide it. Really? Yeah. Yeah. He really cares. And you don't need a 90-year-old person to go to the office every day to teach other people how to do venture. You don't. Yeah. Well, it seems to be working. Yeah.
+
+So, you were founded in 2015. Yeah. You raised your last fund. It was split between two funds about three months ago. 1.3 billion. Okay. So, I want to go through your investing strategy because you did say you're operators with capital. It's completely different from the traditional VC game that's happening here in Silicon Valley because of that hands-on approach. So, when you talk about venture equity and this incubation strategy, how does that work and what are some of the companies that come out of it?
+
+Yeah, I would say I don't know if that model is perfect for everyone, just to be clear. I do think that for companies that are building in the physical world, it actually doesn't make sense to get only passive capital on your board. You need to know manufacturing and supply chain. You need to know how to deal with capex. You need to know how to deal with the government. You need to know how to think about subsidies. You need to know how to leverage debt versus equity. You need to know how to hire the right engineering team, regardless if it's mechanical or electrical, how to think about it holistically because you build a system. You don't build an app that you—if you're good enough of a founder—just take the capital and you build a great app and there is a great outcome.
+
+I also think that if you're looking at the generational change, we started kind of mobile to cloud, so internet to mobile to cloud to SAS enterprise software. I think what we are seeing in the last 10 years is basically this full stack of tech companies taking on a full industry. Cerebras is taking on the compute industry, SpaceX is taking on the space industry, and a bunch of others. These are much more complex businesses to build, much bigger if you're successful. But our model was: we were on the other side as operators, and we felt like, &quot;What would be the most optimal thing that we could have in our investors in our previous life?&quot; We felt like we just wanted to bring that model where it's operators on your board bringing high conviction, a lot of capital, and a lot of expertise and knowledge on how to build those businesses. So that's kind of the model.
+
+On the incubation, it's two years into it. It's actually also a funny Pierre story. I'm feeling my hands start shaking and I'm like, &quot;God, I need to build again.&quot; So, I go to Pierre and I'm like, &quot;Sir, I kind of feel like building a company.&quot; And he says, &quot;Shut the door.&quot; He's like, &quot;Young man, we are investors now. We are not building companies anymore.&quot; And I'm like, &quot;Can we do both?&quot; And he's like, &quot;No.&quot; And he's like, &quot;Your lack of discipline.&quot; Just lectures me for like an hour, and I was able to convince him. And yeah, it's just amazing. I mean, I think Eclipse has 90 companies total today, 30 of them we built. There's some amazing companies like Bright Machines, Bedrock, Maitra, and Mind, and a bunch that we didn't announce yet, like the PE Energy we talked about, the battery company we also incubated. We did it from a selfish point of view because we just love building companies, and I didn't want to stop building companies now when I have the investor hat. And B, it's just keeping our operating skills fresh because when you do the transition from being an operator to an investor, 10 years into it, you're not a fresh operator anymore—not in where technology is, not in where the network of talent or customers is. Building companies keeps us fresh.
+
+So what is your process to starting the companies? But how do you pick the categories? Yeah, I don't think you can manufacture this; that's kind of what I learned in the last 11 years of doing that inside the firm. Every time I'm trying to build a system around that, I fail. Every time I think, &quot;If I only put this thing here, I will be able to build two more,&quot; I fail. Each of those things is a snowflake. In some cases, someone comes to us and says, &quot;Hey, I want to build this new HBM memory, and I want to do it with you,&quot; and I'm like, &quot;Amazing.&quot; In some cases, I'm like, &quot;Oh, the world is going into heterogeneous AI; if I can connect multiple silicons and optimize them from the networking to the kernel to the orchestration, I actually will be able to build the most efficient, high-performance, lower-cost AI data centers.&quot; Since that company doesn't exist, I just go build that and recruit the team. In the case of Rivian and RJ, we actually carved out Mind out of Rivian with him. So it's three very different models I just described, and there are like 10 more.
+
+Damn, can we go into one of those companies, maybe Mind? Yeah, I mean, the one thing we really like to build, I think about it as clusters—an industry that we know, like robotics. A lot of us built robotics in our operating life and then in Eclipse. We've been doing robotics and physical AI for a long time, before it was called &quot;physical AI.&quot; We were friends with RJ G10, one of the founders—one of the partners at Eclipse was on the founding team with him—and I'd been talking with RJ for a long time about this robotics and manufacturing landscape. It needs to be mobile, it doesn't need to look like a human—so no humanoid—and it needs to have high dexterity. You need a lot of data in order to train the model. As we were talking over the years, he says, &quot;You know, we have a small team inside Rivian that's focusing on that.&quot; We did a robotics dinner in my house with him and a bunch of other founders, and at the end of the dinner—the wine helped—I told him, &quot;What do you think about us spinning this thing out?&quot; And he's like, &quot;Huh?&quot; And I'm like, &quot;You can win all wars, we can attract better talent that will not necessarily go work today for that problem inside Rivian, we can attract external capital so it's not on your balance sheet, and it's like Switzerland; you can work with everyone.&quot; Naturally, the rest is history. We were able to carve it out and start the company with him and Rivian, and the company is just flying. It's really exciting to see all the pieces coming together, and we're going to show the first product this year.
+
+It's just so crazy to hear how close to the metal you actually are. I mean, I've had many conversations with many different CEOs and investors, but I don't even know what you said previously when you were talking about building a data center, but that's awesome. So, I guess, taking a step back on the macro scale of things, I talked about this with Andrew on the pod and with Tony Kim of BlackRock because we were going through all the different categories, and it's a common theme that's very ever-present: the original industries that built up Silicon Valley were in the shadows for decades, and now they're back again. Now you have, I'm not going to say &quot;tourist VCs,&quot; but you have a lot of competitive VCs coming in, claiming territory. How, if you're in the founder's seat, do you decipher who to work with and where they actually have expertise?
+
+I would say the reason I started Eclipse was from a fundamental view. It was on the back of me spending a full year in China and seeing how they innovate in the physical industries. Naturally, people don't know, but China essentially built a roughly 20-trillion-dollar economy based on the physical world. They built the entire system on these five forces: talent, policy, capital, technology, and customer demand. They aligned those five forces in a way that let the economic flywheel fly. It's actually very hard to compete against them as a standalone company. My view was, if we don't do it in the Western world, we're kind of screwed. Of course, it was from a selfish point of view because I love building those businesses. I was never a software guy, I was always a hardware guy.
+
+After talking with a bunch of firms as I was leaving Flex, it was clear to me that a lot of my generation came much more from the software world, and hardware sounds to them very scary—like low gross margin, high capex, long cycles. But that's what I love doing. I also held the view that as the world moves from globalization to deglobalization, countries will not be able to rely on buying their energy, manufacturing, and defense from other countries. It was clear to me that it's going to happen. Now, I was wrong on the timing; it took much longer than I thought. Kind of, COVID was the really first one that showed the vulnerability, and as a result, we were seeing much more of the onshoring start kicking in.
+
+What you cannot fight against is that 85% of the world GDP—roughly 100 trillion—is in the physical world. So if you're a founder and you're thinking about what is the biggest problem I can solve, you think about the largest TAM. The largest TAM is manufacturing, energy, defense, transportation, shipping, and mining. Agile software? Nothing. All the software people in the world combined are less than 20 billion, while metal manufacturing is a 3-trillion-dollar industry. When we started Eclipse, I don't have the numbers, but my guess is quite a lot of money was going into enterprise software and probably zero was going into metal manufacturing. It just didn't make sense to me. It goes back to the question of what founders starting out want to think about. It's hard. It's really hard to build these companies. It takes time, and I always have this thing in my brain, like you have 500 planes that all need to land perfectly. That's kind of what we do. The wafer needs to show up to the cold plate, to the PCBA, to the full systems, to the kernel software, to the customers, to get the yield, and everything needs to work perfectly. It's just really hard to do, but I cannot do anything else in life. I'm just passionate about it.
+
+It is interesting; SK Hynix recently went public. When you look at the memory world, there's literally three players. We went so long, and there's only three players, and there's a massive shortage, as you would know in the chip industry. Yeah, totally. That was kind of my point. I was like, &quot;Okay, Micron, SK Hynix, Samsung—if you're looking at HBMs.&quot; When I started Eclipse, I was like, &quot;It's really odd because there's 10,000 SaaS companies; how can it be that there's only three memory companies?&quot; Then when you actually go deep, you're like, &quot;Okay, it's capex, you need a lot of engineering, you need the five forces I was talking about.&quot; That's what Eclipse is expert in, and we are building a new memory company. It feels like the best time in the history of humanity to build those industries again.
+
+So how do you then overlay the venture model on top of these industries, and how do you refute the thesis that these industries are not going to produce SaaS multiples? I know that's technically flipping now, but could you explain that? Maybe it's a little bit connected to the &quot;tourist&quot; comment you made before. I think we, as Silicon Valley and the venture world, got stuck on the idea that SAS and gross margin are the most important metrics. Naturally, if you are a public company, what matters is free cash flow. Gross margin is just an indicator of potentially what your free cash flow is going to be. You're going to trade based on EPS, which is based on your free cash flow.
+
+If you tell me you have an 85% gross margin business, but you're not in agile software—you're just standard software, and you're building a new CRM again because there's a million of them—well, the TAM is not huge, maybe 30 billion, and there are a thousand companies doing a CRM. What happened with a lot of those SaaS companies is their growth was correlated with the way they were burning money. We mechanically moved the engineering spend from what's supposed to be in COGS to R&amp;D, and it was an accounting trick. So your gross margin is high, but you still need to continue to hire engineers as the business is growing. In our world, you cannot do it; there's a hard COGS and an accountant will not let you. So maybe your gross margin will not be as high as the SaaS company, but I'm a fundamental entrepreneur. On a fundamental basis, I always ask the trick question: &quot;How big is the market?&quot; 20 billion is not big enough. &quot;How differentiated is what you do?&quot; and &quot;Do you have the right team to go solve that really tough problem?&quot; Tesla trades like the best SaaS companies in the world. Cerebras has, what, 40-50% gross margin, and they trade way better than most SaaS companies because they solve a really tough problem in a gigantic market and they get paid for it. That's what I do for a living.
+
+I want to go through some of your portfolio because you have some really fun names in there: Ursa Major, VulcanForms, Bright Machines, Augury, Skyrise, Oxide, Wave, Bedrock, True Anomaly, Redwood Materials, Arc, Verata, and Anduril. Let's base it off the latest fundraise. Of the physical industries you're going after, what are the main categories? When you raise money in our world from endowments and pension funds, they always have this question about portfolio construction. I always have the exact same answer: my portfolio construction is not to have a portfolio construction. I see people calling me saying, &quot;Hey, can you introduce me to Bedrock?&quot; and I'm like, &quot;Okay, why?&quot; They say, &quot;We must have a physical AI company in the portfolio,&quot; and I'm like, &quot;I don't have to have anything. I have to have companies I'm obsessed with.&quot;
+
+What I think is really interesting is that we went deep historically on semiconductor, and I think people think about semiconductor as just &quot;the chip.&quot; There is so much around capital equipment, testing, lithography, supply chain, packaging, and subcomponents. That world is really big and growing at a rapid pace. We really like new types of energy sources. We think energy is a gigantic market, so we did a play in nuclear, sodium-ion, peak energy, and TNC. We have Redwood on the LFP recycling side, and we just did a gas turbine company that is building a modern version to compete directly with GE. In the energy sector, there's a lot to do. AI is definitely a factor, and we aren't doing anything in foundational models or LLMs. We catch AI on both sides: the picks and shovels, and then we apply that to the physical world with physical AI. I know nothing about bubbles or valuations; I only know how to build. But there is so much to build.
+
+What are you most excited about? I told that to my daughter. She sees so many people coming to our house that I'm building companies with. She's 11 years old, but she can take you down on term sheet negotiations. She asks me, &quot;Which phase are we in on building companies?&quot; Because she was born into it. She's actually the same age as the firm. We have an Eclipse Kids Day, and we take all the kids of Eclipse to visit two or three of our companies, and then we end up in my house for a pool party. The kids ask me some really good questions. What I told her is: &quot;We are probably in the most interesting time that humanity ever had around building. We are at the very cutting edge of the spirit of building those businesses, and we better not screw that moment.&quot; We have capital, talent, government support, and technology. I believe we can grow 5-7% every year, and I'm going to work really hard to see it come true. It's the best time in the history of this country to build companies.
+
+That's very optimistic. I'm super optimistic about this country and the opportunity. We just had David Friedberg here, and he was talking about how the economic system in America is backward. He thinks you shouldn't be taxed 40% on labor and only 15% on cap gains; it should be the opposite. I agree, it should be the opposite.
+
+Let's go through Redwood Materials. That's a really interesting story in the energy space. Came from Tesla. How did you guys get involved? Joe, one of our partners, worked with JB for a long time on the board, and Greg, one of our other partners, ran operations and manufacturing for Tesla for the first eight years with JB. So we always had a close relationship with the Redwood team. They originally started on recycling, but then they started talking with us about energy storage and taking the batteries they recycle and rebuilding them for very large energy storage for data centers. That's also when Chinese companies started getting blocked from selling energy storage to our grid—good idea. We felt the moment was right and led a very large round. We also brought in Deepak as CFO; he was the CFO of Tesla for many years, so the band is back together.
+
+For Cerebras, the first act was to build a chip, the second was to build a system, and the third is to build data centers. For Redwood, the first act was recycling, the second was selling energy storage. SpaceX first act was launch, second act Starlink. True Anomaly, first act space defense, second act Golden Dome. When you build something in the physical world, if you're successful, you have the ability to introduce multiple new businesses that grow your wallet share.
+
+Most of these come back to AI and data centers. How do you think about customer differentiation, moats, and long-term durability? Are you focused on building them now, or servicing those customers? In the sectors we operate, there are no $10,000 ACVs. We signed many tens of billions in commercial deals last year. Some were double-digit billions, so of course you care about the customers because you're married to a large whale partner. We talked about Oxide—they're building an on-prem CPU-based rack. Our view was that not everything is going to move to the cloud. There's a lot of industries that still want on-prem for security, latency, and cost. We didn't know AI would be a thing, to be clear, but that business is growing so fast. That is typical for our portfolio: you have a whale account that does billions, and multiple other customers in the tens or hundreds of millions.
+
+On-prem is coming back into fashion. AI sovereignty is a huge topic. For the most part, owning the stack—especially in the US—owning the manufacturing, the infrastructure, everything that's being built for these models, it's obvious. We helped write a little bit of the AI Act and collaborated with the administration. We call it the &quot;Eclipse Economy.&quot; We have companies from building chips to manufacturing racks to building the data centers. On top of it, they all apply physical AI. That economy gives us a really interesting view because we're competing with China in their own way. We do very large deals and serve them with three or four portfolio companies. A dollar becomes four or five dollars because we are leveraging multiple companies. Because we're so involved, we can shape how those large deals happen.
+
+Do you get pushback for maintaining this own economy? Not yet. If we did, that means we probably did something well. I think Elon is having his own little economy between SpaceX, xAI, and Tesla, and it works well. I'm sure he gets pushback, but it works.
+
+Is there anything we haven't covered that you're excited to talk about? I'm optimistic about America. People don't understand that when you build in the physical world, you have an impact on the rest of the country. I'm so sick and tired of the pushback on data centers. When you build a data center in Nebraska, you create thousands of jobs. It's a circular economy. You need energy, construction, materials, housing, restaurants. The whole flywheel of the economy kicks in. That's what China did well, and it's the first time we have an opportunity to do it at scale here in the US.
+
+Final questions. You're an experienced banana farmer. That's my number one achievement in life. What were the biggest lessons? It's hot in summer. Carrying those bunches—they weigh 60 pounds—in that part of Israel is not fun. As a 16-year-old dropout, it was good discipline. That's also where I did my first welding, on the metal cranes used to transport them. Welding in a banana farm in the summer is a really bad idea, but it was the first time I realized I needed to build physical things. Would you go back? If I fail at building companies, worst case, my kids go back to the banana farm. They go every summer. My parents and sister still live there on the kibbutz. They go teach the kids how the trees grow and give them a lecture, but the kids don't care.
+
+How do you support your companies? We manage a small portfolio so we can be hands-on. I talk to our CEOs daily. You get a lot of kicks in the face in these types of companies. Recently, I had a call about a data center leakage—basically a pool rather than a server room. I put myself on a plane, flew to the Midwest, and spent 72 hours pulling our network of service providers to fix the HVAC and concrete issues I'd never dealt with before. Founders thank me for being &quot;heroic,&quot; but I tell them I don't need medals. I do it because I'm passionate about building. You must be there in the field. Are they surprised? Not anymore. Now, there's an expectation.
+
+One final question. Who inspires you? Pierre was a huge one, but since Andrew stole that, I'll use someone else. I spend time with Sam at OpenAI. I know there are various points of view about him, but I think he's special, a good guy with a good heart, and a great builder. Seeing my parents use ChatGPT is unbelievable. So, he's definitely a source of inspiration.
+
+That's amazing. I wasn't expecting that one. Well, Leor, thank you so much. It was a pleasure. Thanks for having me.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-yAsrMA_ADPc">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=yAsrMA_ADPc" target="_blank" rel="noopener">Naveen Rao: 4D Computing, AI's Energy Wall &amp; Beating Biology<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_muNFL-sKuOPm72UvG-ofixqx70KVyRS4365-fTtxH_cg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>All-In Podcast</b><span class="subs">(1.1M)</span></span><span class="dot">&middot;</span><span>22:35</span><span class="dot">&middot;</span><span>2.3K views</span><span class="dot">&middot;</span><span>2026-09-21</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Naveen%20Rao%22">Naveen Rao<span class="chip-desc">CEO, MosaicML</span></a> <a class="chip" href="index.html?q=%22Chamath%20Palihapitiya%22">Chamath Palihapitiya<span class="chip-desc">Host, All-In Podcast</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Unconventional AI has developed the world's first physical dynamical computer—a 4D computing chip that merges memory and compute without von Neumann architecture—achieving a thousandfold improvement in energy efficiency to solve AI's impending power wall.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">Exponential Token...</div>
+                    <div class="sum-full" id="full-1"><h3>TL;DR</h3>
+<p>Unconventional AI has developed the world's first physical dynamical computer—a 4D computing chip that merges memory and compute without von Neumann architecture—achieving a thousandfold improvement in energy efficiency to solve AI's impending power wall.</p>
+<h3>The Energy Crisis in AI</h3>
+<ul>
+<li><strong>Exponential Token Growth:</strong> <strong>Google</strong> alone crosses 3.2 quadrillion tokens per month, demanding roughly 12 gigawatts of power for AI services alone (with total U.S. data center capacity sitting around 40 gigawatts).</li>
+<li><strong>The Power Wall Timeline:</strong> <strong>Naveen Rao</strong> estimates the industry will run out of energy within roughly 3 years due to the massive gap between exponential AI market demand and linearized energy supply.</li>
+<li><strong>Cost Structure Shift:</strong> Energy now accounts for roughly 50% of the cost of serving a token, forcing data center operators to prioritize securing power contracts above all else.</li>
+</ul>
+<h3>The Biological Paradigm &amp; 4D Computing Architecture</h3>
+<ul>
+<li><strong>Biological Efficiency:</strong> Human and animal brains operate on remarkably low energy—ranging from a 20-watt human cortex down to an 8-milliwatt squirrel brain capable of highly precise, complex navigation.</li>
+<li><strong>Eliminating Data Movement:</strong> Standard GPU computing systems move nearly 30 trillion bits in and out of memory per second outside the chip (and 10x-100x more inside), whereas the human cortex moves only about 16 billion bits per second.</li>
+<li><strong>The 4D Dynamical Computer:</strong> <strong>Unconventional AI</strong> built a chip using "4D computing," leveraging three physical spatial dimensions (including die stacking) and one time dimension in the dynamics. </li>
+<li><strong>Integrated Memory and Compute:</strong> Unlike traditional von Neumann architectures that shuttle data back and forth between separate memory and processors, dynamical computers combine compute and memory into a single element where individual computing elements act as memory.</li>
+</ul>
+<h3>Technological Breakthroughs &amp; Prototyping</h3>
+<ul>
+<li><strong>Dynamical Systems &amp; Sparsity:</strong> By utilizing dynamical systems theory (emergent behaviors from simple interconnected components, akin to synchronizing metronomes) and introducing *sparsity* (discarding non-essential connections), the system becomes more scalable, trainable, and performant.</li>
+<li><strong>Rapid Hardware Prototyping:</strong> Starting in January, the team taped out their first physical dynamical computer design to the fab on June 1st (5 months later) and successfully generated the world's first images from such a computer.</li>
+<li><strong>Power Efficiency Gains:</strong> The physical prototype achieves image generation at roughly 500 nanojoules per image, representing orders of magnitude greater efficiency than standard GPUs.</li>
+</ul>
+<h3>Product Roadmap, Software, and Team Dynamics</h3>
+<ul>
+<li><strong>Product Form Factor:</strong> <strong>Naveen Rao</strong> states the company is building a full data center rack system (a new data center product) where users feed tokens in and get tokens out through a network cable, while the inner guts run on dynamical computing.</li>
+<li><strong>Model Compatibility:</strong> Existing AI models are ported at the model layer rather than the operations layer; the system implements time-varying behaviors that can be characterized mathematically as state transitions without relying on traditional linear algebra/floating-point hardware math.</li>
+<li><strong>Multidisciplinary Workforce:</strong> <strong>Naveen Rao</strong> notes the company bridges a massive talent gap by combining theorists with math/theoretical neuroscience PhDs (studying dynamical systems) with physical chip architects, coordinated through a Python-based software library designed to express stochastic, time-varying elements.</li>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Naveen Rao</strong> predicts the industry will run out of energy within roughly 3 years.</li>
+<li><strong>Naveen Rao</strong> sets a timeline of within 2 years to deliver a full data center rack product to market.</li>
+<li><strong>Naveen Rao</strong> targets hitting the physical limits of 2D lithography within 3 and a half years (accelerated from an initial 5-year estimate).</li>
+<li><strong>Naveen Rao</strong> states the overarching long-term goal of Unconventional AI is to beat biology in intelligence-per-watt efficiency within the next decade or so.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"I don't think you really understand something until you can build it."
+— <strong>Naveen Rao</strong>
+</blockquote>
+<blockquote>
+"Computers have been built up with these abstractions... each one of these abstractions actually is lossy. It means it's inefficient. It doesn't contemplate all the complexity underneath it."
+— <strong>Naveen Rao</strong>
+</blockquote>
+<blockquote>
+"We want to beat biology. We want to make something better and enable compute everywhere including compute in new robotic forms... in the next decade or so."
+— <strong>Naveen Rao</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">Naveen Ralph, co-founder and CEO of Unconventional AI, is an AI chip startup founder. He is best known for building and selling two deep tech companies. Naveen is kind of definitionally an outlier founder. When I came there, we had about a $20 million business and it was, you know, 7 or 800 million when I left. I don't think you really understand something until you can build it. Just because something is tried does not mean it's wrong.
+
+I'm the opposite of an AI doomer. I think AI is the next evolution of humanity. We need innovation on the hardware substrate to actually build true intelligence. Please welcome Naveen Ralph. Hey everyone, great to be here. You know, switching gears a little bit to AI now, which you may have heard a little bit about. It's super exciting to be at this conference specifically because, as was said in the intro, I'm the opposite of a doomer.
+
+I think AI is one of the most transformational technologies that humanity has ever created and will enable us to get to that next level of evolution, which I'm here for, and this is sort of the anti-doomer conference. So, let's go. Before we get going, I'll tell you a little bit about myself. You know, it's kind of weird; I'm really right where I wanted to be my whole life. This was me at about five or six years old, something like that. We had a computer very early on, so I'll date myself, but this was in 1978. We got a computer. This is probably in the early 80s. I learned to program when I was a little kid. I just thought it was like a puzzle. 
+
+I became an electrical engineer really because I enjoyed sci-fi and always wanted to think about how I could make an intelligent machine. And you know, then after a career in building computers, I went back to school and got a PhD in neuroscience, and the idea was like, let's go back to that thing: how do we make computers intelligent? Fortunately, the whole world kind of moved in this direction. So, you know, as a technologist, it's sort of the dream right now. A little bit about me from a company entrepreneurship standpoint: I actually founded the first AI chip company called Nirvana Systems. 
+
+So this was in 2014; if anyone remembers back then, there was no AI, or at least not in the common vernacular, and it was really hard to actually convince people that this is important, much less to build hardware around it. Now you heard from Jensen up here—the largest company in the world is a hardware company because of AI. So we were early on. I think I sold the company way too early to Intel, but I started and ran the AI group at Intel. After I was done with that in 2020, I actually started thinking about the next problem, which was how do we build bigger models like the large language models we talk about today. 
+
+It was about how do I build the infrastructure to build those models. And so we started platformizing GPUs and enabling it to scale and making that easy to use for other people. And after ChatGPT happened in 2022, we were kind of the best game in town for people to start building their own models, so it took off really fast. We decided to actually join forces with Databricks; that was in 2023, and actually, that's a quarter of the total revenue of Databricks today. So a lot of fun doing that whole thing with Ali and team at Databricks.
+
+And now I want to tell you about Unconventional AI, which is rethinking the foundations of how a computer works. We are going back to first principles here to really try to build a new machine. Computers have worked a certain way for a long time. We want to rethink that for the singular purpose of making something very power-efficient. The goal was initially within 5 years to get to a 1000x power efficiency. I've actually revised this to three and a half years because things have gone faster than we anticipated. We've actually solved very deep scientific problems quicker because of AI, interestingly enough.
+
+Just a little bit: how are we organized? We're truly a top-to-bottom company. We start with theorists. These are people with math PhDs and theoretical neuroscience backgrounds, that kind of thing. They come up with concepts that we think would effectively give us more power efficiency from the perspective of moving less information around. We then translate that into models that do real things, trained on real data and evaluated against real criteria. So it's kind of the rubber hitting the road of these concepts. Then eventually we have to actually build something physical. These are people who architect a physical circuit, actually design those circuits, model them, and see if it actually works, and we try to connect this whole stack together. Then eventually we have to build a system and a board and all that kind of stuff and build a product.
+
+So is energy really a problem? I'm not sure how much everyone in this audience has thought about this, but interestingly enough, I'll give you some data points here. This is one company. This is just Google. I'm using Google because Google has actually talked about this publicly. Per month they cross 3.2 quadrillion tokens. It's a crazy number. I never think in quadrillions, but that's the world we're in today. And if I just take 10 joules per token of energy—this is actually on the lower end of the energy spectrum for models—but let's just take that number and multiply it out. This is 12 gigawatts. 
+
+The US puts about 40 gigawatts of energy into data centers today, and we're about half of the data center capacity of the world. So we're under a 100 gigawatts of data center energy in the world today. 12 gigawatts is going into one company just for AI services. So, you can imagine if models get bigger, that energy goes up, and if demand grows, which it is, that energy goes up. So we're going to run out of energy pretty fast in like 3 years or so, is my estimate. So, putting it graphically, this is what we have. We have this huge market that's growing exponentially—call it a trillion-dollar market in 2030, maybe it's bigger than that. And then we have this kind of linearized energy at the bottom. And so you've heard a lot about this today, but this gap is the problem. And we want to solve that gap with technology.
+
+I don't know if people are aware of this, but the way we think about data centers has shifted over the last several years. It used to be about floor space. Can I get the floor space? Can I get the rack space? Then it was about networking equipment. Then it became about GPUs. Today it's about energy. First you think about energy; I get the energy contract and then I have to figure out how to fill it and basically create infrastructure out of GPUs and things like this. About 50% of the cost of serving a token is energy. Every time you query something on ChatGPT, 50% of that cost is energy. The rest of it is the capex of the hardware and the floor space and all that kind of stuff. So today we sort of think about it as: I get a power contract and I need to monetize every watt, and simply put, our business case is pretty easy—we're going to monetize that 1000x better than existing hardware.
+
+So then the question becomes, okay, great, that all makes sense, but can we actually do it? How do we build a better, more efficient computer? Well, biology actually provides some proof for us here. The human brain, you may have heard this, runs on about 20 watts of energy. And what's even more remarkable to me is the animal brain. That red number is how many neurons are in the brain. And if you kind of scale it linearly down to a monkey's brain, it runs on one watt. To put that in perspective, the cell phone in your pocket runs on about one watt. And other animals like rats and bats run on milliwatts of energy. 
+
+Just something that's pretty relatable to everyone is a squirrel. You've probably watched how accurate they can be; they jump between branches and they do it perfectly a thousand times out of a thousand. Their brain runs on 8 milliwatts of energy. You could run over 100 squirrel brains on your phone and it has very precise and accurate behavior. So biology created something quite incredible; in fact, it's the right kind of physical substrate for intelligence. This is a quote I love: &quot;I don't feel like we truly understand something until we can create it.&quot; We've gotten a lot better at creating intelligent systems; however, they do it in a kind of inefficient way.
+
+What kind of inefficiency is there? Well, as I kind of hinted at the beginning, most of the energy in a computing system goes into moving information around. Just to put some numbers on it, the human cortex—the squiggly part of your brain, the outside of it—only moves about 16 billion bits per second. That's actually kind of a small number if you think about it because there are some 13 or 14 billion neurons in that cortex. A GPU or a high-end computing system moves nearly 30 trillion bits in and out of memory per second. That's outside the chip. Inside the chip, it's probably 100x more than that. So we're moving a lot more bits in these synthetic systems than the brain does, and that's actually what drives the energy demand.
+
+How did we get here? Computers have been around for hundreds of years, actually, in some form. They were mechanical. They became analog around the turn of the century, and they became digital back in the 1930s and 1940s. The operation of that computer in 1945 is actually very similar to how they operate today; there's not a huge paradigm shift. You actually have this memory on the outside, you have some kind of computing, and you move bits back and forth. That operation creates a machine that just requires a lot of movement, but it's very fast. We built computers to be fast; they were always faster than the alternative. 
+
+Incidentally, that computer in 1945 that was built, called ENIAC, was built to do artillery trajectory calculation, and it was built to do it faster than the alternative. The alternative were humans who actually did the calculations. Now, the alternative typically is some other computer; this computer is twice the speed of that computer. That's how we sell computers, but it doesn't contemplate energy efficiency, and that's what we're changing. These have been trends going on for a long time where the number of transistors kept going up, but we couldn't keep scaling the frequency. We couldn't keep scaling single-thread performance. Now we're actually not scaling efficiency any longer. Moore's law—if you may have heard of this—making transistors smaller has largely ended. So we're not seeing efficiency gains just from making transistors smaller. We need to rethink the problem a bit.
+
+How do we do it? Well, a good intuition is that we cut out the middleman. Computers have been built up with these abstractions. I mentioned digital; digital means one and zero. That itself is an abstraction of the physical world. We don't actually have systems that behave as one and zero. A transistor actually has states in the middle, but we engineer it to behave that way, and that's an abstraction. We kept building these abstractions up and eventually we started creating neural networks and learning machines on top of it. Each one of these abstractions is actually lossy; it means it's inefficient; it doesn't contemplate all the complexity underneath it. That's why it's an abstraction. 
+
+So what we're doing is simplifying this in some sense. We find an abstraction of the physics of the semiconductor and connect that to the neural network. If you think about your brain for a moment, it has a bunch of neurons in it, but there's no linear algebra. There's no floating-point math. It's actually the physics of the neurons that give rise to intelligence. We want to mimic some of that with a semiconductor. And this is also not a new concept; there's actually computation all throughout nature. Birds in a flock may show you things like this where a bird does a simple behavior. It looks left, looks right, and figures out where the next guy's going. And when they do that, they actually create these interesting flocking behaviors, this emergent behavior. And we see that with ant colonies; they do intelligent things just by very simple rules. This study is called dynamical systems theory; it's basically how I get these emergent properties from very simple behaviors of individual components. Our brain actually works this way as well. So we're taking these ideas and actually starting to build circuits out of them.
+
+Let me give you an example of such a system. Everyone here probably knows what a metronome is; when you're learning to play the piano, it's just a physical tick-tock thing moving back and forth. This is kind of cool: if you put multiple ones of them on a rigid plank and that plank can just roll back and forth, you'll actually see them start to synchronize. And that's just due to the physics of the system. They each push against the plank just a little bit. And even if they're off by a little bit from each other, they'll all synchronize to exactly the same phase. You can actually scale this up to hundreds of metronomes on a physical system, and they'll all synchronize. This is actually a form of a dynamical system that goes through some starting point of all these different phases and always synchronizes. You can imagine a slightly more complicated version where maybe they don't all synchronize; maybe half of them are synchronized with each other and the other half are synchronized in an opposite pattern. But the idea is that this is a physical system that behaves the way it does just by the inherent interconnection of the system itself.
+
+We asked the question: can we actually use such a system like that metronome system to do computation? We want to connect that to generative AI; that's what we really care about. We released a model we called UNO, which actually demonstrated this. It's an image generation model that's built on a set of oscillators like that. We simulated it and made it open source so people can play with it. But this was the first demonstration that I can actually scale something up, train it, and actually get useful output like image generation. This is some of the analysis that we provided in that write-up. What you're seeing here is what we call state space trajectory; it's basically how the system evolves in time. You can imagine if you characterize the state of the system as all the phases of those oscillators and then look at how it evolves through time, and you basically condition that on the output—you say &quot;I want to generate an airplane or a car or a bird&quot;—it'll actually go through different state space trajectories. And so that's what we're seeing here, just an analysis of this. These are actual images that were generated by it.
+
+It turns out we actually started to build a lot of that fundamental science up over the last couple of months. We found other things that enable this to work even better. This is a concept of what we call sparsity. Sparsity means that if I have, let's say, a bunch of elements all connected to each other like we have on the left-hand side there, if I have 10 elements I want to connect them all to each other, I have 10 times 10 elements, so I have 100 connections. That's okay, but if I have a thousand, now I have 1,000 times 1,000, which becomes a million. So this doesn't scale very well; we call this n-squared scaling. So the more I add, it actually becomes way harder to scale. Sparsity allows us to actually say, well, can I throw away some of those connections? If I throw them away now, can I actually rescue the behavior of the whole system? It turns out you can actually not only throw away some of the connections, but you can actually get better behavior out of the whole system. It actually becomes more trainable. There's a lot of theoretical reasons for this, but we're actually able to do this in not only simulated systems but actually real physical systems. So, it's one of these rare things where you get something that's more efficient, that's actually more scalable, and even gives you more performance.
+
+This is actually the first time I'm talking about this publicly. I wanted to do it at this venue because I think it's a really big deal. This is actually the first physical dynamical computer ever built. We did this in 5 months. This company started in earnest in January. We didn't even have a team, but we said we're going to build this first physical prototype and do it this year. We taped out the design, meaning we sent it to the fab on June 1st. The chip is back in our lab, and we actually have results from it. These are the first-ever images generated from such a computer. Great, cool, but does it do anything useful beyond just images? You can actually do any kind of task like sequence modeling or language models. But the interesting thing here is it's only 500 or so nanojoules per image. To put that in perspective, a normal computer like a GPU is on the order of millijoules. Nanojoules is 10 to the power of negative 9. It's really small. So it's many orders of magnitude more efficient than a standard computer, and it's because it just doesn't move information around. This is proof positive this works.
+
+What's cool here is this is really the emergence of something new. Computers have gone from CPUs to GPUs, going more and more parallel, to compute-in-memory, which is even more parallel and fine-grained. But all of these are what we call von Neumann architecture; they have memory and compute, and we move information back and forth. What we built is what's called a dynamical computer, which actually has compute and memory in one thing. We don't have a memory interface; each individual computing element is a memory. So it's a completely different way to look at the problem. We call this 4D computing where we use the time dimension in the dynamics, and we actually use the physical three dimensions of die stacking—putting things vertically—as well as in a planar form. So we have three dimensions from the physical and one dimension in time. This is a new way of thinking about a computer, and it is really proving to work for efficiency's sake.
+
+What are the implications if we build something that's a thousand times more power-efficient? I think this is actually pretty cool. Intelligence per watt is what we care about. Can we optimize this and make it better over time? There is actually a thermodynamic limit which you can never exceed. Animal brains are somewhere within one or two orders of magnitude of that. Today we're on the far left of this graph and we're about 10 billion times away from that thermodynamic limit. We think in that three and a half years we can hit the limits of 2D lithography. The overarching goal of this company is to beat biology. We want to make something better and enable compute everywhere, including compute in new robotic forms, in the next decade or so. 
+
+I think what will be interesting is that we'll see the shift going from big data centers with gigawatts to many small data centers all over the place. I think this is a good thing; it actually makes things that are more environmentally friendly, more local, and more adaptive. As I said, I think enabling the ability to build billions of robots that dynamically assemble to solve problems in our world is actually really cool. This is something that will enable us to think about bigger problems and do even more. I talked about AI being a trillion-dollar market. Well, if we disrupt it by 1,000x, there's a concept called Jevons paradox, where when you drop the underlying cost of an asset, you actually consume more than the drop of that asset. If you make something half the price, you'll consume more than 2x. If you make something 1/1,000th the price, you'll consume more than 1,000x of it. I think this will create the largest market that humanity has ever seen.
+
+I mean, that was extremely unexpected. I got to say that was pretty amazing. Let me start with actually probably the thing that's on everybody's mind, which is, to the extent that this works, Naveen, you probably saw Jensen earlier—there just needs to be an entire ecosystem of people that are beside you and around you, whether it's the fabs, packagers, etc. What does it take to get from this early version to something that sits in somebody's hand or that people use, and how do you see that path in terms of time and complexity? What does that look like?
+
+Timewise, we're within two years of getting it to a full product. It's a VM that sits somewhere that you guys manage, and effectively we're building a new data center product—it's a whole rack system. The idea is that basically we'll run those models on it. Tokens in, tokens out through a network cable, but the inner guts are completely different than an existing computer.
+
+Do you expect that you'll have to move to support the existing model families and architectures? Will this work in a world where we've spent all this time—KV cache and all this—mechanically reductive based on, as you said, these abstractions that we've lived on? How do you expect the rest of us to move towards this? We'd all want that efficiency curve. How do we take advantage of it?
+
+I think there's a sliding scale between how much better something is and how much pain you'll take to move to it. I basically took the tack of, &quot;Let's make it really, really compelling to move.&quot; There is going to be some work to port things over. We actually don't port at the operations layer; you port the model layer. Existing models will work, but there's a fair bit of compute required to make that transition happen.
+
+And very basic elements like matmul—does that exist in your system? It doesn't exist. You can characterize it as matmul, but it doesn't implement it as matmul. It implements it as a sort of time-varying behavior. Each one of those time steps can be analyzed as basically a matrix of the current state times a transition matrix.
+
+When you're building a team like this, who are these people? Biologists plus physicists plus what else? It's theorists who come up with these ideas; dynamical systems theory has been around for 100 years. So we got people from that world, and then we got people who actually build chips, and they don't talk to each other. We had to facilitate that. That's one of the most challenging things about this company—the span of talents is so big that getting them to coordinate and build one thing is pretty hard.
+
+And what is this, like a CUDA equivalent, if you will—just to use a bad analogy—that allows these people up here to talk to these people down there? We've built a set of libraries in Python. It's Python, not CUDA, but it's a language of sorts that allows you to express time-varying elements that have stochastic behavior. I mean, it's incredibly impressive. It's so ambitious. Thank you very much; it's great to see you.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-s9oBPmKP8Xg">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=s9oBPmKP8Xg" target="_blank" rel="noopener">QIA, Apollo &amp; Goldman CEOs on Global Capital<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_lRvu0tqvKCabP6OVwYB-i82uW31tJyHlrreXfp4Oz-7P0=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Live</b><span class="subs">(196.0K)</span></span><span class="dot">&middot;</span><span>30:36</span><span class="dot">&middot;</span><span>34 views</span><span class="dot">&middot;</span><span>2026-09-21</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Mohammed%20Saif%20Al-Sowaidi%22">Mohammed Saif Al-Sowaidi<span class="chip-desc">CEO, QIA</span></a> <a class="chip" href="index.html?q=%22Marc%20Rowan%22">Marc Rowan<span class="chip-desc">CEO, Apollo Global Management</span></a> <a class="chip" href="index.html?q=%22David%20M.%20Solomon%22">David M. Solomon<span class="chip-desc">CEO, Goldman Sachs</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Global capital allocators emphasize that deploying capital successfully requires looking past daily noise to focus on 5-to-20-year trends, navigating an unprecedented technology supercycle, and managing structural shifts across energy, infrastructure, and geopolitical fragmentation.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2"></div>
+                    <div class="sum-full" id="full-2"><h3>TL;DR</h3>
+<p>Global capital allocators emphasize that deploying capital successfully requires looking past daily noise to focus on 5-to-20-year trends, navigating an unprecedented technology supercycle, and managing structural shifts across energy, infrastructure, and geopolitical fragmentation.</p>
+<h3>Macro Trends &amp; Geopolitical Fragmentation</h3>
+<ul>
+<li><strong>Long-Term Forces:</strong> <strong>Mohammed Saif Al-Sowaidi</strong> identifies four structural forces driving multi-generational funds: AI innovation, geopolitics and trade, demographic shifts, and fiscal discipline/non-physical balance sheets.</li>
+<li><strong>Capital Abundance vs. Ideas:</strong> <strong>David M. Solomon</strong> notes that capital is a commodity while governance, security, innovation, and open markets are scarce and drive capital to productive locales.</li>
+<li><strong>Geopolitical Friction &amp; Supply Chains:</strong> <strong>David M. Solomon</strong> observes that the current period of fragmentation and trade barriers will persist, requiring a long-term view rather than short-term reactivity. <strong>Mohammed Saif Al-Sowaidi</strong> adds that fragmentation pushes up inflation and increases the CapEx required for defense and infrastructure.</li>
+<li><strong>Supply Chain Resilience:</strong> <strong>Marc Rowan</strong> argues that current de-risking and supply chain testing are positive, noting that not addressing these risks for 15 years was more dangerous than addressing them now.</li>
+</ul>
+<h3>The AI Supercycle &amp; Infrastructure Demands</h3>
+<ul>
+<li><strong>CapEx and Financing Scale:</strong> <strong>Mohammed Saif Al-Sowaidi</strong> points out that AI capital expenditure is the largest ever privately financed infrastructure spend, with hyperscaler and related spending projected to reach $1.5 trillion to $2 trillion over the next five years.</li>
+<li><strong>Energy Constraints:</strong> <strong>Marc Rowan</strong> notes that energy accounts for 50% to 60% of what people expect to enable AI, shifting constraints from silicon to gigawatts and megawatts. <strong>Mohammed Saif Al-Sowaidi</strong> adds that the U.S. has not built energy capacity in 25 years but is now moving quickly into natural gas, nuclear, and other options.</li>
+<li><strong>Market Concentration &amp; Risk:</strong> <strong>Marc Rowan</strong> highlights that 10 companies now comprise 50% of the S&amp;P 500 and are all leveraged to the exact same AI trend, leaving markets vulnerable to return-on-investment realities despite fundamental change.</li>
+<li><strong>The Application Layer:</strong> <strong>David M. Solomon</strong> states that the real value over the next 10 to 20 years will be created at the application layer and through the S&amp;P "490" companies deploying AI to improve operating efficiency and earnings growth.</li>
+</ul>
+<h3>Investment Strategies &amp; Asset Allocation</h3>
+<ul>
+<li><strong>Diversified Portfolio Construction:</strong> <strong>Mohammed Saif Al-Sowaidi</strong> outlines a balanced portfolio approach: allocating roughly 60% to innovation and the remaining portion to free cash flow-generating businesses, private credit, or infrastructure isolated from disruption.</li>
+<li><strong>Private Markets &amp; Dry Powder:</strong> <strong>Mohammed Saif Al-Sowaidi</strong> notes that private equity has grown to $3.5 trillion to $4 trillion, but distributions back to investors remain low relative to massive infrastructure and energy capital requirements.</li>
+<li><strong>Physical Defense &amp; Manufacturing:</strong> <strong>Marc Rowan</strong> identifies physical AI, robotics, and defense technology as high-growth areas where 10-to-15-year replacement cycles will compress significantly.</li>
+<li><strong>Regional Allocation &amp; Europe:</strong> <strong>Marc Rowan</strong> notes that Europe is currently lagging due to a less flexible financial system and lower historical hospitality to capital, though change is underway. <strong>Mohammed Saif Al-Sowaidi</strong> highlights Southeast Asia as a promising region.</li>
+</ul>
+<h3>Fiscal Policy, Debt &amp; Inflation</h3>
+<ul>
+<li><strong>US Debt and Growth:</strong> <strong>David M. Solomon</strong> and <strong>Marc Rowan</strong> both express comfort with 5% 10-year Treasury yields, noting that rates at or above 5% characterized much of their professional lives without crushing productivity. However, <strong>David M. Solomon</strong> cautions that unchecked fiscal expansion and debt will become economic headwinds if continuous compounded economic growth does not outpace them.</li>
+<li><strong>Inflation Outlook:</strong> <strong>Mohammed Saif Al-Sowaidi</strong> flags inflation as a major factor to watch over the next 12 to 24 months, warning of potential stagflation risks and weakened consumer investment capacity due to persistent energy costs.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Capital drives what we all do. And at the end of the day, capital looks for opportunity... What's not a commodity is ideas. Locales. Security. Innovation. Open markets."
+— David M. Solomon
+</blockquote>
+<blockquote>
+"In short, we're spending every dollar euro pound since the invention of fire. The demand for capital is overwhelming, and I think capital will go wherever it is respected."
+— Marc Rowan
+</blockquote>
+<blockquote>
+"While there is that opportunities, there are also risks, involved... You need to be extremely selective because such a large cycle and a long cycle. It will take a lot of time to adapt."
+— Mohammed Saif Al-Sowaidi
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">Hello. Hi everyone. Thank you so much for the lovely audience. Thank you. Esteemed panelists, we're going to have a great conversation. We have 30 minutes to talk about deploying capital given all of the uncertainties, i.e., geopolitics, higher rates for longer, energy transition, and the reshaping of global supply chains.
+
+So, let me start off with you. When you look at the structural shifts, what do you think will have the biggest impact on deploying capital in the future? Well, you need to think of the long term. I think there are four key forces. I think ultimately we are multi-generational funds, so we tend to think about three years and five years and beyond. But when you think of the long-term lenses, there are a few forces that are major. One of which is AI innovation and when and how it will get implemented. The second one is geopolitics and trade. Third is around demographic shifts. And the last one is not on the physical balance sheet and fiscal discipline.
+
+The interesting thing is that those forces could have positive and negative correlation with each other, so someone needs to watch what are the adjustments happening along the way and the long-term focus, but also short-term tactical. It's quite difficult to come up with an actual way to know what's going on, but I think AI innovation or what it could do for humanity is huge. The only way to do it is by having a very strong foundation and a strong investment process. It's a marathon, so you check your pulse along the way.
+
+Mark, how should we deploy capital differently today than we did five years ago? You know, look, the drivers today are different. I think getting just out of the region, everywhere in the world, we are building energy. We're doing energy transmission, we're doing energy transition, we're building infrastructure, we're building next-gen manufacturing, we're ramping defense. Oh, and we're also doing AI and data. In short, we're spending every dollar, euro, pound since the invention of fire. The demand for capital is overwhelming, and I think capital will go wherever it is respected. And so, lots of demand is really driving our business, is driving what you do and driving what you do.
+
+David Solomon, I think Mark said it very well: capital drives what we all do. And at the end of the day, capital looks for opportunity. You know, I'm a pretty optimistic guy. There's certainly a lot of friction in the world at the moment, but there's an enormous opportunity. And you see it across all sectors as economies continue to evolve and capital goes to places where it's needed to drive positive results, growth, and good economic outcomes. And I think one of the things that we've all come to understand is there is an abundance of capital. Capital is a commodity. What's not a commodity is ideas, locales, security, innovation, and open markets. You know, those are the things that attract capital at the end of the day.
+
+But it's governance. Governance is not the one I was for sure on, I, David. I mean, how does it compare to prior industrial revolutions, like beyond the semiconductors and the hyperscalers? How do you invest in this? It's that we're in a technology supercycle. There are extraordinary opportunities. I think one of the things that's important to think back on and reflect on whenever we have a new technology that's driving capital and innovation—and I would be the first to say the pace of this technology has been very, very quick—is that we're changing the way the technology is deployed in the enterprise and governments into the economy. It's going to take 10, 20 years to really see the results of that and the impact of that.
+
+And so we get caught in the moment of what's going on at the moment, but what we really have to step back and understand is that this technology is going to do extraordinarily positive things for our society. There are incredible opportunities that come from it. There also are issues and processes and guardrails and governance—the smart system here that we have to really think about carefully. And that's not something that's going to be solved next week, next month, or this year or next year. That's something that's going to roll out over an extended period of time. You look at the last big technology innovation around the internet, and there were things that happened 15 to 20 years after the internet started to disrupt society that were very, very profound. So this is a long-term game; I think we all need to take a deep breath, slow down, and be highly confident humanity will be here and that we'll all be participating actively.
+
+I mean, this I guess is the trillion-dollar question, right? How do you know that there are genuine AI businesses, given all the changes and the chops, and you want to invest now for something that is here and a number-one winner in five years? When you think, we really take a deep breath, as David suggested, and you think about it, this is what we're going into in terms of CapEx required for artificial intelligence; this is the largest ever. But it comes to infrastructure, it's spent and financed privately. So the amount of capital expected to go into energy, which is about 60%, I think, or 50% of what people expect of us to enable AI, and the amount of CapEx when you combine it—I saw the charts you guys displayed on the hyperscalers and the then afterwards—I mean, you go into a trillion and a half or two, trillions over the next five years. So it's a huge spend. This has to happen in addition to AI becoming a reality, and that is actual productivity gains along the way. So, someone, we have a lot of investment ideas. You need to be extremely selective because it's such a large cycle and a long cycle. It will take a lot of time to adapt, and you avoid as much as you can making mistakes along the way.
+
+Is there a danger we're going too fast? There is a danger that we're going too fast, but I think the data coming from the empowerment, the AI activity gains, is also promising. It could be a solution to solve scientific problems around health, around drug discovery, making people's lives better. When you think about the people who have multiple jobs or all of us who spend a lot of time working, there is a probability where you spend less of your time on tedious missions and spend more time on productive missions. So while there is that opportunity, there are also risks involved.
+
+Definitely. I guess to put a finer point on it, I think we can say AI works. The fundamental change in our organizations by the marginal cost of software being driven into next to nothing has made whole businesses possible, discoveries possible, and ways we organize totally possible. What we don't know is what the return on spend will be. So I think we have to separate the two. And so I look at the leverage that the economy has to it. Ten companies now are 50% of the S&amp;P. All ten companies are levered to the exact same trend. I think that leaves us vulnerable to return on investment without any lack of confidence that we're experiencing fundamental change.
+
+That is real, and I think from a capital point of view, we have to recognize that not every bit of capital going into AI is risk capital. Some of it's going to build energy, which has lots of uses. Some of it is going into chips, which are going to be needed for lots of things. Yes, is some of it totally tied to the investment outcome of the economic business model of models? Absolutely. But the scale of it is beyond anything we've ever done previously in modern finance. It looked like an industrial, bigger than the industrial revolution; it is that fundamental. And a lot of it is being financed with equity, which I think is a decent shock absorber for the financial system with whatever risks it may present for financial markets.
+
+David Solomon, if you look at the world, we can see it's fragmented. We can see that, you know, because of tariffs and trade, does it stay this way? And how do you diversify away from geopolitical risk? It's hard to diversify away from geopolitical risk. We all operate globally; capital moves globally; markets are open, by and large, not entirely. But we're going through a period of time, and I don't think that period of time is going to be short, where there's more fragmentation out there and, you know, therefore, different barriers to growth, different frictions. I think you have to accept the landscape, have a lens that that landscape is going to be around for an extended period of time. And I think about at the margin how that changes some of your investment patterns and the flows of capital, and that's kind of what we all do for a living. And, you know, I think for most of us, for people that do that, get out of the moment and they think more about five, ten, 15, 20-year trends and try to kind of take themselves away from the noise that we all deal with on a day-to-day basis.
+
+You know, with the ecosystem of the world that we all have to navigate, that's hard. If you don't know what's happening tomorrow, or if it actually isn't, I actually think that's one of the problems. I mean, look, I'm not—I run a big enterprise, I'm not a trader for a living. I really don't care what happens tomorrow. I can't tell you what's going to happen tomorrow; I can't tell you what's going to happen in three weeks. But I step back and talk to you about things that over the next five, ten, 15 years, I think are going to happen that are going to be really important for the world, really important for capital flows, really important for economic growth, really important for productivity gains. And so I think that's the point: stop worrying about what's going to happen tomorrow and try to think about how to deploy capital to get the right kinds of returns over an extended period of time.
+
+Sheikh Mohammed used a very good analogy. He talked about an earthquake, but almost all earthquakes are preceded by tremors and plate shifts. Do we have more risk today, or did we have more risk a year or two ago? My view is this has been a de-risking. We've now tested the supply chain; we've tested resilience; we've tested the system. The risk of what we're seeing today has been there for 15 years. Not addressing it in some ways was even riskier than addressing it. And so I'm with David. You step back and you look at the long-term trends. It's why we're so bullish, and I know David's organization as well, so bullish on investing in the Gulf.
+
+As a quick note as well, I think both inspire us to spend a minute. I think the point on segmentation globally, from a global trade point of view, is a sizable one, and any type of fragmentation is a bit... you know, from an economic standpoint, this pushes more pressure on inflation and also more CapEx is required. So as a global government spending more on defense, on infrastructure, that may be unnecessary otherwise if you have a better global trade, that is less capital going to AI to actually empower it to the next level. What's interesting is that those major trends are happening at the same time, and they require a large magnitude of financing and investing. The world is looking, of course, at infrastructure, bolstering supply chains, logistics, and defense capabilities. What will be the role for Qatar? So our focus is really to focus on the investment, the global investment portfolio, as His Excellency Sheikh Mohammed indicated today, towards an establishment of a well, very well-thought-through vehicle, which is a Doha investment that focuses on the domestic enablement. More and more details will be highlighted in time, and that globally, we are trying to take a deep view of those long-term trends and trying to find favorable transactions that will fill some of those financing requirements.
+
+David, you were very clear: let's forget the noise and look long term. But again, to find a balance of globalization, reshoring, national security, how do you see that triangle? Yeah, those are... I mean that you're talking about longer term trends. And you know, I think one of the things, you know, we live in a world of media soundbites and reshoring. You know, that's a big, complex thing; everything's not going to be reshored, okay, but some things will be. You know, our job as capital allocators is to really think about how those trends will play out—what's not the soundbite in the short term, but what are the dynamics of longer periods of time? Because you can't make these changes, you can't change supply chains, without a five or ten-year view. For enterprises to change their supply chains, they've really got to have a strategic view about the direction of travel. And so I think these are complicated issues that you don't need to know the answer every day and right away; you can make bets or hedge your bets or move in a direction. You're running capital allocators from diversified portfolios where they do a variety of different things, and you can place capital in different directions; they have a hedge against that. And as you have more information and more perspective, you can move more in that direction.
+
+But the basis of all of this for capital allocators—I come back and I want to amplify this because I think this is to the point when I say I don't care about what happens tomorrow. Of course, if something awful happened or something really significant happened, of course I would care. But I've got a deep belief that one of the exciting things about the world that we live in today is that this technology is going to create productivity gains in the economy and productivity gains for people broadly that are very, very significant. And the result of that is, if we get those productivity gains and we figure this out, we can actually run economies at a higher level of base growth than we've been running. And that is a very, very powerful thing. And so, eye on the prize—the long term—that's what we're really trying to drive toward as capital allocators. We want to play a constructive role in that.
+
+To follow David, I think governments around the world understand that this is happening. There are places that have spent a little capital over a very long period of time; Qatar and the Gulf countries are massively hospitable to capital. Other places in the world that have been less hospitable for capital are trying to get their act together. They understand what David said. You're going to have winners and losers in the AI game. If you are not a sovereign or adjacent to a sovereign, are you going to experience the same productivity gains? Can the world let everyone grow the same? Or is growth going to be uneven? And I think leadership understands this, and whether political reality will allow them to move their countries far enough along to be good users of capital, good users of new technology, is a debate. I'm sorry, do you agree with all of that? I agree, I definitely agree. And I think because, as you know, you have to focus on your processes and remain having a sizable part of their portfolio, but isolated from those impacts and focusing on long-term does not mean that you always go long-term. You have to observe those trends and find your right bets along the way. There's no other way than having a diversified portfolio, and as David said, you have to worry about things that are a bit longer term.
+
+I want to talk a little bit about the U.S., but before we do that, David Solomon, is there an investment that everyone in the room thinks is obvious that you actually believe is wrong? Do you think there's something in the market that you see as... You know, I'm not a great market prognosticator, and I certainly wouldn't point to a single investment. There's a reason why I run an enterprise and I don't run a hedge fund. But you know, I think one of the things that we have to wrestle with when there's excitement about technology innovation or a new technology or a supercycle like this, the optimism in markets tends to imagine a linear growth rate up to the right that's pretty consistent and even. And chances are it won't be consistent and even. We will overestimate in some places demand, and we will underestimate or under-appreciate certain opportunities in other places. And as we have more clarity on that, there'll be recalibration around demand, valuations, etc. And that's happened in any other market cycle, and it's going to happen in this market cycle, and we'll have to navigate that. But I don't have a &quot;don't buy this, buy that&quot; point of view; that's not the way I look at the world.
+
+I 100% agree. Just hear what's going on: everyone has a job, the CapEx cycle is beyond accommodative building into the future, energy is abundant and being invested in, and government policy is massively accommodative. All good. No signs of underlying weakness. Having said that, valuation can be divorced from actual results. And as David said, we're going to have winners and losers; we're going to have dispersion. And when ten stocks are so concentrated, we could have dispersion on a large scale. Now that Mark has said this twice, that there are going to be winners and losers, when you run the next time, you can mark up what they're saying—what is... Oh, I said a very pertinent size. And those things, to add to that, I mean they're not moving in isolation. You have private markets, so the markets on the private equity side are as large as close to three and a half or four trillion, but the amount of actual money coming back to investors is not that much. So at some point, with the capital requirements for infrastructure on the energy side—a lot of it, some by government, but a lot of it is private capital—and now a lot of infrastructure projects globally on other aspects other than AI, something could come up along the way, and the competition is very high as well. Between the hyperscalers, I think, compared to last year when I think it was a bubble, to make it in the market now you can see a sense of direction, which is positive. So I think more focus there and developments with... with...
+
+So, if you have fresh capital, how much do you put in the U.S.? Well, I'm going to ask you the billion—actually, 5 million dollar question; I think you should ask about the billion. But I think if you have capital in the U.S., you would definitely focus on the innovation side of things, the speed of innovation, and the policy around innovation. What about technology and healthcare? That's a very promising area. Another thing I think to focus on is also infrastructure assets, real assets that are isolated from disruption. One of the deepest things we're spending time on is, what does AI mean for private equity? Some of the private equity or the industrial businesses across your portfolio—is this promising, or would it actually be disruptive? So I think a combination between both in your portfolio is something you need to watch out for: half on innovation, half on free cash flow businesses that are isolated from innovation.
+
+David Solomon, what do I do with U.S. debt? I mean, if you look at the forces at play in one, two, three years, I mean, debt around the world is something maybe we should worry about. I think there are lots of governments that are running very, very aggressive fiscal expansion plays. It's been going on for quite some time; it's very hard politically to rein that in. The result of that is the debt stack and the leverage against the economic growth that's being delivered continues to accelerate. I think here in the U.S., we have an ability to manage through that over a period of time, but it's not an infinite period of time. And I would highlight, in the short term, people have been very focused on a 5% ten-year Treasury, for example. But I would say, you know, I'm 64 years old; for most of my life, the ten-year Treasury has been higher than 5%, and that's not really affected our ability to grow the economy and to function productively. But in the long run, if we don't either control our fiscal policy and find a political way to control our fiscal policy, or find a way to add a higher level of continuous economic compounded growth—or some combination of the two—there will be a moment in time where the pressures grow and therefore become a headwind to economic growth in the economic plan we want to execute on. That's not where we are at the moment, but we should be concerned and cautious about the play we're running unless we can significantly increase our economic growth. Now, one of the things that's going on that I'm hopeful about is I think for the first time in a while, we have a real chance to do that. But these are—when this tips or changes, it will change quickly, and the cost of the burden of that will have a real weight on the economy for all of us.
+
+I'm 64 as well, and I also don't freak out at all about a 5% Treasury. That's been where it's been most of my professional career. We're talking about choices. The U.S. is in a great position because it has a choice. These are political choices to run a deficit. We have the tools necessary to continue to grow the economy and reduce our deficit, but it requires change. We're not going to change until there's a financial incentive—read that as a financial event that causes us to change. But of the large countries, I would much rather run our hand of growth, of innovation, of investment, than almost any place in the world. Places like Qatar and other countries, and the Gulf countries in particular, but a few others, have the luxury of running surpluses. This is about investing for the future and diversifying their economies, and we do think of the world in two speeds.
+
+Is there any part of the world that you worry about today? Look, I think there's a big test for Europe now. Europe needs to do everything that the U.S. is doing in terms of energy, energy infrastructure, AI, data. They start more levered; they start with a less flexible financial system; and they start with less openness to respect for capital. But that's changing. So I think Europe is lagging right now; that doesn't mean it's not possible for them to get their act together. And it doesn't have the AI companies, which are also... what do you see when you look at again dispatching capital around the world? Are there regions that you worry about? I mean, if you think of now compared to five years ago, there are major changes that are going on. AI is an important one, and how will governments use them to fuel the growth? If you look throughout the world, there is a lot of economies that spent a lot of time, and rightly so, on services, on employees that focus on coding, for example. Now where are we in that? It used to be that one of the most sought-after jobs; now it's actually not the most sought-after type of job. So it's the discipline by governments, focusing on the growth engines. And in the U.S., I worry the same thing; we need just to direct more of our growth towards the right things. I would think Europe hopefully is at a point diverging towards the right space in terms of fueling energy and securing and fueling innovation and securing energy supplies. Southeast Asia is quite promising. I wouldn't say that a specific geography is one I'm very concerned about, but we are watching closely how IT governments think about those aspects.
+
+So, I was going to give you 5 million each to invest and how you would do it now if it was fresh capital. I think you wanted a billion. I don't know where I live, but 5 million is fine. But I think I would invest in the U.S. I would focus about 3.3 million probably in innovation—I'm doubling down on the speed of innovation through all places. But 2 million I'll put into free cash flow businesses that are isolated from innovation, even private credit or infrastructure.
+
+Do you worry about inflation in the shorter term, or is it something that will work itself out? I think it... within the next 24 months, inflation is a huge factor to watch out for because it can change the way that the central banks... what you worry about, you know, theoretically, is the stagflation situation where there is a lack of growth but inflation is so persistent. The second thing to worry about is what those changes mean in terms of innovation and technology and to the regular consumer. But I do see some weaknesses across the world of consumers, that actually how much capital they have to invest, and energy is an important factor of that. So this is in the shorter term the thing we're watching out for the most.
+
+Macro, I feel a bit cheap with 5 million, but it's still a good chunk of capital. 5 million is 5 million. Let's start there. Look, I think there are big trends: geopolitical fragmentation, some of the state of armed conflicts that we've seen. We also have AI and technology; the physical manifestation of AI, I think, is among the most interesting areas, whether it is robotics or at this intersection of defense tech and AI. I think we're going to see lots of growth there. We as a world have generally not moved technology cycles forward as quickly in defense as we have everywhere. The notion of 10 and 15-year replacement cycles are going to be divided by two, or three, or four, and I think that's going to be a really promising area—defense, physical manufacturing—that just happens to be one of them against the industry backdrop of existing companies who are slower. And I think that's what public or private... we have 5 million, most of these companies are private.
+
+David Solomon? I mean, a couple of thoughts on Mark. I mean, this echoes the direction that Mark's going. But if you step back a little higher, you know, we're very, very wrapped up in the infrastructure and the model companies, etc. I think the real value over the next 10 to 20 years is going to be created in what I call the application layer. The application layer is just another term for what Mark was saying more specifically. But you see it across every industry and every business: how does technology ultimately get applied into applications that can make things better, make things differently, improve things? And the application layer exists in every single industry, and different in different ways. So I think a really interesting investment thesis, broadly, if you are really looking to deploy and think about it long-term, is to get to places where you're accelerating the application layer of the technology. The other thing, which I think is part of a trend and it's just a mindset—the way my mind works when I think about these things—is I really do believe that all enterprises have an opportunity to deploy this technology into their business in a way that improves their operating processes and creates very, very significant operating efficiency to either improve margins or invest more quickly in growth. And so if you just want a simple manifestation of that, buy the S&amp;P 490. What about the other 490 companies? How much is there? How many millions in this? Just buy the other 490 companies in a portfolio because their earnings growth over the next five years, if they're successful and deployed AI into the enterprise, as a portfolio of 490 companies, should be better. Their earnings growth should be higher if we're right about this and the way the technology will be deployed in the enterprise.
+
+We have a very short amount of time. What do we do with energy? The energy complex is changing because everything that's happening—we need more, we need more, we need better, we need more efficient. I mean, we're making progress, but it's a talk about a supercycle, a place where a lot of capital is getting deployed. You know, this is something that with a long-term view we need to remain focused on because the demands for energy are only going to grow. How do you work, how do you deal with energy? I mean, think about it: you moved from silicon constraints to actual gigawatt and megawatt constraints. A lot of things have carbon along the way. I think the models will become more efficient, the hardware is going to be hopefully more efficient, and I see a lot of governments in the U.S. thinking about solutions, whether it's natural gas—good for us because we're doubling down on energy—and nuclear and other options. But I think we've figured it out or grown quickly on energy. We haven't built energy in the U.S. for 25 years. We're getting started, we're moving quickly, but there's also energy north and south of us, and ultimately, common sense is going to prevail.
+
+That's the perfect way to end this wonderful panel. Thank you so much for joining us. Thank you. Thank you.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-tG8S5zpi9P0">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=tG8S5zpi9P0" target="_blank" rel="noopener">Stock Picking in Difficult Times with George Noble | The Real Eisman Playbook Ep 76<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/K8ArKyY9V68hNXTvV9Tbzg2WMgOyH48-T7QmkV4Sct68oETra0imiCpwbNqrC5Bp_k3nXrxI=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Steve Eisman</b><span class="subs">(201.0K)</span></span><span class="dot">&middot;</span><span>50:53</span><span class="dot">&middot;</span><span>27.3K views</span><span class="dot">&middot;</span><span>2026-09-21</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Steve%20Eisman%22">Steve Eisman<span class="chip-desc">Host, The Real Eisman Playbook</span></a> <a class="chip" href="index.html?q=%22George%20Noble%22">George Noble<span class="chip-desc">Former Portfolio Manager, Fidelity</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>George Noble and Steve Eisman break down current macroeconomic pressures, including Scott Bessent's failed attempts to repress interest rates, the structural risks of the AI capex boom, the unwinding yen carry trade, and massive overvaluations in speculative momentum darlings like Tesla and SpaceX.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-3"></div>
+                    <div class="sum-full" id="full-3"><h3>TL;DR</h3>
+<p>George Noble and Steve Eisman break down current macroeconomic pressures, including Scott Bessent's failed attempts to repress interest rates, the structural risks of the AI capex boom, the unwinding yen carry trade, and massive overvaluations in speculative momentum darlings like Tesla and SpaceX.</p>
+<h3>Macro &amp; Interest Rates: Scott Bessent's Policy Battles</h3>
+<ul>
+<li><strong>The Fiscal &amp; AI Pressures:</strong> </li>
+<ul>
+<li>Total US federal debt has reached <strong>$40 trillion</strong>.</li>
+<li>Upward pressure on interest rates is primarily driven by the capital expenditure explosion of AI infrastructure rather than standard deficit spending alone.</li>
+<li>Without the AI demand story, 10-year Treasury yields would likely be <strong>40 basis points lower</strong>.</li>
+</ul>
+<li><strong>Treasury Secretary Intervention:</strong> </li>
+<ul>
+<li>Scott Bessent's attempts to repress interest rates are likened to "bringing a water gun to a real battle" or trying to "kill a whale with a BB gun."</li>
+<li>Bessent faces a severe credibility threat if rates breach 5% in the near term, given his public interventions.</li>
+</ul>
+<li><strong>The Japan Currency &amp; Swap Deal:</strong> </li>
+<ul>
+<li>Japan intervened with <strong>$95 billion</strong> in a single week to defend the collapsing yen.</li>
+<li>Rather than selling US Treasuries and driving up domestic yields, Japan bypassed open market selling by securing a Federal Reserve swap line loan to buy domestic Japanese Government Bonds (JGBs).</li>
+<li>Japan's 10-year JGB yield recently crossed <strong>4%</strong> for the first time in 30 years, though fair value relative to its <strong>240% debt-to-GDP ratio</strong> should be closer to <strong>7%</strong> (compared to the US debt-to-GDP of <strong>125-130%</strong> and a 10-year yield of <strong>4.8%</strong>).</li>
+</ul>
+</ul>
+<h3>The AI Ecosystem &amp; Capital Expenditure</h3>
+<ul>
+<li><strong>The Bear Case &amp; The ROI Question:</strong> </li>
+<ul>
+<li>The entire AI infrastructure buildout is described as a hybrid of the dot-com bubble and subprime housing collapse, entirely dependent on circular financing and "funny money."</li>
+<li><strong>Macro Strategy UK analysis:</strong> Malinvestment in AI is calculated at <strong>24 times</strong> the level seen during the dot-com era.</li>
+</ul>
+<li><strong>Ecosystem Concentration Risk:</strong> </li>
+<ul>
+<li>Approximately <strong>70% of AI revenue</strong> for hyperscalers comes from just two entities: OpenAI and Anthropic.</li>
+<li>OpenAI and Anthropic represent <strong>25% to 35%</strong> of the hyperscalers' entire cloud revenue.</li>
+<li><strong>Nvidia AR Concentration:</strong> In Nvidia's recent quarter, <strong>70% of accounts receivable</strong> came from just <strong>five accounts</strong>.</li>
+</ul>
+<li><strong>Global Cost-Cutting Pressures:</strong> </li>
+<ul>
+<li>Chinese competitors are releasing models that are <strong>95% cheaper</strong> with comparable utility for <strong>95% of users</strong>, undercutting high-cost US LLMs.</li>
+</ul>
+</ul>
+<h3>The Changing Investing Environment: Narrative Dominance</h3>
+<ul>
+<li><strong>The Rise of Narrative Over Fundamentals:</strong> </li>
+<ul>
+<li>Traditional equity research (6-8 page reports covering balance sheets, cash flows, and SWOT analyses) has been replaced by <strong>"narrative dominance"</strong>—investors prioritizing stories and passive index momentum over P/E ratios and financial validation.</li>
+</ul>
+<li><strong>Passive Inflows:</strong> </li>
+<ul>
+<li>Global liquidity and foreign capital influxes (such as Japanese and European pension fund allocations) have propped up US tech valuations despite a lack of traditional price discovery.</li>
+</ul>
+</ul>
+<h3>Tesla &amp; SpaceX: Overvaluation and Structural Shorts</h3>
+<ul>
+<li><strong>SpaceX Fundamentals:</strong> </li>
+<ul>
+<li>Market capitalization sits at <strong>$1.7 trillion</strong>, heavily driven by narrative rather than fundamentals.</li>
+<li>Starlink is estimated to be worth <strong>$200 billion to $300 billion</strong>, while the AI/Grok component is considered a third-tier asset.</li>
+<li><strong>Float Expansion Risk:</strong> Insider lockups are expiring, and the public float is expanding from <strong>5%</strong> toward <strong>25%</strong>, introducing significant institutional selling pressure.</li>
+<li>Sum-of-the-parts valuation points to a share value closer to <strong>$140</strong> versus current market pricing.</li>
+</ul>
+<li><strong>Tesla Fundamentals:</strong> </li>
+<ul>
+<li>US auto sales dropped <strong>26%</strong> in July, with concurrent declines in Europe and China.</li>
+<li>Capital expenditures are surging to <strong>$30 billion</strong> this year (up from depreciation running at <strong>$6 to $8 billion</strong>), pushing the company deeply cash-flow negative.</li>
+<li><strong>Robotaxi Skepticism:</strong> Austin ride-to-population utilization data indicates the robo-taxi total addressable market is heavily overcooked.</li>
+<li>Sum-of-the-parts valuation implies a fair value of <strong>$30 to $60 per share</strong>.</li>
+</ul>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>George Noble:</strong> Predicts that the current passive momentum in mega-cap technology, Tesla, and SpaceX will break as liquidity tightens, ultimately pulling valuations down to fundamental realities.</li>
+<li><strong>George Noble:</strong> Claims that SpaceX and Tesla are both "outstanding shorts" with implied fair values drastically lower than their current multi-trillion-dollar valuations.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"Sometimes years go by and nothing happens and sometimes weeks go by and years happen."* — <strong>George Noble</strong>
+</blockquote>
+<blockquote>
+*"The market constantly overestimated inflation pre-COVID, and since 2022, the market's been constantly underestimating inflation because we have fiscal dominance."* — <strong>George Noble</strong>
+</blockquote>
+<blockquote>
+*"When I started in this business, I thought people want to be told the truth. No, they don't want to be told the truth. They want to be told a story that'll make them feel good."* — <strong>Guy Dami (cited by George Noble)</strong>
+</blockquote>
+<blockquote>
+*"Forget about the sender financing, the valuation... I'm weighing in with narrative dominance. Don't tell me about the fundamentals and the PE and the valuation... Tell me a story."* — <strong>George Noble</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-3" onclick="toggleSummary(3)" type="button" aria-expanded="false" aria-controls="full-3">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-3" onclick="toggleTranscript(3)" type="button" aria-expanded="false" aria-controls="transcript-3">View transcript</button>
+                    <div class="transcript-content" id="transcript-3">Hey, it's Steve Eisman. Welcome to another episode of The Real Eisman Playbook. We get a lot of different types of guests on this show. We get sellside analysts, we get byside analysts, we get authors, we get economists, we're getting substackers, but it's nice to sometimes get someone who has a background that's similar to mine, who has been an asset manager and is now a podcaster and is expressing opinions like I've been expressing opinions. And that person is George Noble, who was once a portfolio manager at Fidelity and now is a podcaster, newsletter writer. and we're going to have a very broad ranging conversation about a whole range of topics.
+
+And when we're done, I'll be back with some thoughts. Hi, this is Steve Eisman and welcome to another episode of The Real Eisman Playbook. Our guest today, George Noble, who has been here before, who has been a portfolio manager, he's now a podcaster and a newsletter writer, kind of like me. so George, welcome back. It's always a pleasure to be here with you, Steve. &gt;&gt; So, not that there's much going on.
+
+&gt;&gt; No, &gt;&gt; but let's start. We got so many things to cover. Let's just start with the latest news. G give me You give me your thoughts. I'll give you my thoughts about the whole Treasury Secretary Scott Besson trying to, for lack of a better term, repress interest rates. What What are your thoughts about this?
+
+&gt;&gt; Before I answer that, it's just one of the lines I always use. It's the quote from Vladimir Lenon where sometimes years go by and nothing happens and sometimes weeks go by and years happen. Okay, we're in one of those right now. All right, we're also in one of those periods where you and I are both stock pickers, but there are times when you really have to pay attention to macro and there are times when the macro is rather quiescent. Right now, we got so much going on with with w with w with with with the oil price with AI with the concerns over the deficit. There's just a lot of moving parts right now.
+
+&gt;&gt; So, over and beyond just I'm going to buy StockX. &gt;&gt; Correct. And so, and a lot and you know this Steve, sometimes it always helps to have the force with you, the macro either neutral in your favor like rumor has it you once did financials. Okay. Yes, right. Okay.
+
+So much better that you're in an environment where you don't have to think about interest rates. It's either flat or going down. All right? But when you have a gale force hurricane in your face, say you want to own home builders or a mortgage guy and rates are going up and to the right, it's hopeless, right? So there are times when you have to be really pay attention to the macro. And Michael Cananter who I believe you know has always said you know most groups most stocks they can be their behavior can be described as a as a combination of various factor influences.
+
+Are rates going up or down? Is the dollar going up or down? Is the economy slowing or increasing? Right? So I tend to use that framework a lot of looking at stocks. But anyway getting to Scott Besson look he's in a he's in a very tough position.
+
+&gt;&gt; Let's have a little mercy. Yes. And a little sympathy. You know, we could be very we could be I know what word you're looking for. No, no, no, no, no. You know, the word I was about to use was raised to explain to the viewers is is Yiddish for sympathy, empathy.
+
+Correct. Correct. &gt;&gt; So, so we we'll get critical. We will have a little in a tough spot. &gt;&gt; Correct. And someone asked me a few week few weeks ago, couple few months ago, what would I do if I were what advice would I give Scott?
+
+What would you What would you do? What advice will I give Scott? They said resign. It's like it's like it's like you know everywhere you look there's no good options here really. &gt;&gt; It's kind of like sometimes in chess you're in a position where you have no move. &gt;&gt; Correct.
+
+Correct. And so I I think you and I have a similar worldview in this regard. And I don't want to make it political. Your job of mine is not to take sides. It's we're just trying to deal with the cards are turned up. Like what do we do?
+
+and the situation we find ourselves in like it's a it's a group effort all the accumulated deficits the left did it the right did it you know we could argue there's plenty of blame to go I don't want to get about what aboutism god forbid you say something critical about one side they'll say what about the other side so any event he he's walking into a very difficult situation &gt;&gt; and it's it's not just the deficit because as you know the the the explosion in debt issuance from AI is in in a a crowding out treasuries &gt;&gt; 100% &gt;&gt; and so and so rates have this have this sort of &gt;&gt; push to them &gt;&gt; that if there was no AI story &gt;&gt; right &gt;&gt; rates would probably be 40 basis points lower I just made that number up something like that &gt;&gt; that's fair and you and I were exchanging emails before we went on the air and you know the I think I wrote something the word something to the effect capex boom meets runaway deficits you know okay so And and what's really going on right now, we'll get to best in a second. It's not about the Straits or Hormuz. it's not about the latest CPI number if you talk about the bond market. Okay. Those who breathlessly hang on every CPI number like it really matters. &gt;&gt; We're talking about &gt;&gt; But by the way, just so people know, &gt;&gt; there are people like that.
+
+Oh yeah. Who trade bonds and and like and they look at the CPI number like like it's Moses coming down with the tablets. &gt;&gt; 100%. And I I'm going to mention names. I I'm I'm reminded you should you can praise specifically but only criticize generally. Well, I'm going to suspend alternate size street parking regulations for this discussion.
+
+Okay. I love Truflation. I have no problem with TruLation. True. Truthflation is a service. They they measure like 10 million different prices and they try to come up with their own estimate of what inflation is.
+
+It's &gt;&gt; as an alternative to CP. &gt;&gt; Yeah. Okay. Okay. And they do good work. So, I'm putting in a So, I'm not critical of trueflation.
+
+That's not the point, right? What I'm critical of is I have these monthly calls. This is going to turn into the Yish hour. They have these macro yentas come on. All right. And they're going on and well, you know, it's it's like you and I got to look at the replay.
+
+Well, the CPI came in at 38 instead of 36. And it's like, who cares? It's like, you know, and and they're and they're just they're just fixated on these monthly CPI numbers. They're totally missing the plot. All right. The plot is and listen you no one knows financials better than you do and and and and interest rates and and and all the like we've been in this environment it's now changed we're going through a regime change all right where no when we were post GFC no matter how much money they spent no matter how much how much more money got printed it didn't really matter almost to the point you and I discussed this the last time I believe almost to the point you might believe MMTs actually makes sense it actually is legit but as Louis Gav likes to say the policy responses, the impacts of those policy measures are much different in a deflationary environment.
+
+We're worried about a bust as opposed to when you've got you you've got you've got binding constraints. In other words, you know, we're running out of shortages of things. So now if you go to cut rates, if you go to stimulate, it's going to have a real it's real inflation because you got bottlenecks. &gt;&gt; Correct. Okay. And and I think I remember reading some last year or two years ago.
+
+I think it was Jim Biano who said it. I shamelessly name drop but I want to give credit where it's due because I'm full of criticisms as well. The market you know this Steve the market was constantly up until like 2021 thereabouts. Post GFC the market was constantly overestimating the extent to which inflation would pick up. &gt;&gt; Right. &gt;&gt; Okay.
+
+And and inflation never came like people thought. And you know this and actually I wrote my senior paper at Yale U. Bill Brandwood, my senior adviser, on the on the efficacy of forward markets and predicting interest rates. They do a horrible job. So when people say, &quot;Oh, look at the bond futures.&quot; ignore that. Okay?
+
+They're no better than the weatherman. All right? Anyway, the point is the market constantly overestimated inflation precoid and since 2022, the market's been constantly underestimating inflation because we have fiscal dominance, right? &gt;&gt; and we have constraints and so it's a much different environment. So Bessoness, let's talk about what you think he's been he's just give my view quickly and then and then then you go. &gt;&gt; He's in a tough spot, but leave that aside.
+
+And we could have a debate about, you know, yes, the the entire federal debt is 40 trillion. We could we could talk about how important that is or not important that is. I mean, we could go back on this to toward blue. Leave that debate aside. I think there's no question there's upward pressure on rates mostly because of AI, not so much the deficit because because the real change is is the AI. You're talking about 40 trillion in US government debt.
+
+I mean, the numbers so big it's hard to even get your mind around it. And he's talking about buying some debt that it's it's like, you know, treating it's like trying to kill a whale with a BB gun. &gt;&gt; Well put, Steve. It's like where the other line of hurt. It's like bringing a water gun to a to a real battle. A real battle, right?
+
+&gt;&gt; That's bad enough. What's worse, he's got a credibility issue now because if let let's say just for example, in two three weeks rates go to five. &gt;&gt; Mhm. &gt;&gt; His credibility is shot. &gt;&gt; Well, in my view, it already is happening. I mean, you know, rates went down for a millisecond and we're meaningfully higher now than we were before he opens his mouth, right?
+
+So, so he's in a tough position. But I'll tell you the issue I have with Scott. I'm going to keep this source in the federal witness protection program. &gt;&gt; Okay? &gt;&gt; I know someone who used to broke to him who used to be was a had him as a client institutional equity sales guy. Okay.
+
+&gt;&gt; Okay. So this this is an institutional equity salesperson who used to serve as Bessa when he ran his hedge fund. &gt;&gt; Correct. Okay. And known Besson for a long time. used to like Scott, respect Scott, but he's now shaking his head.
+
+This is not the Scott best I once knew. &gt;&gt; All right, that initially he probably was saying the things he was saying cuz he knows who his boss is and he has to carry water for Trump. We're not getting into discussion about Trump, but he's taken it to a whole another level now. And the my source suggests it's it's almost at best it really believes what he's saying. the smuggness, the arrogance, and I would say the incompetence. Okay.
+
+You and I were speaking earlier before we started about Stan Ducker Miller's re rebuttal. I mean, if we're playing pickup basketball in the Rucker League and you got Scott Besson on one team and you got Duck on the other, I know who I'm going with. All right. You know, I I know Scott Margie. I don't want to speak. I mean, he's in a very difficult situation, but what he can he can't be held accountable.
+
+In fact, we're in a bad situation, but he can be held accountable for the lies that he is telling. All right? And those lies are what? &gt;&gt; Oh, when he talks about, you know, how much oil is going through the straight or did you see he was with the gas line the other day? No pun intended. He was like everything would have been okay except the Ukraine got invaded and that's why gas prices went up.
+
+I mean, it's just one exaggeration and smear job after another. And and for those who are Trump supporters, I don't want to make this political and then you get into what aboutism. I don't want to get into what aboutism. You mean if you start asking me what about the Democrats, I can do that, too. I'm a fierce middle- of the road kind of a guy. All right.
+
+as I think you are as well. And so I I I take issue with the mistruths like he's either misguided or he's lying. And I think he's smart enough to to say he's not he's he's not that misguided. And to your point about bringing the water gun to the fight, it's like what are you doing? And the bigger point out of all that as well, you're a free markets guy &gt;&gt; by trying to suppress rates, which they're not it's not going to work. Okay?
+
+I I mentioned to you he is Norman Lamont. Okay, this is the UK government under John Major. It's kind of funny. It's so rich. It's role reversal. Okay, so you know he was working for Soros when Soros and Duck attacked the Bank of England and they made a fortune doing it.
+
+And by the way, sidebar many try to credit Bessant with being involved in that in that trade. He was a 28-year-old junior. &gt;&gt; He had nothing to do with it. Okay, this is also we're going to get to narratives later in the conversation, but this idea that he somehow was responsible for that trade, nothing could be further from the &gt;&gt; truth. It was me and Soros. &gt;&gt; It was Dr.
+
+Millan Soros, right? But anyway, for those that weren't around then aren't as old as you and I are, you know, in I guess it was 90 or 91, I forget the exact year when Soros figured out they're trying to they're trying to maintain, you know, the sterling at a at an artificial rate. And Steve, you know this, when there's a wrong price, markets have a way of attacking, right? &gt;&gt; Okay. So when I saw Besson open his mouth a couple weeks ago, I was like, &quot;Ding, ding, ding.&quot; Okay, he's let the it's basically exactly what Ducker Miller started to say as well. Let the market decide what the right prices.
+
+Okay, now he he's he's not bringing enough firepower to really influence. He's trying to engage in what they call open mouth operations. All right, but intervention and stuff like that, you know this, Steve, it only really works when the fundamentals are with you, right? &gt;&gt; Okay, it's like when the Japanese try to intervene in the currency, only do it when the fundamentals are right. come to Japan a bit. We will.
+
+Okay. So, let's move on to a topic that I must write about every single week and I know you write about every single week and I discuss every week and you discuss every week, which is the whole AI ecosystem. So, let's play you show me yours, I'll show you mine. Okay. &gt;&gt; Steve, see Steve, my cap my capex is bigger than your capex. &gt;&gt; Exactly.
+
+So, exactly. So, I mean, again, another topic that we literally could talk about for the next four hours. Let's try and shorten it. Give give us give us your shortened version of the whole AI debate. &gt;&gt; Let me get let me get to the to the money page. All right.
+
+The my for the bare case. Okay. Show me the ROI. All right. Another Yiddish term coming. We can hack into a China all day long about semiconductor demand and this and that and everything else.
+
+Okay. It's all being funded with like with with funny money. Okay. The fact that Nvidia has to announce, you know, what was it, it $250 billion package for Open AI to fund what they're doing. The fact that they're having to do that tells me all I need to know. All right.
+
+And again, rumor has it you were involved in some I I think I I I I texted you. The AI boom, it's kind of like it's kind of like.com and subprime all merged in one because you got you got unsustainable phenomenon. In your case, it was housing. Now it's the the values didn't make any sense with this open AI with the AI it's the same thing. Show me the So again to answer your question, show me the ROI because eventually if the ROI is not there, the funding is going to dry up and we can go on all day long. You know, you come out with a model which is 50% faster and Valerie comes out with a model that's 50% cheaper and blah blah blah blah blah.
+
+This is, you know, and the Chinese are coming out every week with a model which is 95% less and it's cost cutting at large. &gt;&gt; Give me K3. &gt;&gt; Okay. And by the way, best best name out there except for meta's model is called Llama, which is great. &gt;&gt; And you know what's happening with these guys? They're so and you see this on X and in the public domain.
+
+People are so in the weeds in technology, this version, that version. Okay, they're missing the point. The point is AI is set up to fail. Okay. Julian Garren, who you should have on your show from Macro Strategy in the UK, we'll talk about him later. Okay.
+
+He's made the calculation that the malinvestment is 24 times 24 times what we saw during.com. So you can say whatever you want about well you know I used AI to write my summary or this use AI I use AI. That's not the issue. The issue is is it's just going to be an application which has a very narrow technology which is a very narrow application. Maybe the market's worth 50 or hundred billion dollars. I have no doubt the the really highowered needs will use it.
+
+Okay. But then for the rest of us, we don't. It's good enough for the Chinese model is good enough for like 95% of us at 95% less cost. All right? So when people say, &quot;Oh, George, use AI. It's very rich.
+
+You're criticizing.&quot; It's not the point. Just just like with the internet, Steve, one thing to say, &quot;Oh, gee, you you know, you're bearish on internet stocks, but you use the internet.&quot; I mean, I I recall I was interviewing Peter Barersen from Bank Credit Analyst, another guy you should have on your show. He pointed out that the bullish forecasts on the internet back in 99200 were right. Internet traffic compounded at 43% a year for the next 25 years. It went up by like 25 million%. Some crazy number, right?
+
+Didn't stop global crossing and all the rest of them from going bankrupt. Okay, that's what I think we're dealing with here, &gt;&gt; right? So my synopsis, I think about it like as a chain. So you've got Nvidia selling the chips. Nothing wrong with selling chips. You've got the hyperscalers who buy the chips.
+
+Nothing wrong with with somebody buying chips. Where it starts to get squishy is something like 70% of AI revenue of the hyperscalers is just from OpenAI and Anthropic and that's about 25 to 35% of their entire cloud revenue. So basically if you follow the chain down the entire ecosystem is dependent upon two companies who lose to say that they lose billions is a euphemism and one of them I think is in trouble which is open AI. &gt;&gt; Totally agree &gt;&gt; and so anthropic is going to go public. They I think they need to get their S1 out fast because token maxing is ending. &gt;&gt; That's done.
+
+Yeah. And so I don't think they want to they want to go public having reported third quarter numbers. They want to go public having reported second quarter numbers with token max as as at its peak. But they're in better shape regardless. They're in better shape than open AI. And if open AI gets in real trouble because the entire ecosystem is just is just dependent upon two companies.
+
+The whole ecosystem is in trouble. In a world where AI is changing every role in every industry, knowing who actually has deep expertise matters more than ever, Upwork connects you with highly skilled freelance professionals with proven track records so you can hire with confidence. Upwork gives your business fast access to highly skilled specialists with deep expertise so you can fill critical skill gaps, launch projects faster, and scale support up or down without committing to full-time headcount. Upwork is where businesses find highly skilled freelance professionals for specialized work from software development and AI implementation to marketing design and business operations. You can browse profiles, review past work, and get help scoping the roles so you can hire with confidence and get started quickly. With Business Plus, you can access the top 1% of talent on Upwork.
+
+AI powered shortlisting delivers a curated short list of top freelancers matched to your goals in under six hours. No endless searching required. Upwork also cuts down operational hassle by handling things like contracts and payments in one place so you can spend more time running the business. With over 170,000 freelancers holding five-star ratings, you can hire with the confidence that comes from hiring someone with a verified track record. It's free to sign up and posting a job is easy. Visit upwork.com right now and post your job for free.
+
+That is upwork.com to connect with top talent ready to help your business grow. That's upwork.com upwork.com. Are you sick of dealing with a slow computer? Most people blame their device, but the real slowdown often comes from heavy traditional anti virus programs that hog storage and drag everything down. Web Routt is a cloud-based anti virus engineered to stay out of your way. It takes up 33 times less space than bulky competitors and scans six times faster.
+
+So instead of waiting around, you're getting instant powerful protection without the lag. And because the intelligence lives in the cloud, WebRoot keeps your computer running light, fast, and smooth, all while defending you in real time against malware, fishing, ransomware, and other threats. Whether you're working, browsing, or streaming, Webroot is the anti virus that works for you, not against you. Make the switch and feel the difference of truly fast, modern anti virus protection. For a limited time, you can save 60% on Webroot when you go to webroot.com/isman. that 60% off today, but only when you go to webroot.com/isman.
+
+And by the way, if your computer feels sluggish, heats up when you open a few tabs, or sounds like it's preparing for liftoff every time it runs, here's a secret most people don't know. Your device probably isn't the problem. Your antiviruses. Many of the bigname brands out there have become bulky, complicated, and full of pop-ups and upsells. I hear from so many people who feel overwhelmed or annoyed by them. And honestly, I felt the same way.
+
+That's why I switched to Redroot Essentials. And frankly, you should, too. &gt;&gt; Steve, can we take a little detour here? I want the hunter to become the hunter. We do a little role reversal here. You're going to enjoy this.
+
+&gt;&gt; Okay. &gt;&gt; I want you to go back to GFC and all the work you were doing on financials. And we know accounting is a very imperfect science. It's an attempt to portray the economic reality of what's going on. Correct. But often times it has limitations.
+
+So you can have related party transactions, you can have VIES, controlled interests, etc., etc. So I'm sure part of your work, you were looking to see what's the relationship to all these different entities. Okay? &gt;&gt; So if I said to you, Steve, &gt;&gt; there's a home builder, okay? They're selling all these homes, but you know what? P price appreciation's starting to kind of Yeah.
+
+And so they're kind of getting stuck a little bit. So what they're now doing, okay, is they're lending all the money to the wouldbe buyers. All right. At ridiculous at uneconomic uneconomical interest rate. So they're extending they're extending a mortgage at zero 1% let's say, right? Okay.
+
+Okay. &gt;&gt; And they're not acrewing the the the difference between the market rate the mortgage that's mortgage should be seven, right? And they're doing it at zero. &gt;&gt; All right. and they're booking the whole thing as income, right? And you can see what's happening.
+
+This this car crash is is is is all right. That's what's going on here. How how would you how would you respond to that? To me, it's it's the same thing. All this related party transaction, this is not a healthy situation. So So drawing on your past experience, &gt;&gt; now you're in the hot seat.
+
+Okay. What what do you draw from your forget about it, what do you draw from you've done financials forever and ves and all this sort of stuff. What do you draw from this based on p muscle memory pattern recognition from you've seen this before? &gt;&gt; I mean the circular financing kind of drives me crazy but but I'll turn it around. &gt;&gt; Yeah. &gt;&gt; If if &gt;&gt; if by some miracle anthropic and open AI became insanely profitable, it wouldn't matter because the loans would be would would be good.
+
+the the the the circ the circular financing just tells me that there's probably something wrong &gt;&gt; but but in and of itself it's not necessarily the issue &gt;&gt; correct but what you wouldn't do &gt;&gt; you wouldn't blindly say oh look at the earnings look at the PE &gt;&gt; you know not at all I mean I give an example on something that Nvidia when they reported that I still to this to this day can't understand like why no one has comment on this other than a few substackers which is Nvidia's revenue in the in the quarter that was just recently reported was up over 100%. But if you go in the queue, it says that 70% of accounts receivable is from five accounts. I mean, think about it this way that the largest company on planet Earth basically 70% of its revenue comes from five customers is is very frightening. &gt;&gt; Yes, &gt;&gt; that's frightening. But as you pointed out, the receivables piling up, the loans, the whole deal, if it was a healthy system, if the banks thought this was a good business or private credit on it on its back on its heels. If there were healthy lenders that thought these are good credits, &gt;&gt; they'd make loans.
+
+&gt;&gt; They'd make loans, but they're not doing it. Why? Right. &gt;&gt; They're nervous, &gt;&gt; of course. &gt;&gt; Right. Okay.
+
+All right. Let's move to a topic that you're more familiar with than me because I've never &gt;&gt; You know how some people have everybody has mental blocks about certain things. &gt;&gt; Sure. &gt;&gt; My mental block is the dollar yen trade. I I don't understand it. I don't understand what's going on.
+
+I don't understand why that trade is is is a measurement of risk. I know something's going on. Educate me because I just don't get it. &gt;&gt; Well, you're giving me too much credit. I mean, I've only been following Japan for 40 some odd years and &gt;&gt; well that's 40 some odd years basically longer than me but but Steve as we know those who've tried to short the JGBs actually it's been a great trade now but for years they call it the widowmaker trade like if you were any self-respecting hedge fund manager and you hadn't lost money trying to short JGBs like that's a sign of you know okay so so &gt;&gt; I can I can live with without such a badge of honor by the way &gt;&gt; exactly exactly so any rate the yen you know captain obvious checking in the yen continues to go from weakness to weakness. Been many calls of the turn.
+
+&gt;&gt; Explain what the trade was. &gt;&gt; Okay. &gt;&gt; And explain what's happening to the end now. What's happening to rates? Because because I don't really understand it, but I know a little, but I'm sure my audience could really use the help. &gt;&gt; Okay.
+
+So, this gets back to actually gets back to accounting in a certain degree. Say you're a Japanese life insurance company or Mrs. Watonabi, the proverbial housewife that's speculating, &gt;&gt; right? &gt;&gt; money's yielding you nothing. You put your money in the bank, it's half a percent. JGBs are sub 1%.
+
+oh gee, I'm gonna buy some US stocks, you know, maybe they're yielding the US equity market back then. &gt;&gt; Maybe I'll buy REITs that have a nice yield. &gt;&gt; Exactly. Okay. The old carry trade. &gt;&gt; so I take my yen.
+
+&gt;&gt; Yes. Yes. &gt;&gt; And I buy I change it into dollars and I buy Correct. I buy Avalon Bay. Correct. Example.
+
+&gt;&gt; So, Mr. Eman, isn't it true that you know something about carry trades? Yes, your honor. I Okay. So they're they're involved in the C. So they're doing that for the yield pickup.
+
+And then lo and behold, guess what? Not only is there yield pickup, but it's yield pickup. Plus, the dollar keeps going up. &gt;&gt; The dollar keeps going. &gt;&gt; So Avalon Bay, forget about what the price Avalon Bay did in in dollar terms. The dollar, &gt;&gt; let's say the dollar goes up.
+
+Let's say Avalon Bay goes up 10%. &gt;&gt; And the dollar goes up 10%. 20%. &gt;&gt; You just made 20% by by taking your yen and buying Avalon Bay. What's wrong with that? &gt;&gt; Yeah.
+
+What could possibly go? &gt;&gt; What could go wrong? &gt;&gt; Okay. All right. Okay, the yen, mind you, at one point going back number years ago, it was 80. It's now 160.
+
+All right. The reason the yen keeps weakening is because rates are not high enough. in Japan, in Japan, they have I urge everyone to follow Robin Brooks on X, former Goldman Sachs guy, related to Brookings, great guy, &gt;&gt; and he has a wonderful chart. you'll appreciate this. he graphs, debt to GDP versus interest rates. And you might figure out the more debt the country is, the higher the rate should be, just as you would with a subprime buyer.
+
+All right? So you look at countries like Switzerland or Sweden, they have very low borrowing costs on one extreme. And then pretty far up the you got Europe in the middle and further up the curve, you got the US and then you got Japan, right? &gt;&gt; Okay. &gt;&gt; And if you look at the line, if you look at Japan's debt to GDP, their tenure, you think it's high now. It just crossed 4% for the first time in 30 years.
+
+It really should be around 7%. &gt;&gt; Okay. So, so let me ask so our debt to so audience knows our debt to GDP today is around 125 130%. Correct. Japan's is 240. Correct.
+
+&gt;&gt; So &gt;&gt; if what you if what if the relationship &gt;&gt; worked &gt;&gt; our 10 year today is 4.8%. Japan should be seven. &gt;&gt; They're saying seven. And by the way by a couple footnotes I need to add. It is true that the unlike our country the Japanese much of the Japanese debt is owned by the Japanese themselves. &gt;&gt; Yes.
+
+&gt;&gt; So if you net it out it's more like 130 instead of 230 whatever the number is &gt;&gt; but &gt;&gt; Robin makes the point I checked this actually $50 in double jeopardy. Steve, what do you think? And again prediction markets and prediction markets we know forward markets are usually not always they're they're not infallible. Okay. But what do you think? Well, I'm not gonna I'll make the statement.
+
+The market right now is saying 10 years forward the 10-year US rate is at 6%. &gt;&gt; That's what the the market is saying. The market is saying right now today 10 years in the US, forget about the US will be 6%. &gt;&gt; Okay? Because it's because and that's whether it's going to be right or wrong. Who knows?
+
+But that's that's a reflection of its commentary on the sustainability of the path that we're on. All right. Okay. And so wherever we're going, the Japanese are going to get there first. All right. So what's happening in Japan?
+
+answer your question. All money is fungeable. One thing that's changed enormously since you and I were young, we were young once upon a time. you've had tremend global liquid whole global economy liquidity being created everywhere. So money is fungeable. It flows from one place to the next.
+
+So if there's too much money in Japan and it's only yielding half a percent, they'll take the money and they'll go put it in the US if they did it for the Chinese. So the importance of Japan is our markets our bond market and NASDAQ more generally it's not this the NASDAQ is not just a Japan story has benefited enormously from an influx of money from abroad all right &gt;&gt; like Japan &gt;&gt; okay from Japan and even you go you know this too I'm sure Steve you look at Europe the number of like European pension funds that have outsized allocations to like NASDAQ to US tech stocks cuz like look it's the greatest story ever told it's the best macro I mean it's been a huge winner the last 10 years so the point of it is and this is a very important point our markets this is a really important point now you you triggered me our markets have benefited enormously from the influx of money from abroad but now what's happen but first with Japan and I say more generally in Japan because rates have been going up the yield differential in other words if I can buy a 10-year JGB at three and the US is at 480 it's only 180 basis points the gap used to be much bigger and it's getting smaller and smaller as we go along and if you say and here's the problem at some point I don't know when could be tomorrow, could be 5 years from now. The Japanese are going to say enough. &gt;&gt; Bring the money home. &gt;&gt; What we we we we're sick of the yen going down every day. It's causing, you know, rice prices are going up, inflation, this that, whatever.
+
+Okay. &gt;&gt; And when they and they can stop the end from weakening, but they got a problem at home as well, which is, you know, they've got a debt problem. So, if they let rates go up too much, they have the same issue we're dealing with. All right? So the point is the Japanese are going to be caught in a rock in a hard place. They have to balance like how much do we want to let the yen weaken versus how much can we tolerate in the form of higher interest rates.
+
+And the reason this is important is because the Japanese are the world's largest creditor country. They're the savers. If they decide, you know what, we don't think US yields are offering a particularly attractive proposition right now. So we're not going to buy US bonds anymore. Sorry, Scott Bessant. and you know what?
+
+We're not so sure about the US tech trade anymore in the AI that's got a little bit of hair on it so we don't know. So they may source to be they may cease to be a significant source of funds flows into our market. And the last point I'll say on this they've already they already have been selling our bonds in recent months. You saw a few weeks ago when this again Scott Besson please call your office there was noise about there was noise about the Japanese maybe having to sell some of their bonds and this is another point I want to make in respect to this. If they're like, okay, if they're like, we had we had enough of a weekend. They had, I think it was 95 billion of intervention one week a few weeks ago.
+
+&gt;&gt; So, Japan &gt;&gt; with Japan, right? Okay. It's a huge number. They say, &quot;Okay, we want to stop the end from weakening.&quot; So, what does that mean? We're going to sell our dollars and we're going to buy yen. Okay.
+
+We have dollar assets. What do we got? Oh, we have US Treasury bonds. Hey, Scott, it's a really nice bond market you got there. It'd be a shame if something happened to it, right? So the US gets wind of this.
+
+They're like, &quot;No, no, no, no, no. Don't sell our bodies. Tell it what we'll lend you the money.&quot; Okay, that's what they did. &gt;&gt; They lent Japan the money. &gt;&gt; They lent Japan. They set up a swap line.
+
+This is This is like insanity. This is total insanity. &gt;&gt; Repeat. So instead of Japan because they want to protect their currency, &gt;&gt; selling US bonds, which means selling dollars and bring the money back into Japan. &gt;&gt; Correct. They went to Bessant and Bessant basically said, &quot;Well, I'll give you a loan.&quot; &gt;&gt; Correct.
+
+&gt;&gt; And you and so you and take that money and and and buy JGB. &gt;&gt; Correct. &gt;&gt; Wow. I didn't understand what that was about. Now I understand. Okay.
+
+&gt;&gt; And so and by the way, by the way, so the Japanese have been have been selling the US treasuries for a while now. The Chinese have been selling treasuries for years. For years. Okay. &gt;&gt; And Scott, I mean, you know, Bessant's got to look at it and say, &quot;Wait a second. Also, we're not really treating foreigners all that well.
+
+You know, the you know, the whole idea where we we impounded expropriated a lot of money from various sources post the post the Ukraine invasion in 2022. our tax policies, you know, the the trade and so on and so forth. And foreign partners looking increasingly a scance at like what are we doing here? You think they're feel feeling warm and fuzzy about why don't I put more money to the US or less money to the US. So, at a time when we need their funding more than ever, it's almost like we're doing everything possible to discourage it. So, that begs the question then, who's going to buy the bonds, &gt;&gt; right?
+
+Okay. All right. Let's change topics again. Let's just talk about what this investing environment is like to you and what what kind of lessons you're you're learning from what's going on out there. &gt;&gt; &gt;&gt; a small question. &gt;&gt; I think I could probably make the I'll make the case for myself.
+
+I'm not going to project. I would actually and many have said this. I mean, David Einhorn was he had a great interview the other day talking about how his his his model didn't work anymore. &gt;&gt; He said that years ago. &gt;&gt; Yeah. But he said it again the other day and I remember Yeah.
+
+Yeah. I remember it was interviewed a couple weeks ago and I remember Jeff Vinick, former colleague of mine at Fidelity when he tried to raise money a number of years ago and had difficulty raising money. Even the great Jeff Venick, he's like people aren't interested in what I do anymore. It's like they just want to know the narrative. When you say people want to know the narrative, the immediately thing that I think about is is the last episode of Game of Thrones when when Tyrion Tyrion Lannister says, &quot;What motivates people?&quot; &gt;&gt; Yeah. &gt;&gt; Stories.
+
+&gt;&gt; So 100%. I did an interview with Guy Dami a few months ago and Guy said something really profound. He started off by saying, &quot;George, you know, when I started in this business, I thought people I thought people want to be told the truth. No, they don't want to be told the truth. They want to be told a story that'll make them feel good, &gt;&gt; right? &gt;&gt; Okay.
+
+So, right here, right now, on September 2nd, 2026, I'm now introducing Jim Kramer's not going to steal this and all the I guarantee this is going to go viral. I thought about this one. Just came to me. You know, we all know about fiscal dominance, how fiscal fiscal policy is driving the bus. Okay. Well, I for the stock market, I'm weighing in with narrative dominance.
+
+Narrative dominance. Don't tell me about the fundamentals and the PE and the valuation, all that kind of stuff. Tell me a story. I like bedtime stories. I don't want the story about the three little bears. I want the story about three little bulls, maybe.
+
+Okay. Narrative dominance. So, this gets back to the AI thing. Okay. Forget about the sender financing. The valuation.
+
+Forget about we got, you know, &gt;&gt; I got a story about something that's going to change planet Earth. &gt;&gt; Exactly. Okay. And by the way, you don't you don't have to know any finance. You don't have to read any 10Ks, &gt;&gt; right? Just look at the chart and hear the story.
+
+And oh, by the way, if the stock's big enough in the index, the the price will be appreciation be augmented by the fact it's passive the passive bid on all this stuff. All right? So, there's no price discovery. There's no price discovery, which creates threats and opportunities when the force is with you, when the passive bid is all the rage in the market and there's money everywhere. as Charles God famously once said, if you have more money than fools, you have a bull market. You have more fools than money, you get a bare market.
+
+Okay. Okay. It hasn't really mattered. Like I'm going to put your I'm gonna push back against you, Steve. Right. No, I'm with you.
+
+I'm teasing you. Okay. When you look at like take some crappy alternative lender, I mean, if you were running Frontp Point now, you know, okay, you got some crappy BNPL lender and the loan loss reserve is like way too low and it's on six times book for a financial. You'd be like, you'd be like pulling your hair out. I want to blow my brains out. Oh, but you don't understand.
+
+This is SoFi. Okay. You don't understand. All right. Okay. So, so what have I learned?
+
+All right. It's funny. I may have said this to you last. I don't really recall. So, we're on Substack now. We've been writing reports.
+
+And by the way, I'm very proud of our recommendations so far. We can talk about that later, but I wrote my first report in January. It's the only stock I recommend. It's gone down. Actually, we're 11 for 12. And it was on Southwest Airlines.
+
+It was a good story. It's cheap. They don't make any money. Elliot Management's involved. They're getting rid of the middle seat. They're going to charge for bags.
+
+Blah blah blah blah blah. You know, if they if they earned half of what United or Delta made, it would be big stock. &gt;&gt; Okay. &gt;&gt; So, it was a good story. And then, you know, the hormos came along and the oil price, all this other stuff. So, it's kind of gotten derailed.
+
+It's down a few%. No big deal. But here's the point. I wrote this story. I got to write a report. So, I went back in those boxes in my basement.
+
+I'm sure you have them as well. And I fished out some of my fidelity reports. And we had what we know was investment community reports. It's like six or eight pages, you know, SWAT analysis, strengths, weaknesses, cash flow, income statement, balance sheet, catalyst, insider buying, you know, blah blah blah blah. The usual stuff. I'm sure the type of work he used to do, &gt;&gt; right?
+
+And I wrote it up and I said, &quot;You know what? I'll make I'll make it three or four pages.&quot; So I show it to a close friend of mine. He looked at it. He goes, &quot;George, nobody writes reports like this anymore.&quot; I said, &quot;Yeah, that's exactly why I'm going to do it this way. Back to the future.&quot; Okay. So here's the funny thing.
+
+You're going to laugh. You know exactly what I'm talking about. So I write these reports and it's enough. And I was on a I have these month I have these monthly Zoom calls with my investors. I have one tomorrow. And so I'm going through my spiel and I said, &quot;By the way, what do you guys want from me?
+
+How can I make the product better and they said, &quot;Yeah, yeah, we like we like the stock ideas, but you know what? Three or four pages. Too long.&quot; &gt;&gt; Too long. &gt;&gt; Just give us one page. &gt;&gt; One page. &gt;&gt; Elevator pitch.
+
+Elevator pitch. &gt;&gt; Pitch a story. Give me a story and a page. &gt;&gt; Exactly. Story. Story and a page.
+
+&gt;&gt; So that's that that's AI perfectly, right? But I think you and I are going to become relevant now. There's a future for you, Steve. How am I going to become relevant? Well, because when the cost of capital is zero and any schmo can show up and get whatever he wants, pigs fly. Cats sleep with dogs, right?
+
+When the cost of capital starts to matter. Oh, so you you want to borrow this money? Show us Eisman Eisman data centers, right? Show us how you're going to show us the economics of this data center. &gt;&gt; All right. Let's finish up with two companies that you write about.
+
+Well, let's talk about Tesla. Yep. &gt;&gt; you were negative on Tesla last time. &gt;&gt; I'm sure you're still negative on Tesla. Give us an update on Tesla. &gt;&gt; The update is &gt;&gt; and weave in a little SpaceX just to spice up the story.
+
+&gt;&gt; Okay. &gt;&gt; Cuz we're telling the story. &gt;&gt; Oh, yeah. The story. Okay. I think I' I've never seen such shorts at scale as these two companies.
+
+&gt;&gt; What do you mean at scale? &gt;&gt; Market cap. &gt;&gt; I mean, such large market cap. &gt;&gt; You've had subprime lenders shorted at a $500 million market cap. Okay. I'm talking a trillion seven trillion four.
+
+Okay. All right. That that's the mindboggling part. &gt;&gt; Starting with SpaceX. it's built to fail. And the point I'd like to make to people, forget about the 90 times revenues.
+
+Leave that out. We all know that already, but it's important. But what's what's incremental to the to the story and that is the lockup. it's already started. The unlock post the recent earnings the flow went I think from 5% of shares that same to like 20 or 25%. There's a regular schedule now every few weeks 7% more is going to go into the free float.
+
+So the extreme overvaluation owes itself to a the story the narrative but b the incredibly small float &gt;&gt; which is about to change &gt;&gt; which is in the process of changing. So if nothing changes if nothing changes fundamentally &gt;&gt; and the float goes from 5% to 25 to 50 to 75 to 100 stock's going to go down. And think about it if you're if you're a family office or whatever you bought SpaceX, you know, a valuation of 200 billion, 400 billion, 800 billion and now you wake up with still trillion five like you know it's ridiculous and in fact you've seen this with some universities the SpaceX position's gotten so big like their four sellers diversification stand but they have to sell it right so I think so I think that's what people are really missing with SpaceX otherwise it's a story and here's the problem if you're a baron SpaceX. It's a Kathy Woods type of story in so far as they make these predictions out in the future. They're so far out, you can't really disprove them. &gt;&gt; Well, he's got a prediction he's going to do asteroid mining.
+
+Okay. How can you disprove that? &gt;&gt; Okay. Well, but by the way, you talk to any serious physicist, okay, data centers in space, it's ridiculous. &gt;&gt; Total insanity. Okay.
+
+&gt;&gt; I think what people don't understand is that people actually all think that space is always very cold. And it's true that part of space is very, very cold. But whether you're in the sun, it's really really hot. So if you're going to build a data center in space, you're gonna have to deal with heat and cold. &gt;&gt; Eyes when you're no fun. You're letting the facts enter the discussion.
+
+So So SpaceX SpaceX is you know, I had people like we shorted the stock publicly. We actually were the first ones to write up a big report. It got almost two million views on X back in May before it went public. And now every yent is talking about SpaceX and they're all, you know, stock goes up 5% one day like, &quot;Oh, George, are you feeling squeezed?&quot; I'm like, &quot;Well, not really. It's still down meaningfully from where I shorted it.&quot; And Steve, you don't invest on a daily basis. I don't invest any daily basis.
+
+Check back with me at year end or the end of next year. We'll see how this plays out. Another catch catch line I use, and you can relate to this, others speculate, we invest, &gt;&gt; right? And there's and also in this particular environment I feel really my heart goes out to individual investor because the shiny object is a daily price volatility and that has a way of like oh oh my god yeah fomo oh my god space went up 6% I don't own it right and then you have the clowns on the cartoon network praising praising the idea you really don't know what to do so SpaceX stay awake run by the way last point on SpaceX it is not really a space play it's really an AI play. Okay. With a SP with a rocket thing attached to it.
+
+That is to say, if you look at their S1 in the perspectives when they had like a like a $29 trillion T. &gt;&gt; Yeah. Most of it is AI related. &gt;&gt; 22 trillion was an AI. So, it's an it's cash burn by but it's a weak AI company. Totally.
+
+That's the crazy part. It's not It'd be one thing if Grock, which which is a great name. &gt;&gt; you said Croc. F Gro was an incredibly profitable fast growing company and then you know we could say TAM is silly but but but but okay it's it's a great company this is like a third tier AI company &gt;&gt; totally and and okay so Starlink is worth something you look I've done you want the deep dive let's get let's get away from that I'm going to talk facts I come armed with facts I assault you with facts Starlink I don't know worth 200 billion 300 billion some number like that you know reasonable people could disagree a little bit two or 300 billion keep in mind The market cap of SpaceX is like I think it's a trillion7 right now. Okay. All right.
+
+The AI thing, you know, it was bought for stock at an inflated price of 200 billion 250 billion. It's worth a fraction of that. and the rocket thing. Yeah, it's cool. But again, narrative, oh, it's cool. Oh, how can you be short SpaceX?
+
+You see these cool rockets rockets? Okay. Okay. Right. So, so, so &gt;&gt; you know what the By the way, you know what the problem is? Having grown up reading sci-fi, &gt;&gt; you're into that stuff.
+
+&gt;&gt; And I'm into that stuff. Too many people READ THE SAME STUFF. THEY take it very seriously. &gt;&gt; 100%. The point I want to make is though, you add it all up, you're going to come up with 300 billion, 400 billion, 500 billion. The mark's trillion seven, &gt;&gt; right?
+
+It's crazy. &gt;&gt; All right. So, that's that Tesla Tesla the update sales are imploding. I want to remind you that &gt;&gt; and how do you know that? &gt;&gt; Oh, that's public public data. Gordon Gordon J came out with it.
+
+it came out. I think US sales in the months of July were down 26%. Europe's down, China's down. What's really interesting is the third quarter last year benefited immensely from pre- buying the last minute buying ahead of the removal of credit credits, right? So, the third quarter is going to be a disaster this quarter. &gt;&gt; This quarter okay their AI venture at Tesla, right?
+
+Tesla is going seriously cash flow negative. Now one of the things about Tesla Tesla's ROI return on equity is abysmal. All right, they never earn their cost of capital. Now what's happening is their capex capex the depreciation was running I think like 6 or 8 billion order of magnitude and the capex was like similar number the capex is going to 30 billion this year &gt;&gt; and for what &gt;&gt; AI &gt;&gt; but he's got AI in SpaceX &gt;&gt; company he's got he's got AI AI in Tesla all right also. &gt;&gt; Yes. All right.
+
+So, so, they're going seriously cash flow negative at a time when the auto business is falling apart. The, the robot thing, yeah, is a complete freaking joke. All right, here's the point on Tesla and the self-driving car thing, that's a total joke. you know, it's been, it's been, it's been firmly established. Everyone in the world, this is another fugazi. the fake they have with the self-driving cars like so the so in so in Austin, Texas and a few other places they've got the self-driving cars going but it's in a very narrow area it's like geoenced right and there's very few this is a crucial point so please let me finish on this one &gt;&gt; u the number of rides and and Gordon Johnson made a great point about this they actually gave data they gave data which now proves that the auto the the self-driving car thing doesn't work the robo taxis and keep in mind the vast majority of the valuation of Tesla depends on the robo taxis and toit what I'm trying to get at is in Austin which has I think a population a million people whatever it is if you look at the number of rides per million of population like who's actually using it okay and then you extrapolate that to 350 million people United States you wind up coming up with a valuation for &gt;&gt; tax for robo taxi &gt;&gt; robo taxis it's like 800 million not 800 billion &gt;&gt; slight problem all right so so we're going to the the cyber taxi thing is complete completely overcooked.
+
+The robot thing is a total joke. they're they're going cash flow negative. All business is falling apart. You do the sum of the parts. It's kind of funny. I come up with the same numbers for both Tesla and SpaceX.
+
+You're talking somewhere in the neighborhood of 30 $40 $50 a share. Since you're in a good mood, I'll give you 60. All right. The point is Tesla's, you know, 38 360 wherever it is and SpaceX is 140. So, I think they're both outstanding shorts. And by the way, last thing I'll finish on.
+
+This is why you and I both are stock pickers. And the fact that they managed to jam both of these stocks into the S&amp;P, I'd love to compete as a stock picker. If you were had your old hat back on and you get to go against SpaceX and Tesla, it's like, yeah, bring it. I mean, it kind of reminds me of the Japanese market in the 80s where, you know, Japan was killing everything because it was a huge momentum market. Japan got up to 60 times earnings. The financials, the banks, maybe this is before your time.
+
+Japanese banks were on 100 times earnings, six times, 10 times book. Six times book. Can't even remember now. I'm getting old. And so as long as it was going up was a mania. You couldn't John Templeton would be freaking out.
+
+Jeremy Granthon because they're not going to buy that rubbish. But once the worm turned, all you have to do is avoid that and just index everything else and you kill it. So, so I'm what I'm saying is SpaceX and Tesla, it's been passive buying and also the story and the momentum. And last point I'll say on Tesla for all the hype on Tesla and kudos to anyone who owned it way back when. Do you realize Tesla's stock price is unchanged over 5 years? It's done nothing despite all the hype.
+
+I think it's all a function of liquidity and narrative. And I think I think I think the clock's about to strike 12. &gt;&gt; George, thank you. That was great. &gt;&gt; Always good. &gt;&gt; That was great.
+
+&gt;&gt; And we're back. So, that was a pretty wide-ranging conversation. Tons of stuff was discussed. Let me just give a quick synopsis. We first started out talking about Treasury Secretary Scott Bessant trying to repress interest rates. George basically agreed with me.
+
+It's a complete waste of time. The the amount of debt that the US government has, 40 trillion, is just too big for Treasury really to impact interest rates for any duration of time. We also talked about the yen and how interest rates in Japan are climbing, which if they get to a certain level might mean that Japanese institutions and retail will sell dollar assets. Thought that was kind of interesting. We touched on AI. He may be more negative on AI than I am.
+
+The way he looks at it is what's the return on investment? He thinks it's exceptionally low. And then we finished up with SpaceX and Tesla, which he is short both. He thinks SpaceX maybe is worth 200 to 300 billion when the market cap is 1.7 trillion. And then we moved on to Tesla where I think the most interesting data point that he pointed out was that auto sales at Tesla are turning quite negative and he is very very skeptical about the robo taxi business. So I thought it was a great conversation.
+
+See you soon. This podcast is forformational purposes only and does not constitute investment advice. The hosts and guests may hold positions in stocks discussed. Opinions expressed are their own and not recommendations. Please do your own due diligence and consult a licensed financial adviser before making any investment decisions.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
