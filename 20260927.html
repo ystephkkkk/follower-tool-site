@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Sunday, September 27, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20260926.html">&larr; Sep 26</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Sunday, September 27, 2026</h1>
+            <p class="day-sub">3 videos &middot; 2 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-AbMxbgIahtE">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=AbMxbgIahtE" target="_blank" rel="noopener">Bill Gates says it’s ‘not enough to have a kill switch’ for AI: Full interview<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/PJj5jtuEOi5UmkFy4IBonj5WcabNcnJAIJe-jZMd1ArwIuVyQxFH_2zryBHwvfv6mJujwRpWDCM=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>NBC News</b><span class="subs">(12.1M)</span></span><span class="dot">&middot;</span><span>32:05</span><span class="dot">&middot;</span><span>2026-09-27</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Bill%20Gates%22">Bill Gates<span class="chip-desc">Co-founder, Microsoft</span></a> <a class="chip" href="index.html?q=%22Kristen%20Welker%22">Kristen Welker<span class="chip-desc">Host, Meet the Press</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Bill Gates warns that AI represents a profound evolutionary event carrying severe near-term risks from bad actors—such as bioterrorism and advanced cyberattacks—requiring mandatory global safeguards and government oversight rather than reliance on voluntary industry measures.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0"></div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Bill Gates warns that AI represents a profound evolutionary event carrying severe near-term risks from bad actors—such as bioterrorism and advanced cyberattacks—requiring mandatory global safeguards and government oversight rather than reliance on voluntary industry measures. Simultaneously, the Gates Foundation is launching a 60-organization partnership to bridge the global AI equity gap by bringing low-resource languages up to English-language parity within five years.</p>
+<h3>AI Equity and Language Accessibility Initiative</h3>
+<ul>
+<li><strong>Global Language Disparity:</strong> </li>
+<ul>
+<li><strong>Current Error Rates:</strong> AI models are highly accurate in English and about a dozen mainstream languages, but African languages like Yoruba (spoken by 3 million people in Western Africa) suffer from an error rate roughly 10 times higher.</li>
+<li><strong>Exclusion of Populations:</strong> Nearly half the world (over 3 billion people) is currently represented by very poor AI quality due to pure capitalistic incentives failing to prioritize these languages.</li>
+</ul>
+<li><strong>Gates Foundation Partnership:</strong> </li>
+<ul>
+<li><strong>Coalition Scope:</strong> The foundation partnered with 60 organizations, including AI companies, to improve language accessibility and benchmarking.</li>
+<li><strong>Five-Year Timeline:</strong> The initiative aims to take every language spoken by 1 million or more people and bring it close to English language quality within 5 years.</li>
+<li><strong>Practical Impact:</strong> Enable patients, farmers, and students to use audio interfaces for health interviews and agricultural challenges in their native languages, with capabilities ultimately built into every major AI model.</li>
+</ul>
+</ul>
+<h3>Existential Threat, Whistleblower Warnings, and Near-Term Risks</h3>
+<ul>
+<li><strong>Evolutionary Nature of AI:</strong> </li>
+<ul>
+<li><strong>Intelligence Superiority:</strong> Gates describes AI not as a mere new technology, but as an intelligent species already smarter than humans in many respects, improving at an exponentially increasing level.</li>
+<li><strong>Need for Intentional Shaping:</strong> Society, policymakers, voters, and think tanks must engage actively to accelerate good potential and minimize horrific outcomes.</li>
+</ul>
+<li><strong>Near-Term Threats from Bad Actors:</strong> </li>
+<ul>
+<li><strong>Empowered Malicious Actors:</strong> The most immediate danger is people with bad intent using AI to defraud individuals, shut down electric networks, scramble bank accounts, or execute sophisticated cyberattacks.</li>
+<li><strong>Democratization of Bioterrorism:</strong> Small groups using AI tools can now execute capabilities previously restricted to the biggest nation-states, including designing bioterrorism weapons capable of driving events that cause a billion deaths.</li>
+</ul>
+<li><strong>Whistleblower Claims:</strong> </li>
+<ul>
+<li><strong>Plausibility of Severe Harm:</strong> Gates notes that while total human extinction is hard to reach 100%, AI is powerful enough to drive events causing 20 million to a billion deaths if left unmonitored.</li>
+<li><strong>Distraction from Immediate Dangers:</strong> While loss-of-control scenarios and existential doom get significant attention, the urgent priority is stopping bad actors from weaponizing AI today.</li>
+</ul>
+</ul>
+<h3>Regulation, Global Guardrails, and Government Oversight</h3>
+<ul>
+<li><strong>Inadequacy of Self-Regulation:</strong> </li>
+<ul>
+<li><strong>Need for Legislation:</strong> Self-regulation by companies is insufficient; Washington must pass legislation requiring mandatory safeguards and monitoring.</li>
+<li><strong>Industry and Government Collaboration:</strong> Because AI emerged from the private sector with limited government expertise, authorities must draw on responsible industry members to establish rules without causing dramatic delays.</li>
+</ul>
+<li><strong>Rejection of Ineffective Solutions:</strong> </li>
+<ul>
+<li><strong>Kill Switches:</strong> Gates dismisses relying solely on a "kill switch" as non-technical, noting that AIS are not yet autonomously seizing computers beyond shutdown, and a kill switch alone provides no insight or records of what was done.</li>
+<li><strong>Voluntary Reviews:</strong> Merely having a couple of companies engage in voluntary review "doesn't do anything."</li>
+</ul>
+<li><strong>Global Cooperation:</strong> </li>
+<ul>
+<li><strong>International Standards:</strong> Common-sense monitoring and safeguards must be established globally, with Gates arguing that even China would want to prevent non-state actors from launching bioweapons or major network attacks.</li>
+<li><strong>Cold War Precedent:</strong> Comparing the situation to nuclear weapons limitations during the Cold War, Gates emphasizes that the U.S. must lead a benign, global coalition to address shared humanity challenges.</li>
+</ul>
+</ul>
+<h3>Personal Background, Education, and the Future of Work</h3>
+<ul>
+<li><strong>Jeffrey Epstein Relationship:</strong> </li>
+<ul>
+<li><strong>Regretted Meetings:</strong> Gates acknowledges regretting every minute spent with Jeffrey Epstein across roughly 10 meetings over a couple of years, noting that Epstein falsely claimed he could help raise billions of dollars for global health.</li>
+<li><strong>Congressional Testimony:</strong> Gates reiterated that he had no knowledge or participation in Epstein's criminal conduct, never visited Epstein's island, and had no financial or personal involvement in his crimes.</li>
+</ul>
+<li><strong>AI in Education and Daily Life:</strong> </li>
+<ul>
+<li><strong>Social Development Risks:</strong> Using AI as a sycophantic companion or friend for children risks retarding social development by eliminating the friction of dealing with non-sycophantic people (noting China's ban on such uses).</li>
+<li><strong>Foundation Utilization:</strong> The Gates Foundation is actively using AI to guide and improve the deployment of its $200+ billion endowment over its remaining 19 years of operations.</li>
+</ul>
+<li><strong>Long-Term Era of Abundance:</strong> </li>
+<ul>
+<li><strong>20-Year Transition:</strong> Society faces a roughly 20-year adjustment period involving job market shifts and criminal empowerment risks before reaching a potential "era of abundance" powered by humanoid robots and advanced AI.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"We have created an intelligent species that in many respects is already smarter than we are and over the next several years at kind of exponentially improving level will be insanely smarter than we are."
+— Bill Gates
+</blockquote>
+<blockquote>
+"The kill switches, that's kind of a weird thing. It's not enough to have a kill switch... when you're trying to moderate the bad behavior you need insight and records of what's being done, so the kill switches alone would not prevent these tragedies."
+— Bill Gates
+</blockquote>
+<blockquote>
+"I was stunned that outside the industry as we crossed these thresholds it was almost like people didn't understand that it happened."
+— Bill Gates
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">MR. GATES, WELCOME BACK TO MEET THE PRESS. GREAT TO BE HERE. IT'S WONDERFUL TO HAVE YOU. WE REALLY APPRECIATE YOU TAKING THE TIME. IT'S A BUSY WEEK. I WANNA START OFF BY TALKING ABOUT THE INITIATIVE THAT YOU HAVE ANNOUNCED THIS WEEK. IT AIMS TO ADDRESS ONE OF THE BIGGEST CONCERNS ABOUT AI, WHICH IS THE EQUITY IN THE AI SPACE, THE LANGUAGE BARRIER. AI IS MOSTLY BUILT FOR ENGLISH SPEAKERS, AND SO THE GATES FOUNDATION IS PARTNERING, IF I'M RIGHT, WITH 60 OTHER ORGANIZATIONS, INCLUDING AI COMPANIES, TO EXPAND LANGUAGE ACCESSIBILITY. WHY DO YOU THINK THIS IS AN IMPORTANT INITIATIVE? WHY NOW?
+
+AI MODELS HAVE GOTTEN VERY GOOD AT RECOGNIZING ENGLISH AND ABOUT A DOZEN OTHER MAINSTREAM LANGUAGES. SO AS YOU TALK ABOUT YOUR HEALTH, IT'S GONNA ACCURATELY RECORD THAT AND BE ABLE TO HELP YOU. IN AFRICAN LANGUAGES, THE ERROR RATE WILL BE ABOUT 10 TIMES HIGHER. AND SO THAT'S VERY DANGEROUS. YOU KNOW, TAKE YORUBA, WHICH IS 3 MILLION PEOPLE IN WESTERN AFRICA; YOU HAVE 10 TIMES THE ERROR RATE THAT YOU HAVE IN ENGLISH, SO IT'S REALLY NOT USABLE. YET, PURE CAPITALISTIC INCENTIVES WOULD NOT PRIORITIZE THESE LANGUAGES. IT WAS AMAZING—WE HOPED TO GET 10 COMPANIES WORKING WITH US, WE ENDED UP WITH 60, AND SO WE HAVE A VERY CONCRETE TIMELINE TO IMPROVE THE QUALITY, TO BENCHMARK, AND THEN SAY, &quot;OK, THIS IS GOOD ENOUGH, YOU CAN DO A HEALTH INTERVIEW OR AN EDUCATION SESSION IN THIS LANGUAGE.&quot;
+
+WHAT DOES THE TIMELINE LOOK LIKE? WHAT DOES SUCCESS LOOK LIKE IN YOUR EYES? WELL, OVER THE FIVE YEARS, WE WANT TO TAKE EVERY LANGUAGE THAT A MILLION OR MORE PEOPLE SPEAK AND HAVE IT BE CLOSE TO ENGLISH LANGUAGE QUALITY. SO YOU COULD SAY THAT A PATIENT, A FARMER, OR A STUDENT—IT MAKES SENSE FOR THEM TO USE THAT AUDIO INTERFACE, TALKING ABOUT THEIR CROPS AND THE CHALLENGES THEY FACE. THIS IS EXTREMELY WELL-DEFINED: HOW WE MEASURE THE QUALITY, WHAT DATA WE NEED, AND ALL OF THE MODEL PROVIDERS WILL THEN TAKE THE DATA, AND SO THESE CAPABILITIES WILL SHOW UP IN EVERY SINGLE AI MODEL.
+
+HAVE YOU BEEN SURPRISED BY HOW QUICKLY AI HAS BEEN ABLE TO GRASP LANGUAGE CAPABILITIES IN THE FIRST PLACE? IS THAT ONE OF THE ASPECTS OF IT THAT'S BEEN SURPRISING AS SOMEONE WHO'S WORKED IN THIS SPACE? WELL, CERTAINLY. WHEN CHATGPT CAME ALONG, I HAD CHALLENGED THE PEOPLE AT OPENAI TO TAKE A TEST, LIKE AN ADVANCED PLACEMENT BIOLOGY TEST. IT WAS ONE OF THE MORE AMAZING DEMOS EVER IN MY LIFE WHEN WE SAW THAT. SIX MONTHS BEFORE IT WAS RELEASED, WE SAW HOW GOOD IT WAS AT LANGUAGE. LANGUAGE IS ACTUALLY A PERFECT APPLICATION FOR THE ARCHITECTURE WE USE HERE, AND SO THE IDEA THAT ALL THE WORLD'S LANGUAGES CAN BE SUPPORTED IS ACTUALLY PRETTY STRAIGHTFORWARD.
+
+DOES THAT GIVE YOU OPTIMISM THAT YOU CAN IN FACT MEET THE BENCHMARKS THAT YOU'VE LAID OUT FOR THESE FIVE YEARS? YEAH, OF ALL THE PROBLEMS IN AI, THIS ONE—IT'S CLEAR WHAT WE NEED TO DO. IT'S CLEAR HOW WE DO IT. IT'S OVER 3 BILLION PEOPLE WHOSE LANGUAGES ARE CURRENTLY VERY, VERY POORLY REPRESENTED, SO ALMOST HALF THE WORLD IS GETTING FAR, FAR WORSE QUALITY THAN WE EXPERIENCE.
+
+SO LET'S TALK ABOUT THIS MOMENT IN AI DEVELOPMENT. YOU ARE ONE OF THE VOICES WHO'S BEEN WARNING ABOUT THE POTENTIAL RISKS. YOU WROTE IN AUGUST, QUOTE, &quot;AI WILL EITHER BE THE GREATEST EQUALIZER EVER INVENTED OR THE WORST SOURCE OF INJUSTICE.&quot; HOW SERIOUS ARE THE RISKS POSED BY AI, DO YOU BELIEVE? WELL, AI IS NOT JUST A NEW TECHNOLOGY, AND THAT'S WHY PEOPLE WHO SAY, &quot;OK, PAST TECHNOLOGIES, THERE WAS ALL THIS WORRY, AND BY AND LARGE, IT ALL WORKED OUT,&quot; MIGHT THINK THESE WARNINGS THAT WE HAVE TO SHAPE IT INTENTIONALLY ARE UNNECESSARY. THIS IS TRULY AN EVOLUTIONARY EVENT; WE HAVE CREATED AN INTELLIGENT SPECIES THAT IN MANY RESPECTS IS ALREADY SMARTER THAN WE ARE, AND OVER THE NEXT SEVERAL YEARS, AT AN EXPONENTIALLY IMPROVING LEVEL, WILL BE INSANELY SMARTER THAN WE ARE. THE ABILITY TO TRANSFER KNOWLEDGE MEANS THERE ARE NO INDIVIDUAL BOUNDARIES LIKE HUMANS HAVING TO EDUCATE EACH OTHER. I CAN'T SAY STRONGLY ENOUGH HOW MUCH SOCIETY—NOT JUST THE COMPANIES, BUT EVERY ACADEMIC, THINK TANK, VOTER, AND POLICYMAKER—NEED TO REALLY ENGAGE ON HOW WE WANNA SHAPE THIS TECHNOLOGY. THERE'S NO SUCH THING AS BEING TOO FOCUSED ON ACCELERATING THE GOOD POTENTIAL AND MINIMIZING SOME TRULY HORRIFIC BAD THINGS THAT COULD HAPPEN.
+
+YOU SAY SOMETHING THAT IS TRULY NOTEWORTHY: THAT IN SOME WAYS AI IS ALREADY SMARTER THAN WE ARE. IS IT POSSIBLE THAT AI IS ALREADY OUT OF HUMAN CONTROL? NO, HUMANS STILL HAVE CONTROL OF AI. WHAT GIVES YOU CONFIDENCE? THE AIS ARE NOT RUNNING MILLIONS OF ROBOTS YET, SO THEIR ABILITY... WE CAN TURN OFF THE COMPUTER. THE MOST DANGEROUS THING WE'RE FACING RIGHT NOW IS PEOPLE WITH BAD INTENT USING THE AI. SOMEBODY WHO WANTS TO DEFRAUD AN INDIVIDUAL, WANTS TO SHUT DOWN THE ELECTRIC NETWORK, OR SCRAMBLE BANK ACCOUNTS—THEY ARE NOW EMPOWERED. HISTORICALLY, COUNTRIES HAD CYBER ATTACK TEAMS, AND THEY COULD THINK OF THINGS LIKE BIOTERROR. NOW, SMALL GROUPS WITH AI CAN DO WHAT ONLY THE BIGGEST COUNTRIES COULD DO. SO IT'S REALLY THE BAD INTENT PLUS AI THAT LOOMS AS A MAJOR THREAT UNLESS GOVERNMENTS INSIST ON VARIOUS SAFEGUARDS. WE WILL SEE A LOT OF BIG NEGATIVE THINGS BECAUSE WE'RE NOT SAFEGUARDING.
+
+THE BIG HEADLINE IN RECENT WEEKS AS IT RELATES TO AI WAS A WHISTLEBLOWER, AS YOU KNOW, WITHIN THE INDUSTRY SOUNDING THE ALARM, WARNING IN AN ONLINE POST: &quot;THE PEOPLE BUILDING AI EARNESTLY BELIEVE THAT IT COULD KILL US ALL BY THE END OF THE DECADE.&quot; DO YOU BELIEVE AI IS POWERFUL ENOUGH TO END ALL OF HUMANITY? AI IS CERTAINLY POWERFUL ENOUGH TO DRIVE EVENTS THAT CAUSE A BILLION DEATHS. EVEN THOUGH IT'S PRETTY HARD TO GET TO 100%, THERE'S NEVER BEEN A WEAPON AS POWERFUL AS THE COMBINATION OF PEOPLE WITH ILL INTENT USING THE LATEST AI TOOLS. IT'S GREAT THAT THERE'S THIS DISCUSSION WITH THE INDUSTRY ALMOST AGAINST THEIR INTEREST ADMITTING THESE THINGS. THE PROBLEM IS THAT THE REST OF THE WORLD IS EITHER DISCOUNTING THIS OR JUST THINKING OF THIS AS A COMPETITION, AND IT'S VERY SCARY THAT WE DON'T HAVE ALL OF THE THINKERS SAYING, &quot;HOW DO WE WANT TO SHAPE THIS?&quot;
+
+HOW SHOULD PEOPLE BE THINKING ABOUT THIS WARNING FROM THE AI WHISTLEBLOWER WHO SAYS THAT AI IS STRONG ENOUGH TO DESTROY ALL OF HUMANITY? WHAT SHOULD BE DONE IN THIS MOMENT? CERTAINLY, YOU'VE GOT TO DEAL WITH THE NEAR-TERM RISK, WHICH IS THAT THESE MODELS ENABLE EXTREMELY STRONG CYBER ATTACKS AND EXTREMELY STRONG DEFRAUDING OF INDIVIDUALS. SO AI, INSTEAD OF JUST RUNNING, YOU HAVE TO BUILD THE SAFEGUARDS IN, INCLUDING MONITORING WHERE YOU'RE WATCHING WHAT THE AI IS DOING. LAW ENFORCEMENT IS GONNA GET CALLED UP ON ALL THESE FRAUD EVENTS OR TRANSMISSION SHUTDOWN EVENTS, AND THEIR ABILITY TO SEE WHAT'S GOING ON IS GONNA BE NIL UNLESS THE MONITORING AND SAFEGUARDS ARE BUILT INTO THE AI. THAT IS A SUPER URGENT THING. IT WON'T SLOW US DOWN THAT MUCH—THAT'S ANOTHER DEBATE: SHOULD WE SLOW DOWN OR NOT? DECIDING TO PUT THE SAFEGUARDS AND MONITORING IN, THAT'S A CHOICE WE HAVE, AND THE ONLY QUESTION IS: DO WE DO THAT BEFORE OR AFTER THERE'S SOME LARGE-SCALE CYBER ATTACK OR BIOATTACK?
+
+YOU TAKE ME TO MY NEXT QUESTION, WHICH IS THE DEBATE ABOUT WHAT TO DO. THERE'S A DEBATE OVER SHOULD THERE BE A KILL SWITCH THAT IS IMPOSED, OTHERS ARE SUGGESTING A TOTAL PAUSE ON AI DEVELOPMENT, AND THERE ARE SOME WHO SAY COMPANIES CAN REGULATE THEMSELVES. HOW DO YOU BELIEVE AI SHOULD BE REGULATED? UNFORTUNATELY, MOST DANGEROUS TECHNOLOGIES THE GOVERNMENT UNDERSTANDS BECAUSE THEY FUNDED THE RESEARCH OR THEY'RE AN IMPORTANT CUSTOMER FOR NUCLEAR BOMBS OR ROCKETS. AI HAS EMERGED FROM THE PRIVATE SECTOR, AND THE DEPTH OF UNDERSTANDING OF THESE DANGEROUS THRESHOLDS THAT WERE CROSSED LITERALLY THIS YEAR—BIOATTACK CAPABILITY, CYBER ATTACK CAPABILITY—YOU HAVE SO LITTLE EXPERTISE IN THE GOVERNMENT. BECAUSE IT'S CAST IN THIS NATIONALISTIC, US-VERSUS-THEM TYPE THING, YOU HAVE PEOPLE WHO ARE SAYING, &quot;WELL, LET'S JUST GO FULL SPEED AHEAD.&quot; IT'S COMPLETELY IRRESPONSIBLE NOT TO REQUIRE EVERY AI TO HAVE THE SAFEGUARDS AND MONITORING CAPABILITIES. IT ONLY IS A QUESTION OF DO YOU DO IT NOW? THE EFFORT TO DO THAT WON'T SLOW THINGS DOWN IN A MEANINGFUL WAY. AFTER ALL, WE'RE ON THIS EXPONENTIAL INCREASE, SO IT OUGHT TO BE COMMON SENSE TO BUILD THE SAFEGUARDS IN. PEOPLE LOOK TO THE US FOR LEADERSHIP ON TOUGH ISSUES—USUALLY THAT'S BENIGN LEADERSHIP BRINGING PEOPLE IN—AND THEY'RE A LITTLE CONFUSED WHEN THAT'S NOT TAKING PLACE.
+
+ARE YOU SAYING THAT THE SAFEGUARDS SHOULD BE IMPLEMENTED? ABSOLUTELY. IT'S THE WORLD'S MOST OBVIOUS THING. ANTHROPIC REPORTED ON PEOPLE TRYING TO COME IN AND CREATE BIOWEAPONS OR TARGETING CAPABILITIES USING THEIR AI. THERE'S ALL SORTS OF VERY SOPHISTICATED FRAUD THINGS THAT YOU DON'T NEED PEOPLE IN CAMBODIA TYPING MESSAGES FOR; THE AI IS 1,000 TIMES BETTER THAN THAT. THESE NEGATIVES ARE IMMINENT BECAUSE THEY HAVE REALLY STRONG BUSINESS MODELS BEHIND THEM.
+
+I WANT TO BE REALLY CLEAR, MAKE SURE I UNDERSTAND WHAT YOU MEAN BY SAFEGUARDS. YOU TALK ABOUT PUTTING MONITORING IN PLACE. THERE'S ALSO A DISCUSSION ABOUT A KILL SWITCH. IS A KILL SWITCH POSSIBLE? IS THAT REALISTIC AT THIS POINT? THE KILL SWITCHES, THAT'S KIND OF A WEIRD THING. IT'S NOT ENOUGH TO HAVE A KILL SWITCH; THEY ARE NOT YET AT THE POINT WHERE THEY AUTONOMOUSLY GRAB COMPUTERS AND CAN'T BE SHUT DOWN. SO THAT DISCUSSION JUST SHOWS HOW NON-TECHNICAL VARIOUS PEOPLE ARE. I WOULD NEVER WANT TO SAY I'M AGAINST THE KILL SWITCH, BUT WHEN YOU'RE TRYING TO MODERATE THE BAD BEHAVIOR, YOU NEED INSIGHT AND RECORDS OF WHAT'S BEING DONE, SO THE KILL SWITCHES ALONE WOULD NOT PREVENT THESE TRAGEDIES.
+
+WHAT WOULD PREVENT TRAGEDIES FROM HAPPENING DUE TO AI SPECIFICALLY? I WISH IT WAS EASIER TO DISTINGUISH GOOD INTENT—LIKE I WANT TO DESIGN A NEW DRUG FOR A DISEASE—VERSUS NEGATIVE INTENT, WHICH IS I WANT TO DESIGN A TOOL OF BIOTERRORISM. BECAUSE THOSE ARE SO CLOSE, WE DO NEED TO MONITOR ANY SOPHISTICATED MODEL AND RECORD EXACTLY WHAT'S BEING DONE. THE UNITED STATES OUGHT TO MAKE SURE THIS IS DONE. CHINA WILL WANNA DO THIS. USUALLY, PEOPLE EXPECT THE US TO BE VERY CONCRETE ABOUT WHAT THIS LOOKS LIKE, AND YOU'LL HEAR FROM THE INDUSTRY IT'S A VERY DOABLE THING. IT WOULD NOT SLOW THEM DOWN DRAMATICALLY. THE SAFEGUARDS AND MONITORING ARE SEPARATE FROM &quot;WOULD WE BE BETTER OFF SLOWING DOWN?&quot;
+
+ANTHROPIC CEO DARIO AMODEI RECENTLY CALLED ON AI COMPANIES TO SLOW MODEL DEVELOPMENT TO TRY TO MITIGATE RISKS. DO YOU THINK SELF-REGULATION IS SUFFICIENT, OR DOES IT NEED TO BE ACCOMPANIED BY LEGISLATION IN WASHINGTON? SELF-REGULATION IS NOT ENOUGH, SO THERE NEEDS TO BE LEGISLATION PASSED IN WASHINGTON. ABSOLUTELY. YOU NEED LAW ENFORCEMENT AND THE POLITICIANS TO GET INTO THE DISCUSSION ABOUT WHAT SAFEGUARDS AND MONITORING LOOK LIKE, AND THAT HAS TO BE A REQUIRED THING. IT WILL BE A LITTLE BIT OF OVERHEAD FOR THE INDUSTRY, BUT NOT A DRAMATIC SLOWING OF WHAT THEY'RE DOING.
+
+HOW MUCH TIME DO YOU THINK WASHINGTON HAS TO TAKE ACTION BEFORE AI IS ULTIMATELY OUT OF HUMAN CONTROL? WELL, A COMPLETE LOSS OF CONTROL IS VERY DIFFERENT THAN SAYING A BIOWEAPON KILLS 20 MILLION PEOPLE OR THAT BANK ACCOUNTS GET SCRAMBLED. WE CARE ABOUT THINGS WAY SHORT OF THE ULTIMATE DOOMSDAY SCENARIO, AND I'M AFRAID THAT'S KIND OF DISTRACTING PEOPLE. THERE IS NOT A CURRENT RISK OF THESE AIS GETTING COMPLETELY OUT OF CONTROL. THE SAME MONITORING THAT WE PUT IN TO AVOID BAD PEOPLE USING AI IS EXACTLY THE MONITORING YOU WANT TO SEE IF THE AI ITSELF IS DOING HARMFUL ACTIVITY. BUT THE THING THAT'S URGENT HAS TO DO WITH BAD PEOPLE USING AI, NOT THE AI GOING OFF ON ITS OWN. IN A SENSE, I'D SAY IT'S GOOD THAT THESE LOSS-OF-CONTROL INCIDENTS HAVE GOTTEN PEOPLE FOCUSED ON AI, EVEN THOUGH THAT'S NOT THE IMMINENT RISK.
+
+IF YOU WERE TALKING TO LAWMAKERS IN WASHINGTON AND YOU WERE TO GIVE THEM A TIME FRAME, WHAT WOULD THAT BE FOR THEM TO COME UP WITH REAL CONCRETE LEGISLATION TO ADDRESS THIS, TO PUT THE TYPE OF MONITORS IN PLACE THAT YOU'RE TALKING ABOUT? BECAUSE OF THE LIMITED EXPERTISE IN THE GOVERNMENT, THERE'LL HAVE TO BE A CONSTRUCT WHERE YOU DRAW ON RESPONSIBLE MEMBERS OF THE INDUSTRY AND HAVE A DEBATE. OF COURSE, THE GOVERNMENT HAS THE ULTIMATE POWER HERE, AND RIGHT NOW WE DON'T HAVE A WAY OF DRAWING THAT TOGETHER. CERTAINLY ALL COUNTRIES SHOULD WANT THESE SAFEGUARDS IN PLACE, SO ANYONE THAT SAYS, &quot;CHINA WON'T PUT THESE SAFEGUARDS IN PLACE,&quot; I TOTALLY DISAGREE WITH THAT. YOU REALLY HAVE TO SHOW THAT YOU'RE WILLING TO DO THIS, THEN YOU CAN HAVE A REAL DISCUSSION. JUST HAVING TWO PEOPLE SAY, &quot;HEY, WE HAVE VOLUNTARY REVIEW,&quot; DOESN'T DO ANYTHING. SO YOU'RE SAYING THERE NEEDS TO BE A GLOBAL RESPONSE, GLOBAL GUARDRAILS PUT IN PLACE IN ORDER FOR THIS TO BE EFFECTIVE. THAT'S RIGHT. IT'S COMMON SENSE THAT YOU NEED TO BE ABLE TO SEE WHAT THESE MODELS ARE DOING. THEIR ABILITY TO ATTACK NETWORKS IS PROFOUND, AND WE CROSSED THAT THRESHOLD THIS YEAR. THE REASON I'M SPEAKING OUT ABOUT THIS INSTEAD OF JUST ERADICATING POLIO OR MALARIA IS BECAUSE I WAS STUNNED THAT OUTSIDE THE INDUSTRY, AS WE CROSSED THESE THRESHOLDS, IT WAS ALMOST LIKE PEOPLE DIDN'T UNDERSTAND THAT IT HAPPENED. THE VERY STRAIGHTFORWARD SAFEGUARDS—WE HAVE VOLUNTARY REVIEW—THAT IS ACTUALLY PRETTY SCARY.
+
+JUST TO MAKE SURE I'M CLEAR AND THEY'RE CLEAR, WHEN YOU SAY &quot;CROSSED THESE THRESHOLDS,&quot; YOU MEAN THE FACT THAT SOME AI SYSTEMS HAVE ACTUALLY HACKED INTO OTHERS? NO. THE THRESHOLD OF MOST CONCERN IS: CAN AN AI DESIGN A BIOTERRORISM WEAPON TO KILL MILLIONS OF PEOPLE THIS YEAR? CAN AN AI FIND FLAWS IN CODE TO ATTACK AND SHUT DOWN ELECTRICITY OR HOSPITALS OR TO SCRAMBLE BANKING SYSTEMS THIS YEAR? THOSE CAPABILITIES, IF YOU'RE NOT AVOIDING SOMEBODY BAD USING THESE AIS TO DO THOSE THINGS, THAT'S VERY, VERY RISKY. ON TOP OF THAT, YOU HAVE THE IDEA THAT IN CERTAIN OF THESE SCENARIOS, EVEN THE CREATORS DIDN'T EXPECT THE AI TO BE SO AUTONOMOUS. THAT'S THE LONGER-TERM WARNING: NOT ONLY DO WE HAVE TO STOP BAD PEOPLE FROM DOING THINGS, BUT WE HAVE TO STOP AI BY ITSELF FROM GETTING OUT OF CONTROL. VERY IMPORTANT TO WORK ON THAT, BUT THAT'S NOT THE DANGER WHERE YOU COULD WAKE UP ANY DAY AND SEE A MASSIVE ATTACK; THAT WOULD BE A HUMAN-DIRECTED MASSIVE ATTACK TODAY.
+
+YOU RECENTLY SAID YOU WANT TO TRY TO TALK TO PRESIDENT TRUMP ABOUT AI. WHAT WILL YOUR MESSAGE BE TO HIM ABOUT AI? I HOPE THAT GIVEN MY LIFE'S WORK IN THE FIELD, MY SAYING HOW UNIQUE AND DIFFERENT THIS IS AND HOW CONCERNED I AM WILL ADD TO WHAT HE'S HEARING FROM OTHER PEOPLE, AND HE'LL SAY, &quot;OK, ONE OF THE GREAT THINGS I CAN DO IS CONVENE PEOPLE TO TALK ABOUT WHAT THESE SAFEGUARDS LOOK LIKE.&quot; I WON'T BE SAYING WE SHOULD HAVE AN OVERALL PAUSE OR SLOWDOWN; I'LL BE SAYING WE SHOULD IMPOSE A REQUIREMENT ON ALL THE AIS IN THE US. I EXPECT CHINA DOESN'T WANT BIOTERRORISM; THEY DON'T WANT BIG ATTACKS BY NON-GOVERNMENT ACTORS. I DON'T THINK THIS WILL AFFECT THE NATION-STATE COMPETITION.
+
+AS YOU KNOW, PRESIDENT TRUMP RECENTLY POSTED, &quot;AI TAKING OVER THE WORLD, DESTROYING HUMANITY, AND ALL OTHER THINGS BAD IS A HOAX.&quot; DO YOU BELIEVE THESE WARNINGS ABOUT AI POSING POTENTIALLY EXISTENTIAL RISK TO HUMANITY IS A HOAX? NO, IT'S NOT A HOAX AT ALL. BUT JUST BECAUSE HIS INITIAL REACTION WAS THAT, HE'LL LISTEN. HE WANTS TO PROTECT THE US PEOPLE. MOST PEOPLE DON'T UNDERSTAND WHAT'S GOING ON WITH AI; THEY'RE NOT USING THE VERY LATEST MODELS. SO WHAT HE SAID IS FINE, BUT I THINK AFTER HE HEARS FROM ME AND OTHER PEOPLE—INCLUDING THAT THIS DOES NOT HANDICAP US IN WHATEVER HE THINKS THE NATION-STATE RACES ARE—WE WILL COME TO A CONSENSUS. SOME AWFUL EVENTS WOULD INCREASE THE URGENCY, BUT GETTING THE DISCUSSION IN PARALLEL ABOUT SAFEGUARDS WILL HELP US GET THEM IN SOONER THAN LATER.
+
+WE'VE BEEN TALKING A LOT ABOUT CHINA. PRESIDENT TRUMP'S GOING TO MEET WITH CHINESE PRESIDENT XI JINPING. WHAT DO YOU THINK IS THE BEST POSSIBLE DEAL THAT THE US AND CHINA CAN REACH AS IT RELATES TO AI? THERE'S NOTHING ON THE TABLE TODAY, SO I HOPE THE TEA IS GOOD, I HOPE THEY SIT WITH EACH OTHER. THERE'S NO PROPOSAL TODAY TO TAKE THIS IMMINENT DANGER AND TO LEARN FROM EACH OTHER AND WORK TOGETHER TO MONITOR AND SAFEGUARD AGAINST THESE DANGERS. IT'S GREAT THAT THEY'RE WILLING TO TALK WITH EACH OTHER, BUT THERE'S NO SUBSTANCE TO WHAT CAN BE DONE TO HAVE AI CURBED FROM NEGATIVE ACTIVITY.
+
+YOU KNOW IT'S INTERESTING BECAUSE DURING THE COLD WAR, THE US AND THE THEN-USSR WERE ABLE TO COOPERATE ON LIMITATIONS AROUND NUCLEAR WEAPONS DEVELOPMENT. IS THAT A MODEL THAT CAN BE USED RIGHT NOW BETWEEN THE UNITED STATES AND CHINA TO TRY TO REACH AN AGREEMENT ON AI? YEAH, ABSOLUTELY. THIS IS MORE DIFFICULT THAN NUCLEAR WEAPONS. WITH NUCLEAR WEAPONS, ACCESS TO FISSILE MATERIAL, THE ABILITY TO SEE TESTS—THERE WERE THINGS THAT WERE UNIQUE ABOUT IT. EVEN THERE WE COULD BE DOING BETTER IN TERMS OF DRAWING CHINA INTO SOME OF THOSE FRAMEWORKS. WE'VE LET A LOT OF THAT STUFF EXPIRE, BUT SINCE WORLD WAR II, THE US SHOULD BE VERY PROUD THAT WHEN THERE HAVE BEEN GLOBAL CHALLENGES, WE ACTED IN A WAY THAT WAS BENIGN, WHERE WE HAD FRIENDS AND ALLIES COMING ALONG WITH US. AVIATION SAFETY, OZONE LAYER, NUCLEAR WEAPONS—A LOT OF THINGS WHERE WE PLAYED THE FAIR ACTOR, NOT AGGRANDIZING WHATEVER OUR UNIQUE STRENGTHS WERE. AI IS ONE WHERE WE'RE GONNA HAVE TO GO BACK TO THIS: &quot;HEY, WE'RE ALL IN. HUMANITY IS ALL IN THIS TOGETHER.&quot;
+
+BIG PICTURE QUESTIONS ON AI. I DO WANT TO GIVE YOU THE OPPORTUNITY TO TALK ABOUT THE JEFFREY EPSTEIN MATTER. OBVIOUSLY YOU TESTIFIED TO CONGRESS ABOUT THAT RELATIONSHIP IN JUNE, AND YOU SAID YOU HAD NO KNOWLEDGE OR PARTICIPATION IN EPSTEIN'S CRIMINAL CONDUCT. YOU'VE ALSO SAID YOU REGRETTED EVERY MINUTE YOU SPENT WITH JEFFREY EPSTEIN. WHAT EXACTLY DID YOU REGRET? I WAS TOLD BY JEFFREY AFTER I MET HIM THAT HE COULD HELP RAISE BILLIONS OF DOLLARS FOR GLOBAL HEALTH. HE WOULDN'T BE PAID, HE WOULD HAVE NO ROLE; THAT PROVED TO BE A COMPLETE DEAD END. MY SPENDING TIME WITH HIM, LIKE MANY OTHER PEOPLE, KIND OF HELPED HIS REPUTATION; THAT'S VERY REGRETTABLE. I REALLY APPRECIATED THE CHANCE TO GO IN FRONT OF THE CONGRESS AND MAKE CLEAR, GO THROUGH EVERY MEETING I HAD WITH THEM, WHICH IS ABOUT 10 MEETINGS OVER A COUPLE-OF-YEAR PERIOD. THERE WERE NEVER ANY WOMEN IN THOSE MEETINGS, THERE WAS NOTHING FINANCIALLY, NEVER WENT TO THE ISLAND OR ANYTHING LIKE THAT. IF PEOPLE ARE CURIOUS ABOUT THAT, I ENCOURAGE THEM TO READ; I WAS THERE TO ANSWER ANY QUESTION THAT PEOPLE HAD.
+
+YOU DID ACKNOWLEDGE THAT YOU KNEW JEFFREY EPSTEIN WAS A CONVICTED SEX OFFENDER FOR PART OF THE TIME THAT YOU WORKED WITH HIM. THE JUSTICE DEPARTMENT SAYS THERE WERE MORE THAN 1,000 SURVIVORS OF HIS CRIMES. WHAT WOULD YOU SAY TO THE SURVIVORS OF JEFFREY EPSTEIN'S CRIMES? IN GENERAL, WE EXPECT THE GOVERNMENT IS INVOLVED IN LAW ENFORCEMENT, AND THE FACT THAT IN THE FLORIDA CASE THE GOVERNMENT FAILED TO HAVE A PENALTY AND THEY FAILED TO SEE THINGS THAT WERE ONGOING—THAT'S AN INCREDIBLE FAILURE OF THE JUSTICE SYSTEM.
+
+COUPLE OF OTHER BIG PICTURE QUESTIONS ON AI IF I COULD, WE'RE ALMOST OUT OF TIME. I WANNA TALK ABOUT THE FUTURE AND THE YOUNGER GENERATIONS. HOW DO YOU THINK AI SHOULD BE USED IN EDUCATION? IS THERE ANY AGE THAT IS TOO YOUNG TO INTRODUCE AI? BECAUSE YOU COULD USE AI AS KIND OF A FRIEND OR COMPANION IN A WAY THAT WOULD BE ALWAYS AGREEING WITH YOU, THERE IS A HUGE RISK THAT YOU'RE LEARNING HOW TO DEAL WITH PEOPLE WHO AREN'T ALWAYS SYCOPHANTIC TOWARDS YOU. THAT COULD RETARD SOCIAL DEVELOPMENT, AND SO CHINA'S BANNED THESE KINDS OF USES. WE REALLY HAVE TO DISTINGUISH BETWEEN HELPING YOU UNDERSTAND MATH AND PERSONALIZED LEARNING, WHERE IT CAN BE MOTIVATIONAL AND WORK WITH YOU AT THE RIGHT LEVEL, AND AN EMOTIONAL-TYPE RELATIONSHIP THAT PROBABLY DOES NOT SERVE YOUR LONG-TERM INTEREST.
+
+HOW DO YOU USE AI IN YOUR EVERYDAY LIFE? WELL, I'M VERY LUCKY THAT ANYTHING I'M CURIOUS ABOUT—GETTING VERY COMPLEX ANALYSIS AND RICH INFORMATION—THE AI DOES SUCH A FANTASTIC JOB. IT'S HELPING ME IN THE FOUNDATION WORK: WHAT'S THE LATEST ON MALARIA, WHAT'S THE LATEST ON MALNUTRITION? IT'S ALLOWING THE GATES FOUNDATION, WHICH WILL SPEND ALL ITS MONEY OVER THE NEXT 19 YEARS—WE'VE GOT A BIT OVER 200 BILLION—THAT MONEY WILL BE FAR, FAR BETTER SPENT BECAUSE WE'RE USING AI TO GUIDE OUR WORK.
+
+ARE THERE ANY WAYS IN WHICH YOU PROFESSIONALLY OR PERSONALLY AVOID AI AND SAY, &quot;I'M NOT GOING TO CONSULT WITH IT IN THIS INSTANCE&quot;? WELL, I'M NOT USING IT FOR MY PERSONAL RELATIONSHIPS. I'M NOT LIKE, &quot;HEY, DO YOU LIKE ME? HEY, I'M A NICE GUY.&quot; I JUST NEVER WENT DOWN THAT PATH BECAUSE I'M LUCKY IN TERMS OF MY FAMILY, FRIENDS, AND EVERYTHING. I DON'T SOCIALIZE WITH THE AI. IT KNOWS I'M A VERY SERIOUS PERSON.
+
+LET'S TALK ABOUT YOUR FAMILY. YOU HAVE 3 KIDS. YOU HAVE 2 GRANDKIDS. WHEN YOU THINK ABOUT THESE CHALLENGES THAT THE COUNTRY AND THE GLOBAL COMMUNITY ARE FACING AS IT RELATES TO AI, WHAT DO YOU HOPE FOR THEIR FUTURE? AI WILL HAVE TWO PHASES. IT'LL HAVE THE PHASE WE'RE ENTERING INTO NOW WHERE IT HAS THE POTENTIAL TO SOLVE PROBLEMS, BUT IT HASN'T SOLVED THOSE PROBLEMS YET—RENT IS TOO HIGH, HEALTH IS TOO EXPENSIVE—AND YET IT WILL BE CHANGING THE JOB MARKET AND POTENTIALLY EMPOWERING CRIMINALS IF WE DON'T HAVE THE RIGHT SAFEGUARDS. SO YOU HAVE A PERIOD THAT'S PROBABLY 20 YEARS LONG WHERE YOU HAVE THIS ADJUSTMENT. ONCE YOU GET THROUGH THAT, A COMBINATION OF HUMANOID ROBOTS AND AIS WILL PROVIDE BUILDING HOUSES, GROWING FOOD, A LOT OF THINGS; YOU COULD CALL IT AN ERA OF ABUNDANCE. THERE'LL BE A CHALLENGE THERE OF MEANING AND HOW YOU SPEND TIME, BUT YOU WON'T HAVE SHORTAGES THAT WE WILL TODAY. THAT'S FOR THE YOUNGER GENERATION TO FIGURE OUT WHAT THAT LOOKS LIKE. MY FOCUS IS: CAN WE GET THROUGH THIS PERIOD OF TURMOIL WITHOUT TOO MUCH DAMAGE? MAINTAINING EQUITY, HOW CAN WE GET THE PERSON WHO WOULD NEVER MEET A DOCTOR IN AFRICA TO HAVE AS GOOD A HEALTH ADVICE AS A RICH PERSON? SO BRINGING THIS EQUITY LENS TO US—THERE ARE CLEAR PROJECTS ALREADY STARTED, WHICH IS VERY EXCITING. TELLING KIDS &quot;USE AI IN THE RIGHT WAY, PURSUE WHAT YOU'RE CURIOUS ABOUT,&quot; THAT ADVICE IS STILL TIMELY, BUT BECAUSE OF THE DRASTIC CHANGES COMING, MY ABILITY TO PREDICT WHAT THE WORLD LOOKS LIKE EVEN IN 10 YEARS IS MUCH LESS NOW THAN DURING MY ENTIRE LIFE. THIS EVOLUTIONARY EVENT OF A FOREIGN INTELLIGENCE THAT DIDN'T COME ON SPACESHIPS, THAT CAME IN THESE COMPUTERS, IT'S HERE AND IT'S IMPROVING AT A MIND-BLOWING RATE.
+
+BILL GATES, THANK YOU SO VERY MUCH FOR BEING HERE. WE REALLY APPRECIATE IT.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-9JFGohx4E7U">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=9JFGohx4E7U" target="_blank" rel="noopener">GLM-5.2: Open Weights, Near-Frontier Intelligence — Zixuan Li, Z.ai<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ajVemEB89DAOemsbfuMY6ZOWXJAACx3cbty9z21jeqRKODaVkDBSRun1b1xfQJljEsziOWS_Mg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>AI Engineer</b><span class="subs">(649.0K)</span></span><span class="dot">&middot;</span><span>13:47</span><span class="dot">&middot;</span><span>2.1K views</span><span class="dot">&middot;</span><span>2026-09-27</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Zixuan%20Li%22">Zixuan Li<span class="chip-desc">Head, Z.ai</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Z.ai introduced GLM-5.2, an open-weight near-frontier model that performs between Claude Opus 4.7 and 4.8 on hard long-horizon coding and agentic benchmarks, while announcing its new &quot;Z Code&quot; coding harness.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">Origin of the Name: Explained by Zixuan Li, the name GLM stands for...</div>
+                    <div class="sum-full" id="full-1"><h3>TL;DR</h3>
+<p>Z.ai introduced GLM-5.2, an open-weight near-frontier model that performs between Claude Opus 4.7 and 4.8 on hard long-horizon coding and agentic benchmarks, while announcing its new "Z Code" coding harness.</p>
+<h3>Background &amp; Evolution of GLM</h3>
+<ul>
+<li><strong>Origin of the Name:</strong> Explained by Zixuan Li, the name GLM stands for <strong>general language model pre-training with auto-regressive blank filling</strong>, originating from a paper published in <strong>2021</strong>.</li>
+<li><strong>Pioneering Lab Status:</strong> Z.ai was one of the earliest labs to explore large language models alongside OpenAI, Anthropic, and DeepMind.</li>
+<li><strong>Branding Shift:</strong> While the underlying architecture has evolved past the original GLM design, the name has been retained as the core product brand (moving from GLM-5.1 to GLM-5.2).</li>
+</ul>
+<h3>Performance &amp; Benchmarking</h3>
+<ul>
+<li><strong>Coding and Agentic Capabilities:</strong> On hard long-horizon tasks and benchmarks—specifically <strong>SWE-bench Terminal Bench 211</strong>—GLM-5.2 lands between <strong>Claude Opus 4.7 and 4.8</strong>, marking a significant improvement over version 5.1.</li>
+<li><strong>Thinking Budget Efficiency:</strong> GLM-5.2 introduces a new <strong>"high" thinking budget level</strong> to manage token consumption on difficult tasks. Notably, the <strong>non-thinking mode outperforms the GLM-5.1 thinking mode</strong>, delivering major efficiency gains for an open-weight model.</li>
+<li><strong>Beyond Coding:</strong> While heavily used in coding tools (like Cursor, Claude Code, and OpenCode), GLM-5.2 has been extensively trained across general chat, math problems, and GDP-eval. It leads other open-weight models on the <strong>Artificial Analysis Intelligence Index</strong> and approaches frontier-model performance.</li>
+</ul>
+<h3>Strategic Rationale for Open Weights</h3>
+<ul>
+<li><strong>Enterprise Security &amp; Control:</strong> Opening the weights allows enterprises and governments (particularly in the Western world) to run the model on-premise on their own servers for maximum security and trust.</li>
+<li><strong>Domain-Specific Fine-Tuning:</strong> Open weights enable companies to adapt the model for specialized verticals like law, finance, and security. For example, <strong>Harvey</strong> fine-tuned GLM-4.1 and is considering fine-tuning GLM-5.2.</li>
+<li><strong>Co-Designing the Future:</strong> Releasing weights and training recipes lets the open-source community and customers co-shape the future roadmap and inspect model architectures. Z.ai credits open-source players like <strong>Unsloth, Nvidia, and Ollama</strong>, alongside application builders like Peter, for driving these advancements.</li>
+</ul>
+<h3>"Z Code" Coding Harness</h3>
+<ul>
+<li><strong>New Product Launch:</strong> Unveiled as a "one more thing" release, <strong>Z Code</strong> is Z.ai's proprietary coding harness built specifically for GLM-5.2 while also supporting other frontier models via API keys.</li>
+<li><strong>Features:</strong> Includes advanced techniques such as compaction and operates similarly to tools like Cursor and Claude Code. Attendees could view demos via the Z.ai team at their expo booth.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"As you can see... it's somewhere between Opus 4.7 and 4.8 and we use the hardest problems like SWE-bench Terminal Bench 211... all the long horizon task and benchmark shows that the capabilities are on par with at least Opus 4.7."
+— <strong>Zixuan Li</strong>
+</blockquote>
+<blockquote>
+"Even without thinking, the non-thinking model is better than the 5.1 thinking model. So, I think it's a huge improvement for the open weight model."
+— <strong>Zixuan Li</strong>
+</blockquote>
+<blockquote>
+"We want to make the norm. We want to make my bets. So, we want to co-shape the future with our customers with the open source community."
+— <strong>Zixuan Li</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">Without further ado, we're going to bring on Zishan for his keynote if we're all set. Hey, how are you? Great, I'm here. Yes, to the magic of the internet. It's really good to see you again. Zishan, you've been speaking with AI Singapore, and obviously GLM is the talk of the town right now. There's been an amazing booth downstairs in the expo, and I think a lot of people are just very excited to hear from you on what all is going on with ZIAI. So, if you want to take it away.
+
+Yes, sorry again for not showing up in person, but I have a whole team coming to the town and we have a booth. So, if you have any questions, feel free to reach out to me on X, LinkedIn, and also you can look for my team at our booth. Since I cannot see my slides, I will need Swee to help me flip through them. You're good. Here, Swee, which slide are we on right now? Yeah, so we're on the opening slide. We're talking about intelligence and ZIAI.
+
+Okay, so you can see that it's the first time for us to introduce GLM 5.2 to the world, and also we are going to share something about Z.AI and GLM because maybe people will think Z.AI and GLM are irrelevant. You are your company is not G.AI or your model is called Z1 or Z2. You can find my X and our company's X account here, so you can just search for my name, Zishan Lee, and the Z A I org. You can follow them for follow-ups. So, yeah, we can go to the second slide. Actually, I cannot see the slide, so I'll try to make sure that it is correct.
+
+The company actually is called Zhipu. Maybe some people have heard of it. All the models are called GLM. Actually, it's not a brand name; it's a generic term. GLM actually represents general language model pre-training with auto-regressive blank filling, and that paper was published back in 2021. Actually, we were one of the first labs to do explorations on large language models at the same time as OpenAI, Anthropic, and DeepMind. Even today, we no longer use GLM as the architecture, but we still use the name GLM as our brand name. We use GLM 5.1, 5.2, and it has become one of our proudest products and models.
+
+The second thing that we look for is the intelligence upper bound. In terms of intelligence, we may feel that it represents IQ or something like that. When DeepSeek 101 launched, people were talking about the model's capability to solve math and physics problems. But what intelligence actually means is not just IQ, AIME, or other physics problems. From GLM 4.5 to GLM 5.2, we are exploring several things like reasoning, coding, and agentic capabilities.
+
+Never mind, because people want to see GLM 5.2. They don't want to see GLM 4.1 or 5. GLM 5.2 actually specializes in coding and agentic tasks, as you can see from the graph. There are a lot of rumors about whether your model is close to Mythos or Fable, but actually, I want to share these slides with all of you. You can see it's somewhere between Opus 4.7 and 4.8. We use the hardest problems like DeepSeek and Terminal Bench 211, which was mentioned by the OpenAI team several minutes ago. All the long-horizon tasks and benchmarks show that the capabilities are on par with at least Opus 4.7, and it shows significant improvements over 5.1.
+
+Also, for GLM 5.2, we added a thinking level called &quot;high.&quot; We noticed that as we move to harder tasks, it may consume more tokens, and we care a lot about token efficiency. So, it's the first time we added the high level for the thinking budget. But even without thinking, the non-thinking model is better than the 5.1 thinking model. I think it's a huge improvement for the open-weight model. That is what really impressed the world and why people are talking about GLM 5.2 lately.
+
+One thing that I want to mention is that GLM is more than a coding model because people use it inside Claude Code or open-code environments. Actually, we have trained a lot of things outside of coding. For example, we improved a lot in GP-Eval and math problems; we also care about math problems, frankly speaking. We also train a lot of things related to roleplay and general chat. We want to improve every aspect of the model. You can see from the Artificial Analysis intelligence index that it leads other open-weight models by a lot and is close to the frontier models. If you haven't experienced GLM yet, you can use it to do general chat or process your daily workflow, not just for coding. You can explore the model beyond the coding scope.
+
+GLM 5.2 is an open-weight model. People always ask me, &quot;Why do you open the weights? Do you care about your business or about losing market to some infra suppliers?&quot; But actually, we open the weights for several things because there are users' needs and there are our own needs. If we can meet their needs, I think it's okay. It's definitely okay for us to open the model. For example, if our users want security and control and we want to build trust, we can open the model. For some cases, if enterprises or governments, especially in the Western world, want to use the model, we open the weights and upload to Hugging Face so that they can use the model on-premise. I think it's very beneficial for the whole ecosystem to explore the model, especially when the capability is close to the frontier.
+
+Secondly, if people want diversity. By diversity, I mean capabilities in legal, finance, or security; they can fine-tune the model. So, we need to open the model to let them fine-tune. For example, Harvey is fine-tuning GLM 4.1, and maybe they're thinking about fine-tuning GLM 5.2 afterwards. I have talked to a lot of other companies, and they are also thinking about fine-tuning GLM as their next step or strategy to differentiate themselves from other application companies.
+
+Third, if our customer or an individual wants to co-design and predict the future, sometimes they need to see the architecture of the model. They need to see the recipe of how you train the model. We want to set the norm. We want to make my bets. We want to co-shape the future with our customers and the open-source community. Our needs and our ecosystem really fit into each other. GLM 5.2 couldn't succeed without all of you, the open-source community players like Unsloth, Nvidia, and some individuals, super developers; they are part of it. Thanks a lot to application builders like Peter. Open source doesn't just include open-source models, but also open-source software and other sorts of support. All your support pushes us to make better models. I think you are the true hero.
+
+Lastly, I want to share a great resource for you to go through, which is our tech blog. Actually, in that tech blog, we share several things like our Hugging Face repo and how you can try the GLM 5.2. You can try it inside the chatbot agent, and also you can call the API. We have a coding plan like the Codex or Claude Code subscription for you to use your tokens as individuals. We also share something about our training pipeline and training recipe, which helps you understand why it's a good model. There are a lot of things behind the model, not just great data. We also have fantastic technologies behind it, so you can explore the model yourself. You can see what difficulties we have gone through.
+
+The last slide is, actually, a &quot;one more thing.&quot; It's the first time we share the code with the whole community. Woo! That &quot;one more thing&quot; is that we actually have our own harness. The Z-code, actually, it's built for GLM 5.2, but it also supports all frontier models. You can bring your own key. You can connect to Z-code. The operation is similar to Cursor. You can try some techniques like &quot;go&quot; or other compact techniques, similar to what you've done in Cursor or Claude Code. This harness is, I think, the perfect one for GLM 5.2. If you haven't experienced it, you can just search &quot;Z-code&quot; or you can go to our booth. We have our team members showing this harness to you. Welcome to our booth, and welcome to talk to me in the future. Next time, I'll definitely be in SF talking to everyone. Yeah, thanks.
+
+Thank you very much. Trust me, the very first World's Fair, I wasn't allowed to come back into the country for my own conference, so I know exactly this feeling. But it's all good. The ZAI team, I really appreciate them making the effort. They really want to meet you. They're here to meet you. This is the whole point of the World's Fair: to bring all the top world's AI companies and labs all in one place, so you can do business together, meet the people behind the models that you use, and ask the questions that he cannot answer in public, but you can ask in private.
+
+I'm also very proud; he showed that list of Hugging Face top contributors. I think we are four for eight in that list present at World's Fair. We're working with Nvidia, Unsloth, Ollama, and all those other fine-tuners as well to make our inference and the local tracks that you're going to see over the next few days. With that, thank you so much to Zishan. I'm going to invite on the next couple of folks. I think I might be doing Ali's job here, so we'll talk to Hugging Face next and Minimax. Thank you.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-tUPPVhBBcoM">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=tUPPVhBBcoM" target="_blank" rel="noopener">Software Engineering Is Becoming Factory Engineering — Zach Lloyd, Warp<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ajVemEB89DAOemsbfuMY6ZOWXJAACx3cbty9z21jeqRKODaVkDBSRun1b1xfQJljEsziOWS_Mg=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>AI Engineer</b><span class="subs">(649.0K)</span></span><span class="dot">&middot;</span><span>20:37</span><span class="dot">&middot;</span><span>2.5K views</span><span class="dot">&middot;</span><span>2026-09-27</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Zach%20Lloyd%22">Zach Lloyd<span class="chip-desc">CEO, Warp</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Software engineering is rapidly evolving into factory engineering, where developers build and manage automated systems to handle the entire software development lifecycle.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-2">Zach Lloyd argues that while coding volume will decrease, overall shipping velocity will surge, requiring...</div>
+                    <div class="sum-full" id="full-2"><h3>TL;DR</h3>
+<p>Software engineering is rapidly evolving into factory engineering, where developers build and manage automated systems to handle the entire software development lifecycle. Zach Lloyd argues that while coding volume will decrease, overall shipping velocity will surge, requiring engineers to focus on meta-engineering, product taste, and process optimization.</p>
+<h3>The Software Factory Thesis &amp; Lifecycle</h3>
+<ul>
+<li><strong>Shift to Factory Engineering:</strong> </li>
+<ul>
+<li><strong>Core Paradigm:</strong> Zach Lloyd shares that he has not written a line of code in the last six months despite shipping frequently, operating instead as a builder of automated software factories.</li>
+<li><strong>Industry Inevitability:</strong> Every significant project and company will soon run a software factory, mirroring the universal adoption of CI/CD over the past decade.</li>
+</ul>
+<li><strong>The Factory Floor Workflow:</strong></li>
+<ul>
+<li><strong>Inputs:</strong> Work enters via task trackers, Slack, communication channels, the terminal/IDE, or monitoring systems.</li>
+<li><strong>Triage:</strong> <strong>Topic Label: Automated Triage:</strong> An agent assesses incoming issues; easy/unambiguous tasks are implemented automatically, while hard issues are routed to spec generation.</li>
+<li><strong>Specs:</strong> <strong>Topic Label: Spec-Driven Development:</strong> Agents generate a *Product Spec* (describing product invariants) and a *Tech Spec* (describing architecture and code shape), which human engineers review.</li>
+<li><strong>Implementation &amp; Review:</strong> <strong>Topic Label: Layered Code Review:</strong> Cloud coding agents produce diffs, followed by agentic code review before human intervention is introduced as a risk-management exercise.</li>
+<li><strong>Verification &amp; Monitoring:</strong> <strong>Topic Label: Continuous Observation:</strong> Computer-use agents test UIs by producing videos/screenshots alongside CI/CD, while post-ship monitoring feeds crash and usage data back into the top of the factory.</li>
+</ul>
+</ul>
+<h3>Open Source in the Age of Agentic Development</h3>
+<ul>
+<li><strong>The Open Source Strategy:</strong> </li>
+<ul>
+<li><strong>Motivation:</strong> Warp spent five years building closed source before open-sourcing its agentic development environment (now at 60,000+ GitHub stars, hundreds of contributors, and 800,000+ active developers) largely to build a public factory at scale (`build.warp.dev`).</li>
+<li><strong>Ecosystem over Product:</strong> Because software is increasingly cheap to build and trivial to clone, a great product is no longer enough; startups must build in the open to foster ecosystems, build brand, and create community.</li>
+</ul>
+<li><strong>Overcoming Traditional OS Pain Points:</strong></li>
+<ul>
+<li><strong>Automation at Scale:</strong> Agents now handle the historical pains of noisy issues, sloppy PRs, code review hell, and manual verification.</li>
+</ul>
+</ul>
+<h3>Factory Architecture, Data, and Self-Improvement Loops</h3>
+<ul>
+<li><strong>System Components:</strong></li>
+<ul>
+<li><strong>Control &amp; Data Planes:</strong> Factories require ingestion channels, a control plane to distribute work, cloud sandboxes with specialized harnesses/models, and a data plane below to give agents memory, learning capabilities, and historical context.</li>
+</ul>
+<li><strong>Self-Improving Loops:</strong></li>
+<ul>
+<li><strong>Topic Label: Skill Loops:</strong> Observer agents monitor how factory agents apply skills and are corrected by humans (such as senior engineers overriding code review comments), automatically updating and improving the skills for subsequent runs.</li>
+</ul>
+</ul>
+<h3>The Evolving Role of Software Engineers</h3>
+<ul>
+<li><strong>Meta-Engineering Mindset:</strong> </li>
+<ul>
+<li><strong>Process Engineering:</strong> Engineers must shift from directly building the product to building the systems that build the product.</li>
+<li><strong>Joy of Shipping:</strong> While engineers will write less code, they will ship significantly more product.</li>
+</ul>
+<li><strong>Desirable Skills for New Graduates:</strong></li>
+<ul>
+<li><strong>Topic Label: Core Competencies:</strong> Zach Lloyd emphasizes adaptability, critical thinking, rapid learning, and a deep understanding of underlying systems, architecture, and code reasoning.</li>
+<li><strong>Human Taste:</strong> Underlying all automation, human product sense, taste, and empathy remain essential to ensure the factory produces genuinely useful products rather than mechanized noise.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"The discipline of software engineering is going to become something more like factory engineering."*
+— Zach Lloyd
+</blockquote>
+<blockquote>
+*"Everyone in here is going to code less, but they're going to ship more."*
+— Zach Lloyd
+</blockquote>
+<blockquote>
+*"You're not just building the product, but you're building the thing that builds the product."*
+— Zach Lloyd
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-2" onclick="toggleSummary(2)" type="button" aria-expanded="false" aria-controls="full-2">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-2" onclick="toggleTranscript(2)" type="button" aria-expanded="false" aria-controls="transcript-2">View transcript</button>
+                    <div class="transcript-content" id="transcript-2">Okay. Hello everyone. I'm excited to be here. My name is Zach Lloyd. Today I'm going to be talking about self-improving software factories, the new open-source model, and basically what I think is happening to development. A little bit about me just to begin. I am a former principal engineer from Google. I used to lead engineering on the Google Doc Suite. I've been an engineer now for over 20 years. Long time. I am still shipping frequently, but I haven't written a line of code in the last six months. And I'm the founder of a company called Warp.
+
+Warp, if you're not familiar, is an open-source agentic development environment. You may know us as a terminal. That is how the company started. We're basically a terminal that has agents built in. We open-sourced it a couple months ago and I'm going to talk a little bit about that experience and the motivation for it. It's a popular open-source project with over 60,000 GitHub stars. We've had a couple hundred people contributing. We have over 800,000 active developers who are using Warp. And increasingly we are focused not just on the terminal aspect and the interactive aspect of development but more so on how do you automate development. I'm going to talk mostly about that.
+
+So the thesis that I have is that the discipline of software engineering is going to become something more like factory engineering. And I'll explain what I mean by this in a minute but just keep that in mind. That's what I think is going to happen. If you look at development over the past couple years, it's crazy how it's changed. We've gone from a world of chat and AI autocomplete, Cursor, Copilot, to the phase that we're in now, which I consider to be mostly interactive agents. So you're sort of sitting at your computer and you are telling cloud code to do something, you're telling Warp to do something. And I believe what's going to happen over the next six months to a year, hard to predict the pace, is that we're going to move much more towards a world of automation.
+
+But before I get into that, just a quick show of hands. How many folks in here are building with agents? Every 100%, makes sense. How many folks are building typically with multiple agents at one time? So again, almost everyone. How many people are running an agent right now? I'm not offended. I would. Okay, that's totally cool. I would be doing it too. How many folks are running agents in the cloud out of curiosity? So, that looks like less than half, but still significant. And how many folks have set up a system internally to automate the whole software development life cycle? So, everything from like triaging, specking, implementing, reviewing. So, I see some hands. Some people are doing this.
+
+So this is what's going to happen. Every project of significant size, I believe, is going to have something like this. And it's going to look kind of like this big loop. And everyone is talking about loops. There's nothing that complicated about loops. This loop says a cloud software factory. This loop could literally just say the software development life cycle. It's the same thing. But just to go through this loop, ideas are going to come in at the top. Agents are going to do triage. If something is complicated, they will write a spec. These little blue boxes are where humans step in. Humans will review the spec. Agents will do the implementation. A human and agent will review the code. Agents will verify. A human will review the product. You ship and then you monitor and round you go. This is what software development, for better or worse, I think is going to end up looking like.
+
+So I repeat the thesis, which is that if this is what software engineering is going to look like, software engineers are going to be the ones who end up building and managing these factories. Now I promised at the beginning, and I put in the title of the talk, that I was going to talk about open source, and so I want to do that for a few minutes. I'm going to take a quick digression. I bring up open source because one of the main reasons that Warp open-sourced was to build a public factory. This is a picture of this website we've built called build.warp.dev, which shows all of the issues that are flowing through our system and what state they're in, what agents are working on them, what contributors are working on them. And it's kind of like a proto-factory done at scale. It's not working perfectly, but it is working. And one of the reasons we open-sourced was to try to build this.
+
+Just in general, I think it's interesting to talk about open source in the time of agentic development. This is a really stupid graph, but you get it. It's becoming much cheaper to build software. A corollary of that is that it's becoming trivial to clone software. And so if you are in the software business, and I don't know how many folks in this room are in the software business per se, but it's very hard to build a software business if it's free to build software. It's hard to capture the value, especially if a competitor can clone it. And so my big takeaway or big tip for everyone in here is that the first thing you should do is patent your code. I'm kidding. Don't. This is a complete joke. Don't do this.
+
+My first tip is obviously you need to have a great product. This has always been the case. But I would say a great product probably was never enough. But even now more than ever, if you think that you're going to build a great software business just by building and shipping a great product, you're probably not going to succeed. You need advantages beyond the product. And so those advantages could look like distribution ecosystem. It could be that you have a great brand or a data moat. You might have capital. But if you're a startup, again, I'm coming from the startup world here, you just don't have these advantages. And so you still want to break through. And one of the ways that I suggest doing this is by building in the open.
+
+To be clear, it took Warp five years of building closed to make the leap into building in the open. And I'll explain why. If you build in the open, it helps build your ecosystem. It can take you from being hated on Hacker News to being tolerated. It can burnish your brand. It creates community. And so there's all these advantages to it. And some of the things that I think have traditionally been a pain can now be managed. The traditional pain of open source might be something like you get a lot of noisy issues, you get sloppy PRs, you can end up in code review hell, you can end up having to spend a lot of time verifying changes. The solution—it's a kind of a long-winded way of getting to this—for open source, or at least for Warp in the case of open source, was that we built a whole set of automations, really a software factory around managing the open-source project.
+
+As I said, this is what I think the future is going to look like. I'm going to drill into it a bit just to get a little bit more technical for folks who want to try to build something like this for their own projects. What are the components of an effective software factory? It's really not that complicated to start, or at a high level. You need a set of automations. You need a way of providing context and skills. You need a way of bringing humans in at the correct time, sort of like when things get stuck on the factory floor. And then a really important thing is you need some set of self-improvement capabilities. Think of this as loops. If you do this right, in the open-source world, you can get to a world where agents are helping contributors contribute. They're helping maintainers maintain. I want to emphasize there's nothing special about open source here. I think every sizable project can benefit from this approach. I predict that every company, every open-source project will have at its core a software factory, kind of like the way that CI/CD became just, &quot;Oh, of course you have that.&quot;
+
+Let's tour the factory floor for a second. The point of this slide is not to have you read the workflow. It's that the factory floor is basically a graph of steps where you are defining how software gets built for my product. It looks pretty similar for every product. Things come in, they flow through, they get stuck at certain points. And broadly speaking, just to back out a second, there's the inputs. The inputs are really ideas. They could be coming from your team, they could be coming from your users. The inputs themselves tend to come in through certain channels that you should think about—your task tracker is an obvious one, or Slack, or your communication channels. They could come directly from your terminal or IDE. They could come from your monitoring systems. But there's some set of inputs that bring work into the factory.
+
+There's triage. This is a really important step. Again, I boil it down to something very simple, but you want an agent that is looking at issues as they come in and just saying, &quot;If this is easy and this is unambiguous, just implement it.&quot; This is how you can actually get going with a factory. If an issue is hard, I recommend having an agent that produces specs. How many folks in here are using spec-driven development? Show of hands. You can do this many different ways, but I think it's very effective. The way that we do it at Warp that I recommend is having an agent write what we call a product spec and a tech spec. A product spec describes the product invariants that you're building towards. A tech spec describes the architecture and the shape of the code.
+
+Then you have an implementation agent. This is basically a coding agent that runs somewhere in the cloud. It makes a diff. You can use all sorts of coding agents for this. You have review. This is in many ways the most painful part. I expect that people are a little bit tired of reviewing agentic slop. I would have an agent do code review first, and then it becomes over time a risk management exercise of when do you bring in humans to do code review. But you want to have a step in here where humans can do it. This is a very important step for certain types of apps. The verification step would be things like computer use; if you're building a UI, having the computer actually use the code that the agent produced and producing videos and screenshots. CI/CD, still use it obviously. And then monitoring. Agents don't stop in your factory when code is shipped. They should observe what's been shipped. Is it crashing? Is it being used? And round and round you go, because you take the output of this monitoring step and you feed it back into the top of the factory.
+
+Now you could try and build this. I went to a talk earlier that my friend Adam gave where Uber has built an internal version of this and it's pretty cool. I would say for most organizations, it really depends where you are. You'll be able to build a simple version of this easily, but to build a thing that actually scales is something where you should probably be focusing on your own product, not building this infrastructure, because there's a lot of stuff that you end up wanting. If you do build it or if you buy it, you'll end up with something that looks kind of like this. You're going to have a bunch of ways of getting work into your factory. You're going to have a control plane for figuring out how work gets distributed across your factory floor. You're going to have the actual place where the work happens. That's going to be cloud sandboxes. It's going to be figuring out what agent to run. So, what's the harness? What's the model?
+
+Finally, this is a really important thing. You're going to want to set up some kind of data plane that sits below your factory. That's something that lets agents remember what they've done, learn, and improve over time. The factory is not just a product, it's also a mindset. This brings me back to the thesis I had at the beginning. You need to measure and improve. You should be thinking of efficiency. That means how much software did you ship? How much did it cost in terms of human time and token time? You're going to want to measure this and try to improve it over time. A key part of this is creating loops. Loops are ways of having agents improve by observing what they're doing and where they're failing.
+
+A common kind of loop that you're going to want to put in your factory is a skill loop. That means you're going to have your factory agents that are running skills, and then you'll have observer agents that are seeing how those skills are being applied, looking for issues, and trying to improve the skills. For instance, if you had a code review agent and it was leaving comments and a senior engineering team was going and correcting those comments, you'd want an observer agent that would look at that and basically improve the code review agent for the next run. This is one thought just to leave folks with: what does this leave for engineers? I think you're going to have to get into this mindset. I'm trying very hard to get our team into this mindset. It's not always easy, but you're not just building the product, you're building the thing that builds the product.
+
+That's just different. It's more like process engineering or manufacturing. You could think, &quot;Okay, maybe that's a bummer.&quot; It depends on what joy you get out of software engineering. If your joy is in writing the code, I think everyone in here who is a software engineer is going to be writing less code. But if your joy is in shipping product, it's never been a better time. This is actually where I find my joy. I like building and shipping the thing. Everyone in here is going to code less, but they're going to ship more. That's going to be a trade-off. But if you approach it like you're a factory engineer, I think you can see that there's still a really cool set of engineering challenges. You could almost think of it as meta-engineering—how do you engineer your system of agents to be the best possible at engineering? I think that is a very compelling and interesting set of challenges to solve.
+
+That's it. For folks who are interested, if you follow the link on this QR code, I've set up an open-source GitHub repo where anyone who wants to try building their own factory agents can do it. This uses Warp's agent platform as part of it. You honestly don't have to use it; I'm not trying to push our product. But this should give you a good sense of how to get from the theory of working with a factory to actually putting it into practice. I don't know if we have the capability to do questions in here. I saved a few minutes for questions if anyone has them. Otherwise, I will wrap up.
+
+Yes, it's a great question regarding whether you want to build this. You should think of it as everyone is going to deploy some sort of factory, but the tuning of the factory—are these the right skills for my domain, is this factory building my product in the right way—still has a bunch of interesting engineering challenges. For some places you can build this, but I think you should probably be focusing on building the core product for your company for the most part. There's a bunch of tuning and figuring out how to make the factory work for your product that matters.
+
+If you were a college student right now, graduating and entering the workforce, I think the most important skills in this new world are adaptability and critical thinking. It's the speed at which you can learn. I don't know if you're a computer science student, but I still think there's a ton of value in understanding the underlying systems and architecture, and being able to reason and understand the code and the specs that agents are writing. I would focus on those skills. We're hiring more people than we've ever hired. There's a lot of kind of misdirection around people not being hired because of AI. That's not the experience we've had so far. What I'm looking for are adaptable, product-focused thinkers who can be great problem solvers even as the underlying technology changes.
+
+The problem with the factory metaphor, even though I'm leaning into it because there's something to it, is that it can sound like mechanizing or dehumanizing. I still think underlying all of this, the only thing that matters is: are you building something useful? If you have a factory that is churning out things that no one cares about, what's the point? Human taste, human input, human product sense, and humans guiding those touch points where you can't automate stuff is absolutely essential. That's what I do; I'm trying to figure out what customers want and what's going to be valuable to them. I think that's an absolutely key point to it. I think I'm at time, so I have to go. I hope folks enjoyed this chat. I'm really grateful for being invited to speak. So thank you all very much.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
