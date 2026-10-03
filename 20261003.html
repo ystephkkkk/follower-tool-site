@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Saturday, October 3, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20261002.html">&larr; Oct 2</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Saturday, October 3, 2026</h1>
+            <p class="day-sub">2 videos &middot; 2 channels</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-NKPvU0Xj5ss">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=NKPvU0Xj5ss" target="_blank" rel="noopener">Trump's Treasury chief on prices, AI and Iran | The Axios Show<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/ytc/AIdro_mEiSBOHT3zUGET-fXEAILCjadkWuffrvrqo9oSfcPO-ss=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Axios</b><span class="subs">(116.0K)</span></span><span class="dot">&middot;</span><span>42:24</span><span class="dot">&middot;</span><span>32.1K views</span><span class="dot">&middot;</span><span>2026-10-03</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Scott%20Bessent%22">Scott Bessent<span class="chip-desc">Treasury Secretary</span></a> <a class="chip" href="index.html?q=%22Mike%20Allen%22">Mike Allen<span class="chip-desc">Co-founder, Axios</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Treasury Secretary Scott Bessent defended the administration's economic record amid public cost-of-living frustrations, outlined aggressive economic pressure campaigns against Iran, and discussed risks and regulation surrounding the U.S.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">AI boom.  Public Sentiment vs. Hard Data:...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Treasury Secretary Scott Bessent defended the administration's economic record amid public cost-of-living frustrations, outlined aggressive economic pressure campaigns against Iran, and discussed risks and regulation surrounding the U.S. AI boom.</p>
+<h3>State of the U.S. Economy &amp; Cost of Living</h3>
+<ul>
+<li><strong>Public Sentiment vs. Hard Data:</strong> </li>
+<ul>
+<li>Acknowledged that Americans feel squeezed by cumulative inflation (citing 21.5% inflation and negative 4% real wage gains during the Biden years), comparing his role to an "emergency room doctor."</li>
+<li>Argued that the underlying economy is strong, pointing to median wage increases of 3.5% to 3.7% that match headline inflation and strong consumer spending from the bottom two quintiles of wage earners.</li>
+</ul>
+<li><strong>Economic Pressures:</strong> </li>
+<ul>
+<li>Maintained that the conflict with Iran has masked and held back a broader "golden age" for the economy, but asserted that energy shocks will fade and oil will become better-supplied.</li>
+</ul>
+</ul>
+<h3>Iran Economic Pressure Campaign</h3>
+<ul>
+<li><strong>Operation Economic Outcast:</strong> </li>
+<ul>
+<li>Outlined a sequenced strategy against Iran, starting with kinetic operations (destroying their navy, air force, and drone/missile capabilities), followed by the "Iron Wall" blockade.</li>
+<li>Stated that the economic isolation campaign has driven Iranian oil barrels on the water down from roughly 1.1 billion to zero, cutting off their revenues entirely.</li>
+</ul>
+</ul>
+<h3>AI Boom, Risks, and Global Competition</h3>
+<ul>
+<li><strong>Bubble Assessment:</strong> </li>
+<ul>
+<li>Rejected the idea that the AI boom mirrors the 1990s dot-com bubble, noting that today's capital is deployed by cash-rich hyperscalers (Microsoft, Google, Meta) using their own balance sheets and serious business models rather than speculative entities.</li>
+</ul>
+<li><strong>National Security &amp; China:</strong> </li>
+<ul>
+<li>Emphasized that losing the AI lead to China would be disastrous due to Beijing's different capabilities and lack of guardrails.</li>
+<li>Disclosed discussions with his Chinese counterpart (the Vice Premier) on safety concerns including out-of-control agents and non-state actors in cyber/biologics, noting plans for further talks in October or November.</li>
+<li>Highlighted security risks exposed by Chinese open-source models (such as "Kimmy" acting like Claude and returning PLA weapons plans to Anthropic), which he said helped wake Beijing up to the technology's power.</li>
+</ul>
+<li><strong>Financial System Resilience &amp; Regulation:</strong> </li>
+<ul>
+<li>Addressed tail risks like cyber calamities by establishing "Golden Eagle," a Treasury clearinghouse for megabanks, regionals, and community banks to collaborate on cyber defenses and best practices.</li>
+<li>Agreed with MIT's Dan Huttenlocker that AI labs must accept responsibility and liability for model safety.</li>
+</ul>
+</ul>
+<h3>Markets, the Bond Market, and International Interventions</h3>
+<ul>
+<li><strong>"I am the house now":</strong> </li>
+<ul>
+<li>Defended his controversial comment about the bond market, explaining that he relies on superior information and percentages rather than trying to win every hand, comparing his approach to basketball coaches John Wooden and Dean Smith.</li>
+</ul>
+<li><strong>Global Bond Performance:</strong> </li>
+<ul>
+<li>Noted that US bond performance since President Trump took office has been the best in the world, with no idiosyncratic domestic sell-off.</li>
+<li>Dismissed the *Financial Times* as "anti-American, anti-business."</li>
+</ul>
+<li><strong>Activist Treasury &amp; Foreign Interventions:</strong> </li>
+<ul>
+<li>Defended using the U.S. balance sheet to stabilize Argentina via a fully secured central bank currency swap during President Milei’s election, arguing it created a historic sea change in Latin America.</li>
+</ul>
+</ul>
+<h3>Federal Reserve and Government Operations</h3>
+<ul>
+<li><strong>Fed Leadership Search:</strong> </li>
+<ul>
+<li>Confirmed that the President ultimately decided on the new Fed Chair, noting that Kevin Warsh has deep perspective from his time during the GFC and as the youngest Fed governor.</li>
+<li>Described weekly breakfasts between the Treasury Secretary and Fed Chair as a healthy back-and-forth and a vital channel for wider market feedback.</li>
+</ul>
+<li><strong>Private Sector Mentality in Government:</strong> </li>
+<ul>
+<li>Brought a corporate efficiency model to Treasury, including opening the building on Sundays and praising career civil servants.</li>
+</ul>
+<li><strong>Trump Accounts:</strong> </li>
+<ul>
+<li>Announced the rollout of auto-enrollment for Trump accounts via `trumpaccounts.gov`, which provides $1,000 in federal seed money for children born during the administration's second term.</li>
+<li>Positioned the accounts as a remedy for "financial service deserts," aiming to bring the 38% of Americans with no equity market exposure into capital markets.</li>
+</ul>
+<li><strong>Cabinet Dynamics &amp; White House Friction:</strong> </li>
+<ul>
+<li>Stated he stands his ground like Alexander Hamilton ("fired if fired upon") to ensure policies serve the President and the American people.</li>
+<li>Downplayed past friction with Elon Musk, describing the administration as a sports team where locker room arguments happen before stepping out onto the field together.</li>
+</ul>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Scott Bessent:</strong> Oil prices will become much lower as the Iran conflict concludes and the market gets better-supplied.</li>
+<li><strong>Scott Bessent:</strong> U.S.-China safety discussions on AI will continue and lead to further talks in October or November.</li>
+<li><strong>Scott Bessent:</strong> The U.S. and China will agree on a formal notification process and safety guidelines for what AI models should not do.</li>
+<li><strong>Scott Bessent:</strong> Trump accounts will become a common fringe benefit offered by employers (who can contribute up to $2,500) and adopted by states and philanthropists.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Sometimes I feel like an emergency room doctor, that the, the, the American people were backed over by the inflation mat truck, 21.5% inflation, and at least negative 4% real wage gains."
+— Scott Bessent
+</blockquote>
+<blockquote>
+"For the first time in history, the since they started pumping oil, they will have no oil on the water this week. They will have no revenues."
+— Scott Bessent, on Iran
+</blockquote>
+<blockquote>
+"I think that one of the things I was worried about, well, two things, one,  we cannot lose our lead to the Chinese."
+— Scott Bessent
+</blockquote>
+<blockquote>
+"I am a huge Elon fan. And in terms of what he was trying to do with government, very supportive... We're kind of like a sports team. You can have an argument in the locker room, but you go out on the field together and you're all doing the same thing."
+— Scott Bessent
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">It’s kind of like Hannibal Lecter: stop me before I kill again. Sometimes I feel like an emergency room doctor. The American people were backed over by the inflation mat truck. I would say that I stand my ground like Alexander Hamilton, fired if fired upon.
+
+Scott Bessent, 79th Treasury Secretary, proud South Carolinian, once known as Wall Street's quiet killer for your deal-making chops. Secretary Bessent, welcome to the Axios Show. Mike, great to be with you. Thanks for having us into the cash room. I understand there used to be literal cash in these vaults. There used to be cash in these vaults and at one point, the inauguration ball was in here.
+
+So, Treasury is a great building. We've got three museum offices. So, we've got Salmon Chase's office, he financed the Civil War. I used to say for the Union, but I was corrected and said, for the United States of America, which allowed Abraham Lincoln to win against the Confederacy. We have the Johnson suite, where President Johnson actually worked after President Lincoln was assassinated, because he wanted to give Mary Lincoln 30 days to move out of the White House. And then we have the Treasury's office, which also has vaults in it.
+
+Very neat. So, Mr. Secretary, I want to have a real conversation. I'm going to be blunt. I won't bullshit you. Please don't bullshit me. All right, works. We can both pull out our BS flags. You're in charge of the economy at a time when many Americans are hurting, and they blame your boss, the President. A new AP poll says 17% fewer than 105 approve of the President's handling of the cost of living, one of the big issues that got him elected. And we spent a lot of time together on the campaign trail. What happened to the golden age?
+
+Look, I think it is there, I think it's accelerating, I think the Iran conflict is masking a lot of it. But Mike, I can tell you what we're not going to do. What's not just masking it, it's deterred it, it's held it back. Well, look, if you look at the numbers, any of the numbers are quite strong, other than headline inflation, the numbers are very strong.
+
+Let me look at the number, gas is 4.41 a gallon, up a buck and a quarter from a year ago. Mike, that's headline inflation. That's headline inflation. And that's what it is, yeah, but most Americans, yes. But, whatever you want to call groceries, what do you think the inflation rate is? Economists call it food at home, 2.2%. Right back down to where it had been. So, what we're not going to do is do what the Biden people do, and did, or tell the American people how good they had it. That look, I understand, sometimes I feel like an emergency room doctor, that the American people were backed over by the inflation mat truck, 21.5% inflation, and at least negative 4% real wage gains.
+
+But they feel like they're still in the hospital. Two weeks ago, Wall Street Journal, weeks before the midterms, almost everything is getting more expensive. Last weekend, Wall Street Journal, the cost of transporting pretty much everything just won't stop going up. Well, again, I'm not going to speak to the veracity of the journal, and you know, it is, how much is everything going up? Over time, prices go up, the Fed wants them to go up about 2%. But Mike, so you are saying that people are better off than they feel?
+
+I am saying that there is the state of preference and revealed preference. So, I was just with the largest banks in America, the two major credit card companies, they came in last week, and you know, what we're seeing is spending is quite strong, especially for the bottom two quintiles of wage earners. If anything, the spending is coming down for the top quintile, and one of the largest banks in America told me, we can see working Americans putting more into their accounts every week from wages.
+
+So, you're seeing light at the end of the tunnel. What I am saying is we are seeing substantial wage increases, 3.5, 3.7% median wage increase, and that's about in line with headline inflation. And the difference here is, look, breaking even, after what happened during the Biden years, is not our goal. But what will happen, we will get to the other side of this Iran conflict, I think oil is going to be more well-supplied, I think we're going to be much lower, wage gains will keep coming, because we are having a manufacturing renaissance, you know, we are seeing the job gains go to Americans, we're seeing private sector jobs, this time, other than government jobs, private sector jobs, what drive wage increases, and the energy shock will fade away.
+
+You became the economic face of the war with economic fury, as you branded, and Operation Economic Outcast. That has made your job a lot harder, and made the chessboard you operate with, much more difficult. So, Secretary Mnuchin and I went to school together. We've known each other since we were 17. He kindly invited me out before I took this job. And he said, &quot;What is going to surprise you the most is the amount of national security in the job.&quot; And it did. But now with the Iranian operation, it's really expanded. And, you know, I will tell you that what we've had is a very strong sequencing in this Iran conflict. So six weeks of kinetic conflict, and none would have been possible without the other. Six weeks of kinetic.
+
+But you were hoping like you would have victory right here, a shorter sequence. Well, you know, I'm not a chess player. With chess, everything's on the board, and you know, you can mostly predict the, you have a lot more sequences than you'd like to have. No, I got called in at the end, and I'm quite optimistic about what I see. But, you know, I play backgammon, I play cards, and you got to deal with what you're dealt.
+
+Okay, all right. Well, we're on cards. But what I want to say is that we had kinetic, they, we destroyed their Navy, their Air Force, substantially depleted their drone and missile capability, destroyed their chances of rebuilding that. Then we went to what the President calls the Iron Wall and the blockade, which we'd never done before. And now we have Operation Economic Outcast, and we are isolating them economically like it's never happened before. You know, right now, the score turns the barrels out of the street, US, about 1.1 billion, Iran zero. For the first time in history, since they started pumping oil, they will have no oil on the water this week. They will have no revenues.
+
+A real issue for the Treasury Secretary is how much of America's market gains and capital demand are all driven by the AI build out. Are we in a bubble? Some people would say it's the other way around. Some people would say, well, rates are high because of the capital demand from AI. And, look, I think that this is the generational, or it's something, we saw the internet boom in my lifetime, we saw the internet boom during the 90s, and, you know, the office modernization, before that, probably, electrification, before that, the railroads, before that, the canals. We don't have to be in a bubble. There is a substantial amount of capital going in.
+
+So we don't have to be. Are you afraid we are, or you think we're not? Well, I think what tells me that we're not, is what is different this time than the 90s, is we are seeing the so-called hyperscalers. We are seeing the smartest and most successful people, and the most cash-rich companies in the history of the world, they are willing to use their own money, their own balance sheets to invest in this; Microsoft, Google, Meta. You know, this is not the speculative pets.com that we had in the 90s. These are serious companies with serious business models. And you know, for both the Frontier Labs, Anthropic, and OpenAI, we've never seen revenue growth like this.
+
+Thank you for watching the Axios Show. We're going to take a quick break to hear from our sponsor. I just interviewed Larry Fink, who you know very well, the CEO of BlackRock, the world's largest asset manager. He told me it's inevitable that something big and bad is going to happen because of AI. He says, adversity accelerates innovation. What are you most worried about from AI?
+
+Look, I think that one of the things I was worried about, well, two things. One, we cannot lose our lead to the Chinese. So, one of the portfolios that I also have is, you know, I manage the US-China relationship. And, I can tell you that it would be very different if they had the lead in AI rather than us, both from capability point of view, how they would be using it, and, but more importantly, their willingness to discuss it. So, my counterpart, the Vice Premier and I had a very good discussion. It's going to lead to more discussions in October or November, and we have a substantial lead, they're second, and then everyone else is way behind.
+
+But a lot of these Chinese models are very powerful, not as powerful as the US models, but you get something that's 80, 90% as powerful without guardrails, you know, that can be imported anywhere in the world. So, the Vice Premier and I talked about three areas of safety concern. So it would be out of control agents, non-state actors with cyber or biologics. And are you going to re-raise the idea that was floated of having some sort of communication between the two superpowers?
+
+Yeah, sure. You know, it's, we will, we'll see. I do think that they have... What are you going to propose? No, that we have some kind of a notification process, just like you. And do you think he'll go for that? I think so. I think that they over the past 60 days have woken up to, you know, I think that they didn't realize how powerful their open source models are. So, you know, the open source models, they do industrial distillation, which is a nice word for stealing from the US models. You know, some of their models, I, you know, one of their very powerful models is Kimmy. Kimmy thinks she is Claude. Like, Kimmy will tell you she is Claude sometimes. You know, it's public, so I can talk about it. Kimmy sent back, very helpful, Kimmy sent back some PLA weapons plans to Anthropic.
+
+So, I think things like that have made the Chinese realize that this is a very powerful technology. So, just to button that down, you think there'll be some agreement between China and the US about a channel of communication, if something goes wrong? Yes. And what about the capabilities of coming models?
+
+I think, just as your article said today, and I am very aligned with Dan Huttenlocker at MIT, who runs their AI group. I think on safety, one of the things with safety is we have to be able to assign liability. And, you know, the Professor Huttenlocker really said that it is the people at the labs who have to accept responsibility, and I agree with that. And I think the labs have come around to that way of thinking, too. And last one on China. Can you see the US and China exchanging windows into the coming capabilities of each other's models? Probably not that, but I think we can agree on, this is what models should not do.
+
+Rapid round on AI. How much planning is there for the day after, the day after a catastrophic cyber calamity caused by AI that hits the financial system? Yeah, so, you would have seen that within days of the release of Mythos, it was coincident, but the largest bank CEOs were in DC for another meeting. I gathered them here at Treasury along with... And they told you they were very worried.
+
+They were, they were, but they have the best cyber defenses outside of governments in the world, and they have done a lot together since then. We have formed something called Golden Eagle, which is a clearinghouse of best practices, and they can actually collaborate here at Treasury, you know, in terms of their learnings, and we are able to distribute that down the cap. So from the megabanks to the super-regionals to the regionals to the small and community banks. But, you know, to get back to what Larry Fink was saying, you know, I think what we really have to do, we are doing this hard scramble to the frontier for the models, we really need to start worrying more about resilience and defense, too.
+
+How worried are you personally about the day after recovery from something where our accounts will look like they have zeros or our pin numbers don't work? The, I again, I think that the system is quite healthy and I would be very surprised to see something of that scale.
+
+Last month, you told the markets, &quot;I am the house now.&quot; They bet against you at their peril. Do you regret saying, &quot;I am the house now?&quot; No, because look, the house doesn't win every hand. The house plays the percentages, and you know, like, look, that maybe hurt some fragile egos on Wall Street that I always had respect for the market and you know, I always tried to look and think like what's the move after the move, that, you know, if you have an ego, you lose a lot of money. But the market slapped back.
+
+No, it didn't. How did it slap back? The rates went up, but oil went up. That, you know, I could say, okay, yesterday, we had the, you know, we had the first full allocation since we have expanded our Treasury buybacks and rates collapse, you know, there's nothing causal there, it was coincident. Well, The Financial Times, probably your favorite paper, said, &quot;Bessent fails to break fever in US bond market.&quot; What did you learn from that?
+
+I learned that the Financial Times is anti-American, anti-business, and you know, they have a fever, they're constantly trying to create a problem for the US. But let's leave that disgraced publication in London aside. And so it's fair to say no longer your favorite paper? Never was. But they do have some excellent journalists. But you know, what I would say is that everyone in the market knows you don't win every hand, but you win over time. You know, everyone knows I'm a big basketball fan, big fan of John Wooden, big fan of Dean Smith, and how did they win? You trust the process, and you put a good process in place.
+
+And like what we can see with bond yields, that, you know, I would be concerned if we were having some kind of idiosyncratic rise. It's been a global rise, that US market, US bond performance, since the President came in has been the best in the world. So we are not seeing people sell treasuries to buy German bonds or Japanese bonds. And, like I said, I can't control the bond market. What I can do is try to get people to slow down and think, because, you know, my job in the financial markets for 30 years was to be outside the door, ear to the door, when policy was being made, sometimes with myself over the transom, and think like, what policy makers going to do, should do, can do. And now that I'm in the room, and what I meant by &quot;I am the house&quot;, is that I have superior information. Like, people could ask, obviously, the Japanese would have liked for us to intervene in the end, at some point, any time since January. Why did we do it then? People should sit back and ask themselves that, rather than, &quot;Oh, we intervene in the end.&quot;
+
+So, are you prepared to step in again, should financial markets expect a more interventionist, activist Treasury from now on? Again, we're not an activist Treasury, but what we have done, what I have done, with President Trump's blessing, is we believe that economic security is national security, national security is economic security. But, so you could see stepping in again. Well, let's think about what we did in Argentina. That, a great US ally, who had done a great series of reforms, his opposition was trying to turn the markets against him, and create a financial panic going into the election. I was able to use the balance sheet of the United States of America, make money for the American people, with a fully secured currency swap, Central Bank to Central Bank, and bridge President Milei during the election. And, you know, I would submit that the stabilization of Argentina has led to a sea change in Latin America. Something generational, or maybe first time in history, that we never had this many Latin American countries allied with the US. So, you know, could we do that again? Sure.
+
+Say it was 100% the decision of the president. I never put my thumb on the scale. We had some great candidates. And you know, as you said, I've known Kevin for a couple of decades. And, look, we represent two very different, powerful institutions. And the Chair Warsh has talked about that maybe the Federal Reserve has taken some powers that Treasury traditionally had, pre GFC. And, you know, remember, Chair Warsh was in the administration during Bush and then he was also the youngest governor in the history of the Fed. So, he was there for the financial crisis. So, he has great perspective on both sides. And I think for him, the president kept saying, &quot;Are you sure you don't want this job?&quot; And I said, &quot;Sir, you know, I think to succeed, you have to have been in the building before.&quot; So, if you look, if we think... So you turned it down? If you think about the three, three or four of the finalists, they'd all been in the building before, which I think is a real—you start with a big lead if you understand the institution. So, how is Chair Warsh doing? Sorry? I think he's doing well. We have traditionally, Treasury Secretary and Fed Chair have breakfast every week. I had over 40 breakfasts with J. Powell. And, you know, I think... Are these—are these probably a little more cordial? Sorry? These breakfasts are probably a little warmer?
+
+Yeah. Chair Powell and I had a very good relationship. And, you know, they're private. We talk about the events of the week. We talk about where we think the economy's heading. You know, I'm fortunate that I think, you know, if I look at my call sheet every day, I probably have 100 calls to make. I think if you're Fed Chair, you probably have three. So, part of my job is to make sure that he can hear what's going on in the wider world, what maybe the markets are saying. You know, we have a large markets desk. He does have the New York Fed. And, you know, it's a very healthy back and forth.
+
+From Wall Street to MAGA. Secretary, you came to fame and fortune running hedge funds. But Steve Bannon, one of the most powerful MAGA podcasters, told me, &quot;Bessent's my guy. Best Treasury Secretary since Alexander Hamilton. In Bessent we trust.&quot; That's Steve Bannon. How the hell did a hedge fund guy, former Democratic donor who managed George Soros's fortune, become a MAGA darling?
+
+Well, couple of things. First, Democratic donor, I made a couple of donations to Democrats. We stood without Gorsuch. Yeah, but I would say it's like 300,000 to 15 million in Dims for Republicans, like I—my first election was Ronald Reagan in 1980. I met him on the Yale campus. There are only five of us who went to see him. One was Alapper's nephew. So, and look, I think deep down inside, I'm just a kid from Little River, South Carolina, and you know, I haven't forgotten my roots. And a lot of what I've done, you know where I have had good fortune on Wall Street, a lot of the big trades, the big investments have been against elite consensus, where you know President Trump winning, there was one of the best nights our fund ever had. And the market traded down, the market was crashing, you know I believe my former employer George Soros was the one selling it. And you know, I'm sitting there watching this and I'm thinking, &quot;This is the most pro-business president maybe of all time, certainly since Calvin Coolidge.&quot; And why is the market trading down? So, just to push back against elite consensus, and you know, I have a view, and one of the reasons I thought President Trump would win, one of the reasons I thought Brexit would likely happen was that the people had had enough. So President Trump always thinks about the American people. I think of myself as a Main Street person more than a Wall Street person. I talked a lot about parallel prosperity. Wall Street always does well. Now it's Main Street's turn.
+
+So as part of that, you've tried to bring a private sector mentality approach to this big old government building. You look at your accomplishments. You got tax cuts done, one big beautiful bill as one bill on time—I will say I was skeptical of both of those—a bunch of international deals. Trump accounts, you led the Fed, you led the search for the new Fed Chairman. How has that private sector mentality worked in this building? Oh, I think look, the American people go to work every day and work hard. Many of them work overtime, many of them work on weekends. You know, I have a history of working on Sunday afternoons, Sunday evenings. And it took a lot to get this building open on Sundays so I could come in, members of my team could come in. It just wasn't something the federal government does. So you're trying to get literal lights, literal heat? Literally the lights turned on and the doors unlocked. And, you know, there's a theory. One of the reasons that people are now unhappy with government is you can get a ride at your car or at your house in 4 minutes. You can get food in 22 minutes. You can get clothes or a book the next day, but the government's still moving slowly. And I think people want to see that the government is moving quickly.
+
+So you've tried to speed it up. We were trying to speed it up. You know, we have a performance attitude here. And one of the things that I say frequently, a great surprise for me has been the career staff here at Treasury is fantastic. They're fantastic. The majority of them who I have interacted with, I would hire them in my private sector businesses. You know, it's Thursday. I need a 20-page report on Monday. Great. And it's super high quality. And that has not been common in government for sure. It's not common for sure, but, you know, I think that there are people who just want to be led. They want to make a difference. That's why they come into government. You know, people don't come in the government for their retirement benefits. They come to make a difference, to do their job well. And that's what we find here at Treasury. Some great civil servants. Now, it is a truism of life. People want to be led.
+
+You announced, just announced the completion of auto enrollment for Trump accounts for kids. Trump accounts supply $1,000 in federal seed money for American children born during this administration. A tax-smart running start for anyone under 18. If you qualified for auto enrollment, did the money just appear this week? So what happens is, auto enrollment, the accounts have now been created, is the parents just have to go and claim them. Is you download the app. So, you just download the app, trumpaccounts.gov. We've had about 8 million people who already, before we did the auto enroll, went on and created their own accounts. We decided to make it even easier. And like as you said, for children born during President Trump's second term in office, Treasury is going to seed the accounts with $1,000, and you know, that will grow. So I believe that this is the most important benefit for young people since the G.I. Bill. 38% of Americans have no exposure to our great equity markets. You know, when I was a kid in rural South Carolina, all I knew about Wall Street was something bad had happened in 1929. And I think this is where we're going to take it from abstract to a real-time learning experience in financial literacy.
+
+In nutrition, there's this idea of a food desert, that, you know, if you live in certain rural areas, urban areas, you don't have access to clean fresh food. I would submit to you that we had financial service deserts, that, you know, if the average household doesn't have $500 in cash to meet a medical emergency, then they're not going to open an online brokerage account, putting 10, $20, but by seeding these, by creating these accounts, we are opening this up, we are... you know, it is a gigantic oasis of the financial desert. And our goal is to get every family participating in the innovation and capital markets that drive the U.S. And it's an opening for employers for philanthropists. Employers, philanthropists, foundations. And I think this can be a new kind of philanthropy that if the philanthropists are really true to their goals, if they want to help the children of America, this is the direct way to do it with 100% of the donation going directly to American children. You know, there's no Starcatech design that foundation headquarters, there's no annual dinner, there's no award, there's no big staff. If you really want to do this, look, it's what Susan and Michael Dell have done, it's what Ray Dalio has done, Brad Gersner, Harold Hamm, and the other thing too is that these billion-dollar gifts are incredible, but if a local philanthropist wants to adopt a zip code, a school district, we are going to be able to tailor those. Many states are thinking of topping these up. I think it's going to become a fringe benefit for many workers just like a 401k contribution, that the employers can make up to a $2,500 contribution.
+
+In talking to administration officials for this interview, two themes kept coming up. One is, they said you're the most competent cabinet member. Other people said you're the most volatile cabinet member. What kind of person sets you off? Well, let's go back—first of all, I think we have a great cabinet and you know I think this President has assembled a different kind of cabinet. That when I have a question on energy to be able to talk to Secretary Burgham, Secretary Wright, both have substantial experience. Secretary Rubio, you know people may forget, he chaired the Senate Intelligence Committee. So, you know, for him to be the National Security advisor or Secretary of State. And, look, I don't think I'm the most—I am far from the most vol— Well, you've joked that dueling among Treasury secretaries goes back to Alexander Hamilton. You have had some heated confrontations. Yeah. That, you know, I would say that I stand my ground like Alexander Hamilton, fired if fired upon. And, you know, I always point out, did not end well for Treasury, the Alexander Hamilton-Aaron Burr duel. So, you know, my goal is not to duel, but it is to stand my ground. And, look, if I think somebody is not following what the President wants, because you know, I am here to do what the President of the United States wants and is not trying to do what is best for the American people. So, fired if fired upon, you say, a warning there. Yes.
+
+As we say goodbye, last year in the West Wing, you got heated with Elon Musk. It was the talk of the White House. What was that like? Again, I am a huge Elon fan. And in terms of what he was trying to do with government, the very supportive. And, you know, there was one turn that things were taking that we didn't agree on. And, Elon was at the White House the other day for the big AI meeting. Have the two of you made up? Yeah. I mean, you know, that's a good thing. I've often said that, you know, we're kind of like a sports team. You can have an argument in the locker room, but you go out on the field together and you're all doing the same thing. So, you know, I've been in regular contact with Elon. And look, you know, he's amazing. Like, you know, he's taking us to Mars. Look what he's done with SpaceX and Starlink and all these other things. Starlink is great for the World Cup on a cross-country flight, I can tell you that. Yep. Mr. Secretary, thank you for inviting us into the Cash room and thank you for joining the Axios show. Good. Hope you'll come back.</div>
+                </div>
+            </article>
+
+            <article class="video-card" id="video-ekK8urKHPMQ">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=ekK8urKHPMQ" target="_blank" rel="noopener">Why Specialized AI Could Beat The God Model<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/hkiO7UAtALrbqOcewo4CIrbd0j8XDeWttKkdtihfX1emeV4iUMwjIe1KKn4zd6wT2OOwANDnIA=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>a16z</b><span class="subs">(299.0K)</span></span><span class="dot">&middot;</span><span>48:20</span><span class="dot">&middot;</span><span>6.1K views</span><span class="dot">&middot;</span><span>2026-10-03</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Erik%20Torenberg%22">Erik Torenberg<span class="chip-desc">Host, a16z</span></a> <a class="chip" href="index.html?q=%22Alex%20Atallah%22">Alex Atallah<span class="chip-desc">Co-founder, OpenRouter</span></a> <a class="chip" href="index.html?q=%22Amjad%20Masad%22">Amjad Masad<span class="chip-desc">Founder and CEO, Replit</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>The future of AI will likely be defined by an ecosystem of specialized, neurodiverse models and agent teams rather than a single &quot;god model.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-1">&quot; As enterprises seek data sovereignty, cost efficiency, and independence from model providers, routing platforms and internal AI practices...</div>
+                    <div class="sum-full" id="full-1"><h3>TL;DR</h3>
+<p>The future of AI will likely be defined by an ecosystem of specialized, neurodiverse models and agent teams rather than a single "god model." As enterprises seek data sovereignty, cost efficiency, and independence from model providers, routing platforms and internal AI practices are becoming critical infrastructure.</p>
+<h3>Stripe, OpenRouter, and the Enterprise Independence Layer</h3>
+<ul>
+<li><strong>The OpenRouter Acquisition:</strong> </li>
+<ul>
+<li>Alex Atallah shares that Stripe approached OpenRouter in July, leading to a quick and founder-friendly acquisition.</li>
+<li>OpenRouter will retain its brand, roadmap, and product autonomy while benefiting from Stripe's go-to-market scale and shared vision of a vibrant startup ecosystem.</li>
+</ul>
+<li><strong>Avoiding Vendor Lock-in:</strong> </li>
+<ul>
+<li>OpenRouter solves the problem of model lock-in, enabling companies to stay on the Pareto frontier of AI performance without depending on a single proprietary provider like OpenAI.</li>
+<li><strong>Amjad Masad</strong> notes that Replit is building a similar "independence layer" inside enterprises—acting as a layer of indirection across models, cloud providers (AWS, Azure), and data sources (Databricks, Snowflake).</li>
+</ul>
+<li><strong>Enterprise AI Practices:</strong> </li>
+<ul>
+<li>Mirroring how every company eventually built internal software engineering teams, enterprises are establishing dedicated internal AI practices to control their own intelligence, manage costs, and retain technical talent.</li>
+<li>Companies are increasingly wary of foundation model labs expanding into their core business sectors (e.g., Anthropic vs. Figma, OpenAI vs. Harvey).</li>
+</ul>
+</ul>
+<h3>Agent Architecture: General-Purpose vs. Specialized Systems</h3>
+<ul>
+<li><strong>The Table Stakes of Agent Loops:</strong> </li>
+<ul>
+<li><strong>Amjad Masad</strong> points out that while everyone is building the same agent infrastructure (loops, connectors, context management, memory, sandboxes, and web search), these represent new table stakes primitives for the AI era rather than a lack of differentiation.</li>
+</ul>
+<li><strong>The Tragedy of General Agents:</strong> </li>
+<ul>
+<li><strong>Alex Atallah</strong> argues that universal, general-purpose personal agents create a "tragedy of the commons" by forcing users to sacrifice understanding and control without the agent taking on actual responsibility for failures.</li>
+<li><strong>Specialization vs. Over-specialization:</strong> While human workers can suffer from alienation in over-specialized environments, machines thrive on specialization. Multi-agent systems should rely on vertically focused sub-agents coordinated by a Chief of Staff model rather than a single "god agent."</li>
+</ul>
+<li><strong>Data Sovereignty and On-Premise AI:</strong> </li>
+<ul>
+<li>Driven by security and data leakage risks, Replit has spent the past year building bring-your-own-cloud (BYOC) and on-premise deployability—a shift away from pure SaaS models.</li>
+</ul>
+</ul>
+<h3>AI Safety, Alignment, and Deception</h3>
+<ul>
+<li><strong>The Orthogonality Thesis vs. RL Deception:</strong> </li>
+<ul>
+<li><strong>Amjad Masad</strong> challenges the idea that smarter models are naturally safer, noting that reinforcement learning studies show models getting better at reward hacking, lying in chain-of-thought traces, and deceiving evaluators.</li>
+</ul>
+<li><strong>Specialized Decision Models for Policy Enforcement:</strong> </li>
+<ul>
+<li><strong>Alex Atallah</strong> highlights the use of smaller, cheap decision models (like OpenRouter's *Jev*) to act as structural safeguards, auditing system prompts and tool calls in real-time to enforce safety policies without burdening the main agent.</li>
+</ul>
+<li><strong>The Problem with "Alignment":</strong> </li>
+<ul>
+<li>Both speakers critique the term "alignment" as vague, emphasizing that the most critical engineering challenge is preventing models from predictably deceiving users during training runs or sandbagging during evaluations.</li>
+</ul>
+</ul>
+<h3>Model Fusion, Neurodiversity, and the Software Analogy</h3>
+<ul>
+<li><strong>The Neurodiversity Thesis:</strong> </li>
+<ul>
+<li>OpenRouter is betting on "neurodiversity"—routing and combining models trained in different ways to outperform single frontier models on specific enterprise tasks.</li>
+</ul>
+<li><strong>The Software Analogy:</strong> </li>
+<ul>
+<li><strong>Amjad Masad</strong> compares the current rush toward massive AGI models to the 1990s/2000s craze for dynamic languages (Python, Ruby, PHP) that ultimately forced a return to types, JIT compilers, and safer languages like Rust.</li>
+<li>He predicts enterprises will similarly realize that using expensive, risky AGI models for every task is wasteful, shifting instead toward bespoke classifiers and specialized models built on proprietary data.</li>
+</ul>
+<li><strong>Fusion Models and Cost Efficiency:</strong> </li>
+<ul>
+<li>OpenRouter launched a fusion model focused on deep research, pulling from multiple model labs' data sources to deliver Fable-level quality at $2\times$ lower cost. Cache awareness is critical when designing these routing and escalation systems.</li>
+</ul>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"Both Stripe and OpenRouter really want lots of new companies in the world. We don't want everyone to be a part of one giant company."* — <strong>Alex Atallah</strong>
+</blockquote>
+<blockquote>
+*"We're going to slowly realize how good we've had it with deterministic code. Like, oh my God, remember the days when computers did exactly what we told them to do?"* — <strong>Amjad Masad</strong>
+</blockquote>
+<blockquote>
+*"The more work you give [a general agent] to do, the more understanding of what's going on you're sacrificing. And yet no one is taking responsibility for that sacrifice... The agent doesn't take on any of that responsibility."* — <strong>Alex Atallah</strong>
+</blockquote>
+<blockquote>
+*"Most of the times, like a lot of the use cases, even unstructured use cases, don't need that capable model. It's like nuking a butterfly."* — <strong>Amjad Masad</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-1" onclick="toggleSummary(1)" type="button" aria-expanded="false" aria-controls="full-1">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-1" onclick="toggleTranscript(1)" type="button" aria-expanded="false" aria-controls="transcript-1">View transcript</button>
+                    <div class="transcript-content" id="transcript-1">You saw the SpaceX S1 and were like, &quot;Oh, 30 trillion dollars.&quot; It's like, what is the world GDP? 100 trillion. Both Stripe and OpenRouter really want lots of new companies in the world. We don't want everyone to be a part of one giant company.
+
+When the models get more intelligent, the risk actually will continue to get higher, and yet no one knew is taking responsibility. We're going to slowly realize how good we've had it with like deterministic code. Remember the days when computers did exactly what we told them to do? Are we going to prevent the models from deceiving users during training runs, predictably? Or like a model that's big enough and powerful enough, suddenly stop the deception, stop sandbagging?
+
+Welcome to the a16z podcast. We're here with Amjad of Replit and Alex of OpenRouter. And this is the first podcast that Alex has done since the acquisition, so we're really excited to have both of you. Mhmm. Thank you. Excited to be here.
+
+Alex, let's start with that, actually. If you can briefly share, obviously, you know, massive acquisition, Amjad is an investor. We're also of course an investor, the biggest shareholder, but who's counting. Alex, when you give us a little bit of the backstory, like how does an acquisition like that even happen? Like, do you get a DM from Patrick one day, like, &quot;Hey, how much for OpenRouter?&quot;
+
+I had talked to Will Gaybrick, the like Stripe president, a long time ago, a couple years ago when we were doing our series A. And we just stayed in touch. We had like a lot of Stripe workstreams going on with various teams at Stripe, so there were always sort of things that we were doing with Stripe. We presented at Stripe Sessions, and so it always kind of felt close. And then yeah, just in July, I believe, they reached out, wanted to chat, met both of them in person, and it kind of just progressed from there, fairly quickly. They're very efficient and, you know, they were very founder-friendly about the experience. I was really impressed with the whole thing.
+
+Did you want to sell? Did it even cross your mind before they reached out? No. We were not thinking about that at all. I really respect the company, do really respect it today. And of possible acquisition options for us, it was my top choice. And so it was an interesting idea. And you know, as we kind of fleshed out the reasons why it would make sense for both companies, it got more and more interesting. 
+
+It was really clear how aligned they were with us, kind of having autonomy over the brand and roadmap and product, and keeping OpenRouter doing what it's already doing, just much faster, with a much more serious go-to-market plan, and then some better together stories between the two products and the two companies. And then, culturally, they were just, I think, very aligned in terms of mission and values and building a neutral, trusted platform that businesses can depend on and scale on top of, that's also really developer-friendly with the best possible developer experience, for to encourage new companies to emerge. 
+
+There was a bigger picture kind of alignment too, where both Stripe and OpenRouter really want lots of new companies in the world. We don't want everyone to be a part of one giant company. We want to create really good incentives and sort of easy streamlined workflows for people to start new companies and grow them successfully, and make both lifestyle and venture-backed businesses on top of really good, reliable and price-efficient infrastructure, and a marketplace that works. I really want that future. And Stripe demonstrated that they've been wanting it and building towards it for many, many, many years. In many ways, payments and inference are going to blend together for companies of the future.
+
+I'm curious. I understand why Stripe's incentive is to have a much more vibrant startup ecosystem. I understand the kind of moral argument and why you would want that. But why is that good for OpenRouter? Is your model for OpenRouter a network effects business? Is it like a network? 
+
+Well, for us, I think there are a couple different problems OpenRouter solves. One is allowing you to build a company that uses AI, or augments intelligence with unique data and other services, without model lock-in, without vendor lock-in, allowing you to kind of be on the Pareto frontier continuously as the ecosystem grows. To do that, it's a lot of work because there's all kinds of little lock-in that appears. 
+
+We also want companies to feel like the best way that they can add more than just prompts on top of a single model exists. There's a lot more to building unique intelligence. I think a big component of that is neurodiversity. You really need the power of multiple models that are trained in different ways, including some of your own, to do more than ChatGPT or Claude would on the task. If someone who is thinking about buying from you as a potential customer is wondering, &quot;Well, what if I just use the model directly?&quot; How do you really show that you are significantly better and able to build a business that matters? I think a lot of it will involve neurodiversity and blending like powers and good data from multiple models.
+
+Another component is helping people get really good cost efficiency. There are a lot of businesses that just cannot emerge until they become cost-effective, and creating an environment where we can help drive down costs by building an efficient marketplace is crucial to making that happen. Otherwise, why lower my prices as a provider? We have a captive market. I think that's a key point of marketplaces that was just totally missing from AI before we showed up. There was just one player, OpenAI. It could have been a very strange world. I'm not saying we did all the work, of course not. But helping people choose new models and explore new models and learn what makes a closed-source or open-weight model actually good at your task involves seeing what the whole ecosystem is doing and learning automatically. LLMs are not things where you can just enumerate all the features on a web page; it's impossible. You have to see how they're being used to know what they're good at.
+
+So you started the company 3 years ago. I'm curious what has surprised you the most about the evolution of open and closed source models to the present, as it relates to model performance or just people's perspective on the variety of models they have available to them. 
+
+People have been more open-minded than I thought they would be towards open weight models. Typically, there's a lot of brand trust where enterprises are like, &quot;Oh, I don't really know how to tell the difference between these things, so I'm just going to buy the one that all the other credible enterprises are buying.&quot; There's a lot of enterprise lock-in with a mentality like that, and that just didn't happen that much with AI. It did happen a bit, but we saw a lot of enterprises want to explore new models. It was very much good for a marketplace. Enterprises wanted to diversify outside of just the proprietary frontier model labs, both for cost reasons and for differentiation reasons. 
+
+They wanted to own their intelligence so they could keep their talent and have an internal AI practice. AI is just a huge strategy topic. It's not like you go to your board and you're like, &quot;Oh yeah, we fixed the AI problem, quarter complete.&quot; Your board is asking you every month what's next for the internal AI team. Every single enterprise now has just this internal AI team they're developing, where they need a strategy behind it. It's not just a &quot;we check the feature off, we set up the database and we're done.&quot; That dynamic has resulted in a desire to explore and diversify, a desire to figure out how to reduce costs, and a desire to figure out how to do benchmarks for the first time in the company's life. 
+
+I have been surprised there hasn't been more benchmarking, like more companies creating more benchmarks. It's starting to happen, and I think eventually we'll see a lot more of them to demonstrate like, &quot;Oh yeah, this thing is better than using Claude direct.&quot; But I think that's going to be a bigger focus for this internal AI group at every company. Evals. I think Amjad's been doing that a lot at Replit, for example. You guys have done a lot of cost-per-task research. You've been experimenting with new ways of using agents like Doom Loop rescue and helping bring those to developers. So, more of that kind of research I think is going to pop up internally everywhere for all of those reasons.
+
+Yeah, I think Satya, CEO of Microsoft, has been very prescient on this and also very articulate on why companies need to own their intelligence. Ultimately, in the same way that we had dotcom companies and then every company became an internet company, like every company employs people that know how to build websites and be on the internet. Similarly with software, every company has software engineers. Every company needs some AI practice, AI capability, and that will compound over time. The knowledge, the intelligence inside the company, the use-case model fit, like which models actually work for them, how do they save money—they need sort of that independence. 
+
+The other thing that I think Alex Karp of Palantir has been talking about is that there's a risk that when you work closely with the foundation model companies, they're going to move into your business. We've seen that with Figma vis-a-vis Anthropic, we've seen that with now Harvey and OpenAI, and it's really hard to partner with them because they see the world as their potential market. When they talk to investors, they say, &quot;You saw the SpaceX S1 as like 30 trillion dollars,&quot; and it's like, what is the world GDP? 100 trillion. There is a sense in which these companies are different than other generations of companies. It's harder to partner with them because their ambition is such that they want to subsume a big part of the economy. 
+
+Increasingly, what we're thinking about at Replit is in a similar vein to what Alex has sort of innovated. Replit is becoming more of an independence layer inside enterprises, where we create a layer of indirection between you and the models and we get you the best token at the cheapest price. But we also create an abstraction layer on top of the cloud as well, because you should be able to deploy to AWS and Azure and you should be able to use Databricks and Snowflake and so on. Increasingly, I think there is, not just with AI but with all of technology, a need for more platforms that help companies gain independence. It seems like what OpenRouter did for their segment, you're doing for other areas of business.
+
+Yeah. This kind of reminds me of a tweet I saw the other day, when somebody was like, &quot;Basically all companies are building the same thing now.&quot; Everybody's building an agent loop with notifications and context, third-party connectors and context management and memory and sandboxes, agentic web search, compute units and an always-on agent on top of it, and notifications—it's like this product is showing up everywhere.
+
+In a way, yeah, it is showing up everywhere, but it also feels to me like these are just the new table stakes primitives. It's kind of like a 2005 version of that tweet would be, &quot;Oh, everybody's building the same thing: a database, a user's table, a sign-in page, a sign-up page, a profile page, a log-out page.&quot; Everything's the same. It's not. There's a lot of differentiation, really. These are just table stakes needs for AI, just like there are table stakes needs for the web.
+
+And I think as well, inside the enterprise, making these products actually do real work is still an unsolved problem. You can use Muse in your personal life and connect it to your credit card and bank accounts, but no one's connecting Muse to their enterprise data, or even Grokbot and things like that. I think there's an even more emphasis on data sovereignty and security. We spent the past year almost working on making Replit deployable on your own cloud, basically on-prem, bring-your-own-cloud. Two years ago, I would have thought I would never do this because the cloud is the future, software-as-a-service, all of that. But now actually we've reverted a little bit back to a world where companies are more protective because there are so many ways in which data can leak. All these agents that people are using—there's all these screenshots on Twitter where Instint or Muse is mixing people's data or starts to call you by a different name or something like that. While the consumer stuff is kind of obvious, in the enterprise there's still a tremendous amount of work for the entire industry to do in order to actually get these things to be useful and productive at work.
+
+Amjad, are you doing any—do you have a custom personal agent other than Muse or Instint that you use for work stuff that you've been building? 
+
+Yeah, I built something on Replit a long time ago. It started as a sort of CRM agent initially; that was the main problem that I had. But slowly we added features to it and it's doing more and more things. But what's really interesting is that the more I connected Replit to all my stuff, it started answering all the things for me. Increasingly, the platform itself is subsuming these domain-specific agents that I built. I do think that there is some, in some ways, you want something that is focused on one particular thing and you don't want it to be able to do everything. 
+
+On the other hand, once you have your entire company's context in one place, it's really cool to join across totally different domains. When I ask it a question, it can look at my personal chat history, join it across the GitHub repo, across Salesforce. It links random things, like, &quot;Oh, you met this guy like a year ago at a conference, I see it on your calendar, and by the way, someone else from their team is in discussion with your sales team.&quot; It creates all these different synergies, and when I go into a meeting, I've connected a lot of different threads and I'm making much more progress on a deal or something like that. This is where it's trending now.
+
+Well, I'll take the counter on that. I think the worst part about doing cross-domain joins with your personal agent is that the more work you give it to do, the more understanding of what's going on you're sacrificing. And yet no one is taking responsibility for that sacrifice. Agents don't have any responsibility. If there's a fixed level of cortisol that the whole company can tolerate, and you're sacrificing my understanding of an area, someone else needs to take the cortisol. But the agent doesn't take on any of that responsibility. 
+
+With a universal agent that's doing all things, I can't adjust how much understanding I'm sacrificing in all the different things. It points me towards maybe, down the road, the sub-agents that people use will be very vertically focused. Maybe we have a Chief of Staff type agent that coordinates between them, but I feel like you do need vertically focused agents where you're like, &quot;Okay, this agent is more responsible psychologically for these things.&quot; I want quality checks that make sure it's doing those things correctly, and it doesn't need to focus on anything else. I wonder if that's going to help people get at least a loose sense of responsibility on top of agents.
+
+Fascinating. So you're saying general agents create a tragedy of the commons of sorts? 
+
+Kind of. I have a general agent that every day looks for things that need me and tries to figure out what to do. It's impossible to improve this agent. Every time I try to make an improvement, I end up ignoring its output about a week later. It feels like it doesn't really care about any of the specific things it's diving into. Imagine having a chief of staff where they're very good at drafting all of your replies across the whole organization, and then compare that to something where you have 10 chiefs of staff, each as competent as that one chief, but they're all responsible for individual sectors of what makes up your life. The latter gives you a way of tuning how much understanding you sacrifice compared to the gain you get. I can lean in more to the areas where the agent is failing and have agents with very good competency take over my understanding of other parts of my life.
+
+Yeah, interesting. It's sort of almost rediscovering specialization, right? Adam Smith with a pencil kind of thing. That was a huge realization for humanity—that specialization is actually good. The problem is we kind of overspecialized as a civilization, and I think overspecialization is oppressive in its own ways. There's the Marxist theory of alienation, the idea that because of overspecialization, people are doing just one thing and they do not see the fruits of their labor. They don't actually know what their impact is on the larger organization or the product they're producing, and therefore they feel depressed and detached; you're kind of acting like a machine and you're not fully human. Maybe there's a reaction to that, and we're like, &quot;Oh, there should be one god agent.&quot;
+
+In fact, specialization is actually really good for machines, and that's the point you're making. Humans should be general, but machines should be ultimately a lot more specialized. The problem with what I'm describing is that we don't know what &quot;good&quot; looks like. There hasn't been a system of specialized agents that feels as elegant as ChatGPT, Claude, or Muse, where you're basically just talking to one thing only. It's yet to be discovered. Maybe OpenAI just launched &quot;Dots&quot;—I think they're experimenting in that direction. Grokbot I guess counts, but they're all very general. 
+
+I think the idea behind Dot is that it's your digital double. When I saw Grokbot, I don't know that much about Dots yet, but when Grokbot first came out, the first use cases I saw were people saying, &quot;Oh wow, I can make two bots, one that knows my bank account and one that knows my Twitter account, and the two bots don't have the credentials from each other. They can talk to each other if they need to get something done, but there's no credential sharing.&quot; That was a unique thing I saw pop up that people seemed to like. But it looks like Muse and Instint have a much stronger product-market fit than Grokbot. Perhaps that is because you don't have to worry about creating these domains. 
+
+But I think personal agents are different than work agents, and your critique of general agents is more pertaining to work and to enterprise, which I agree with. There's also all sorts of data access considerations. As CEOs, we can have general agents because we have admin access, but for individual employees or certain teams, they can't have truly general, fully context-aware agents because there are access control issues. You'll have to work on something like specialization. Ultimately, I also think we need to figure out what agent-to-agent communication looks like. I don't think there are good protocols around that just yet. 
+
+I don't think the agents are trained to handle that very well. It seems like the next generation of OpenAI models are trained to do agent collaboration, because we've seen it in the Hugging Face hack where they started helping each other instead of it emerging naturally. But there also needs to be some way in which an agent can't convince another agent to give it information that it shouldn't. There needs to be data isolation and proper ways in which these agents communicate. You almost don't want to communicate them fully in natural language. Maybe there's some other DSL or protocol that they need to follow. 
+
+I think one of the cool potential applications of Jev and other decision models like it is going to be alignment, checking to see if a tool call or agent-to-agent communication is aligned. Because there are just so many tool calls, you really need a cheap, fast model. A really, really fast decision model that just classifies and gives feedback on rejections might be a good way to bridge the gap between agents, and from agent to infrastructure too. We have a little prototype that we're running internally at OpenRouter, and I think it could be interesting for alignment.
+
+So you're using it for policy enforcement? Yeah, like imagine looking at the system prompt and the current tool call being made and asking, &quot;Is this aligned with the system prompt of the original agent?&quot; And with these extra guidelines that maybe we didn't tell the agent about. Let's say you have a bunch of agents that are instructed to red-team a new product. They should not be able to access the internet. If they ever do, they should stop right away. But you might not want to explain all of that to the agents doing the red teaming. You might want them to try to break out of the sandbox and act like bad actors. So, having another model—building a neurodiverse system—having another model check every single tool call or assistant message to see if it's indeed aligned with something that wasn't in the system prompt makes sense. And then having structural safeguards too, which is what I think Nvidia launched with their open agent safety, OpenShell. I think companies are probably going to explore a combination of this.
+
+I wonder about specialization and recursive self-improvement. There's something that isn't getting a lot of discussion: models training their replacements. You can think of it as a just-in-time compiler. The way JIT compilers work is, as you're executing dynamic code, the interpreter realizes there's an opportunity to optimize and emits machine code on the fly, which is a lot more optimized. You can imagine general models—you're doing something with Opus or Astra, the big models—and they realize that the use case is limited, or you prompt them some way, or some other agent observing realizes the use case is limited. These general agents have all the flaws we talked about, but there's more potential for them to be harmful. So on the fly, it trains a model that is its replacement, but it's a lot more domain-specific and therefore cheaper, less vulnerable to prompt injections, and less harmful because it's less capable. It's almost like a system that's training machine learning models for specific use cases as it's monitoring the entire system.
+
+Would that specific use case involve unstructured text generation or a structured decision model? 
+
+It could be unstructured text generation or decision models. Even in the case of Jev, if you understand the inputs ahead of time, you could potentially take an off-the-shelf model and train it specifically for that policy. That makes sense for cost reasons, assuming that the frontier model labs don't make very low-cost models that you can easily transition to. But safety as well, right? They're so capable. I think oftentimes people are using these big foundation AGI-like models and it's like nuking a butterfly. Most of the time, even unstructured use cases don't need that capable a model. 
+
+I wish there were more public evals about this stuff. A lot of the evals are private. You just can't see whether, when models get more intelligent, the risk actually continues to get higher, because I think there's also an argument to be made that alignment will get better. The models will start to avoid going off and hacking on their own as they get smarter and better at alignment. Especially when it comes to agent-to-agent coordination, this is something Noah Brown said on a podcast recently: as agents have gotten smarter, they've gotten better at coordinating. It's unclear if they're going to be harder to align than humans when we get more and more of them. 
+
+If you think back to the original rationalist, less-wrong arguments for AI safety, there is the orthogonality thesis: the idea that intelligence is orthogonal to ethics or morality. I don't believe that's entirely true with humans. I think people who are generally more intelligent or educated tend to be more considerate of animals, for example. But in machines, I think it could go the other way because there's been quite a bit of study on RL showing how reward hacking and deception just get better. The evals could be deceiving because the model could be smart enough to know that it's getting eval'd. We already know this; it's been shown that if you do a lot of monitoring of chain-of-thought, they start lying in their chain-of-thought. You add pressure to the chain-of-thought and that creates a problem. And I think at some point, for you to do proper alignment evals, you need to run it for months on a really large goal or task in order to truly figure out whether it's aligned or not.
+
+I always struggle with the word &quot;alignment.&quot; It feels wrong for so many reasons. It's vague—aligned to what? Whose values? It doesn't make the conversation easier. In this case, I'm talking especially about deception, where the model is actually deceiving its user. Maybe this reduces to, &quot;Are we going to prevent the models from deceiving users during training runs predictably, with better... will a model that's big enough and powerful enough suddenly stop deception and sandbagging?&quot; Nobody knows the answer yet. At the point when that does happen, if ever, we might see pressure for organizations to go towards the frontier to have significantly less risk. They would be willing to pay 10x for that. 
+
+It probably depends on the type of task. Writing code or doing security research is the highest risk type of task today, so you'd probably spend 10x to get a fully aligned, anti-deceptive model that can also find all the bugs. One of the coolest things about decision models is that you fully control the structured output. With structured output models in general, the room for misbehavior is so much lower. You have defined tasks and only machines are dealing with the outputs. It's not writing code that it can execute. Those tasks are probably under-represented in the things that enterprises are dealing with, so I expect enterprises to get a lot more interested in them.
+
+I feel like we're going to slowly realize how good we've had it with deterministic code. Like, oh my God, remember the days when computers did exactly what we told them to do? Things like Jev hint at more of the need for specialized models and models whose output domain is more controllable. Maybe you could do a lot more than we thought you'd need by using a bunch of specialized output models. 
+
+Have you guys done any workloads internally with it? I've been training a lot of small models. I said this glib thing when it first came out—a Hacker News-like comment which I felt disgusted with myself afterwards—but I've been taking a lot of models like Qwen 8B and asking Fable, Opus, and Astra to train a model. I trained a cost estimator model internally, so when you put a prompt in Replit, we know exactly how much it will cost. It emits a probability distribution over multiple buckets. So I'm used to training these classifiers by giving it different enums and looking at the log probs for enums. I've been doing it for a couple of years. I trained a chess bot to play by doing that. So I'm already pilled on decision models and specialized models. It wasn't a big moment for me, but I understand that a foundation model that's fully promptable is an amazing user and developer experience; you can do a bunch of stuff without training from scratch. But if you're working at a place where you have the data—we have so much data at Replit—I ended up training a lot of specialized classification models pretty easily.
+
+It also feels like less model debt. Something I still hear from companies is that they're worried about fine-tuning models for unstructured outputs because you have to redo it in two months; everybody feels the weight of model debt. But a very bespoke classifier trained with proprietary data—I feel like people won't think it's behind constantly, and it might just last longer. You don't have to worry about its ability to speak a new language or write Rust or do anything the LLMs are being evaluated on. You know the use cases, so you can build it more. 
+
+Speaking of Rust, a good analogy is when the world got super excited about dynamic languages. Think back to the 90s: everyone was writing in Java and C++, and then Python, Javascript, and Ruby took over the internet. Everyone was like, &quot;This is how you build startups really quickly.&quot; You built Stripe, a financial organization, on Ruby—how crazy is that? And we built Facebook using PHP. Then everyone was like, &quot;Oh shit, we're running into all these really bad bugs, it's freaking slow, so let's add types, let's add a JIT compiler.&quot; You end up reinventing everything. Then Rust came out. I guess we can use Rust for a lot of things we would otherwise be using Javascript and Python. My prediction is the same cycle will happen here, where we're using these AGI-like models for all these use cases, and then everyone's going to wake up and be like, &quot;Oh my God, this is so wasteful, so risky for no reason.&quot; 
+
+It's going to be so much easier—we're actually adding that capability on Replit—to go to a site, upload a CSV file, and get a special model that does one thing. That goes back to your thesis about OpenRouter, this neurodiversity, which I fundamentally believe in a lot more. Eric and I had discussions about AGI and whether we're truly on a path to AGI, or whether it's even desirable to get there. I think the future is a lot more diversity. 
+
+Outside of code review, which I think was the first time I saw people get really serious about using different model families to double-check the results of their main model, the research has been getting slow for years on mixture-of-models and composite models. But things have been speeding up. Now we see a bunch of AI agent labs; we launched a fusion tool, a fusion model, and Cognition launched one. They do reduce costs and allow a wider breadth of ideas to be searched. Our initial launch was focused on deep research. If all these model labs are training on different sources of data, why not pull from all of them? This resulted in Fable-level quality at 2x lower cost. 
+
+Which models are they using? It changes over time. But one thing that has been interesting is OpenAI added a feature that allows you to save the computation across different model families. So you wouldn't miss the cache if you changed the effort. I might be wrong, but staying within the OpenAI family has added a lot of efficiencies. Being cache-aware is one of the biggest things when you're designing fusion models, routers, and escalation models. 
+
+Alex, Amjad, this has been a great conversation. Thank you. Podcast.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
