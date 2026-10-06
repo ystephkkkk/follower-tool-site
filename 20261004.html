@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Sunday, October 4, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20261003.html">&larr; Oct 3</a><a href="20261005.html">Oct 5 &rarr;</a></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Sunday, October 4, 2026</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-MM-C3JqCXBk">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=MM-C3JqCXBk" target="_blank" rel="noopener">OpenAI’s Head of ChatGPT: We’re entering a new era of AI (again) | Tibo Sottiaux<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/Wk7-4UW17JqDXgVWDiE7s1gJxDkt_UwNa2oNw8OYRwc9deiCv2V2fFAdNgByDi0K9AAF0YMj=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Lenny's Podcast</b><span class="subs">(642.0K)</span></span><span class="dot">&middot;</span><span>37:23</span><span class="dot">&middot;</span><span>2026-10-04</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Tibo%20Sottiaux%22">Tibo Sottiaux<span class="chip-desc">Head of ChatGPT and Codex, OpenAI</span></a> <a class="chip" href="index.html?q=%22Lenny%20Rachitsky%22">Lenny Rachitsky<span class="chip-desc">Host, Lenny's Podcast</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Tibo Sottiaux, Head of ChatGPT and Codex at OpenAI, discusses the launch of Dots (OpenAI's new personal agent platform), predicting that the majority of internet actions will soon be executed by autonomous agents that operate 24/7.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Primary vs. Multi-Dot Setup: OpenAI launched...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Tibo Sottiaux, Head of ChatGPT and Codex at OpenAI, discusses the launch of Dots (OpenAI's new personal agent platform), predicting that the majority of internet actions will soon be executed by autonomous agents that operate 24/7.</p>
+<h3>1. Dots &amp; The Personal Agent Vision</h3>
+<ul>
+<li><strong>Primary vs. Multi-Dot Setup:</strong> OpenAI launched the primary dot for pro users to configure, connect to apps, and learn deep preferences; the ability to create multiple dots to form a virtual team for specific tasks (like monitoring Twitter) will follow soon.</li>
+<li><strong>The Octopus Architecture:</strong> Unlike traditional setups where the harness runs on the local device, dots run on their own hardware (or VMs like Mac Minis) and can connect to and control multiple devices simultaneously.</li>
+<li><strong>Real-World Incident Response:</strong> Sottiaux shared that during a ChatGPT production outage 5 minutes before his live DevDay demo, his dot pinged him to warn him and offered to try and fix it itself.</li>
+<li><strong>Frictionless Design:</strong> Dots feature no model picker and no manual configuration; users simply talk to them, and all complex capabilities will eventually be integrated straight into ChatGPT.</li>
+</ul>
+<h3>2. The Shift Beyond Loops, Graphs, and UI</h3>
+<ul>
+<li><strong>Death of Fiddly Workflows:</strong> Setting up and fiddling with loops and graphs is a passing phase; systems should instead learn continuously from user feedback and long-term goals without manual routing.</li>
+<li><strong>Agent-First Internet:</strong> As the majority of actions on the internet shift to agents, products will need to scale to handle automated traffic, making interface design secondary to API and agent accessibility.</li>
+<li><strong>Merging Chat and Work Interfaces:</strong> OpenAI is merging the ChatGPT chat and work toggles to reduce complexity and lifting the floor for its 1.2 billion users.</li>
+</ul>
+<h3>3. The Open Ecosystem &amp; Economic Sharing</h3>
+<ul>
+<li><strong>Sign-in with ChatGPT:</strong> OpenAI has secured 16 major partners (such as Notion and Figma) for its "Sign-in with ChatGPT" auth ecosystem.</li>
+<li><strong>Revenue Sharing:</strong> Popular plugins and integrations that drive genuine user retention and utility will receive a share of subscription revenue.</li>
+<li><strong>Plugin Recommendation Engine:</strong> OpenAI ranks plugins based on retention and utility rather than traditional SEO or keywords, actively recommending high-performing tools during conversations.</li>
+</ul>
+<h3>4. Skills Trending Up and Down</h3>
+<ul>
+<li><strong>Skills Trending Down:</strong> Fast typing and manual coding (though Sottiaux still does LeetCode recreationally on weekends).</li>
+<li><strong>Skills Trending Up:</strong> Great taste, user-centric thinking, domain-specific passion, and knowing "what good looks like"—noting that OpenAI currently employs over 120 ex-founders.</li>
+<li><strong>The Rise of Generalists &amp; New Grads:</strong> Roles are blurring between design and engineering, and younger generations are proving exceptionally fast at adopting and harnessing new AI capabilities.</li>
+</ul>
+<h3>5. OpenAI Culture, Safety, and Autonomy</h3>
+<ul>
+<li><strong>Bottoms-Up Innovation:</strong> OpenAI operates like a "mega startup" where ideas form in Slack channels over weekends and scale rapidly (e.g., the Decisions API).</li>
+<li><strong>Extensive Safety Investment:</strong> Safety and alignment are prioritized using secondary monitoring compute—running parallel guardrail models to monitor primary agents for high-risk actions or prompt injections.</li>
+<li><strong>Pragmatic Pacing:</strong> OpenAI chose not to release its top-tier "Astra-level" model capability initially, opting instead for efficiency and safety.</li>
+</ul>
+<h3>Predictions &amp; Forward Calls</h3>
+<ul>
+<li><strong>Majority Internet Actions:</strong> "The majority of actions on the internet will be taken by agents." — Tibo Sottiaux</li>
+<li><strong>Ultra-Fast Speeds:</strong> Sottiaux stated that OpenAI is releasing the 6-month-old "ultra-fast" model speeds soon, which cost roughly the same as Astra and enable endless voice-controlled creative flow.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+"Often when I look at what people are building out there, it's just like, 'You're not quite getting it.' Like, if you were just pushing yourself and just really imagining all of this being roughly 10 times better than it is today... you would build in a different way."
+— Tibo Sottiaux
+</blockquote>
+<blockquote>
+"I myself even get fatigued with the model picker and the reasoning efforts and whether to use multi-agent or ultra... and you kind of need a PhD in model pickers. I just want to get rid of all of that as quickly as we can."
+— Tibo Sottiaux
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">Often when I look at what people are building out there, it's just like, &quot;You're not quite getting it.&quot; If you were just pushing yourself and really imagining all of this being roughly 10 times better than it is today in a year, you would build in a different way. What do you think people aren't pricing in in terms of where things are going? The majority of actions on the internet will be taken by agents. If you want your product to be successful for agents, you have to build for a certain level of scale.
+
+How many agents do you find yourself running in parallel in your day-to-day work? As I'm pushing the frontier, I find myself building larger and larger teams of agents. When we have the next breakthrough with models, I think, &quot;Oh, well, a bigger agent can just do all of it,&quot; and so I shrink the team again. It just kind of goes through this expansion and shrinking.
+
+It makes me think about this whole loops thing and then this whole graphs thing. Having to set up and fiddle with your loops is something that maybe people got excited about, but I don't think this is the way that it's going to work. Over time, you just want a system that learns. You don't want to necessarily think about how you are looping it exactly to get good results.
+
+Is there still more radical change happening to how we work? It will continue to change quite radically. Even today, it still feels like a bit clunky, and I think it will feel clunky until it isn't.
+
+I mean, Evo, thank you for doing this. Yeah, big fan of you. Of course. Nice room. You launched a ton of stuff today. How is your sleep? Are you doing all right? I'm doing great. I'm fortunate to have a very good team. While I sleep, they were awake most of the night. We have this amazing room at the office called the library, which we completely repurposed as a mega war room. The vibes in there are just immaculate; people were there until very, very late.
+
+So, you've been a long-time engineer. Are you coding at all anymore? Are you shipping PRs, or are you mostly in docs and meetings now? What is coding? Exactly. Yeah, are you shipping PRs? I'm merging some code every once in a while. Technically, a lot of code is getting written for me to do all sorts of analysis, to understand trends, understand a business, understand the next feature, or how well our previous launches are doing. A lot of code is written by Codex for Dot. I'm obviously not writing it by hand anymore. Occasionally, on the weekends, I'll have a little therapeutic moment where I do a little LeetCode by hand, but that's the only actual hands-on coding that I do.
+
+How many agents do you find yourself running in parallel in your day-to-day work? I used to run a lot more in parallel, and then we were fortunate enough to get a breakthrough with Ultrafast. Now, I feel like I'm able to be in the flow again, so having a faster agent helps me a lot. I'm excited that we're getting the six-month-old Ultrafast out there soon. It sort of varies; as I'm pushing the frontier, I find myself building larger and larger teams of agents. Then, when we have the next breakthrough with models, suddenly I think, &quot;Oh, well, a bigger agent can just do all of it,&quot; and I keep everything in memory and learn. It goes through this expansion and shrinking.
+
+Can you say more about that? It makes me think about this whole loops thing and this whole graphs thing. I think having to set up and fiddle with your loops is something that maybe people got excited about, but I don't think this is the way that it's going to work. I think the way it's going to work is what we're positioning and shipping with Dots, where you have an incredibly smart agent that works 24/7, understands your goals, understands your preferences, and learns from feedback. What we launched isn't perfect, but I will learn from making this available to our pro users. Over time, you just want a system that learns from what you want to achieve. You don't want to necessarily think about looping it exactly this way to get results.
+
+Right now there's Codex, there's ChatGPT work, there's ChatGPT consumer, there's Dots. What I'm hearing is you think we're heading towards Dots being the primary way you talk to AI, and that kicks off all these other things. Yeah, I think fundamentally, if you take a step back, whether it's Dots or not, it's all about breaking free from the technology and having this permanent active intelligence that knows everything it needs to do and is available through any client or any screen. Maybe you walk into a meeting room, it shows up, it takes notes, you pick it back up on email, and then you text it if you need it. It's not that you need to be glued to a laptop or always on your phone; it's available when you need it and gets out of the way when you don't. I can't wait for that to come to fruition because carrying your laptop as this brick around everywhere is just being tied to the technology instead of the technology working for you.
+
+This episode is brought to you by our season's presenting sponsor, WorkOS. What do OpenAI, Anthropic, Cursor, Replit, Sierra, Clay, and hundreds of other winning companies all have in common? They are all powered by WorkOS. If you're building a product for the enterprise, you've felt the pain of integrating single sign-on, SCIM, RBAC, audit logs, and other features required by large companies. WorkOS turns those deal blockers into drop-in APIs with a modern developer platform built specifically for B2B SaaS. Literally every startup that I'm an investor in that starts to expand upmarket ends up working with WorkOS. That's because they are the best. Whether you are a seed-stage startup trying to land your first enterprise customer or a unicorn expanding globally, WorkOS is the fastest path to becoming enterprise-ready and unblocking growth. It's essentially Stripe for enterprise features. Visit workos.com to get started, or just hit up their Slack where they have actual engineers waiting to answer your questions. WorkOS allows you to build faster with delightful APIs, comprehensive docs, and a smooth developer experience. Go to workos.com to make your app enterprise-ready today.
+
+I was going to ask you about this. It feels like so much has changed in how we work over the past two years. Especially for engineers, day-to-day life has changed significantly. I'm curious if you think we're settling into what work will look like in the next five years, or if there's still more radical change happening. No, I think it's going to continue to change quite radically. Even today, it does seem like the technology is finally coming together with voice and multimodal inputs and outputs, but it still feels a bit clunky. I think it will feel clunky until it isn't. Then you're just like, &quot;Wow, I can just talk to this thing the same way that we're talking right now.&quot; It remembers things perfectly. If I want to ideate and brainstorm, I can squiggle a thing. I have this collaborative surface, which is what we launched with ChatGPT spaces. You can imagine we have a shared whiteboard; we can collaborate between humans and between agents. I think it's going to transcend conversations and transcend a lot of the clients that you have today. None of this is really working today, so I think we're going to go through this big new transformation.
+
+What I'm hearing is that Dots is a big part of that future, this AI assistant that does everything for you and you don't have to think about Codex versus ChatGPT. Yes, and for Codex and ChatGPT, we're going to merge them. We have chat and we have the work toggle. We heard the feedback loud and clear. People love the capability in work, but sometimes you want to use chat because it's a little bit faster and more pleasant to use. We're merging that and reducing that complexity. Eventually, we will ship all of the capabilities of Dots straight into ChatGPT as well and lift the floor for our 1.2 billion users. We want it to be really seamless. One thing that I'm very excited about with Dots is that they don't have a model picker. There's just no configuration; you just talk to it. The only thing you have to configure is which channels you want to talk to.
+
+It feels very much like the &quot;Her&quot; vision of the world. Do you think about that movie much? I watched it once. It's interesting to think about, but I think more about sci-fi from 30 or 40 years ago and how visionary it was. Is there specific sci-fi you think about that's most influenced you? Books like &quot;Neuromancer&quot; and the original &quot;Star Trek.&quot; I think about that a lot. There's something about &quot;Star Trek&quot; where there was this technology that was very, very useful. You were able to talk to a computer and it does things for you. You can talk to your spaceship and it moves. This is getting real; we're entering that era.
+
+We're recording this in front of a live audience. There was a line out the door with people waiting to see you and to hear from you. How do you think about this role you're in, the responsibility you have to build what you're building, and the impact it has on people's lives? I think it's very important to be part of a community and to build with people. We're discovering this technology and what we can do together. Every time I talk to people, I'm reminded of something I hadn't even anticipated. It's impacting your life in a certain way and it's impacted this other person's life; all together, it's both very humbling, very inspiring, and I think very necessary in order to build something that is truly useful for humans. I don't know how we would do it without the community.
+
+That's something I hear a lot with people building AI: they don't know what it is until they've launched it and seen how people use it. It feels like you're saying, &quot;Build it with people&quot; versus &quot;Here's the vision, we've got it figured out.&quot; Even the Twitter community has been very nice in general. You're very good at Twitter—kind of antagonistic sometimes, but very good. How do you find time to even tweet? I don't understand how someone in your role has time to sit on Twitter, tweet, and reply. I spend maybe half an hour per day. Just scrolling and doing something when I feel inspired and have something interesting to say. Often it just comes in the moment. That's a perfect Twitter skill. And I have a... we haven't released the team Dots yet, but today we're releasing the primary Dot which you can configure, connect it to your apps, and get used to what a Dot can do. But we'll release the ability to create more than one, and I have one that's responsible for Twitter.
+
+Okay, say more about that. Right now everyone gets one Dot? Yeah. They can't add more? That's right. They will be able to have many? Talk about where that's going. We wanted to start with one, the primary Dot, which is the one you'll probably also text, that learns your preferences most deeply. We'll see what people do with it, see how we need to tune the system, and learn by working with the community. Then, very quickly, you'll be able to add a second one, a third one, a fourth one, as many as you need to create your virtual team. You can give them specific roles. It's not absolutely necessary, but sometimes I have a task that requires quite a bit of work, such as monitoring Twitter for me. That is the work of an entire Dot, and you can have a couple of those.
+
+If you think about all the launches that happened today, it feels like Dots is maybe the sexiest. I'm curious if there's something that you think is not getting the attention it deserves but will become very important down the road. The sleeper hit is ecosystem and opening it all up. Our deep commitment to opening it all up is significant. We have 16 partners for signing with ChatGPT, and I'm very proud of that. We started that in the moment last year. I was talking to the creators of Pi and OpenCode, and it was like, of course you should just be able to use the quick sign-in. We shook hands virtually, and we trusted them not to do anything shady. That grew and became quite popular, so now we've made it an actual supported thing. I'm excited to grow that very quickly. The other side is opening up all of the infrastructure and how we build for ChatGPT with plugin extensions and plugin discovery, allowing everyone to ship something to our 1.2 billion users and benefit from that distribution. We also have shared economics that we didn't actually talk about in the keynote, but we will pay plugins that are popular and seeing a lot of usage. They're going to get part of the revenue share. This commitment towards an open ecosystem is going to be very exciting.
+
+That's amazing. As an example, if somebody is using the Notion plugin or the Figma plugin within ChatGPT Work, Notion or Figma makes money from people using it? Yes, we have all these subscribers that use ChatGPT; they get a certain amount of usage. When they use that usage with the plugin or within the other product when they use sign-in with ChatGPT, we will have some shared economics where they will get remuneration.
+
+One of the things that gets people excited about plugins and ecosystems is distribution platforms. Any advice for people that want their plugins to bubble up and get discovered? Build a good plugin. The way that it works—and we'll obviously tune the system—is we look at retention numbers, we look at the plugin's quality, and that's what we then start to recommend to users in conversations. Your plugin can get recommended to a significant slice of users. Obviously, if your plugin is not quite good, it will stop being recommended. That's amazing that you're looking at retention. It's actually adding utility and enabling ChatGPT to do something else. It's not so much SEO or getting the right words; it's people using it consistently.
+
+Okay, so you think that's the sleeper hit. Going back to Dots, when did you guys start working on this? There's the foundation, Grok Bot, Muse, Instinct, and all these things. How long have you been working on it? Why did it take so long? Do you remember a Codex Cloud? That was like a year ago, right? If you look back at Codex Cloud and the little animation we used, I think that was the inspiration for Grok Bot. It's very, very similar. But seriously, on the research for long, persistent, long-horizon tasks, this is something we've worked on for more than two years. Memory systems that are coherent—that's roughly the same amount of time. We launched a lot of that straight into ChatGPT. People enjoy that ChatGPT gets to know so much relevant information about them. So many people have anecdotes like, &quot;I fell ill and ChatGPT remembered I had a barbecue, I had lime, and I was making tequila, and it figured out the burn on my hand was likely from the lime.&quot; It's just that the memory works very well. We put a lot of research into that, and all of this coming together on top of the Quora harness and the ability to run 24/7 with good productivity is what we launched with Dots. It's the work of many months. Getting safety and security right was also important, which is why we launched with Astra, our safest, most aligned model. A lot of effort went into making Dots safe and secure.
+
+A question I like to ask is: where do you think human brains will continue to be valuable over time? Where is it necessary for humans to be involved versus where AI is taking over? I think this is a function of how we build the technology. The way we design everything at OpenAI is to put humans at the center of it and build it as an extension of your will and your taste. It's a super empowering thing. As long as we continue to do that, it enables you to take whatever you wanted to do—your creativity and your taste—and expand that in a way that feels awesome in the moment. It's an artistic tool. We may not have &quot;coders&quot; anymore, but we have more builders than ever. There's something human about that; humans want to learn and see what other humans are building. I'm not talking to a Dot; I'm talking to you. I think that will remain true for a very long time.
+
+One thing that has emerged with engineers is there's a lot more context switching and a trend of loneliness where they're talking to agents all day instead of humans. Are there solutions to that? Yes, all the time. Reducing configuration fatigue is one. Reducing the fact that talking to an agent is a solo adventure—where you just have a conversation with your one agent, and then many, and you're delegating so many things—is a focus. A lot of things are going to come together to make it much more delightful. For me, the ideal way to get things done is to just have it in your physical space, like the conversation we have now. It's able to observe and hear the ideas we have. We can jot something down on paper, it takes that and starts building in the background, then you have another idea, it starts building another thing. You can project it on a screen and talk to it, evolving it in a conversation with other humans. You don't have this fatigue of being glued to a screen and thinking about prompting; it becomes supernatural. That's what we're trending towards.
+
+Another downside is the pressure to do more because we can do more. Everyone says, &quot;Run 30 agents at once, why aren't you shipping more?&quot; Is that solvable? I think we heard Sam speak about the promise of this: reducing the noise and allowing you to spend attention where you want. Having all these things vying for your attention—we can tone that down. It's remarkable that every time I go on holiday and disconnect, I start thinking in different, more creative ways. I'm eager to see if we can bring that to the day-to-day. Maybe you need fewer meetings, maybe you don't need to do as much, and you'd be more productive if you were better rested. We have to figure that out, but that's the promise of AI—it's not just &quot;one more prompt per second.&quot;
+
+There's a bot I'm building that's an energy audit bot; it watches my calendar and asks if a meeting gave or took energy. Is there anything you've done with AI recently that blew your mind? Something cool? My live demo failed, so that wasn't cool. But my daughter—well, I realized production went down, and it pinged me five minutes before the live demo. That was stressful; it said, &quot;Hey, production is down, do you want me to try and fix it?&quot; I said, &quot;I don't think you're there yet, little Dot, but thank you.&quot; I got in touch with the engineering teams, and we fixed it. Having this thing that understands there's an important event—DevDay—and a production system, and that these two things are connected and happening in five minutes, so I should ping him because he probably wants to know—that is remarkable.
+
+How do you feel about giving it access to all these things? It has access to some production systems with guardrails. We talked about specialist Dots, but they operate with additional guardrails, additional monitoring, and on their own hardware. We actually run some on Mac Minis. The fundamental difference is that the harness does not run on the machine; it can connect to as many devices as you want. It has its own computer, and you can connect it to your laptop as well. Over time, you might connect it to 10 different devices and it can control it all, like an octopus. So you're talking to your Dot, it's living in some VM somewhere, and it can connect to many devices.
+
+This season's supporting sponsor is DX. Now that everybody is using AI, the question is no longer &quot;are we using AI,&quot; but &quot;is it paying off?&quot; With DX, you can measure and benchmark the impact of AI adoption across your full product life cycle. DX shows you where AI is helping developers and where it's creating new bottlenecks. You can also evaluate AI vendors, monitor costs, and see exactly what's limiting your agents. That's why hundreds of enterprises, including Snowflake, Sony, and BNY, use the DX platform to measure AI's impact on developer productivity. Visit getdx.com/lenny to get a demo.
+
+In your interviewing, what skills are trending up, and what is trending down? The skill trending down is typing fast; that is not that useful anymore. Skills trending up are great taste, thinking about the user, and connecting to the audience. A lot of ex-founders are incredibly successful right now. We have more than 120 YC founders at OpenAI. That passion and the urge to build something that matters and knowing what &quot;good&quot; looks like is more important than ever. I've argued that PMs are going to thrive because that's their job: where should we build, help someone build it, is this right, is this great, and iterate. Roles are blurring, so you might have been only into design or only engineering and felt uncomfortable, but now it's your time to shine.
+
+Do you miss the engineering part? I was an engineer for 10 years. I missed it for a while, but now with really fast speeds, I'm finding that back. I'm excited to democratize that as much as possible. It will take a while for it to be ubiquitous for a billion users, but now with Ultra-fast speeds, the progress is astonishing. We're using Astra and pushing it super far. When you have those speeds, especially with voice control, you get back into a creative state of mind and endless flow. It is different from the flow of the past, but I don't miss the old way.
+
+Advice for new grads? The next Thibault is already at OpenAI; his name is Ahmed Ibrahim. He was a new grad when hired. He's now responsible for all of OpenAI's compute fleet and Applied, which is a massive responsibility. He's incredibly kind, collaborative, and tries to solve the problem without putting himself first. He's a sponge, learning at speeds I haven't seen before. In the span of a year, his progress was fascinating. He's someone I trust with the most gnarly launches.
+
+What would surprise people about working inside OpenAI? It's a lot of ex-founders doing a lot of bottoms-up, exciting ideas. Decisions API came together very quickly; we realized we have a really good model, we can do some constraint sampling and ship it as a different shape. If you peel under the hood, you realize a Slack channel came together, four people hacked on it on a weekend, it was made accessible as &quot;company food,&quot; people got excited, started to build, and it evolved. It feels unstructured, but people assume roles to channel that in productive ways.
+
+You have a lot of autonomy. It's a unique culture. You have to own up to it. We trust people to make great choices. When things go wrong, fix it quickly or learn. It's worked as an empowering environment. I can press the reset button whenever necessary, which is a privilege. It allows me to be close to the community in ways that wouldn't be possible if I had to run it through an echelon of approvals.
+
+Is there something you screwed up? At times I could have made teams more inspired to build things that are less complex. Early days in Codex, I caused a couple of outages. I took production down on day three. I learned my lesson.
+
+What do people not price in regarding where things are going? The majority of actions will be taken by agents. Models are going to become cheaper and faster at rates that are incredible. We will integrate all modalities together seamlessly. If you were pushing yourself and imagining all of this being 10 times better in a year, you would build in a different way.
+
+Any second-order effects? If you want your product to be successful for agents, you have to build for scale. We worked with Notion, and when they built their MCP, suddenly all these agents could do work, which put a ton of strain on the system. You have to figure out the economics of that. There's tension between building an interface or not, but it's inevitable that the majority of things will be used by agents.
+
+Anything you've changed your mind about in the past year? I was expecting us to reach these capabilities in a year or two, so I had to revise my prior. I didn't expect to rely so much on voice, but I do so much through dictation now. Also, the energy of younger generations and how they embrace this change—I had to change my opinion on hiring strategy there.
+
+Optimistic we will solve safety problems? Yes. We build products for 1.2 billion people; we can't screw that up. We take it very seriously. We don't gamble there.
+
+Final question: what annoys you about the current state of the app? I feel like the models are almost there, but not quite for the app to disappear. I can't wait to get to the essence of simplicity. I get fatigued with the model picker and the reasoning efforts; you currently need a PhD in model pickers. I want to get rid of all of that as quickly as we can.
+
+Thanks for doing this. Thanks for having me.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
