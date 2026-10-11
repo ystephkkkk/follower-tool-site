@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Intelligence Briefings — Sunday, October 11, 2026</title>
+    <script>(function(){try{var t=localStorage.getItem('fb-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0c0f14;
+            --bg-1: #12161d;
+            --bg-2: #1b212b;
+            --border: #262d38;
+            --border-strong: #38414f;
+            --text: #e6e9ee;
+            --text-2: #9aa3b0;
+            --text-3: #808a99;
+            --accent: #d9a93f;
+            --accent-strong: #e7bd5e;
+            --accent-soft: rgba(217, 169, 63, 0.12);
+            --mark-bg: rgba(217, 169, 63, 0.25);
+            --mark-text: #e7bd5e;
+            --chip-bg: #1b212b;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+            }
+        }
+
+        :root[data-theme="light"] {
+
+            color-scheme: light;
+            --bg: #faf9f7;
+            --bg-1: #ffffff;
+            --bg-2: #f0eeea;
+            --border: #e2dfd8;
+            --border-strong: #cfcbc2;
+            --text: #1f2328;
+            --text-2: #57606a;
+            --text-3: #5f6873;
+            --accent: #8a6116;
+            --accent-strong: #6f4e0f;
+            --accent-soft: rgba(154, 109, 22, 0.10);
+            --mark-bg: rgba(154, 109, 22, 0.18);
+            --mark-text: #6f4e0f;
+            --chip-bg: #eceae4;
+            --shadow: 0 1px 2px rgba(31, 35, 40, 0.05);
+
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* CSS display rules on a class would otherwise defeat the hidden attribute */
+        [hidden] { display: none !important; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html { scroll-behavior: smooth; }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        /* ------- top bar ------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.66rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .topbar-search {
+            flex: 1;
+            max-width: 460px;
+            margin-left: auto;
+            min-width: 0; /* flex children default to min-content width — without this the input imposes a ~440px page floor on phones */
+            position: relative;
+            display: flex;
+        }
+
+        .topbar-search svg {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: var(--text-3);
+            pointer-events: none;
+        }
+
+        .topbar-search input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.42rem 0.8rem 0.42rem 2.1rem;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.86rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .topbar-search input::placeholder { color: var(--text-3); }
+        .topbar-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-2);
+            flex-shrink: 0;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+        .theme-toggle svg { width: 15px; height: 15px; }
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* ------- hero (index) ------- */
+        .hero { margin: 0.5rem 0 2.25rem; }
+
+        .kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1, .day-hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .lede { color: var(--text-2); font-size: 1rem; max-width: 56ch; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--text-3);
+        }
+
+        .stat-value { color: var(--text); font-weight: 600; }
+
+        /* ------- search results meta ------- */
+        .search-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-2);
+        }
+
+        .search-meta .count-num { color: var(--text); font-weight: 600; }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-clear:hover { text-decoration: underline; }
+
+        /* ------- month groups / day cards ------- */
+        .month-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-2);
+            margin: 2rem 0 0.9rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 52px; /* topbar height — keeps the month visible on a 125-day page */
+            background: var(--bg);
+            z-index: 5;
+        }
+
+        .month-group:first-child .month-label { margin-top: 0; }
+
+        .day-list { list-style: none; }
+
+        .day-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s ease;
+        }
+
+        .day-card:hover { border-color: var(--border-strong); }
+
+        .day-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .day-date {
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.15s ease;
+        }
+
+        .day-head:hover .day-date { color: var(--accent); }
+        .day-count { color: var(--text-3); font-size: 0.82rem; white-space: nowrap; }
+
+        .day-previews {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.4rem 1rem;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 0.65rem 0;
+            border-top: 1px solid var(--border);
+            text-decoration: none;
+            transition: background 0.12s ease;
+        }
+
+        .preview:hover { background: var(--bg-2); margin: 0 -0.6rem; padding-left: 0.6rem; padding-right: 0.6rem; border-radius: 8px; }
+        .preview:hover + .preview { border-top-color: transparent; }
+
+        .p-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .preview:hover .p-title { color: var(--accent); }
+
+        .p-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.74rem;
+            color: var(--text-3);
+        }
+
+        .p-tldr {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        /* excerpt shown when search matched inside the summary body */
+        .p-excerpt {
+            font-size: 0.76rem;
+            color: var(--text-3);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border);
+            padding-top: 0.3rem;
+            margin-top: 0.15rem;
+        }
+
+        .excerpt-label {
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 0.12rem;
+            border-radius: 3px;
+        }
+
+        /* ------- channel pill / person chips ------- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.55rem 0.12rem 0.22rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+        }
+
+        .pill img {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-2);
+        }
+
+        .pill b { font-weight: 600; color: var(--text-2); }
+        .pill .subs { color: var(--text-3); font-size: 0.7rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            min-width: 0;
+            background: var(--chip-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.16rem 0.6rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            max-width: 100%;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip-desc {
+            font-weight: 400;
+            color: var(--text-3);
+            font-size: 0.7rem;
+            max-width: 32ch;
+            min-width: 0;
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chip-sm { padding: 0.08rem 0.5rem; font-size: 0.68rem; }
+
+        /* ------- daily page ------- */
+        .day-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .day-nav a {
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .day-nav a:hover { color: var(--accent); }
+        .day-step { display: flex; gap: 1.2rem; }
+        .day-step .disabled { color: var(--text-3); opacity: 0.45; pointer-events: none; }
+
+        .day-hero { margin-bottom: 1.8rem; }
+        .day-sub { color: var(--text-2); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        .toc {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.6rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.25rem 0; }
+        .toc a { color: var(--text-2); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        .toc strong { font-weight: 600; color: var(--text); }
+        .toc a:hover strong { color: var(--accent); }
+
+        /* ------- video card ------- */
+        .video-card {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 4.5rem;
+        }
+
+        /* Brief cue for a card opened via a #video-N deep link (e.g. from the
+           newsletter) so the reader sees which item the email pointed to. */
+        @keyframes vc-target-flash {
+            from { box-shadow: 0 0 0 3px var(--accent); }
+            to   { box-shadow: var(--shadow); }
+        }
+        .video-card.vc-target { animation: vc-target-flash 1.6s ease-out 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .video-card.vc-target { animation: none; }
+        }
+
+        .vc-head { padding: 1.25rem 1.5rem 1rem; }
+
+        .vc-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            overflow-wrap: anywhere;
+        }
+
+        .vc-title a {
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .vc-title a:hover { color: var(--accent); }
+
+        .vc-title .ext {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 0.3rem;
+            color: var(--text-3);
+            vertical-align: baseline;
+        }
+
+        .vc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.8rem;
+            color: var(--text-3);
+        }
+
+        .dot { color: var(--border-strong); }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .tldr {
+            display: flex;
+            gap: 0.7rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-soft);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .tldr > span:last-child { max-width: 84ch; }
+
+        .tldr-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .vc-body {
+            padding: 1rem 1.5rem 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sum-preview { font-size: 0.92rem; line-height: 1.7; color: var(--text); max-width: 84ch; }
+        .sum-full { display: none; font-size: 0.92rem; line-height: 1.7; max-width: 84ch; }
+        .sum-full.expanded { display: block; }
+
+        .sum-full h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.3rem 0 0.6rem;
+        }
+
+        .sum-full h3:first-child { margin-top: 0; }
+        .sum-full h4 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+        .sum-full ul { margin: 0.4rem 0; padding-left: 1.3rem; }
+        .sum-full li { margin: 0.35rem 0; }
+        .sum-full ul ul { margin: 0.2rem 0; }
+        .sum-full strong { font-weight: 600; }
+        .sum-full p { margin: 0.6rem 0; }
+
+        .sum-full blockquote {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-2);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .linklike:hover { color: var(--accent-strong); }
+        .linklike svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+        .linklike.expanded svg { transform: rotate(180deg); }
+
+        .vc-transcript { padding: 0 1.5rem 1.25rem; }
+
+        .transcript-toggle {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .transcript-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+        .transcript-content {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .transcript-content.expanded { display: block; }
+
+        /* ------- empty / no results ------- */
+        .no-results, .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--text-3);
+        }
+
+        .no-results .nr-q { color: var(--text); font-weight: 600; }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-3);
+            font-size: 0.78rem;
+        }
+
+        footer a { color: var(--text-3); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.25rem 1rem 2rem; }
+            .topbar { padding: 0.55rem 1rem; gap: 0.6rem; }
+            .brand span.brand-name { display: none; }
+            .hero h1, .day-hero h1 { font-size: 1.6rem; }
+            .vc-head, .tldr, .vc-body { padding-left: 1rem; padding-right: 1rem; }
+            .vc-transcript { padding: 0 1rem 1rem; }
+            .day-head, .day-previews { padding-left: 1rem; padding-right: 1rem; }
+            .transcript-content { max-height: 300px; }
+        }
+</style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">IB</span><span class="brand-name">Intelligence Briefings</span></a>
+        <form class="topbar-search" action="index.html" method="get" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" name="q" id="globalSearch" placeholder="Search people, topics, quotes&hellip;" autocomplete="off" aria-label="Search briefings">
+        </form>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" type="button"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+    </header>
+    <div class="container">
+
+        <nav class="day-nav">
+            <a href="index.html">&larr; All briefings</a>
+            <div class="day-step"><a href="20261010.html">&larr; Oct 10</a><span class="disabled">Newer &rarr;</span></div>
+        </nav>
+        <header class="day-hero">
+            <p class="kicker">Daily Briefing</p>
+            <h1>Sunday, October 11, 2026</h1>
+            <p class="day-sub">1 video &middot; 1 channel</p>
+        </header>
+        
+        <main>
+
+            <article class="video-card" id="video-bPSeumz6sgI">
+                <div class="vc-head">
+                    <h2 class="vc-title"><a href="https://www.youtube.com/watch?v=bPSeumz6sgI" target="_blank" rel="noopener">Trade Wars, Fighting Corruption and Rethinking Globalization | Leaders with Francine Lacqua<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></h2>
+                    <div class="vc-meta"><span class="pill"><img src="https://yt3.ggpht.com/8sL0eqOeU4a1wZBVxn5NOFsug17I2XM0dmCdT7eouq12qE-I-JLCzrzub9Z4SdF0IEt5AzEY=s240-c-k-c0x00ffffff-no-rj" alt="" loading="lazy"><b>Bloomberg Originals</b><span class="subs">(5.2M)</span></span><span class="dot">&middot;</span><span>24:02</span><span class="dot">&middot;</span><span>32.0K views</span><span class="dot">&middot;</span><span>2026-10-11</span></div>
+                    <div class="people"><a class="chip" href="index.html?q=%22Ngozi%20Okonjo-Iweala%22">Ngozi Okonjo-Iweala<span class="chip-desc">Director-General, World Trade Organization</span></a> <a class="chip" href="index.html?q=%22Francine%20Lacqua%22">Francine Lacqua<span class="chip-desc">Anchor, Bloomberg</span></a></div>
+                </div>
+                <div class="tldr"><span class="tldr-label">TL;DR</span><span>Global trade is facing unprecedented disruption and fragmentation reminiscent of the 1930s, driven by geopolitical tensions, shifting subsidies, and protectionism.</span></div>
+                <div class="vc-body">
+                    <div class="sum-preview" id="preview-0">Ngozi Okonjo-Iweala, Director-General of the World Trade Organization, advocates for &quot;re-globalization&quot; to...</div>
+                    <div class="sum-full" id="full-0"><h3>TL;DR</h3>
+<p>Global trade is facing unprecedented disruption and fragmentation reminiscent of the 1930s, driven by geopolitical tensions, shifting subsidies, and protectionism. Ngozi Okonjo-Iweala, Director-General of the World Trade Organization, advocates for "re-globalization" to decentralize supply chains and reform multilateral rules while maintaining resilience.</p>
+<h3>The State of Global Trade and WTO Pressures</h3>
+<ul>
+<li><strong>Unprecedented Stress:</strong> Ngozi Okonjo-Iweala notes that global trade is experiencing fragmentation and stress unseen in 80 years, with dissatisfaction leading some members toward unilateral and bilateral arrangements.</li>
+<li><strong>The 1930s Parallel:</strong> Turning inward mirrors the protectionist era of a century ago; however, modern supply chains, financial linkages, and digital trade make any collapse far more damaging today.</li>
+<li><strong>Resilience of the Core:</strong> Despite strains, about <strong>75%</strong> of world trade continues to function under WTO rules, demonstrating a solid core.</li>
+<li><strong>The 25% Friction Points:</strong> Contentious areas include outdated 1990s subsidy rules, state-directed economic models, and disputes over developing country status (such as China's ongoing classification alongside positions held by India and Brazil).</li>
+</ul>
+<h3>Subsidies, Industrial Policy, and China</h3>
+<ul>
+<li><strong>Rising Subsidies:</strong> Government support via tax breaks, grants, and cheap loans distorts trade by lowering company costs artificially rather than relying strictly on efficiency.</li>
+<li><strong>Semiconductor Investments:</strong> Citing estimates from the Semiconductor Industry Association, China is on track to invest <strong>$142 billion</strong> into chip making.</li>
+<li><strong>Evolution of Rules:</strong> Okonjo-Iweala emphasizes the need to update subsidy and trade frameworks established before major developing economies like China joined the WTO.</li>
+</ul>
+<h3>Personal Cost and the Fight Against Corruption</h3>
+<ul>
+<li><strong>Nigeria Finance Minister Tenure:</strong> Okonjo-Iweala served two non-consecutive terms as Nigeria's finance minister, waging a central life's work against corruption that diverted public funds from education, health, and infrastructure.</li>
+<li><strong>Gas Subsidy Fraud:</strong> An audit initiated by Okonjo-Iweala uncovered <strong>$2.4 billion</strong> worth of fraud in fuel import subsidy claims, leading to her refusal to pay fraudulent marketers.</li>
+<li><strong>Abduction Ordeal:</strong> The crackdown triggered death threats and the harrowing 5-day kidnapping of her 96-year-old mother (then younger), during which kidnappers demanded Okonjo-Iweala's resignation and departure from the country.</li>
+<li><strong>Resilience Under Fire:</strong> Despite immense fear and guilt, she continued her governmental duties following her father's firm insistence that the family would not submit to blackmail.</li>
+</ul>
+<h3>African Trade and Structural Barriers</h3>
+<ul>
+<li><strong>Low Intra-Continental Trade:</strong> Africa accounts for only <strong>3%</strong> of global exports, with roughly <strong>15%</strong> of the continent's formal trade occurring between African nations.</li>
+<li><strong>Structural Hurdles:</strong> High trade barriers, shipments of raw materials abroad followed by reimportation of finished goods, dysfunctional transport, numerous currencies, and red tape hinder economic growth.</li>
+<li><strong>Mobility Obstacles:</strong> Okonjo-Iweala highlighted needing <strong>35 different visas</strong> on her passport as an investor and noted personal incidents where the African Union's experimental African passport was initially rejected at borders.</li>
+<li><strong>AfCFTA Initiative:</strong> Launched in <strong>2021</strong>, the African Continental Free Trade Area groups <strong>54 countries</strong> into a single market to stimulate manufacturing and intra-African commerce.</li>
+</ul>
+<h3>Re-Imagining Globalization and Digital Trade</h3>
+<ul>
+<li><strong>Re-Globalization Concept:</strong> Okonjo-Iweala champions decentralizing and de-concentrating production away from single geographies to multiple locations with comparative advantages to build global resilience.</li>
+<li><strong>Digital Trade Growth:</strong> Total world trade stands at <strong>$33 trillion</strong>, with digitally delivered services (movies, music, education, health) growing the fastest at about <strong>6% per year</strong>, reaching roughly <strong>$4 trillion</strong>.</li>
+<li><strong>Digital Moratorium Stalemate:</strong> A longstanding moratorium on electronic transmissions faced resistance at the latest WTO ministerial conference—pitting the US and EU against Brazil, India, and developing nations—raising fears of national rules and internet taxation.</li>
+</ul>
+<h3>Notable Quotes</h3>
+<blockquote>
+*"Right now, Francine, this is an unprecedented time for global trade because we are seeing disruptions to trade and emerging fragmentation in a way we've not seen since really eighty years."* — <strong>Ngozi Okonjo-Iweala</strong>
+</blockquote>
+<blockquote>
+*"I was told that for her to be released, I should resign and leave the country. Of course, it was a terrible, terrible five-day ordeal. I think the worst in my life, you know, when you feel that you, what you're doing might lead to the death of your own parent..."* — <strong>Ngozi Okonjo-Iweala</strong>
+</blockquote>
+<blockquote>
+*"We have come up with a concept at the WTO that we call re-globalization. We believe that we need to reimagine globalization and reimagine value and supply chains in a way that builds greater resilience for the world."* — <strong>Ngozi Okonjo-Iweala</strong>
+</blockquote></div>
+                    <button class="linklike" id="sum-btn-0" onclick="toggleSummary(0)" type="button" aria-expanded="false" aria-controls="full-0">
+                        Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
+                
+                <div class="vc-transcript">
+                    <button class="transcript-toggle" id="trans-btn-0" onclick="toggleTranscript(0)" type="button" aria-expanded="false" aria-controls="transcript-0">View transcript</button>
+                    <div class="transcript-content" id="transcript-0">And that happened to me. This is my office. Very personal. This is the most controversial piece of artwork at the WTO. So the painting used to hang publicly and the staff, many of the female staff, didn't want it. So I said, &quot;Bring it to my office because it's speaking to me.&quot; You don't understand this artist. He's saying this is the world as it was, and it's not acceptable.
+
+How do you explain trade? Everyone trades without really realizing they're doing that. But when people go to the store in, in richer countries and they find things on the shelves, they never think about how did it get there? How can I trust that what I see, this T-shirt, this good that I'm buying, whatever it is, meets the right standards and quality?
+
+This type of trade takes place because there are rules that govern the trade, and most people don't know that those rules exist. When a business person from one country sends goods to another, they know that they face fair competition because another business selling the same goods will meet the same rules. Ngozi Okonjo-Iweala leads the World Trade Organization, the body that governs a lot of these trade rules. I think the WTO is too important to allow it to be, you know, slowed down, paralyzed and moribund the way it was being made to be, not fit for purpose.
+
+But there haven't always been common trade rules and a system to settle disputes. Actually, governments only realized how interconnected the global economy is after the two world wars. So in 1947, the General Agreement on Tariffs and Trade was signed. And in 1995, GATT became the WTO. It's a framework really for global trade, a sort of forum where its 166 members have equal representation and equal say, no matter their size. Ideally under WTO rules, global trade isn't power based. It's not supposed to be the law of the jungle where big animals eat smaller ones.
+
+A look at how war, AI, and climate change are shaking up $32 trillion a year in global commerce. There have been a lot of other issues that have also cropped up as well that seem to have just completely reshaped, I guess, just how goods flow around the world right now, if at all. Something happened, right? I don't know if everybody's gotten a fair deal. How many countries come to you and say, look, this needs to change?
+
+Right now, Francine, this is an unprecedented time for global trade because we are seeing disruptions to trade and emerging fragmentation in a way we've not seen since really eighty years. Global trade is under tremendous stress. And that is because many members of the WTO are beginning to feel that the rules no longer work for them the same way that they used to work in the past. So the dissatisfaction is leading to unilateral behavior on the part of some, meaning that they're deciding, okay, this doesn't work for us. We're going to try bilateral arrangements. But for others, it's leading to a lot of complaints.
+
+Look, this organization, it's all been about technical negotiation skills. If you want to continue doing the same thing you did in the past and getting the same result, fine. I think they should do something different. How fast can you reform? Do people forget? Do countries like the US forget how much they've benefited in the past with free trade? Well, you know what the human nature and the nature of countries and so on is, that when members or countries feel they're no longer benefiting as much, they tend to feel the pain more and many don't remember the benefits.
+
+Today, trade looks a lot like it did in the 1930s when countries responded to economic stress by turning inward. A century ago, the US raised tariffs and other countries retaliated. Trade blocks formed, countries focused on national security, and global trade fell by about two thirds between 1929 and 1934. A similar collapse today would be much more damaging because economies are far more interconnected. Modern supply chains stretch across many countries. Financial systems are linked, and digital trade is now a major part of the economy.
+
+Trade creates mutual dependence between nations which can encourage cooperation and trust. When trust breaks down, countries often form rival economic blocks, increasing competition and potentially raising the risk of conflict. And trade is closely linked to the economic health of nations. For poor nations, it's an essential part of development. So what doesn't work? And actually if too many countries and the big countries especially think it doesn't work, is it each to their own and is this really a breakdown of all rules?
+
+No, it's not a breakdown. Almost three quarters of world trade, believe it or not—it's still going on on our terms, which means that the core of the rules is seen as solid and beneficial. So you need to ask, what do we do with say the 25% that is not going on according to WTO rules? For instance, subsidies. If you're subsidizing businesses, are you declaring these subsidies? What are the rules we have now that govern subsidies?
+
+Subsidies are government support for businesses through measures like tax breaks, grants, or cheap loans, but they can distort trade. If a government helps a company lower its costs, that company can sell its products more cheaply, not necessarily because it's more efficient, but because it's state supported. They are a contentious issue at the WTO. A lot of these countries are really playing catch up to decades of Chinese industrial policy in this space. You know, we've estimated based on estimates from the Semiconductor Industry Association, China's on track to invest $142 billion into chip making.
+
+Critics argue this creates an uneven playing field; wealthier countries can spend huge amounts, while poor countries often can't. Also, rules around subsidies were written in the 1990s, and lots has changed since then. China was flatlining for years and years and decades, and it got into this World Trade Organization with all sorts of advantages. I must say that those rules need to be updated because they were brought in at a time when some members like China, for instance, had not joined the organization, and other economies had not joined, many developing countries had not joined. So how do we look at this and look at our members and say, &quot;What do we need to change?&quot;
+
+Are you really just talking about the US and China? If those two are more aligned and part of it and feel listened to, does it automatically make everything else more simple? It's not just US and China. Making it a US and China problem I think is not recognizing that many emerging markets and poorer developing countries also have problems with the system. No, so it's beyond that. Virtually all members feel that we really have to move now. We have to do these reforms.
+
+China joined the WTO in 2001 on condition of cutting tariffs, on opening sectors to foreign investment, and they agreed to transparency requirements. It joined as a developing country which gave it some advantages under WTO rules. Then its exports exploded. China became the world's factory, central to global supply chains. The United States and some other countries argue that China is now too economically advanced to keep receiving benefits designed for developing nations.
+
+However, countries such as India and Brazil are cautious about changing these rules because they also benefit from developing country status. Critics say WTO rules are not well suited to dealing with China's state-directed economic system. China disagrees. China has since given up some benefits like extended transition periods, but not its developing country status. The broader debate is whether the WTO can still effectively manage a modern global economy and make decisions through consensus amongst all members.
+
+The WTO was also set up to facilitate global trade deals, but to date, it hasn't succeeded. I think it's no use beating around the bush. This meeting has collapsed. That's the Doha Round, an ambitious deal flamed out by stalemates over issues like agriculture. From there, politicians ignored the WTO and pursued bilateral deals using their economic heft as leverage. Common criticisms of the WTO include decision-making is too slow. Wealthier countries have more resources to fight disputes. The dispute settlement system needs reform and it struggles to address modern trade challenges.
+
+April 2nd, 2025 will forever be remembered as the day American industry was reborn. Starting tomorrow, the United States will implement reciprocal tariffs on other nations. As head of the WTO, what was your first reaction? Who did you call first? I actually didn't call anyone. We knew it was coming. So my first reaction was exactly what I had said on a CNN broadcast to Richard Quest. Well, this is what I say. I say, Richard, we should all chill. Can we chill? Let's wait and see what actually is done.
+
+I felt we had to, you know, not get overexcited, wait for the announcements to roll out, wait to see how the implementation would work, because if you react too quickly, then you might make mistakes. These are very consequential announcements, so you really need to absorb them to see what they mean, to see their impact. And before you come out with, okay. So, but many of our members, of course, were looking at how does this impact me? And I was saying, let's take it calmly. Let's look at. Let's slow down a bit.
+
+This latest headline coming in from the Supreme Court, global tariffs struck down by the Supreme Court. Yep. So today was going to be the fate of whether or not Trump's IEEPA tariffs, which about 60 to 75% of the tariff policy right now in the United States is based off of, and the Supreme Court making this decision. I, you know, really can't overemphasize how big of a blow this is for the Trump administration. And you were, you were right, actually. It served you well, right? Just taking a step back.
+
+Tit for tat will not be good for the world. It's going to take us in a direction in which we will really have serious fragmentation. And guess who will be the biggest losers? It'll be the poorer countries. We really need to take a deep breath before actions that would further undermine the economic growth would take place. What did you learn in 2025? Two things. Gratitude to WTO members because they didn't do the tit-for-tat that would have taken the world down in the way that would not have been good. I was very appreciative of them for that. I think the second thing I learned is the resilience of world trade. Trade continued to follow global rules for the most part.
+
+Ngozi Okonjo-Iweala isn't new to conflict and working under pressure. Before joining the WTO and between years in senior roles at the World Bank, she served as Nigeria's finance minister for two non-consecutive terms. Would you say that your, your life's biggest fight was against corruption? Probably, yes. Why? If you look at what corruption does in diverting resources that should be benefiting education, health, agriculture, all the things that make life better in a developing country for poor people, helping to create jobs, if you see these monies that the state should be spending being diverted by corruption, then you feel that this is a real fight that has to be waged. If you are a country that is not that rich, every single penny counts.
+
+You've continued this fight at great personal risk. Yes. When I was finance minister of my country, we noticed that large sums of money seemed to be being spent on a program that we had subsidizing gas at the pump. Nigeria is an oil producing country, but we cannot refine everything that we consume. So we do bring in refined oil from outside. So importers would bring in and they would be paid the subsidies and they would sell it cheaper at the pump. And they put in claims for these subsidies, and we suddenly found that the amounts were just skyrocketing. It just didn't seem normal.
+
+So I went to the president and said, &quot;Look, something is going on here. Could we audit the accounts?&quot; And he said, &quot;Yes, go ahead.&quot; And we found about $2.4 billion worth of fraud. So we refused to pay. That then led to, to threats to me and then my mother got kidnapped. The Delta State Police Command says it's on the trail of the kidnappers who abducted the mother of Nigeria's finance minister, Dr. Ngozi Okonjo-Iweala. I was told that for her to be released, I should resign and leave the country.
+
+Of course, it was a terrible, terrible five-day ordeal. I think the worst in my life, you know, when you feel that you, you, what you're doing might lead to the death of your own parent, that is not a situation that anyone ever wants to be in. But yeah, so it's even painful every time I think about it and what happened. I feel very emotional. She was held in the middle of a forest, and one night she escaped. She's still alive. She's 96 now. You can't talk about it. If you mention it, she just starts shaking immediately.
+
+Do you ever think of, of quitting? Yeah. I mean, between my mother, having my mother alive and staying in a job, I will pick my mother any day, but it was my father who said &quot;No, you're not going to give in. You're going to carry on doing your work. You're going to go to cabinet meeting.&quot; You know, meetings used to be first part televised in those days. And he said, &quot;You've got to go.&quot; I said, &quot;I can't do it.&quot; I was so paralyzed by fear, and I was, what I was going to do is give, you know, give in and get out to get my mother back.
+
+I don't think anybody would think differently, but my father had a highly different opinion, and he said, &quot;We don't give in to blackmail. We don't.&quot; And he said, &quot;You've got to carry on. You've got to go to work.&quot; In the case of payment for oil subsidy money, we have been paying marketers who have been verified. If they're not verified then we will not be able to pay, and that position continues. Marvelous is 22 years old and is a leader of the eight-man gang that abducted the mother of the finance minister, Dr. Ngozi Okonjo-Iweala.
+
+I never dreamt my parents could ever be touched in this way, that people would be that evil. So the enormous guilt, even til today, I still feel a bit of it. I think I take things more in stride these days. Age also helps. By the time you get older, I love being older, you've had so many experiences in life that really help you be, in my case, become a much stronger, wiser, more patient person. My mind always goes to what is the solution and where the next opportunity? I think it just comes out of so many difficult experiences.
+
+Africa's trade looks a lot like the world economy during earlier eras of heavy protectionism. High trade barriers between neighboring countries, high exports of raw materials, high imports of finished goods, but Africa's problems stem from structural barriers. The continent only accounts for about 3% of global exports. It's rich in raw materials, but these are often shipped outside and then reimported as finished products. It's not very industrialized. Transport is often dysfunctional. Most trade blocks don't work very well, so only about 15% of the continent's formal trade actually takes place from one African country to another.
+
+It can be more convenient to travel from, say, Senegal to the DRC via Europe than directly within the continent. And often lots of visas are needed to move and do business no matter how rich you are. As an investor, as somebody who really wants to make Africa great, I have to now apply 35 different visas on my passport. Many currencies, red tape, and limited access to affordable capital are other stress points for trade. The African Continental Free Trade Area, launched in 2021, aims to boost intra-African trade by grouping its 54 countries into a single market and promoting manufacturing sectors.
+
+The African Union was beginning to issue these Africa passports where you're supposed to be able to enter another African country without a visa. And this is supposed to make movement easier so we can be better integrated as a continent and trade better with each other. You know, so I arrived at an African country with this passport, and they said they would not. They didn't recognize the African passport, and they said they wouldn't let me in. So on principle, I, I stayed at the airport all night until morning. They couldn't believe it. I refused to leave. I had my Nigerian passport with a visa which would have gotten me in, but I preferred to wait. And in the morning when they came in, they eventually gave the green light. Yeah, so those kinds of things mean a lot. If, if we don't stand up for the things we are doing, then who will?
+
+But DG, the world is changing. What do you say to people that say you're idealist? I don't mind being idealist. The world is changing, but should it change around the basic principles of what makes people human? We have come up with a concept at the WTO that we call re-globalization. We believe that we need to reimagine globalization and reimagine value and supply chains in a way that builds greater resilience for the world. Instead of being dependent on one geography or one place, can we, can we decentralize production and de-concentrate that to other places that also have a comparative advantage and produce there?
+
+It's not easy. I mean, building supply chains takes years, but the world needs to begin now, and there's some of that happening. We have about $33 trillion in world trade now. The one that is very exciting is digitally delivered, meaning things like movies and music and education and health services delivered digitally is growing the fastest at about 6% per year. It's about $4 trillion now, really growing phenomenally.
+
+Ngozi Okonjo-Iweala is optimistic, but digital trade is a stark symbol of the WTO's broader crisis. It was on display in the latest WTO ministerial conference. Excellencies. Central part of your work here is to confront these challenges, to discuss the very foundational principles on which the WTO was built. A longstanding moratorium on imposing duties on electronic transmissions, a vague definition that could apply to nearly every online transaction that crosses a border wasn't renewed, pitting countries with large digital economies like the US and the European Union member states against Brazil, India, and some developing countries.
+
+Digital trade, historically open and borderless, might now be subject to national rules and taxes. So is this the future of protectionism? Is the global internet the next frontier for trade wars? What do you tell members that just complain to you? Yeah, multilateralism is going through a very tough time. I would be lying through my teeth if I didn't tell you that. Multilateral institutions were created because the world came to realize after World War II that there are problems no one nation can solve on its own, and that is still the case.
+
+Is there a danger that reform just takes too long, that, you know, members are frustrated because it just takes a long timeline to put them in place? Well, you know, it's up to members. Members pride themselves on saying it is member driven. So if they are frustrated, they need to act faster. All that I, as DG and the Secretariat can do is support them and help them to, to say, &quot;Look, you really need to focus on this and that,&quot; but they themselves have to move. DG, thank you so much for your time today. Thank you, Francine.</div>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <span>Generated by Follower Tool</span>
+            <span>Press <strong>/</strong> to search</span>
+        </footer>
+    </div>
+    <script>
+    (function(){
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function(){
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                var current = explicit || (prefersLight ? 'light' : 'dark');
+                var next = current === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('fb-theme', next); } catch(e) {}
+            });
+        }
+        document.addEventListener('keydown', function(e){
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey
+                && !document.activeElement.isContentEditable
+                && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                var s = document.getElementById('globalSearch');
+                if (s) { e.preventDefault(); s.focus(); }
+            }
+        });
+    })();
+
+    function toggleSummary(id) {
+        var preview = document.getElementById('preview-' + id);
+        var full = document.getElementById('full-' + id);
+        var btn = document.getElementById('sum-btn-' + id);
+        var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        if (full.classList.contains('expanded')) {
+            full.classList.remove('expanded');
+            preview.style.display = 'block';
+            btn.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = 'Read more ' + chevron;
+        } else {
+            full.classList.add('expanded');
+            preview.style.display = 'none';
+            btn.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.innerHTML = 'Show less ' + chevron;
+        }
+    }
+
+    function toggleTranscript(id) {
+        var content = document.getElementById('transcript-' + id);
+        var btn = document.getElementById('trans-btn-' + id);
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'View transcript';
+        } else {
+            content.classList.add('expanded');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'Hide transcript';
+        }
+    }
+
+    // Deep-link support: a #video-N hash (e.g. from the newsletter) lands on the
+    // card AND expands its summary so the reader needs no extra click. Reuses
+    // toggleSummary so the button label / aria-expanded stay in sync.
+    function openFromHash() {
+        var m = /^#video-(\d+)$/.exec(window.location.hash || '');
+        if (!m) return;
+        var id = m[1];
+        var full = document.getElementById('full-' + id);
+        if (full && !full.classList.contains('expanded')) toggleSummary(id);
+        var card = document.getElementById('video-' + id);
+        if (card) {
+            card.scrollIntoView();  // re-scroll: expanding changed the layout
+            card.classList.remove('vc-target');
+            void card.offsetWidth;  // restart the flash if re-targeting the same card
+            card.classList.add('vc-target');
+        }
+    }
+    window.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+</script>
+    
+</body>
+</html>
