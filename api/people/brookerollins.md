@@ -60,7 +60,7 @@ The Trump administration is seeking an $87.6 billion supplemental funding packag
 - Video: https://www.youtube.com/watch?v=Sl1498LQA2U
 - Published: 2026-04-15
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260415.html#video-Sl1498LQA2U
-- Speakers: Brooke Rollins (Secretary of Agriculture); Howard Lutnick (Secretary of Commerce); Kevin Hassett (Director, National Economic Council)
+- Speakers: Brooke Rollins (Secretary of Agriculture); Howard Lutnick (Secretary of Commerce); Kevin (Director, National Economic Council)
 
 ---
 

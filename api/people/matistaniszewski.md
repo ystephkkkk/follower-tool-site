@@ -171,7 +171,7 @@ AI has moved from experimental augmentation to massive-scale execution, exemplif
 - Video: https://www.youtube.com/watch?v=zA1zdqIYER4
 - Published: 2026-04-14
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260414.html#video-zA1zdqIYER4
-- Speakers: Mati Staniszewski (Co-founder, ElevenLabs); John Collison (Co-founder, Stripe)
+- Speakers: Mati Staniszewski (Cofounder, ElevenLabs)
 
 ---
 

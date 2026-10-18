@@ -128,7 +128,7 @@ Psychiatry faces a profound modern crisis due to a flawed, symptom-based diagnos
 - Video: https://www.youtube.com/watch?v=NYFGCESmikA
 - Published: 2026-08-26
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260826.html#video-NYFGCESmikA
-- Speakers: David Heinemeier Hansson (CTO, 37signals); Lex Fridman (Host, Lex Fridman Podcast)
+- Speakers: Lex Fridman (Host, Lex Fridman Podcast); DHH (CTO, 37signals)
 
 ---
 

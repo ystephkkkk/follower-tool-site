@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=8804JYm81cc
 - Published: 2026-10-07
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20261007.html#video-8804JYm81cc
-- Speakers: Alex Reibman (CEO, Higgsfield)
+- Speakers: Alex Mashrabov (Co-founder and CEO, Higgsfield)
 
 ---
 

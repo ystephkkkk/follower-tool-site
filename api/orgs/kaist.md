@@ -65,7 +65,7 @@ The AI era is fundamentally driven by memory infrastructure rather than algorith
 - Video: https://www.youtube.com/watch?v=zB2hFlDX0XM
 - Published: 2026-06-23
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260623.html#video-zB2hFlDX0XM
-- Speakers: Joungho Kim (Professor of Electrical Engineering, KAIST); Wooseok Kang (Reporter, Dong-A Ilbo)
+- Speakers: Joungho Kim (Professor, KAIST)
 
 ---
 

@@ -495,7 +495,7 @@ This briefing analyzes the geopolitical and economic volatility of the Iran conf
 - Video: https://www.youtube.com/watch?v=wTiHheA40nI
 - Published: 2026-02-07
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260207.html#video-wTiHheA40nI
-- Speakers: Brad Gerstner (CEO, Altimeter Capital); Chamath Palihapitiya (Founder, Social Capital); Jason Calacanis (Entrepreneur and Investor)
+- Speakers: Brad Gerstner (Investor, Altimeter Capital)
 
 ---
 

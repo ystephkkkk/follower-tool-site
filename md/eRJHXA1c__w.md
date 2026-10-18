@@ -10,19 +10,47 @@
 
 ---
 
-**TL;DR** (1-2 sentences): Tea is a 5,000-year-old beverage originating from ancient China that has evolved into the most consumed drink in the world after water.
+1. **TL;DR:** Commerce Secretary Howard Lutnick testified before the Senate Appropriations Committee that the BEAD broadband program has achieved universal coverage for 50 of 56 states and territories while saving $21 billion, and he committed to keeping unspent funds within states and adhering strictly to the statute. The hearing also featured contentious questioning over Lutnick's past associations with Jeffrey Epstein, debates over the Census Bureau's poverty metrics and upcoming 2026 test, and scrutiny of tech export controls.
 
-## Historical Origins and Legend
-* **Ancient Chinese Heritage:** The history of tea drinking spans over five millennia, beginning in ancient China.
-* **The Legend of Emperor Shen Nung:** According to folklore, the beverage was discovered by accident.
-    * **Accidental Infusion:** The Emperor reportedly discovered the drink when wild tea leaves blew into his pot of boiling water.
-    * **Sensory Appeal:** The Emperor adopted the drink after being impressed by its unique aroma and taste.
+---
 
-## Global Market Dominance
-* **Consumption Ranking:** Tea has grown from a regional discovery into a universal commodity.
-* **Global Standing:** It currently holds the title of the most widely consumed beverage in the world, second only to water.
+## **BEAD Program Deployment & Funding**
+* **Status of Approvals:** 50 out of 56 states and territories have approved BEAD plans; the remaining two are on the "one-yard line" (including Alaska, which Secretary Lutnick committed to approving promptly for the construction season).
+* **Funding Release:** Once states sign their final agreements, grant funds become immediately available for draw (noted as operational for Rhode Island and other jurisdictions).
+* **Technology Neutrality & Cost Savings:** States utilized technology-neutral approaches (combining fiber, fixed wireless, and satellite), resulting in $21 billion in savings while still covering every resident identified in state plans. For example:
+  * **Kansas:** 67% fixed wireless, 29.5% fiber, 3% satellite.
+  * **New Hampshire:** 67% fiber, 21.5% satellite, 11% fixed wireless.
+* **Rejection of SpaceX/Starlink Riders:** Lutnick confirmed that SpaceX riders attempting to modify grant terms (demanding federal money even when residents don't purchase service or without reserving network capacity) are outside NTIA guidelines and will be rejected. States facing such defaults will be supported in finding alternative ISPs.
+* **Unspent Funds ($21 Billion):** Lutnick firmly stated that unspent funds will **not** be returned to the Treasury as a rescission. A public listening tour starting the following day (with over 900 participants) will help determine the best statutory uses for the remaining funds, with potential applications including pole attachments, public safety communications, cybersecurity, telehealth, and precision agriculture.
 
-**Notable Quotes**
-> "Legend has it that Emperor Shen Nung discovered it when some wild tea leaves blew into his pot of boiling water. He loved the aroma and the taste, and thus, tea was born." — Howard Lutnick, Commerce Secretary
+## **Census Bureau Operations & Poverty Metrics**
+* **Poverty Measurement Deficiencies:** Senators (including Kennedy and Merkley) criticized the Census Bureau's 11% poverty rate calculation for only counting cash income and excluding non-cash federal benefits (SNAP, housing subsidies, Medicaid, EITC, utility/school meal subsidies), which drastically overstates the number of struggling families or misrepresents true economic standing. Lutnick acknowledged this was an area for review.
+* **2026 Census Test & Post Office Utilization:** The Census Bureau plans to execute the 2026 test using the U.S. Postal Service and the American Community Survey to leverage existing postal routes and personnel for greater efficiency ahead of the 2030 census. 
+* **Citizenship Question:** When questioned on whether a citizenship question would be added to the census test, Lutnick stated that apportionment is not predicated on citizenship under the Constitution, but noted that final questionnaire decisions have not been made and he would look into research regarding chilling effects on participation.
 
-> "Today, it's the most widely consumed beverage in the world, second only to water." — Howard Lutnick, Commerce Secretary
+## **Intellectual Property & Technology Policy**
+* **Patent Office Valuation Tax:** Lutnick confirmed that a proposed value-based patent tax (charging inventors different fees based on PTO valuations) is **not** going to be implemented, agreeing with senators that it is unworkable and would harm innovation.
+* **AI Chip Demand & Export Controls:** Lutnick noted that advanced chip designer NVIDIA relies heavily on Taiwan for manufacturing. On January 13, the Department of Commerce issued regulations stating it will not grant licenses for advanced AI chip sales to China (such as to DeepSeek or Tencent) if exports would delay NVIDIA's ability to meet domestic U.S. demand from firms like Anthropic, OpenAI, and Google.
+* **Manufacturing Extension Partnership (MEP):** Acknowledging delays in disbursing FY 2025 funds ($175 million allocated), Lutnick cited historical oversight issues, waste, fraud, and abuse by executing offices as the primary driver behind necessary clean-up and tighter oversight.
+
+## **Scrutiny Over Jeffrey Epstein Associations**
+* **Contradicted Timeline:** Senators Van Hollen, Coons, and Merkley pressed Secretary Lutnick regarding records in the Epstein files showing at least 8 interactions post-2005 (including inquiries for phone numbers in 2009, a 2011 appointment for drinks, and a 2012 family vacation lunch on Epstein's private island with his wife, four children, and nannies), contrasting with his prior public statements that he had cut off all contact after meeting him in 2005.
+* **Lutnick's Defense:** Lutnick maintained he met Epstein only three times over a 14-year period after becoming neighbors in New York, that he had no business or personal relationship, and that his family vacation lunch on the island involved no wrongdoing, inappropriate behavior, or knowledge of wrongdoing by staff.
+
+---
+
+## **Predictions & Forward Calls**
+* **Quarterly GDP Growth:** Lutnick predicted Q4 2025 GDP growth will exceed **5%**, and Q1 2026 growth could reasonably surpass **6%** driven by rising exports and lower imports due to tariffs. — Howard Lutnick
+* **Manufacturing Job Growth:** Lutnick claimed that domestic manufacturing job growth will accelerate significantly **over the course of 2026**. — Howard Lutnick
+
+---
+
+## **Notable Quotes**
+> "The money will be spent according to the statute, of course... And there were comments from the Department of Commerce and others about the money would be returned to the Treasury, that is not the plan." 
+> — Howard Lutnick
+
+> "It is my understanding that SpaceX... sent you a rider to modify the terms and they sent a number of states that rider is outside of our guidelines is outside the statute and it is rejected by us. There will be no rider, and if SpaceX does not want to live without the rider, then you will definitely go find an alternative means of execution." 
+> — Howard Lutnick
+
+> "We will avoid harming innovation by not doing a value evaluation or any valuation fee or tax on patents. Good. That is not a plan, that is not going anywhere. We are totally on side." 
+> — Howard Lutnick

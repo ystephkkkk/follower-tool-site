@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=dQi3MX7ato8
 - Published: 2026-05-15
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260515.html#video-dQi3MX7ato8
-- Speakers: Tom Llamas (Anchor and Correspondent, NBC News); Marco Rubio (Secretary of State); Xi Jinping (President of China)
+- Speakers: Tom Llamas (Anchor, NBC News); Marco Rubio (Secretary of State, United States)
 
 ---
 

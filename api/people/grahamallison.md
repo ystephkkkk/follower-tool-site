@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=-kx9o14bwzM
 - Published: 2026-06-25
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260625.html#video--kx9o14bwzM
-- Speakers: Fareed Zakaria (Host, CNN); Ray Dalio (Founder, Bridgewater Associates); Graham Allison (Professor, Harvard Kennedy School)
+- Speakers: Graham Allison (Professor, Harvard University)
 
 ---
 

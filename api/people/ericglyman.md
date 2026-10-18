@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=TRPCRIhrYac
 - Published: 2026-02-17
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260217.html#video-TRPCRIhrYac
-- Speakers: Eric Glyman (CEO, Ramp); John Collison (Cofounder, Stripe); Alex Rampell (General Partner, Andreessen Horowitz)
+- Speakers: Eric Glyman (Cofounder and CEO, Ramp)
 
 ---
 

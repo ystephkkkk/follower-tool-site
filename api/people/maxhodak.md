@@ -61,7 +61,7 @@ Max Hodak, co-founder and CEO of Science Corporation, discusses the company's mi
 - Video: https://www.youtube.com/watch?v=5gspRJVp9dI
 - Published: 2026-03-09
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260309.html#video-5gspRJVp9dI
-- Speakers: Max Hodak (Founder, Science); Garry Tan (President & CEO, Y Combinator)
+- Speakers: Max Hodak (Founder, Science / Cofounder, Neuralink)
 
 ---
 

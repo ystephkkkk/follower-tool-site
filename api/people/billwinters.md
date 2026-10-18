@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=6edo18ZQUDw
 - Published: 2026-01-28
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260128.html#video-6edo18ZQUDw
-- Speakers: Bill Winters (CEO, Standard Chartered); Nicolai Tangen (CEO, Norges Bank Investment Management)
+- Speakers: Bill Winters (CEO, Standard Chartered)
 
 ---
 

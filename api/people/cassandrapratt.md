@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=EmvpSL6s0W0
 - Published: 2026-07-06
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260706.html#video-EmvpSL6s0W0
-- Speakers: Cassandra Pratt (Chief Human Resources Officer, Progyny); Barry O'Reilly (Author)
+- Speakers: Cassandra Pratt (CHRO, Progyny)
 
 ---
 

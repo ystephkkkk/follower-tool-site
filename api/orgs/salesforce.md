@@ -261,7 +261,7 @@ Salesforce reported a strong Q1 with 14% year-over-year revenue growth to $11 bi
 - Video: https://www.youtube.com/watch?v=jJRAvZNGUvI
 - Published: 2026-05-15
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260515.html#video-jJRAvZNGUvI
-- Speakers: Marc Benioff (CEO, Salesforce); Donald Trump (US President); Xi Jinping (President of China)
+- Speakers: Marc Benioff (CEO, Salesforce)
 
 ---
 

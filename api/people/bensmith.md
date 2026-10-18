@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=ExTgRBzqu2g
 - Published: 2026-07-03
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260703.html#video-ExTgRBzqu2g
-- Speakers: Steve Huffman (Co-founder and CEO, Reddit); Ben Smith (Co-founder, Semafor); Max Tani (Media Reporter, Semafor)
+- Speakers: Steve Huffman (Co-founder and CEO, Reddit); Max Tani (Host, Mixed Signals); Ben Smith (Host, Mixed Signals)
 
 ---
 

@@ -120,7 +120,7 @@ Canadian Prime Minister Mark Carney emphasized Canada's readiness to negotiate a
 - Video: https://www.youtube.com/watch?v=jPmZgN_5keE
 - Published: 2026-04-27
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260427.html#video-jPmZgN_5keE
-- Speakers: Mark Carney (Prime Minister); Adrienne Arsenault (Chief Correspondent, CBC News)
+- Speakers: Mark Carney (Prime Minister, Canada)
 
 ---
 

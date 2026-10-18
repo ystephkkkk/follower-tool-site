@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=VwvrZphtg2I
 - Published: 2026-04-21
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260421.html#video-VwvrZphtg2I
-- Speakers: Tony Xu (Cofounder and CEO, DoorDash); John Collison (Cofounder, Stripe)
+- Speakers: Tony Xu (Cofounder and CEO, DoorDash)
 
 ---
 

@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=NfD_6mKEI_k
 - Published: 2026-05-18
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260518.html#video-NfD_6mKEI_k
-- Speakers: David Perdue (U.S. Ambassador to China); Michael O'Leary (CEO, Ryanair); Greg Abel (CEO, Berkshire Hathaway)
+- Speakers: David Perdue (U.S. Ambassador to China)
 
 ---
 

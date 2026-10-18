@@ -58,52 +58,62 @@ Treasury Secretary Scott Bessent detailed ongoing US-China economic and AI diplo
 > "On September 23rd, all of the Iranian airlines will be shut down around the world... if they land, you cannot provide them with fuel, you cannot provide them with landing services, you cannot sell them tickets or you will be knocked out of the dollar system." - Scott Bessent on enforcement actions against Iran
 
 
-## Trump Xi Summit LIVE: Why Is Team Trump Under Digital Lockdown During China Visit? | Vantage
+## Opening Plenary
 
-- Channel: Firstpost
-- Video: https://www.youtube.com/watch?v=JX88X9oRT5I
-- Published: 2026-05-16
-- Briefing: https://ystephkkkk.github.io/follower-tool-site/20260516.html#video-JX88X9oRT5I
-- Speakers: Donald Trump (President, United States); Xi Jinping (President, China); Elon Musk (CEO, Tesla)
+- Channel: World Economic Forum
+- Video: https://www.youtube.com/watch?v=nFuifJi0_sY
+- Published: 2026-06-24
+- Briefing: https://ystephkkkk.github.io/follower-tool-site/20260624.html#video-nFuifJi0_sY
+- Speakers: Li Qiang (Premier, China)
 
 ---
 
-**TL;DR**
-President Trump and a delegation of top U.S. business leaders are under a strict "digital lockdown" during their visit to China, utilizing temporary "clean" devices and vetted software to mitigate the extreme risk of sophisticated state-sponsored cyber surveillance.
+**TL;DR**  
+The 17th Annual Meeting of the New Champions ("Summer Davos") in Dalian, China, convened over 1,800 global leaders to focus on the theme of "Innovating at Scale." Chinese Premier Li Qiang highlighted China's resilient 5% Q1 economic growth and championed a transition toward "China Opportunity 2.0," urging global stakeholders to reject protectionist trade barriers in favor of multilateral technological collaboration.
 
-### The Digital Lockdown Protocol
-* **Total Device Ban:** Members of the U.S. delegation—including high-profile executives like **Elon Musk** (Tesla/X), **Tim Cook** (Apple), **Jensen Huang** (Nvidia), and **Larry Fink** (BlackRock)—were ordered to leave all personal electronics at home.
-    * This restriction covers iPhones, laptops, and smartwatches.
-* **Classified Data Protection:** The measures are designed to protect the massive amounts of sensitive and classified information held by high-level officials and titans of industry.
-* **The "Golden Image" Solution:** Instead of personal devices, officials are issued temporary hardware carrying a "golden image."
-    * **Technical Standard:** A golden image is a carefully vetted, pre-approved software configuration.
-    * **Post-Trip Audit:** Upon return, security teams conduct a byte-by-byte comparison of the device to detect "phantom files," rogue applications, or hidden keyloggers installed during the trip.
+---
 
-### Rigorous Field Security Measures
-* **Connectivity Restrictions:** To prevent data theft or the installation of malicious software, the delegation is following strict hardware guidelines:
-    * **No Public Infrastructure:** Using hotel Wi-Fi or public charging ports is strictly prohibited.
-    * **Approved Accessories:** Only government-approved chargers, battery packs, and accessories are permitted.
-* **Sensitive Communication:** All high-level or sensitive discussions are mandated to occur in person rather than over digital channels.
-* **Controlled Routing:** Any necessary digital communication is routed through temporary accounts and tightly controlled, encrypted channels.
+### Launching Summer Davos: Theme and Global Context
+* **Event Overview:** The 17th Annual Meeting of the New Champions gathered more than 1,800 leaders, including 200 technology pioneers, representing over 90 geographies at the Dalian International Convention Center.
+    * Co-hosted by the World Economic Forum (WEF) and the Chinese government, the meeting focuses on frontier technologies, emerging economies, and next-generation leadership.
+* **The Imperative to "Innovate at Scale":** Ngoh Gium-Hui, Managing Director and Chair of Greater China at the WEF, emphasized that scaling innovation requires a holistic systems lens that balances local realities with global ideals.
+    * The forum aims to catalyze actionable solutions to build institutions, reskill workforces, and protect the environment while navigating geopolitical and economic realities.
+* **Deepening Ties with China:** Alois Zwinggi, President and CEO of the WEF, highlighted a 40-year relationship with China dating back to 1979, noting that China remains an essential engine of the global economy, clean energy, and digital infrastructure.
 
-### The Sophistication of Chinese Surveillance
-* **Aggressive Environment:** U.S. intelligence officials describe China as having one of the world's most sophisticated and aggressive cyber surveillance environments. 
-    * **The "Window" Metaphor:** Officials warn that in China, a phone acts as a "window" through which the state is constantly watching.
-* **Documented Hacking Campaigns:** Washington cites specific Chinese cyber operations as the justification for these measures, specifically:
-    * **Volt Typhoon**
-    * **Salt Typhoon**
-* **Inherent Risks:** The briefing emphasizes that these risks are not theoretical but documented and do not discriminate based on the wealth or status of the target.
+### China's Economic Outlook: The Four Pillars of Growth
+Premier Li Qiang outlined the state of China's economy at the launch of its 15th Five-Year Plan, defining its trajectory through four key keywords:
+* **Economic Stability:** China registered a steady 5% GDP growth in Q1, demonstrating strong resilience in its massive 140 trillion RMB economy despite global supply chain disruptions and energy shortages.
+* **Technological Innovation:** The domestic artificial intelligence (AI) sector has seen explosive growth, with daily AI token usage hitting hundreds of trillions by the end of May, ranking first globally. Embodied intelligence has also moved into large-scale commercial application.
+* **Market Dynamism:** Driven by green and niche consumption, China's domestic market remains highly active, handling over 550 million express deliveries daily—surpassing the combined total of the rest of the world.
+* **Global Integration:** Rejecting protectionism, China has extended zero-tariff policies to 63 countries and maintained its position as the world's second-largest import market for 17 consecutive years, recording a 20.5% import growth in the first five months of the year.
 
-### Geopolitical Context and Denials
-* **Mutual Accusations:** While the U.S. points to Chinese espionage, Beijing frequently highlights past U.S. surveillance activities to deflect criticism.
-    * **The Snowden Precedent:** The 2013 Edward Snowden revelations showed the NSA monitored the phones of 35 world leaders, including close American allies.
-* **Official Denials:** The Chinese government consistently denies involvement in state-backed cyber espionage, though U.S. officials state an admission is never expected.
+### The Mechanics of China's Innovation Ecosystem
+Premier Li rejected narratives of government subsidies driving Chinese market competitiveness, attributing success to structured, long-term national effort:
+* **Relentless R&D Investment:** During the 14th Five-Year Plan (2021–2025), China's total R&D expenditure grew by an average of 10% annually, making it the world's second-largest R&D spender.
+    * R&D investment by enterprises accounts for nearly 80% of China's total research spending.
+    * Telecommunications giant Huawei invested over 1 trillion RMB in research over nearly 10 years to bypass external technological blockades and achieve core breakthroughs.
+* **Accelerated Industrial Application:** China's robust manufacturing supply chain dramatically shortens the time from lab to market, bridging the "Darwinian sea" of commercialization.
+    * Premier Li noted that physical blueprints can be turned into functional consumer prototypes in Shenzhen in just one week, compared to up to a year in other countries.
+* **Talent and Infrastructure Development:** China produces approximately 7 million university graduates in science, engineering, agriculture, and medicine every year.
+    * China claims 24 of the world's top 100 innovation clusters, topping the Global Innovation Index rankings for three consecutive years.
+    * Specialized hubs include a one-hour electronic innovation circle in the Yangtze River Delta and a 30-minute robot-supporting circle in Shenzhen's Robot Valley.
 
-> "In China, if you trust the wrong socket, you might as well just hand over your secrets personally."
-— **Firstpost Presenter**
+### Transitioning to "China Opportunity 2.0" and Global Cooperation
+Rather than viewing China's technological rise as a threat ("China Shock 2.0"), Premier Li advocated for viewing it as a global benefit ("China Opportunity 2.0") that offers innovation dividends and investment returns:
+* **Transition to "Created in China":** Global enterprises are increasingly setting up R&D centers in China, with 14,000 foreign-funded scientific and technological service firms established in 2023 alone (a 27.2% year-on-year increase).
+* **Exponential Capital Returns:** Rapid growth pathways exist for local tech startups; robotics firm Unitree grew in valuation from 10 million RMB in 2016 to 42 billion RMB today.
+* **Commitment to Open Source:** Much of China's technological advancement is designed to be shared. China's open-source AI models have surpassed 10 billion cumulative downloads globally, and its large-scale scientific facilities (including the Tiangong space station) are open to international scientists and astronauts.
+* **Call for Collective Tech Governance:** Recognizing the "Cambrian moment" of AI, Premier Li urged global cooperation to manage the ethical risks and control liabilities of fast-moving tech, calling on world leaders to "tear down walls and build bridges."
 
-> "The risk isn't theoretical. It is documented, it is sophisticated, and it does not care how many zeros are there in your bank account."
-— **Firstpost Presenter**
+---
 
-> "A phone isn't just a phone [in China]. It's a window, and someone is always looking through it."
-— **Firstpost Presenter**
+### Notable Quotes
+
+> "Pathfinders, pathfinders, there is no path, the path is made by walking."  
+> — *Ngoh Gium-Hui, quoting Spanish poet Antonio Machado*
+
+> "For China, our integrated development with the world has never been an expediency, but a strategic decision made in line with the trend of history and based on our own development philosophy."  
+> — *Premier Li Qiang*
+
+> "Advanced technologies should serve as tools that benefit people across countries rather than sources of chaos that undermine peace and stability."  
+> — *Premier Li Qiang*

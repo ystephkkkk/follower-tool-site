@@ -109,7 +109,7 @@ Keri Findley, founder of Tacora Capital, leverages a "ratings arbitrage" strateg
 - Video: https://www.youtube.com/watch?v=yvAj6LEAIYw
 - Published: 2026-04-21
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260421.html#video-yvAj6LEAIYw
-- Speakers: Colin Lintz (Co-Founder, Narya Capital); David Weisburd (Host, How I Invest)
+- Speakers: Colin (Co-Founder, Narya); David Weisburd (Host, How I Invest)
 
 ---
 

@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=4EsUaur0nsQ
 - Published: 2026-04-16
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260416.html#video-4EsUaur0nsQ
-- Speakers: Quan Vuong (Co-founder, Physical Intelligence); Garry Tan (President and CEO, Y Combinator); Jared Friedman (Partner, Y Combinator)
+- Speakers: Quan Vuong (Cofounder, Physical Intelligence)
 
 ---
 

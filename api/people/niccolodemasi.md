@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=sOVSBXltphM
 - Published: 2026-10-12
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20261012.html#video-sOVSBXltphM
-- Speakers: Morgan Brennan (Anchor, CNBC); Niccolo de Masi (Chairman and CEO, IonQ)
+- Speakers: Morgan Brennan (Host, CNBC); Niccolo de Masi (Chairman and CEO, IonQ)
 
 ---
 

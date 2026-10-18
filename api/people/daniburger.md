@@ -98,7 +98,7 @@ Bank of America CEO Brian Moynihan expects third-quarter trading revenue to be r
 - Video: https://www.youtube.com/watch?v=aa2fDwGnEZA
 - Published: 2026-09-14
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260914.html#video-aa2fDwGnEZA
-- Speakers: CS Venkatakrishnan (CEO, Barclays); Dani Burger (Reporter, Bloomberg)
+- Speakers: C.S. Venkatakrishnan (CEO, Barclays); Dani Burger (Reporter, Bloomberg)
 
 ---
 

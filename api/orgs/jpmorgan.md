@@ -63,7 +63,7 @@
 - Video: https://www.youtube.com/watch?v=1ZHoOgS7Xyc
 - Published: 2026-09-22
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260922.html#video-1ZHoOgS7Xyc
-- Speakers: Jamie Dimon (CEO, JPMorgan); Prashant Nair (Anchor, CNBC-TV18)
+- Speakers: Jamie Dimon (CEO, JPMorgan)
 
 ---
 

@@ -63,7 +63,7 @@ OpenAI President and co-founder Greg Brockman discusses the rollout of GPT-6 to 
 - Video: https://www.youtube.com/watch?v=XkKdbPhIvbY
 - Published: 2026-10-07
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20261007.html#video-XkKdbPhIvbY
-- Speakers: Sam Altman (CEO, OpenAI)
+- Speakers: Dominik (Presenter, OpenAI)
 
 ---
 
@@ -118,7 +118,7 @@ OpenAI President and co-founder Greg Brockman discusses the rollout of GPT-6 to 
 - Video: https://www.youtube.com/watch?v=aDTPTwnrRyA
 - Published: 2026-10-07
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20261007.html#video-aDTPTwnrRyA
-- Speakers: Sam Altman (CEO, OpenAI)
+- Speakers: Jason (Developer Experience Team, OpenAI)
 
 ---
 
@@ -184,7 +184,7 @@ Jason from OpenAI’s developer experience team explains how moving from single-
 - Video: https://www.youtube.com/watch?v=SXCfs7mitPo
 - Published: 2026-10-07
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20261007.html#video-SXCfs7mitPo
-- Speakers: Sam Altman (CEO, OpenAI)
+- Speakers: Nick (Host, OpenAI); Danielle (Host, OpenAI); Dani (Lead Developer Social, OpenAI)
 
 ---
 
@@ -282,56 +282,6 @@ OpenAI’s Head of Product & Platform, Thibault “Tibo” Sottiaux, and host Ra
 
 > "What struck me the most about my conversation with Tibo is his optimism which felt really genuine to me. He also clearly stated his commitment to safety and AI alignment..."
 > — Rana el Kaliouby
-
-
-## Stop Overpaying for Intelligence | DevDay 2026
-
-- Channel: OpenAI
-- Video: https://www.youtube.com/watch?v=_nmlHbSB8kM
-- Published: 2026-10-07
-- Briefing: https://ystephkkkk.github.io/follower-tool-site/20261007.html#video-_nmlHbSB8kM
-- Speakers: Sam Altman (CEO, OpenAI)
-
----
-
-### TL;DR
-Optimizing AI costs requires shifting the focus from list-price token costs to the total "cost per task," leveraging advanced capabilities like prompt caching, programmatic tool calling, and flexible model sizing to reduce expenditures without sacrificing quality.
-
-### The Right Optimization Metric: Cost Per Task
-* **Cost Per Token Fallacy:** A model with a low cost per token can ultimately be more expensive on a cost-per-task basis if it consumes excess tokens, produces bloated outputs, or fails entirely, requiring costly human intervention.
-* **Real-World Examples:**
-  * **Airline Customer Support:** An automated chatbot that fails to resolve a flight rescheduling request incurs the combined cost of the tokens plus the labor time of a human agent who must step in.
-  * **Perplexity:** Utilized 6 Astra to achieve 9% more accurate results at half the cost compared to their previous model, driving greater task efficiency despite higher per-token pricing.
-  * **Notion:** Migrated from model 5.5 to 5.6 Sol, reporting improved accuracy at half the cost per task.
-
-### Right-Sizing Models and Leveraging "Luna Maxing"
-* **Defining Success Parameters:** Begin by crisply defining the task and the expected business accuracy threshold (e.g., resolving 80% of customer inquiries autonomously).
-* **The Pareto Curve Approach:** Plot accuracy against cost by testing different models, configurations, and harnesses to identify the optimal threshold balance.
-* **Strategic Model Selection:**
-  * Use smaller, efficient models (like Luna) early in the process for simpler tasks such as text classification or document field extraction.
-  * Start with frontier models (like 6 Astra) for high-intelligence planning tasks.
-* **Luna Maxing:** Luna deployed with high or extra-high reasoning effort frequently outperforms larger previous-generation models and competitors; customers report it successfully handles 80–90% of workflows (such as coding).
-
-### Four Non-Model Levers for Cost Reduction
-* **Prompt Caching:** 
-  * Reuses the pre-processing of shared input information (such as company policies or support documents) while the model processes new prompt data.
-  * Delivers up to 90% cost reduction for cached inputs.
-  * **Blitzy Case Study:** Moved from a single-structured output call to Luna's tool calling loop, boosting cache reuse from 24% to 90%, achieving 8.5x fewer output prompt tokens and an 87% cost reduction compared to GPT 5.4 Mini while handling 2.2x more context.
-* **Programmatic Tool Calling:**
-  * **Core Concept:** Offloads intermediate data processing to a small script that coordinates tool calls and packages results, avoiding the need to pass every piece of intermediary data back into the LLM's context window.
-  * **Clio Case Study:** A legal AI platform achieved 38% fewer prompt tokens in multi-step document analysis with zero quality loss.
-* **Reasoning Effort Adjustments:**
-  * Treats reasoning effort separately from answer length.
-  * Routing tasks should start at a lower reasoning effort level, iteratively running evaluations to verify quality.
-* **Batch and Flex API Processing:**
-  * **OpenAI Batch APIs:** Provide a 24-hour processing window at 50% lower token pricing compared to standard synchronous requests, ideal for non-urgent bulk workloads (e.g., processing thousands of documents).
-
-### Advanced Prompt Caching Best Practices
-* **Maximizing Hit Rates:** Keep the beginning of prompts consistent so the system can reliably reuse shared instructions and preprocessing.
-* **Explicit Breakpoints (GPT 5.6 Families):** Allows developers to insert explicit boundaries right after stable prompt components and before frequently changing tasks.
-* **Explicit-Only Mode:** Lets developers pick and choose specific portions or paths to cache to avoid caching short-lived, frequently changing content.
-* **Runtime Flexibility (GPT 6 Astra):** Enables changing reasoning effort within an ongoing conversation—and modifying accessible tools via allowed tools parameters—without breaking the prompt cache.
-* **Measurement & Diagnostics:** OpenAI provides a prompt caching dashboard on the admin webpage to track hit rates, alongside a diagnostics API to pinpoint where cache misses occur.
 
 
 ## Sam Altman on Elon Musk, ‘Artificial,’ and the Future of Humanity (Part One)
@@ -527,3 +477,51 @@ OpenAI has launched "Dots"—proactive, persistent personal AI agents equipped w
 > *"As soon as you start... designing software to be embodied or in some future... building robots that are humanoid, you start to get to reuse a lot of really excellent design thinking that has already been done elsewhere in the world."* — **Alexander Embiricos**
 
 > *"Your Dot should be available 24/7, and there should be no way for it to not be available 24/7... We want your Dot is available 24/7, you pay a flat monthly amount to have access to your Dot."* — **Alexander Embiricos**
+
+
+## How Sam Altman Actually Uses AI to Run OpenAI and His Life
+
+- Channel: Every
+- Video: https://www.youtube.com/watch?v=jZh55CQwSh8
+- Published: 2026-09-30
+- Briefing: https://ystephkkkk.github.io/follower-tool-site/20260930.html#video-jZh55CQwSh8
+- Speakers: Sam Altman (CEO, OpenAI); Dan Shipper (Host, The Every Podcast)
+
+---
+
+#### TL;DR
+Sam Altman discusses how OpenAI's new "Dot" persistent agent protects his morning creative time, why developer demand for AI remains deeply human-centered, and how OpenAI is betting on a decentralized "Renaissance" for builders rather than a single corporate monopoly.
+
+### The Future of Engineering & Human-Centered AI
+- **Latent Demand for Software:** Engineering coding models have not replaced developers; instead, they have unlocked massive latent demand. 
+    - **Higher Bar:** Developers have never been able to do more, but society's expectations and the bar for quality have never been higher.
+    - **Human-Centric Obsession:** Despite automation fears, public interest remains stubbornly focused on people, stories, and the human creators behind art and technology (e.g., the public reaction focusing on people involved rather than raw data center agent coordination).
+- **Industrial Revolution vs. AI Renaissance:** Altman contrasts two opposing future models for AI:
+    - **Industrial Revolution Model:** Treating humans as specialized cognitive cogs in a machine.
+    - **Renaissance Model:** A massive expansion of human potential, scientific discovery, art, and one-person company formation where people regain control of their time.
+
+### Protect Your Mornings: Sam Altman’s "Dot" Agent
+- **Regaining Deep Work:** Altman’s new always-on agent, **"Dot"** (or "Dottie"), acts as a persistent triage system that protects his early morning window of maximum creativity by handling overnight fires and surfacing only truly urgent matters.
+- **Proactive Context Synthesis:** 
+    - **Cross-Platform Retrieval:** Dot successfully scanned images and Slack screenshots across systems to find a lost reference after Altman spent 10–20 minutes failing to locate it using Codex search.
+    - **Live Iteration on Ideas:** Altman uses voice notes on walks or right before sleep to dump raw feature ideas; Dot then builds 5 or 6 versions for him to review and iterate on during spare moments.
+- **Live Collaboration Spaces:** OpenAI built "Spaces" because traditional software abstractions break down when multiple people and multiple AI agents attempt to collaborate simultaneously on living documents and company dashboards that auto-update from Slack and real-world changes.
+
+### Platform Ecosystem & Empowering Startups
+- **Platform Strategy:** OpenAI explicitly rejects the philosophy that only one mega-corporation should exist; instead, they are betting heavily on an absolute lowering of the bar for one-person companies and small teams.
+- **Bringing ChatGPT Subscriptions Everywhere:** OpenAI's new developer tools allow users to bring their ChatGPT subscriptions directly to third-party app developers and plugin extensions, eliminating the financial penalty of letting users run heavy AI models.
+- **Startup Golden Age:** Altman notes that he has never seen startups get as successful as quickly, viewing the current ecosystem as an absolute golden age of entrepreneurship and creativity.
+
+### Inference, Speed, and "Ultrafast" Prompting
+- **The Ultrafast Workflow:** Altman conducts all of his prompting on **"Ultrafast"**, arguing that immediate connection and rapid feedback loops fundamentally transform a creator's iterative thinking process.
+- **The Price of IQ vs. Speed:** OpenAI's historical focus has been driving down the price of intelligence; moving forward, speed and cost reduction will be pushed aggressively via custom chips and infrastructure investments to put high-speed inference into everyone's hands.
+
+### Notable Quotes
+> "People just want so much more stuff. People's expectations are so high. And I think that's a wonderful thing. I think this is why we will all have this incredible future in front of us to explore."
+> — **Sam Altman**
+
+> "One take on this would be that the Renaissance was fundamentally centered around people, and the industrial revolution was fundamentally centered around machines."
+> — **Sam Altman**
+
+> "We are not a gigantic company, first of all. Like, there's probably, I don't know, like maybe the big tech companies have like a hundred times more people than we do, something like that."
+> — **Sam Altman**

@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=Axpnkqd-Agk
 - Published: 2026-03-26
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260326.html#video-Axpnkqd-Agk
-- Speakers: Bryan Johnson (Founder, Blueprint); David Friedberg (CEO, The Production Board); Chamath Palihapitiya (Founder, Social Capital)
+- Speakers: Bryan Johnson (Founder, Blueprint)
 
 ---
 

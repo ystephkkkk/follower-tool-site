@@ -215,7 +215,7 @@ Citadel CEO Ken Griffin is committing a record $3 billion to Carnegie Mellon Uni
 - Video: https://www.youtube.com/watch?v=-aRZcFdIh94
 - Published: 2026-05-16
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260516.html#video--aRZcFdIh94
-- Speakers: Kenneth Griffin (Founder and CEO, Citadel); David Rubenstein (Co-Founder, The Carlyle Group); Michael O'Leary (CEO, Ryanair)
+- Speakers: Kenneth Griffin (Founder and CEO, Citadel); Robyn Grew (CEO, Man Group)
 
 ---
 
