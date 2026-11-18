@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=bmDrbHOh7Bo
 - Published: 2026-10-01
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20261001.html#video-bmDrbHOh7Bo
-- Speakers: Joel De La Garza (Host, a16z); Barrett Lyon (Founder, DoxxNet)
+- Speakers: Joel de la Garza (Host, a16z); Barrett Lyon (Founder, DoxxNet)
 
 ---
 

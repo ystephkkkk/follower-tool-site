@@ -10,7 +10,7 @@
 - Video: https://www.youtube.com/watch?v=RtNrvPBkwfA
 - Published: 2026-08-07
 - Briefing: https://ystephkkkk.github.io/follower-tool-site/20260807.html#video-RtNrvPBkwfA
-- Speakers: Joel De La Garza (Security Lead, a16z); Dylan Ayrey (Co-founder and CEO, Truffle Security); Feross Aboukhadijeh (Founder and CEO, Socket)
+- Speakers: Joel de la Garza (Security Lead, a16z); Dylan Ayrey (Co-founder and CEO, Truffle Security); Feross Aboukhadijeh (Founder and CEO, Socket)
 
 ---
 
